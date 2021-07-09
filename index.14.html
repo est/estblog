@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="This blog is rated&nbsp;&nbsp;R⃣ , viewer discretion is advised" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="list-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="card-container side-gutter">
+      <header class="list-header">
+        <p class="list-header-subtext">This blog is rated&nbsp;&nbsp;R⃣ , viewer discretion is advised</p>
+        <!-- <h1 class="list-header-title">Est's Blog</h1> -->
+      </header>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/34892432623"  rel="bookmark" >
+              <h2 class="card-title">1073 DLNA = Internet Radio</h2>
+            </a>
+            <p class="card-text"><p>家里有个老机器 海美迪HD 300B，用的是Realtek 1073DD+方案，发现一个很猛的固件：</p>
+<p><a href="http://www.hdpfans.com/thread-120536-1-1.html">http://www.hdpfans.com/thread-120536-1-1.html</a></p>
+<p>吐槽一下，DLNA被国内翻译成 多屏互动 。搞了半天我一个关键字搜索不到是这个原因。。。囧。</p>
+<p>刷机之后真的能支持了，Win7上网络设备刷出来一个</p>
+<p><img alt="" src="/images/tumblr/34892432623.png" /></p>
+<p>连WMP和BubbleUPnP都支持很好。赞美一个。</p>
+<p>继续玩Intel UPnP Device Spy想到一个比较好玩的功能：</p>
+<p><code>SetAVTransportURI()</code> 是支持任意HTTP地址的，而很多shoutcast/icecast等Internet Radio，本质上就是HTTP流媒体的mp3/aac</p>
+<p>于是我试了下，还真成功了。比如3fm alternative</p>
+<p><a href="http://ics2oss.omroep.nl/3fm-alternative-mp3?q=/npo/mp3/3fm_alternative.pls&amp;stream=ok&amp;esthack=1073.mp3">http://ics2oss.omroep.nl/3fm-alternative-mp3?q=/npo/mp3/3fm_alternative.pls&amp;stream=ok&amp;esthack …</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-11-03T06:43:00+00:00">2012-11-03</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/34761834868"  rel="bookmark" >
+              <h2 class="card-title">UPnP/DLNA初步</h2>
+            </a>
+            <p class="card-text"><p>玩了一下<a href="http://software.intel.com/en-us/articles/intel-software-for-upnp-technology-download-tools/218896.htm">Intel UPnP Device Spy</a>很好玩</p>
+<p>让设备播放媒体很简单：</p>
+<ol>
+<li>打开AVTransport</li>
+<li>调用SetAVTransportURL() 参数URL是<code>python -m SimpleHTTPServer</code>然后随便指定了一个avi。</li>
+<li>调用Play()</li>
+</ol>
+<p><img alt="" src="/images/tumblr/34761834868.png" /></p>
+<p>就OK了。</p>
+<p>家里的网络有问题，找不到设备，找到设备也无法播放。Win7/Android 2.3/4.0之间的DLNA互通还是有问题。折腾ing。。。用的DMR设备是 com.waxrain.airplayer 。</p>
+<p>btw DLNA国内翻译的貌似是 多屏互动 。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-11-01T11:06:00+00:00">2012-11-01</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/34741235628"  rel="bookmark" >
+              <h2 class="card-title">Miracast, DLNA</h2>
+            </a>
+            <p class="card-text"><p>终于搞清楚了几个概念。</p>
+<p>DLNA是一套基于UPnP的4层协议，基于HTTP+SOAP的，是Sony在2004年提出的。</p>
+<p>有如下几个角色：</p>
+<ul>
+<li>Digital Media Server (DMS) 存储内容，供pull</li>
+<li>Digital Media Player (DMP) 播放pull下来的内容</li>
+<li>Digital Media Renderer (DMR) 接受push的内容并播放</li>
+<li>Digital Media Controller (DMC) 远程遥控，播放/暂停/音量 等</li>
+</ul>
+<p>DLNA没有去实现屏幕镜像。主要用于内容传输和播放。</p>
+<p>Miracast是Android 4.2搞的，基于Wifi Direct技术</p>
+<p>简单的说，就是同一个wifi AP下完成协议握手，然后两个设备之间wifi信号直连。这样效率高实时传输无延迟。Miracast也包含了DLNA的设备发现功能，和视频播放能力，但同时：</p>
+<ul>
+<li>不支持纯音频（比如无线音箱）设备（见 …</li></ul></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-10-31T23:21:00+00:00">2012-10-31</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/34679157351"  rel="bookmark" >
+              <h2 class="card-title">用tcmalloc代替glibc的malloc()。无须重编译</h2>
+            </a>
+            <p class="card-text"><p>据说这样就行了</p>
+<pre><code>$ LD_PRELOAD="/usr/lib/libtcmalloc.so"
+</code></pre>
+<p><a href="http://news.ycombinator.com/item?id=4719705">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-10-30T22:40:12+00:00">2012-10-30</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/34673796115"  rel="bookmark" >
+              <h2 class="card-title">The Web Is A Mess</h2>
+            </a>
+            <p class="card-text"><p>《<a href="http://mkronline.com/2012/10/30/you-arent-imagining-it-the-web-is-a-mess/">You aren’t imagining it: The web is a mess</a>》这篇文章提出了一些比较犀利的观点：</p>
+<p>Web已经乱死了。</p>
+<ul>
+<li>人们在本世纪初，网上写的东西还是给人看的。都是浓缩精华</li>
+<li>Google出现之后，人们写东西就不是给人看的了，而是给Google看的。为了各种关键字超高命中率，而不惜篇幅急剧膨胀灌水</li>
+<li>普通的个体再也不可能每天认真读完例如TechCrunch, LifeHacker这样网站的 每 一 篇 报道。</li>
+</ul>
+<p>我觉得，同理，现在blog圈子基本已经死了。不是外力杀死的，而死blog太讨好搜索引擎自杀的。Blog还没有 长微博 这种怪胎混得好。这是一种莫大的讽刺。</p>
+<p>我突然想到一个指标用来判断网站好坏，阅读量。单位：人天。</p>
+<p>一个标准人一天的阅读量是固定的。假设阅读效率为s。一个人每天花t时间上网，那么整天阅读量 R 就是：</p>
+<p>R = s x t</p>
+<p>如果一个网站每天更新的内容超过了 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-10-30T21:22:00+00:00">2012-10-30</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/34342180038"  rel="bookmark" >
+              <h2 class="card-title">bottle.py: better reloader with django's</h2>
+            </a>
+            <p class="card-text"><p>The most depression thing today, is I found a solution to a problem from <a href="http://initiative.yo2.cn/archives/625499">my OWN BLOG FOUR years ago</a>!</p>
+<p>Bottle.py's dev server <a href="http://bottlepy.org/docs/stable/tutorial.html#auto-reloading">auto-reloading</a> sucks hell. </p>
+<blockquote>
+<p>The child process will have os.environ['BOTTLE_CHILD'] set to True and start as a normal non-reloading app server. As soon as any …</p></blockquote></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-10-25T23:42:00+00:00">2012-10-25</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/34288214582"  rel="bookmark" >
+              <h2 class="card-title">fix bottle.py / wsgiref.simple_server slow</h2>
+            </a>
+            <p class="card-text"><p>Running bottlepy with default server (<code>wsgiref.simple_server</code>) is always dog slow for me, after some digging I found that the fucking server is trying to resolve the IP address of 10.x.x.x, both the server and client, into hostnames so the fucking logger can 'properly' display them. FUCK …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-10-25T04:53:00+00:00">2012-10-25</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/34276821898"  rel="bookmark" >
+              <h2 class="card-title">FEC在网络传输中的应用</h2>
+            </a>
+            <p class="card-text"><blockquote>
+<p>It is a bit different than your standard FEC. Traditionally, FEC works on a block (of bits/bytes) by block basis. You need to the entire block to decode the message. So the transmitter needs a good guess on the channel capacity to choose the correct coding strength for the …</p></blockquote></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-10-24T23:19:00+00:00">2012-10-24</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/34212978554"  rel="bookmark" >
+              <h2 class="card-title">@cached_property</h2>
+            </a>
+            <p class="card-text"><p>在<code>django.utils.functional</code> 里发现的。</p>
+<pre><code>class cached_property(object):
+    """
+    Decorator that creates converts a method with a single
+    self argument into a property cached on the instance.
+    """
+    def __init__(self, func):
+        self.func = func
+
+    def __get__(self, instance, type):
+        res = instance.__dict__[self.func.__name__] = self.func(instance)
+        return res
+</code></pre>
+<p>这玩意好用啊 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-10-24T00:00:00+00:00">2012-10-24</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/34207514410"  rel="bookmark" >
+              <h2 class="card-title">测试ssh连接速度和带宽</h2>
+            </a>
+            <p class="card-text"><p>安装pv： <br />
+<code>sudo apt-get install pv</code></p>
+<p>下行： <br />
+<code>$ ssh est@my_host 'cat /dev/zero'  | pv &gt; /dev/null</code> <br />
+<code>144kB 0:00:05 [ 121kB/s] [ &lt;=&gt;                                               ]</code></p>
+<p>上行：   <br />
+<code>$ yes | pv | ssh est@my_host "cat &gt; /dev/null"</code>   <br />
+<code>2.06MB 0:00:05 [1.96MB/s] [  &lt;=&gt;                                              ]</code></p>
+<p>测试本机IO能力：  <br />
+<code>$ pv /dev/zero &gt; /dev/null</code> <br />
+<code>75.3GB 0:00:09 [8 …</code></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-10-23T22:30:00+00:00">2012-10-23</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/33682210269"  rel="bookmark" >
+              <h2 class="card-title">Web墨卡托</h2>
+            </a>
+            <p class="card-text"><p>最近在android上玩RMaps Ext和Mobile Atlas Creator (MOBAC)</p>
+<p>一直觉得tg的<a href="www.tianditu.cn">天地图</a>其实道路信息和POI做的比其他厂商都好，所以网上找到了这个<a href="http://www.doyouhike.net/forum/comm_nav/585383,0,0,1.html">天地图版MOBAC</a></p>
+<p>但是我发现一个很好玩的信息，跟我当时对天地图的感觉一样：天地图最大的问题不是<a href="http://discover.news.163.com/special/tianditu/">163这种喷子媒体</a>说的各种问题，而是：地图是扭曲的。</p>
+<p>网上找到这篇文章《<a href="http://blog.3snews.net/html/88/47188-28181.html">天地图-地图投影技术剖析与思考</a>》</p>
+<p>虽然图片jb全无，但是却得到了一个很有用的结论：</p>
+<blockquote>
+<p>目前国内做数字城市方面的GIS项目、产品和公众应用，常涉及的投影方式主要有：面向局部区域的二维平面高斯投影（横轴墨卡托，横轴圆柱投影）、面向大范围（如全省、全国）的兰伯特投影（圆锥投影）、面向大范围的经纬度等间隔直投，而互联网上的大部分全国公众地图网站（百度、google、搜狗）则是另外一种-----“Web墨卡托”。  <br />
+在市一级的小范围区域的GIS系统，比如规划局、国土局、建设局的系统，大都使用<strong>高斯投影</strong>，以便与地方地形图测绘、工程报建一直采用的坐标系相一致。高斯投影的特点也很明显，分带，适合小范围局部 …</p></blockquote></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-10-15T21:48:19+00:00">2012-10-15</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/33678828555"  rel="bookmark" >
+              <h2 class="card-title">windows下nslookup的bug</h2>
+            </a>
+            <p class="card-text"><p>今天才知道的。windows下，干净hosts，可以nslookup 和 ping 的 ip 不一样。</p>
+<p>主要是 Primary DNS suffix of this computer 这个功能。</p>
+<p>解决方法也很简单，<code>nslookup my.domain.tld. dns.server.ip</code></p>
+<p>注意 tld 后边一个点。这样强制从根域来解析。</p>
+<p>用这个方法可以来欺骗一些人，前提是获得主机域权限。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-10-15T21:05:25+00:00">2012-10-15</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/33418164605"  rel="bookmark" >
+              <h2 class="card-title">Holland House Library, 1940</h2>
+            </a>
+            <p class="card-text"><p><img alt="" src="http://i.imgur.com/GPczw.jpg" /></p>
+<p>一种说不出来的味道。</p>
+<p><a href="http://www.reddit.com/r/pics/comments/11b7za/zero_fucks_given_bombed_library_style/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-10-12T02:42:42+00:00">2012-10-12</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/33350155261"  rel="bookmark" >
+              <h2 class="card-title">神一样的摄影君</h2>
+            </a>
+            <p class="card-text"><p><img alt="" src="http://i.imgur.com/KETrf.jpg" /></p>
+<p><img alt="" src="http://i.imgur.com/agPCz.jpg" /></p>
+<blockquote>
+<p>When Alex Honnold and I discussed the Nikon D4 project several months prior, we locked in on Joshua Tree National Park. Given the area's dry weather in late November, J-Tree seemed to be the obvious climbing location. During our first phone call, we simultaneously suggested Equinox as the climb. At …</p></blockquote></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-10-11T01:07:00+00:00">2012-10-11</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/33291117111"  rel="bookmark" >
+              <h2 class="card-title">ownCloud, csync</h2>
+            </a>
+            <p class="card-text"><p>KDE那帮人觉得Dropbox不错于是搞了个山寨品 ownCloud.org 。我很是喜欢。</p>
+<p>其中双向同步的关键核心组件是 csync，看了下，是<a href="http://news.opensuse.org/2009/01/08/opensuse-project-announces-csync/">OpenSUSE一帮人搞的</a>类unison工具。</p>
+<p>unison/csync 区别在于：</p>
+<blockquote>
+<p>csync is a bidirectional file synchronizer like unison. csync is written in C and not in ocaml. So it can be used by PAM (pam_csync) or you can write a GUI for it (this is a future …</p></blockquote></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-10-10T05:41:14+00:00">2012-10-10</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/33289020579"  rel="bookmark" >
+              <h2 class="card-title">get current 3fm song in python</h2>
+            </a>
+            <p class="card-text"><p><code>&gt;&gt;&gt; import pprint, datetime, json, urllib2</code> <br />
+<code>&gt;&gt;&gt; p=lambda:json.loads(urllib2.urlopen('http://radioplayer.omroep.nl/helper/now-on-air.json?ac=%s&amp;channel_id=3' % datetime.datetime.now().strftime('%Y%m%d%H%M')).read())</code> <br />
+<code>&gt;&gt;&gt; pprint.pprint(p()['current_song'])</code></p>
+<p>or parsing this HTML</p>
+<p>http://radioplayer.omroep.nl/helper/playlist.html?ac=201210101540&amp;channel_id …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-10-10T03:49:00+00:00">2012-10-10</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/33224029027"  rel="bookmark" >
+              <h2 class="card-title">ping uwsgi</h2>
+            </a>
+            <p class="card-text"><p>Here's a handy python script do the job of <code>uwsgi --ping &lt;address&gt;</code></p>
+<pre><code>#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals, print_function
+
+import socket
+import struct
+
+#---------------------------------------------------------------
+#---------------------------------------------------------------
+def ping_uwsgi(sock_file):
+    '''
+    Ping UWSGI process trought socket. Return [True,...] if OK,
+    return [False,error] if UWSGO not pinging, or
+    [None,error] if …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-10-09T05:33:00+00:00">2012-10-09</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/33201338908"  rel="bookmark" >
+              <h2 class="card-title">这小夜灯，德味啊</h2>
+            </a>
+            <p class="card-text"><p><img alt="" src="http://i.imgur.com/MasvHl.jpg" /></p>
+<p><a href="http://www.etsy.com/listing/96964388/green-led-faucet-valve-night-light">etsy上边</a>有卖</p>
+<p>还有这个</p>
+<iframe width="640" height="360" src="http://www.youtube.com/embed/YyZ7tOPbrOo?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
+
+<p>感觉有点像jet engine。。</p>
+<p>voa <a href="http://www.reddit.com/r/pics/comments/114ye1/this_is_the_coolest_nightlamp_ive_ever_seen/">1</a>, <a href="http://www.reddit.com/r/shutupandtakemymoney/comments/115gsp/sweetest_nightlight_ever_xpost_from_rpics_pic_only/">2</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-10-08T21:05:00+00:00">2012-10-08</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/33020945266"  rel="bookmark" >
+              <h2 class="card-title">（我的）信息危机</h2>
+            </a>
+            <p class="card-text"><p>难得夜深人静反思一下。我个人每天12个小时在网上闲逛，自个觉得我现在有几个值得警惕的危险趋势：</p>
+<ol>
+<li>
+<p>输入越来越多，输出越来越少。创作能力退化。 <br />
+个人觉得消费信息文化这个风气是由教主Steve Jobs带来的，以iPad为代表的纯内容消费平台给大家带来的各种使用的便利和享受的同时，也剥夺了一项至关重要的权利——创作和生产。 <br />
+和PC相比，你既可以在上边消磨时光，但同时也可以用来当作生产力工具。我个人觉得PC平台是一种输入输出的平衡 <br />
+而iPad这类平台不一样，这货带来的风气，就是一种consumer culture。在iPad上外接键盘打字都十分痛苦和不友好。你在上边能做的就是消费弱智游戏，消费视频，消费小清新照片。Android似乎友好一点，甚至android上直接编写android程序。办公什么的也有可行性，但是这也最多是先驱者的尝试和号称而已。 <br />
+这个问题的各种衍生也深深影响了互联网。我觉得可以叫做consumerism。君不见各大博客、BBS、微博上，除了喷子就是小白。很少有人积极去invent有意义和价值东西了。</p>
+</li>
+<li>
+<p>过多信息时效化。（我承认我现在患“<strong>语体教</strong>”病了，我很难找到一个词语来形容这个东西）具体的描述就是，人们更加关心失效性很快的东西，更加耸人听闻的东西，和心理落差更大的东西，而偏向忽略那些永恒的东西。比如关心某软件、ROM、OS的新特性，而不去关心整个业界的完备推进程度。就举一个简单例子。Steve …</p></li></ol></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-10-06T14:31:00+00:00">2012-10-06</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/32187066617"  rel="bookmark" >
+              <h2 class="card-title">水果教向物理开炮了</h2>
+            </a>
+            <p class="card-text"><iframe width="640" height="360" src="http://www.youtube.com/embed/V4IRsCjMqdI?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
+
+<p>这广告做得，尼玛跟脑白金差不多了。</p>
+<p><a href="http://www.reddit.com/r/Physics/comments/10dbbt/the_iphone_5_commercial_this_is_insulting_right/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-09-24T03:03:46+00:00">2012-09-24</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+    </main>
+    <nav class="pagination-nav side-padding">
+<a href="/index.13.html" class="pagination-newer">&lt; Newer Posts</a><a href="/index.15.html" class="pagination-older">Older Posts &gt;</a>    </nav>
+
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+</html>

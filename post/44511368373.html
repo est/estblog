@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>Python 3.3很多激动人心的新特性啊 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Python 3.3很多激动人心的新特性啊" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Python 3.3很多激动人心的新特性啊</h2>
+    <p class="post-date">Posted <time datetime="2013-03-03T21:46:00+00:00">2013-03-03</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>最近粗浅把玩了一下libev，感受颇深</p>
+<p>首先是瞻仰了libuv python binding - pyuv 作者 @saghul 的博客</p>
+<p>特别是<a href="http://code.saghul.net/index.php/2013/02/04/how-do-event-loops-work-in-python/">这个slides</a>很是学习了点东西</p>
+<p><img alt="" src="/images/tumblr/44511368373.png" /></p>
+<p>里边还提到，Twisted, Tornade和Gevent都有其对应libuv实现了。猛啊。</p>
+<p>其中一个重要的东西，就是 Python 3.3里边的<a href="http://www.python.org/dev/peps/pep-3156/">PEP-3156</a>，和其参考实现<a href="https://code.google.com/p/tulip/">Tulip</a>，基于Pyuv的也有个实现叫<a href="https://github.com/saghul/rose">Rose</a>。</p>
+<p>可以大胆估计，PEP 3156是以后最重要的Python标准接口之一了。其重要性超过PEP 333 WSGI</p>
+<p>libuv和 Boost.ASIO的比较<a href="http://stackoverflow.com/questions/11423426/">看这里</a>：</p>
+<pre><code>                         libuv          Boost
+Event Loop:              yes            Asio
+Threadpool:              yes            Asio + Threads
+Threading:              
+  Threads:               yes            Threads
+  Synchronization:       yes            Threads
+File System Operations:
+  Synchronous:           yes            FileSystem
+  Asynchronous:          yes            Asio + Filesystem
+Timers:                  yes            Asio
+Scatter/Gather I/O[1]:    no             Asio
+Networking:
+  ICMP:                  no             Asio
+  DNS Resolution:        async-only     Asio
+  SSL:                   no             Asio
+  TCP:                   async-only     Asio
+  UDP:                   async-only     Asio
+Signal:
+  Handling:              yes            Asio
+  Sending:               yes            no
+IPC:
+  UNIX Domain Sockets:   yes            Asio
+  Windows Named Pipe:    yes            Asio
+Process Management:
+  Detaching:             yes            Process[2]
+  I/O Pipe:              yes            Process[2]
+  Spawning:              yes            Process[2]
+System Queries:
+  CPU:                   yes            no
+  Network Interface:     yes            no
+TTY:                     yes            no
+Shared Library Loading:  yes            Extension[3]
+</code></pre>
+<p>Python 3.3还支持socket.sendmsg() 和 socket.recvmsg() ，这是两个碉堡了的Vector IO (Scatter/Gather I/O) 函数。POSIX里边writev() 和 readv() 这两个 都是基于他们实现。sendmsg() 还有个<a href="http://docs.python.org/dev/library/socket.html#socket.socket.recvmsg">非常诡异的功能</a></p>
+<blockquote>
+<p>On some systems, sendmsg() and recvmsg() can be used to pass file descriptors between processes over an AF_UNIX socket</p>
+</blockquote>
+<p>这个其实可以用来轻松实现跨进程 IPC 机制。系统原生支持。</p>
+<p>是不是 mpi4py 可以去死了呢？</p>
+<p>python 3.3还支持 <a href="http://docs.python.org/dev/library/concurrent.futures.html">concurrent.futures</a> ，自带virtualenv，yield.from，dict共享内存，支持lzma/xz等等好玩的特性。</p>
+<p>其中Unicode改进：</p>
+<p>ASCII字符占用1个字节，BMP范围（也就包括了CJK文字）占用2字节，其他Unicode占用4字节。。碉堡了！</p>
+<p>作为一个Python 2.7忠实用户，有点动心了！</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/44511368373';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

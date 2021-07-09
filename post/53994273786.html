@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>GNURadio, AirProbe, libosmocore for OS X 10.8 Mountain Lion - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="GNURadio, AirProbe, libosmocore for OS X 10.8 Mountain Lion" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">GNURadio, AirProbe, libosmocore for OS X 10.8 Mountain Lion</h2>
+    <p class="post-date">Posted <time datetime="2013-06-27T01:35:04+00:00">2013-06-27</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>First you need to <a href="http://mxcl.github.io/homebrew/">install Homebrew</a></p>
+<p>Then you need to <a href="http://stackoverflow.com/a/9329325/41948">install GCC from XCode "command line tools"</a></p>
+<p><img alt="" src="http://i.stack.imgur.com/SMQvZ.jpg" /></p>
+<pre><code>$ brew install gfortran umfpack swig
+$ sudo pip install  numpy Cheetah lxml scipy matplotlib
+$ brew tap ksnieck/homebrew-gnuradio
+$ cd /usr/local/Library/Taps/
+$ mv ksnieck-gnuradio/ titanous/homebrew-gnuradio
+$ brew install gnuradio
+$ brew install rtlsdr gr-osmosdr gr-baz --HEAD
+</code></pre>
+<p>There's like a shitton of dependency for GNURadio, you'll possibly need a fast Internet connection or wait.</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/53994273786';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

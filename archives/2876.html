@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>Ruby写的可以旋转的Quine - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Ruby写的可以旋转的Quine" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Ruby写的可以旋转的Quine</h2>
+    <p class="post-date">Posted <time datetime="2010-09-07T01:40:17+00:00">2010-09-07</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>日本人果然变态啊，用Ruby写了这么一段代码：</p>
+
+<pre><code>v=0000;eval$s=%q~d=%!^Lcf&lt;LK8,                  _@7gj*LJ=c5nM)Tp1g0%Xv.,S[&lt;&gt;YoP
+4ZojjV)O&gt;qIH1/n[|2yE[&gt;:ieC       &quot;%.#%  :::##&quot;       97N-A&amp;Kj_K_&gt;&lt;wS5rtWk@*a+Y5
+yH?b[F^e7C/56j|pmRe+:)B     &quot;##%      ::##########&quot;     O98(Zh)&#39;Iof*nm.,$C5Nyt=
+PPu01Avw^&lt;IiQ=5$&#39;D-y?    &quot;##:         ###############&quot;    g6`YT+qLw9k^ch|K&#39;),tc
+6ygIL8xI#LNz3v}T=4W    &quot;#            #.   .####:#######&quot;    lL27FZ0ij)7TQCI)P7u
+}RT5-iJbbG5P-DHB&lt;.   &quot;              ##### # :############&quot;   R,YvZ_rnv6ky-G+4U&#39;
+$*are@b4U351Q-ug5   &quot;              #######################&quot;   00x8RR%`Om7VDp4M5
+PFixrPvl&amp;&lt;p[]1IJ   &quot;              ############:####  %#####&quot;   EGgDt8Lm#;bc4zS^
+y]0`_PstfUxOC(q   &quot;              .#############:##%   .##  .&quot;   /,}.YOIFj(k&amp;q_V
+zcaAi?]^lCVYp!;  &quot; %%            .################.     #.   &quot;  ;s=&quot;v=%04o;ev&quot;%
+(;v=(v-($*+[45,  &quot;:####:          :##############%       :   &quot;  ])[n=0].to_i;)%
+360)+&quot;al$s=%q#{  &quot;%######.              #########            &quot;  ;;&quot;%c&quot;%126+$s&lt;&lt;
+126}&quot;;d.gsub!(/  &quot;##########.           #######%             &quot;  |\s|&quot;.*&quot;/,&quot;&quot;);;
+require&quot;zlib&quot;||  &quot;###########           :######.             &quot;  ;d=d.unpack&quot;C*&quot;
+d.map{|c|n=(n||  &quot;:#########:           .######: .           &quot;  )*90+(c-2)%91};
+e=[&quot;%x&quot;%n].pack   &quot; :#######%           :###### #:          &quot;   &amp;&amp;&quot;H*&quot;;e=Zlib::
+Inflate.inflate(   &quot;  ######%           .####% ::          &quot;   &amp;&amp;e).unpack(&quot;b*&quot;
+)[0];22.times{|y|   &quot;  ####%             %###             &quot;   ;w=(Math.sqrt(1-(
+(y*2.0-21)/22)**(;   &quot; .###:             .#%             &quot;   ;2))*23).floor;(w*
+2-1).times{|x|u=(e+    &quot; %##                           &quot;    )[y*z=360,z]*2;u=u[
+90*x/w+v+90,90/w];s[(    &quot; #.                        &quot;    ;y*80)+120-w+x]=(&quot;&quot;&lt;&lt;
+32&lt;&lt;&quot;.:%#&quot;)[4*u.count((     &quot; .                   &quot;     ;&quot;0&quot;))/u.size]}};;puts\
+s+&quot;;_ The Qlobe#{&quot; &quot;*18+ (       &quot;#  :#######&quot;       ;&quot;Copyright(C).Yusuke End\
+oh, 2010&quot;)}&quot;;exit~;_ The Qlobe                  Copyright(C).Yusuke Endoh, 2010
+</code></pre>
+
+<p>运行后得到</p>
+
+<pre><code>v=0416;eval$s=%q~d=%!^Lcf&lt;LK8,                  _@7gj*LJ=c5nM)Tp1g0%Xv.,S[&lt;&gt;YoP
+4ZojjV)O&gt;qIH1/n[|2yE[&gt;:ieC       &quot;.#####%.#% &quot;       97N-A&amp;Kj_K_&gt;&lt;wS5rtWk@*a+Y5
+yH?b[F^e7C/56j|pmRe+:)B     &quot;    .#####%##%      :&quot;     O98(Zh)&#39;Iof*nm.,$C5Nyt=
+PPu01Avw^&lt;IiQ=5$&#39;D-y?    &quot;       #####%###:         #&quot;    g6`YT+qLw9k^ch|K&#39;),tc
+6ygIL8xI#LNz3v}T=4W    &quot;        %########            #.&quot;    lL27FZ0ij)7TQCI)P7u
+}RT5-iJbbG5P-DHB&lt;.   &quot;          :#######              ###&quot;   R,YvZ_rnv6ky-G+4U&#39;
+$*are@b4U351Q-ug5   &quot;            ###:  :              ####&quot;   00x8RR%`Om7VDp4M5
+PFixrPvl&amp;&lt;p[]1IJ   &quot;              %#...               #####&quot;   EGgDt8Lm#;bc4zS^
+y]0`_PstfUxOC(q   &quot;                %###               .#####&quot;   /,}.YOIFj(k&amp;q_V
+zcaAi?]^lCVYp!;  &quot;                    :. %%            .#####&quot;  ;s=&quot;v=%04o;ev&quot;%
+(;v=(v-($*+[45,  &quot;                      :####:          :####&quot;  ])[n=0].to_i;)%
+360)+&quot;al$s=%q#{  &quot;                      %######.             &quot;  ;;&quot;%c&quot;%126+$s&lt;&lt;
+126}&quot;;d.gsub!(/  &quot;                      ##########.          &quot;  |\s|&quot;.*&quot;/,&quot;&quot;);;
+require&quot;zlib&quot;||  &quot;                      ###########          &quot;  ;d=d.unpack&quot;C*&quot;
+d.map{|c|n=(n||  &quot;                      :#########:          &quot;  )*90+(c-2)%91};
+e=[&quot;%x&quot;%n].pack   &quot;                      :#######%          &quot;   &amp;&amp;&quot;H*&quot;;e=Zlib::
+Inflate.inflate(   &quot;                      ######%          &quot;   &amp;&amp;e).unpack(&quot;b*&quot;
+)[0];22.times{|y|   &quot;                     ####%           &quot;   ;w=(Math.sqrt(1-(
+(y*2.0-21)/22)**(;   &quot;                   .###:           &quot;   ;2))*23).floor;(w*
+2-1).times{|x|u=(e+    &quot;                 %##           &quot;    )[y*z=360,z]*2;u=u[
+90*x/w+v+90,90/w];s[(    &quot;               #.          &quot;    ;y*80)+120-w+x]=(&quot;&quot;&lt;&lt;
+32&lt;&lt;&quot;.:%#&quot;)[4*u.count((     &quot;            .        &quot;     ;&quot;0&quot;))/u.size]}};;puts\
+s+&quot;;_ The Qlobe#{&quot; &quot;*18+ (       &quot; .#####  :#&quot;       ;&quot;Copyright(C).Yusuke End\
+oh, 2010&quot;)}&quot;;exit~;_ The Qlobe                  Copyright(C).Yusuke Endoh, 2010
+</code></pre>
+
+<p>再运行</p>
+
+<pre><code>v=0341;eval$s=%q~d=%!^Lcf&lt;LK8,                  _@7gj*LJ=c5nM)Tp1g0%Xv.,S[&lt;&gt;YoP
+4ZojjV)O&gt;qIH1/n[|2yE[&gt;:ieC       &quot;#% .#####%.&quot;       97N-A&amp;Kj_K_&gt;&lt;wS5rtWk@*a+Y5
+yH?b[F^e7C/56j|pmRe+:)B     &quot; :        %#####%##. &quot;     O98(Zh)&#39;Iof*nm.,$C5Nyt=
+PPu01Avw^&lt;IiQ=5$&#39;D-y?    &quot;              #####%###:   &quot;    g6`YT+qLw9k^ch|K&#39;),tc
+6ygIL8xI#LNz3v}T=4W    &quot;                %########      &quot;    lL27FZ0ij)7TQCI)P7u
+}RT5-iJbbG5P-DHB&lt;.   &quot;                   :#######        &quot;   R,YvZ_rnv6ky-G+4U&#39;
+$*are@b4U351Q-ug5   &quot;                     :###   :        &quot;   00x8RR%`Om7VDp4M5
+PFixrPvl&amp;&lt;p[]1IJ   &quot;                        %#...          &quot;   EGgDt8Lm#;bc4zS^
+y]0`_PstfUxOC(q   &quot;                          .###:          &quot;   /,}.YOIFj(k&amp;q_V
+zcaAi?]^lCVYp!;  &quot;                               :. %%       &quot;  ;s=&quot;v=%04o;ev&quot;%
+(;v=(v-($*+[45,  &quot;                                 :####:    &quot;  ])[n=0].to_i;)%
+360)+&quot;al$s=%q#{  &quot;                                 %######.  &quot;  ;;&quot;%c&quot;%126+$s&lt;&lt;
+126}&quot;;d.gsub!(/  &quot;                                 ##########&quot;  |\s|&quot;.*&quot;/,&quot;&quot;);;
+require&quot;zlib&quot;||  &quot;%                                ##########&quot;  ;d=d.unpack&quot;C*&quot;
+d.map{|c|n=(n||  &quot;                                 :#########&quot;  )*90+(c-2)%91};
+e=[&quot;%x&quot;%n].pack   &quot;                                 ########&quot;   &amp;&amp;&quot;H*&quot;;e=Zlib::
+Inflate.inflate(   &quot;#.                              ######%&quot;   &amp;&amp;e).unpack(&quot;b*&quot;
+)[0];22.times{|y|   &quot;##                            :####. &quot;   ;w=(Math.sqrt(1-(
+(y*2.0-21)/22)**(;   &quot;#.                          .###:  &quot;   ;2))*23).floor;(w*
+2-1).times{|x|u=(e+    &quot;%    .                   %##   &quot;    )[y*z=360,z]*2;u=u[
+90*x/w+v+90,90/w];s[(    &quot;   .                  #.   &quot;    ;y*80)+120-w+x]=(&quot;&quot;&lt;&lt;
+32&lt;&lt;&quot;.:%#&quot;)[4*u.count((     &quot;                 :   &quot;     ;&quot;0&quot;))/u.size]}};;puts\
+s+&quot;;_ The Qlobe#{&quot; &quot;*18+ (       &quot;#.  .##### &quot;       ;&quot;Copyright(C).Yusuke End\
+oh, 2010&quot;)}&quot;;exit~;_ The Qlobe                  Copyright(C).Yusuke Endoh, 2010
+</code></pre>
+
+<p>再运行一次</p>
+
+<pre><code>v=0264;eval$s=%q~d=%!^Lcf&lt;LK8,                  _@7gj*LJ=c5nM)Tp1g0%Xv.,S[&lt;&gt;YoP
+4ZojjV)O&gt;qIH1/n[|2yE[&gt;:ieC       &quot;####% .####&quot;       97N-A&amp;Kj_K_&gt;&lt;wS5rtWk@*a+Y5
+yH?b[F^e7C/56j|pmRe+:)B     &quot;#####  :       .#####&quot;     O98(Zh)&#39;Iof*nm.,$C5Nyt=
+PPu01Avw^&lt;IiQ=5$&#39;D-y?    &quot;######.              #####%&quot;    g6`YT+qLw9k^ch|K&#39;),tc
+6ygIL8xI#LNz3v}T=4W    &quot;####:  .                %######&quot;    lL27FZ0ij)7TQCI)P7u
+}RT5-iJbbG5P-DHB&lt;.   &quot;####  .                     :######&quot;   R,YvZ_rnv6ky-G+4U&#39;
+$*are@b4U351Q-ug5   &quot;####%                          ###:  &quot;   00x8RR%`Om7VDp4M5
+PFixrPvl&amp;&lt;p[]1IJ   &quot;###                               %#...&quot;   EGgDt8Lm#;bc4zS^
+y]0`_PstfUxOC(q   &quot;##  ..                               %###&quot;   /,}.YOIFj(k&amp;q_V
+zcaAi?]^lCVYp!;  &quot;:#.  .                                    :&quot;  ;s=&quot;v=%04o;ev&quot;%
+(;v=(v-($*+[45,  &quot;:   : :                                    &quot;  ])[n=0].to_i;)%
+360)+&quot;al$s=%q#{  &quot;% %#:                                      &quot;  ;;&quot;%c&quot;%126+$s&lt;&lt;
+126}&quot;;d.gsub!(/  &quot;#::#.:  %#%                                &quot;  |\s|&quot;.*&quot;/,&quot;&quot;);;
+require&quot;zlib&quot;||  &quot;  :      :#%                               &quot;  ;d=d.unpack&quot;C*&quot;
+d.map{|c|n=(n||  &quot;       :% :                                &quot;  )*90+(c-2)%91};
+e=[&quot;%x&quot;%n].pack   &quot;     %###%%                              &quot;   &amp;&amp;&quot;H*&quot;;e=Zlib::
+Inflate.inflate(   &quot;   ########.                           &quot;   &amp;&amp;e).unpack(&quot;b*&quot;
+)[0];22.times{|y|   &quot;   ########.                         &quot;   ;w=(Math.sqrt(1-(
+(y*2.0-21)/22)**(;   &quot;   ##:%###.                        &quot;   ;2))*23).floor;(w*
+2-1).times{|x|u=(e+    &quot;       %%    .                 &quot;    )[y*z=360,z]*2;u=u[
+90*x/w+v+90,90/w];s[(    &quot;          .                &quot;    ;y*80)+120-w+x]=(&quot;&quot;&lt;&lt;
+32&lt;&lt;&quot;.:%#&quot;)[4*u.count((     &quot;                     &quot;     ;&quot;0&quot;))/u.size]}};;puts\
+s+&quot;;_ The Qlobe#{&quot; &quot;*18+ (       &quot;####.  .###&quot;       ;&quot;Copyright(C).Yusuke End\
+oh, 2010&quot;)}&quot;;exit~;_ The Qlobe                  Copyright(C).Yusuke Endoh, 2010
+</code></pre>
+
+<p>再一次：</p>
+
+<pre><code>v=0207;eval$s=%q~d=%!^Lcf&lt;LK8,                  _@7gj*LJ=c5nM)Tp1g0%Xv.,S[&lt;&gt;YoP
+4ZojjV)O&gt;qIH1/n[|2yE[&gt;:ieC       &quot;#######% .#&quot;       97N-A&amp;Kj_K_&gt;&lt;wS5rtWk@*a+Y5
+yH?b[F^e7C/56j|pmRe+:)B     &quot;##########: :        &quot;     O98(Zh)&#39;Iof*nm.,$C5Nyt=
+PPu01Avw^&lt;IiQ=5$&#39;D-y?    &quot;#############.             &quot;    g6`YT+qLw9k^ch|K&#39;),tc
+6ygIL8xI#LNz3v}T=4W    &quot;############:  .               &quot;    lL27FZ0ij)7TQCI)P7u
+}RT5-iJbbG5P-DHB&lt;.   &quot;#############  .                   &quot;   R,YvZ_rnv6ky-G+4U&#39;
+$*are@b4U351Q-ug5   &quot;##############                       &quot;   00x8RR%`Om7VDp4M5
+PFixrPvl&amp;&lt;p[]1IJ   &quot;#  %#########                          &quot;   EGgDt8Lm#;bc4zS^
+y]0`_PstfUxOC(q   &quot;    %#:  %##:  :                         &quot;   /,}.YOIFj(k&amp;q_V
+zcaAi?]^lCVYp!;  &quot;     #.   .:#.  .                          &quot;  ;s=&quot;v=%04o;ev&quot;%
+(;v=(v-($*+[45,  &quot;      :    :   : :                         &quot;  ])[n=0].to_i;)%
+360)+&quot;al$s=%q#{  &quot;          :% %#:                           &quot;  ;;&quot;%c&quot;%126+$s&lt;&lt;
+126}&quot;;d.gsub!(/  &quot;           #::#.:  %#%                     &quot;  |\s|&quot;.*&quot;/,&quot;&quot;);;
+require&quot;zlib&quot;||  &quot;             :      :#%                    &quot;  ;d=d.unpack&quot;C*&quot;
+d.map{|c|n=(n||  &quot;                  :% :                     &quot;  )*90+(c-2)%91};
+e=[&quot;%x&quot;%n].pack   &quot;               .###%#                    &quot;   &amp;&amp;&quot;H*&quot;;e=Zlib::
+Inflate.inflate(   &quot;             ########.                 &quot;   &amp;&amp;e).unpack(&quot;b*&quot;
+)[0];22.times{|y|   &quot;            :########                &quot;   ;w=(Math.sqrt(1-(
+(y*2.0-21)/22)**(;   &quot;            ##:%###.               &quot;   ;2))*23).floor;(w*
+2-1).times{|x|u=(e+    &quot;               %%    .         &quot;    )[y*z=360,z]*2;u=u[
+90*x/w+v+90,90/w];s[(    &quot;                 .         &quot;    ;y*80)+120-w+x]=(&quot;&quot;&lt;&lt;
+32&lt;&lt;&quot;.:%#&quot;)[4*u.count((     &quot;                     &quot;     ;&quot;0&quot;))/u.size]}};;puts\
+s+&quot;;_ The Qlobe#{&quot; &quot;*18+ (       &quot;#######.  .&quot;       ;&quot;Copyright(C).Yusuke End\
+oh, 2010&quot;)}&quot;;exit~;_ The Qlobe                  Copyright(C).Yusuke Endoh, 2010
+</code></pre>
+
+<p>继续Quine</p>
+
+<pre><code>v=0132;eval$s=%q~d=%!^Lcf&lt;LK8,                  _@7gj*LJ=c5nM)Tp1g0%Xv.,S[&lt;&gt;YoP
+4ZojjV)O&gt;qIH1/n[|2yE[&gt;:ieC       &quot;:::#######%&quot;       97N-A&amp;Kj_K_&gt;&lt;wS5rtWk@*a+Y5
+yH?b[F^e7C/56j|pmRe+:)B     &quot;################  :  &quot;     O98(Zh)&#39;Iof*nm.,$C5Nyt=
+PPu01Avw^&lt;IiQ=5$&#39;D-y?    &quot;####################.      &quot;    g6`YT+qLw9k^ch|K&#39;),tc
+6ygIL8xI#LNz3v}T=4W    &quot;  .####:############:  .       &quot;    lL27FZ0ij)7TQCI)P7u
+}RT5-iJbbG5P-DHB&lt;.   &quot;# # :#################  .          &quot;   R,YvZ_rnv6ky-G+4U&#39;
+$*are@b4U351Q-ug5   &quot;#######################%             &quot;   00x8RR%`Om7VDp4M5
+PFixrPvl&amp;&lt;p[]1IJ   &quot;######:####  %#########                &quot;   EGgDt8Lm#;bc4zS^
+y]0`_PstfUxOC(q   &quot;#######:##%   .##  .###  ..              &quot;   /,}.YOIFj(k&amp;q_V
+zcaAi?]^lCVYp!;  &quot;##########.     #.   .:#.  .               &quot;  ;s=&quot;v=%04o;ev&quot;%
+(;v=(v-($*+[45,  &quot;#########%       :    :   : :              &quot;  ])[n=0].to_i;)%
+360)+&quot;al$s=%q#{  &quot;#########            :% %#:                &quot;  ;;&quot;%c&quot;%126+$s&lt;&lt;
+126}&quot;;d.gsub!(/  &quot;#######%              #::#.:  %#%          &quot;  |\s|&quot;.*&quot;/,&quot;&quot;);;
+require&quot;zlib&quot;||  &quot;:######.                :      :#%         &quot;  ;d=d.unpack&quot;C*&quot;
+d.map{|c|n=(n||  &quot;.######: .                   :% :          &quot;  )*90+(c-2)%91};
+e=[&quot;%x&quot;%n].pack   &quot;:###### #:                %###%%         &quot;   &amp;&amp;&quot;H*&quot;;e=Zlib::
+Inflate.inflate(   &quot;.####% ::              ########.       &quot;   &amp;&amp;e).unpack(&quot;b*&quot;
+)[0];22.times{|y|   &quot; %###                 ########.      &quot;   ;w=(Math.sqrt(1-(
+(y*2.0-21)/22)**(;   &quot; .#%                 ##:%###.      &quot;   ;2))*23).floor;(w*
+2-1).times{|x|u=(e+    &quot;                       %%    . &quot;    )[y*z=360,z]*2;u=u[
+90*x/w+v+90,90/w];s[(    &quot;                        .  &quot;    ;y*80)+120-w+x]=(&quot;&quot;&lt;&lt;
+32&lt;&lt;&quot;.:%#&quot;)[4*u.count((     &quot;                     &quot;     ;&quot;0&quot;))/u.size]}};;puts\
+s+&quot;;_ The Qlobe#{&quot; &quot;*18+ (       &quot;##########.&quot;       ;&quot;Copyright(C).Yusuke End\
+</code></pre>
+
+<p>再运行，继续旋转</p>
+
+<pre><code>oh, 2010&quot;)}&quot;;exit~;_ The Qlobe                  Copyright(C).Yusuke Endoh, 2010
+v=0055;eval$s=%q~d=%!^Lcf&lt;LK8,                  _@7gj*LJ=c5nM)Tp1g0%Xv.,S[&lt;&gt;YoP
+4ZojjV)O&gt;qIH1/n[|2yE[&gt;:ieC       &quot;%  :::#####&quot;       97N-A&amp;Kj_K_&gt;&lt;wS5rtWk@*a+Y5
+yH?b[F^e7C/56j|pmRe+:)B     &quot;   .:################&quot;     O98(Zh)&#39;Iof*nm.,$C5Nyt=
+PPu01Avw^&lt;IiQ=5$&#39;D-y?    &quot;     ######################&quot;    g6`YT+qLw9k^ch|K&#39;),tc
+6ygIL8xI#LNz3v}T=4W    &quot;     #.   .####:############:  &quot;    lL27FZ0ij)7TQCI)P7u
+}RT5-iJbbG5P-DHB&lt;.   &quot;     ##### # :#################  . &quot;   R,YvZ_rnv6ky-G+4U&#39;
+$*are@b4U351Q-ug5   &quot;    :############################    &quot;   00x8RR%`Om7VDp4M5
+PFixrPvl&amp;&lt;p[]1IJ   &quot;    ############:####  %#########      &quot;   EGgDt8Lm#;bc4zS^
+y]0`_PstfUxOC(q   &quot;    %############:###    %#:  %##:  :    &quot;   /,}.YOIFj(k&amp;q_V
+zcaAi?]^lCVYp!;  &quot;    .################.     #.   .:#.  .    &quot;  ;s=&quot;v=%04o;ev&quot;%
+(;v=(v-($*+[45,  &quot;     :##############%       :    :   : :   &quot;  ])[n=0].to_i;)%
+360)+&quot;al$s=%q#{  &quot;           #########            :% %#:     &quot;  ;;&quot;%c&quot;%126+$s&lt;&lt;
+126}&quot;;d.gsub!(/  &quot;           #######%              #::#.:  %#&quot;  |\s|&quot;.*&quot;/,&quot;&quot;);;
+require&quot;zlib&quot;||  &quot;           :######.                :      :&quot;  ;d=d.unpack&quot;C*&quot;
+d.map{|c|n=(n||  &quot;           .######: .                   :% &quot;  )*90+(c-2)%91};
+e=[&quot;%x&quot;%n].pack   &quot;           ######%:#                .###%&quot;   &amp;&amp;&quot;H*&quot;;e=Zlib::
+Inflate.inflate(   &quot;          .####% ::              ######&quot;   &amp;&amp;e).unpack(&quot;b*&quot;
+)[0];22.times{|y|   &quot;          .###:                :#####&quot;   ;w=(Math.sqrt(1-(
+(y*2.0-21)/22)**(;   &quot;          .#%                 ##:%#&quot;   ;2))*23).floor;(w*
+2-1).times{|x|u=(e+    &quot;                               &quot;    )[y*z=360,z]*2;u=u[
+90*x/w+v+90,90/w];s[(    &quot;                           &quot;    ;y*80)+120-w+x]=(&quot;&quot;&lt;&lt;
+32&lt;&lt;&quot;.:%#&quot;)[4*u.count((     &quot;                     &quot;     ;&quot;0&quot;))/u.size]}};;puts\
+s+&quot;;_ The Qlobe#{&quot; &quot;*18+ (       &quot;:##########&quot;       ;&quot;Copyright(C).Yusuke End\
+oh, 2010&quot;)}&quot;;exit~;_ The Qlobe                  Copyright(C).Yusuke Endoh, 2010
+</code></pre>
+
+<p>然后就得到了第一次运行的代码：</p>
+
+<pre><code>v=0000;eval$s=%q~d=%!^Lcf&lt;LK8,                  _@7gj*LJ=c5nM)Tp1g0%Xv.,S[&lt;&gt;YoP
+4ZojjV)O&gt;qIH1/n[|2yE[&gt;:ieC       &quot;%.#%  :::##&quot;       97N-A&amp;Kj_K_&gt;&lt;wS5rtWk@*a+Y5
+yH?b[F^e7C/56j|pmRe+:)B     &quot;##%      ::##########&quot;     O98(Zh)&#39;Iof*nm.,$C5Nyt=
+PPu01Avw^&lt;IiQ=5$&#39;D-y?    &quot;##:         ###############&quot;    g6`YT+qLw9k^ch|K&#39;),tc
+6ygIL8xI#LNz3v}T=4W    &quot;#            #.   .####:#######&quot;    lL27FZ0ij)7TQCI)P7u
+}RT5-iJbbG5P-DHB&lt;.   &quot;              ##### # :############&quot;   R,YvZ_rnv6ky-G+4U&#39;
+$*are@b4U351Q-ug5   &quot;              #######################&quot;   00x8RR%`Om7VDp4M5
+PFixrPvl&amp;&lt;p[]1IJ   &quot;              ############:####  %#####&quot;   EGgDt8Lm#;bc4zS^
+y]0`_PstfUxOC(q   &quot;              .#############:##%   .##  .&quot;   /,}.YOIFj(k&amp;q_V
+zcaAi?]^lCVYp!;  &quot; %%            .################.     #.   &quot;  ;s=&quot;v=%04o;ev&quot;%
+(;v=(v-($*+[45,  &quot;:####:          :##############%       :   &quot;  ])[n=0].to_i;)%
+360)+&quot;al$s=%q#{  &quot;%######.              #########            &quot;  ;;&quot;%c&quot;%126+$s&lt;&lt;
+126}&quot;;d.gsub!(/  &quot;##########.           #######%             &quot;  |\s|&quot;.*&quot;/,&quot;&quot;);;
+require&quot;zlib&quot;||  &quot;###########           :######.             &quot;  ;d=d.unpack&quot;C*&quot;
+d.map{|c|n=(n||  &quot;:#########:           .######: .           &quot;  )*90+(c-2)%91};
+e=[&quot;%x&quot;%n].pack   &quot; :#######%           :###### #:          &quot;   &amp;&amp;&quot;H*&quot;;e=Zlib::
+Inflate.inflate(   &quot;  ######%           .####% ::          &quot;   &amp;&amp;e).unpack(&quot;b*&quot;
+)[0];22.times{|y|   &quot;  ####%             %###             &quot;   ;w=(Math.sqrt(1-(
+(y*2.0-21)/22)**(;   &quot; .###:             .#%             &quot;   ;2))*23).floor;(w*
+2-1).times{|x|u=(e+    &quot; %##                           &quot;    )[y*z=360,z]*2;u=u[
+90*x/w+v+90,90/w];s[(    &quot; #.                        &quot;    ;y*80)+120-w+x]=(&quot;&quot;&lt;&lt;
+32&lt;&lt;&quot;.:%#&quot;)[4*u.count((     &quot; .                   &quot;     ;&quot;0&quot;))/u.size]}};;puts\
+s+&quot;;_ The Qlobe#{&quot; &quot;*18+ (       &quot;#  :#######&quot;       ;&quot;Copyright(C).Yusuke End\
+oh, 2010&quot;)}&quot;;exit~;_ The Qlobe                  Copyright(C).Yusuke Endoh, 2010
+</code></pre>
+
+<p><a href="http://news.ycombinator.com/item?id=1667093">via</a></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/2876';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

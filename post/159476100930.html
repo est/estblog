@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>RESTful is bad and you should feel bad - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="RESTful is bad and you should feel bad" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link active">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">RESTful is bad and you should feel bad</h2>
+    <p class="post-date">Posted <time datetime="2017-04-11T23:10:11+00:00">2017-04-11</time> | <span>stderr</span></p>
+  </header>
+
+  
+  <p>From <a href="https://www.v2ex.com/t/354273">this</a> thread</p>
+<p>What's wrong with</p>
+<pre><code>GET     /users/                -----&gt;  `list.users` 
+GET     /users/:id/            -----&gt;  `retrieve.users`
+POST    /users/                -----&gt;  `create.users`
+PUT     /users/:id/password/   -----&gt;  `replace.users`
+PATCH   /users/:id/            -----&gt;  `update.users`
+DELETE  /users/:id/            -----&gt;  `destroy.users`
+</code></pre>
+<p>You will find these URL super ugly and annoying when doing log analysis, you have to monkey craft <code>regexp</code>s to truncate the useless <code>:id</code> part from the url so your aggregator would work properly.</p>
+<p>I prefer simply use <code>GET</code> for read and <code>POST</code> for writes. Like this</p>
+<pre><code>GET /users/list
+GET /users/retrieve
+POST /users/create
+POST /users/update
+POST /users/destroy
+</code></pre>
+<p>It's clean, it's concise, it works everywhere.</p>
+<p>Fuck those obnoxious <code>OPTIONS</code> and <code>PATCH</code>.</p>
+<p>BTW who the fuck invents a <code>users.replaec()</code> functions?</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/159476100930';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

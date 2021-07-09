@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>HTML5 for TV (Big screen) - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="HTML5 for TV (Big screen)" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">HTML5 for TV (Big screen)</h2>
+    <p class="post-date">Posted <time datetime="2013-01-29T03:34:05+00:00">2013-01-29</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>看到<a href="http://weibo.com/1455643221/zgI6wA2AP">一则微博</a></p>
+<blockquote>
+<p>@刘兴亮<br />
+HTML5的突出优点是多设备、跨平台。“HTML5 for TV”是由美国Cable Labs牵头组成的国际性开源协作项目，为推动HTML5技术在电视终端上的应用。预计2013年会有更多的开发者投入到基于智能电视的应用开发。针对大屏的应用开发是个“富矿”。2013年，智能电视终端应用的重要特点是——跨屏，跨终端互操作。</p>
+</blockquote>
+<p>然后就跑去看了下他们的文档：</p>
+<p><a href="http://www.cablelabs.com/specifications/CL-SP-HTML5-MAP-I02-120510.pdf">http://www.cablelabs.com/specifications/CL-SP-HTML5-MAP-I02-120510.pdf</a></p>
+<p>觉得这个只是定制了一个节目厂商嵌入HTML的规范，然后他们的Tru2way®设备可以推送网页节目到电视。</p>
+<p>这个只解决了一部分问题。首先限定了是线性内容，其次格式居然限定死是MPEG-2 TS。这个H.265的时代来看真的有点匪夷所思。</p>
+<p>个人觉得最大的问题，是解决了HTML5 to TV，但是没有解决TV内嵌HTML5渲染引擎的问题。比如一个现实的问题：</p>
+<p>vod.xunlei.com 我已经大部分视频在这里看了。但是</p>
+<ul>
+<li>多媒体键盘的media key没法响应。这个是browser vendor的问题</li>
+<li>音视频内容无法DLNA到其他设备的屏幕</li>
+</ul>
+<p>如果真正要推动标准发展和技术进步，HTML5应该支持 </p>
+<pre><code>&lt;video onControlPlay="function(){}" /&gt;
+</code></pre>
+<p>这样的DOM节点。</p>
+<p>只是一些粗浅看法，可能并不完善。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/41774190853';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>恶搞javascript来对付盗链 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="恶搞javascript来对付盗链" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">恶搞javascript来对付盗链</h2>
+    <p class="post-date">Posted <time datetime="2011-01-01T12:16:13+00:00">2011-01-01</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>如果有人盗链网站的 .js ，那么你可以考虑悄悄把js替换成这个文件</p>
+
+<pre><code>(function () {
+  var Math = this.Math,
+  isNaN = this.isNaN,
+  reverse = Array.prototype.reverse,
+  toUpperCase = String.prototype.toUpperCase,
+  hasOwnProperty = Object.prototype.hasOwnProperty,
+  toString = Object.prototype.toString,
+
+  shiftMap = {
+    &#39;`&#39;: &#39;~&#39;,
+    &#39;1&#39;: &#39;!&#39;,
+    &#39;2&#39;: &#39;@&#39;,
+    &#39;3&#39;: &#39;#&#39;,
+    &#39;4&#39;: &#39;$&#39;,
+    &#39;5&#39;: &#39;%&#39;,
+    &#39;6&#39;: &#39;^&#39;,
+    &#39;7&#39;: &#39;&amp;&#39;,
+    &#39;8&#39;: &#39;*&#39;,
+    &#39;9&#39;: &#39;(&#39;,
+    &#39;-&#39;: &#39;_&#39;,
+    &#39;=&#39;: &#39;+&#39;,
+    &#39;[&#39;: &#39;{&#39;,
+    &#39;]&#39;: &#39;}&#39;,
+    &#39;\\&#39;: &#39;|&#39;,
+    &#39;;&#39;: &#39;:&#39;,
+    &#39;\&#39;&#39;: &#39;&quot;&#39;,
+    &#39;,&#39;: &#39;&lt;&#39;,
+    &#39;.&#39;: &#39;&gt;&#39;,
+    &#39;/&#39;: &#39;?&#39;
+  };
+
+  this.undefined = this.NaN = Infinity;
+
+  this.isNaN = function (value) {
+    return !(isFinite(value) || isNaN(value));
+  };
+
+  this.Math = {
+    &#39;ceil&#39;: function () {
+      return 42;
+    },
+    &#39;max&#39;: Math.min,
+    &#39;min&#39;: function () {
+      return Infinity;
+    },
+    &#39;pow&#39;: function () {
+      return &#39;pow pow pow!&#39;;
+    },
+    &#39;random&#39;: function () {
+      return String.fromCharCode(~~(Math.random() * 1e3));
+    },
+    &#39;round&#39;: Math.sqrt,
+    &#39;SQRT2&#39;: Math.SQRT1_2,
+    &#39;SQRT1_2&#39;: Math.LOG2E,
+    &#39;LOG2E&#39;: Math.LN10,
+    &#39;LN10&#39;: Math.LN2,
+    &#39;LN2&#39;: Math.E,
+    &#39;E&#39;: Math.PI,
+    &#39;PI&#39;: 3.2
+  };
+
+  Array.prototype.reverse = function () {
+    var len = this.length, item;
+    while (len--) {
+      item = this[len];
+      this[len] = typeof item === &#39;string&#39; ? reverse.apply(
+        item.split(&#39;&#39;)).join(&#39;&#39;) : (item * Math.random());
+    }
+    return reverse.apply(this);
+  };
+
+  Array.prototype.sort = function () {
+    return [4, 8, 15, 16, 23, 42];
+  };
+
+  String.prototype.toUpperCase = function () {
+    var strArr = toUpperCase.call(this).split(&#39;&#39;), i = 0;
+    for (; i &lt; strArr.length; i++) {
+      if (hasOwnProperty.call(shiftMap, strArr[i])) {
+        strArr[i] = shiftMap[strArr[i]];
+      }
+    }
+    return strArr.join(&#39;&#39;).replace(/[A-Z]/g, &quot;$&amp;\u0305&quot;);
+  };
+
+  this.JSON = {
+    &#39;parse&#39;: function () {
+      return Object.prototype;
+    },
+    &#39;stringify&#39;: function () {
+      return toString();
+    }
+  };
+}).call(this);
+</code></pre>
+
+<p>PI都能弄成3.2，太有才了！</p>
+
+<p><a href="http://news.ycombinator.com/item?id=2055565">via</a></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/3575';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

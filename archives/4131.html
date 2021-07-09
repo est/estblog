@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>WSGI的毛病 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="WSGI的毛病" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">WSGI的毛病</h2>
+    <p class="post-date">Posted <time datetime="2011-07-29T10:10:49+00:00">2011-07-29</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>来自<a href="http://lucumr.pocoo.org/2011/7/27/the-pluggable-pipedream/">pocoo.org</a></p>
+
+<ul>
+<li>'wsgi.input' is ill-specified but in practice it rarely causes troubles because a) half the servers are already extending WSGI and b) even though half the libraries are in violation it's only the edge cases that cause problems and those are rare.</li>
+<li>Headers cannot be streamed which might be a problem with responses that have a huge amount of headers.</li>
+<li>Trailers are not specified at all except for that “servers might do chunked responses”</li>
+<li>Chunked request data is totally unimplementable on top of the current specification due to the ill-specified WSGI input thing.</li>
+<li>WSGI can be hard to implement in an environment where you are running inside a server like Apache that is already doing request filtering that is outside of your control. WSGI assumes HTTP level access which inside a webserver you usually no longer have.</li>
+<li>WSGI extends CGI's environment and inherits the problem that paths are decoded which comes with loss of information.</li>
+<li>The start_response() machinery seems unnecessarily complex for the fact that barely anybody these days needs the exc_info or write() callable any more.</li>
+<li>The 'wsgi.file_wrapper' is complete garbage because it does not work in practice as soon as middlewares are involved that process responses.</li>
+</ul>
+
+<p>n年前在Web-SIG就对WSGI这玩意产生了厌恶。不支持异步服务器模型</p>
+
+<p>看来ZeroMQ+JSON才是未来架构的王道啊。</p>
+
+<p><a href="http://www.reddit.com/r/Python/comments/j28bp/wsgi_and_the_pluggable_pipe_dream/">via</a></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/4131';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

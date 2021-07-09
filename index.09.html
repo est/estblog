@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="This blog is rated&nbsp;&nbsp;R⃣ , viewer discretion is advised" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="list-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="card-container side-gutter">
+      <header class="list-header">
+        <p class="list-header-subtext">This blog is rated&nbsp;&nbsp;R⃣ , viewer discretion is advised</p>
+        <!-- <h1 class="list-header-title">Est's Blog</h1> -->
+      </header>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/50487021215"  rel="bookmark" >
+              <h2 class="card-title">get rid of example.com for Django's default site</h2>
+            </a>
+            <p class="card-text"><p>Suppose you have the following model:</p>
+<pre><code>class MyModel(models.Model):
+    def get_absolute_url(self, *args, **kwargs):
+        return '/show/%s' % self.pk
+</code></pre>
+<p>The "View on site" button on admin will always take you to example.com, which is bullshit.</p>
+<p>Even if you override it with <code>ABSOLUTE_URL_OVERRIDES</code> in settings.py.</p>
+<p>The solution is …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-05-15T05:39:29+00:00">2013-05-15</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/50388604760"  rel="bookmark" >
+              <h2 class="card-title">比奥数题还脑残的Python题</h2>
+            </a>
+            <p class="card-text"><p>下边的问题是在CPython interactive shell 里<strong>按顺序</strong>执行的，请在 下划线处  ____  填上答案。</p>
+<pre><code>&gt;&gt;&gt; x = [1, 2, 3]
+&gt;&gt;&gt; for number in x:
+...     number += 1
+... 
+&gt;&gt;&gt; print x
+__________________
+&gt;&gt;&gt; print 1 == True
+__________________
+&gt;&gt;&gt; print 0 == False
+__________________
+&gt;&gt;&gt; print 2 == True
+__________________
+&gt;&gt;&gt; item = 'x'
+&gt;&gt;&gt; print item == "y" or "z"
+___________________
+&gt;&gt;&gt; l = [1,6,4,2,3,9 …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-05-13T21:55:01+00:00">2013-05-13</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/50147253283"  rel="bookmark" >
+              <h2 class="card-title">微软到底出了什么问题</h2>
+            </a>
+            <p class="card-text"><p>最近HN上有个<a href="https://news.ycombinator.com/item?id=5688151">关于Linux 3.1内核tickless新特性</a>的讨论，然后一位微软员工，自称来自NT内核组，发个帖子抱怨微软：</p>
+<blockquote>
+<p>See, component owners are generally openly hostile to outside patches: if you're a dev, accepting an outside patch makes your <strong>lead</strong> angry (due to the need to maintain this patch and to justify in in shiproom the unplanned design change), makes <strong>test …</strong></p></blockquote></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-05-11T01:52:00+00:00">2013-05-11</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/49985684263"  rel="bookmark" >
+              <h2 class="card-title">n-body 舞蹈</h2>
+            </a>
+            <p class="card-text"><p>看到这个demo：<a href="http://www.maths.manchester.ac.uk/~jm/Choreographies/">n-Body Choreographies   v. 0.9</a></p>
+<p>js写的太看了。赞一个。</p>
+<p>其中很多模型我觉得比较好理解啊：</p>
+<p>比如：</p>
+<p>D(10,8/3) 这个可以看成两个质心互绕，其中每个质心就是5个球体。。。<br />
+D(10,5/2) 这个可以看成2个质心一个收缩一个膨胀 <br />
+D(8,9/4) 也类似2个质心。。。</p>
+<p>很多看似复杂的轨道把  trajectory 关了就发现简单规律了。人脑的模式识别真是个神奇的东西~~~~~~~~~~~~~~</p>
+<p>让我想起了几天前fallark发的那个<a href="http://www.datapointed.net/visualizations/math/factorization/animated-diagrams/">分解质因数的javascript</a></p>
+<p>都是超赞的东西~</p>
+<p><a href="https://news.ycombinator.com/item?id=5673948">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-05-08T22:58:00+00:00">2013-05-08</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/49575878820"  rel="bookmark" >
+              <h2 class="card-title">一个NP-complete问题</h2>
+            </a>
+            <p class="card-text"><iframe width="640" height="360" src="http://www.youtube.com/embed/dAyDi1aa40E" frameborder="0"></iframe>
+
+<p>Steiner tree problem<br />
+好酷！的解法！中间的点叫做 <a href="http://zh.wikipedia.org/wiki/%E8%B4%B9%E9%A9%AC%E7%82%B9">费马点</a></p>
+<p><a href="http://www.reddit.com/r/math/comments/1dnjd1/really_cool_example_of_calculus_of_variations/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-05-04T02:46:00+00:00">2013-05-04</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/49564925054"  rel="bookmark" >
+              <h2 class="card-title">PonyORM - python的新一代黑魔法级别ORM</h2>
+            </a>
+            <p class="card-text"><p>简单的例子，来自<a href="http://ponyorm.com/">官网</a></p>
+<p>python的查询代码：</p>
+<pre><code>select(c for c in Customer
+     if sum(c.orders.price) &gt; 1000)
+</code></pre>
+<p>通过PonyORM翻译成SQL：</p>
+<pre><code>SELECT "c"."id"
+FROM "Customer" "c"
+  LEFT JOIN "Order" "order-1"
+    ON "c"."id" = "order-1"."customer"
+GROUP BY "c"."id"
+HAVING coalesce(SUM("order-1"."total_price"), 0) &gt; 1000
+</code></pre>
+<p>以前觉得<a href="http://peewee.readthedocs.org/en/latest/peewee/querying.html">peewee的查询语法</a>很clever，比Django那种丑爆的 <code>price__gt=1000</code> 好出一条街 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-05-03T23:33:00+00:00">2013-05-03</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/49498875576"  rel="bookmark" >
+              <h2 class="card-title">I/O模型</h2>
+            </a>
+            <p class="card-text"><p>I/O模型<br />
+看了<a href="https://www.v2ex.com/t/65058">这个帖子</a>，归纳了一下自己理解的 I/O 模型，不知道对不对。</p>
+<p>下边我们假设这样一个场景：</p>
+<p>我 去食堂打饭。需要从3个得到3样东西：4两米饭，回锅肉，素菜。</p>
+<ol>
+<li>blocking： 打饭的人多啊，哥一直排队等，知道买到3样东西完毕。</li>
+<li>non-blocking 去食堂一看，卧槽，那么jb多人排队，算了不吃了。这里的我就是一个 fd (file descriptor)，这样做急性子的人就叫做 O_NONBLOCK 属性。如果你尝试让一个急性子买饭，人少还好，人多了他会直接抛出一个异常报错。</li>
+<li>sync 先买米饭，再买回锅肉，再买素菜。如果临时回锅肉卖完了怎么办？等食堂师傅一直炒出下一锅为止。而且必须先买到回锅肉再买素菜！</li>
+<li>async 哪个窗口人少就先买哪个，哪个窗口先出锅就先买那个。</li>
+</ol>
+<p>再说说unix 5种IO模型：</p>
+<ol start="5">
+<li>复用 (multiplexing)： 寝室5个好基友一起去买饭 …</li></ol></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-05-03T15:11:00+00:00">2013-05-03</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/49510419228"  rel="bookmark" >
+              <h2 class="card-title">关于码畜的定义</h2>
+            </a>
+            <p class="card-text"><p>码农的定义就不用说了。</p>
+<p>码畜的定义：</p>
+<p>&gt; If you answer to managers and build CRUD apps to support their careers rather than your own, then you're not a professional.</p>
+<p>如果你的职业生涯就是给你的上级写CRUD应用。那么你就是码畜。</p>
+<p><a href="https://news.ycombinator.com/item?id=5649877">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-05-03T09:24:00+00:00">2013-05-03</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/48751778838"  rel="bookmark" >
+              <h2 class="card-title">ITU这个2b，让人不吐槽不舒服。</h2>
+            </a>
+            <p class="card-text"><p>话说E.164这个标准还是挺重要的。电话国家区号。比如中国是 +86</p>
+<p>好吧。我们去看下官网：</p>
+<p><a href="http://www.itu.int/itudoc/itu-t/ob-lists/icc/e164_763.html">http://www.itu.int/itudoc/itu-t/ob-lists/icc/e164_763.html</a></p>
+<p>卧槽，哪里可以下载？？？？？？？</p>
+<p>查看源码——有pdf和doc下载。。。。。但是页面上没有？？？？</p>
+<p>用F12开发者工具一看，卧槽，尼玛居然需要水平滚动，下载icon在页面最右边！！！！！！！body的水平width是1910px！！！！！！我了个大艹！！！！！！</p>
+<p><img alt="" src="/images/tumblr/48751778838_0.png" /></p>
+<p>尼玛水平滚动也就算了，footer文字为毛position根据窗口固定？</p>
+<p>好了。下载pdf ，一打开：</p>
+<p><img alt="" src="/images/tumblr/48751778838_1.png" /></p>
+<p>尼玛逼的，怎么搞技术的都这么脑残，不懂 natural sort 呢？</p>
+<p>后来发现为啥不用natural sort了。这尼玛坑爹的国家区号是<strong>变长</strong>的。</p>
+<p>+123 123456<br />
++12 3123456  </p>
+<p>可能是两个来自两个国家的不同号码，这个没法区分 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-04-23T23:59:10+00:00">2013-04-23</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/48676042902"  rel="bookmark" >
+              <h2 class="card-title">传说中Kinect/OpenCV做的咪咪跟踪算法。</h2>
+            </a>
+            <p class="card-text"><iframe width="640" height="360" src="http://www.youtube.com/embed/TXwGSpofobI?feature=player_detailpage" frameborder="0"></iframe>
+
+<p>SPY居然冒了一句excellent。。。视频叫 <a href="http://www.youtube.com/watch?v=pV4KrCn1vJc">suprise buttseks</a>。。。</p>
+<p><img alt="" src="http://i4.ytimg.com/i/S3y8T4s2NN7klN0Xez1rjQ/1.jpg" /></p>
+<p><a href="http://www.reddit.com/r/videos/comments/1cw3ee/boobtracker_117/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-04-23T01:25:00+00:00">2013-04-23</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/48513042417"  rel="bookmark" >
+              <h2 class="card-title">365icl.com 的通讯</h2>
+            </a>
+            <p class="card-text"><p>ipaddr=118.123.8.95 <br />
+port=8000 <br />
+ipaddr_auxiliary=125.64.16.139 <br />
+port_auxiliary=8000   </p>
+<p>分析协议是件蛋痛的事情。</p>
+<p>国产软件是多么不靠谱。。。。自带一个MapInfo MapX的地图组件，搞得客户端飞JB大。。。。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-04-21T05:51:00+00:00">2013-04-21</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/48433661723"  rel="bookmark" >
+              <h2 class="card-title">对于通讯的一些感受</h2>
+            </a>
+            <p class="card-text"><p><img alt="" src="/images/tumblr/48433661723.png" /></p>
+<p>今天地震，然后家里就断网了，就无聊听电台。然后就听了下350MHz - 370MHz。一开始以为是跳频，后来发现是多频道时断时续而已。一些感受：</p>
+<p>我觉得普通JC是最苦逼的职业。基本就是被总台呼来唤去的民工。半个小时处理的事情基本就是解决停车纠纷啊，菜市场打架啊，银行卡被盗刷500元啊之类的鸡毛蒜皮事。真心蛋痛啊我日。</p>
+<p>模拟信号语音交流感觉在“微信”时代真的落后了。</p>
+<p>我们需要一个更加原子化、更加 IP 化的交流通讯方式。总台可以PUSH任务到人员，人员可以update情况，这一切需要一个更加优良的 UX 设计。我观察到比如一个很苦逼的事情就是手台里说手机号码。。这个在21世纪是很尴尬的。从市民报告，到总台分配，到解决，都应该数字化。</p>
+<p>前几天看到reddit众在互相通气Boston PD的scanner，后来mod出来阻止这种严重泄密危害警员安全的行为。但是同时也感觉别人社会发达，居然有人把scanner做成了Internet Radio向所有人开放！</p>
+<p>加上今天地震的一些报道，我觉得这个社会的信息化还有很大发展空间。感谢伟大的MTK，智能终端的普及指日可待，智能社会正在以势不可挡地到来。</p>
+<p>个人觉得码农要以时代责任感去下岗一大批吃干饭的社会工作文科生。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-04-20T08:58:33+00:00">2013-04-20</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/48319644529"  rel="bookmark" >
+              <h2 class="card-title">Re: python标准库貌似没有实现链表？</h2>
+            </a>
+            <p class="card-text"><p>发信人: draculalord ( 嗯？), 信区: Python   <br />
+标  题: 也谈链表及其他Re: python标准库貌似没有实现链表？   <br />
+发信站: 水木社区 (Mon Mar 21 18:49:46 2011), 转信     </p>
+<p>实际上刚开始学习一些高级语言的时候我也有同样的疑问，而且即使有链表对应物的语言，链表常常也很少被实际使用。   <br />
+如果是在国外听数据结构的课，老师一般会警告你这只是一个理论概念，实际应用应该实际考察，在通常情况下链表不是一个很好的结构。   <br />
+通常链表会作为一个很好的反例，告诉大家脱离实际硬件环境来谈论所谓算法复杂度是没有任何意义的。   <br />
+这是因为，链表已经不适合当今的计算机硬件发展。当今的计算机硬件对内存是否连续更为敏感，而链表恰恰会破坏这种顺序读取。   <br />
+由于locality很差所以常常造成page fault和cache miss   <br />
+这也是为什么大多数教师不再推荐使用链表的原因。而且现今的硬件内存拷贝实际相当迅速。   <br />
+并且python的list算法不是通常的单项表，也不是通常的数组。   <br />
+具体可以看这里：http://wiki.python.org/moin/TimeComplexity   <br />
+在List末尾append/pop都是O(1)的 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-04-18T20:54:56+00:00">2013-04-18</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/48106626563"  rel="bookmark" >
+              <h2 class="card-title">Boston爆炸后偷衣服</h2>
+            </a>
+            <p class="card-text"><iframe width="640" height="360" src="https://www.youtube.com/embed/1hM7Ura6Q4w?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
+
+<p><a href="http://www.reddit.com/r/videos/comments/1cfgcw/post_boston_marathon_bombing_looters_stealing/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-04-16T02:31:50+00:00">2013-04-16</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/48024359039"  rel="bookmark" >
+              <h2 class="card-title">新闻是个坏东西</h2>
+            </a>
+            <p class="card-text"><ul>
+<li>News misleads</li>
+<li>News is irrelevant</li>
+<li>News has no explanatory power<blockquote>
+<p>The more "news factoids" you digest, the less of the big picture you will understand. If more information leads to higher economic success, we'd expect journalists to be at the top of the pyramid. That's not the case.</p>
+</blockquote>
+</li>
+<li>News is …</li></ul></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-04-15T01:55:00+00:00">2013-04-15</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/47677324624"  rel="bookmark" >
+              <h2 class="card-title">听水车们讲大数据在国内的发展</h2>
+            </a>
+            <p class="card-text"><p>发信人: Nineteen (..), 信区: Database<br />
+标  题: Re: cassandra集群的去中心拓扑真是帅啊<br />
+发信站: 水木社区 (Sat Mar  9 10:03:09 2013), 站内</p>
+<p>就像@immars提到的，开源项目们在一两年后开发出来的东西比论文原型在性能上差了一个层次，其实不仅仅是性能，其他方面差得会更多。</p>
+<p>然后其他公司一看，不错，有东西能应付应付需求，接着就开始大用特用，坚持个一两年，东西尽管被改个面目全非，但仅限于补丁摞补丁，在外围小刀，想深入大改？门都没有，老板们会说了，先满足业务需求。最常听到的说法是：tmd我们都要死了，你丫还想花那么长时间大改？</p>
+<p>团队规模在“快死了”的状态中不断成长，成长的另一个原因是层出不穷的运维事件和用户“永远都没办法满足的需求”，话语权也变得越来越重。</p>
+<p>集群规模越来越大，最后发现确实搞不定了，一边开始上各种歪招，比如云梯居然在优化jvm；另一方面开始组织力量研发自己的系统，后者三大互联网公司貌似都尝试过 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-04-10T23:45:00+00:00">2013-04-10</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/47665235603"  rel="bookmark" >
+              <h2 class="card-title">Google Street View Hyperlapse</h2>
+            </a>
+            <p class="card-text"><iframe src="http://player.vimeo.com/video/63653873" width="400" height="300" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+
+<p><a href="http://www.reddit.com/r/videos/comments/1bzvdt/incredible_hyperlapse_made_with_google_street_view/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-04-10T21:21:10+00:00">2013-04-10</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/47664941306"  rel="bookmark" >
+              <h2 class="card-title">跟 @igrigorik 大神学前端</h2>
+            </a>
+            <p class="card-text"><p><a href="http://www.reddit.com/r/programming/comments/1c24s9/video_by_a_google_engineer_about_what_it_takes_to/">reddit上</a>看到的</p>
+<p>ppt在<a href="https://docs.google.com/presentation/d/1qbqqcfjz3YwocRZu2led3CzhjHjcTvvQVSYET0QYyL4/preview?sle=true#slide=id.gd101c179_2_64">这里 </a></p>
+<p>做点笔记：</p>
+<ol>
+<li>现代浏览器可以通过  performance.timing 看到载入和渲染时间记录。</li>
+<li>Chrome的pagespeed插件和audit工具很有用</li>
+<li>在线pagespeed <a href="https://developers.google.com/speed/pagespeed/insights">分析 critical path</a></li>
+</ol>
+<p>其实 @igrigorik 大神的<a href="http://www.igvita.com/">博客</a>和<a href="https://github.com/igrigorik?tab=repositories">github</a>有不少好东西！</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-04-10T21:17:00+00:00">2013-04-10</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/47527143469"  rel="bookmark" >
+              <h2 class="card-title">1915年，北京 盆糕 【老照片】</h2>
+            </a>
+            <p class="card-text"><p><img alt="" src="http://farm3.staticflickr.com/2756/4104642924_14e615c38f_z.jpg" /></p>
+<p>国内把切糕的英语翻译说成 Xinjiang glutinous rice cake, nut  cake，不如这个1915年照片名字起的好：Cake Of Millet &amp; Jujubes。感觉盆糕和切糕差不多？</p>
+<p>From <a href="http://www.flickr.com/photos/ralphrepo_photolog/4104642924/in/set-72157622725544786">Flickr</a> via <a href="http://www.reddit.com/r/China/comments/1bxhfr/in_light_of_the_popular_album_uploaded_a_few_days/">reddit</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-04-09T04:11:00+00:00">2013-04-09</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/47516526252"  rel="bookmark" >
+              <h2 class="card-title">如何艹渣度的烂广告，但是保留贴吧登陆/发回帖功能</h2>
+            </a>
+            <p class="card-text"><p>Chrome里打开：</p>
+<p>chrome://settings/contentExceptions#cookies</p>
+<p><img alt="" src="/images/tumblr/47516526252.png" /></p>
+<p>Chrome的通配符语法真是 奇葩！</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-04-09T00:07:00+00:00">2013-04-09</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+    </main>
+    <nav class="pagination-nav side-padding">
+<a href="/index.08.html" class="pagination-newer">&lt; Newer Posts</a><a href="/index.10.html" class="pagination-older">Older Posts &gt;</a>    </nav>
+
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+</html>

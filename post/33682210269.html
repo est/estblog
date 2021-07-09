@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>Web墨卡托 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Web墨卡托" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Web墨卡托</h2>
+    <p class="post-date">Posted <time datetime="2012-10-15T21:48:19+00:00">2012-10-15</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>最近在android上玩RMaps Ext和Mobile Atlas Creator (MOBAC)</p>
+<p>一直觉得tg的<a href="www.tianditu.cn">天地图</a>其实道路信息和POI做的比其他厂商都好，所以网上找到了这个<a href="http://www.doyouhike.net/forum/comm_nav/585383,0,0,1.html">天地图版MOBAC</a></p>
+<p>但是我发现一个很好玩的信息，跟我当时对天地图的感觉一样：天地图最大的问题不是<a href="http://discover.news.163.com/special/tianditu/">163这种喷子媒体</a>说的各种问题，而是：地图是扭曲的。</p>
+<p>网上找到这篇文章《<a href="http://blog.3snews.net/html/88/47188-28181.html">天地图-地图投影技术剖析与思考</a>》</p>
+<p>虽然图片jb全无，但是却得到了一个很有用的结论：</p>
+<blockquote>
+<p>目前国内做数字城市方面的GIS项目、产品和公众应用，常涉及的投影方式主要有：面向局部区域的二维平面高斯投影（横轴墨卡托，横轴圆柱投影）、面向大范围（如全省、全国）的兰伯特投影（圆锥投影）、面向大范围的经纬度等间隔直投，而互联网上的大部分全国公众地图网站（百度、google、搜狗）则是另外一种-----“Web墨卡托”。  <br />
+在市一级的小范围区域的GIS系统，比如规划局、国土局、建设局的系统，大都使用<strong>高斯投影</strong>，以便与地方地形图测绘、工程报建一直采用的坐标系相一致。高斯投影的特点也很明显，分带，适合小范围局部，不适合应用于大省、全国等大范围应用，若是强制按某带投影，则远离中央经线的区域的角度、距离、面积全部变形严重。<br />
+在大范围，目前好像很多项目都采用“经纬度直投”，------天地图也采用了。</p>
+</blockquote>
+<p>Web墨卡托的问题是什么呢？</p>
+<blockquote>
+<p>也许您还有疑问，“Web墨卡托”虽然形状没变，但是高纬度地区的面积比真实同样放大了很多倍，面积也是变化很严重啊！同一张全中国范围图上，三亚和哈尔滨，选取同样真实面积的区域，在投出来的图上面积相差好多倍，但是他们各自区域中的图形都没变型。</p>
+</blockquote>
+<p>哇靠。怪不得天地图那个坐标比例看起来别扭死了。我擦。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/33682210269';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

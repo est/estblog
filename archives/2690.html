@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>shell script一句话下载youtube flv/mp4 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="shell script一句话下载youtube flv/mp4" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">shell script一句话下载youtube flv/mp4</h2>
+    <p class="post-date">Posted <time datetime="2010-08-08T12:42:40+00:00">2010-08-08</time> | <span>archive</span></p>
+  </header>
+
+  
+  <pre><code>id=&quot;oHg5SJYRHA0&quot;; curl -L &quot;http://www.youtube.com/get_video?asv=&amp;fmt=18&amp;video_id=$id&amp;t=$(curl -s http://www.youtube.com/watch?v=$id | sed -n &#39;s/.*, &quot;t&quot;: &quot;\([^&quot;]*\)&quot;, .*/\1/p&#39;)&quot; &gt; 1.mp4
+</code></pre>
+
+<p>其中 <code>fmt=18</code> 表示360p清晰度。主要遇到2个问题，一个是URL里必须有 <code>asv=</code> 才能成功，二是sed的p模式还第一次遇到，而且group匹配括号前后必须有东西才能只输出括号内容，而不是整行内容。sed不适合我啊。。。</p>
+
+<p>参考<a href="http://www.commandlinefu.com/commands/view/3006/stream-youtube-url-directly-to-mplayer#comment">1</a>, <a href="http://bitbucket.org/rg3/youtube-dl/src/tip/youtube-dl">2</a>。感谢#ubuntu-cn和#linuxfire频道。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/2690';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

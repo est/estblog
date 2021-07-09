@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>Fix Paladins stuck at Completing Login - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Fix Paladins stuck at Completing Login" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Fix Paladins stuck at Completing Login</h2>
+    <p class="post-date">Posted <time datetime="2019-08-21T20:43:54+00:00">2019-08-21</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p><a href="https://store.steampowered.com/app/444090/Paladins/">Paladins</a> is one of the F2P games on Steam. It's called 枪火游侠 in Chinese market with Tencent as its Partner operator.</p>
+<p>To play it on Steam:</p>
+<ol>
+<li>Add any game to cart</li>
+<li>Modify region to US on the checkout page</li>
+<li>Type the following script into browser's DevTool<br />
+<code>jQuery.post('//store.steampowered.com/checkout/addfreelicense', {
+        action: 'add_to_cart',
+        sessionid: g_sessionID,
+        subid:94404})</code></li>
+<li>Go to <a href="https://store.steampowered.com/account/licenses/">https://store.steampowered.com/account/licenses/</a> and see if Paladins were added to your account</li>
+<li>To install the game, run <code>steam://install/444090</code> in Win+R</li>
+</ol>
+<p>However it appears to be stuck on "Completing Login" screen from time to time.</p>
+<p>To fix it, run <code>cmd</code> with Administrator provilege type these commands:</p>
+<pre><code>ipconfig /flushdns
+netsh winsock reset category
+netsh int ip reset reset.log
+</code></pre>
+<p>Then go to <code>Steam\steamapps\common\Paladins\Binaries\EasyAntiCheat</code>, run <code>EasyAntiCheat_Setup.exe</code> as Administrator and repair Paladins.</p>
+<p>And restart the PC. </p>
+<p>Now try play again. 80% of the case the issue will go away.</p>
+<p>If it still doesn't work, and you are still stuck at the "Completing Login", try hit the "Settings" button during login, then hit Esc to close the settings window, the login screen will display a message saying "Player is offline", and a "Reconnect" button magically appears. Now hit the button exactly once! I captured the in/out packets to TCP port 9000 and found that you after you click the "Reconnect" button, the Paladins client will retry negociating login process. Don't hit it too many times. </p>
+<p>Once you see "Loading Vendors" you are 99% through this, just be patient and you will load to main menus.</p>
+<p>Hope this helps.</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '201908/stdout-005';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

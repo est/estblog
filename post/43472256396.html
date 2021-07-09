@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>dynamic app routing for Bottle.py based on hostname / domain - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="dynamic app routing for Bottle.py based on hostname / domain" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">dynamic app routing for Bottle.py based on hostname / domain</h2>
+    <p class="post-date">Posted <time datetime="2013-02-19T01:59:57+00:00">2013-02-19</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>Problem:</p>
+<p>I want ONE bottle project to display different pages for:</p>
+<ul>
+<li>http://foo.est.im</li>
+<li>http://bar.est.im</li>
+</ul>
+<p>These should be separate Bottle apps.</p>
+<p>There's <a href="http://permalink.gmane.org/gmane.comp.python.bottle.general/730">an ugly hack</a> from the official maillist, I think I can make it better.</p>
+<p>The secret is to create a customized WSGI app:</p>
+<pre><code>from fnmatch import fnmatch
+from bottle import Bottle, default_app, run
+
+foo = Bottle()
+foo.hostnames = ['foo.est.im']
+@foo.route('/')
+def hello():
+    return 'hello!'
+
+bar = Bottle()
+bar.hostnames = ['bar.est.im']
+@bar.route('/')
+def hi():
+    return 'hi~'
+
+@route('/')
+def index():
+    print 'hello world'
+
+def application(environ, start_response):
+    for app in [foo, bar]:
+        hostnames = getattr(app, 'hostnames', [])
+        if filter(lambda x:fnmatch(hostname, x), hostnames):
+            return app(environ, start_response)
+    return default_app()(environ, start_response)
+</code></pre>
+<p>Then run this motherfucker:</p>
+<pre><code>from django.utils import autoreload
+def dev_server():
+    run(application, host='0.0.0.0', port=8002, debug=True)
+autoreload.main(dev_server)
+</code></pre>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/43472256396';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

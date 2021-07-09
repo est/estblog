@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>用lambda写python class - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="用lambda写python class" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">用lambda写python class</h2>
+    <p class="post-date">Posted <time datetime="2011-06-14T06:10:13+00:00">2011-06-14</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>原class：</p>
+
+<pre><code>class Foo:
+    classVariable = &#39;ImAClassVariable&#39;
+    def __init__(self, a, b, c):
+        self._a = a
+        self._b = b
+        self._c = c
+
+    def getA(self):
+        return self._a
+
+    @classmethod
+    def aClassMethod(cls):
+        return cls.classVariable
+
+    @staticmethod
+    def aStaticMethod(a, b):
+        return a + b
+
+    def __repr__(self):
+        return &#39;&lt;%s: %r&gt;&#39; % (
+            self.__class__.__name__,
+            vars(self)
+        )
+</code></pre>
+
+<p><code>lambda</code>版本：</p>
+
+<pre><code>Foo = (lambda(new): # level 1, we define our new variable.
+        new.classobj(&#39;Foo&#39;, (), dict( # return a class object.
+            classVariable = &#39;ImAClassVariable&#39;,
+            __init__ = (lambda self, a, b, c:
+                self.__dict__.update(dict(
+                    _a = a,
+                    _b = b,
+                    _c = c
+                ))
+            ),
+            getA = lambda self: self._a,
+            aClassMethod = classmethod(
+                lambda cls: cls.classVariable
+            ),
+            aStaticMethod = staticmethod(
+                lambda a, b: a + b
+            ),
+            __repr__ = (lambda self:
+                &#39;&lt;%s: %r&gt;&#39; % (
+                    self.__class__.__name__,
+                    vars(self)
+                )   
+            )
+        ))
+    )(__import__(&#39;new&#39;)) # level 1 args
+</code></pre>
+
+<p>虽然很炫，但是<code>new</code>模块不是已经要被废除了么？</p>
+
+<p>from <a href="https://gist.github.com/1023982">gist</a> via <a href="http://www.reddit.com/r/Python/comments/hyxle/python_fun_with_lambdas_or_how_to_never_use/">reddit</a></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/4071';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

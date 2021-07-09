@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>[zz]百度地图的研发们 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[zz]百度地图的研发们" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[zz]百度地图的研发们</h2>
+    <p class="post-date">Posted <time datetime="2013-06-27T01:48:00+00:00">2013-06-27</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>http://www.douban.com/note/284760511/   </p>
+<p>三鲜 <br />
+主页 广播 相册 喜欢 活动 发豆邮 <br />
+去年我开始有抬头纹 <br />
+2013-06-27 01:11:37 <br />
+今天发现，百度地图的研发们都玩起新浪微博，互相 at 得不亦乐乎，看样子是经常齐刷刷地去登山、长跑。在我心中他们都是同一类的人，龙叔也如是说。   </p>
+<p>这种感觉很奇怪，我离开快一年了，他们看上去变得更凝聚温馨。以前我高嗓门的架构讲座、开会时候对项目代码的怒斥，突然感觉就像只是破坏团队氛围的东西。记得我写的那个树状脑图，讲模块劣化的现象、原因、改进措施，21寸显示器两屏才显示得完，经理看了一个劲的笑，其他同事充满不理解不赞同，有人还公然拥护全局变量，我操。   </p>
+<p>去年我一个人重构搜索后端，披星戴月，脑浆迸裂。说是重构实际上就是重写。除非当时内部的人，很少人愿意相信地图搜索引擎的代码的所有函数都只传一个参数，而这个参数就是传说中的全局变量，每个服务模块这个全局结构体的成员变量大概四五百个吧，是的真的就是这样。你可以说出这种代码的弊端有啥吗？函数完全无法复用？函数功能不明确？函数涉及的变量不明确？函数相互依赖导致少调用一个就coredump？操，你完全错了，这些都不是重点，这样搞法会导致代码压根就没有函数的概念，每个「函数」都上千行，逻辑完全混乱、bug 横飞，没任何人知道程序真正做了什么，没人敢碰别人的全局变量，同样的数据只敢在刚接收到 request 的时候 copy 一个过来用，最终这个全局结构体就有了这样的变量：query, query1, query2, queryword, word, QueryWord, origin_query, search_query 等不甚枚举，各有各的归一化，各有各的分词，各有各加载的资源。   </p>
+<p>写到这里，发现沦为吐槽，其实我不喜欢在豆瓣写槽文。算了继续。   </p>
+<p>牛逼的是，对于这样一个还没引入用户行为调权的复杂系统，它竟然不是幂等的。也就是说，对于同样的请求，它结果是随机的。为啥随机？因为各种没初始化、各种变量混用。你说为啥现在线上百度地图的搜索是稳定的？你让那帮家伙把 cache 关了试试。其他不随机的 bug 就更不用说，那套 ranking 过程中全是整型溢出、double 被误转成 bool，鸡飞狗跳。   </p>
+<p>更牛逼的是，我重构的时候把那些扯鸡巴蛋的 bug 都修了，系统不再随机了，但是搜索质量下降了，PM 不让上线。这个现象倒是符合逻辑的，因为一旦系统在某个时期有 bug，之后的策略优化就会对这个 bug 有倾向性。当时项目排期很紧，其他几个人的项目都等着我重构完才能开搞，结果跟同事讨论之后决定让我去主动仿造原来那些 bug（是不是很厉害？是不是闻所未闻？），我一顿狂改之后搜索质量有所回升，但仍然达不到原来的效果。这时候唯一的出路大概只能加策略优化 ranking，但如果再经历几次立项、审批、测试沟通、写MRD/TDD，这次重构就彻底无法善终。万般无奈下我给偷偷调整了一堆参数，尼玛，搜索效果终于持平。   </p>
+<p>这时候又面临一个牛逼的事情。前俩月其他同事加的代码要 merge 到我的项目里来，diff 一下有上千行，我得看明白他们的逻辑才能穿插到新版来。又一轮闷头搞，途中又发现各种 bug，其中有个同事的函数让我很欣慰，因为它真的比其他人短，才十几行，不幸的是，他忘记写 return 了，于是又鸡巴是个随机的东西。   </p>
+<p>最终上线之前还被 OP 们摆了一道。OP 分为 searching 和 indexing 两堆人，我们需要更多的 searching 机器，还得约 OP 出来磨嘴皮子。这头 searching 机器申请还没个着落，那头 indexing 的 OP 又频繁找我谈，扯逼淡的是，我不知道他们想跟我谈什么，我敞开问那哥们就傻笑。后来才搞明白他们是想让我劣化 indexing 程序的性能，以降低机器闲置率，提高他们的 KPI。明白之后就再没理他们。   </p>
+<p>这个项目总共做了三个多月，比预期延了一个月。快结束的时候我经理离职了，结束之后测这个项目的 QA 也离职了。这坨新的东西不见得有多好，但可以称之为「可维护的」系统，代码量只有原来的 1/3，搜索性能提高50倍。   </p>
+<p>在某些部门，所谓优化搜索策略变成了研发人员乱搞的游戏，乱想一个法子，在代码堆里胡写那么几行，让 PM 评估个几百个随机 query，发现效果似乎提升了那么零点几个百分点，我操，立马上线！立马有 KPI！立马可以申请专利！   </p>
+<p>话虽如此，那帮同事都是纯朴善良的人，只是那个地方严重挫伤了我对技术的情感，所以后来选择离开。临走前又推了一次 code review 和 unit test，失败告终。在我看来写代码是工程师的基石，这个不达标其他都是扯逼蛋，代码写得有板有眼了，才有资格给我谈做项目、做事情、做人。工程师最终要的能力是「抽象」和「拆解」，这个百度很多人都听过，但是首先应该从代码上实践出来。百度人还喜欢谈「知行合一」，这个就是抽自己嘴巴的话。   </p>
+<p>本来想些的不是这些，先这么着，算是留个记录。   </p>
+<p>添加到豆列 分享到    推荐 98人 51人 喜欢  喜欢</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/53995049770';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

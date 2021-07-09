@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>1073 DLNA = Internet Radio - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="1073 DLNA = Internet Radio" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">1073 DLNA = Internet Radio</h2>
+    <p class="post-date">Posted <time datetime="2012-11-03T06:43:00+00:00">2012-11-03</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>家里有个老机器 海美迪HD 300B，用的是Realtek 1073DD+方案，发现一个很猛的固件：</p>
+<p><a href="http://www.hdpfans.com/thread-120536-1-1.html">http://www.hdpfans.com/thread-120536-1-1.html</a></p>
+<p>吐槽一下，DLNA被国内翻译成 多屏互动 。搞了半天我一个关键字搜索不到是这个原因。。。囧。</p>
+<p>刷机之后真的能支持了，Win7上网络设备刷出来一个</p>
+<p><img alt="" src="/images/tumblr/34892432623.png" /></p>
+<p>连WMP和BubbleUPnP都支持很好。赞美一个。</p>
+<p>继续玩Intel UPnP Device Spy想到一个比较好玩的功能：</p>
+<p><code>SetAVTransportURI()</code> 是支持任意HTTP地址的，而很多shoutcast/icecast等Internet Radio，本质上就是HTTP流媒体的mp3/aac</p>
+<p>于是我试了下，还真成功了。比如3fm alternative</p>
+<p><a href="http://ics2oss.omroep.nl/3fm-alternative-mp3?q=/npo/mp3/3fm_alternative.pls&amp;stream=ok&amp;esthack=1073.mp3">http://ics2oss.omroep.nl/3fm-alternative-mp3?q=/npo/mp3/3fm_alternative.pls&amp;stream=ok&amp;esthack=1073.mp3</a></p>
+<p>最后边个参数是欺骗蹩脚DMR播放器MIME为mp3才能播放。</p>
+<p>于是在罗技z906上成功实现听Internet Radio。想起来Android上支持DLNA的播放器还真不多。QQ视频支持。还不错。</p>
+<p>如果手机有app支持直接push网络电台到DMR就爽了。看来得自己DIY一个哈哈。以后应该自己逐步实现audio book/podcast用上DLNA。</p>
+<p>btw 发现这个upnp/dlna可以刷进路由器的  http://xupnpd.org/t/ 威武</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/34892432623';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

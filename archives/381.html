@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>invoke GetUName() from getuname.dll using ctypes in python - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="invoke GetUName() from getuname.dll using ctypes in python" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">invoke GetUName() from getuname.dll using ctypes in python</h2>
+    <p class="post-date">Posted <time datetime="2010-01-09T15:57:16+00:00">2010-01-09</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>Here’s a way to lookup a <a href="http://www.unicode.org/Public/UNIDATA/NamesList.txt">Unicode character’s full name</a>, using Windows built-in getuname.dll, which is the core component of <code>CharMap.exe</code>.</p>
+
+<pre><code>&gt;&gt;&gt; import ctypes, ctypes.wintypes
+&gt;&gt;&gt; dwCodePoint = ctypes.wintypes.DWORD( ord(&#39;&amp;&#39;) )
+&gt;&gt;&gt; lpBuffer = ctypes.create_unicode_buffer(255)
+&gt;&gt;&gt; ctypes.windll.getuname.GetUName(dwCodePoint , ctypes.byref(lpBuffer))
+2 #length of returned lpBuffer
+&gt;&gt;&gt; print lpBuffer.value
+与号 #Localized name of the Unicode character &#39;&amp;&#39;
+</code></pre>
+
+<p>The <code>GetUName()</code> function is an <em>undocumented</em> Win32 API, learned from <a href="http://blogs.msdn.com/michkap/archive/2006/01/12/511920.aspx">1</a>, <a href="http://www.eggheadcafe.com/software/aspnet/32809387/invoke-dll-on-x86x64.aspx">2</a>, <a href="http://kmleak.spaces.live.com/blog/cns!1A64EF1CFC75CCA2!273.entry">3</a></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/381';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

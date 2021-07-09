@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>一道很火星的智商测试题 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="一道很火星的智商测试题" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">一道很火星的智商测试题</h2>
+    <p class="post-date">Posted <time datetime="2010-05-07T05:07:19+00:00">2010-05-07</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>可能是万年老坟了。。。今天被问到这个题依然被阴了。。。。传说是初中生水平的智商测试题。。。杯具了。。。。</p>
+
+<blockquote>
+  <p>某公司招聘新职员，甲种岗位底薪是1000元/月，每月加薪200元；乙种岗位底薪是600/月，每<strong>半月</strong>加薪60元。注意：两种岗位都是<strong>半月</strong>发一次薪水。如果是长期工作的话，哪个岗位更好？</p>
+</blockquote>
+
+<p>现在我几乎一点对数字敏感能力都没有了。毫不犹豫的以为是甲种好。。。智商下降了哎。。。。。</p>
+
+<p>引出几个问题：<br>
+1. 乙种加薪低到什么程度才会导致永远追不上甲种？<br>
+2. 和半个月这个频率是什么关系？<br>
+3. 直觉在哪里发生了非理性错误？如何避免？<br>
+4. 假设甲乙工资曲线是任意连续可微函数 <code>f(t)</code> 和  <code>g(t)</code>，这个时候 <code>f'(t) / g'(t) = r</code>，<code>r</code>为一个常数，又应该如何讨论？</p>
+
+<p>总结了一下思考过程，不知道对不对，有错误欢迎批评指出：</p>
+
+<p>人们的潜意识是有缺陷的，主要问题出在，人们默认把这两个<strong>函数导数</strong>的比例，等同成两个<strong>原函数</strong>的比例了。假设<code>f'(t)</code>和<code>g'(t)</code>的比例为<code>r</code>，<code>r</code>是一个常数， 但是<code>f(t)</code> 和 <code>g(t)</code> 的比例貌似是没有通解的。这个题目而言，我们很容易得出 60×2 == 120 &lt; 200 这个结论，但实际情况是，60×2<sup>2</sup> == 240 &gt; 200。甲乙两种岗位加薪的等价点是乙每半个月拿50，而具体工资就看初始值底薪了。</p>
+
+<p>但是人们的这个潜意识其实也不是完全没有道理的，有没有特殊情况让人们这个非理性谬误反而成立呢？感谢 <a href="https://twitter.com/terryxxy">@terryxxy</a> 同学的提醒，还真有这种情况。这个东西叫<a href="http://zh.wikipedia.org/zh-cn/%E6%B4%9B%E5%BF%85%E8%BE%BE%E6%B3%95%E5%88%99">洛必达法则</a></p>
+
+<p><img src="http://upload.wikimedia.org/math/7/9/7/7979eeeb6b4736deb1a05b83cef7dfa8.png" alt=""></p>
+
+<p>但是洛必达法则有个前提是：在<code>a</code>那一点，两个函数都趋近与0。</p>
+
+<p>这个问题还真可以发散一下，假设工资曲线是三角函数，指数函数和多项式等等n种情况讨论得到不同的最佳工作岗位。但是我高数真的忘干净了全还给老师了，继续分析下去太浪费时间了。哪位高手有空了可以玩玩。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/2229';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

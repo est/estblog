@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>【Chrome】最快的Google搜索设置 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="【Chrome】最快的Google搜索设置" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">【Chrome】最快的Google搜索设置</h2>
+    <p class="post-date">Posted <time datetime="2011-11-29T07:16:54+00:00">2011-11-29</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>最近在v2ex上看到<a href="http://www.v2ex.com/t/22335">篇帖子</a></p>
+
+<p>估计很多人也对 <code>google.com/url?sa=t&amp;</code> 这种搜索结果页面链接强制跳转烦死了。</p>
+
+<p>我觉得用userscript都是治标不治本的，因为我以前也<a href="http://userscripts.org/scripts/show/50059">写过</a>。Google改版这个脚本就废了。而且Chrome每一个Extension开一个进程有点划不来。</p>
+
+<p>Google Instant也是一个垃圾设计，有的时候输入了一个空格才发现想点击下面一个搜索结果，结果backspace回去就找不到了。烦啊。</p>
+
+<p>所以搞了个办法治一治Google，Chrome专用！</p>
+
+<ol>
+<li>修改Chrome的默认搜索引擎为：。http://64.233.183.132/search?gbv=1&amp;tbo=1&amp;as_qdr=all&amp;hl=en&amp;num=50&amp;q=%s</li>
+<li>选项 - 高级 - 内容设置 （chrome://settings/content） 里禁用掉 <code>64.233.183.132</code> 这个域名的javascript运行权限。</li>
+<li>？？？</li>
+<li>Profit!</li>
+</ol>
+
+<p>我来解释下位什么那个搜索URL很好用。</p>
+
+<blockquote>
+  <p>64.233.183.132 这个IP速度基本是最快的了。内地电信到美国西岸180ms<br>
+  ?gbv=1&amp;tbo=1 开启左边工具栏<br>
+  &amp;as_qdr=all 关闭Google Instant，使得下一个每页50条参数才能生效。<a href="javascript:void(0);">感谢</a><br>
+  &amp;num=50 每页50条结果<br>
+  &amp;hl=en 强制英文界面。相当于 google.com/ncr</p>
+</blockquote>
+
+<p>把最后的 <code>&amp;q=%s</code> 替换成  <code>&amp;query=%s</code> 就可以任意搜索敏感词了。但是SERP内容有敏感词还是会RST。</p>
+
+<p>这样修改了之后，在Chrome地址栏进行Google搜索，速度真心碉堡。一共才3个HTTP请求。让你尽快离开Google达到目的网址。</p>
+
+<p>最后祝愿Google早日把核心业务搜索做烂做倒闭。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/4343';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

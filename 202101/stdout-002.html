@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>OpenWRT 实现 Cloudflare 动态域名 dynamic DNS - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="OpenWRT 实现 Cloudflare 动态域名 dynamic DNS" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">OpenWRT 实现 Cloudflare 动态域名 dynamic DNS</h2>
+    <p class="post-date">Posted <time datetime="2021-01-05T23:36:09+00:00">2021-01-05</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>首先得有公网 IP （废话），然后你得 OpenWRT 路由器桥接直拨。</p>
+<p>这个方法的核心是通过 <code>ifstatus wan |  jsonfilter -e '@["ipv4-address"][0].address'</code> 命令得到本机 WAN 的公网 IP。</p>
+<p>根据官方的<a href="https://support.cloudflare.com/hc/en-us/articles/360020524512-Manage-dynamic-IPs-in-Cloudflare-DNS-programmatically">说明</a>走</p>
+<ol>
+<li>创建 <a href="https://dash.cloudflare.com/profile/api-tokens">API Token</a> 。权限选 <code>All Zones</code>，得到 <code>TOKEN</code></li>
+<li>验证 API 是否 ok<br />
+        curl - X GET "https://api.cloudflare.com/client/v4/user/tokens/verify" \<br />
+          -H "Authorization: Bearer TOKEN" \<br />
+          -H "Content-Type:application/json"</li>
+<li>获取 <code>:zone_identifier</code>。找那个长得像 ID 的<br />
+        curl - X GET "https://api.cloudflare.com/client/v4/zones"\ <br />
+          -H "Authorization: Bearer TOKEN" \<br />
+          -H "Content-Type:application/json"</li>
+<li>因为脑残的 RESTful 风格 API 无法实现 upsert，先创建个DNS。得到 <code>:identifier</code><br />
+        curl -svk -X POST "https://api.cloudflare.com/client/v4/zones/:zone_identifier/dns_records"\<br />
+          -H "Authorization: Bearer TOKEN" \<br />
+          -H "Content-Type: application/json" \<br />
+          -d '{"type":"A","name":"my_ddns.est.im","content":"'$(ifstatus wan |  jsonfilter -e '@["ipv4-address"][0].address')'","ttl":600,"proxied":false}'</li>
+<li>日常更新 DNS<br />
+        curl -svk -X PUT "https://api.cloudflare.com/client/v4/zones/:zone_identifier/dns_records/:identifier" \<br />
+          -H "Authorization: Bearer TOKEN" \<br />
+          -H "Content-Type: application/json" \<br />
+          -d '{"type":"A","name":"my_ddns.est.im","content":"'$(ifstatus wan |  jsonfilter -e '@["ipv4-address"][0].address')'","ttl":600,"proxied":false}'</li>
+</ol>
+<p>感觉挺麻烦。而且没法 API 网关自动把调用者的 IP 设为 A 记录。但是聊胜于无吧。高版本的 OpenWRT <a href="https://openwrt.org/docs/guide-user/base-system/ddns">/usr/lib/ddns/services<br />
+</a> 直接支持 Cloudflare 了不用这么麻烦了。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '202101/stdout-002';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

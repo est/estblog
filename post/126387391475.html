@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>小白涨姿势之GIS系统 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="小白涨姿势之GIS系统" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">小白涨姿势之GIS系统</h2>
+    <p class="post-date">Posted <time datetime="2015-08-10T21:57:19+00:00">2015-08-10</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>小白涨姿势之gis系统</p>
+<p>好久没写blog，最近去知乎问了这样一个问题 </p>
+<p><a href="http://www.zhihu.com/question/34387819">有现成的 GIS 系统能处理 河流、立交桥、单行道、限行 等限制条件下求最近距离叫车的问题吗？</a></p>
+<p>终于把心中的疑惑解决了。也怪自己笨，导航问题跟游戏寻路算法不一回事嘛！</p>
+<p>参考ArcGIS的文档（<a href="http://help.arcgis.com/en/arcgisdesktop/10.0/help/index.html#//004700000053000000">英文</a>，<a href="http://help.arcgis.com/zh-cn/arcgisdesktop/10.0/help/index.html#//004700000053000000">中文</a>）：</p>
+<p>网络分析主要解决下列几个问题：</p>
+<ul>
+<li>导航 routing：</li>
+<li>单行道限制 one-way restrictions</li>
+<li>转弯限制 turn restrictions</li>
+<li>交汇点阻抗 junction impedance</li>
+<li>障碍 barriers</li>
+<li>街边约束 side-of-street constraints</li>
+<li>最近设施点 Closest facility 这个好像就是已知多家医院和多起事故，如何找最短路径把尽量多的伤者送到最近的医院？</li>
+<li>OD矩阵 (origin-destination matrix)：多个出发地和多个目的地，形成一个“价格阶梯表”</li>
+<li>服务区分析 service area 。这个是我想了很久的。一个外勤警察5分钟能到达的区域范围是那些？算法涉及到一个概念叫不规则三角网 (TIN - triangulated irregular network)</li>
+<li>流动推销员问题 (TSP - Traveling salesman problem)：第一步是在有待排序的所有停靠点之间生成OD成本矩阵，然后通过基于禁忌搜索的算法查找访问停靠点的最佳顺序。禁忌搜索(Tabu Search)是求解组合问题的元启发式算法。该算法属于局部搜索算法的范畴。</li>
+<li>有时间窗的多路车辆配送(VRP - vehicle routing problem)。VRP是TSP的超集。加上车辆性能参数，配送时间窗口，特殊配送要求等限制。算法也是先建立OD矩阵，然后通过在最合适路径中一次插入一个停靠点的方式构建初步解决方案。随后可通过以下方式改进初步解决方案：对各路径中的停靠点重新进行排序、将停靠点从一个路径移至另一个路径，或在路径之间交换停靠点。ArcGIS在这方面有私有算法。</li>
+<li>位置分配(Location-allocation)：多个相邻的连锁店如何保证覆盖面最大，重叠面积最小？即，给定具有权重的 N 候选设施点和 M 请求点，可选择设施点的子集 P，从而使每个 M 到最近的 P 之间的加权距离总和最短。这属于 N 选 P 的组合问题，解空间极大。无法通过检验所有组合获得最优解。</li>
+</ul>
+<p>前三者都采用的是  Dijkstra 算法。</p>
+<p>网络分析的限制条件：</p>
+<ul>
+<li>时间窗口(time window)</li>
+<li>U字调头限制</li>
+<li>障碍</li>
+<li>道路分级(hierarchy)，比如高速优先。分级网络创建完成后，将使用双向 Dijkstra 改进算法计算起始点和目的地之间的路径。</li>
+<li>驾驶方向和方向容宽度(Bearing &amp; BearingTol)</li>
+</ul>
+<p>还可以参考pg的<a href="http://workshop.pgrouting.org/">pgRouting Workshop</a> “FOSS4G routing with pgRouting, OpenStreetMap road data and OpenLayers 3”.：</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/126387391475';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

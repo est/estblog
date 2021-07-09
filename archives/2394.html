@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>FSK的suicide人数最终会稳定在在22人左右[zz] - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="FSK的suicide人数最终会稳定在在22人左右[zz]" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">FSK的suicide人数最终会稳定在在22人左右[zz]</h2>
+    <p class="post-date">Posted <time datetime="2010-05-27T05:36:27+00:00">2010-05-27</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>转载一篇<a href="http://blog.renren.com/blog/241554042/467526105">关于FSK的suicide人数曲线的Logistic回归分析</a></p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/05/13.jpg" alt=""></p>
+
+<blockquote>
+<pre><code>General model Exp2:
+       f(x) = a*exp(b*x) + c*exp(d*x)
+Coefficients (with 95% confidence bounds):
+       a =  7.569e-007  (-6.561e-006, 8.075e-006)
+       b =     0.01529  (0.006473, 0.0241)
+       c =       1.782  (0.5788, 2.984)
+       d =    0.001075  (2.37e-005, 0.002125)
+Goodness of fit:
+  SSE: 8.846
+  R-square: 0.9684
+  Adjusted R-square: 0.9598
+  RMSE: 0.8968
+</code></pre>
+
+  <p>可见相关度0.96也是非常高的。<br>
+  然而和所有疾病一样，一旦其事件引起了人们的关注，则各方的反馈作用，将阻碍其继续上升。<br>
+  因此，和很多流行病分析一样，该曲线很有可能呈S型。对于该曲线的分析，使用Logistic回归。<br>
+  首先我们假设Logis(B,x)=F(x),之中B为参数数组，则由经验和可能的微分方程关系，回归曲线应该为<br>
+  S（x）=m*Logis（B,x+t）/（n+Logis（B,x+t））格式<br>
+  由于当Logis（B,x）较小时S(x)=Logis（B,x），则可以认为f（x）的参数可以直接引入S（x）作为一种近似，而对于m，n的确定，我以1为间隔，画出m*n=40*20的所有曲线，<br>
+  选出其中最吻合的的一条（m=22 n=20 t=50）：</p>
+</blockquote>
+
+<p>数学建模帝威武！</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/2394';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

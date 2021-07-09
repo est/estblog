@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>基于正则的URL匹配安全性考虑 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="基于正则的URL匹配安全性考虑" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">基于正则的URL匹配安全性考虑</h2>
+    <p class="post-date">Posted <time datetime="2010-11-14T10:17:42+00:00">2010-11-14</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p><a href="http://www.reddit.com/r/programming/comments/e5lud/never_use_regular_expressions_to_enforce_type/">reddit上</a>讨论的这个问题比较有意思。</p>
+
+<p>假设django里有这样一个URL匹配</p>
+
+<pre><code>(r'^(\d\d\d\d)/$', 'jl6.core.views.showyear'),
+</code></pre>
+
+<p>那么下面两个网址能否命中这个匹配呢？</p>
+
+<pre><code>http://james.lab6.com/%D9%A2%D9%A0%D9%A0%D9%A8/
+
+http://james.lab6.com/%F0%9D%9F%AE%F0%9D%9F%AC%F0%9D%9F%AC%F0%9D%9F%B4/
+
+</code></pre>
+
+<p>结果是可以命中的。</p>
+
+<p>第一个URL是/٢٠٠٨/，包含了4个unicode字符</p>
+
+<pre><code>٢ U+0662 ARABIC-INDIC DIGIT TWO
+٠ U+0660 ARABIC-INDIC DIGIT ZERO
+٠ U+0660 ARABIC-INDIC DIGIT ZERO
+٨ U+0668 ARABIC-INDIC DIGIT EIGHT
+</code></pre>
+
+<p>第二个URL是/&amp;#x1D7D0;&amp;#x1D7CE;&amp;#x1D7CE;&amp;#x1D7D6;/：</p>
+
+<pre><code>U+1D7D0 MATHEMATICAL BOLD DIGIT TWO
+U+1D7CE MATHEMATICAL BOLD DIGIT ZERO
+U+1D7CE MATHEMATICAL BOLD DIGIT ZERO
+U+1D7D6 MATHEMATICAL BOLD DIGIT EIGHT
+</code></pre>
+
+<p><code>\d</code>能匹配这些字符并不是python的bug，因为Python能正确转换Unicode到对应数字</p>
+
+<pre><code>Python 2.6.3 (r263rc1:75186, Oct  2 2009, 20:40:30) [MSC v.1500 32 bit (Intel)] on win32
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; int(u&#39;\u0661&#39;)
+1
+&gt;&gt;&gt; int(u&#39;１&#39;)
+1
+</code></pre>
+
+<p>结论：以后多用<code>[0-9]</code>少用<code>\d</code></p>
+
+<p><ins>更新1：</ins><br>
+MATHEMATICAL BOLD DIGIT这个Unicode太威武了，MySQL没法存，我的blog第一次保存直接被截断了。。。我说怎么blog后面一大段内容不见了。。。用这个特性来防止被复制粘贴，被小偷程序采集入库应该很爽。</p>
+
+<p>换成HTML标记保存下来了，可是markdown语法的空四格代码段又不支持HTML标记。。。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/3229';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

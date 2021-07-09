@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>ITU这个2b，让人不吐槽不舒服。 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="ITU这个2b，让人不吐槽不舒服。" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">ITU这个2b，让人不吐槽不舒服。</h2>
+    <p class="post-date">Posted <time datetime="2013-04-23T23:59:10+00:00">2013-04-23</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>话说E.164这个标准还是挺重要的。电话国家区号。比如中国是 +86</p>
+<p>好吧。我们去看下官网：</p>
+<p><a href="http://www.itu.int/itudoc/itu-t/ob-lists/icc/e164_763.html">http://www.itu.int/itudoc/itu-t/ob-lists/icc/e164_763.html</a></p>
+<p>卧槽，哪里可以下载？？？？？？？</p>
+<p>查看源码——有pdf和doc下载。。。。。但是页面上没有？？？？</p>
+<p>用F12开发者工具一看，卧槽，尼玛居然需要水平滚动，下载icon在页面最右边！！！！！！！body的水平width是1910px！！！！！！我了个大艹！！！！！！</p>
+<p><img alt="" src="/images/tumblr/48751778838_0.png" /></p>
+<p>尼玛水平滚动也就算了，footer文字为毛position根据窗口固定？</p>
+<p>好了。下载pdf ，一打开：</p>
+<p><img alt="" src="/images/tumblr/48751778838_1.png" /></p>
+<p>尼玛逼的，怎么搞技术的都这么脑残，不懂 natural sort 呢？</p>
+<p>后来发现为啥不用natural sort了。这尼玛坑爹的国家区号是<strong>变长</strong>的。</p>
+<p>+123 123456<br />
++12 3123456  </p>
+<p>可能是两个来自两个国家的不同号码，这个没法区分。</p>
+<p>怎么办？ITU这帮聪明人想了个办法：</p>
+<p>比如 0 - 9 个位数区号，只有 +1北美 和+7毛熊。</p>
+<p>然后没有1或7开头的二位数、三位数区号。</p>
+<p>这设计让人泪流满面！！！！让我想起了牛逼的<a href="http://initiative.yo2.cn/archives/636125">兲朝IPv9网络</a>。</p>
+<p><a href="http://www.google.com/intl/en/takeaction/whats-at-stake/">tg还曾经</a>让 ITU 这个婊子去把网络审查标准国际化。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/48751778838';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

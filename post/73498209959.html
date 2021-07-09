@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>Manually resolve any DNS A record - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Manually resolve any DNS A record" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Manually resolve any DNS A record</h2>
+    <p class="post-date">Posted <time datetime="2014-01-16T03:31:00+00:00">2014-01-16</time> | <span>archive</span></p>
+  </header>
+
+  
+  <pre><code>printf "\0\1\1\0\0\1\0\0\0\0\0\0\6reddit\3com\0\0\1\0\1" |nc -vvuq1 8.8.8.8  53 |xxd
+</code></pre>
+<p>Explain:</p>
+<p>0x0001 means transaction ID. Invent one as you like  <br />
+0x0100 Flag. Always this for all requests  <br />
+0x0001 number of requests: always 1. because DNS RFC sucks  <br />
+0x0000 Response: 0  <br />
+0x0000 Authority Response: 0  <br />
+0x0000 Additional Response: 0  <br />
+\6 reddit The string reddit has length of 6  <br />
+\3 com The string com has length of 3  <br />
+0x0001 Record Type: A  <br />
+0x0001: Class: IN. Always this.    </p>
+<p>then ping the last four bytes</p>
+<pre><code>$ ping 0x60.0x11.0xb4.0x89
+PING 0x60.0x11.0xb4.0x89 (96.17.180.137) 56(84) bytes of data.
+</code></pre>
+<p>Why DNS Resource Record Name is always C0 0C?</p>
+<p>It's compression.</p>
+<p>C00C = 11000000 00001100</p>
+<p>First two bits means it's a pointer, b1100 = 12 bytes offset.</p>
+<p>Reference:</p>
+<p>http://www.ccs.neu.edu/home/amislove/teaching/cs4700/fall09/handouts/project1-primer.pdf</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/73498209959';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

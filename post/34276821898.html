@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>FEC在网络传输中的应用 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="FEC在网络传输中的应用" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">FEC在网络传输中的应用</h2>
+    <p class="post-date">Posted <time datetime="2012-10-24T23:19:00+00:00">2012-10-24</time> | <span>archive</span></p>
+  </header>
+
+  
+  <blockquote>
+<p>It is a bit different than your standard FEC. Traditionally, FEC works on a block (of bits/bytes) by block basis. You need to the entire block to decode the message. So the transmitter needs a good guess on the channel capacity to choose the correct coding strength for the block. If the sender guesses wrong, the channel is either under utilized (sending too slow) or over utilized (lost packet). In practice it is hard to guess the channel state.<br />
+The novelty is their work is the use of network coding, a form of rateless coding. A rateless code does not operate on a block by block basis. Instead once enough bits are received, the message can be decoded. The rate automatically adapts to the channel's capacity because of the encoding/decoding of the code.<br />
+Rateless codes are also known by different names, e.g. fountain (LT) codes, raptor codes, tornado codes, hybrid-ARQ, strider codes, spinal codes, and in a sense network coding (though this may have more applications).  </p>
+</blockquote>
+<p>最近一篇paper在网上吵得很火，这段话基本总结了这个技术的思想。</p>
+<p>纸：http://www.mit.edu/~medard/papers2011/Modeling%20Network%20Coded%20TCP.pdf</p>
+<p>from extremetech via <a href="http://www.extremetech.com/computing/138424-increasing-wireless-network-speed-by-1000-by-replacing-packets-with-algebra">1</a>, <a href="http://www.reddit.com/r/technology/comments/120198/mit_researchers_use_algebraic_equation_that/">2</a>, <a href="http://news.ycombinator.com/item?id=4690197">3</a></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/34276821898';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

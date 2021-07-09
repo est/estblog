@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>Chrome的Remoting Host (chromoting) - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Chrome的Remoting Host (chromoting)" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Chrome的Remoting Host (chromoting)</h2>
+    <p class="post-date">Posted <time datetime="2010-11-15T12:49:20+00:00">2010-11-15</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>由于没有时间去钻研Chromium源码，从目前泄漏的一些资料来看“Chromoting”的作用，相当于一种进程级别的远程桌面，叫远程进程吧。有点类似Vmware Fusion那种，也就是说，你的Chrome的一个tab可能是本地进程，也有可能是服务器Chrome OS远程资源加载渲染完毕然后显示在tab上的。</p>
+
+<p><img src="http://www.blogcdn.com/www.downloadsquad.com/media/2010/08/chromoting.jpg" alt=""></p>
+
+<p>加上Google NaCl的处理能力，chromoting应该说能够广泛用于移动设备。或许以后www网站在提供http://，spdy://方式访问的同时，还直接提供chrome://协议的chromting地址？这玩意儿能催生很多非常酷的应用。</p>
+
+<p>VNC, X11, RDP, Vmware VDI, Citrix HDX什么的，都是浮云。基于IPC的跨平台进程互通模型必定一统江湖。</p>
+
+<p>参考：<br>
+<a href="http://superuser.com/questions/207183/what-is-remoting-as-offered-by-google-chrome">What is remoting as offered by Google Chrome ?</a><br>
+Chromium-discuss <a href="http://groups.google.com/a/chromium.org/group/chromium-discuss/browse_thread/thread/a1e4a3007a72b964/">1</a>, <a href="http://groups.google.com/a/chromium.org/group/chromium-discuss/browse_thread/thread/673ad441d0cb64ae">2</a>, <a href="http://groups.google.com/a/chromium.org/group/chromium-discuss/browse_thread/thread/e136bd601cbed516/">3</a><br>
+<a href="http://www.theregister.co.uk/2010/06/09/google_to_include_remote_access_in_chrome_os/">Google morphs Chrome OS into netbook thin client</a><br>
+<a href="http://www.pcworld.com/businesscenter/article/198763/chrome_os_to_achieve_windows_support_through_chromoting.html">Chrome OS to Achieve Windows Support through "Chromoting"</a></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/3241';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

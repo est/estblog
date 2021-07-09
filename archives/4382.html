@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>Chrome 和 Native Client前瞻 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Chrome 和 Native Client前瞻" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Chrome 和 Native Client前瞻</h2>
+    <p class="post-date">Posted <time datetime="2011-12-15T09:33:58+00:00">2011-12-15</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>n天前一则<a href="https://news.ycombinator.com/item?id=3322280">新闻</a>，最近又想了很多</p>
+
+<p>摘要：</p>
+
+<ul>
+<li><p>DART would be an otherwise generally uninteresting Javascript-alike if not for one fact: it is designed and explicitly documented to run on an as-yet nonexistent virtual machine, distinct from the existing Javascript VM.</p></li>
+<li><p>(Native Client) is a sandboxing technology that allows running untrusted native code directly on a user&#39;s CPU with almost optimal virtualisation overhead (&lt;1% on i386, ~7% on amd64 and ARM). Initially billed as a &quot;research experiment&quot;, the stated aim was to allow writing fast code in C++ that can augment a JavaScript application, e.g. for the renderer of a 3D browser based game.</p></li>
+<li><p>It is worth noting that the original "experiment" failed - it relied on features (segmentation) that AMD removed from the amd64 platform, and so its useful life was basically 32bit processors only</p></li>
+<li><p>Google's intention for at least 6 months has been to extend NaCl to a point where rather than being the host process, Chrome itself becomes just another child, bootstrapped (and updated) via HTTP just like any other Native Client app.</p></li>
+</ul>
+
+<p>简单的说，Dart其实是NaCl向Javascript兼容模块，Chrome将来会自己跑在NaCl平台上。</p>
+
+<p>感觉很牛逼的样子。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/4382';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

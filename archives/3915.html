@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>wget中文无乱码带IRI编译版本(32bit) - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="wget中文无乱码带IRI编译版本(32bit)" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">wget中文无乱码带IRI编译版本(32bit)</h2>
+    <p class="post-date">Posted <time datetime="2011-04-15T03:24:23+00:00">2011-04-15</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>最近Google Code慢得跟狗屎一样，然后<code>svn export</code>或者<code>svn checkout</code>遇到大量文件，中途失败一下就悲剧了，因为没法断点续传。（或者我不知道）</p>
+
+<p>然后svn用代理也很sb，google的那个代理貌似不支持HTTP OPTIONS这种svn需要的语法，所以我就只有很悲剧的用<code>wget -m</code>了</p>
+
+<p>折腾了一下发现<code>wget -m</code>这玩意很很sb，居然不支持中文URL或文件名。好吧，发现wget支持两个参数</p>
+
+<pre><code>--local-encoding=ENC      use ENC as the local encoding for IRIs.
+--remote-encoding=ENC     use ENC as the default remote encoding.
+</code></pre>
+
+<p>满怀欣喜的用着两个参数 =UTF-8 的运行，结果发现</p>
+
+<blockquote>
+  <p>This version does not have support for IRIs</p>
+</blockquote>
+
+<p>卧槽啊卧槽， 于是自己弄源码编译，已经都<code>--with-libidn</code>了，结果这JB烂玩意儿只能随机处理<strong>一个或两个</strong>中文字符，UTF-8尼玛伤不起啊！</p>
+
+<p>最后用了<a href="http://cocobear.info/blog/2008/04/19/wget-chinese-encode/">cocobear的patch</a>，搞定了中文URL和文件名的问题，顺利<code>wget -m</code>来下载Google Code的一个SVN。</p>
+
+<p>以前折腾sftpd发现中文路径要挂，记得也是源码里只处理32-127的ASCII。</p>
+
+<p>为了节省大家的时间，提供一个编译好的32bit wget ELF文件下载：</p>
+
+<p><a href="http://blog.est.im/wp-content/uploads/2011/04/wget.zip">http://blog.est.im/wp-content/uploads/2011/04/wget.zip</a></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/3915';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

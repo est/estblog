@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>PonyORM - python的新一代黑魔法级别ORM - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="PonyORM - python的新一代黑魔法级别ORM" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">PonyORM - python的新一代黑魔法级别ORM</h2>
+    <p class="post-date">Posted <time datetime="2013-05-03T23:33:00+00:00">2013-05-03</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>简单的例子，来自<a href="http://ponyorm.com/">官网</a></p>
+<p>python的查询代码：</p>
+<pre><code>select(c for c in Customer
+     if sum(c.orders.price) &gt; 1000)
+</code></pre>
+<p>通过PonyORM翻译成SQL：</p>
+<pre><code>SELECT "c"."id"
+FROM "Customer" "c"
+  LEFT JOIN "Order" "order-1"
+    ON "c"."id" = "order-1"."customer"
+GROUP BY "c"."id"
+HAVING coalesce(SUM("order-1"."total_price"), 0) &gt; 1000
+</code></pre>
+<p>以前觉得<a href="http://peewee.readthedocs.org/en/latest/peewee/querying.html">peewee的查询语法</a>很clever，比Django那种丑爆的 <code>price__gt=1000</code> 好出一条街。那么PonyORM就超出其他python ORM一条银河系了。</p>
+<p>这个PonyORM的黑魔法在哪里呢？</p>
+<ol>
+<li>首先<code>select(x for x in ...)</code> 这是一个generator comprehension，和list comprehension不同的是，返回的是一个惰性求值的生成器，于是</li>
+<li>该表达式bytecode可以反编译</li>
+<li>把Python的AST翻译成SQL的AST</li>
+<li>分离和优化查询。</li>
+<li>把SQL AST生成为特定数据库的query</li>
+<li>执行SQL query</li>
+<li>把返回构造成python对象，并且缓存。</li>
+</ol>
+<p><a href="http://www.reddit.com/r/Python/comments/1co1pz/pony_orm_use_pure_python_to_speak_to_your_data/c9k6wrg">出自</a>PonyORM开发者 u/amalashkevich。更加详细的黑魔法解释可以<a href="http://stackoverflow.com/questions/16115713/how-pony-orm-does-its-tricks/16118756#16118756">在stackoverflow上</a>看到。</p>
+<p>可以说Peewee和PonyORM的设计才是优雅的。但是<a href="https://news.ycombinator.com/item?id=5576562">PonyORM更加高级</a>，基本接近了LINQ和超过了Hibernate HQL。</p>
+<p>顺便提一下，有一个另外<a href="http://www.reddit.com/r/Python/comments/1ctlml/pql_02_is_out_converts_python_expressions_to/">类似的</a>ORM——PQL，用于MongoDB：</p>
+<p>比如：</p>
+<pre><code>pql.find("a &amp;gt; 1 and b == 'foo' or not c.d == False")
+</code></pre>
+<p>翻译成MongoDB的查询：</p>
+<pre><code>{'$or': [{'$and': [{'a': {'$gt': 1}}, {'b': 'foo'}]}, {'$not': {'c.d': False}}]}
+</code></pre>
+<p>很可惜它是基于字符串的翻译，而不是原生python表达式。</p>
+<p>其他<a href="http://www.newsmth.net/bbstcon.php?board=Python&amp;gid=103169">讨论</a></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/49564925054';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>certmgr.msc。。。你们都被骗了 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="certmgr.msc。。。你们都被骗了" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">certmgr.msc。。。你们都被骗了</h2>
+    <p class="post-date">Posted <time datetime="2010-02-03T11:20:17+00:00">2010-02-03</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>今天在##networking里跟老外聊天发现CNNIC CA那个事情，大家都被骗了…</p>
+
+<ul>
+<li>很多教程都是，把cert删除了，就以为安全了，其实不然，再访问一次 https://www.enum.cn/ 那个cert又回来了。。。囧。。。正确的方法是<strong>禁止</strong>这个CERT的所有用途，并且添加到<strong>不信任</strong>证书区域里</li>
+<li>关于certmgr.msc那一步操作，大家又被骗了。。。Windows的证书<strong>至少</strong>分两种，machine的和user的。很不幸 certmgr.msc 只是处理的是当前user的。正确的做法是 mmc 里添加证书管理模块然后逐个设置<br><img src="http://blog.est.im/wp-content/uploads/2010/02/13.jpg" alt=""></li>
+<li>即使每一步都做了，我发现Chrome依然能够打开CNNIC证书验证的的SSL页面。这是个<a href="http://code.google.com/p/chromium/issues/detail?id=34231">bug</a>吗？</li>
+<li>我发现CNNIC这个ROOT CA可能用于将来IPv6/IPSec部署的。但是我不能确定IPSec是否一定会用现在系统里的PKI。老外说也有可能用的是PSK之类的。不知道读者有没有对IPv6/IPSec比较熟悉的？CNNIC ROOT CA这个举动会不会是和IPSec和IPv6有关</li>
+</ul>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/1015';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

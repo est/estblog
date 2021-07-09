@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>不知道为啥ifttt也能火 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="不知道为啥ifttt也能火" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">不知道为啥ifttt也能火</h2>
+    <p class="post-date">Posted <time datetime="2011-07-02T12:24:48+00:00">2011-07-02</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>Google Plus出来这几天，还有一个很火的就是<a href="http://ifttt.com/">If This Then That</a>。满村飞的邀请码。</p>
+
+<p>不明白啊，ifttt这软件不是第一个，也不是做得最好的，这个邀请泡沫就那么迷人嘛？</p>
+
+<p>几个月前参加beta看了下，ifttt的功能简直弱暴了：</p>
+
+<ul>
+<li>中心化抓取服务，肯定是延迟超高的瓶颈</li>
+<li>既然是中心化的，被abuse了，然后被各大hosting和ICP封IP也是意料中的。</li>
+<li>轮询机制</li>
+<li>伪同步。其实算上延迟基本就没法用。还不如用pubsubhubblob这种直接支持事件的实时服务好。</li>
+<li>逻辑太弱，不支持多事件和复合条件判断</li>
+<li>管道太直，不支持数据微加工。比如我想抓取的RSS的某一个xml的属性值转换为时间，用这个时间发送SMS怎么做？</li>
+</ul>
+
+<p>和ifttt类似的，我第一个想起来的就是<a href="http://www.xfruits.com/">xfruits</a>。以前我用这个来合并过RSS。为啥xfruits就没这么火？</p>
+
+<p>如果考虑我上面说的后两点，那么直接用<a href="http://pipes.yahoo.com/">Yahoo Pipes</a>好了。Yahoo Pipes其实限制也多，那么<a href="http://www.wordloosed.com/running-yahoo-pipes-on-google-app-engine">把Yahoo Pipes编译到Google App Engine</a>是个最好的办法。</p>
+
+<p>我只能说，最终用户永远只会用类似 ifttt 直观得不能再直观的服务，而且加上的邀请的神秘感，真的很能炒。高级货只适合技术宅。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/4097';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

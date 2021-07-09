@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="This blog is rated&nbsp;&nbsp;R⃣ , viewer discretion is advised" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="list-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="card-container side-gutter">
+      <header class="list-header">
+        <p class="list-header-subtext">This blog is rated&nbsp;&nbsp;R⃣ , viewer discretion is advised</p>
+        <!-- <h1 class="list-header-title">Est's Blog</h1> -->
+      </header>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/4148"  rel="bookmark" >
+              <h2 class="card-title">MongoDB之mapReduce()蛋痛</h2>
+            </a>
+            <p class="card-text"><ol>
+<li>直到发现 <code>printjson()</code>之前，调试起来麻烦。</li>
+<li>写起来很诡异，因为MongoDB本来就是诡异的BSON（用内置的Javascript操作起来就是JSON）数据结构，然后大量的Javascript Array的<code>forEach()</code>, <code>map()</code>就昏了。</li>
+<li>万幸的是MongoDB自带的SpiderMonkey还不支持Array.reduce(), yield()等各种蛋痛Javascript 1.8方法。</li>
+<li>mapReduce()代码维护起来麻烦，2周之后自己的代码可读性趋近于0了。郁闷。</li>
+<li>用的是pymongo这个 MongoDB Python Driver。Javascript和Python混写很蛋痛。估计Node.js写起来爽一点吧。还有就是命名风格也很蛋痛，findOne() 和 find_one() 是同一个东西在不同地方的写法，但是$addToSet又是同一个写法。</li>
+<li>Javascript还是比较烂的一门语言。我觉得最大的问题就是函数不能可选命名参数调用，把Object当字典用但是key又不加引号，缺乏Object.keys()和 Object.update() 方法，key只能是固定格式的字符。</li>
+</ol></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-08-02T03:50:34+00:00">2011-08-02</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/4146"  rel="bookmark" >
+              <h2 class="card-title">Unlimited Detail</h2>
+            </a>
+            <p class="card-text"><p><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://www.youtube.com/v/00gAbgBu8R4?version%3D3&amp;width=640&amp;height=390" width="640" height="390"></iframe></p>
+
+<p>Shit just got real</p>
+
+<p><a href="http://www.reddit.com/r/gaming/comments/j5sg6/games_are_going_to_get_really_realistic/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-08-02T02:13:21+00:00">2011-08-02</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/4144"  rel="bookmark" >
+              <h2 class="card-title">苏宁的渣服务器</h2>
+            </a>
+            <p class="card-text"><p>$ curl -I "http://www.suning.com"<br>
+HTTP/1.1 200 OK<br>
+Date: Sun, 31 Jul 2011 11:56:15 GMT<br>
+Server: IBM_HTTP_Server/7.0.0.13 (Unix)<br>
+Pragma: No-cache<br>
+Cache-Control: no-cache,no-store,max-age=0<br>
+Expires: Thu, 01 Jan 1970 00:00:00 GMT</p>
+
+<ol>
+<li>时间比北京时间晚了4分钟</li>
+<li>Expires很奇怪。。</li>
+</ol></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-07-31T12:03:11+00:00">2011-07-31</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/4135"  rel="bookmark" >
+              <h2 class="card-title">The Free Design - Love You</h2>
+            </a>
+            <p class="card-text"><p>今天看电影《Stranger than Fiction》觉得结束的vocal很好听。想收藏OST，在<a href="http://www.amazon.com/Stranger-Than-Fiction-Various-Artists/dp/B000IONLB8">Amazon</a>, <a href="http://en.wikipedia.org/wiki/Stranger_than_Fiction_%28soundtrack%29">wikipedia</a>, ，<a href="http://www.imdb.com/title/tt0420223/soundtrack">IMDb</a>和<a href="http://www.columbiarecords.com/strangerthanfiction/">Columbia Records</a>都没找到。</p>
+
+<p>想起了一个神奇的听歌搜歌网站，midomi.com，试了一下，太牛X了。果然准确<a href="http://www.midomi.com/index.php?action=main.album&amp;album_id=29355933f5d73abd5dc4fcbaf033410e&amp;track_id=2e6a0b2e9351b6b5efc82b00514b06f2&amp;from=voice_search">鉴定</a>：</p>
+
+<p><a href="http://www.xiami.com/song/2025405">http://www.xiami.com/song/2025405</a></p>
+
+<p></p>
+
+<blockquote>
+  <p>Give a little time for the child within you,<br>
+  don't be afraid to be young and free.<br>
+  Undo the locks and throw away …</p></blockquote></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-07-30T16:24:33+00:00">2011-07-30</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/4131"  rel="bookmark" >
+              <h2 class="card-title">WSGI的毛病</h2>
+            </a>
+            <p class="card-text"><p>来自<a href="http://lucumr.pocoo.org/2011/7/27/the-pluggable-pipedream/">pocoo.org</a></p>
+
+<ul>
+<li>'wsgi.input' is ill-specified but in practice it rarely causes troubles because a) half the servers are already extending WSGI and b) even though half the libraries are in violation it's only the edge cases that cause problems and those are rare.</li>
+<li>Headers cannot be streamed which …</li></ul></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-07-29T10:10:49+00:00">2011-07-29</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/4127"  rel="bookmark" >
+              <h2 class="card-title">Wanna dance?</h2>
+            </a>
+            <p class="card-text"><p><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://www.youtube.com/v/QOSR76VHhII?version%3D3&amp;width=640&amp;height=390" width="640" height="390"></iframe></p>
+
+<p>BGM来自Mass Effect 2 Lower Afterlifed Lo-Fi Epic the Techno Madness Mix</p>
+
+<p><a href="http://www.reddit.com/r/tf2/comments/j20sk/i_dont_even/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-07-28T12:03:25+00:00">2011-07-28</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/4124"  rel="bookmark" >
+              <h2 class="card-title">组策略Software Restriction Policies (SRP)提权</h2>
+            </a>
+            <p class="card-text"><ol>
+<li>rename <code>gpdisable.dll</code> to <code>deskpan.dll</code>;</li>
+<li>create a new folder and name it as <code>files.{42071714-76d4-11d1-8b24-00a0c9068ff3}</code>;</li>
+<li>place <code>deskpan.dll</code> to the new folder;</li>
+<li>open the folder;</li>
+<li>create a new rich text document in the folder;</li>
+<li>double-click the rich-text document.</li>
+<li>Wordpad runs with gpdisable.dll</li>
+<li>Bypassed :) We can run any process …</li></ol></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-07-27T06:44:40+00:00">2011-07-27</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/4122"  rel="bookmark" >
+              <h2 class="card-title">高手拍照</h2>
+            </a>
+            <p class="card-text"><p>原来高手是这样拍照的。我就只能拍出第二张图那样的效果。终于发现这里面的区别了。</p>
+
+<p><img src="http://i.imgur.com/3ND3k.jpg" alt=""></p>
+
+<p>最后一张高清大图：</p>
+
+<p><a href="http://i.imgur.com/w66zs.jpg">http://i.imgur.com/w66zs.jpg</a></p>
+
+<p>系列大图</p>
+
+<p><a href="http://imgur.com/a/1EoIf">http://imgur.com/a/1EoIf</a></p>
+
+<p>via <a href="http://www.reddit.com/r/pics/comments/j04eh/up_at_sunrise_taking_my_favorite_photo/">1</a>, <a href="http://www.reddit.com/r/wallpapers/comments/hvoh1/im_a_photographer_and_these_are_some_of_my/">2</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-07-27T02:11:01+00:00">2011-07-27</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/4120"  rel="bookmark" >
+              <h2 class="card-title">萌妹子</h2>
+            </a>
+            <p class="card-text"><p><img src="http://media.comicvine.com/uploads/6/62134/1924562-sdcc2011_comicvine_cosplay_0548_super.jpg" alt=""></p>
+
+<p><a href="http://www.reddit.com/r/tf2/comments/iz463/beauty_scout_cosplay/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-07-25T14:54:44+00:00">2011-07-25</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/4109"  rel="bookmark" >
+              <h2 class="card-title">Fuck Google</h2>
+            </a>
+            <p class="card-text"><p>你麻痹的把老子Google  Plus Profile冻结了，</p>
+
+<blockquote>
+  <p>Your profile has been suspended</p>
+
+  <p>After reviewing your profile, we have determined that the name that you provided violates our Community Standards.</p>
+
+  <p>If you believe that your profile has been blocked in error, please provide us with additional information via this form and we will review your …</p></blockquote></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-07-22T10:25:08+00:00">2011-07-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/4107"  rel="bookmark" >
+              <h2 class="card-title">wtf</h2>
+            </a>
+            <p class="card-text"><p><img src="http://img3.cache.netease.com/photo/0001/2011-07-16/900x600_7924OS0A19BR0001.jpg" alt=""></p>
+
+<p>7月9日，广东东莞中堂镇一家专业制作医用硅胶仿真人皮面具的工厂里，工作人员演示仿真人皮的使用。时下，一种号称“可以改变人脸相貌”的仿真人皮面具悄然兴起，已成国内影视圈、美容圈、娱乐圈以及时尚化妆舞会上的新宠。据了解，目前仿真人皮面具在市场售价在800-13000元之间，最高可达3万-6万元不等。CFP</p>
+
+<p><a href="http://news.163.com/photoview/19BR0001/16569.html#p=7924OS0A19BR0001">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-07-16T17:43:13+00:00">2011-07-16</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/4103"  rel="bookmark" >
+              <h2 class="card-title">IEEE的hacker二维谱系表</h2>
+            </a>
+            <p class="card-text"><p><img src="http://blog.est.im/wp-content/uploads/2011/07/2011-07-14_225646.png" alt=""></p>
+
+<p>我表示我不在分布域区间内。</p>
+
+<p><a href="http://news.ycombinator.com/item?id=2762837">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-07-14T14:59:39+00:00">2011-07-14</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/4101"  rel="bookmark" >
+              <h2 class="card-title">美帝国疆域扩张史</h2>
+            </a>
+            <p class="card-text"><p><img src="http://i.imgur.com/RxWxc.gif" alt=""></p>
+
+<p>北美版</p>
+
+<p><img src="http://upload.wikimedia.org/wikipedia/commons/9/9f/Non-Native_American_Nations_Control_over_N_America_1750-2008.gif" alt=""></p>
+
+<p>via <a href="http://www.reddit.com/r/pics/comments/ioc0i/evolution_of_the_united_states/">1</a>, <a href="http://www.reddit.com/r/history/comments/ipe4y/heres_a_gif_showing_territory_change_in_north/">2</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-07-14T09:37:13+00:00">2011-07-14</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/4100"  rel="bookmark" >
+              <h2 class="card-title">伟大的尼古拉·特斯拉同志生日快乐</h2>
+            </a>
+            <p class="card-text"><p><img src="http://i.imgur.com/oZZc7.jpg" alt=""></p>
+
+<p><a href="http://www.reddit.com/r/gaming/comments/ils7s/happy_birthday_tesla_heres_how_i_and_i_suspect/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-07-11T00:57:29+00:00">2011-07-11</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/4097"  rel="bookmark" >
+              <h2 class="card-title">不知道为啥ifttt也能火</h2>
+            </a>
+            <p class="card-text"><p>Google Plus出来这几天，还有一个很火的就是<a href="http://ifttt.com/">If This Then That</a>。满村飞的邀请码。</p>
+
+<p>不明白啊，ifttt这软件不是第一个，也不是做得最好的，这个邀请泡沫就那么迷人嘛？</p>
+
+<p>几个月前参加beta看了下，ifttt的功能简直弱暴了：</p>
+
+<ul>
+<li>中心化抓取服务，肯定是延迟超高的瓶颈</li>
+<li>既然是中心化的，被abuse了，然后被各大hosting和ICP封IP也是意料中的。</li>
+<li>轮询机制</li>
+<li>伪同步。其实算上延迟基本就没法用。还不如用pubsubhubblob这种直接支持事件的实时服务好。</li>
+<li>逻辑太弱，不支持多事件和复合条件判断</li>
+<li>管道太直，不支持数据微加工。比如我想抓取的RSS的某一个xml的属性值转换为时间，用这个时间发送SMS怎么做？</li>
+</ul>
+
+<p>和ifttt类似的，我第一个想起来的就是<a href="http://www.xfruits.com/">xfruits</a>。以前我用这个来合并过RSS。为啥xfruits就没这么火？</p>
+
+<p>如果考虑我上面说的后两点，那么直接用<a href="http://pipes.yahoo.com/">Yahoo Pipes</a>好了。Yahoo Pipes其实限制也多，那么<a href="http://www.wordloosed.com/running-yahoo-pipes-on-google-app-engine">把Yahoo Pipes编译到Google App Engine</a>是个最好的办法。</p>
+
+<p>我只能说，最终用户永远只会用类似 ifttt …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-07-02T12:24:48+00:00">2011-07-02</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/4088"  rel="bookmark" >
+              <h2 class="card-title">iPad两个音乐软件：autoflip和etude</h2>
+            </a>
+            <p class="card-text"><p>最近一直在玩电钢琴，一直很迷恋Windows上的<a href="http://synthesiagame.com/">Synthesia</a>这个软件，这个软件的好处是：通过MIDI信号来识别你的弹奏，和现有的midi文件做对比，判断你是否把曲谱弹对了。这自学者来说太爽了。</p>
+
+<p><img src="http://www.synthesiagame.com/images/screenshot_sheet.png" alt=""></p>
+
+<p>Synthesia还有几个NB的功能：用算法把midi自动显示为五线谱，区分左右手，最新的dev版还加入了指法提示。（虽然fingering hint是人工输入数据，保存为metadata到midi文件，不是算法判断的）</p>
+
+<p>但是软件虽然好，但是要在电钢琴前面放一个小桌子，再放笔记本，在小房间里还是显得有点挤。如果电钢琴靠墙，那么本本放侧边，你就只能偏头痛的去看Synthesia屏幕上的谱。</p>
+
+<p>我又想起来我还有个iPad。iPad上面，我知道的，有两个显谱软件：Etude 和 Autoflip</p>
+
+<p><a href="http://itunes.apple.com/us/app/etude-sheet-music-on-steroids/id358352641?mt=8">Etude</a> ~ sheet music on steroidsBy Wonder Warp Software SP</p>
+
+<p><img src="http://a1.mzstatic.com/us/r1000/019/Purple/f0/e9/93/mzi.pfnppahg.175x175-75.jpg" alt=""></p>
+
+<p><img src="http://a1.mzstatic.com/us/r1000/004/Purple/e6/74/91/mzl.zexddils.320x480-75.jpg" alt=""></p>
+
+<p><img src="http://a3.mzstatic.com/us/r1000/037/Purple/b4/0e/76/mzl.wotomlfr.320x480-75.jpg" alt=""></p>
+
+<p><a href="http://itunes.apple.com/us/app/autoflip/id413455877?mt=8">autoflip</a> By Velvetmatter, LLC</p>
+
+<p><img src="http://a3.mzstatic.com/us/r1000/042/Purple/20/5b/65/mzl.uxjoryfv.175x175-75.jpg" alt=""></p>
+
+<p><img src="http://a3.mzstatic.com/us/r1000/028/Purple/b3/20/89/mzl.fpumgiiq.480x480-75.jpg" alt=""></p>
+
+<p>Etude是在Hacker News上看到的（<a href="http://news.ycombinator.com/item?id=1196055">1</a>, <a href="http://www.hnsearch.com/search#request/submissions&amp;q=etude&amp;start=0">2</a>），功能非常类似Synthesia，不同的是 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-07-01T14:24:28+00:00">2011-07-01</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/4083"  rel="bookmark" >
+              <h2 class="card-title">tf2的更新把我笑抽了</h2>
+            </a>
+            <p class="card-text"><p><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://www.youtube.com/v/6kHIxNq-QuU?version%3D3&amp;width=640&amp;height=390" width="640" height="390"></iframe></p>
+
+<p><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://www.youtube.com/v/FZfXi8W0O4k?version%3D3&amp;width=640&amp;height=390" width="640" height="390"></iframe></p>
+
+<p><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://www.youtube.com/v/ivQJe1ys3zc?version%3D3&amp;width=640&amp;height=390" width="640" height="390"></iframe></p>
+
+<p><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://www.youtube.com/v/sxM5cNP36TA?version%3D3&amp;width=640&amp;height=390" width="640" height="390"></iframe></p>
+
+<p><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://www.youtube.com/v/5QbKtNu-JMg?version%3D3&amp;width=640&amp;height=390" width="640" height="390"></iframe></p>
+
+<p>facestab 美~~</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-06-27T14:41:48+00:00">2011-06-27</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/4080"  rel="bookmark" >
+              <h2 class="card-title">中国网站开发者在网吧精心制作反腐网站</h2>
+            </a>
+            <p class="card-text"><p><img src="http://blog.est.im/wp-content/uploads/2011/06/5.png" alt=""></p>
+
+<blockquote>
+  <p>This photo taken on May 12 shows people at an internet cafe in Beijing. Chinese web developers are creating sites encouraging people to share stories of bribes online.</p>
+</blockquote></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-06-27T09:42:12+00:00">2011-06-27</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/4076"  rel="bookmark" >
+              <h2 class="card-title">某雷《大抄袭》决战Team Fortress 2</h2>
+            </a>
+            <p class="card-text"><p>某雷最近搞了个天雷滚滚的<a href="http://fc.xunlei.com/">东西</a></p>
+
+<p><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://www.youtube.com/v/ngDVbt0rq_Q?version%3D3&amp;width=640&amp;height=390" width="640" height="390"></iframe></p>
+
+<p><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://www.youtube.com/v/FaIYSJsY76E?version%3D3&amp;width=640&amp;height=390" width="640" height="390"></iframe></p>
+
+<p>官方网站<a href="http://fc.xunlei.com/c/1308039412635.shtml">说</a>：</p>
+
+<blockquote>
+  <p>《大冲锋》由大名鼎鼎的《古墓丽影》系列游戏制作人 Troy Horton 领衔担纲产品制作，研发团队云集世界顶尖游戏开发者，分别来自EA, Ubi Soft, Sony ，blizzard的精英程序、策划、设计人员，一共拥有超过14年、30余款游戏开发经验。《古墓丽影》作为一款优秀的动作冒险游戏，其逸秀品质放在今天来看也不失为经典，而这一切都应该归功于其幕后强大的制作班底。 Troy Horton蛰伏多年，如今在充分了解中国本土玩家喜好和需求的基础上推出《大冲锋》，希望给中国玩家带来一个耳目一新的FPS游戏精品。</p>
+</blockquote>
+
+<p>贴吧消息<a href="http://tieba.baidu.com/f?kz=1110730106">说</a>：</p>
+
+<blockquote>
+  <p>其实迅雷是把项目外包给有实力的司。主要山寨这个构思绝对是迅雷的领导想出来的....开发的人无罪。主要是我加的一个群有人是在上海PDE工作，他就跟我们直接说了就山寨TF2+BF:HS。。。</p>
+
+  <p>PDE是啥司？ 一个庞大的外包司，当然自己也有自主开发东西。BC2等游戏都有他们的参与...<a href="http://www.pearldigital.com/cn/index.html">http://www.pearldigital.com/cn/index.html …</a></p></blockquote></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-06-16T15:37:59+00:00">2011-06-16</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/4074"  rel="bookmark" >
+              <h2 class="card-title">兲朝的网站果然很威武</h2>
+            </a>
+            <p class="card-text"><p>Google搞了个<a href="http://httparchive.org/">HTTP Archive</a></p>
+
+<p>Pages with the Most Javascript</p>
+
+<p>我勒个擦丫，千脑的1.3MB的javascript是肿么做到的？肿么做到的？肿么做到的？</p>
+
+<p><img src="http://chart.apis.google.com/chart?chxl=1:%7Caverage%7Chttp%3A%2F%2Fwww.fannation.com%2F%7Chttp%3A%2F%2Fwww.qiannao.com%2F%7Chttp%3A%2F%2Fwww.zipcar.com%2F%7Chttp%3A%2F%2Fwww.craktraffic.com%2F%7Chttp%3A%2F%2Fwww.unicaondemand.com%2F&amp;chdlp=b&amp;chdl=size%20of%20all%20scripts%20(kB)&amp;chxtc=0,6&amp;chxs=0,676767,11.5,0,l%7C1,676767,11.5,1,lt,67676700&amp;chxr=1,0,160%7C0,0,4044&amp;chxt=x,y&amp;chbh=22&amp;chs=640x260&amp;cht=bhg&amp;chco=B4B418&amp;chds=0,4044&amp;chd=t:3944,2937,1433,1327,1313,131&amp;chm=N**+kB,676767,0,,12,,:4:&amp;chma=%7C0,5&amp;chtt=Pages+with+the+Most+JavaScript" alt=""></p>
+
+<p>Page with the Most Flash Files</p>
+
+<p><img src="http://chart.apis.google.com/chart?chxl=1:%7Caverage%7Chttp%3A%2F%2Fwww.sun0769.com%2F%7Chttp%3A%2F%2Fwww.telecinco.es%2F%7Chttp%3A%2F%2Fwww.soufun.com%2F%7Chttp%3A%2F%2Fwww.destructoid.com%2F%7Chttp%3A%2F%2Fwww.afpbb.com%2F&amp;chxtc=0,6&amp;chxs=0,676767,11.5,0,l%7C1,676767,11.5,1,lt,67676700&amp;chxr=1,0,160%7C0,0,83&amp;chxt=x,y&amp;chbh=22&amp;chs=640x260&amp;cht=bhg&amp;chco=AA0033&amp;chds=0,83&amp;chd=t:73,41,41,36,35,1.5114&amp;chm=N**,676767,0,,12,,:4:&amp;chma=%7C0,5&amp;chtt=Pages+with+the+Most+Flash+Files" alt=""></p>
+
+<p>搜房 和 东莞阳光网</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-06-16T02:54:37+00:00">2011-06-16</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+    </main>
+    <nav class="pagination-nav side-padding">
+<a href="/index.22.html" class="pagination-newer">&lt; Newer Posts</a><a href="/index.24.html" class="pagination-older">Older Posts &gt;</a>    </nav>
+
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+</html>

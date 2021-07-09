@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>EFF的浏览器指纹追踪技术 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="EFF的浏览器指纹追踪技术" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">EFF的浏览器指纹追踪技术</h2>
+    <p class="post-date">Posted <time datetime="2010-02-02T04:25:26+00:00">2010-02-02</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>EFF那个不用IP或者cookie追踪用户的<a href="http://internet.solidot.org/article.pl?sid=10/01/28/1111221&amp;threshold=-1">新闻</a>大家可能都看了，但是估计好多人没有<a href="http://panopticlick.eff.org/index.php?action=log&amp;js=yes">亲自去试</a>过</p>
+
+<p>我去玩了下，还是很能启发人的。EFF这个panopticlick技术是通过下面几个特征来区分浏览器指纹的</p>
+
+<ul>
+<li>User Agent</li>
+<li>HTTP_ACCEPT Headers 这个其实可以把所有HTTP头都算进来</li>
+<li>Browser Plugin Details 这个是通过DOM里一个接口enum的（貌似是<code>displayComponent</code>？）。貌似IE和Mozilla里还有更多私有接口</li>
+<li>Time Zone 这个还少了<a href="http://blog.est.im/archives/538">一堆</a> <code>toLocal*()</code> 方法</li>
+<li>Screen Size and Color Depth</li>
+<li>System Fonts 这个是通过Flash得到的。Flash被禁用了会尝试Java applet</li>
+<li>Are Cookies Enabled?</li>
+<li>Limited supercookie test 这个还少了一个HTC Behavior里的存储方法</li>
+</ul>
+
+<p>我觉得这里面最有趣的就是搜集系统字体这个技术了。。。呵呵。。。假如Flash和Java applet都被禁用了，我们就安全了吗？</p>
+
+<p>错。我们依然有办法搜集和遍历系统系统字体，通过纯<a href="http://www.lalit.org/lab/javascript-css-font-detect">JS+CSS就可以判断系统是否已经安装一个字体</a>（我以前<a href="http://initiative.yo2.cn/archives/630650">写过</a>这个猥琐的技术）：</p>
+
+<p><img src="http://www.lalit.org/wordpress/wp-content/uploads/2008/05/fontwidth.gif" alt=""></p>
+
+<p>这个结合<a href="http://initiative.yo2.cn/archives/622238" title="一种新的密码输入方式：击键力学">18摸的猥琐技术</a>来做盗号预防很爽。</p>
+
+<p>see more discussions on <a href="http://www.reddit.com/domain/panopticlick.eff.org">reddit</a></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/964';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

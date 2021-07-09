@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>Chrome的热键补丁又可以用了 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Chrome的热键补丁又可以用了" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Chrome的热键补丁又可以用了</h2>
+    <p class="post-date">Posted <time datetime="2010-01-30T03:55:43+00:00">2010-01-30</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>以前发过一个<a href="http://initiative.yo2.cn/archives/642056">Chrome的热键补丁</a>（<a href="http://zxn0.googlecode.com/svn/chrome_hotkey_patch/chrome_hotkey_patch.exe">下载</a>，<a href="http://zxn0.googlecode.com/svn/chrome_hotkey_patch/chrome_hotkey_patch.au3">源码</a>），主要是修改chrome.dll实现下面4个热键</p>
+
+<pre><code>F1 撤销关闭标签
+F2 上一个标签
+F3 下一个标签
+F4 关闭当前标签
+</code></pre>
+
+<p>不过Chrome 2.x之后这个补丁就失效了，我去Chrome论坛、列表和issue list闹了几次（<a href="https://groups.google.com/group/chromium-dev/browse_thread/thread/b7e9be25f7208c40">1</a>, <a href="http://www.google.com/support/forum/p/Chrome/thread?tid=2500d7b4944e8519&amp;hl=en">2</a>, <a href="http://code.google.com/p/chromium/issues/detail?id=31048">3</a>）没人理，而且被鄙视了。</p>
+
+<p>这个bug很奇怪之处，是把chrome.dll给mod之后有按键冲突，F1和P键冲突，F2和O键冲突，F3和R键冲突，F4和S键冲突，当时有网友在我blog上留言反馈我一筹莫展，不知道什么情况，后来在#chromium的IRC上有高人提示可能是终端转义代码：</p>
+
+<pre><code>F1      ^[OP
+F2      ^[OQ
+F3      ^[OR
+F4      ^[OS
+</code></pre>
+
+<p>这个bug就很诡异了。Win32版本的Chrome怎么会涉及到终端转义代码？</p>
+
+<p>这个问题就不了了之。</p>
+
+<p>Google官方也提供了一个<a href="https://chrome.google.com/extensions/detail/mgjjeipcdnnjhgodgjpfkffcejoljijf">自定义快捷键的extension</a>，不过这玩意儿太烂了，只有http://和https://页面支持热键，空白页和file://，chrome://，about:之类的页面就不行，而且最白痴的是必须页面载入完全之后才能使用相应热键，而且用起来感觉很卡，延迟比较高。最重要的是，这个extension是日本人写的。所以要鄙视到底。</p>
+
+<p>不过今天Chrome Dev Channel的 5.0.307.1 (r37331) 发布了（完整安装包直接<a href="http://dl.google.com/chrome/install/307.1/chrome_installer.exe">下载地址</a>，感谢<a href="http://twitter.com/terryxxy/status/8395365328">@terryxxy</a>）</p>
+
+<p>满怀希望的试了试我的补丁，居然又可以用了，100%完美兼容，很高兴。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/920';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>物联网 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="物联网" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">物联网</h2>
+    <p class="post-date">Posted <time datetime="2012-02-24T04:29:05+00:00">2012-02-24</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>最近装修房子，想自己折腾一个手机可查看的视频监控，乱写点自己的感受。</p>
+
+<p>淘宝上最便宜的 720p + WiFi + 云台 摄像头都是600人刀。感觉太贵了。640x480的VGA倒是便宜。220左右。</p>
+
+<p>同轴闭路信号的监控，基本都是380线这种悲剧的分辨率，Sony有750线的高清方案，但是依然悲剧。</p>
+
+<p>数字化摄像头，基本都是USB接口，USB接口上了5米就是渣。HDMI超过10米成本上升太吓人。而且需要额外的服务器端设备才能实现IP Cam/webcam的功能。</p>
+
+<p>想来想去，还是以太网 +RJ45好。说不定还可以PoE网线供电</p>
+
+<p>但是我又想到了一个山寨办法，最近Raspberry Pi的生产线测试已经<a href="http://www.raspberrypi.org/archives/676">接近尾声开始准备出货</a>了</p>
+
+<blockquote>
+  <p>Meanwhile, the manufacturing cogs continue to turn. We hope the Raspberry Pis from the first batch will be out of testing by the end of Thursday, and on their way to freight.</p>
+</blockquote>
+
+<p>要是能$25买到，随便配一个USB摄像头，就可以基本做成很好的监控+编码平台。而且http服务器可以自己折腾毫无压力。避免了产品化监控头的专用二进制封装协议，还要ActiveX才能看。</p>
+
+<p>现在想起来，智能家庭还是很有趣的话题。电源、信号、多路联网这些都是麻烦事。</p>
+
+<p>今天又得知，我们公司的打卡机考勤记录，居然是每周人工用优盘去拷贝。感觉好落后。直接连一根网线不就完了吗？</p>
+
+<p>但是又想到，上一个以太网或者WiFi模块，还不够，还得做一个服务器端，以供远程实时查询；</p>
+
+<p>做服务器端还远远不够，还得做权限和访问控制。</p>
+
+<p>这些都是麻烦的课题。如果有一套基于IP的协议能提供基本信息输入输出和权限业务，那是最好不过了。</p>
+
+<p>这尼玛不就是物联网么。</p>
+
+<p>40年前谁会知道，私人会有这么大的计算需求；现在谁也不能否定每个人都有联网数据需求。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/4518';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

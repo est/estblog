@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>DIY OAuth 2 library：从97KB到22行Python - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="DIY OAuth 2 library：从97KB到22行Python" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">DIY OAuth 2 library：从97KB到22行Python</h2>
+    <p class="post-date">Posted <time datetime="2012-07-09T05:23:00+00:00">2012-07-09</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>最近的项目需要用代码去读取一些Google Spreadsheet的数据，看了下Google官方的Spreadsheet API，读取数据这些好说，就是xml格式我比较讨厌。于是想用<code>alt=json</code>这个<a href="https://developers.google.com/gdata/docs/json">json输出API</a>，试用发现，对于ClientLogin（浏览器cookie）直接调用Spreadsheet API的Google Apps用户而言，这个json输出是400不可用的。于是只能撸一个OAuth读取数据试试了。</p>
+<p>看了下官方的<a href="http://code.google.com/p/gdata-python-client/">Google Data APIs Python Client Library</a>，我勒个擦啊，一大坨垃圾依赖，比如<code>OpenSSL.crypto</code>，<a href="http://code.google.com/p/httplib2/source/browse/python2/httplib2/__init__.py">httplib2</a>等。</p>
+<p>仔细看了下Google <a href="https://developers.google.com/accounts/docs/OAuth2ServiceAccount">OAuth 2.0</a>的文档，似乎也不复杂的样子，至少比<a href="http://initiative.yo2.cn/archives/633801">OAuth 1.0 那种3 legged login</a> 简单多了。于是就自己DIY了一个</p>
+<p>OAuth 2.0把流程分为了几个scenario，比如用于Web交互，客户端app，设备，等等。我需要的只是服务器读取某个Google Spreadsheet的一些数据，无须用户点击几个“确认”，所以属于Service Account</p>
+<p>当然，官方<a href="https://developers.google.com/accounts/docs/OAuth2ServiceAccount#overview">强烈不推荐</a>你自己去实现OAuth 2.0这一套流程</p>
+<p>&gt; The rest of this article describes the specifics of creating a JWT, signing the JWT, forming the access token request, and handling the response. Libraries should abstract these specifics from your application. Again, developers are strongly encouraged to attempt to use an existing library <strong>rather than building your own</strong> support for server-to-server interactions.</p>
+<p>所以我就直接去逆向他们的<a href="http://code.google.com/p/google-api-python-client/source/browse/samples/service_account/tasks.py">Tasks API with a Service account</a> sample</p>
+<p>安装了一大票依赖，痛苦编译好pyopenssl之后，直接运行，出错：</p>
+<pre><code>oauth2client.client.AccessTokenRefreshError: invalid_grant
+</code></pre>
+<p>加个Fiddler代理调试：</p>
+<pre><code>http = httplib2.Http(
+  proxy_info=httplib2.ProxyInfo(
+    httplib2.socks.PROXY_TYPE_HTTP, 
+    proxy_host='10.0.18.2', 
+    proxy_port=8888
+), ca_certs='FiddlerRoot.cer')
+</code></pre>
+<p>发现https不支持。于是</p>
+<pre><code>httplib2.debuglevel = 4
+</code></pre>
+<p>终于看到一坨东西了。</p>
+<p>对比上面那个 OAuth 2文档，可以轻松写出OAuth 2.0获得access_token的代码：</p>
+<p>需要用到API用户email，p12密钥两个东西，可以从Google API Console里获得。</p>
+<pre><code>import base64
+
+b64 = lambda x:base64.urlsafe_b64encode(x).rstrip('=')
+
+header = '{"alg":"RS256","typ":"JWT"}'
+ts_now = int(time.time())
+
+claim_set = {
+    "iss": email,
+    "scope": ' '.join(scope),
+    "aud": "https://accounts.google.com/o/oauth2/token",
+    "exp": ts_now+3600,
+    "iat": ts_now,
+}
+
+jwt = '%s.%s' % (url_b64(header), url_b64(json.dumps(claim_set)))
+# convert pkcs12 to private key
+p = Popen('openssl pkcs12 -in key.p12 -nocerts -passin stdin -nodes -out key.pem', shell=True, stdin=PIPE, stdout=PIPE)
+p.stdin.write('notasecret') # Google's key default password
+p.stdin.close()
+p.wait()
+# RSA sign with sha256 using private key
+p = Popen('openssl dgst -sha256 -sign 'key.pem' -keyform PEM', shell=True, stdin=PIPE, stdout=PIPE)
+p.stdin.write(jwt)
+p.stdin.close()
+sig = p.stdout.read()
+p.wait()
+
+print '%s.%s' % (jwt, url_b64(sig))
+</code></pre>
+<p>有了access_token之后，获取spreadsheet数据就很简单了，我也拿<a href="https://developers.google.com/gdata/samples/spreadsheet_sample">sample里</a>的spreadsheet作为例子：</p>
+<p>https://spreadsheets.google.com/feeds/list/o13394135408524254648.240766968415752635/od6/public/values?alt=json&amp;access_token=1/XXXXX</p>
+<p>其中<code>1/XXXXX</code> 就是OAuth 2.0得到的access_token。</p>
+<p>对比一下，上面提到的Google官方的OAuth 2 library是97KB大小，自己DIY的算上注释都才只有22行。。。</p>
+<p>Google客户端的代码是用了<code>import OpenSSL</code>来直接实现RSA SHA256签名，我直接先后启动两个openssl命令行实现的。好处是不用麻烦的编译pyopenssl这个库依赖了。服务器部署方便。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/26823744858';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

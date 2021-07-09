@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="This blog is rated&nbsp;&nbsp;R⃣ , viewer discretion is advised" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="list-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="card-container side-gutter">
+      <header class="list-header">
+        <p class="list-header-subtext">This blog is rated&nbsp;&nbsp;R⃣ , viewer discretion is advised</p>
+        <!-- <h1 class="list-header-title">Est's Blog</h1> -->
+      </header>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/2641"  rel="bookmark" >
+              <h2 class="card-title">42张照片叠加</h2>
+            </a>
+            <p class="card-text"><p>来自<a href="http://apod.nasa.gov/apod/ap100720.html">NASA APOD</a></p>
+
+<p><img src="http://apod.nasa.gov/apod/image/1007/lightning_kotsiopoulos_big.jpg" alt=""></p>
+
+<p>那哥们儿其实就是等雷打完了去拍的第42张照片。。。</p>
+
+<p><a href="http://www.reddit.com/r/pics/comments/cwn7u/this_is_a_photo_sequence_of_42_stacked_shots/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-08-03T13:20:07+00:00">2010-08-03</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/2633"  rel="bookmark" >
+              <h2 class="card-title">解决问题的代价是制造更多的问题</h2>
+            </a>
+            <p class="card-text"><p>看到 <a href="http://cnbeta.com/articles/118186.htm">《搜狗浏览器“网速保护”专版》</a>。我笑了。这真是<strong>支那精神</strong>的又一次完美体现。</p>
+
+<p>先扯远一点，说说下载软件的故事：</p>
+
+<p>国外为什么一般都没人专门用多线程下载软件？因为别人网速好，如果网速不好QoS做得好，不会出现天朝垃圾ISP这种下载无故中断的情况。所以断点续传没有必要。IE，Firefox和Chrome那种默认自带的下载框就足够普通使用了。</p>
+
+<p>什么是多线程下载？多线程下载，用一种早期的说法，叫 leech。比Netants还早的一个下载软件就叫“网络吸血鬼”。</p>
+
+<p>而国内最牛逼的迅雷又做了其他几件事情，之一就是“抢占式下载”。什么叫抢占式？一个机器的带宽和网速是有限的，TCP包本来大家都按照秩序一个一个排队，排不动了就阻塞。直到轮到你收发包为止。</p>
+
+<p>而迅雷不会理你这么多，直接插队。强制用完带宽</p>
+
+<p>所以早期迅雷一般一启动整个LAN的网络就挂了。</p>
+
+<p>回到前面，为什么我看了那则新闻会笑呢？搜狗的这个“网速保护”，是不是又重新发明了一套TCP包排队的秩序呢？</p>
+
+<p><img src="http://failblog.files.wordpress.com/2009/07/fail-owned-hat-fail.jpg?w=300" alt=""></p>
+
+<p>废了这么一大堆劲儿，为什么不从一开始每一个程序都按照TCP默认队列收发包，不去故意抢占网速呢？</p>
+
+<p>就好比一个体育馆的出口，大家都按秩序挨个儿出去，比起了火灾大家都慌忙挤门逃生的速度快得多。最后大家都在挤，以至于还得在门口弄一个交通疏导员的位置出来指挥人流。。。囧 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-08-02T15:51:52+00:00">2010-08-02</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/2629"  rel="bookmark" >
+              <h2 class="card-title">跑酷</h2>
+            </a>
+            <p class="card-text"><p><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://www.youtube.com/v/voB6WiP83NU%26hl%3Den_US%26fs%3D1&amp;width=640&amp;height=385" width="640" height="385"></iframe></p>
+
+<p>两人是 Phil Doyle 和 Kie Willis。英国跑酷最牛的几人之一。。。。。</p>
+
+<p>0:29那个从上面飞过去的。。。太夸张了。。。1:24那个真的算飞檐走壁了。。。。不知道最后是怎么下来的。。。要我的话肯定摔骨折。。。</p>
+
+<p>墙内镜像</p>
+
+<p><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://player.youku.com/player.php/sid/XMTk0Njg4NDY0/v.swf&amp;width=480&amp;height=400" width="480" height="400"></iframe></p>
+
+<p><a href="http://www.reddit.com/r/videos/comments/cw447/amazing_parkour/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-08-02T08:23:11+00:00">2010-08-02</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/2625"  rel="bookmark" >
+              <h2 class="card-title">耳机线绞乱的原理</h2>
+            </a>
+            <p class="card-text"><p>今天在10分钟内耳机线居然绞了三次～～～RP啊。。。。于是花了1分钟来研究一下为什么会出现线结，发现还是很简单的</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/08/1.png" alt=""></p>
+
+<p>如果耳机刚好在一个圈里，这个时候从圈里拿起来就有可能形成一个线结～～～～～以后尽量不要把耳机线形成一个圈就OK了。。。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-08-01T11:39:27+00:00">2010-08-01</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/2622"  rel="bookmark" >
+              <h2 class="card-title">谁在圣经里杀人最多？</h2>
+            </a>
+            <p class="card-text"><p><img src="http://i.imgur.com/AnaSC.jpg" alt=""></p>
+
+<p>这里有个详细分析<a href="http://dwindlinginunbelief.blogspot.com/2006/08/how-many-has-god-killed.html">1</a>, <a href="http://dwindlinginunbelief.blogspot.com/2007/01/how-many-has-god-killed-complete-list.html">2</a></p>
+
+<p><a href="http://www.reddit.com/r/atheism/comments/cvwnk/who_killed_more_people/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-08-01T04:50:08+00:00">2010-08-01</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/2620"  rel="bookmark" >
+              <h2 class="card-title">山寨版BSG封面</h2>
+            </a>
+            <p class="card-text"><p><img src="http://i.imgur.com/DMWQ5l.jpg" alt=""></p>
+
+<p>Stargate+BSG主角+企业号。。。全亮了。。</p>
+
+<p><a href="http://www.reddit.com/r/scifi/comments/cvu8i/a_friend_of_mine_bought_me_a_chinese_bsg_bootleg/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-08-01T04:32:27+00:00">2010-08-01</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/2617"  rel="bookmark" >
+              <h2 class="card-title">这就是我的包裹迟到了一周的原因</h2>
+            </a>
+            <p class="card-text"><p><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://www.youtube.com/v/9Nv28lunRSY%26hl%3Den_US%26fs%3D1&amp;width=480&amp;height=385" width="480" height="385"></iframe></p>
+
+<p>equilibrium达成！如果这箱子里装的是硬盘就爽YY了。。。。</p>
+
+<p>ba BI ba Ba-ba, ba BI ba Ba-ba, ba BI ba Ba-ba, ba BI ba Ba-ba, ba BI ba Ba-ba</p>
+
+<p><a href="http://www.reddit.com/r/videos/comments/cvqpk/so_this_is_why_my_package_was_a_week_late/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-07-31T13:48:42+00:00">2010-07-31</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/2615"  rel="bookmark" >
+              <h2 class="card-title">迪拜的宾馆</h2>
+            </a>
+            <p class="card-text"><p><img src="http://www.mypicturelist.com/files/d/dubaihotel44979.jpg" alt=""></p>
+
+<p><a href="http://www.google.com/images?hl=en&amp;q=dubai%20clouds">更多</a></p>
+
+<p><a href="http://www.reddit.com/r/pics/comments/cvf6t/a_view_from_a_hotel_in_dubai/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-07-31T09:21:14+00:00">2010-07-31</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/2611"  rel="bookmark" >
+              <h2 class="card-title">工程师看的porn是酱紫滴。。。。</h2>
+            </a>
+            <p class="card-text"><p><img src="http://i.imgur.com/TSEcN.jpg" alt=""></p>
+
+<p>这图片的标题叫 How memories are made  。。。双关了。。。</p>
+
+<p><a href="http://www.reddit.com/r/funny/comments/cvg6j/how_memories_are_made_pic/">评论</a> 好多里pun啊。。。</p>
+
+<blockquote>
+  <p>A CMOS BCD-Decimal encoder locked in unholy union with a TTL Octal flip-flop. They're not even the same species! There should be a law against this sort of thing!!   <br>
+  Is this how they made the 74HC family?</p>
+</blockquote>
+
+<p>听这些笑话让我感到自己是个文盲。。。。。伤自尊啊。。。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-07-31T06:00:01+00:00">2010-07-31</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/2607"  rel="bookmark" >
+              <h2 class="card-title">Offensive Python for Web Hackers (Blackhat 2010)</h2>
+            </a>
+            <p class="card-text"><p><img src="http://blog.est.im/wp-content/uploads/2010/07/13.png" alt=""></p>
+
+<p>还是不错的slides了。基本的要点都cover了。</p>
+
+<p><a href="http://www.reddit.com/r/netsec/comments/cvahk/offensive_python_for_web_hackers_blackhat_2010_pdf/">pdf</a> | <a href="http://docs.google.com/viewer?url=http%3A%2F%2Fhexsec.com%2Fdocs%2Fconstricting_the_web_final.pdf%2Fat_download%2Ffile">G Docs</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-07-31T01:38:55+00:00">2010-07-31</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/2600"  rel="bookmark" >
+              <h2 class="card-title">这一期The Economist杂志的封面</h2>
+            </a>
+            <p class="card-text"><p>我们工人要什么？更多钱！<br>
+什么时候要？现在！</p>
+
+<pre><code>发信人: beagle (b0210eb60aff5851b7607227b8530521), 信区: ITExpress
+标  题: 发个 这一期 The Economist杂志的封面
+发信站: 水木社区 (Fri Jul 30 19:03:57 2010), 站内
+
+富士康很有影响力。。。
+rt
+</code></pre>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/07/ROFL.png" alt=""></p>
+
+<p>文章在这里</p>
+
+<p><a href="http://www.economist.com/node/16693333?story_id=16693333">http://www.economist.com/node/16693333?story_id=16693333</a></p>
+
+<p>pdf附件见newsmth原帖～～～btw 手机上看水木用这个网站最爽了 <a href="http://hime.appspot.com">http://hime.appspot.com</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-07-30T11:42:50+00:00">2010-07-30</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/2597"  rel="bookmark" >
+              <h2 class="card-title">FTPRush传输中文文件失败乱码解决办法</h2>
+            </a>
+            <p class="card-text"><p><img src="http://blog.est.im/wp-content/uploads/2010/07/12.png" alt=""></p>
+
+<p>站点管理器 - 属性-连接 - 使用UTF-8模式来列表</p>
+
+<p>手工可以试试<code>STAT -I</code>和<code>MLSD</code>命令。</p>
+
+<p>FlashFXP里在 站点管理器 - 高级 - 字符编码 里设置</p>
+
+<p>Dreamhost的FTP就很扯蛋。。。中文文件名的文件的上传上去没问题。。。下载的时候提示 <code>550 中文名.mp3: No such file or directory</code>。。。。WTF？</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-07-30T10:56:19+00:00">2010-07-30</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/2592"  rel="bookmark" >
+              <h2 class="card-title">战争即和平，自由即奴役，无知即力量</h2>
+            </a>
+            <p class="card-text"><p>tg牛逼！！！兲朝砖家提醒您：<strong>有害</strong>气体是<strong>无害</strong>的。。。。</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/07/11.png" alt=""></p>
+
+<p>via <a href="http://blog.dotnil.org/84504.html">1</a>, <a href="http://twitter.com/rtmeme/statuses/19827342984">2</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-07-30T10:13:55+00:00">2010-07-30</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/2589"  rel="bookmark" >
+              <h2 class="card-title">石头剪子布 大师级必胜秘诀【图】</h2>
+            </a>
+            <p class="card-text"><p><img src="http://akhost.chacha.com/chacha.com/infographics/rock-paper-scissors-original.jpg" alt=""></p>
+
+<p>谢耳朵的 蜥蜴-Spock-石头剪子布 同理～～～</p>
+
+<p>此图绝非扯蛋，背后有深刻的心理学原理～～～我记得高中的时候我和同学超无聊玩石头剪子布，赢了前进一步，输了后退一步，我把同学从教学楼走廊左边逼到右边了～～～而且基本一赢就会连续好几次赢～～～～有意思～～～</p>
+
+<p><a href="http://flowingdata.com/2010/07/30/how-to-win-rock-paper-scissors-every-time/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-07-30T09:03:53+00:00">2010-07-30</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/2586"  rel="bookmark" >
+              <h2 class="card-title">黑ATM的视频</h2>
+            </a>
+            <p class="card-text"><p></p>
+
+<p>今年Black Hat 2010的演讲。。。cash那是哗哗的～～～～～只能黑基于Windows CE的机器～～～</p>
+
+<p>via <a href="http://www.reddit.com/r/netsec/comments/cutmw/blackhat_atm_hack/">1</a>, <a href="http://www.reddit.com/r/programming/comments/cuvbj/hacker_breaks_into_atms_dispenses_cash_remotely/">2</a></p>
+
+<p>btw 今年Black Hat两大遗憾，一个是<a href="http://it.solidot.org/article.pl?sid=10/07/16/054247">揭露tg网军</a>的演讲，一个是<a href="http://www.reddit.com/r/netsec/comments/cu79p/talk_on_highfrequency_trading_vulnerabilities/">HFT exploit</a>。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-07-29T08:53:43+00:00">2010-07-29</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/2578"  rel="bookmark" >
+              <h2 class="card-title">北韩政府官方网站那是很强强强强强强强强强强强大</h2>
+            </a>
+            <p class="card-text"><p>Coz north korea is the best korea</p>
+
+<p><img src="http://img.thedailywtf.com/images/201007/strong-strong-strong.png" alt=""></p>
+
+<p>源码在此：<a href="http://www.korea-dpr.com/">http://www.korea-dpr.com/</a></p>
+
+<p>如果西朝鲜用<a href="http://code.google.com/p/chtml/">CHTML</a>做网站的话应该是</p>
+
+<pre><code>&lt;伟大&gt;&lt;光荣&gt;&lt;正确&gt;&lt;伟大&gt;&lt;光荣&gt;&lt;正确&gt;&lt;伟大&gt;&lt;光荣&gt;&lt;正确&gt;&lt;伟大&gt;&lt;光荣&gt;&lt;正确&gt;&lt;伟大&gt;&lt;光荣&gt;&lt;正确&gt;&lt;伟大&gt;&lt;光荣&gt;&lt;正确&gt;&lt;伟大&gt;&lt;光荣&gt;&lt;正确&gt;&lt;伟大&gt;&lt;光荣&gt;&lt;正确&gt;&lt;伟大&gt;&lt;光荣&gt;&lt;正确&gt;&lt;伟大&gt;&lt;光荣&gt;&lt;正确&gt;
+党&lt;/正确&gt;&lt;/光荣&gt;&lt;/伟大&gt;&lt;/正确 …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-07-29T05:49:06+00:00">2010-07-29</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/2576"  rel="bookmark" >
+              <h2 class="card-title">当时我整个人都 囧rz 了</h2>
+            </a>
+            <p class="card-text"><p><img src="http://i.imgur.com/ZBlqe.jpg" alt=""></p>
+
+<p><img src="http://i.imgur.com/dJ7aM.jpg" alt=""></p>
+
+<pre><code> Θ Θ
+( )-( )
+</code></pre>
+
+<p><a href="http://www.reddit.com/r/pics/comments/culk4/hold_that_pose/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-07-29T05:37:36+00:00">2010-07-29</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/2572"  rel="bookmark" >
+              <h2 class="card-title">DC Universe Online</h2>
+            </a>
+            <p class="card-text"><p><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://www.youtube.com/v/3kDZhzPJLvw%26hl%3Den_US%26fs%3D1&amp;width=640&amp;height=385" width="640" height="385"></iframe></p>
+
+<p>小时候看到的各种 XX侠 和各种 XX人 大乱斗。实时渲染CGI技术再过十年就可以直接做到电影水平了吧？</p>
+
+<p>btw boob physics @ 4:18</p>
+
+<p><a href="http://www.reddit.com/r/videos/comments/cu48u/after_watching_this_i_wonder_why_bother_making/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-07-27T23:13:50+00:00">2010-07-27</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/2567"  rel="bookmark" >
+              <h2 class="card-title">CCF邀请一枚</h2>
+            </a>
+            <p class="card-text"><p>要的留下自己的 网站/开源项目/博客 地址 :)</p>
+
+<p>不喜欢发言长期潜水的就算了。。。。</p>
+
+<p>注意：获得邀请之后不表示能直接登录CCF论坛</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/07/1.png" alt=""></p>
+
+<p><del>20天内有效。</del> 已发送。</p>
+
+<p>本广告已过期，谢谢关注。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-07-27T04:43:51+00:00">2010-07-27</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/2565"  rel="bookmark" >
+              <h2 class="card-title">Level 1 Human</h2>
+            </a>
+            <p class="card-text"><p><img src="http://www.lostinbrittany.org/blog/wp-content/uploads/images/2007-06/camiseta_geek.jpg" alt=""></p>
+
+<p>最近迷Alien Swarm和Steam的成就系统。根据<a href="http://en.wikipedia.org/wiki/Law_of_the_instrument">IAYHIAHELLAN定理</a>，现在我老是把生活当成RPG in real life，然后大脑里经常出现achievement unlocked。。。。看来是HUD和AR附体了。。呵呵。。。。acquire skillz！</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-07-26T15:38:43+00:00">2010-07-26</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+    </main>
+    <nav class="pagination-nav side-padding">
+<a href="/index.35.html" class="pagination-newer">&lt; Newer Posts</a><a href="/index.37.html" class="pagination-older">Older Posts &gt;</a>    </nav>
+
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+</html>

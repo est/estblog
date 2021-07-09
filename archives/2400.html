@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>noindex an individual post in wordpress - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="noindex an individual post in wordpress" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">noindex an individual post in wordpress</h2>
+    <p class="post-date">Posted <time datetime="2010-05-28T03:44:26+00:00">2010-05-28</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p><em>Be cautious to prevent fire, theft and ChinaNET police.</em></p>
+
+<p>Here's how to <a href="http://www.google.com/support/webmasters/bin/answer.py?answer=61050">noindex</a> a single post in wordpress without install any plugin or edit <code>robots.txt</code> file</p>
+
+<ol>
+<li>open <code>http://your-site.com/wp-admin/theme-editor.php</code>, and choose to edit the <code>header.php</code></li>
+<li>add this line after a bunch of <code>&lt;meta&gt;</code> tags:<br>
+<code>&lt;?php if (in_array($post-&gt;ID, array(&#39;2323&#39;, &#39;2424&#39;, &#39;2525&#39;))) {echo &#39;&lt;meta name=&quot;robots&quot; content=&quot;noindex&quot;&gt;&#39;;} ; ?&gt;</code><br>
+In the above example we block wordpress posts with id 2323, 2424 and 2525.</li>
+<li>Open Google Webmaster tool <a href="https://www.google.com/webmasters/tools/crawl-access?hl=en&amp;siteUrl=http://your-site.com/&amp;tid=removal-list">1</a> or <a href="https://www.google.com/webmasters/tools/removals">2</a>, and remove your search record &amp;amp&#39; cache from Google</li>
+</ol>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/2400';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

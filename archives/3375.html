@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>wordpress+spawn-fcgi+nginx经常502解决 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="wordpress+spawn-fcgi+nginx经常502解决" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">wordpress+spawn-fcgi+nginx经常502解决</h2>
+    <p class="post-date">Posted <time datetime="2010-12-01T05:48:37+00:00">2010-12-01</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>我的blog经常出现这个</p>
+
+<blockquote>
+  <p>502 Bad Gateway</p>
+
+  <p>nginx/0.7.65</p>
+</blockquote>
+
+<p>以前用了个很ugly的办法就是在cron里每隔一段时间restart一下spawn-fcgi。。。</p>
+
+<p>昨天被一个IP为77.232.66.20用工具扫站的家伙弄郁闷了。服务器坚持几秒钟就铁定502。所以今天查了几个（<a href="http://forum.slicehost.com/comments.php?DiscussionID=4523">1</a>, <a href="http://devblog.streamy.com/2009/04/24/debugging-fastcgi-and-lighttpd-with-spawn-fcgi-and-fcgi-debug/">2</a>, <a href="http://serverfault.com/questions/129465/spawn-fcgi-fast-cgi-php-crashes-without-traces-in-logs-on-gentoo">3</a>）帖子，把这个问题<strong>似乎</strong>解决了。方法很简单，在nginx配置文件wordpress这一段加上一行环境变量：</p>
+
+<pre><code>location ~ \.php$ {
+    #这里略去了一大堆 fastcgi_param，在最后一个fastcgi_param加上下面的：
+    fastcgi_param PHP_FCGI_MAX_REQUESTS 500;
+}
+</code></pre>
+
+<p>然后<code>kill -HUP <code>pgrep -f "nginx: master"</code></code> 就可以了。</p>
+
+<p><ins>更新</ins>：Gentoo的php终于5.3了。。。改用php-fpm了。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/3375';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

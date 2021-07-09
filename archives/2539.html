@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>好吧，终于搞定新空间了 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="好吧，终于搞定新空间了" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">好吧，终于搞定新空间了</h2>
+    <p class="post-date">Posted <time datetime="2010-07-18T05:32:32+00:00">2010-07-18</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>感谢<a href="http://www.douban.com/people/zuroc/">zsp007</a>师兄的VPS空间，和他的帮助 :)</p>
+
+<p>第一次折腾gentoo的portage，对layman非常不熟悉导致php-fpm没装成功，偷懒装了spawn-fcgi+nginx。。。。。</p>
+
+<p>wordpress 3.0很囧。。。装个插件都要FTP支持。所以还是继续2.x版本好了。况且我也修改了那么多wordpress内核文件，也懒得重新修改一次了。</p>
+
+<p>然后就是让我异常头大的MySQL乱码问题。我才发现，Dreamhost空间的MySQL配置是有点异样的。主要是<code>character_set_server</code>设置成了<code>latin1</code>，然后就是一大陀杯具。比如说汉字的 <code>看</code> 的UTF8编码本来应该是<code>\xe7\x9c\x8b</code>，但是从<code>SELECT HEX(columnname) FROM table</code>的结果来看，居然是 C3A7C593E280B9。两重编码。然后鼓捣鼓捣了2个晚上才把dump文件搞定，然后才没有乱码导入</p>
+
+<p>觉得最爽的工具组合是ssh TCP端口转发到本地，然后用Navicat 8来直接操作MySQL。省去了再去调节PuTTY终端编码这又一层复杂度。</p>
+
+<p>就是这样。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/2539';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

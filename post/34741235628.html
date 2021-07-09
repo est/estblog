@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>Miracast, DLNA - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Miracast, DLNA" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Miracast, DLNA</h2>
+    <p class="post-date">Posted <time datetime="2012-10-31T23:21:00+00:00">2012-10-31</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>终于搞清楚了几个概念。</p>
+<p>DLNA是一套基于UPnP的4层协议，基于HTTP+SOAP的，是Sony在2004年提出的。</p>
+<p>有如下几个角色：</p>
+<ul>
+<li>Digital Media Server (DMS) 存储内容，供pull</li>
+<li>Digital Media Player (DMP) 播放pull下来的内容</li>
+<li>Digital Media Renderer (DMR) 接受push的内容并播放</li>
+<li>Digital Media Controller (DMC) 远程遥控，播放/暂停/音量 等</li>
+</ul>
+<p>DLNA没有去实现屏幕镜像。主要用于内容传输和播放。</p>
+<p>Miracast是Android 4.2搞的，基于Wifi Direct技术</p>
+<p>简单的说，就是同一个wifi AP下完成协议握手，然后两个设备之间wifi信号直连。这样效率高实时传输无延迟。Miracast也包含了DLNA的设备发现功能，和视频播放能力，但同时：</p>
+<ul>
+<li>不支持纯音频（比如无线音箱）设备（见<a href="https://www.wi-fi.org/sites/default/files/uploads/Miracast_FAQ_20120919.pdf">Miracast FAQ</a>）  </li>
+<li>可以实现屏幕镜像。</li>
+</ul>
+<p>所谓屏幕镜像就是手机上打游戏在电视上同步围观这种。类似Windows的3389 RDP远程桌面和VNC。</p>
+<p>Apple的AirPlay可以实现DLNA和Miracast的所有功能。</p>
+<p>我觉得Apple的小圈子营销真的做的很好。Miracast的branding看来真的是一坨屎。光同一概念的子名词就有一大堆。Galaxy S III上把这个叫WLAN DIrect，Miracast的3层协议叫Wifi Direct/Wifi Display/TDLS。。。。。还有各种WFD, WIMO, WIDI, WHDI, WirelessHD。。。太多阿猫阿狗名字了。。orz真够混乱的。</p>
+<p>参考：<a href="http://blog.sina.com.cn/s/blog_10bc1d030101aw97.html">http://blog.sina.com.cn/s/blog_10bc1d030101aw97.html</a></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/34741235628';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>ownCloud, csync - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="ownCloud, csync" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">ownCloud, csync</h2>
+    <p class="post-date">Posted <time datetime="2012-10-10T05:41:14+00:00">2012-10-10</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>KDE那帮人觉得Dropbox不错于是搞了个山寨品 ownCloud.org 。我很是喜欢。</p>
+<p>其中双向同步的关键核心组件是 csync，看了下，是<a href="http://news.opensuse.org/2009/01/08/opensuse-project-announces-csync/">OpenSUSE一帮人搞的</a>类unison工具。</p>
+<p>unison/csync 区别在于：</p>
+<blockquote>
+<p>csync is a bidirectional file synchronizer like unison. csync is written in C and not in ocaml. So it can be used by PAM (pam_csync) or you can write a GUI for it (this is a future plan). csync is a client only file synchronizer and doesn’t need a daemon running on the other system. Unison needs to be installed and running on both systems.</p>
+</blockquote>
+<p>希望csync能用上rsync的差分复制算法。这样就完美了。</p>
+<p>关于ownCloud，赞美+吐槽几点：</p>
+<ul>
+<li>一下子就喜欢官方网站和demo的UI了</li>
+<li>Photo浏览界面非常不错。很现代。类似 Google Image那种定高不定宽。</li>
+<li>还是老系统思路，功能全面，系统臃肿庞大</li>
+<li>URL不苗条</li>
+<li>客户端不性感。QT做的一个巨大玩意。Android的貌似还收费</li>
+<li>服务器端是php的。有些地方不够细致。</li>
+<li>文件历史通过git实现。git真是个银弹啊，任何问题都是个钉子，壮哉我git钉锤万能党！</li>
+</ul>
+<p>希望能加几点：</p>
+<ul>
+<li>作为开源消息分发中心。比如scrobble，timeline</li>
+<li>web hooks</li>
+<li>ifttt的开源版</li>
+<li>yahoo pipes, page transencoding, readability tool</li>
+<li>zfec integration</li>
+<li>不仅仅一个有版本历史的持久化工具，个人数据重要的是结构化存储知识和记忆，而不是二进制持久化工具。加上一些处理功能是重大利好。</li>
+</ul>
+<p>有点心痒痒想跳进这个坑啦。非常有趣的项目。总的来说，ownCloud前途无量。他们也有商业版本 ownCloud.com。这个模式很好，可以说潜能是是把云计算真正做到了消费者零售这个级别。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/33291117111';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

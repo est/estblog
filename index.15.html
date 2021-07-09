@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="This blog is rated&nbsp;&nbsp;R⃣ , viewer discretion is advised" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="list-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="card-container side-gutter">
+      <header class="list-header">
+        <p class="list-header-subtext">This blog is rated&nbsp;&nbsp;R⃣ , viewer discretion is advised</p>
+        <!-- <h1 class="list-header-title">Est's Blog</h1> -->
+      </header>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/31780723732"  rel="bookmark" >
+              <h2 class="card-title">Google的天顶星技术——Google Spanner</h2>
+            </a>
+            <p class="card-text"><p>上次看到 <a href="http://www.csdn.net/article/2012-08-20/2808870">Google后Hadoop时代的新“三驾马车”——Caffeine、Pregel、Dremel</a></p>
+<p>感觉碉堡了。</p>
+<p>Pregel是一个graph db。这是逆NoSQL运动行之的潮流——NoSQL倡导没有<code>join</code>，而graph db则是——所有数据都可以默认join起来。</p>
+<p>Dremel 是一个query interface。</p>
+<p>Caffeine的背后是Google True Time API，这是基于Google Spanner的一个碉堡技术。。</p>
+<p>什么是Google Spanner？Spanner是一个行星级别的db系统——通过GPS、原子钟实现全球数据中心timestamp同步的MVCC。</p>
+<p>和BigTable相比，BigTable的cell是mutable，Spanner是Datomic，类似函数式变成里的常量；Spanner还提供了BigTable不具备的——分布式transaction支持。比如lock-free read transaction</p>
+<p>隐隐的感觉Google的天顶星科技碉堡了。paper都非常值得一读。。。虽然不明，但觉历。</p>
+<p><a href="http://news.ycombinator.com/item?id=4526710">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-09-18T00:38:14+00:00">2012-09-18</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/31769215479"  rel="bookmark" >
+              <h2 class="card-title">Python良民证算法rev 2</h2>
+            </a>
+            <p class="card-text"><p>以前发过一个<a href="http://initiative.yo2.cn/archives/635924">良民证算法</a></p>
+<p>现在发现了一个碉堡的新办法：</p>
+<pre><code>get_id = lambda s: s + '1X864209753'[int(s, 13) % 11]
+</code></pre>
+<p>来自newsmth的python版：</p>
+<pre><code>发信人: Andor (珍惜), 信区: Python
+标  题: Re: Python的良民证算法，有没有更简单的写法？
+发信站: 水木社区 (Fri Sep 14 15:13:05 2012), 站内
+
+get_id = lambda s: s + '1X864209753'[int(s, 13) % 11]
+【 在 zxn0 (est) 的大作中提到: 】
+: &gt;&gt;&gt; get_id = lambda s: s …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-09-17T21:38:00+00:00">2012-09-17</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/31766533896"  rel="bookmark" >
+              <h2 class="card-title">人类花几个月工资买几克拉的碳晶体弱爆了</h2>
+            </a>
+            <p class="card-text"><p>钻石其实是宇宙中——最常见的晶体之一。。。本来应该非常便宜，但是价格是人为捧高的。</p>
+<p>毛子在70年代发现了一个陨石坑。。。。。。。。。。大概有<a href="http://www.csmonitor.com/World/Global-News/2012/0917/Russia-reveals-shiny-state-secret-It-s-awash-in-diamonds">几万亿克拉的钻石</a>。。。</p>
+<p>世界上：</p>
+<p>最稀有的宝石top 10: <br />
+Jeremejevite, Black Opal, Red Beryl Emerald, Musgravite, Grandidierite, Painite, Blue Garnet, Serendibite, Red Diamonds, Jadeite</p>
+<p>最贵重的金属top 10:<br />
+Indium, Silver, Rhenium, Palladium, Osmium, Iridium, Ruthenium, Gold, Platinum, Rhodium</p>
+<p>Rhodium就是铑，Two.And.A.Half.Men.S09E10里边Walden的那颗价值不菲的铂铑戒指。。。但是这货2007年价格崩了，从$10,000/oz垮到$1 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-09-17T21:04:00+00:00">2012-09-17</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/31703069009"  rel="bookmark" >
+              <h2 class="card-title">iPhone 5/HTC One X/Galaxy S III 性能跑分之geekbench</h2>
+            </a>
+            <p class="card-text"><p>iPhone 5 1601分<br />
+<a href="http://browser.primatelabs.com/geekbench2/1030202">http://browser.primatelabs.com/geekbench2/1030202</a></p>
+<p>HTC One X 1697分<br />
+<a href="http://browser.primatelabs.com/geekbench2/989732">http://browser.primatelabs.com/geekbench2/989732</a></p>
+<p>Galaxy S III 1781分<br />
+<a href="http://browser.primatelabs.com/geekbench2/1026099">http://browser.primatelabs.com/geekbench2/1026099</a></p>
+<p>值得注意的是，iPhone 5的内存和stream IO性能屌爆了。Android被爆出翔了。</p>
+<p><a href="http://news.ycombinator.com/item?id=4530188">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-09-16T21:45:00+00:00">2012-09-16</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/31448527901"  rel="bookmark" >
+              <h2 class="card-title">CBSi's bitch</h2>
+            </a>
+            <p class="card-text"><p>统计了一下属于<a href="http://www.cnet.com.cn/">CBS Interactive</a>旗下的网站</p>
+<pre><code>bnet.com.cn           BNET 商业英才网
+cnetnews.com.cn       CNET 科技资讯网
+cheshi.com            网上车市
+ea3w.com              万维家电网
+fengniao.com          蜂鸟网
+gocar.cn              购车网
+zwbang.com            小学生作文
+haibao.cn             海报时尚网
+kdslife.com           KDS 宽带山
+kimiss.com            闺蜜网
+onlylady.com          OnlyLady 女人志
+pchome.net            电脑之家
+xcar.com.cn           爱卡汽车 …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-09-13T01:09:55+00:00">2012-09-13</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/31261368529"  rel="bookmark" >
+              <h2 class="card-title">少女网上发微博被熊猫查水表</h2>
+            </a>
+            <p class="card-text"><p>开门！顺丰快递来查水表来了！</p>
+<p><img alt="" src="http://i.imgur.com/OPNM9.jpg" /></p>
+<p>新闻报道：</p>
+<p><a href="http://www.wtsp.com/politics/article/272378/36/Secret-Service-investigates-teens-tweet-about-Obama">http://www.wtsp.com/politics/article/272378/36/Secret-Service-investigates-teens-tweet-about-Obama</a></p>
+<p><a href="http://www.reddit.com/r/funny/comments/zmoh6/be_careful_what_you_tweet/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-09-10T04:05:30+00:00">2012-09-10</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/31247318597"  rel="bookmark" >
+              <h2 class="card-title">成都的交通是不是碉堡了？</h2>
+            </a>
+            <p class="card-text"><p>见过堵车的没见过这么堵车的</p>
+<p><img alt="" src="http://ww4.sinaimg.cn/large/68567898jw1dwr5zfzek4j.jpg" /></p>
+<p><img alt="" src="http://ww2.sinaimg.cn/large/69b8b43cjw1dwr5hmz9mhj.jpg" /></p>
+<p><img alt="" src="http://ww1.sinaimg.cn/large/722fa4b4jw1dwr4zob7f7j.jpg" /></p>
+<p><img alt="" src="http://ww2.sinaimg.cn/large/8d3946e0jw1dwr56s3t26j.jpg" /></p>
+<p><img alt="" src="http://ww4.sinaimg.cn/large/8555f3e0jw1dwr3uvbcrkj.jpg" /></p>
+<p><img alt="" src="http://ww3.sinaimg.cn/large/6a8b93f3gw1dwr7loanyyj.jpg" /></p>
+<p><img alt="" src="http://ww4.sinaimg.cn/large/81e0aee5gw1dwr7x75pcbj.jpg" /></p>
+<p>然后11路也可以堵车</p>
+<p><img alt="" src="http://ww4.sinaimg.cn/bmiddle/afc91138tw1dwr5o9obndj.jpg" /></p>
+<p><img alt="" src="http://ww4.sinaimg.cn/large/6e9c0579jw1dwr5m0adohj.jpg" /></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-09-09T22:24:00+00:00">2012-09-09</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/31046389782"  rel="bookmark" >
+              <h2 class="card-title">成都美领馆 PM2.5数据</h2>
+            </a>
+            <p class="card-text"><p>成都 <a href="https://twitter.com/CGChengduAir">https://twitter.com/CGChengduAir</a></p>
+<p>魔都 <a href="https://twitter.com/CGShanghaiAir">https://twitter.com/CGShanghaiAir</a></p>
+<p>妖都 <a href="https://twitter.com/Guangzhou_Air">https://twitter.com/Guangzhou_Air</a></p>
+<p>帝都 <a href="https://twitter.com/BeijingAir">https://twitter.com/BeijingAir</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-09-07T02:44:00+00:00">2012-09-07</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/30977835168"  rel="bookmark" >
+              <h2 class="card-title">一些感受</h2>
+            </a>
+            <p class="card-text"><p>最近一些项目感受：</p>
+<p>关于主管：</p>
+<ol>
+<li>拿个解决方案来寻找问题。Finding a nail with a hammer?</li>
+<li>没有客观可度量指标来盲目“优化”。</li>
+</ol>
+<p>盲目造成的附加伤害和长期隐患比“优化”带来的短期或局部好处大得多。没有严格长期的AB组对比试验，就不要谈优化了。</p>
+<p>关于动机：</p>
+<p>最可悲的动机，不是你的目标和项目目标相反，而是你的目标和项目目标正交。。。。</p>
+<p>关于bug：</p>
+<p>出了问题怎么办？再多hire一个人，再多增加一个用于fix bug的项目！把一个bug变成两个，就可以把当前的bug推脱成别的bug了。当前的bug就解决了。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-09-05T23:40:00+00:00">2012-09-05</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/30966653688"  rel="bookmark" >
+              <h2 class="card-title">r/gifsound</h2>
+            </a>
+            <p class="card-text"><iframe width="640" height="360" src="http://www.youtube.com/embed/KR0EHW6IpSw?feature=player_detailpage" frameborder="0" allowfullscreen></iframe></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-09-05T20:55:17+00:00">2012-09-05</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/30566340794"  rel="bookmark" >
+              <h2 class="card-title">为神马android NFC不能模拟RFID Tag</h2>
+            </a>
+            <p class="card-text"><p>今天研究了一下这个玩意。先说结论：</p>
+<ol>
+<li>Android手机的NFC芯片本质只是一个tag reader/writer，要把自身模拟成tag，需要在驱动里把自己改造成可以控制的Secure Element</li>
+<li>Galaxy Nexus的2.3 ROM可以用<code>com.pocketluxus.nfclassic</code> 这个 nfca.apk模拟。有人成功过</li>
+<li>Nexus S可以用一个定制过的firmware来<a href="http://forum.xda-developers.com/showthread.php?t=1281946">打开</a>驱动的 卡模拟 模式，模拟任意RFID Tag。步骤非常麻烦。需要编译android源码（我日）</li>
+<li>i9300用的NFC芯片是NXP PN65N，和<a href="http://www.nfcworld.com/2011/02/13/35913/uncovered-the-hidden-nfc-potential-of-the-google-nexus-s-and-the-nokia-c7/">Nexus S的</a>一样</li>
+</ol>
+<p><img alt="" src="http://cdn3.nfcworld.net/wp-content/uploads/2011/02/pn65n-nexus-s-250x187.jpg" /></p>
+<p>至于什么普通手机可以读取RFID Tag，而不能模拟呢？</p>
+<p>国内的一些说法是，rfid卡加密了，没法模拟。其实这是错误的。</p>
+<p>我在XDA翻了下一些理论，大概是这样的：</p>
+<p>RFID/ID卡分两种，一种是只读的，一种是可写的。</p>
+<p>比如门禁卡 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-08-30T23:35:00+00:00">2012-08-30</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/30512755425"  rel="bookmark" >
+              <h2 class="card-title">on github wiki</h2>
+            </a>
+            <p class="card-text"><p>对github wiki的一些感受</p>
+<ul>
+<li>
+<p>wiki和source code是分开的repo。其实像google code那样内嵌的多好。</p>
+</li>
+<li>
+<p>由于分开的repo导致git submodule操作起来不方便。</p>
+</li>
+<li>
+<p>markdown语法太弱。<a href="https://github.com/github/markup/issues/6">不支持anchor</a>？</p>
+</li>
+<li>
+<p>wiki无法自动生成段落交互导航，长一点的文档就不适合了。</p>
+</li>
+<li>
+<p>wiki pages显示不支持用户格式，比如txt之类的。</p>
+</li>
+</ul>
+<p>恩。总之没有完美的东西。但是别人hosting的东西就是不如自己可以折腾的爽。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-08-30T05:44:48+00:00">2012-08-30</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/30489923712"  rel="bookmark" >
+              <h2 class="card-title">POTUS竞选者的捐款贡献来源top 5</h2>
+            </a>
+            <p class="card-text"><p>Barack Obama  </p>
+<p>University of California      $491,868<br />
+Microsoft Corp  $443,748<br />
+Google Inc  $357,382 <br />
+DLA Piper   $331,715<br />
+Harvard University  $317,516  </p>
+<p>Mitt Romney <br />
+Goldman Sachs   $676,080<br />
+JPMorgan Chase &amp; Co $520,299<br />
+Morgan Stanley  $513,647<br />
+Bank of America $510,728<br />
+Credit Suisse Group $427,560  </p>
+<p>Ron Paul …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-08-29T21:07:00+00:00">2012-08-29</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/30284919483"  rel="bookmark" >
+              <h2 class="card-title">tubmlr主题被重置的解决办法</h2>
+            </a>
+            <p class="card-text"><p><a href="http://staff.tumblr.com/post/380346543/theme-recovery">http://staff.tumblr.com/post/380346543/theme-recovery</a></p>
+<p>这么脑残的feature也有，还是标记一下吧。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-08-26T21:33:28+00:00">2012-08-26</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/29815635261"  rel="bookmark" >
+              <h2 class="card-title">斐波那契数列求和</h2>
+            </a>
+            <p class="card-text"><p>今天<a href="http://www.reddit.com/r/math/comments/oiv7s/cool_fraction/c3hp6vb?context=3">学习到</a>了一个碉堡的斐波那契求和函数：</p>
+<pre><code>1
+ 2
+  3
+   5
+    8
+    13
+     21
+      34
+       55
+        89...
+1235955...
+</code></pre>
+<p>1/89 == 0.011235955056179775</p>
+<p><a href="http://en.wikipedia.org/wiki/Generating_function">母函数</a> 这种技巧都忘记好久啦。。</p>
+<p>还有类似的 1001/997002999 == 1.004009016025036049....</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-08-20T02:54:00+00:00">2012-08-20</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/29599530256"  rel="bookmark" >
+              <h2 class="card-title">合肥暴风动漫，你的节操掉了一地</h2>
+            </a>
+            <p class="card-text"><p><img alt="" src="http://i.imgur.com/Ltuyq.jpg" /></p>
+<p>别人辛辛苦苦做的Flash游戏放在<a href="http://www.kongregate.com/games/nexoncls/cloudstone">kongregate上</a>，合肥暴风动漫 就直接<a href="http://apps.pengyou.com/100638897">抄袭过来</a>了。说不定只是反编译swf汉化了一下。。。</p>
+<p><a href="http://www.reddit.com/r/gaming/comments/yc02l/some_company_in_china_stole_my_game/">via</a></p>
+<p>更新1：国内<a href="http://game.chinanews.com/social/201208/1723510.html">报道</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-08-16T23:48:00+00:00">2012-08-16</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/29446071671"  rel="bookmark" >
+              <h2 class="card-title">[2012] Chrome v22 direct offline standalone installer download</h2>
+            </a>
+            <p class="card-text"><p>For example, I want to download version 22.0.1229.2</p>
+<p>Old URL, no longer works<br />
+http://dl.google.com/chrome/install/1229.2/chrome_installer.exe</p>
+<p>New URL:<br />
+http://cache.pack.google.com/edgedl/chrome/win/22.0.1229.2_chrome_installer.exe</p>
+<p>Fuck Google's bootstrappers downloader which is slow like shit …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-08-14T20:56:00+00:00">2012-08-14</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/29328730757"  rel="bookmark" >
+              <h2 class="card-title">尼玛的portable</h2>
+            </a>
+            <p class="card-text"><p><img alt="" src="/images/tumblr/29328730757_0.png" /></p>
+<p><img alt="" src="/images/tumblr/29328730757_1.png" /></p>
+<p><img alt="" src="/images/tumblr/29328730757_2.png" /></p>
+<p>这货是弱智发明出来报复社会的么？</p>
+<p>带安装器还叫个锤子便携啊？尼玛。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-08-13T05:39:00+00:00">2012-08-13</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/29324316601"  rel="bookmark" >
+              <h2 class="card-title">亚伯拉罕三教</h2>
+            </a>
+            <p class="card-text"><p><img alt="" src="http://ww2.sinaimg.cn/large/63f0336fjw1dvtresffa4j.jpg" /></p>
+<p>来自最近很牛的一个帖子</p>
+<p>《<a href="http://www.cctvdream.com.cn/bbs/forum.php?mod=viewthread&amp;tid=59451">赫敏为什么不能嫁给哈利——《哈利波特》中的历史、文化与政治</a>》</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-08-13T03:10:16+00:00">2012-08-13</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/29311635326"  rel="bookmark" >
+              <h2 class="card-title">原来android 4.0 ICS里边自带延时time-lapse摄影功能了</h2>
+            </a>
+            <p class="card-text"><p>从<a href="http://www.reddit.com/r/Android/comments/y3ge6/in_jelly_bean_their_is_a_time_lapse_feature_i/c5rzhbm?context=1">这里</a>知道的</p>
+<ol>
+<li>打开android自带的相机</li>
+<li>切换到视频模式</li>
+<li>设置 里设置延时为10s之类的</li>
+<li>开拍。</li>
+</ol>
+<p>放一个别人拍的</p>
+<iframe width="640" height="360" src="https://www.youtube.com/embed/hd5CBsy0--E?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
+
+<p>感觉不错啊。哈哈。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-08-12T23:18:16+00:00">2012-08-12</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+    </main>
+    <nav class="pagination-nav side-padding">
+<a href="/index.14.html" class="pagination-newer">&lt; Newer Posts</a><a href="/index.16.html" class="pagination-older">Older Posts &gt;</a>    </nav>
+
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+</html>

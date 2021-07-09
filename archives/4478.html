@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>小白喷一下Basecamp - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="小白喷一下Basecamp" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">小白喷一下Basecamp</h2>
+    <p class="post-date">Posted <time datetime="2012-02-04T01:11:28+00:00">2012-02-04</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>看到吹嘘Basecamp好多年了。今天真正集体用了一下，觉得好挫啊。我承认我没法做一个更好的，但是还是要喷一下不爽的地方。</p>
+
+<ul>
+<li>注册的时候没有任何框框提示输入的是什么东西，或者到底哪里出错了。</li>
+<li>Messages远远没有普通web forum的layout做的好。</li>
+<li>Messages里，Go to message | 3 comments 这两个链接功能重复</li>
+<li>ToDo不能assign to multiple individual people</li>
+<li>ToDo不支持依赖关系。</li>
+<li>Whiteboards不支持realtime aggregation。这都神马年代了还save刷新？</li>
+<li>其实Message, To-Do, Calendar, Whiteboard, Chart, Time功能是完全一模一样，重复的。没有核心和重点。</li>
+</ul>
+
+<p>感觉Basecamp并不能解决异步远程协同工作和人数稍多的管理问题。如果Basecamp的成功真的是just works的话，这真的是一个奇迹。</p>
+
+<p>有人说basecamp不是project mangagement，只是issue tracker。我不同意。</p>
+
+<p>如果我来设计，我觉得Google Wave那种就很好。管理上有两种风格，要么通过职能职位，铁打的营盘流水的兵，要么就细化到具体人头小而精。</p>
+
+<p>基本组成单位应该是单条message，message构成thread，核心和重点就是thread。一个thread可以是todo，也可以是calendar event，也可以是whiteboard，也可以是chat。多个thread构成time。如果是whiteboard或者是collaboration这种mutable content，thread主帖之外message就应该是playback和revision。</p>
+
+<p>thread要突出metadata，entity-attribute-value体系，以及完整的active/passive event mechanism。thread之间可以构成<a href="http://en.wikipedia.org/wiki/Directed_acyclic_graph">有向无环图</a>的依赖关系。thread也是Knowledge Base的基本单位，thread的顶楼message是article，下面的是评论和回帖。article可以是文字，也可以是语音、文件和多媒体，甚至指针，通过MIME Multipart分割。一个thread的参与者可以动态加入或者退出，来去自由。</p>
+
+<p>技术上用etherpad那种realtime的，类markdown语法为主的就很好。辅助富文本，以及interactive canvas。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/4478';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>replay attack on Apple IAP receipt - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="replay attack on Apple IAP receipt" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">replay attack on Apple IAP receipt</h2>
+    <p class="post-date">Posted <time datetime="2012-07-04T05:10:00+00:00">2012-07-04</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>in <a href="http://developer.apple.com/library/ios/#documentation/NetworkingInternet/Conceptual/StoreKitGuide/APIOverview/OverviewoftheStoreKitAPI.html#//apple_ref/doc/uid/TP40008267-CH100-SW1">this senario</a></p>
+<p><img alt="" src="http://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/StoreKitGuide/Art/store_transactions.png" /></p>
+<p>Before client sends verify receipt to developer server, the receipt data can be recorded and replayed to developer server,</p>
+<ol>
+<li>
+<p>suppose the receipt data is <code>&lt;receipt-something&gt;</code>, it's verified, and buy transaction has finished.</p>
+</li>
+<li>
+<p>add a space to receipt data <code>&lt;receipt-something&gt;&lt;space&gt;</code></p>
+</li>
+<li>
+<p>submit to developer server again</p>
+</li>
+<li>
+<p>developer server will first <code>base64</code> the <code>&lt;receipt-something&gt;</code>, with a trailing space, the wrap it into a JSON object like <code>{'receipt-data': &lt;receipt-something&gt;&lt;space&gt;}</code>, then send it to <code>https://buy.itunes.apple.com/verifyReceipt</code></p>
+</li>
+<li>
+<p>apple server will return status = 0</p>
+</li>
+<li>
+<p>now you can buy IAP stuff using the same receipt over and over and over again.</p>
+</li>
+<li>
+<p>???</p>
+</li>
+<li>
+<p>Profit!!!11!111</p>
+</li>
+</ol>
+<p>see also this <a href="http://stackoverflow.com/questions/1298998/verify-receipt-for-in-app-purchase">thread</a>, especially comment by <code>Ben S</code> </p>
+<p>btw I am still trying to figure out how to do a rollback transaction. lol</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/26483115741';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

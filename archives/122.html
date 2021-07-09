@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>Download files in console from mediafire/rapidshare, without sudo or root privilege - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Download files in console from mediafire/rapidshare, without sudo or root privilege" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Download files in console from mediafire/rapidshare, without sudo or root privilege</h2>
+    <p class="post-date">Posted <time datetime="2009-12-29T05:01:33+00:00">2009-12-29</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>This is a short tutorial</p>
+
+<ol>
+<li>Get this shit <a href="http://plowshare.googlecode.com/files/plowshare-0.8.1.tgz">http://plowshare.googlecode.com/files/plowshare-0.8.1.tgz</a>, unpack it to somewhere</li>
+<li>Mess with the plowshare <a href="http://code.google.com/p/plowshare/wiki/Readme">dependencies</a>, includes: <a href="http://ftp.us.debian.org/debian/pool/main/x/xulrunner/spidermonkey-bin_1.8.0.15~pre080614i-0etch1_i386.deb">spidermonkey</a>, <a href="http://ftp.us.debian.org/debian/pool/main/x/xulrunner/libmozjs0d_1.8.0.15~pre080614i-0etch1_i386.deb">libmozjs</a>, <a href="http://ftp.us.debian.org/debian/pool/main/r/readline5/libreadline5_5.2-2_i386.deb">libreadline5</a>, <a href="http://security.debian.org/debian-security/pool/updates/main/n/nspr/libnspr4-0d_4.7.1-5_i386.deb">libnspr4</a>. They can be found on <a href="http://packages.debian.org/">http://packages.debian.org/</a>. Btw, most of <code>lenny</code> binary works on <code>etch</code> too.</li>
+<li>Since I am on a shared host, so there’s no <code>sudo</code> or root, so no <code>dpkg</code> nor <code>/usr/*</code> access. The only thing you can to is <em>hack</em></li>
+<li>Unpack those <code>.deb</code>, grab the <code>data.tar\usr\*</code> stuff, including <code>smjs, lib.sh, libmozjs.so.0d, libnspr4.so.0d, libreadline.so.5</code>. </li>
+<li>patch the plowshare module, take mediafire for example, edit <code>plowshare-0.8.1/src/modules/mediafire.sh</code> to something like this: <code>FILE_URL=$(echo "$VARS; print($HREF);" | ./smjs)</code></li>
+<li><code>ldd smjs</code> to see if everything is OK, then, this step is <strong>crucial</strong>: <code>export LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH</code></li>
+<li>OK, now you can try something like this<br><code>./download.sh http://www.mediafire.com/?dhbxnndmznw</code></li>
+</ol>
+
+<p>Everything went better than expected.</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/122';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

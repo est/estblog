@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>疑Google员工把8w行Python项目用4w行Java重写了 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="疑Google员工把8w行Python项目用4w行Java重写了" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">疑Google员工把8w行Python项目用4w行Java重写了</h2>
+    <p class="post-date">Posted <time datetime="2013-12-06T05:50:00+00:00">2013-12-06</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>看发帖IP是亮点。后面后贴的一堆喷子。   </p>
+<p>发信人: daluobu (阿土仔), 信区: Python    <br />
+标  题: 终于把一个8万行的Python程序用Java重写了    <br />
+发信站: 水木社区 (Fri Dec  6 08:10:26 2013), 转信      </p>
+<p>在噩梦般地维护了一年多一个8万多行的Python程序之后，终于争取到机会把这个破烂玩意用Java重写了一遍，大概是4万行Java左右。说说效果吧：    <br />
+1. 从过去平均每周down一次，到现在连续运转近半年只down过一次。    <br />
+2. 节省超过80%的cpu和内存    <br />
+3. 代码多了很多功能，过去无数因为系统太复杂无法实现的功能现在都能简单清爽地实现了。    <br />
+4. 单元测试真管用了，不是过去那种把代码反过来写一遍的滥用mock了。  <br />
+前后代码都是同一个team写的，写代码的人都不是菜鸟（顶级公司的核心团队）区别只有语言和几年的经验积累。      </p>
+<p>总结一句话就是：动态语言滥用起来真是可怕      </p>
+<p>珍惜生命，远离Python。      </p>
+<p>--      </p>
+<p>※ 来源:·水木社区 http://newsmth.net·[FROM: 216.239.45.*]      </p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Fri Dec  6 08:24:55 2013), 转信   </p>
+<p>刚开始写的时候以为就是随便hack一个小系统临时用用，结果慢慢发展到成为关键系统，负载巨大，而且还对宕机越来越敏感，导致不得不用Java重写。重写也不是那么简单的过程，半年多时间里面一个模块一个模块地替换，整个系统还不能停转一分钟，像是给一架飞行中的飞机换引擎。</p>
+<p>同样的故事在别的公司肯定也发生过好多次，写一个小东西玩玩结果变成了关键系统。我觉得我们团队的问题是几年前过分迷信Python，错过了在系统还不太复杂的时候重写的机会。   </p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Fri Dec  6 13:42:31 2013), 转信   </p>
+<p>原帖说的是一个10个人团队的故事，不是他自己。信与不信其实并不太重要，我发这个帖子也是纪念一下这个美梦成真的项目。如果有人有共鸣，那就已经很好了。   </p>
+<p>过去公司里面也是有不少迷信Python的人，重写系统的想法我在组里提了很多次，终于在一个Python大粉丝离开之后才得以实现。现在随着某Python之父的离开，公司里面粉Python的人也越来越少了。而且事实证明，那个Python之父带的项目（不是我们这个，比我们这个规模要大一些），用Java重写之后，不论功能还是性能还是新功能，也都明显好了很多，和我们组的经验相当吻合。   </p>
+<p>我觉得代码行数的节省也在于新系统更严谨的设计。Java鼓励精密的接口设计和简洁的代码关系，再加上Dependency Injection，代码的复用程度很高。Python完全没有接口的概念，一切类都是胡乱写，还可以动态增加新成员，导致代码复用的难度相当大，不修改地复用一个类还不引入bug简直是奇迹。   </p>
+<p>※ 来源:·水木社区 http://newsmth.net·[FROM: 216.239.45.*]   </p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Sat Dec  7 00:48:05 2013), 转信   </p>
+<p>这个项目里面，重构是一直在进行的，在过去的八年里面，用Python大规模地重构也发生过好几次。   </p>
+<p>决定用Java重写是很艰难的，不是某个人拍脑袋的决定。放弃Python主要是因为它的代码可维护性比较差，缺乏编译器检查，动态语言特性导致模块间过渡耦合，缺乏性能分析工具，内存管理机制低效，多线程性能很差。这些都是一个持续维护很多年的高负载应用所必须的。   </p>
+<p>Linter能做的事情很有限，公司代码管理系统早就是不过lint不能submit。code review也不能解决问题，因为团队里面每一个人对于系统设计和语言特性是否滥用理解程度都不同。   </p>
+<p>争论是否能够通过管理来解决语言本身缺陷其实是没意义的，因为我们碰见的是实实在在的语言缺陷问题，就应该用最直接的解决方案。   </p>
+<p>“Python很好，只是你们这些外行不会用”，这是我听到的最多的所谓Pythonic人的论调。事实是Python作者自己亲自带领的那个项目也是一塌糊涂。他们遇到的最主要问题就是可维护性低和性能差。世界上有没有人比Python作者本人更Pythonic?如果他自己的项目都不行，谁能做得更好？   </p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Sat Dec  7 01:30:35 2013), 转信   </p>
+<p>如果一个语言比另外一个差1000倍，那就是很大的问题了，随便写两行code都可能成为性能瓶颈。Python又恰好缺乏性能分析和优化工具，导致出了性能问题都不知道在哪儿。BTW，1000倍这个数据是有依据的。   </p>
+<p>接口上所谓的冗余其实是提高程序可维护性的关键。人脑容量有限，所以必须用电脑辅助人脑进行接口使用正确性的检查。强制要求程序员写强类型的接口也是一种强迫程序员对正确的设计进行思考的过程。结果导致的就是强类型语言可维护性更好。Openstack只有1.4M和3年历史，用c/c++/Java写的大型软件都是复杂几个数量级，而且维护几十年。Python程序的问题之一就是“腐烂”得很快，程序刚写好的时候看起来很简洁，一旦开始维护就快速地变成一堆乱七八糟的东西，动态语言代码腐烂速度远远超过强类型语言。 <br />
+如果Python作者本人带领的团队都写不出可维护的Python代码，谁能？   </p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Sat Dec  7 01:50:35 2013), 转信   </p>
+<p>Guido搞的那个code review系统就是我说的那个维护不了的系统，最后的结果就是用Java重写了。新系统比旧系统好用很多，而且还持续有新功能上线。那个项目组有一个在公司内部流传很广的文章，说为什么需要用Java重写，并且结论是Python只适合写100行以内的小脚本。我刚才试了找这个文章有没有外网可以访问的版本，但是没找到。   </p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Sat Dec  7 02:25:23 2013), 转信   </p>
+<p>如果用一个语言开发出可维护的代码需要的能力超过了Google能招聘到程序员的平均水平，我认为这个语言就不是一个可以用来开发可维护代码的语言。创造出一个不可维护的语言很容易，汇编，Basic以及大批的早期编程语言都是这种。创造出可以让普通程序员也可以维护的语言才是更困难的，只有少数语言做到了，C和Java是，C++都不能算是很成功。   </p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Sat Dec  7 02:48:32 2013), 转信   </p>
+<p>你几乎都说反了，Google非常重视代码的可维护性，扩展性几乎是在项目一开始就必须考虑的问题，Google对软件工程实践的重视和深度是我所知道的公司里面最高的。不知道你说的管理是什么意思，但是Google有强制性的代码规范，有强制性的designreview。Python的很多“高级”特性已经在编程规范里面禁用了，但是有些特性是没法禁用的，比方所有对象member都是public，比方函数参数没有类型。就是这些很基本的东西带来的可维护性问题。   </p>
+<p>越是水平高的程序员越是会遵守编程规范和软件工程实践。至少在我们这种产品team里面大家是相当重视代码质量和设计质量的。这也是为什么我们舍得投入那么多把一个不好的系统重写。    </p>
+<p>【 在 Alassius (饿了索食) 的大作中提到: 】   </p>
+<p>问题是这种不可维护性恐怕正是贵司能招聘到的这种平均水平造成的。智商高，技术至上，写代码怎么聪明怎么来，不重视维护，不重视扩展性（直到太迟的时候），不重视软件工程，不重视管理。普通程序员如果有好的资深码农引导，早早地被告知不要滥用语言的灵活性，倒未必会有这些问题。聪明的程序员你这样跟他说他还看不起你。   </p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Sat Dec  7 03:21:05 2013), 转信   </p>
+<p>意思就是：任何流程，任何规范，任何review，任何代码检查工具，都阻止不了程序员缓慢地一点一点地滥用语言特性，也阻止不了一个软件代码自身的腐败。Python本身鼓励滥用Mock因为没有不用mock就可以方便写unit test的测试工具。Python还鼓励不定义清晰的类接口和类关系，如果你写了一个接口继承，就会有Python大牛跳出来说你不Pythonic。系统复杂性在大型软件中是不可避免的，但是如果我们可以付出一些写code的时候的小小冗余，带来长期的代码可维护性改善，那就是值得的。Java不是完美的，用Java一样可以写出不可维护的代码，但是Java至少比Python在这方面强很多。我们的经验证实了这点，信与不信就是看官的事了。   </p>
+<p>发信人: YABC (Yet Another BBS Client), 信区: Python<br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了<br />
+发信站: 水木社区 (Sat Dec  7 10:26:33 2013), 转信</p>
+<p>难得这么热烈的讨论，可是争论语言优劣没结果。</p>
+<p>希望楼主再爆料点。这个大粉丝说的就是Guido了吧？这套系统说的就是Rietveld？Java的版本说的是Gerrit吗？可是Gerrit不是早就有了吗？难道你们内部用的不是开源的Gerrit？另外，GAE的Python版本你们内部有什么评价呢，比起Java和Go的呢？也觉得质量不行吗？Guido干得不爽才走了吗？谢谢。</p>
+<p>我用过Rietveld，是Python语言本身在用的review工具，感觉风格挺老旧的。还没见有别的项目用这个东西。</p>
+<p>发信人: YABC (Yet Another BBS Client), 信区: Python<br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了<br />
+发信站: 水木社区 (Sat Dec  7 10:41:11 2013), 转信</p>
+<p>Gerrit是这个项目的Java的fork，很多大项目在用。从这点说Guido开创的这个Python项目算成功的。当然后面的自然会吸取前面的教训，做得更好是应该的。</p>
+<p>发信人: iJava (简单美好), 信区: Python<br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了<br />
+发信站: 水木社区 (Sat Dec  7 14:28:56 2013), 转信</p>
+<p>这个帖子满精彩的,俺就8了一下:</p>
+<p>楼长说的那个系统应该就是Mondrain,从来没有开源的.这里有详细的介绍,包括对g公司的code review process.</p>
+<p>http://www.youtube.com/watch?v=sMql3Di4Kgc</p>
+<p>发信人: yueq (yueq), 信区: Python<br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了<br />
+发信站: 水木社区 (Sat Dec  7 16:09:34 2013), 转信</p>
+<p>根据楼主的描述，是Google的内部code review工具：）。</p>
+<p>发信人: yueq (yueq), 信区: Python<br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了<br />
+发信站: 水木社区 (Sat Dec  7 16:15:16 2013), 转信</p>
+<p>旧系统Mondrian<br />
+新系统Critique</p>
+<p>如大家上所述，我觉得楼主对于UT、OOP的理解还有待加强。</p>
+<p>（我也在G家某组用PYTHON）</p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Mon Dec  9 11:51:08 2013), 转信   </p>
+<p>我们采用的连续上线的开发模式，每周发布一次增量版本，所以大概从第一个月就已经开始有Java code在产品中稳定运行了。同时我们也在把Python的代码分割成很多小的模块，方便与Java代码集成。从第一行Java code开始写，直到删掉Python部分的核心逻辑，大概用了9个月时间，其中后几个月已经是Java代码负责大部分功能，剩下一些不重要的小功能仍然依靠旧的Python代码实现。我在前面的帖子也提到，在一点一点切换到新系统的过程中，整个系统完全不间断运行，感觉就像给飞行中的飞机换引擎。   </p>
+<p>因为是非常短周期的增量开发模式，所以并没有一般意义上的“调试”期。测试主要依靠单元测试和一些自动集成测试，所以也没有一般意义上的“测试“期。新代码上线的时候我们也会采用10%发布的方式，也就是把10%的负载导入新系统，剩下90%的负载在旧系统，然后在逐渐提高新代码负载直到完全替代旧系统 。新代码上线之后就会删掉相应的旧代码。需要说明的是因为新系统的设计和过去很不一样，所以整个过程并不是按照Python代码翻译成Java，而是全新的设计，但是又在任何时刻都兼容老的代码。实现这种高度的连续平滑发布其实是相当困难的。   </p>
+<p>【 在 wificamera (wificamera) 的大作中提到: 】  <br />
+重写编码+调试+测试 到最后稳定运行 一共花了多少时间</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/69161031446';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

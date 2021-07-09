@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>fix bottle.py / wsgiref.simple_server slow - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="fix bottle.py / wsgiref.simple_server slow" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">fix bottle.py / wsgiref.simple_server slow</h2>
+    <p class="post-date">Posted <time datetime="2012-10-25T04:53:00+00:00">2012-10-25</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>Running bottlepy with default server (<code>wsgiref.simple_server</code>) is always dog slow for me, after some digging I found that the fucking server is trying to resolve the IP address of 10.x.x.x, both the server and client, into hostnames so the fucking logger can 'properly' display them. FUCK THIS BULLSHIT.</p>
+<p>Find <code>BaseHTTPServer.py</code></p>
+<p>Go to line 478;</p>
+<pre><code>def address_string(self):
+    return self.client_address[0]
+</code></pre>
+<p>It works best if you have virtualenv set you can just modify a copy in the <code>lib</code> only for development use.</p>
+<p>Fuck who ever wrote BaseHTTPRequestHandler.address_string() FUCK YOU ASSHOLE. Who ever thought reverse DNS lookup is acceptable is pure piece of shit. It only spams your log with fake &amp; gay spammer domains.</p>
+<p>Bottle.py is great Web framework, it supports <a href="http://bottlepy.org/docs/stable/async.html">Async WSGI</a> calls, which Flask <a href="http://flask.pocoo.org/docs/design/">can not do</a>. . It works even without using <code>gevent</code> as server. I am thinking of adding some sessions support to it. db backend maybe?</p>
+<p>Update: for python 2.6, just write this line for monkey patch before bottle.run() or wsgiref.simple_server </p>
+<pre><code>__import__('BaseHTTPServer').BaseHTTPRequestHandler.address_string = lambda x:x.client_address[0]
+</code></pre>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/34288214582';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

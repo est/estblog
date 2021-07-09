@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>The regional Internet matrix - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="The regional Internet matrix" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">The regional Internet matrix</h2>
+    <p class="post-date">Posted <time datetime="2010-01-14T03:49:39+00:00">2010-01-14</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>I am trying to sum up the dimensions of regional Internet</p>
+
+<p>Regional = [ timezone | geo-region | language ]</p>
+
+<p>which can be defined in</p>
+
+<ul>
+<li>browser settings, thus HTTP request headers</li>
+<li>browser components, like <code>toLocaleDateString(), toLocaleTimeString, tolocaleLowerCase(), tolocaleUpperCase(), toLocaleString()</code> in Javascript, and any browser specific or vendor specific scriptable interface.</li>
+<li>cookie</li>
+<li>session</li>
+<li>Flash cookie (aka LocalSharedObject)</li>
+<li>URL (like <code>hl=zh_CN&amp;</code>)</li>
+<li>profile website and product specific profile. Example in Google profile your language is English(US) while your in Google Calendar settings you choose English(UK)</li>
+<li>target website ccTLD</li>
+<li>DNS settings</li>
+<li>third party data provision like oAuth or OpenID</li>
+<li>IP address and other lower-level or higher-level network identifiers, most maliciously, RTT combined with a accurate route table</li>
+<li>(to be added)</li>
+</ul>
+
+<p>This is why making comparison and getting conclusions are <a href="http://www.google.org.cn/posts/google-only-have-10-search-results-on-china-ip.html">hard to be scientific complete and correct</a>.</p>
+
+<p>To protect <a href="http://en.wikipedia.org/wiki/Network_neutrality">network neutrality</a>, <strong>fuck all kinds of regional Internet</strong>.</p>
+
+<p>Viva la Résistance!</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/538';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

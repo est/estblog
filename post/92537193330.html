@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>iOS后门笔记 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="iOS后门笔记" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">iOS后门笔记</h2>
+    <p class="post-date">Posted <time datetime="2014-07-22T11:14:54+00:00">2014-07-22</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>lockdownd的tcp端口62078，文档 libimobiledevice.org，厂家有Cellebrite，AccessData (Mobile Phone Examiner)，Elcomsoft</p>
+<p>com.apple.pcapd  抓包服务</p>
+<p>com.apple.mobile.file_relay 文件传输服务。就不说文件了，SQLite库，Voicemail（AMR格式）等啥都包括了。甚至最后一次键盘拼写自动修正是什么单词！一开始是iTunes用来传输用的。</p>
+<p>其他自动启动服务：</p>
+<p>com.apple.iosdiagnostics.relay 统计app数据上网流量</p>
+<p>com.apple.mobile.installation_proxy 企业证书安装app的</p>
+<p>com.apple.syslog_relay 用来NSLog()的</p>
+<p>iOS 7做了一个重要的安全改进：不能连接到localhost或者本地IP了。比如localhost:62078</p>
+<p>如何在Info.plist指定后台运行的app</p>
+<pre><code>&lt;key&gt;SBAppTags&lt;/key&gt; 
+&lt;array&gt; 
+&lt;string&gt;hidden&lt;/string&gt; 
+&lt;/array&gt; 
+&lt;key&gt;UIBackgroundModes&lt;/key&gt; 
+&lt;array&gt; 
+&lt;string&gt;voip&lt;/string&gt; 
+&lt;/array&gt;
+</code></pre>
+<p><a href="http://www.zdziarski.com/blog/wp-content/uploads/2014/07/iOS_Backdoors_Attack_Points_Surveillance_Mechanisms.pdf">来源</a>，作者 @JZdziarski</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/92537193330';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

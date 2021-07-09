@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>关于webkit - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="关于webkit" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">关于webkit</h2>
+    <p class="post-date">Posted <time datetime="2010-04-09T10:08:18+00:00">2010-04-09</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p><a href="http://www.reddit.com/r/programming/comments/bodo5/webkitdev_announcing_webkit2/c0nre5a">reddit上</a>看到一段对webkit最好的解释</p>
+
+<blockquote>
+  <p>The idea of “WebKit2” can be a little confusing since WebKit is something of an overloaded name. It is used by various people to refer to the WebKit API layer that the WebKit framework provides on Mac OS X, the WebKit project as a whole, and to nightly builds of WebKit used with Safari. “WebKit2” is a replacement for the API layer of WebKit that’s designed with multi-process and multi-threaded clients in mind.<br>
+  The API layer of WebKit sits on top of the cross-platform WebCore codebase. To date it has consisted of platform-specific code that implements the WebKit APIs (Objective-C API on Mac, COM on Windows, etc) and some amount of platform behavior. Very little code at that level is currently shared between platforms. The new API layer intends to push as much of the platform behavior as possible down in to WebCore, to provide a cross-platform core that abstracts the multi-process / multi-thread model (where web content lives in a separate process or thread from the client application), and to provide a cross-platform API on which the platform-specific APIs can be built.</p>
+</blockquote>
+
+<p>今天是开发者社区对苹果shitstorm的日子，webkit2的发布可以把这个平衡一下 :)</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/1967';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

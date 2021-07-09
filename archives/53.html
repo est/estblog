@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>How to chain SSH tunnels using PuTTY - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="How to chain SSH tunnels using PuTTY" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">How to chain SSH tunnels using PuTTY</h2>
+    <p class="post-date">Posted <time datetime="2009-12-27T08:09:13+00:00">2009-12-27</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>Here’s a simple tutorial of how to setup a chained SSH tunnel with two SSH hosts.</p>
+
+<ol>
+<li>Open PuTTY and connect to your first (nearest to you) ssh node</li>
+<li>In the console, connect to your final ssh (which IP will be shown as an exit of chained tunnel) like this:<br><pre><code>ssh -CfNg -D 127.0.0.1:8787 <i>user</i>@<i>hostname</i></code></pre></li>
+<li>Right click putty title bar for context menu and click <code>Change settings</code>, like the following screenshot:<img src="http://blog.est.im/wp-content/uploads/2009/12/2.jpg" alt="putty config for chain ssh tunnel"><br>This settings means, PuTTY will listen on your local machine port 7777, and forward everything to 127.0.0.1:8787 on the first ssh server. Since in step #2 we have 127.0.0.1:8787 already there listening as a socks5 tunnel, the chain SSH tunnel is complete.</li>
+</ol>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2009/12/1.png" alt="chain ssh tunnel structure"></p>
+
+<p>Picture provided by <a href="http://ditaa.org/ditaa/render?grid=+++++%2B---------------%2B+++%2B----------------%2B++++%2B----------%2B++++%2B----------%2B%0D%0A+++++%7C+++++++++++++++%2B---%2B+127.0.0.1+8787+%7C++++%7C++++++++++%2B---%3E%7C+%7Bs%7D++++++%7C%0D%0A+++++%7C+0.0.0.0:7777++%7C+++%2B----------------%2B++++%7CSSH+Socks5%7C++++%7C+Internet+%7C%0D%0A+++++%7C+++++++++++++++%7C+++%7C+++++%7Bd%7D++++++++%7C++++%7C++++++++++%7C++++%7C++++++++++%7C%0D%0A+++++%7C+++++%7Bd%7D+++++++%7C+++%7C+127.0.0.1+8787+%2B---%3E%7C+++%7Bd%7D++++%7C++++%7C++++++++++%7C%0D%0A+++++%2B------%2B--------%2B+++%2B----------------%2B++++%2B----------%2B++++%2B----------%2B%0D%0A+++++++++:++++++++++++++++++++++++++++++++++++++++++++++++++++++++++%5E%0D%0A+++++++++%7C++++++++++++++++++++++++chained+ssh+tunnel++++++++++++++++%7C%0D%0A+++++++++----------------------------------------------------------/%0D%0A&amp;scale=1&amp;timeout=100">ditaa.org</a> using a nice ASCII2Graph tool called <a href="http://ditaa.sourceforge.net/">ditaa</a></p>
+
+<p>If you understand how to chain SSH tunnel using two ssh nodes, it’s easy to expanding it to three or more.</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/53';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

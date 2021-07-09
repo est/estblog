@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Est's Blog</title><link>https://blog.est.im/</link><description>This blog is rated&amp;nbsp;&amp;nbsp;R⃣ , viewer discretion is advised</description><lastBuildDate>Tue, 06 Jul 2021 23:13:17 +0000</lastBuildDate><item><title>美国国家航空航天局（NASA）在1966年的黑科技</title><link>https://blog.est.im/2021/stdin-006</link><description>&lt;p&gt;我 2018-09-29 在 &lt;a href="https://www.zhihu.com/question/61925305/answer/500667495"&gt;zhihu 上&lt;/a&gt;回答一个老贴。问题是「美国国家航空航天局（NASA）有什么黑科技」，存到自己 blog 上留档&lt;/p&gt;
+&lt;p&gt;转载一个故事 &lt;a href="http://www.worldofindie.co.uk/?p=682"&gt;McMoon: How the Earliest Images of the Moon Were so Much Better than we Realised&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;1966 年&lt;/h3&gt;
+&lt;p&gt;这个时候我国在做什么，大家可以回忆一下。这是一个胶片相机还是精密仪器的时代，2年前，东京奥运会被称为第一个有电视机奥运会。&lt;/p&gt;
+&lt;p&gt;NASA为了探测月球，发射了5个探测器Lunar Orbiter I 到 V。需要传回月球图片&lt;/p&gt;
+&lt;p&gt;那么请问没有任何数码手段如何把图片传回来？那个时候的美国间谍飞机到我国上空侦查，是要派飞行员来飞，而且要回去洗照片的。美国的侦察卫星，也是需要定期弹射胶卷回地球，然后地面部队回收 …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 06 Jul 2021 23:13:17 +0000</pubDate><guid isPermaLink="false">tag:None,2021-07-06:/2021/stdin-006</guid></item><item><title>macOS 设置 TCP 握手连接超时，提升浏览器在糟糕网络下的访问体验</title><link>https://blog.est.im/2021/stdout-009</link><description>&lt;p&gt;多年的疑惑今天居然被偶然解开了。&lt;/p&gt;
+&lt;p&gt;由于墙内糟糕的网络环境，而且ISP甚至wifi内还有墙中墙，所以很多域名是打不开的。&lt;/p&gt;
+&lt;p&gt;每次看浏览器在傻乎乎的转菊花，就觉得浪费时间。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo sysctl  net.inet.tcp.keepinit=3000
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这一条指令可以直接设置 macOS 的 TCP Keepalive 心跳包初始化时间设置为3000毫秒。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;net.inet.tcp.keepinit&lt;/code&gt;默认值是 75000 ，单位是毫秒。注意 Linux 下没这设置，而且单位是 秒&lt;/p&gt;
+&lt;p&gt;这句话学究式的解释可以通过 &lt;code&gt;man 4 tcp&lt;/code&gt; 得到，摘录几条：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;TCP_CONNECTIONTIMEOUT  The TCP_CONNECTIONTIMEOUT option allows to specify the timeout, in seconds, for new …&lt;/p&gt;&lt;/blockquote&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 02 Jul 2021 15:51:19 +0000</pubDate><guid isPermaLink="false">tag:None,2021-07-02:/2021/stdout-009</guid></item><item><title>MySQL on duplicate key in SQLAlchemy</title><link>https://blog.est.im/202106/stdout-008</link><description>&lt;p&gt;A simple function to upsert something atomically into MySQL&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;def upsert(val1, val2, **kwargs):
+    """upsert val1-val2 pair into mysql and return the pk"""
+    from sqlalchemy.dialects.mysql import insert
+    from sqlalchemy.sql.expression import func
+
+    # this val1-val2 pair should have UNIQUE KEY constraint in MySQL table.
+    stmt = insert(MyModel.__table__ …&lt;/code&gt;&lt;/pre&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 29 Jun 2021 11:55:13 +0000</pubDate><guid isPermaLink="false">tag:None,2021-06-29:/202106/stdout-008</guid></item><item><title>古墓丽影9（Tomb Raider 2013）治3D眩晕必备FOV补丁+禁镜头晃动</title><link>https://blog.est.im/202106/stdout-007</link><description>&lt;p&gt;断断续续把&lt;a href="https://steamcommunity.com/id/electronixtar/recommended/203160"&gt;买&lt;/a&gt;的&lt;a href="https://store.steampowered.com/app/203160/Tomb_Raider/"&gt;古墓丽影9&lt;/a&gt;打完了。这款2013年的游戏放在今天看也很不错。&lt;/p&gt;
+&lt;p&gt;唯一的巨大问题就是3D头晕。网上找了一些办法。&lt;/p&gt;
+&lt;h3&gt;禁止镜头晃动&lt;/h3&gt;
+&lt;p&gt;虽然故事和镜头都很好，但是这晃动太烦人了，很容易头晕。值得庆幸的是 PC 平台可以彻底根治这问题。下载 &lt;a href="https://community.pcgamingwiki.com/files/file/1166-tomb-raider-2013-yamatai-patch/"&gt;Yamatai Patch&lt;/a&gt;。按图修改&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="/images/2021/stdout-007-1.png" /&gt;&lt;/p&gt;
+&lt;h3&gt;增大 FOV&lt;/h3&gt;
+&lt;p&gt;这是多年的经验。头晕的主要问题就是视野太窄。&lt;/p&gt;
+&lt;p&gt;去下载 &lt;a href="https://cheatengine.org/"&gt;Cheat Engine&lt;/a&gt; 安装并打开，然后下载&lt;a href="https://community.pcgamingwiki.com/files/file/1148-tomb-raider-2013-fov-cheat-table/"&gt;内存修改表&lt;/a&gt;，按图修改。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="/images/2021/stdout-007-2.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;以上修改都需要有管理员权限并且保证游戏正在进行中。顺便说下 Yamatai patch 还可以治好 Lara Croft 胸部发育不良的毛病。好顶赞！&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 26 Jun 2021 14:32:36 +0000</pubDate><guid isPermaLink="false">tag:None,2021-06-26:/202106/stdout-007</guid></item><item><title>[zz]为什么古代汉族人不能在蒙古草原游牧？</title><link>https://blog.est.im/202106/stdin-005</link><description>&lt;p&gt;&lt;a href="https://www.zhihu.com/question/462005682/answer/1947378432"&gt;回答这个问题&lt;/a&gt;（快照&lt;a href="http://web.archive.org/web/20210621141823/https://www.zhihu.com/question/462005682/answer/1947378432"&gt;1&lt;/a&gt;, &lt;a href="https://archive.md/Wxq0C"&gt;2&lt;/a&gt;）的是个蒙古族人 &lt;em&gt;那你说我该叫什么&lt;/em&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我就是蒙古族，我来说一下吧。&lt;br /&gt;
+理论上汉人可以游牧，没人管你是什么族的，可是入乡随俗，你来游牧肯定要住帐篷赶车放牧吧，这么一弄谁还知道你是哪个族的。&lt;br /&gt;
+所以没有汉人不能游牧一说，而是大部分时候你并不知道他是什么族的。但是确实有一个实际原因导致汉人无法游牧，或者说无法以汉人的身份游牧。&lt;br /&gt;
+那就是汉人没有自己的营盘点。&lt;br /&gt;
+什么叫营盘点，就是你扎营的位置。跟很多人想的不一样，古代时候的游牧不是真的“游”，而是半定居。太多人把游牧部落想的很原始，其实并不是这样的。&lt;br /&gt;
+蒙古包并不是简单的折叠帐篷，而是一堆木棍，一大堆皮接合而成的房屋。拆卸安装可能要个把小时，最后变成一个小房子。而且包群的外面还要做篱笆，防御工事，哨岗等，里面还要有粪坑，火种点，食物/燃料/羊毛储存点这些基本配置。防水防虫防火都要做好。而且冬季牧场，夏季牧场都分的很清楚，哪里冬天暖和，哪里夏天没有那么炎热。不出意外是不会出现一些答主说的冬天冻死几千只羊，全靠长生天保佑过活这种的。游牧部落不是野人，不可能扛着帐篷蒙着眼睛跑着养羊的，连最简单的RTS都不可能做的这么简单，现实怎么可能啊 …&lt;/p&gt;&lt;/blockquote&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Mon, 21 Jun 2021 21:54:52 +0000</pubDate><guid isPermaLink="false">tag:None,2021-06-21:/202106/stdin-005</guid></item><item><title>自由意志</title><link>https://blog.est.im/202106/stderr-006</link><description>&lt;p&gt;人有自由意志吗？今天听&lt;a href="http://www.geekonomics10000.com"&gt;刚哥&lt;/a&gt; 说Robert Sapolsky 的书 &lt;em&gt;&lt;a href="https://book.douban.com/subject/26997370/"&gt;Behave&lt;/a&gt;&lt;/em&gt;。书中说到：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;1980 年代，神经生理学家本杰明·李贝特（Benjamin Libet）做了一个被传诵至今的经典实验。实验中受试者要做一个简单的动作，比如选择打开还是关上一个开关。科学家使用核磁共振同时观察大脑的活动，发现在受试者意识到自己选择怎么做的几百毫秒甚至几秒之前，他的大脑其实已经做出了选择。&lt;/p&gt;
+&lt;p&gt;这个实验似乎证明了人没有自由意志，你的意识只是听大脑的。但是萨波斯基介绍，李贝特本人对这个现象有个更高级的说法。李贝特说，是，你没有决定往哪边按下开关的自由意志 —— 但是，当你的大脑已经做出选择之后，到你切实按下开关之前的那半秒钟之内，你的意识可以决定不按那个开关。你有最后一刻的否决权。&lt;br /&gt;
+对我来说这是非常惊人的知识，这叫“自由非意志（Free Won't）”。这是一个充满争议的解释，有很多实验研究，有的同意有的反对。&lt;br /&gt;
+但不论如何，我们姑且认为人真的有否决权，那我们要问的是，这个否决权，又是啥东西呢？那个否决权只可能是生物因素，而你不能说因为现在脑神经科学家还没有达成共识，所以人还是有自由意志的。萨波斯基承认，脑神经科学仍然在发展之中 …&lt;/p&gt;&lt;/blockquote&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 19 Jun 2021 00:13:16 +0000</pubDate><guid isPermaLink="false">tag:None,2021-06-19:/202106/stderr-006</guid></item><item><title>Clarkson's Farm 观后感</title><link>https://blog.est.im/202106/stderr-005</link><description>&lt;p&gt;&lt;a href="https://www.imdb.com/title/tt10541088/"&gt;&lt;em&gt;Clarkson's Farm&lt;/em&gt;&lt;/a&gt; 居然是我对现代机械化农业入门的第一个的片子。乱写一些&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;兰博基尼的拖拉机(Lamborghini R8 270 DCR)真是 nb。40个前进档，40个后退档。不过 clarkson 好像买的二手4w刀&lt;/li&gt;
+&lt;li&gt;第一集没太明白，为啥必须一定先耕地再播种？直接雇佣另外一个人跟着耕过的地马上播种不就行了么&lt;/li&gt;
+&lt;li&gt;下雨的时候应该也能耕地吧。国内很多种水稻的田都是蓄水后再耕地。据长辈们说比旱地更容易。可能是怕拖拉机陷进泥浆？&lt;/li&gt;
+&lt;li&gt;拖拉机耕田弯弯曲曲的问题，应该可以通过LIDAR +　SLAM 解决？四轴无人机来个小区域精确导航？&lt;/li&gt;
+&lt;li&gt;那个 S 形状来回耕田的确不好调头，但是为什么不走 回 字形状画圆圈呢？&lt;/li&gt;
+&lt;li&gt;无人驾驶拖拉机耕田是不是下一个趋势？&lt;/li&gt;
+&lt;li&gt;那个公羊的 ball 是真的大！平均30-40cm 我日&lt;/li&gt;
+&lt;li&gt;把母羊搞怀孕还打个标记。。。这脑洞发明啊。。&lt;/li&gt;
+&lt;li&gt;那个很辣很贵的 wasabi，查了下，本来是 山葵，被误翻译成 芥末 了 …&lt;/li&gt;&lt;/ol&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Mon, 14 Jun 2021 08:31:17 +0000</pubDate><guid isPermaLink="false">tag:None,2021-06-14:/202106/stderr-005</guid></item><item><title>行车记录仪视频ffmpeg合并转录存档，跳过重复的漏秒</title><link>https://blog.est.im/202106/stdout-006</link><description>&lt;p&gt;手上有几个行车记录仪&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;VOSONIC 勤宇V10，也叫群华 路不平，用的 联咏 Novatek NT96550BG 的芯片，1080p&lt;/li&gt;
+&lt;li&gt;BLACKVIEW 凌度A12，采用 安霸(Ambarella) A12 方案，2k&lt;/li&gt;
+&lt;li&gt;PAPAGO 趴趴狗，GoSafe 560WiFi，采用 NT96670 芯片+IMX415的 sony CMOS，4k&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;特点是每5分钟切割成一个单独的文件，为了防止每两个视频之间漏秒，所以会额外重复写入1秒的内容&lt;/p&gt;
+&lt;p&gt;现在想把一段时间的视频合并成一个存档，并且要&lt;a href="https://www.v2ex.com/t/248037"&gt;跳过那些额外的1秒&lt;/a&gt;，上 ffmpeg。&lt;/p&gt;
+&lt;p&gt;首先前摇，生成需要合并的视频文件路径列表&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ls -fd1 /Volumes/SD_CARD/DCIM/xxxxx/*&lt;/code&gt; &lt;/p&gt;
+&lt;p&gt;的结果写成如下格式：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;file 'input1.mov' …&lt;/code&gt;&lt;/pre&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 05 Jun 2021 20:42:15 +0000</pubDate><guid isPermaLink="false">tag:None,2021-06-05:/202106/stdout-006</guid></item><item><title>Sandy Munro 看不懂 美的Midea 的注塑工艺</title><link>https://blog.est.im/202105/stdin-004</link><description>&lt;p&gt;看了好多 Tesla 的拆车视频，对 Youtube 上这个 &lt;a href="https://www.youtube.com/c/MunroLive/videos"&gt;Sandy Munro 老爷子&lt;/a&gt;还是挺有好感的。查了下&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;桑迪·蒙罗（Sandy Munro）是一个汽车工程师，专门研究机床和制造，在加拿大安大略省的温莎出生长大，后来加入了Valiant Machine＆Tool公司，这个公司主要为通用汽车提供配套，1978年加入福特公司，成为制造工程师，改进了发动机组装方法，1988年在密歇根州开办了自己的咨询公司。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;搜到他一个讨论电动车的视频，比较有意思&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://youtu.be/MrvvVSwEgmE?t=1411"&gt;https://youtu.be/MrvvVSwEgmE?t=1411&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;It's not China cheap anymore, that's for sure. And then when it comes to tooling oh …&lt;/p&gt;&lt;/blockquote&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 25 May 2021 15:46:14 +0000</pubDate><guid isPermaLink="false">tag:None,2021-05-25:/202105/stdin-004</guid></item><item><title>金朝汉化不成功，很大程度上也是一个“建国神话”范式</title><link>https://blog.est.im/202105/stdin-003</link><description>&lt;p&gt;下面内容转载自 &lt;a href="https://www.zhihu.com/pin/1380452379582644224"&gt;zhihu/叶思泰&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;最近打算写一个暴论：金朝汉化不成功，很大程度上也是一个“建国神话”范式。&lt;br /&gt;
+很多强盛的少数民族王朝都会有这种问题：开国一代人确实武功赫赫，打下了，好大一片积液，但是子孙后代往往被这样伟大的建国神话所迷惑，将一切原因归功于本民族的独特风俗习惯，而忽略了开国一代的艰辛睿智。&lt;br /&gt;
+金朝上下就普遍存在着这样一种认识：太祖太宗两朝吞辽灭宋武力强盛，那是因为当时的女真人风俗质朴，所以只要勒令女真人保持建国时期的风俗，就能保持军队的战斗力。&lt;br /&gt;
+这种刻舟求剑的建国神话痴迷和太平洋岛国土著的船货崇拜没区别，如果这些人真的细究一下本国的建国历史，就会意识到：耶律阿保机的契丹和孙万荣的契丹是完全不一致的，完颜阿骨打时代的女真和完颜函普时代也大相径庭，李元昊时代的党项和拓跋思恭相比也有本质的进步——他们开创的辉煌基业，正是在变化的基础上实现的，后世却刻舟求剑的将原因都归结于具体的一个个风俗上。&lt;br /&gt;
+金人为了维持女真旧俗费了很大的功夫，猛安谋克户实行父子相聚而耕的原始村社，还屡次商议重新均贫富平分地产。直接结果就是落后的生产关系导致军户经营极差，根本竞争不过周围的汉族农民，国家屡次拘刷良田供给他们，大大激化了金朝的民族矛盾。&lt;br /&gt;
+再就是对建国神话的痴迷导致了对女真人武力的过度想象，即使在金末时期，也妄想建立“北族超人军队”，继续实行汉族耕田供给女真人打仗的愚蠢制度。&lt;br /&gt;
+联想到前些年某些地方不思政务，完全忘却了为人民服务的宗旨，整天举办重走某某路、唱某某歌的活动，以为这就能天下倾心，万姓拥护，这就能不忘初心，继续奋斗了，所作所为 …&lt;/p&gt;&lt;/blockquote&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 25 May 2021 10:53:19 +0000</pubDate><guid isPermaLink="false">tag:None,2021-05-25:/202105/stdin-003</guid></item><item><title>育儿心得：语音日记(a-log)</title><link>https://blog.est.im/202105/stderr-004</link><description>&lt;p&gt;娃越来越大，作为家长就不可避免的内心越来越卷。老师要求的繁杂的作业，搜集好句好文，我看来是非常吃力和浪费时间的。因为小孩的书写速度太慢了。而且年纪很低，很多词汇还不会，只能用蹩脚的拼音代替。个人观点是小学3年级以前超过10分钟的书写劳动都是一种煎熬而不是提高。&lt;/p&gt;
+&lt;p&gt;今天突然灵机一动，想到了语音日记。就拿着 MIUI 手机实践了一下：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="audio log" src="/images/2021/stderr-004-1.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;上面的文本是 MIUI Notes 的识别结果，准确率不高，但是看个大概意思没问题。语音日记的好处很多：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;说话比写字快得多，词汇也大得多。&lt;/li&gt;
+&lt;li&gt;可以思考好了一口气说出来。写字更容易思绪被干扰或者打断&lt;/li&gt;
+&lt;li&gt;不会出现写错了反复擦除修改浪费时间&lt;/li&gt;
+&lt;li&gt;可以家长现场纠正，马上改进&lt;/li&gt;
+&lt;li&gt;因为手机笔记软件和语音识别技术的成熟，可以立刻看到实时语音转文本结果。回顾遣词造句水平和段落结构&lt;/li&gt;
+&lt;li&gt;练习标准普通话发音才能让 app 更好识别语音&lt;/li&gt;
+&lt;li&gt;可以训口头表达能力，语句连贯性。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;想起来现在很多 Interweb celeb 都喜欢做 vlog 来发泄，但是小学生通过audio log，a-log 进行20分钟的语音日记，说不定效果不错。&lt;/p&gt;
+&lt;p&gt;准备坚持一下。说不定找个地方记录一下 …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Mon, 10 May 2021 22:01:21 +0000</pubDate><guid isPermaLink="false">tag:None,2021-05-10:/202105/stderr-004</guid></item><item><title>Win10 自动设置开机锁屏壁纸</title><link>https://blog.est.im/202104/stdout-005</link><description>&lt;p&gt;Win10启动后，锁屏界面有一些每天更新的漂亮的墙纸，但是每个用户进去却只能看到默认的墙纸，不能自动切换。很是遗憾，于是搞了一段小脚本弥补。&lt;/p&gt;
+&lt;p&gt;找个地方比如桌面，右键新建一个 &lt;code&gt;est_win10_auto_wallpaper.bat&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@if (@X)==(@Y) @end /* JScript comment
+@echo off
+
+cscript //E:JScript %~n0.bat
+
+exit /b %errorlevel%
+*/
+
+var oShell = new ActiveXObject("WScript.Shell") ;
+var oFSO = new ActiveXObject("Scripting.FileSystemObject");
+
+var sWinDir = oFSO.GetSpecialFolder(0);
+var sPath = oShell.ExpandEnvironmentStrings('%LOCALAPPDATA%\\Packages\\Microsoft …&lt;/code&gt;&lt;/pre&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 11 Apr 2021 22:35:12 +0000</pubDate><guid isPermaLink="false">tag:None,2021-04-11:/202104/stdout-005</guid></item><item><title>Mac 命令行终端里获得视频文件的长度</title><link>https://blog.est.im/202104/stdout-004</link><description>&lt;p&gt;记录一下，Mac OS X 10.6.8 或更高版本：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;mdls -name kMDItemDurationSeconds -name kMDItemFSName  1.mp4
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这命令有一个很神经病的一点，同一个 .mp4 文件，获取只读的 TF 卡上的就没法获得视频长度，复制到可以读写的本地硬盘上就可以读出来。&lt;/p&gt;
+&lt;p&gt;或者在 Finder 里新建一个叫  &lt;code&gt;Movies&lt;/code&gt; 的文件夹，把视频文件放进去，然后列表展示，表头右键，就可以选择显示长度。。&lt;/p&gt;
+&lt;p&gt;同理，建立一个叫  &lt;code&gt;Pictures&lt;/code&gt; 的文件夹，可以列表展示图片尺寸。。&lt;/p&gt;
+&lt;p&gt;来自 &lt;a href="https://superuser.com/questions/1024894/"&gt;superuser&lt;/a&gt; 。真是神一般的设定。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 04 Apr 2021 12:01:30 +0000</pubDate><guid isPermaLink="false">tag:None,2021-04-04:/202104/stdout-004</guid></item><item><title>FastAPI/Starlette+Requests实现反向代理</title><link>https://blog.est.im/202103/stdout-003</link><description>&lt;p&gt;因为某些拉垮的业务需要，不得不在代码里去反向代理别的 HTTP API&lt;/p&gt;
+&lt;p&gt;一般格式如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@app.get('/other/{other_path:path}')
+@app.post('/other/{other_path:path}')
+async def other_api(other_path: str, req: Request):
+    """透传 API"""
+    host = 'http://example.intranet'
+    url = '{}/other/{}'.format(host, other_path)
+    body = bytes(await req.body()) or None
+    r = requests.request(
+        req.method, url,
+        headers={
+            'Cookie': req.headers …&lt;/code&gt;&lt;/pre&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 30 Mar 2021 15:07:01 +0000</pubDate><guid isPermaLink="false">tag:None,2021-03-30:/202103/stdout-003</guid></item><item><title>纪念 Sewall Wright</title><link>https://blog.est.im/202103/stderr-003</link><description>&lt;p&gt;在这个3月即将结束的特殊日子里，纪念 Sewall Wright。尤其是那石破天惊的从相关性反推因果性的豚鼠花色实验。&lt;/p&gt;
+&lt;p&gt;豚鼠的花色，按照我们一般的理解是遗传的。但是两只豚鼠很多代近亲繁殖也不可能生产出纯色的豚鼠。那花色和遗传的因果性能通过相关性推出吗？&lt;/p&gt;
+&lt;p&gt;这位大神还真推断出来了&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Sewall Wright first path diagram guinea pigs" src="/images/2021/stderr-003-1.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;插图来自最近听的一本书 &lt;em&gt;The Book of Why: The New Science of Cause and Effect&lt;/em&gt; 第二章 From Buccaneers to Guinea Pigs: The Genesis of Causal Inference 。网上有 pdf 直接看：&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://bayes.cs.ucla.edu/WHY/why-ch2.pdf"&gt;http://bayes.cs.ucla.edu/WHY/why-ch2.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;要知道他做出这个研究的时候，遗传学也就孟德尔水平，DNA 尚未发现！他假设豚鼠双亲各自有遗传因素 &lt;code&gt;H'' …&lt;/code&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 25 Mar 2021 23:56:41 +0000</pubDate><guid isPermaLink="false">tag:None,2021-03-25:/202103/stderr-003</guid></item><item><title>Clubhouse 一些感受</title><link>https://blog.est.im/202102/stderr-002</link><description>&lt;p&gt;clubhouse 总体感觉，自从被那啥之后，群体就基本一岸两地的人，和大陆留学生为主了。而且真的以学生为主。如果有家业压力人，要么就是创投圈要么就是币圈大佬。&lt;/p&gt;
+&lt;p&gt;第一次发言是在一个 English Lounge 里面有几个英语老师在聊 dyslexia 。这单词我都不认识但是还是强行尬聊了。&lt;/p&gt;
+&lt;p&gt;我当时就胡扯说中文这种文字为载体的语言，符号和读音分离，可能压根就不存在拼音字母类语言的发音乱序导致的理解能力的问题。&lt;/p&gt;
+&lt;p&gt;房主后来因为要去讨论女权，就早早的关闭了房间。不知道是被我的暴论或无知吓到了。我也因为时间太晚就睡了。第二天醒来，觉得不过瘾，就去搜了一下  dyslexia 这个概念。发现果然汉语里也是存在的。而且 HK 有个调查发现有这个问题的学生比例(10%)比 UK (5%-7%) 还高。&lt;/p&gt;
+&lt;p&gt;我又自己回味了一下，可能真的有这么回事。于是去 V 站发了个贴《&lt;a href="https://www.v2ex.com/t/752905"&gt;有哪些你一直认错、读反的词语你过了很久才发现？&lt;/a&gt;》。第一个回帖就给我当头一棒，天赋异禀这个词，我是的确很长时间读成  天赋bing yi 的。&lt;/p&gt;
+&lt;p&gt;但是这个问题也有有趣 …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 12 Feb 2021 23:18:45 +0000</pubDate><guid isPermaLink="false">tag:None,2021-02-12:/202102/stderr-002</guid></item><item><title>双亲+子女组成核心家庭(Nuclear Family)</title><link>https://blog.est.im/202101/stderr-001</link><description>&lt;p&gt;最近几个月最大的认知冲击是，我们这一代人可能是人类作为灵长类动物历史上非常罕见的核心家庭时期。&lt;/p&gt;
+&lt;p&gt;所谓「核心家庭」是 &lt;a href="https://en.wikipedia.org/wiki/Nuclear_family"&gt;nuclear family&lt;/a&gt; 这一概念的直译，表示一个最小、最基本的家庭单元。与该概念相对的是单亲家庭(single-parent family)，或者家族(extended family，四代同堂、三代同堂那种大家庭)&lt;/p&gt;
+&lt;p&gt;&lt;img alt="guan video" src="/images/2021/stderr-001-1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://youtu.be/ashExaHC9cg?t=909"&gt;马前卒说&lt;/a&gt;，「三五个人组成的小家庭，彻底成为独立的基层单位，在中国是80年代以后的事情」，所以差不多就是我们这代才人发生的。而且更为奇葩的是我们这一带是前无古人后无来者的独生子女一代。&lt;/p&gt;
+&lt;p&gt;无独有偶，在&lt;a href="https://news.ycombinator.com/item?id=25723851"&gt;Hacker News上&lt;/a&gt;也看到一篇趣文 「&lt;a href="https://boyle.substack.com/p/can-zoom-save-the-american-family"&gt;视频聊天软件 ZOOM 能拯救美式家庭吗 Can Zoom Save the American Family?&lt;/a&gt;」&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Corporate families, as defined by Steven Ruggles, a professor of history at …&lt;/p&gt;&lt;/blockquote&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 26 Jan 2021 05:49:36 +0000</pubDate><guid isPermaLink="false">tag:None,2021-01-26:/202101/stderr-001</guid></item><item><title>阶级滑落已经在发生</title><link>https://blog.est.im/202101/stdin-002</link><description>&lt;p&gt;刷到个视频&lt;/p&gt;
+&lt;div class="div-iframe"&gt;&lt;iframe src="https://www.youtube.com/embed/XXWYPeEfOb8?start=12:10" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"&gt;&lt;/iframe&gt;&lt;/div&gt;
+
+&lt;p&gt;12:10 开始那个哥说的话，很有感触&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;I think a lot of the anger stems from people who grew up believing their life was going to be a certain way and then it's not. right? And they don't have the opportunities their parents did.&lt;br /&gt;
+I think my generation is the first one …&lt;/p&gt;&lt;/blockquote&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 19 Jan 2021 20:53:44 +0000</pubDate><guid isPermaLink="false">tag:None,2021-01-19:/202101/stdin-002</guid></item><item><title>古之学者为己</title><link>https://blog.est.im/202101/stdin-001</link><description>&lt;blockquote&gt;
+&lt;p&gt;科文的所有道理，都是以“我”为主，这可是个特别难得的品格。很多人接触文化艺术，是为了别人。英文中有个专门的名词 —— “art snob”，也就是“艺术势利小人”。&lt;/p&gt;
+&lt;p&gt;他们并不真的欣赏文化，他们喜欢的是谈论文化。他们看电影是为了批评导演，他们读书是为了获得谈资，他们参加音乐会是为了自拍。他们特别关注别人给文化艺术划分的高中低档，以高档为荣，以低档为耻 —— 他们自己从来不知道怎么分档。他们能滔滔不绝地背诵艺术家的生平八卦，但是从未被艺术打动过。&lt;/p&gt;
+&lt;p&gt;他们关心的不是自己，而是“别人眼中的自己”。买幅油画挂在家里，是因为自己喜欢这幅画呢，还是为了向客人彰显自己的品位呢？有句话叫“古之学者为己，今之学者为人” —— 何止学习是为了别人，欣赏艺术也是为了别人。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;来自 万维钢·精英日课第一季 《谁想成为（文化）亿万富翁（下） 》&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 07 Jan 2021 20:50:42 +0000</pubDate><guid isPermaLink="false">tag:None,2021-01-07:/202101/stdin-001</guid></item><item><title>OpenWRT 实现 Cloudflare 动态域名 dynamic DNS</title><link>https://blog.est.im/202101/stdout-002</link><description>&lt;p&gt;首先得有公网 IP （废话），然后你得 OpenWRT 路由器桥接直拨。&lt;/p&gt;
+&lt;p&gt;这个方法的核心是通过 &lt;code&gt;ifstatus wan |  jsonfilter -e '@["ipv4-address"][0].address'&lt;/code&gt; 命令得到本机 WAN 的公网 IP。&lt;/p&gt;
+&lt;p&gt;根据官方的&lt;a href="https://support.cloudflare.com/hc/en-us/articles/360020524512-Manage-dynamic-IPs-in-Cloudflare-DNS-programmatically"&gt;说明&lt;/a&gt;走&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;创建 &lt;a href="https://dash.cloudflare.com/profile/api-tokens"&gt;API Token&lt;/a&gt; 。权限选 &lt;code&gt;All Zones&lt;/code&gt;，得到 &lt;code&gt;TOKEN&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;验证 API 是否 ok&lt;br /&gt;
+        curl - X GET "https://api.cloudflare.com/client/v4/user/tokens/verify" \&lt;br /&gt;
+          -H "Authorization: Bearer TOKEN" \&lt;br /&gt;
+          -H …&lt;/li&gt;&lt;/ol&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 05 Jan 2021 23:36:09 +0000</pubDate><guid isPermaLink="false">tag:None,2021-01-05:/202101/stdout-002</guid></item></channel></rss>

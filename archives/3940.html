@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>解决Win7在TP-Link R402上狂掉线问题 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="解决Win7在TP-Link R402上狂掉线问题" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">解决Win7在TP-Link R402上狂掉线问题</h2>
+    <p class="post-date">Posted <time datetime="2011-04-20T15:16:43+00:00">2011-04-20</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>在中文网站搜索了一下，有下面几个办法</p>
+
+<ul>
+<li>Intel 网卡会自作聪明电源管理，所以掉线，关掉网卡的电源选项；</li>
+<li>本地连接 IPv6关掉就不会掉线了；</li>
+<li>禁用TP-Link R402上的 DHCP，UPnP，防火墙；</li>
+</ul>
+
+<p>我最近越来越发现这问题严重了。ping 192.168.1.1有的时候居然会出现&gt;6ms甚至&gt;10ms，&gt;20ms的rtt延迟。开始以为是网线问题，后来弄了很久这个问题依然持续。</p>
+
+<p>但是我注意到：</p>
+
+<ul>
+<li>TP-Link R402的 DHCP服务器 - 客户端列表 下只显示我这一台PC的IP和MAC地址</li>
+<li>arp -a里居然没有路由器的IP和MAC</li>
+<li>禁用 启用 本地连接，又能上一会儿的网</li>
+</ul>
+
+<p>所以估计多半是脑残的微软又在Win7里改DHCP的什么东东了。Google一搜索Win7 dhcp bug果然<a href="http://hardforum.com/showthread.php?t=1471670">找到</a>了<a href="http://blogs.technet.com/b/teamdhcp/archive/2009/02/12/dhcp-broadcast-flag-handling-in-windows-7.aspx">办法</a>：</p>
+
+<p>regedit打开</p>
+
+<p><code>HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\{GUID}</code></p>
+
+<p>这里的<code>{GUID}</code>要一个一个看，看你 “本地连接” 那个IP</p>
+
+<p>把 <code>DhcpConnForceBroadcastFlag</code> 设置为 <code>1</code></p>
+
+<p>问题解决。再反观国内互联网，搜索关键词 "Win7 掉线" 会有 1,080,000 个结果，而搜索 DhcpConnForceBroadcastFlag 只有 3,360 个结果。而且居然没有一个大站提出这个问题的准确解决方法。遗憾。</p>
+
+<p>第二个教训就是，TL-R402这种廉价低端路由器实在不靠谱。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/3940';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

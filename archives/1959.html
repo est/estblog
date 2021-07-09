@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>社区，权利与政治 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="社区，权利与政治" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">社区，权利与政治</h2>
+    <p class="post-date">Posted <time datetime="2010-04-09T05:33:37+00:00">2010-04-09</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>很早就<a href="http://initiative.yo2.cn/archives/632347">说</a>过，计算机科学（特别是互联网和Web）其实和社会科学（特别是政治）其实是邻居。</p>
+
+<p>最近有两个事情从一些很微妙的地方和政治还真有可类比之处：</p>
+
+<ol>
+<li>iPhone OS 4.0 SDK ToS Sec. 3.3.1章节<a href="http://news.ycombinator.com/item?id=1250799">霸王条款</a>问题。</li>
+<li>reddit<a href="http://www.reddit.com/r/announcements/comments/bnskk/youve_just_been_drafted/">新的spam过滤</a>机制</li>
+</ol>
+
+<p>第一个问题，各大社区都吵翻天了。4.0新版SDK的ToS这样说的：</p>
+
+<blockquote>
+  <p>3.3.1 — Applications may only use Documented APIs in the manner prescribed by Apple and must not use or call any private APIs. Applications must be <strong>originally</strong> written in Objective-C, C, C++, or JavaScript as executed by the iPhone OS WebKit engine, and <strong>only</strong> code written in C, C++, and Objective-C may compile and directly link against the Documented APIs (e.g., Applications that link to Documented APIs through an intermediary translation or compatibility layer or tool are <strong>prohibited</strong>).</p>
+</blockquote>
+
+<p>首先咱们给这玩意儿定个性：这是一个完全无视任何技术和发展，纯粹的政治决定。因为Apple大爷有这个<strong>权利</strong>在ToS里提出这个要求和法律。</p>
+
+<p>在IT工业从PC升级到mobile过程中，Apple可谓处处抢占了先机。Apple作出这个决定其实跟当年微软把user和dev捆绑到 Win32 API 上是同一个性质的决定。但是别人微软至少还是一个基于Wintel松散的open体系，Vista的失败很大一部份原因就是因为微软斗不过DoJ的官司。但是微软跟Apple的垄断相比，真的是小巫见大巫了。Apple是从最上游的硬件到最下游的软件一口气垄断完了。从理论上来说，这个新ToS不仅宣判了Flash, Java, appcelerator, MonoTouch, Unity3D的死刑，甚至宣判了objective-j, GLSL 和 GWT 的死刑。这也是rms和自由软件运动一直批判的proprietary software可恶的地方。</p>
+
+<p>而这一切，都把人们的注意力从技术的进步和发展，拉入了政治斗争的泥潭。</p>
+
+<p>第二个问题，我们不谈reddit本身spam问题是怎么怎么样的。我只是觉得reddit博客里有一点描述很有意思：</p>
+
+<ul>
+<li>In the earliest days, there was no spam.</li>
+<li>Then, there was some spam, but users would downvote it right away.</li>
+<li>Then, the New queue was so flooded with spam that it became unreadable, which ultimately starved the front page of good submissions. So we (the admins) started removing it manually.</li>
+<li>Then we asked you guys to report spam so we at least didn't have to go looking for it.</li>
+<li>Then, even sorting through the reports got overwhelming, and we had to turn the job over to moderators.</li>
+<li>Then, the moderators were overwhelmed and an automated spam filter had to be set up for each reddit community.</li>
+<li>Then, traffic grew so much that the spam filter's tiny false positive rate started accumulating into a constant stream of stories about poor souls who were unfairly blocked. Most redditors are understandably sympathetic to these stories, and so there have been numerous prominent submissions that inevitably end with us being <strong>accused of censorship</strong> -- or at best, <strong>being a police state</strong>. And that makes us feel terrible.</li>
+</ul>
+
+<p>恩。一个社区的发展，不仅有技术上scalabiilty的问题，更大更致命的问题是权利上scalability的问题。看到reddit社区admin和mod之间隐蔽的裂痕，我第一个想到的就是中国古代宫廷里，皇帝和臣子权利拉锯和政治斗争。政治和人类sociology是一门很复杂的学问，地球上最聪明的中国人，花了几千年的时间来探索，也很难找到一个平衡。我觉得这里面最有趣的一点就是，技术人员解决社会问题就像解决软件工程问题一样，如果遇到一个没法解决的事情，就通过增加一个中间层来解决。而其实mod这个中间层就像一个摔断的磁铁，N-S其实是相斥的。mod其实是背着admin向着user的。所以mod其实拉远了admin和user之间的距离。如果遇到素质和觉悟不高的mod，很有可能就造成社区的分崩离析和衰亡。</p>
+
+<p>reddit前一段时间还有个闹得满城风雨的mod。id叫Saydrah。这也是一个社区兴衰史的一个小浪花和小插曲吧。一个网站，社区的死亡比技术的死亡更加致命。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/1959';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

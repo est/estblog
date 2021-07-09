@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>Re: python标准库貌似没有实现链表？ - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Re: python标准库貌似没有实现链表？" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Re: python标准库貌似没有实现链表？</h2>
+    <p class="post-date">Posted <time datetime="2013-04-18T20:54:56+00:00">2013-04-18</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>发信人: draculalord ( 嗯？), 信区: Python   <br />
+标  题: 也谈链表及其他Re: python标准库貌似没有实现链表？   <br />
+发信站: 水木社区 (Mon Mar 21 18:49:46 2011), 转信     </p>
+<p>实际上刚开始学习一些高级语言的时候我也有同样的疑问，而且即使有链表对应物的语言，链表常常也很少被实际使用。   <br />
+如果是在国外听数据结构的课，老师一般会警告你这只是一个理论概念，实际应用应该实际考察，在通常情况下链表不是一个很好的结构。   <br />
+通常链表会作为一个很好的反例，告诉大家脱离实际硬件环境来谈论所谓算法复杂度是没有任何意义的。   <br />
+这是因为，链表已经不适合当今的计算机硬件发展。当今的计算机硬件对内存是否连续更为敏感，而链表恰恰会破坏这种顺序读取。   <br />
+由于locality很差所以常常造成page fault和cache miss   <br />
+这也是为什么大多数教师不再推荐使用链表的原因。而且现今的硬件内存拷贝实际相当迅速。   <br />
+并且python的list算法不是通常的单项表，也不是通常的数组。   <br />
+具体可以看这里：http://wiki.python.org/moin/TimeComplexity   <br />
+在List末尾append/pop都是O(1)的，   <br />
+如果要在头部或者中部插入是O(n),任何破坏连续性的操作都会被要求realloc,所以任何此类操作都是O(n)   <br />
+但是当今的常用硬件，使用C写的链表和python的list，在insert的时候只有n&gt;50000才让链表比list快那么一点点。   <br />
+这还没有考虑其他实际操作的复杂度。加上前面说的破坏locality,导致链表完全没有吸引力。在对象特别多的时候通常我们直接抽象它为数据库，也不要去想什么链表了。     </p>
+<p>在需要用到linked list特性的地方，比如常常需要从头部append或者pop   <br />
+这时候有python的deque. (这里我记错了，特此更正，deque如果做insert还是会导致内存拷贝/移动，这里面的关键思想就是目前硬件的内存拷贝相当快，不是相当长的东西都可以接受)   <br />
+deque也不是通常的简单数据结构，它是经过认真权衡过后得到的一种混合式数据结构。   <br />
+他是一个链式块结构，每个块包含62个对象，以此来平衡对locality的优化和对push, pop的优化。有人问为啥是62个而不是其他数：那是因为deque是个双向链表，一个节点64个指针，一个指向前一个指向后，剩下就是62个指针用来指向对象     </p>
+<p>要做到对insert到中间的优化是用btree和array结合的办法，有个第三方包blist   <br />
+但是我估计很少有应用会真正用到这个。insert是O(log n)   <br />
+http://pypi.python.org/pypi/blist/     </p>
+<p>其实python是大师设计的语言，他们来决定底层具体的数据结构，作为一般人，你没有必要去质疑大师们精心设计的东西。   <br />
+如果你真的对性能有很大要求，python也许并不适合你，python不是作为纯粹针对高性能计算诞生的东西，   <br />
+他是一种胶水语言，它只对常见的List长度，常用的算法结构进行优化。他希望达到的目的是把现实的应用抽象出来，让使用者不用关心具体的数据结构和算法。   <br />
+pythonic是一种面向大众的编程态度     </p>
+<p>如果你要用它来做其他事情，可以看看有没有你需要的第三方模块,或者可以用C来实现自己的一个模块，python本来就是C写的，所以这实际上也一点不困难。   <br />
+比如python里面没有一个数据结构是能用来很好表示数值运算中使用的大型矩阵或者数组的，这时候就诞生了第三方包：numpy     </p>
+<p><a href="http://www.v2ex.com/t/66268">via</a></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/48319644529';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>“没有什么事情在技术上做不到” - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="“没有什么事情在技术上做不到”" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">“没有什么事情在技术上做不到”</h2>
+    <p class="post-date">Posted <time datetime="2012-11-27T21:12:00+00:00">2012-11-27</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>看到一条<a href="http://weibo.com/1577794853/z7a8Zh3Ij">微博</a></p>
+<blockquote>
+<p>@互联网的一些事  ： 马化腾说过：“在腾讯不允许说什么事情在技术上做不到。”</p>
+</blockquote>
+<p>让我想起来了这个经典的<a href="http://www.perlmonks.org/index.pl?node_id=542341">XY problem</a>，今天恰好又在<a href="http://www.reddit.com/r/programming/comments/13w3st/til_the_name_of_an_antipattern_that_often_happens/">reddit上</a>看到了</p>
+<p>什么是XY 问题呢？用一个例子说明</p>
+<blockquote>
+<p>提问者：什么函数能返回两个分隔符之间的字符呢？  <br />
+路人甲：没有直接搞这个的函数吧？  <br />
+路人乙：split 然后 slice  <br />
+路人丙：partition也可以  <br />
+提问者：我试过 partition  <br />
+提问者：原始字串字符是这样的 "attribute1: 50.223, attribute2: 442.1"，现在我想得到50.223  <br />
+路人丁：为啥不直接写个函数来专门解析这样的字串  <br />
+提问者：有没有自带函数能直接搞定这个呀  <br />
+路人丁：pairs = [x.strip() for x in s.split(",")]; attribs = {k: v for x in pairs for k, v in x.split(": ")}  <br />
+路人丁：还有一些库可以解析各种格式的字符串的。  <br />
+路人丁：比如 json或yaml  <br />
+提问者：字串是来自html里边的  <br />
+提问者：但是我想找一个能解析Javascript的HTMLParser之类的  <br />
+路人丁：是需要解析一段html里的javascript，还是解析各种变形的html？  <br />
+提问者：是解析嵌入html的javascript  <br />
+路人丁：你去查一下json是不是差不多？  <br />
+提问者：呃，好像这的就是json。学习了。  <br />
+路人丁：解析json的库多了去了随便用一个  <br />
+提问者：果然如此。谢谢    </p>
+</blockquote>
+<p>回到本帖的主题，如果马化腾真说过这句话，那么看来腾讯这个PM说了算的帝国果然名不虚传。</p>
+<p>大多数PM定制的需求就是把用户的X问题，用自己的2b能力包装成了Y需求，然后苦逼码农在功能上做出了打折扣的Z实现。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/36708513156';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

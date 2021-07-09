@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>用函数描绘群山+地形+长城+金字塔+雾气 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="用函数描绘群山+地形+长城+金字塔+雾气" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">用函数描绘群山+地形+长城+金字塔+雾气</h2>
+    <p class="post-date">Posted <time datetime="2010-08-17T09:14:21+00:00">2010-08-17</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p><img src="http://blog.est.im/wp-content/uploads/2010/08/15.png" alt=""></p>
+
+<p>代码一共924个字，相当于一篇稍长的高考作文。</p>
+
+<pre><code>float map(float x, float z)
+{
+    // terrain
+    float f;
+    f =  0.50000000f*noise2f( 1.0f*x,    1.0f*z);
+    f += 0.25000000f*noise2f( 2.0f*x,    2.0f*z);
+    f += 0.12500000f*noise2f( 4.0f*x,    4.0f*z);
+    f += 0.06250000f*noise2f( 8.0f*x,    8.0f*z);
+    f += 0.03125000f*noise2f( 16.0f*x,    16.0f*z);
+    f += 0.01562500f*noise2f( 32.0f*x,    32.0f*z);
+    f += 0.00781250f*noise2f( 64.0f*x, 64.0f*z);
+    f += 0.00390625f*noise2f(128.0f*x, 128.0f*z);
+    f = 0.5f+0.5f*f;
+    f = f*f*(3.0f-2.0f*f);
+    f = f*f*(3.0f-2.0f*f);
+    f = -2.5f + 1.5f*f;
+
+    // chinese wall
+    float cx = x-1.5f*noise2f( 2.0f*x, 2.0f*z);
+    float cz = z+1.5f*noise2f( 2.0f*x, 2.0f*z);
+    float di = fabsf(cx+cz);
+    if( di&lt;0.1f )
+        f += 0.1f-di;
+
+    // pyramid
+    float g;
+    z -= 2.0f;
+    float rx = x*0.9f-z*0.2f;
+    float rz = x*0.2f+z*0.9f;
+    g = 0.25f - fabsf(rx*1.65f) - fabsf(rz*1.65f);
+    g = ((int)(g*10.0f))/10.0f;     // stairs
+    if( fabsf(rx+rz)&lt;0.1f || fabsf(rx-rz)&lt;0.1f ) // path
+        g += 0.1f;
+
+    // select terrain or pyramid 
+    if( g&gt;f ) f=g;
+    return f;
+}
+
+void fog(float *rgb, float t, const float *rayDir)
+{
+    float fog = (1.0f-m2xf(-2.5f*rayDir[1]*t) ) / rayDir[1];
+    collerp(rgb, fog*0.01f, rgb, fogColor);
+}
+</code></pre>
+
+<p>同样的场景用自然语言精确描述又需要多少字呢？</p>
+
+<p>来源：<a href="http://iquilezles.org/www/articles/proceduralgfx/inspire2008.pdf">4k intro常见技巧讲述pdf</a>。作者是rgba的iq。做demoscene的大神。。。</p>
+
+<p><a href="http://www.reddit.com/r/programming/comments/d1wfi/making_graphics_in_4_kilobytes_pdf/">via</a></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/2716';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

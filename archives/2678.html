@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>从垃圾站看技术：Chrome也能调用ActiveX版的Flash - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="从垃圾站看技术：Chrome也能调用ActiveX版的Flash" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">从垃圾站看技术：Chrome也能调用ActiveX版的Flash</h2>
+    <p class="post-date">Posted <time datetime="2010-08-07T03:28:24+00:00">2010-08-07</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>无聊逛豆瓣无意中点到一个垃圾站，很让我震惊的是，这玩意儿居然是用Windows Media Player作为Adobe Flash的容器</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/08/12.png" alt=""></p>
+
+<p>看源码</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/08/21.png" alt=""></p>
+
+<p>居然是<code>type="application/x-mplayer2"</code>里嵌入一个sina video的swf视频播放器。。。</p>
+
+<p>从dll加载的角度证实了我这个猜想</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/08/31.png" alt=""></p>
+
+<p>系统里的Flash插件分两种</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/08/41.png" alt=""></p>
+
+<p>一个是<code>Flash10h.ocx</code>，这个是所有Windows本地播放器的核心，也是IE的Flash插件的核心，基于ActiveX技术。</p>
+
+<p>另一个是<code>NPSWF32.dll</code>，这个是支持所有NPAPI的浏览器插件。支持NPAPI的有：Netscape, Firefox, Opera, Safari, Chrome等等。</p>
+
+<p>我还猜想通过Windows Media Player加载的swf可能会绕过Chrome自身的HTTP协议栈，而直接通过WinINET发出请求，也就是说，IE的cookie可以被Chrome读取到～～～～IE的exp也有可能在Chrome下被加载和诱发～～～～</p>
+
+<p>第二个猜想：Firefox里即使用了Noflash, NoScript插件，通过WMP容器加载的Flash依然能够显示。手里暂时没Firefox所以就没试了。</p>
+
+<p>我又邪恶了～～～muh ha ha ha～～～～垃圾站里这种囧技术真能启发思维啊。。。。</p>
+
+<p><ins>更新</ins>：Firefox的NoScript的确对这种Flash无效</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/08/5.png" alt=""></p>
+
+<p>除非你勾选了Forbid other plugins.</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/2678';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

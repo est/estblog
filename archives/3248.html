@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>三陆零的libdefa.dat解密工具 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="三陆零的libdefa.dat解密工具" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">三陆零的libdefa.dat解密工具</h2>
+    <p class="post-date">Posted <time datetime="2010-11-15T14:48:51+00:00">2010-11-15</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>小狮子娱乐公司挺牛逼的，三陆零的<a href="http://www.360.cn/xukexieyi.html">使用协议</a>说：</p>
+
+<blockquote>
+  <p>用户不得对本软件产品进行反向工程（reverse engineer）、反向编译（decompile）或反汇编（disassemble），违者属于侵权行为</p>
+</blockquote>
+
+<p>但是还是被<a href="http://cnbeta.com/articles/127119.htm">公开</a>反编译<a href="http://it.sohu.com/20101115/n277646683.shtml">羞辱</a>了。</p>
+
+<p>不过小狮子娱乐公司提供的这个<a href="http://rsdownload.rising.com.cn/for_down/decodegui.exe">decodegui.exe</a>还是挺好玩的，调用件AntiAdwa.dll来解密三陆零的libdefa.dat。这个libdefa.dat应该不是小狮子娱乐公司所说的“数万用户隐私”，而是三陆零用来防钓鱼的识别特征库。这个解密结果非常有意思，可以用来一窥大陆<strong>整个插件行业</strong>的大概。</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/11/14.png" alt=""></p>
+
+<p>我当小白鼠已经把提取出来了。大家来围观吧：</p>
+
+<p><ins>更新</ins>：出于版权考虑，下载地址就不提供了。</p>
+
+<p>其实有了这个CLSID库好多人都可以山寨一个三陆零了。LOL。</p>
+
+<p>一个最简单的山寨应用就是企业<strong>官方网站</strong>查询。</p>
+
+<p>解密过后的libdefa.dat.txt文件9991行就是：</p>
+
+<blockquote>
+  <p>0 1 6 &quot;招商银行&quot; &quot;招商银行&quot; 2 0 &quot;http://*.cmbchina.com/*&quot;</p>
+</blockquote>
+
+<p>这个时候<code>grep</code>派上用场了：</p>
+
+<pre><code>$ grep 招商 libdefa.dat.txt
+1 0 2 "招商银行专业版" "" 1 0 clsid:{f2eb8999-766e-4bf6-aaad-8d1800008c39}
+1 0 2 "招商银行网银登录控件|||中国招商银行大众版网上银行登录控件、用于登录信息的
+输入" "中国招商银行" 1 0 clsid:{0ca54d3f-ceae-48af-9a2b-90310000b99c}
+1 0 2 "招商银行一事通控件|||招商银行一事通相关控件" "招商银行" 1 0 clsid:{b433e8
+21-a29d-4feb-a575-44cb00000ea8}
+1 0 2 "招商银行一网通安全控件|||招商银行一网通在线安全登陆控件" "招商银行" 1 0 c
+lsid:{a01eb014-728e-44a0-9d1e-fca40000ab50}
+1 0 2 "招商银行专业版|||招商银行专业版在线安全登陆控件" "中国招商银行" 1 0 clsid
+:{4f9fa543-fabc-4b68-b2c4-df010000a86e}
+1 0 2 "招商银行专业版|||招商银行专业版在线安全登陆控件" "中国招商银行" 1 0 clsid
+:{43a137c3-b41e-4cb9-9c77-06f200000b98}
+1 0 2 "招商银行专业版|||招商银行专业版在线安全登陆控件" "中国招商银行" 1 0 clsid
+:{2f7d8085-831e-406a-8059-d76d00000baf}
+1 0 2 "招商银行专业版|||招商银行专业版在线安全登陆控件" "中国招商银行" 1 0 clsid
+:{19ad95ab-b73f-11d3-9ad8-a000000000b9}
+1 0 2 "招商银行专业版|||招商银行专业版在线安全登陆控件" "中国招商银行" 1 0 clsid
+:{bed39a48-894d-4550-93b3-1f510000e521}
+1 0 2 "招商证券WEB交易安全控件|||招商证券WEB交易安全控件" "招商证券股份有限公司"
+ 1 0 clsid:{e038d538-7d30-490e-8ddc-805f0000f9ba}
+1 0 2 "招商银行专业版|||招商银行专业版在线安全登陆控件" "中国招商银行" 1 0 clsid
+:{5e68a951-6abb-4069-8523-e4750000d556}
+1 0 2 "电卡充值在线控件|||电卡充值在线相关控件" "招商银行北京分行" 1 0 clsid:{60
+9cb1e9-120f-454b-89b8-ff1200000f99}
+0 1 6 "招商银行" "招商银行" 2 0 "http://*.cmbchina.com/*"
+0 1 6 "招商银行香港分行" "招商银行香港分行" 2 0 "http://hk.cmbchina.com/*"
+0 1 6 "招商证券" "招商证券" 2 0 "http://*.newone.com.cn/*"
+0 1 6 "招商基金" "招商基金" 2 0 "http://*.cmfchina.com/*"
+1 0 2 "截图软件在线控件|||截图软件在线控件" "招商银行股份有限公司" 1 0 clsid:{c2
+fd2157-3be4-40f6-b142-720f000062c0}
+</code></pre>
+
+<p>看来这个文件是比较有商业利用价值和含金量的东东了。老周应该很心痛。。。。期待360出手把QQ的一个什么库反编译出来看看有什么好玩的东东。。。哈哈。。。</p>
+
+<p>以后要吸取教训，做指纹识别库，先MD5再加密。。。。。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/3248';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

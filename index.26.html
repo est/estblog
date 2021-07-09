@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="This blog is rated&nbsp;&nbsp;R⃣ , viewer discretion is advised" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="list-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="card-container side-gutter">
+      <header class="list-header">
+        <p class="list-header-subtext">This blog is rated&nbsp;&nbsp;R⃣ , viewer discretion is advised</p>
+        <!-- <h1 class="list-header-title">Est's Blog</h1> -->
+      </header>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/3886"  rel="bookmark" >
+              <h2 class="card-title">santyaho91在中俄边境买了个移动硬盘，回俄罗斯一看悲剧了</h2>
+            </a>
+            <p class="card-text"><p><img src="http://blog.est.im/wp-content/uploads/2011/04/12.jpg" alt=""></p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2011/04/2.jpg" alt=""></p>
+
+<p>电脑上显示的是500G，还能存文件进去，还他妈的用螺帽做配重，我X，真敬业！兲朝人有这个心思怎么不花在做产品上啊。</p>
+
+<p><a href="http://news.ycombinator.com/item?id=2418837">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-04-07T13:26:58+00:00">2011-04-07</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/3879"  rel="bookmark" >
+              <h2 class="card-title">3D版贪吃蛇（基于OpenGL）</h2>
+            </a>
+            <p class="card-text"><p>卧槽，这玩意儿我玩自卑了，每次都是那个四面体那一关就差不多快挂了。。。</p>
+
+<p><a href="http://cycleblob.com/">http://cycleblob.com/</a></p>
+
+<p>最好的水平打到这一关就挂了 T___T!!</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2011/04/1.jpg" alt=""></p>
+
+<p>严格的来说这个不是贪吃蛇，是电影《tron》里面那种光轮摩托。</p>
+
+<p>发现一个道理：越是old school的东西发散创新的维度越多。在这个天下XX一大抄的时代回归到本质的返璞归真的境界，把所有问题原子化才能爆发新的奇异点。</p>
+
+<p><ins>更新</ins>：<a href="http://blog.est.im/wp-content/uploads/2011/04/11.jpg">所有关卡截图</a>，反编译的<a href="http://paste.ubuntu.com/589852/">javascript源码</a></p>
+
+<p><a href="http://www.reddit.com/r/programming/comments/giz2r/lightcycle_on_a_3d_surface_webgl/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-04-05T13:51:56+00:00">2011-04-05</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/3875"  rel="bookmark" >
+              <h2 class="card-title">sshuttle is better ssh -D alternative</h2>
+            </a>
+            <p class="card-text"><p>ignw大神以前说过ssh和openvpn性能不行，我当时觉得如果openvpn走tcp连接的话，隧道里的tcp的控制和重发岂不是就没用了？</p>
+
+<p>今天<a href="http://news.ycombinator.com/item?id=2407924">HN上</a>讨论了一个新东东 <a href="https://github.com/apenwarr/sshuttle">sshuttle</a>，一句话介绍：</p>
+
+<p>如果说<code>ssh -D</code>是tcp-over-tcp，那么sshuttle则是data-over-tcp。</p>
+
+<p>详细介绍：</p>
+
+<blockquote>
+  <p>But you can't safely just forward TCP packets over a TCP session (like ssh), because TCP's performance depends fundamentally on packet loss; it must experience packet loss in order to know when to slow down! At …</p></blockquote></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-04-05T05:24:36+00:00">2011-04-05</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/3872"  rel="bookmark" >
+              <h2 class="card-title">今日天气</h2>
+            </a>
+            <p class="card-text"><p>多RST，雨。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-04-05T01:38:04+00:00">2011-04-05</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/3853"  rel="bookmark" >
+              <h2 class="card-title">[zz]百度和谷歌搜索“科学”的区别（有福利）</h2>
+            </a>
+            <p class="card-text"><p>发信人: Quanm (胖子), 信区: ITExpress<br>
+标  题: Google、百度之“科学大战”<br>
+发信站: 水木社区 (Sat Apr  2 18:03:48 2011), 站内</p>
+
+<p><a href="http://news.mydrivers.com/1/190/190144.htm">http://news.mydrivers.com/1/190/190144.htm</a></p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2011/04/21.png" alt=""></p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2011/04/11.png" alt=""></p>
+
+<p>最后是<a href="http://cn.bing.com/images/search?q=%E7%A7%91%E5%AD%A6&amp;form=QBLH&amp;qs=n&amp;sk=">福利</a>：</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2011/04/2011-04-03_231810.png" alt=""></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-04-03T15:19:21+00:00">2011-04-03</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/3854"  rel="bookmark" >
+              <h2 class="card-title">两个ssl非常酷的hack</h2>
+            </a>
+            <p class="card-text"><p><a href="http://news.ycombinator.com/item?id=2396933">第一个</a>是Google Certificate Catalog</p>
+
+<pre><code>$ openssl s_client -connect www.google.com:443 &lt; /dev/null | openssl x509 -outform DER | openssl sha1
+depth=1 /C=ZA/O=Thawte Consulting (Pty) Ltd./CN=Thawte SGC CA
+verify error:num=20:unable to get local issuer certificate
+verify return:0
+DONE
+405062e5befde4af97e9382af16cc87c8fb7c4e2
+$ dig +short 405062e5befde4af97e9382af16cc87c8fb7c4e2 …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-04-03T14:26:42+00:00">2011-04-03</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/3847"  rel="bookmark" >
+              <h2 class="card-title">iPhone Unique Device Identifier的40位udid key算法</h2>
+            </a>
+            <p class="card-text"><pre><code>udid=hashlib.sha1(serial.upper()+imei+wifi_mac+bluetooth_mac).hexdigest()
+print udid
+</code></pre>
+
+<p>都可以在iphones Settings - General -About里看到</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-04-01T07:50:56+00:00">2011-04-01</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/3838"  rel="bookmark" >
+              <h2 class="card-title">2011-04-01 collection</h2>
+            </a>
+            <p class="card-text"><p>Portal 2 Demo <a href="http://www.reddit.com/r/gaming/comments/gfwh8/portal_2_sp_demo_leaked/">偷跑</a> <a href="http://blog.est.im/wp-content/uploads/2011/04/1.png">截图</a>  <a href="http://www.reddit.com/r/gaming/comments/gfwh8/portal_2_sp_demo_leaked/">来自</a></p>
+
+<p>Adblock Chrome推出IRL版本<a href="http://chromeadblock.com/freedom/">AdBlock Freedom</a>。话说我早就想ps个这个来玩了。可惜很少坐车出远门~~</p>
+
+<p><img src="http://chromeadblock.com/freedom/example.jpg" alt=""></p>
+
+<p>Flask推出企业级开发组件 <a href="http://massive.immersedcode.org/2011/staging/projects/default/python/flask-enterprise/">Flask-Enterprise</a>，包括了对SOAP/WSDL/XMLRPC的完善支持！ <a href="http://www.reddit.com/r/Python/comments/gfxzf/we_just_released_flaskenterprise_enterprise_level/">来自</a></p>
+
+<p>IETF搞了个<a href="http://tools.ietf.org/html/rfc6217">rfc6217</a>Regional Broadcast Using an Atmospheric Link Layer</p>
+
+<p><a href="http://www.iteye.com/news/20605">JavaEye.com收到Oracle律师函</a>，这个……貌似是真的。</p>
+
+<p>Google推出 <a href="http://www.google.com/romance/">Google Remance</a>，还有就是招<a href="http://www.google.com/intl/en/jobs/uslocations/mountain-view/autocompleter/index.html">人工拼写检查和搜索建议</a>这个职位。<a href="http://www.cnbeta.com/articles/138831.htm">G.CN</a>和<a href="http://www.cnbeta.com/articles/138891.htm">Gmail团队</a>的那个就不说了。到处都报道了。</p>
+
+<p>Debian他们搞了个 Canterbury Distribution。很NB，这么多网站一起改主页啊。<a href="http://blog.est.im/wp-content/uploads/2011/04/2.png">截图</a></p>
+
+<p>reddit …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-04-01T06:24:49+00:00">2011-04-01</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/3836"  rel="bookmark" >
+              <h2 class="card-title">NoSQL Databases: What, Why And When – Lorenzo Alberton</h2>
+            </a>
+            <p class="card-text"><p>最近研究Redis和MongoDB颇有些感触。分享个好东东。</p>
+
+<iframe src="http://player.vimeo.com/video/20994328" width="400" height="225" frameborder="0"></iframe>
+
+<p><a href="http://vimeo.com/20994328">NoSQL Databases: What, Why and When - Lorenzo Alberton</a> from <a href="http://vimeo.com/user6188686">PHP UK Conference</a> on <a href="http://vimeo.com">Vimeo</a>.</p>
+
+<div style="width:425px"><strong style="display:block;margin:12px 0 4px"><a href="http://www.slideshare.net/quipo/nosql-databases-why-what-and-when" title="NoSQL Databases: Why, what and when">NoSQL Databases: Why, what and when</a></strong><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://static.slidesharecdn.com/swf/ssplayer2.swf?doc%3Dnosqldatabases-slideshare-110227120448-phpapp01%26stripped_title%3Dnosql-databases-why-what-and-when%26userName%3Dquipo&amp;width=425&amp;height=355" width="425" height="355"></iframe><div style="padding:5px 0 12px">View more <a href="http://www.slideshare.net/">presentations</a> from <a href="http://www.slideshare.net/quipo">Lorenzo Alberton</a>.</div></div>
+
+<p>Cassandra is teh schnitz. lol</p>
+
+<p><a href="http://ontwik.com/nosql/nosql-databases-what-why-and-when-lorenzo-alberton/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-03-31T13:37:12+00:00">2011-03-31</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/3832"  rel="bookmark" >
+              <h2 class="card-title">据说有7男1女，你能找出那个唯一的女的吗？</h2>
+            </a>
+            <p class="card-text"><p><img src="http://blog.est.im/wp-content/uploads/2011/03/11.jpg" alt=""><img src="http://blog.est.im/wp-content/uploads/2011/03/2.jpg" alt=""></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-03-31T13:03:55+00:00">2011-03-31</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/3829"  rel="bookmark" >
+              <h2 class="card-title">毕加索头像真人版</h2>
+            </a>
+            <p class="card-text"><p><img src="http://blog.est.im/wp-content/uploads/2011/03/tumblr_litxix8wb11qc61d2o1_500.jpg" alt=""></p>
+
+<p>MIND 8========&gt; BLOWN</p>
+
+<p>所谓毕加索风格头像，Picasso Head，就是这种模棱两可可以从2个角度去理解的头像。</p>
+
+<p><img src="http://no-ref.appspot.com/http://pic.yupoo.com/jdvip/915075c69668/small.jpg" alt=""></p>
+
+<p>最知名的例子就是Mac的logo</p>
+
+<p><img src="http://blogs.sun.com/draks/resource/MacLogo.jpg" alt=""></p>
+
+<p><a href="http://www.reddit.com/r/trees/comments/ge7vr/this_blew_my_mind_at_a_4/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-03-30T06:00:55+00:00">2011-03-30</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/3823"  rel="bookmark" >
+              <h2 class="card-title">用于绘图的OpenType字体</h2>
+            </a>
+            <p class="card-text"><p>这是一个要多疯狂的人才能想出来的idea啊，用特制的OpenType字体来绘图</p>
+
+<p><img src="http://www.tktype.com/images/chartwell/chartwell-pies-ex1.png" alt=""></p>
+
+<p>1: Turn all ligatures off, and make sure the tracking is set to “0”.<br>
+2: Type values. Use “+” to connect values into the same chart.<br>
+3: Adjust colors if desired.<br>
+4: Turn standard ligatures on, and enjoy!</p>
+
+<p><a href="http://www.tktype.com/chartwell.php">Tk Type Chartwell</a>，牛逼的创意。按照这个思路可以做好多好多有趣的应用啊。</p>
+
+<p>via pinboard / popular</p>
+
+<p>btw 花$9 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-03-26T14:03:45+00:00">2011-03-26</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/3814"  rel="bookmark" >
+              <h2 class="card-title">美国众议员建议将圆周率π法定为3</h2>
+            </a>
+            <p class="card-text"><p>看到这么一个笑话</p>
+
+<blockquote>
+  <p>发信人: baraka (美是一种信仰), 信区: Joke<br>
+  标  题: 美国众议员建议将圆周率π法定为3<br>
+  发信站: 水木社区 (Thu Mar 24 15:09:30 2011), 站内</p>
+
+  <p>【 以下文字转载自 NewExpress 讨论区 】<br>
+  发信人: Radwanska (xx), 信区: NewExpress<br>
+  标  题: 美国众议员建议将圆周率π法定为3<br>
+  发信站: 水木社区 (Thu Mar 24 15:06:53 2011), 站内</p>
+
+  <p>美国阿拉巴马州的共和党女众议员Martha Roby在国会草拟法案，建议将圆周率π法定为3，以解决美国学生数学成绩在工业发达国家中排名殿后的情况。（via HuffingtonPost.com）</p>
+</blockquote>
+
+<p>不看故事原文下的<a href="http://www.huffingtonpost.com/ian-squires/republicans-introduce-leg_b_837828.html">评论</a>江海以为是真的 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-03-25T00:36:05+00:00">2011-03-25</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/3806"  rel="bookmark" >
+              <h2 class="card-title">谷歌听力帝啊input x-webkit-speech</h2>
+            </a>
+            <p class="card-text"><p>试了下<a href="http://slides.html5rocks.com/#speech-input">Google搞的HTML5麦克风和语音识别技术</a>，卧槽，真牛逼啊</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2011/03/2011-03-23_194017.png" alt=""></p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2011/03/2011-03-23_193940.png" alt=""></p>
+
+<p>API的入口为：</p>
+
+<p><a href="http://www.google.com/speech-api/v1/recognize?client=chromium&amp;lang=zh-CN">http://www.google.com/speech-api/v1/recognize?client=chromium&amp;lang=zh-CN</a></p>
+
+<p>或</p>
+
+<p><a href="http://www.google.com/speech-api/v1/recognize?client=chromium&amp;lang=en-US">http://www.google.com/speech-api/v1/recognize?client=chromium&amp;lang=en-US</a></p>
+
+<p>Flash真的有事烧纸了。</p>
+
+<p><a href="http://news.ycombinator.com/item?id=2357835">via</a></p>
+
+<p><strong>update1:</strong> <a href="http://slides.html5rocks.com/#web-workers">这张slide</a>卡爆了。说HTML5不卡的人可以去死了。以后投放广告一次性同时开10k个worker看你卡不卡。</p>
+
+<p><strong>Update2:</strong> <a href="http://slides.html5rocks.com/#new-form-types">shit</a>'s fucked up in Chrome</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2011/03/2011-03-23_195418.png" alt=""></p>
+
+<p><strong>Update3:</strong> Arrow keys don't fucking work in <a href="http://slides.html5rocks.com/#canvas-3d">this …</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-03-23T11:43:20+00:00">2011-03-23</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/3804"  rel="bookmark" >
+              <h2 class="card-title">[zz]为什么python标准库没有实现链表</h2>
+            </a>
+            <p class="card-text"><p>发信人: draculalord ( 嗯？), 信区: Python<br>
+标  题: 也谈链表及其他Re: python标准库貌似没有实现链表？<br>
+发信站: 水木社区 (Mon Mar 21 18:49:46 2011), 转信</p>
+
+<p>实际上刚开始学习一些高级语言的时候我也有同样的疑问，而且即使有链表对应物的语言，链表常常也很少被实际使用。<br>
+如果是在国外听数据结构的课，老师一般会警告你这只是一个理论概念，实际应用应该实际考察，在通常情况下链表不是一个很好的结构。<br>
+通常链表会作为一个很好的反例，告诉大家脱离实际硬件环境来谈论所谓算法复杂度是没有任何意义的。<br>
+这是因为，链表已经不适合当今的计算机硬件发展。当今的计算机硬件对内存是否连续更为敏感，而链表恰恰会破坏这种顺序读取。<br>
+由于locality很差所以常常造成page fault和cache miss<br>
+这也是为什么大多数教师不再推荐使用链表的原因。而且现今的硬件内存拷贝实际相当迅速。<br>
+并且python的list算法不是通常的单项表，也不是通常的数组。<br>
+具体可以看这里：<a href="http://wiki.python.org/moin/TimeComplexity">http://wiki.python.org/moin/TimeComplexity</a><br>
+在List末尾append/pop都是O(1)的 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-03-23T00:58:52+00:00">2011-03-23</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/3796"  rel="bookmark" >
+              <h2 class="card-title">2011最佳辟谣奖</h2>
+            </a>
+            <p class="card-text"><p><img src="http://blog.est.im/wp-content/uploads/2011/03/2011-03-19_194511.png" alt=""></p>
+
+<p>严肃点，朝廷正在<del>一本正经</del> 1pon 正经地<a href="http://news.xinhuanet.com/photo/2011-03/16/c_121192235_2.htm">辟谣</a>呢。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-03-19T02:50:10+00:00">2011-03-19</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/3788"  rel="bookmark" >
+              <h2 class="card-title">EVERYBODY PANIC!</h2>
+            </a>
+            <p class="card-text"><p>我内个艹 啊，<a href="http://news.cd.soufun.com/2011-03-16/4688051.htm">这帮</a>圡人真的<a href="http://www.douban.com/group/topic/18315452/">没救</a>了。脑残都溢出负无穷了。</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2011/03/1.jpg" alt=""></p>
+
+<p>尼玛连我这里这种产盐地都是到处都是一堆一堆的人有人屯NaCl。生怕大家还不够PANIC!!!111!!11</p>
+
+<p>卧槽都疯了卧槽都疯了卧槽都疯了卧槽都疯了卧槽都疯了卧槽都疯了卧槽都疯了卧槽都疯了</p>
+
+<p>所有屯NaCl的人肯定是上辈子折翼到新疆NaCl湖的天使!!!111!!!!!</p>
+
+<p>This is a fucked up world. 我还是去搜集可乐盖子好了。这才是辐射生存的正经事儿。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-03-16T14:25:48+00:00">2011-03-16</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/3784"  rel="bookmark" >
+              <h2 class="card-title">手机信号不好是一个几千年都没能解决的世界级难题</h2>
+            </a>
+            <p class="card-text"><p><img src="http://i.imgur.com/a3TbS.jpg" alt=""></p>
+
+<p><a href="http://www.reddit.com/r/pics/comments/g3p1e/reception_has_been_a_problem_the_common_man_has/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-03-15T04:16:36+00:00">2011-03-15</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/3773"  rel="bookmark" >
+              <h2 class="card-title">美国愤青语录</h2>
+            </a>
+            <p class="card-text"><p><img src="http://blog.est.im/wp-content/uploads/2011/03/1299923102166.jpg" alt=""></p>
+
+<p><a href="http://www.google.com/search?q=%E7%A5%9D%E8%B4%BA+%E6%97%A5%E6%9C%AC+%E5%9C%B0%E9%9C%87">天朝众</a>有同伴了。</p>
+
+<p><a href="http://ignorantandonline.tumblr.com/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-03-13T01:18:37+00:00">2011-03-13</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/3762"  rel="bookmark" >
+              <h2 class="card-title">裸眼3D原理之一Parallax Barrier研究心得</h2>
+            </a>
+            <p class="card-text"><p>今晚花时间研究了下裸眼3D其中一种实现方法<a href="http://en.wikipedia.org/wiki/Parallax_barrier">Parallax Barrier</a>的原理。顺便写了个HTML5 canvas来玩，有如下心得：</p>
+
+<ul>
+<li>格栅的空隙/阻碍最佳比是1:1，如果不是1:1则可以用静态图案做parallax motion</li>
+<li>Parallax Barrier的缺陷是：观看3D最佳位置是固定的，我推了个公式：<br>
+　显示器厚度　　　　显示器眼睛距离<br>
+——————— == ——————————<br>
+　格栅遮光长度　　　　　双眼距离<br>
+也就是说垂直距离必须保持，而可以水平横移。</li>
+<li>小孩和大人的双眼距离不一样，所以需要离显示器更近才能得到最佳3D观赏位置。</li>
+<li>如果格栅不动，Parallax Barrier需要更加精密的显示点阵和双倍的显示亮度才能达到普通显示器同等分辨率和亮度。或许采用6边形蜂窝状的显示阵列有更加好的亮度。</li>
+</ul>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2011/03/2011-03-12_231419.png" alt=""></p>
+
+<p>不保证结论正确性，仅供参考 :)</p>
+
+<p>ps 继续研究宽幅打印机+丙烯的可玩性 :)</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-03-12T15:21:26+00:00">2011-03-12</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+    </main>
+    <nav class="pagination-nav side-padding">
+<a href="/index.25.html" class="pagination-newer">&lt; Newer Posts</a><a href="/index.27.html" class="pagination-older">Older Posts &gt;</a>    </nav>
+
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+</html>

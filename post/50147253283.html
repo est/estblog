@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>微软到底出了什么问题 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="微软到底出了什么问题" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">微软到底出了什么问题</h2>
+    <p class="post-date">Posted <time datetime="2013-05-11T01:52:00+00:00">2013-05-11</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>最近HN上有个<a href="https://news.ycombinator.com/item?id=5688151">关于Linux 3.1内核tickless新特性</a>的讨论，然后一位微软员工，自称来自NT内核组，发个帖子抱怨微软：</p>
+<blockquote>
+<p>See, component owners are generally openly hostile to outside patches: if you're a dev, accepting an outside patch makes your <strong>lead</strong> angry (due to the need to maintain this patch and to justify in in shiproom the unplanned design change), makes <strong>test</strong> angry (because test is on the hook for making sure the change doesn't break anything, and you just made work for them), and <strong>PM</strong> is angry (due to the schedule implications of code churn). There's just no incentive to accept changes from outside your own team. You can always find a reason to say "no", and you have very little incentive to say "yes".</p>
+<p>Another reason for the quality gap is that that we've been having trouble keeping talented people. Google and other large Seattle-area companies keep poaching our best, most experienced developers,</p>
+<p>More examples:<br />
+- We can't touch named pipes. Let's add %INTERNAL_NOTIFICATION_SYSTEM%! (Oh, and let's make %INTERNAL_NOTIFICATION_SYSTEM% inconsistent with virtually every other named NT primitive.) <br />
+- We can't expose %INTERNAL_NOTIFICATION_SYSTEM% to the rest of the world because we don't want to fill out paperwork and we're not losing sales because we only have 1990s-era Win32 APIs available publicly. <br />
+- We can't touch DCOM. Let's create %C#_REMOTING_FLAVOR_OF_THE_WEEK%! <br />
+- XNA. Need I say more? <br />
+- Why would anyone need an archive format that supports files larger than 2GB? <br />
+- Let's support symbolic links (Can I have a one on my review score now?), but make sure that nobody can use them so I don't get blamed for security vulnerabilities (Great! I got that one on my review score, and now I get to look sage and responsible!) <br />
+- We can't touch Source Depot, so let's hack together SDX! <br />
+- We can't touch SDX, so let's pretend for four releases that we're moving to TFS while not actually changing anything! <br />
+- Oh god, the NTFS code is a purple opium-fueled Victorian horror novel that uses global recursive locks and SEH for flow control. Let's write ReFs instead. (And hey, let's start by copying and pasting the NTFS source code and removing half the features! Then let's add checksums, because checksums are cool, right, and now with checksums we're just as good as ZFS? Right? Do I get a one on my review score now? And who the hell needs quotas anyway?) <br />
+- We just can't be fucked to implement C11 support, and variadic templates were just too hard to implement in a year. (But ohmygosh I turned "^" into a reference-counted pointer operator. Can I have my patent cube and one on my review score now? Oh, and what's a reference cycle?)   </p>
+</blockquote>
+<p>简单的说，就是NT内核</p>
+<ol>
+<li>改进都被臃肿的官僚枪毙了。 <br />
+2  牛人都去Google了</li>
+<li>做内核的都是现招应届毕业生。造轮子NIH综合症高发群体   </li>
+</ol>
+<p>在大学的时候也接触过微软技术体系，感觉是有牛逼的地方，有亮点，但是偶数代会把奇数代的技术否定掉。记得有个哥们花了很大力气学习翻译了.NET Atlas AJAX，结果beta一完毕，整个AJAX体系就变得面目全非了。</p>
+<p>微软的内部已经死掉了。Wintel 没有希望了。PC也将继续没落。</p>
+<p>btw 想起了<a href="http://www.36kr.com/p/31377.html">一幅图</a></p>
+<p><img alt="" src="/images/tumblr/50147253283.png" /></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/50147253283';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

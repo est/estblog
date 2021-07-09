@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>WPF不行啊 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="WPF不行啊" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">WPF不行啊</h2>
+    <p class="post-date">Posted <time datetime="2010-03-07T12:09:39+00:00">2010-03-07</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>一直以来对WPF的印象就不太好，特别是那个<a href="http://initiative.yo2.cn/archives/349160">占用80MB内存来切换壁纸的软件</a>，给我的印象太差了。</p>
+
+<p>今天在测试<a href="http://www.web20share.com/2010/03/inbox2.html">Inbox2</a>的时候，还陆续发现了一些问题</p>
+
+<p>字体发虚</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/03/13.jpg" alt=""></p>
+
+<p>特别是中文字体，简直惨不忍睹。</p>
+
+<p>其次是按钮焦点虚线框看起来错位了</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/03/14.jpg" alt=""><br>
+<img src="http://blog.est.im/wp-content/uploads/2010/03/22.jpg" alt=""></p>
+
+<p>好把，我过于苛刻了一点。但是我印象中混乱不一致的控件外观，只有在Web页上才会发生。</p>
+
+<p>其次，.NET程序首次启动慢，WPF耗内存和CPU，这些缺点就不说了。Inbox2用的技术十分杂，从它的依赖库来看就有IronPython和jQuery。</p>
+
+<p>反正至今为止还没有找到令人印象深刻的WPF客户端软件。</p>
+
+<p>reddit上看到n个人说WinForms已死，MSDN论坛上提出的WinForms的bug，微软都不怎么修复了，建议开发人员要么做传统VC++的原生界面开发，要么全面转移到WPF上来。微软为WPF提供了高效的开发语言，便捷的开发平台和强大的工具链，但是目前我还是为WPF感到担忧。或许是微软招了太多的<del>第三世界</del>廉价开发人员做不出来短小精悍而强大的复杂大型软件了。要知道当年Windows 98带GUI极限精简可以做到8MB，Windows 2003的极限完整GUI精简版才93MB。界面十分华丽的<a href="http://initiative.yo2.cn/archives/623848">Renoise</a>才11MB，而且还不用安装依赖库。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/1612';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

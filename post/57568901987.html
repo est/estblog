@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>关于BREACH/CRIME的一些思考 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="关于BREACH/CRIME的一些思考" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">关于BREACH/CRIME的一些思考</h2>
+    <p class="post-date">Posted <time datetime="2013-08-06T21:19:50+00:00">2013-08-06</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>最近<a href="https://news.ycombinator.com/item?id=6166292">很火</a>的一个问题就是暴破TLS/SSL的  BREACH 攻击。我觉得有一些解决办法：</p>
+<ol>
+<li>
+<p>hack一种兼容gzip，但是能对内容进行adaptive compression的技术。比如把用户输入不纳入Huffman coding范围，只压缩页面的其他部分。这样无论你在user input 做什么花样也不能影响最终conten length</p>
+</li>
+<li>
+<p>csrf上做文章。由于大多数场景下，web framework是需要保证 csrf 是 per session的。目前基本都是服务器生成什么csrf，客户端下一次就需要传入一模一样的。我们可以发明一种聪明的技术，给客户端的csrf加入一些per request的变长noise，需要通过特定算法，最简单的比如XOR，才能还原csrf。其中这个变长的noise不是随机生成，因为随机生成可能被概率统计出noise level然后过滤掉，而是根据用户输入用一种变长散列生成的。比如用户输入为空，csrf为e0bc6e08a2fda853eef，用户输入为 user@gmail.com，csrf为 b594e902c7fe6b1748d13aefaf63a ，但是实际服务器端的csrf都一直是 04b58236f5 。</p>
+</li>
+</ol>
+<p>目前业界的mitigation我觉得比较搓：</p>
+<ol>
+<li>禁用gzip。这个没意思了。</li>
+<li>给html添加一些随机padding垃圾数据。这个不是等于禁用了gzip么。浪费空间浪费传输</li>
+<li>在http头做文章。因为gzip只影响http body。这个缺点是需要js。兼容性不好</li>
+<li>禁止频繁请求。这个最直接。哈哈。</li>
+</ol>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/57568901987';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

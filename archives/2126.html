@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>cnbeta啊。。。 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="cnbeta啊。。。" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">cnbeta啊。。。</h2>
+    <p class="post-date">Posted <time datetime="2010-04-30T08:28:53+00:00">2010-04-30</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>不知道cnbeta最近怎么回事，新闻质量下降非常厉害。</p>
+
+<p>比如这个<a href="http://cnbeta.com/articles/109977.htm">《微软:HTML5才是未来 视频只会支持H.264》</a></p>
+
+<p>而别人微软的<a href="http://blogs.msdn.com/ie/archive/2010/04/29/html5-video.aspx">原话</a>是：HTML5 Video只支持H.264这个codec(see also: <a href="http://www.reddit.com/r/programming/comments/by3dr/ie9_html5_video_will_play_h264_only/">proggit</a>)。Flash毫无疑问可以继续通过Plugin在IE9里运行。如果不出意外的话，WMP显然也可以在IE9里运行。理论上说，IE9支持的视频格式只与操作系统安装的codec数量有关。</p>
+
+<p>cnbeta怎么说的？</p>
+
+<blockquote>
+  <p><strong>微软在上周五重申，他们的Internet Explorer 9仅会提供对H.264和HTML5的支持。</strong></p>
+</blockquote>
+
+<p>下面的评论加剧了这个误解</p>
+
+<blockquote>
+  <p>匿名人士 发表于 2010-04-30 14:04:47<br>
+  Adobe悲剧了<br>
+  回复 支持(74) 反对(1)   举报</p>
+
+  <p>匿名人士 发表于 2010-04-30 14:12:20<br>
+  adobe这下就麻烦了， 专心做好自己的photoshop就行了<br>
+  回复 支持(45) 反对(1)   举报</p>
+</blockquote>
+
+<p>还是那句话，不要以为宋体加粗了就是真理。。。。</p>
+
+<p>其实<a href="http://www.w3.org/TR/html5/video.html">HTML5 spec的draft</a>里，<code>video</code>是不指定codec的。但是目前业界都比较倾向选择H.264。原因很简单，H.264是工业标准，很多DC, DV直接支持H.264录像，手持设备也有H.264的硬解码DSP模块。当然，任何事情背后都有两个动机，一个是good reason一个是 real reason。那real reason就是Apple和Microsoft其实都是<a href="http://www.mpegla.com/main/programs/AVC/Pages/Licensors.aspx">MPEG-LA的后台</a>，H.264用得越<a href="http://www.mpegla.com/main/programs/AVC/Pages/Licensees.aspx">广泛</a>，Apple和Microsoft赚的钱就越多。哈哈。</p>
+
+<p>Mozilla因为是free software的旗帜，当然不会选择屈服在MPEG-LA的淫威之下，所以选了OGG Theora而杯葛了H.264。Google准备开源VP8。est觉得从技术上来说，不唯一定死codec，但是大家都支持一下H.264是有好处的。希望Firefox一些非官方编译版，学习chromium一样，官方二进制包不直接支持H.264，但是源码里弄一个ffmpeg的注释掉的flag，第三方编译版本可以开启H.264支持。这样大家都好说。</p>
+
+<p>从<a href="http://multimedia.cx/eggs/vp8-the-savior-codec/">x264的评测</a>来看，VP8从技术实力上来说超过了H.264。</p>
+
+<p><img src="http://multimedia.cx/eggs/wp-content/uploads/2010/04/vp8vsh264.jpg" alt=""></p>
+
+<blockquote>
+  <p>Pictured: All the proof you need that VP8 is superior to H.264</p>
+</blockquote>
+
+<p>不知道和H.265相比如何，反正还是对VP8很抱希望的。至少期待VP8的moviez出现。也希望Google在下周的声明里，有更多外围厂商推出支持VP8硬编解码的电子产品出来。呵呵</p>
+
+<p>还有就是最近感觉cnbeta精彩评论也有点boring了，重复新闻越来越多，新闻深度就不说了，新闻的覆盖面和广度也成问题，有的时候跑题甚至特别厉害。寻找新的中文IT业界新闻源中。。。。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/2126';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

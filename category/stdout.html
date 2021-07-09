@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Est's Blog - stdout category</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="This blog is rated&nbsp;&nbsp;R⃣ , viewer discretion is advised" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="list-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="card-container side-gutter">
+      <header class="list-header">
+        <p class="list-header-subtext">This blog is rated&nbsp;&nbsp;R⃣ , viewer discretion is advised</p>
+        <!-- <h1 class="list-header-title">Est's Blog</h1> -->
+      </header>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/2021/stdout-009"  rel="bookmark" >
+              <h2 class="card-title">macOS 设置 TCP 握手连接超时，提升浏览器在糟糕网络下的访问体验</h2>
+            </a>
+            <p class="card-text"><p>多年的疑惑今天居然被偶然解开了。</p>
+<p>由于墙内糟糕的网络环境，而且ISP甚至wifi内还有墙中墙，所以很多域名是打不开的。</p>
+<p>每次看浏览器在傻乎乎的转菊花，就觉得浪费时间。</p>
+<pre><code>sudo sysctl  net.inet.tcp.keepinit=3000
+</code></pre>
+<p>这一条指令可以直接设置 macOS 的 TCP Keepalive 心跳包初始化时间设置为3000毫秒。</p>
+<p><code>net.inet.tcp.keepinit</code>默认值是 75000 ，单位是毫秒。注意 Linux 下没这设置，而且单位是 秒</p>
+<p>这句话学究式的解释可以通过 <code>man 4 tcp</code> 得到，摘录几条：</p>
+<blockquote>
+<p>TCP_CONNECTIONTIMEOUT  The TCP_CONNECTIONTIMEOUT option allows to specify the timeout, in seconds, for new …</p></blockquote></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-07-02T15:51:19+00:00">2021-07-02</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/202106/stdout-008"  rel="bookmark" >
+              <h2 class="card-title">MySQL on duplicate key in SQLAlchemy</h2>
+            </a>
+            <p class="card-text"><p>A simple function to upsert something atomically into MySQL</p>
+<pre><code>def upsert(val1, val2, **kwargs):
+    """upsert val1-val2 pair into mysql and return the pk"""
+    from sqlalchemy.dialects.mysql import insert
+    from sqlalchemy.sql.expression import func
+
+    # this val1-val2 pair should have UNIQUE KEY constraint in MySQL table.
+    stmt = insert(MyModel.__table__ …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-06-29T11:55:13+00:00">2021-06-29</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/202106/stdout-007"  rel="bookmark" >
+              <h2 class="card-title">古墓丽影9（Tomb Raider 2013）治3D眩晕必备FOV补丁+禁镜头晃动</h2>
+            </a>
+            <p class="card-text"><p>断断续续把<a href="https://steamcommunity.com/id/electronixtar/recommended/203160">买</a>的<a href="https://store.steampowered.com/app/203160/Tomb_Raider/">古墓丽影9</a>打完了。这款2013年的游戏放在今天看也很不错。</p>
+<p>唯一的巨大问题就是3D头晕。网上找了一些办法。</p>
+<h3>禁止镜头晃动</h3>
+<p>虽然故事和镜头都很好，但是这晃动太烦人了，很容易头晕。值得庆幸的是 PC 平台可以彻底根治这问题。下载 <a href="https://community.pcgamingwiki.com/files/file/1166-tomb-raider-2013-yamatai-patch/">Yamatai Patch</a>。按图修改</p>
+<p><img alt="" src="/images/2021/stdout-007-1.png" /></p>
+<h3>增大 FOV</h3>
+<p>这是多年的经验。头晕的主要问题就是视野太窄。</p>
+<p>去下载 <a href="https://cheatengine.org/">Cheat Engine</a> 安装并打开，然后下载<a href="https://community.pcgamingwiki.com/files/file/1148-tomb-raider-2013-fov-cheat-table/">内存修改表</a>，按图修改。</p>
+<p><img alt="" src="/images/2021/stdout-007-2.jpg" /></p>
+<p>以上修改都需要有管理员权限并且保证游戏正在进行中。顺便说下 Yamatai patch 还可以治好 Lara Croft 胸部发育不良的毛病。好顶赞！</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-06-26T14:32:36+00:00">2021-06-26</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/202106/stdout-006"  rel="bookmark" >
+              <h2 class="card-title">行车记录仪视频ffmpeg合并转录存档，跳过重复的漏秒</h2>
+            </a>
+            <p class="card-text"><p>手上有几个行车记录仪</p>
+<ul>
+<li>VOSONIC 勤宇V10，也叫群华 路不平，用的 联咏 Novatek NT96550BG 的芯片，1080p</li>
+<li>BLACKVIEW 凌度A12，采用 安霸(Ambarella) A12 方案，2k</li>
+<li>PAPAGO 趴趴狗，GoSafe 560WiFi，采用 NT96670 芯片+IMX415的 sony CMOS，4k</li>
+</ul>
+<p>特点是每5分钟切割成一个单独的文件，为了防止每两个视频之间漏秒，所以会额外重复写入1秒的内容</p>
+<p>现在想把一段时间的视频合并成一个存档，并且要<a href="https://www.v2ex.com/t/248037">跳过那些额外的1秒</a>，上 ffmpeg。</p>
+<p>首先前摇，生成需要合并的视频文件路径列表</p>
+<p><code>ls -fd1 /Volumes/SD_CARD/DCIM/xxxxx/*</code> </p>
+<p>的结果写成如下格式：</p>
+<pre><code>file 'input1.mov' …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-06-05T20:42:15+00:00">2021-06-05</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/202104/stdout-005"  rel="bookmark" >
+              <h2 class="card-title">Win10 自动设置开机锁屏壁纸</h2>
+            </a>
+            <p class="card-text"><p>Win10启动后，锁屏界面有一些每天更新的漂亮的墙纸，但是每个用户进去却只能看到默认的墙纸，不能自动切换。很是遗憾，于是搞了一段小脚本弥补。</p>
+<p>找个地方比如桌面，右键新建一个 <code>est_win10_auto_wallpaper.bat</code></p>
+<pre><code>@if (@X)==(@Y) @end /* JScript comment
+@echo off
+
+cscript //E:JScript %~n0.bat
+
+exit /b %errorlevel%
+*/
+
+var oShell = new ActiveXObject("WScript.Shell") ;
+var oFSO = new ActiveXObject("Scripting.FileSystemObject");
+
+var sWinDir = oFSO.GetSpecialFolder(0);
+var sPath = oShell.ExpandEnvironmentStrings('%LOCALAPPDATA%\\Packages\\Microsoft …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-04-11T22:35:12+00:00">2021-04-11</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/202104/stdout-004"  rel="bookmark" >
+              <h2 class="card-title">Mac 命令行终端里获得视频文件的长度</h2>
+            </a>
+            <p class="card-text"><p>记录一下，Mac OS X 10.6.8 或更高版本：</p>
+<pre><code>mdls -name kMDItemDurationSeconds -name kMDItemFSName  1.mp4
+</code></pre>
+<p>这命令有一个很神经病的一点，同一个 .mp4 文件，获取只读的 TF 卡上的就没法获得视频长度，复制到可以读写的本地硬盘上就可以读出来。</p>
+<p>或者在 Finder 里新建一个叫  <code>Movies</code> 的文件夹，把视频文件放进去，然后列表展示，表头右键，就可以选择显示长度。。</p>
+<p>同理，建立一个叫  <code>Pictures</code> 的文件夹，可以列表展示图片尺寸。。</p>
+<p>来自 <a href="https://superuser.com/questions/1024894/">superuser</a> 。真是神一般的设定。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-04-04T12:01:30+00:00">2021-04-04</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/202103/stdout-003"  rel="bookmark" >
+              <h2 class="card-title">FastAPI/Starlette+Requests实现反向代理</h2>
+            </a>
+            <p class="card-text"><p>因为某些拉垮的业务需要，不得不在代码里去反向代理别的 HTTP API</p>
+<p>一般格式如下：</p>
+<pre><code>@app.get('/other/{other_path:path}')
+@app.post('/other/{other_path:path}')
+async def other_api(other_path: str, req: Request):
+    """透传 API"""
+    host = 'http://example.intranet'
+    url = '{}/other/{}'.format(host, other_path)
+    body = bytes(await req.body()) or None
+    r = requests.request(
+        req.method, url,
+        headers={
+            'Cookie': req.headers …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-03-30T15:07:01+00:00">2021-03-30</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/202101/stdout-002"  rel="bookmark" >
+              <h2 class="card-title">OpenWRT 实现 Cloudflare 动态域名 dynamic DNS</h2>
+            </a>
+            <p class="card-text"><p>首先得有公网 IP （废话），然后你得 OpenWRT 路由器桥接直拨。</p>
+<p>这个方法的核心是通过 <code>ifstatus wan |  jsonfilter -e '@["ipv4-address"][0].address'</code> 命令得到本机 WAN 的公网 IP。</p>
+<p>根据官方的<a href="https://support.cloudflare.com/hc/en-us/articles/360020524512-Manage-dynamic-IPs-in-Cloudflare-DNS-programmatically">说明</a>走</p>
+<ol>
+<li>创建 <a href="https://dash.cloudflare.com/profile/api-tokens">API Token</a> 。权限选 <code>All Zones</code>，得到 <code>TOKEN</code></li>
+<li>验证 API 是否 ok<br />
+        curl - X GET "https://api.cloudflare.com/client/v4/user/tokens/verify" \<br />
+          -H "Authorization: Bearer TOKEN" \<br />
+          -H …</li></ol></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-01-05T23:36:09+00:00">2021-01-05</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/202101/stdout-001"  rel="bookmark" >
+              <h2 class="card-title">OpenWRT 随机设置 PPPoE 拨号的 MAC 地址 Randomize WAN MAC address in OpenWRT PPPoE</h2>
+            </a>
+            <p class="card-text"><p>新年第一贴！</p>
+<p>Run the command before connect to PPPoE or as cronjob</p>
+<p>添加一个重启的定时任务，在重启之间执行一个命令：</p>
+<pre><code>uci set network.wan.mac_addr=$(hexdump -n3 -e'1/3 "8c:8d:8e" 3/1 ":%02X" "\n"' /dev/random) &amp;&amp; uci commit network
+</code></pre>
+<p>为什么要在拨号前随机生成WAN口的 MAC 地址呢？嘿嘿。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-01-01T00:27:52+00:00">2021-01-01</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/202010/stdout-011"  rel="bookmark" >
+              <h2 class="card-title">nsq-py, pynsq, gnsq compared</h2>
+            </a>
+            <p class="card-text"><p><a href="https://nsq.io">nsq</a> is a lightweight message queue like Kafka/RabbitMQ/RocketMQ/RedisQueue/Celery.</p>
+<p>For python bindings there ware three libraries out there:</p>
+<ul>
+<li>pynsq: the official build, but requires <code>tornado</code></li>
+<li>gnsq: the gevent only consumer/publisher, might have race condition in state machine. Don't use.</li>
+<li>nsq-py: <code>select()</code> based, but compatible with gevent …</li></ul></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2020-10-30T15:35:45+00:00">2020-10-30</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/202010/stdout-010"  rel="bookmark" >
+              <h2 class="card-title">人和动物有什么区别</h2>
+            </a>
+            <p class="card-text"><p>上下班通勤极度无聊，就趁着罗胖的10元优惠券买了 学而时嘻之 博主开设的 199元的 精英日课。之前一直讨厌这个名字，但是很喜欢 <a href="http://www.geekonomics10000.com">学而时嘻之  geekonomics10000</a> 这个博客，就买了当付费 podcast 了。听第二课就讲了《未来简史2：我有意识，它有吗》，就提到了本篇的问题：</p>
+<p>人和动物的区别是什么？</p>
+<p>马克思认为是使用工具。很多人不认同，觉得这纯粹是为了引出劳动论，其二的确很多动物也会用工具。</p>
+<p>《Homo Deus 未来简史》的作者 尤瓦尔·赫拉利 说，人和动物的区别区别是意识。但<a href="https://en.wikipedia.org/wiki/Animal_consciousness">动物也是有意识</a>的，甚至自我意识。比如鹦鹉会照镜子，认出自己，并且梳妆脸上的异物。和人相处的宠物很明显有情绪表达。</p>
+<p>我认为，人类是地球上第一个进化出来能<strong>远程攻击</strong>的动物，而且是大规模群体协作那种，脱离了近身肉搏的低级趣味。如果你玩 RTS 就知道，远程兵种出现的意义是多么牛逼 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2020-10-21T23:39:55+00:00">2020-10-21</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/202009/stdout-008"  rel="bookmark" >
+              <h2 class="card-title">javascript 一句话算农历</h2>
+            </a>
+            <p class="card-text"><p>同步发帖在 <a href="https://www.v2ex.com/t/705897">v2ex</a></p>
+<p>今天发现 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl">Intl</a> 这个 ECMAscript 内置对象，可以一句话算农历。</p>
+<pre><code>new Date().toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)\s*?年/, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子丑寅卯辰巳午未申酉戌亥".charAt((y-4)%12))
+</code></pre>
+<p>算农历最麻烦就是跨年。这个 API 处理得还挺好的。比如2020年1月的除夕夜+春节</p>
+<pre><code>new Date(2020, 0, 24).toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)年 /, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子丑寅卯辰巳午未申酉戌亥".charAt …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2020-09-10T22:39:01+00:00">2020-09-10</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/202007/stdout-007"  rel="bookmark" >
+              <h2 class="card-title">China's AI Dominance Does Not Depend On Math</h2>
+            </a>
+            <p class="card-text"><p>There was a not-so-interesting article on reddit that says <a href="https://www.reddit.com/r/technology/comments/hlttg0/why_chinas_race_for_ai_dominance_depends_on_math/">China's Race For AI Dominance Depends On Math</a></p>
+<p>The arguments looks flawed in several ways.</p>
+<p>First of all, yes Chinese students <em>do</em> performs well in math, but only in one narrow specific branch of math: alrithmetics. Once they graduate into college …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2020-07-06T17:01:55+00:00">2020-07-06</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/202003/stdout-004"  rel="bookmark" >
+              <h2 class="card-title">Covid-19 一些基本常识</h2>
+            </a>
+            <p class="card-text"><ol>
+<li>检测 Covid-19 有几种手段：</li>
+</ol>
+<ul>
+<li>症状。比如发烧，呼吸困难，血氧浓度低</li>
+<li>影像。比如胸部 CT</li>
+<li>抗体。IgG/IgM。耗时短。比如15分钟。但是正确率 75% </li>
+<li>核酸。用 PCR 。耗时长，需要 BSL 高等级生物实验室。正确率 &gt;90%</li>
+</ul>
+<p>其中抗体检测主要是用来区分你得的是普通流感还是 Covid-19。并不能直接检测出 SARS-CoV-2。</p>
+<p>而且：</p>
+<ul>
+<li>检测出抗体，（小概率）不一定是 SARS-CoV-2 导致的。</li>
+<li>没检测出抗体，也可能代表你<ul>
+<li>免疫系统还没反应过来。病毒还在悄悄感染。</li>
+<li>免疫球蛋白 IgG/IgM 已经不顶用了。免疫系统被摧毁了，或者要开始细胞因子风暴了。</li>
+<li>也可能代表你的鼻腔 swab 没挖对。</li>
+<li>拭子挖对了但是未达到能显色的剂量 …</li></ul></li></ul></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2020-03-26T17:34:30+00:00">2020-03-26</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/202003/stdout-003"  rel="bookmark" >
+              <h2 class="card-title">为什么会有数学家反对对无穷集合使用排中律？</h2>
+            </a>
+            <p class="card-text"><p>因为现在 zhihu 要绑手机才能回答，所以还是写自己 blog 上吧。</p>
+<p>对「<a href="https://www.zhihu.com/question/375363116">为什么会有数学家反对对无穷集合使用排中律</a> 」这个问题，我有一个胡思乱想的回答：</p>
+<p>房间里的小明如果不是男生，那么他一定是女生。</p>
+<p>其实也不一定。小明是个物品。</p>
+<p>我觉得人类智慧的最大秘密就是 否定。否定一定要当心使用。常见的否定是限定在「同类别」的事物中。</p>
+<p>但是由于自然语言的结构性缺陷，一些否定就成了谬论。</p>
+<p>比如，如果你批评国家政策，就是不爱国。</p>
+<p>喜爱的反面是憎恨？其实喜爱的反面是漠不关心。</p>
+<blockquote>
+<p>The opposite of love is not hate but apathy。</p>
+</blockquote>
+<p>所谓 those who are heartless, once cared too much</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2020-03-04T23:17:50+00:00">2020-03-04</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/202002/stdout-002"  rel="bookmark" >
+              <h2 class="card-title">语音编程 设想</h2>
+            </a>
+            <p class="card-text"><p>在 <a href="https://news.ycombinator.com/item?id=22404264">HN头条</a> 上看到有人说用语音识别 写代码。</p>
+<p>现在是疫情在家上班期间，感觉还是可以试试。毕竟公共办公环境搞这个不太现实，怕打扰别人用 TNT 了。也怕自己被打扰。23333</p>
+<p>想起了 13 年前就有大神尝试用 Vista 自带的语音识别在 notepad 写 perl。。。</p>
+<p><a href="https://www.youtube.com/watch?v=MzJ0CytAsec">https://www.youtube.com/watch?v=MzJ0CytAsec</a></p>
+<p>不过这篇帖子想说的不是这个 语音编程(voice assisted programming)，我想说的是 可编程语音 (programmable speech)</p>
+<p>现在市面上有很多「智障音响」比如 Alexa、小爱，手机上都可以直接说 ok boomer，但是我设想的 可编程音响 的使用场景是这样的：</p>
+<ol>
+<li>离线wakup word +　离线识别 …</li></ol></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2020-02-25T01:21:34+00:00">2020-02-25</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/202002/stdout-001"  rel="bookmark" >
+              <h2 class="card-title">减速玻璃的原理</h2>
+            </a>
+            <p class="card-text"><p>原来<a href="https://www.zhihu.com/question/20084003/answer/490712357">发表在 zhihu</a>，可惜不绑手机不让发帖了。就自己写个 blog 备忘一下。</p>
+<p>减速玻璃这个都会传说，买车前听说过，买车后也百思不得其解。今天突然想明白了。</p>
+<p>减速玻璃靠的不是玻璃，而是靠挡风玻璃倾斜角度、中控台长度、驾驶者座位、A 柱宽度决定的。</p>
+<p>简单的说，和 FOV 有关。</p>
+<p>人对速度的感知，其实不是视野中心决定的，而是视野左右边缘两侧物体移动速度决定的。</p>
+<p>25° FOV 视野：</p>
+<p><img alt="" src="/images/2020/stdout-001-1.jpg" /></p>
+<p>45°视野</p>
+<p><img alt="" src="/images/2020/stdout-001-2.jpg" /></p>
+<p>90°视野</p>
+<p><img alt="" src="/images/2020/stdout-001-3.jpg" /></p>
+<p>不同视野角度的对比：</p>
+<p><img alt="" src="/images/2020/stdout-001-4.jpg" /></p>
+<p>所以市面上为什么你们觉得捷达就没有减速玻璃？因为挡风玻璃比较垂直，驾驶者很容易看到车头，开车位置考前，在 A 柱范围内，更容易看到更开阔的路面。然后你的视觉感受就是车速很快</p>
+<p>为什么好一点的车子觉得安装了「减速玻璃」？因为中控台厚，玻璃比较倾斜，看不到车头，A 柱粗。你们的视野受限，就觉得视野两侧物体运动慢 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2020-02-07T23:51:59+00:00">2020-02-07</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/201910/stdout-006"  rel="bookmark" >
+              <h2 class="card-title">一些重要问题的答案 Important Why's</h2>
+            </a>
+            <p class="card-text"><p>发现 blog 越来越喜欢记录一些哲学问题。。。</p>
+<p>记录一些重要问题的答案，有些是自己想出来的，有些是网上抄别人的，有些是被别人启发自己补充一些的。这里面有些是对的，有些可能是错的。欢迎读者反馈。</p>
+<p>Q: 什么是存在 What is Being (Dasein)?<br />
+A: 存在的最根本属性是稳定性。<br />
+    古希腊有个悖论说一艘船叫 忒修斯（ship of Theseus），船上的木头因为损坏和腐烂被一块一块随着时间逐渐替换，如果有一天所有的木头都不是出厂的原装的木头，那这艘船还是原来的那艘船吗？</p>
+<pre><code>所以这里的存在分两个层面的稳定。从船的用途来说，忒修斯号因为设计没变，用途一致，所以忒修斯号依然存在；从忒修斯原装价值来说，因为木头都被换过一轮了，所以追求「原汁原味」的价值已经不存在了。这艘船至少还在「设计用途」这个层面保持了稳定，所以这艘船还有一定的存在意义。如果这艘船的木头被拆下来烧掉了，空气中的 Co2 和 地上一堆灰没有人会认为这是一艘船。
+
+如果一个物体不停的变化，变化周期甚至小于普朗克时间长度，那么这样的东西压根无法观察，也无法影响我们的生活，所以就不存在 …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2019-10-04T18:16:00+00:00">2019-10-04</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/201908/stdout-005"  rel="bookmark" >
+              <h2 class="card-title">Fix Paladins stuck at Completing Login</h2>
+            </a>
+            <p class="card-text"><p><a href="https://store.steampowered.com/app/444090/Paladins/">Paladins</a> is one of the F2P games on Steam. It's called 枪火游侠 in Chinese market with Tencent as its Partner operator.</p>
+<p>To play it on Steam:</p>
+<ol>
+<li>Add any game to cart</li>
+<li>Modify region to US on the checkout page</li>
+<li>Type the following script into browser's DevTool<br />
+<code>jQuery.post('//store.steampowered …</code></li></ol></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2019-08-21T20:43:54+00:00">2019-08-21</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/201907/stdout-004"  rel="bookmark" >
+              <h2 class="card-title">公司文化的三种类型</h2>
+            </a>
+            <p class="card-text"><p>最近播音737两次空难闹得全球沸沸扬扬，中国民航局敢为天下先直接停飞，FAA 最后也只能跟进然后全球停飞，风暴的中心就是波音公司。看到一篇报道，波音的一位工程师、资深工会Stan Sorscher，也是 SPEEA 的一位行业代表 (the Society for Professional Engineering Employees in Aerospace)，画了一张有意思的图：</p>
+<p><img alt="" src="/images/2019/77d64a0b1331588db82efa7812b7c028.jpg" /></p>
+<p>波音公司是由工程师创立的具有工匠气质的尖端科技公司。这里插一个题外话，波音之父其实是一个中国人 <a href="https://en.wikipedia.org/wiki/Wong_Tsu">王助(Wong Tsu)</a></p>
+<p><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Jianqiao-camco_Wangzhu.jpg/440px-Jianqiao-camco_Wangzhu.jpg" /></p>
+<p>波音在90年代初，收到日本制造的冲击，拥抱了「质量」为重的团队文化模式，强调基层参与，流程改进和效率提升。但是90年代末期，波音公司文化再次改变，拥抱砍成本和给股东创造利润。这里看到787真是吓得一身汗啊。要知道你坐的梦想飞机每一个零部件都是由最低价中标商供应的。</p>
+<p>为了方便你们抄袭这篇博客文章，我翻译成中文了。转载请按照传统做成jpeg截图，尽量造成读者复制不便。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>工程师为导向</th>
+<th>团队为导向</th>
+<th>砍成本为导向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>商业目标</td>
+<td>创新，性能</td>
+<td>产出 …</td></tr></tbody></table></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2019-07-06T05:42:42+00:00">2019-07-06</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/201906/stdout-003"  rel="bookmark" >
+              <h2 class="card-title">Open Source projects Chinese companies and individuals contributed to</h2>
+            </a>
+            <p class="card-text"><p>Chinese companies have very little presence online and many people may believe that Chinese are reluctant to engage in open source projects.</p>
+<p>Last year, <a href="https://twitter.com/mjasay/status/960563592683667456">@filmaj</a> used the GitHub REST API to pull public profile information from all 2,060,011 GitHub users who were active in 2017 (10+ commits to …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2019-06-25T21:35:40+00:00">2019-06-25</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/201904/stdout-002"  rel="bookmark" >
+              <h2 class="card-title">Ubuntu Server 为什么这么成功？Wardley 地图</h2>
+            </a>
+            <p class="card-text"><p>从 <a href="https://www.thoughtworks.com/cn/radar">https://www.thoughtworks.com/cn/radar</a> 看到的一个新概念，Wardley mapping</p>
+<p>其实也不新了，2014年就出来了。见：</p>
+<p><a href="https://www.youtube.com/watch?v=NnFeIt-uaEc">Simon Wardley OSCON 2014 Keynote: "Introduction to Value Chain Mapping"</a></p>
+<p>如果你觉得各种软件工程 和 商业 diagram 很无聊，其实这视频前半部分也是讲为什么他们很无聊。</p>
+<p>但是后面就有趣了。作者 Wardley 发明了一个新的东西：</p>
+<ul>
+<li>横坐标分为：Genesis, Custom built, Product, Commodity, Utillity, Evolution</li>
+<li>纵坐标讲 Value-chain。从 visible 到 invisible</li>
+</ul>
+<p>其实很多 IT 或者互联网从业者 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2019-04-24T18:28:35+00:00">2019-04-24</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/201903/stdout-001"  rel="bookmark" >
+              <h2 class="card-title">Jinja2 不能覆盖 include 里的 block</h2>
+            </a>
+            <p class="card-text"><p>记录一下</p>
+<p>https://github.com/pallets/jinja/issues/169</p>
+<p>https://github.com/pallets/jinja/issues/243</p>
+<p>开发这个主题 <a href="https://github.com/est/aether-pelican">https://github.com/est/aether-pelican</a> 时候遇到的。</p>
+<p>btw 还有好多 css 问题需要改。有问题可以 <a href="https://github.com/est/estblog/issues">提issue</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2019-03-31T23:51:56+00:00">2019-03-31</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+    </main>
+
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+</html>

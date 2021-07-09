@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>[zz]Windows的cmd.exe使用consolas加中文雅黑字体的方法 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[zz]Windows的cmd.exe使用consolas加中文雅黑字体的方法" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[zz]Windows的cmd.exe使用consolas加中文雅黑字体的方法</h2>
+    <p class="post-date">Posted <time datetime="2012-07-31T20:44:00+00:00">2012-07-31</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>发信人: timepp (时间调色板), 信区: NewSoftware<br />
+标  题: [原创]控制台使用consolas加中文雅黑字体的方法<br />
+发信站: 水木社区 (Fri Jul 27 11:32:10 2012), 站内</p>
+<p>中间很多坑,能达到截图的效果真是太不容易了. 过程我就不说了, 直接说怎么改吧<br />
+(过程涉及注册表, 感兴趣的同学请小心修改)</p>
+<ol>
+<li>
+<p>设置控制台字体属性<br />
+    HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont<br />
+      (REG_SZ)00 = Consolas  注: 貌似WINDOWS缺省就是这样的啦<br />
+      (REG_SZ)0936 = aaa     注: 这步是必须的, 注意ValueName是0936, value随便弄个不存在的字体</p>
+</li>
+<li>
+<p>把consolas连接到雅黑<br />
+    HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontLink\SystemLink<br />
+        (REG_MULTI_SZ)Consolas = MSYH.TTC,微软雅黑,128,96<br />
+    (修改了字体链接需要注销重登录才能生效)</p>
+</li>
+<li>
+<p>修改控制台属性(也可以在控制台属性页中直接设,需要自己摸索下规律)<br />
+    HKEY_CURRENT_USER\Console\%SystemRoot%_system32_cmd.exe<br />
+      修改FaceName为Consolas<br />
+      修改FontSize为1179648</p>
+</li>
+<li>
+<p>这时在控制台依然显示很虚的宋体! 需要这第四步, 这步是我蒙对的(运气好啊)<br />
+  HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\RasterFonts<br />
+    (REG_SZ)微软雅黑=msyh.ttc<br />
+  (这步可能需要注销一下)</p>
+</li>
+</ol>
+<p>至此就结束了. 在控制台属性页中找不到consolas的同学, 先把代码页设成65001<br />
+  chcp 65001</p>
+<p>cygwin也从中受益了, 呵呵, 见附图</p>
+<p>不知道这个cmd不知道能不能用mactype渲染,如果可以的话显示效果应该会更好(见附件MADEDIT截图), 我是64位的WIN8, 试不了.</p>
+<p><img alt="" src="/images/tumblr/28448766013.png" /></p>
+<p>虽然我不用cmd，但是转载1下。。。就不吐槽了。。。。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/28448766013';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>CSDN弱密码邮箱分析 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="CSDN弱密码邮箱分析" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">CSDN弱密码邮箱分析</h2>
+    <p class="post-date">Posted <time datetime="2011-12-21T10:48:10+00:00">2011-12-21</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>CSDN密码表</p>
+
+<p>无聊做了个统计</p>
+
+<p>格式：用户数量 邮箱后缀</p>
+
+<p>邮箱二级域名，用户大于400个</p>
+
+<pre><code>2011467 qq.com
+1768978 163.com
+ 807940 126.com
+ 358442 sina.com
+ 269823 com.cn
+ 202955 hotmail.com
+ 186844 gmail.com
+ 104990 sohu.com
+  87050 yahoo.cn
+  72415 tom.com
+  53297 yeah.net
+  50815 21cn.com
+  29215 139.com
+  29161 edu.cn
+  24790 263.net
+  18920 live.cn
+  18607 sina.cn
+  18476 yahoo.com
+  16432 foxmail.com
+  15307 com.tw
+  15188 163.net
+  14213 msn.com
+  13378 eyou.com
+   8493 huiseo.cn
+   7121 csoftmail.cn
+   6723 citiz.net
+   5004 189.cn
+   4465 com.hk
+   4392 china.com
+   4238 etang.com
+   3976 chinaren.com
+   3409 net.cn
+   2944 neusoft.com
+   2780 wormsoft.cn
+   2567 sogou.com
+   2528 live.com
+   2474 ac.cn
+   1933 huawei.com
+   1889 co.jp
+   1816 371.net
+   1555 company-mail.cn
+   1550 hinet.net
+   1532 netease.com
+   1522 msn.cn
+   1492 gov.cn
+   1428 sh.cn
+   1363 uggsrock.com
+   1277 owlpic.com
+   1275 siteposter.net
+   1222 csdn.net
+   1187 elong.com
+   1184 x263.net
+   1033 chongseo.com
+   1022 bofthew.com
+    992 tyldd.com
+    870 king.com
+    858 org.cn
+    844 cmmail.com
+    841 123.com
+    838 zj.com
+    837 56.com
+    783 edu.tw
+    763 fm365.com
+    622 lzu.cn
+    602 xnmsn.cn
+    599 ah163.com
+    594 yahoo.ca
+    568 263.com
+    561 eastday.com
+    558 188.com
+    529 sian.com
+    518 ymail.com
+    518 net.tw
+    515 km169.net
+    483 pp.com
+    462 googlemail.com
+    454 tianya.cn
+    431 zj.cn
+    414 sh163.net
+    410 co.uk
+    409 21cn.net
+    409 2911.net
+    407 qq.con
+</code></pre>
+
+<p>邮箱用户大于1000的：</p>
+
+<pre><code> 1976196    qq.com
+ 1766927    163.com
+ 807895 126.com
+ 351596 sina.com
+ 205491 yahoo.com.cn
+ 202948 hotmail.com
+ 186843 gmail.com
+ 104736 sohu.com
+  87048 yahoo.cn
+  72365 tom.com
+  53295 yeah.net
+  50710 21cn.com
+  35119 vip.qq.com
+  29207 139.com
+  24779 263.net
+  19156 sina.com.cn
+  18920 live.cn
+  18601 sina.cn
+  18454 yahoo.com
+  16432 foxmail.com
+  15176 163.net
+  14211 msn.com
+  13372 eyou.com
+  10810 yahoo.com.tw
+   8493 huiseo.cn
+   7121 csoftmail.cn
+   6605 citiz.net
+   5378 vip.sina.com
+   5004 189.cn
+   4236 etang.com
+   3973 chinaren.com
+   3899 yahoo.com.hk
+   2930 neusoft.com
+   2780 wormsoft.cn
+   2567 sogou.com
+   2551 bdqnok-cp.com.cn
+   2528 live.com
+   2177 mail.china.com
+   2169 china.com
+   2038 mail.ustc.edu.cn
+   1921 huawei.com
+   1882 vip.163.com
+   1881 sjtu.edu.cn
+   1805 371.net
+   1782 10pig.com.cn
+   1681 zte.com.cn
+   1632 cp-bdqnok.com.cn
+   1555 company-mail.cn
+   1522 msn.cn
+   1499 netease.com
+   1363 uggsrock.com
+   1342 bjtu.edu.cn
+   1313 hotmail.com.tw
+   1277 owlpic.com
+   1275 siteposter.net
+   1184 x263.net
+   1180 2008.sina.com
+   1172 elong.com
+   1049 yahoo.co.jp
+   1033 chongseo.com
+   1022 bofthew.com
+</code></pre>
+
+<p>.edu分析</p>
+
+<pre><code>349 ustc.edu
+ 22 students.poly.edu
+ 19 usc.edu
+ 18 columbia.edu
+ 16 syr.edu
+ 16 umich.edu
+ 12 njit.edu
+ 11 udel.edu
+ 11 purdue.edu
+ 11 mtu.edu
+ 11 iastate.edu
+ 10 fudan.edu
+ 10 wpi.edu
+ 10 mst.edu
+ 10 wisc.edu
+</code></pre>
+
+<p>.edu.cn 前20强</p>
+
+<pre><code>   2038 mail.ustc.edu.cn
+   1881 sjtu.edu.cn
+   1342 bjtu.edu.cn
+    987 fudan.edu.cn
+    931 stu.xjtu.edu.cn
+    878 zju.edu.cn
+    719 mails.tsinghua.edu.cn
+    693 bit.edu.cn
+    640 mail.nankai.edu.cn
+    559 stu.edu.cn
+    488 emails.bjut.edu.cn
+    452 swu.edu.cn
+    416 nenu.edu.cn
+    327 mail.dhu.edu.cn
+    311 cqu.edu.cn
+    309 pku.edu.cn
+    309 mail.sdu.edu.cn
+    299 stu.snnu.edu.cn
+    260 cqut.edu.cn
+    242 shu.edu.cn
+</code></pre>
+
+<p>第一次知道USTC还有 ustc.edu 这个域名。US Training Center真是碉堡了。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/4414';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

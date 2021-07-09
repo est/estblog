@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>MongoDB之mapReduce()蛋痛 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="MongoDB之mapReduce()蛋痛" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">MongoDB之mapReduce()蛋痛</h2>
+    <p class="post-date">Posted <time datetime="2011-08-02T03:50:34+00:00">2011-08-02</time> | <span>archive</span></p>
+  </header>
+
+  
+  <ol>
+<li>直到发现 <code>printjson()</code>之前，调试起来麻烦。</li>
+<li>写起来很诡异，因为MongoDB本来就是诡异的BSON（用内置的Javascript操作起来就是JSON）数据结构，然后大量的Javascript Array的<code>forEach()</code>, <code>map()</code>就昏了。</li>
+<li>万幸的是MongoDB自带的SpiderMonkey还不支持Array.reduce(), yield()等各种蛋痛Javascript 1.8方法。</li>
+<li>mapReduce()代码维护起来麻烦，2周之后自己的代码可读性趋近于0了。郁闷。</li>
+<li>用的是pymongo这个 MongoDB Python Driver。Javascript和Python混写很蛋痛。估计Node.js写起来爽一点吧。还有就是命名风格也很蛋痛，findOne() 和 find_one() 是同一个东西在不同地方的写法，但是$addToSet又是同一个写法。</li>
+<li>Javascript还是比较烂的一门语言。我觉得最大的问题就是函数不能可选命名参数调用，把Object当字典用但是key又不加引号，缺乏Object.keys()和 Object.update() 方法，key只能是固定格式的字符。</li>
+</ol>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/4148';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

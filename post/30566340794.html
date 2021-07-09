@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>为神马android NFC不能模拟RFID Tag - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="为神马android NFC不能模拟RFID Tag" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">为神马android NFC不能模拟RFID Tag</h2>
+    <p class="post-date">Posted <time datetime="2012-08-30T23:35:00+00:00">2012-08-30</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>今天研究了一下这个玩意。先说结论：</p>
+<ol>
+<li>Android手机的NFC芯片本质只是一个tag reader/writer，要把自身模拟成tag，需要在驱动里把自己改造成可以控制的Secure Element</li>
+<li>Galaxy Nexus的2.3 ROM可以用<code>com.pocketluxus.nfclassic</code> 这个 nfca.apk模拟。有人成功过</li>
+<li>Nexus S可以用一个定制过的firmware来<a href="http://forum.xda-developers.com/showthread.php?t=1281946">打开</a>驱动的 卡模拟 模式，模拟任意RFID Tag。步骤非常麻烦。需要编译android源码（我日）</li>
+<li>i9300用的NFC芯片是NXP PN65N，和<a href="http://www.nfcworld.com/2011/02/13/35913/uncovered-the-hidden-nfc-potential-of-the-google-nexus-s-and-the-nokia-c7/">Nexus S的</a>一样</li>
+</ol>
+<p><img alt="" src="http://cdn3.nfcworld.net/wp-content/uploads/2011/02/pn65n-nexus-s-250x187.jpg" /></p>
+<p>至于什么普通手机可以读取RFID Tag，而不能模拟呢？</p>
+<p>国内的一些说法是，rfid卡加密了，没法模拟。其实这是错误的。</p>
+<p>我在XDA翻了下一些理论，大概是这样的：</p>
+<p>RFID/ID卡分两种，一种是只读的，一种是可写的。</p>
+<p>比如门禁卡，就是只读的，然后门禁系统有个白名单，列表允许的uid就可以开门。只读的信息不可能变的。所以加密了也能模拟。</p>
+<p>比如公交卡，是可写的，余额信息是写入ID卡内的。有的数据有加密，有的没有。</p>
+<p>（第一种情况其实可以用xda大神写的ReTag来把数据强行写入）</p>
+<p>那为什么手机有NFC芯片却不能任意模拟门禁卡RFID tag呢？</p>
+<p>RFID都有一个唯一uid，门禁卡的这个uid是静态的。关键是NFC芯片厂商为了安全，每次NFC芯片刷卡，都会动态随机生成一个新的uid。要强制把这个uid改成静态，就需要修改驱动和firmware了。</p>
+<p>目前三桑的S Beam和GoogleWallet都是动态uid的。并不能直接支持自定义静态uid。</p>
+<p>所以，等待大神的hack吧。xda上已经有人研究出来了，但是app只是小范围分享。</p>
+<p>如果这玩意公开了估计很多学校、写字楼、酒店、公共交通刷卡设备报要报废。</p>
+<p><a href="http://stackoverflow.com/questions/5859682/getting-nexus-s-android-nfc-into-card-emulation-mode">参考</a></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/30566340794';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

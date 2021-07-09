@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>北美 VPS 推荐：Racknerd - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="北美 VPS 推荐：Racknerd" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link active">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">北美 VPS 推荐：Racknerd</h2>
+    <p class="post-date">Posted <time datetime="2020-12-26T01:03:36+00:00">2020-12-26</time> | <span>stderr</span></p>
+  </header>
+
+  
+  <p>以前买的 hostmem 总感觉高峰期速度不行。Racknerd 这家看上去英语比较地道，感觉还行？于是跑了个脚本把它家的套餐遍历了一下：</p>
+<pre><code>mkdir -p ~/Downloads/racknerd; cd $_
+
+for i in $(seq 1 423); do wget -t 0 -T 5  -U 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1'  -O ~/Downloads/racknerd/$i.html; done
+
+for f in $(ls -rt .); do python -c 'm=__import__("re").search(r"product-title\"&gt;(.+)&lt;/p&gt;.*(\d).+?CPU.+?([\d\.]+).+SSD.*\n([\d\.]+\s?.B)\sRAM.*\n(\d+.B).+Band.+?(\$[\d+\.]+)(/(\w+)|.+?\s(\w+ly))", open("'$f'").read(), 16);print("'$f' {},{}C,{}G,{},{},{} {}".format(*m.groups()[:7])) if m else "'$f'" '; sleep 0.1; done
+</code></pre>
+<p>得到下面的表格：</p>
+<style type="text/css" id="pre-table">
+    style#pre-table + table{
+        font-size: 65%;
+    }
+</style>
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>CPU</th>
+<th>SSD</th>
+<th>RAM</th>
+<th>Traffic</th>
+<th>Price</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1C</td>
+<td>30G</td>
+<td>512MB</td>
+<td>500GB</td>
+<td>$22.99 Annually</td>
+<td><a   href="https://my.racknerd.com/aff.php?aff=1865&pid=1">KVM-512MB</a></td>
+</tr>
+<tr>
+<td>20</td>
+<td>2C</td>
+<td>50G</td>
+<td>1024MB</td>
+<td>1000GB</td>
+<td>$17.99 Monthly</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=20">KVM-1GB</a></td>
+</tr>
+<tr>
+<td>21</td>
+<td>3C</td>
+<td>75G</td>
+<td>2048MB</td>
+<td>2000GB</td>
+<td>$20.59 Monthly</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=21">KVM-2GB</a></td>
+</tr>
+<tr>
+<td>22</td>
+<td>4C</td>
+<td>130G</td>
+<td>4096MB</td>
+<td>3000GB</td>
+<td>$24.59 Monthly</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=22">KVM-4GB</a></td>
+</tr>
+<tr>
+<td>23</td>
+<td>5C</td>
+<td>170G</td>
+<td>6144MB</td>
+<td>4000GB</td>
+<td>$27.59 Monthly</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=23">KVM-6GB</a></td>
+</tr>
+<tr>
+<td>24</td>
+<td>6C</td>
+<td>220G</td>
+<td>8192MB</td>
+<td>5000GB</td>
+<td>$36.59 Monthly</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=24">KVM-8GB</a></td>
+</tr>
+<tr>
+<td>25</td>
+<td>7C</td>
+<td>300G</td>
+<td>12288MB</td>
+<td>6000GB</td>
+<td>$55.99 Monthly</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=25">KVM-12GB</a></td>
+</tr>
+<tr>
+<td>26</td>
+<td>3C</td>
+<td>55G</td>
+<td>2048MB</td>
+<td>2000GB</td>
+<td>$88.00 Annually</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=26">BLACK FRIDAY - 2GB KVM</a></td>
+</tr>
+<tr>
+<td>27</td>
+<td>1C</td>
+<td>40G</td>
+<td>512MB</td>
+<td>1000GB</td>
+<td>$22.99 Annually</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=27">OVZ-768MB</a></td>
+</tr>
+<tr>
+<td>28</td>
+<td>1C</td>
+<td>40G</td>
+<td>512MB</td>
+<td>1000GB</td>
+<td>$5.59 Monthly</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=28">OVZ-1536MB</a></td>
+</tr>
+<tr>
+<td>33</td>
+<td>8C</td>
+<td>300G</td>
+<td>12288MB</td>
+<td>10000GB</td>
+<td>$55.99 Monthly</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=33">OVZ-12GB</a></td>
+</tr>
+<tr>
+<td>40</td>
+<td>3C</td>
+<td>33G</td>
+<td>3GB</td>
+<td>3000GB</td>
+<td>$83.33 Annually</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=40">RackNerd - BLOOMING 3 SPECIAL - 3GB KVM</a></td>
+</tr>
+<tr>
+<td>46</td>
+<td>6C</td>
+<td>80G</td>
+<td>8192MB</td>
+<td>5000GB</td>
+<td>$99.00 Annually</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=46">Custom Package - 8GB KVM</a></td>
+</tr>
+<tr>
+<td>51</td>
+<td>1C</td>
+<td>11G</td>
+<td>512MB</td>
+<td>2500GB</td>
+<td>$12.71 Annually</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=51">XMas Sale - 512MB KVM</a></td>
+</tr>
+<tr>
+<td>52</td>
+<td>1C</td>
+<td>20G</td>
+<td>1.5GB</td>
+<td>4500GB</td>
+<td>$15.71 Annually</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=52">XMas Sale - 1.5GB KVM</a></td>
+</tr>
+<tr>
+<td>53</td>
+<td>2C</td>
+<td>38G</td>
+<td>2.5GB</td>
+<td>6500GB</td>
+<td>$28.71 Annually</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=53">XMas Sale - 2.5GB KVM</a></td>
+</tr>
+<tr>
+<td>56</td>
+<td>3C</td>
+<td>25G</td>
+<td>2GB</td>
+<td>4000GB</td>
+<td>$21.80 Annually</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=56">2020 New Year - 2GB KVM Flash Sale</a></td>
+</tr>
+<tr>
+<td>57</td>
+<td>3C</td>
+<td>40G</td>
+<td>2.5GB</td>
+<td>6000GB</td>
+<td>$27.80 Annually</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=57">2020 New Year - 2.5GB KVM Flash Sale</a></td>
+</tr>
+<tr>
+<td>58</td>
+<td>3C</td>
+<td>25G</td>
+<td>2GB</td>
+<td>3000GB</td>
+<td>$21.80 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=58">LEB NEW YEAR - 2GB KVM Flash Sale</a></td>
+</tr>
+<tr>
+<td>59</td>
+<td>3C</td>
+<td>40G</td>
+<td>2.5GB</td>
+<td>5000GB</td>
+<td>$27.80 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=59">LEB NEW YEAR - 2.5GB KVM Flash Sale</a></td>
+</tr>
+<tr>
+<td>60</td>
+<td>1C</td>
+<td>60G</td>
+<td>2048MB</td>
+<td>2500GB</td>
+<td>$17.65 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=60">LEB NEW YEAR - 2GB OpenVZ 7 VPS</a></td>
+</tr>
+<tr>
+<td>61</td>
+<td>2C</td>
+<td>50G</td>
+<td>2GB</td>
+<td>4000GB</td>
+<td>$36 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=61">LARGE STORAGE - 2GB KVM</a></td>
+</tr>
+<tr>
+<td>62</td>
+<td>3C</td>
+<td>80G</td>
+<td>4GB</td>
+<td>5000GB</td>
+<td>$59 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=62">LARGE STORAGE - 4GB KVM</a></td>
+</tr>
+<tr>
+<td>63</td>
+<td>4C</td>
+<td>140G</td>
+<td>6GB</td>
+<td>6000GB</td>
+<td>$95 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=63">LARGE STORAGE - 6GB KVM</a></td>
+</tr>
+<tr>
+<td>64</td>
+<td>4C</td>
+<td>200G</td>
+<td>8GB</td>
+<td>8000GB</td>
+<td>$135 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=64">LARGE STORAGE - 8GB KVM</a></td>
+</tr>
+<tr>
+<td>66</td>
+<td>2C</td>
+<td>35G</td>
+<td>2GB</td>
+<td>4000GB</td>
+<td>$22.80 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=66">Latest 2020 New Year - 2GB KVM Flash Sale</a></td>
+</tr>
+<tr>
+<td>73</td>
+<td>1C</td>
+<td>18G</td>
+<td>1GB</td>
+<td>2500GB</td>
+<td>$16.68 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=73">RackNerd Lunar RED ENVELOPE Promo - 1GB KVM</a></td>
+</tr>
+<tr>
+<td>75</td>
+<td>2C</td>
+<td>32G</td>
+<td>3GB</td>
+<td>4000GB</td>
+<td>$24.68 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=75">RackNerd Lunar RED ENVELOPE Promo - 3GB KVM</a></td>
+</tr>
+<tr>
+<td>76</td>
+<td>3C</td>
+<td>45G</td>
+<td>4GB</td>
+<td>6000GB</td>
+<td>$35.68 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=76">RackNerd Lunar RED ENVELOPE Promo - 4GB KVM</a></td>
+</tr>
+<tr>
+<td>87</td>
+<td>3C</td>
+<td>32G</td>
+<td>2GB</td>
+<td>5500GB</td>
+<td>$22.55 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=87">Flash Sale Promo - 2GB RAM</a></td>
+</tr>
+<tr>
+<td>88</td>
+<td>2C</td>
+<td>15G</td>
+<td>1GB</td>
+<td>4500GB</td>
+<td>$15.38 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=88">Flash Sale Promo - 1GB RAM</a></td>
+</tr>
+<tr>
+<td>98</td>
+<td>3C</td>
+<td>35G</td>
+<td>2.5GB</td>
+<td>6000GB</td>
+<td>$23.50 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=98">February Flash Sale 2.5GB KVM</a></td>
+</tr>
+<tr>
+<td>103</td>
+<td>3C</td>
+<td>40G</td>
+<td>2.5GB</td>
+<td>6500GB</td>
+<td>$25.50 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=103">LEB KVM VPS Flash Sale 2.5GB KVM</a></td>
+</tr>
+<tr>
+<td>113</td>
+<td>1C</td>
+<td>12G</td>
+<td>768 MB</td>
+<td>2000GB</td>
+<td>$13.93 Annually</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=113">Valentine's Day Special - 768MB KVM</td>
+</tr>
+<tr>
+<td>114</td>
+<td>2C</td>
+<td>23G</td>
+<td>1.5GB</td>
+<td>4000GB</td>
+<td>$19.95 Annually</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=114">Valentine's Day Special - 1.5GB KVM</td>
+</tr>
+<tr>
+<td>120</td>
+<td>1C</td>
+<td>15G</td>
+<td>1GB</td>
+<td>2500GB</td>
+<td>$14.89 Annually</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=120">2K20 - 1GB KVM Flash Sale</a></td>
+</tr>
+<tr>
+<td>121</td>
+<td>2C</td>
+<td>25G</td>
+<td>2GB</td>
+<td>4500GB</td>
+<td>$21.89 Annually</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=121">2K20 - 2GB KVM Flash Sale</a></td>
+</tr>
+<tr>
+<td>122</td>
+<td>3C</td>
+<td>33G</td>
+<td>3GB</td>
+<td>6000GB</td>
+<td>$29.89 Annually</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=122">2K20 - 3GB KVM Flash Sale</a></td>
+</tr>
+<tr>
+<td>124</td>
+<td>2C</td>
+<td>28G</td>
+<td>2.5GB</td>
+<td>4000GB</td>
+<td>$22.19 Annually</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=124">RackNerd KVM VPS Sale - 2.5GB</a></td>
+</tr>
+<tr>
+<td>128</td>
+<td>2C</td>
+<td>20G</td>
+<td>1.5GB</td>
+<td>4000GB</td>
+<td>$16.55 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=128">NEW WEBSITE SPECIAL! 1.5GB KVM</a></td>
+</tr>
+<tr>
+<td>129</td>
+<td>3C</td>
+<td>40G</td>
+<td>2.5GB</td>
+<td>6500GB</td>
+<td>$23.49 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=129">NEW WEBSITE SPECIAL! 2.5GB KVM</a></td>
+</tr>
+<tr>
+<td>130</td>
+<td>3C</td>
+<td>45G</td>
+<td>3.5GB</td>
+<td>7000GB</td>
+<td>$28.99 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=130">NEW WEBSITE SPECIAL! 3.5GB KVM</a></td>
+</tr>
+<tr>
+<td>135</td>
+<td>2C</td>
+<td>20G</td>
+<td>1.5GB</td>
+<td>4000GB</td>
+<td>$16.55 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=135">LEB New Website Special - 1.5GB KVM</a></td>
+</tr>
+<tr>
+<td>136</td>
+<td>3C</td>
+<td>45G</td>
+<td>3.5GB</td>
+<td>7000GB</td>
+<td>$28.99 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=136">LEB New Website Special - 3.5GB KVM</a></td>
+</tr>
+<tr>
+<td>137</td>
+<td>3C</td>
+<td>40G</td>
+<td>2.5GB</td>
+<td>6500GB</td>
+<td>$23.49 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=137">LEB New Website Special - 2.5GB KVM</a></td>
+</tr>
+<tr>
+<td>141</td>
+<td>2C</td>
+<td>20G</td>
+<td>2GB</td>
+<td>4000GB</td>
+<td>$18.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=141">White Day Flash Sale - 2GB KVM</a></td>
+</tr>
+<tr>
+<td>147</td>
+<td>3C</td>
+<td>40G</td>
+<td>3GB</td>
+<td>4000GB</td>
+<td>$27.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=147">EOM - March 3GB KVM</a></td>
+</tr>
+<tr>
+<td>151</td>
+<td>1C</td>
+<td>18G</td>
+<td>1GB</td>
+<td>2500GB</td>
+<td>$16.68 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=151">LEB SPECIAL- KVM VPS 1GB</a></td>
+</tr>
+<tr>
+<td>153</td>
+<td>3C</td>
+<td>45G</td>
+<td>4GB</td>
+<td>6000GB</td>
+<td>$35.68 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=153">LEB SPECIAL- KVM VPS 4GB</a></td>
+</tr>
+<tr>
+<td>154</td>
+<td>3C</td>
+<td>55G</td>
+<td>4GB</td>
+<td>8000GB</td>
+<td>$33.25 Annually</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=154">(Custom) 4GB KVM Special</a></td>
+</tr>
+<tr>
+<td>155</td>
+<td>1C</td>
+<td>20G</td>
+<td>768 MB</td>
+<td>3000GB</td>
+<td>$15.68 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=155">3 Day FLASH SALE - 768MB KVM</a></td>
+</tr>
+<tr>
+<td>156</td>
+<td>2C</td>
+<td>35G</td>
+<td>2GB</td>
+<td>5000GB</td>
+<td>$22.68 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=156">3 Day FLASH SALE - 2GB KVM</a></td>
+</tr>
+<tr>
+<td>157</td>
+<td>3C</td>
+<td>50G</td>
+<td>2.5GB</td>
+<td>6500GB</td>
+<td>$26.25 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=157">(Custom) 2.5GB KVM VPS - Ticket #855790</a></td>
+</tr>
+<tr>
+<td>162</td>
+<td>2C</td>
+<td>22G</td>
+<td>1.5GB</td>
+<td>4500GB</td>
+<td>$20 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=162">LIMITED STOCK for CN 1.5GB KVM</a></td>
+</tr>
+<tr>
+<td>164</td>
+<td>1C</td>
+<td>15G</td>
+<td>1GB</td>
+<td>3000GB</td>
+<td>$15 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=164">Easter Sale - KVM 1GB Special</a></td>
+</tr>
+<tr>
+<td>165</td>
+<td>2C</td>
+<td>27G</td>
+<td>2GB</td>
+<td>5000GB</td>
+<td>$24 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=165">Easter Sale - KVM 2GB Special</a></td>
+</tr>
+<tr>
+<td>167</td>
+<td>1C</td>
+<td>22G</td>
+<td>1GB</td>
+<td>3000GB</td>
+<td>$17.80 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=167">1G RAM KVM VPS Special</a></td>
+</tr>
+<tr>
+<td>168</td>
+<td>2C</td>
+<td>27G</td>
+<td>2GB</td>
+<td>5000GB</td>
+<td>$24 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=168">2G RAM KVM VPS Special</a></td>
+</tr>
+<tr>
+<td>169</td>
+<td>3C</td>
+<td>40G</td>
+<td>3.5GB</td>
+<td>6500GB</td>
+<td>$34 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=169">3.5G RAM KVM VPS Special</a></td>
+</tr>
+<tr>
+<td>171</td>
+<td>3C</td>
+<td>25G</td>
+<td>2.5GB</td>
+<td>5000GB</td>
+<td>$22 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=171">2.5GB KVM VPS - FLASH SALE 2020</a></td>
+</tr>
+<tr>
+<td>178</td>
+<td>1C</td>
+<td>15G</td>
+<td>1GB</td>
+<td>3000GB</td>
+<td>$13.50 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=178">1GB KVM Flash Sale</a></td>
+</tr>
+<tr>
+<td>179</td>
+<td>1C</td>
+<td>20G</td>
+<td>1.5GB</td>
+<td>2500GB</td>
+<td>$15.99 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=179">1.5GB KVM Flash Sale</a></td>
+</tr>
+<tr>
+<td>180</td>
+<td>2C</td>
+<td>30G</td>
+<td>2.5GB</td>
+<td>4000GB</td>
+<td>$22.19 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=180">2.5GB KVM Flash Sale</a></td>
+</tr>
+<tr>
+<td>181</td>
+<td>1C</td>
+<td>20G</td>
+<td>1.5GB</td>
+<td>3000GB</td>
+<td>$15.88 Annually</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=181">Birthday KVM VPS Sale - 1.5GB KVM</a></td>
+</tr>
+<tr>
+<td>182</td>
+<td>2C</td>
+<td>45G</td>
+<td>2.5GB</td>
+<td>5000GB</td>
+<td>$22.88 Annually</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=182">Birthday KVM VPS Sale - 2.5GB KVM</a></td>
+</tr>
+<tr>
+<td>183</td>
+<td>4C</td>
+<td>45G</td>
+<td>4.5GB</td>
+<td>2000GB</td>
+<td>$69.90 /month</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=183">(Custom) 10x 4.5 GB KVM VPSs</a></td>
+</tr>
+<tr>
+<td>184</td>
+<td>4C</td>
+<td>45G</td>
+<td>4.5GB</td>
+<td>2000GB</td>
+<td>$699 /month</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=184">(Custom) 100x 4.5 GB KVM VPSs</a></td>
+</tr>
+<tr>
+<td>185</td>
+<td>4C</td>
+<td>45G</td>
+<td>4.5GB</td>
+<td>3000GB</td>
+<td>$4790.00 Monthly</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=185">(Custom) 1000x 4.5 GB KVM VPSs</a></td>
+</tr>
+<tr>
+<td>187</td>
+<td>2C</td>
+<td>30G</td>
+<td>2.5GB</td>
+<td>4000GB</td>
+<td>$39.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=187">2.5GB KVM VPS (DDoS Protected Network)</a></td>
+</tr>
+<tr>
+<td>188</td>
+<td>3C</td>
+<td>40G</td>
+<td>3.5GB</td>
+<td>6000GB</td>
+<td>$49.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=188">3.5GB KVM VPS (DDoS Protected Network)</a></td>
+</tr>
+<tr>
+<td>189</td>
+<td>1C</td>
+<td>30G</td>
+<td>512 MB</td>
+<td>500GB</td>
+<td>$32.99 Annually</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=189">512MB KVM VPS (DDoS Protected Network)</a></td>
+</tr>
+<tr>
+<td>190</td>
+<td>2C</td>
+<td>50G</td>
+<td>1GB</td>
+<td>1000GB</td>
+<td>$19.19 Monthly</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=190">1GB KVM VPS (DDoS Protected Network)</a></td>
+</tr>
+<tr>
+<td>191</td>
+<td>4C</td>
+<td>45G</td>
+<td>4.5GB</td>
+<td>2000GB</td>
+<td>$10.00 Monthly</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=191">(Custom) -- 4.5GB RAM KVM VPS</a></td>
+</tr>
+<tr>
+<td>194</td>
+<td>3C</td>
+<td>45G</td>
+<td>3GB</td>
+<td>6000GB</td>
+<td>$31.50 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=194">3GB RAM KVM VPS</a></td>
+</tr>
+<tr>
+<td>198</td>
+<td>1C</td>
+<td>25G</td>
+<td>1.5GB</td>
+<td>5000GB</td>
+<td>$18.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=198">Labor Day Promo - 1.5GB KVM</a></td>
+</tr>
+<tr>
+<td>199</td>
+<td>3C</td>
+<td>45G</td>
+<td>3GB</td>
+<td>6500GB</td>
+<td>$24.28 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=199">Labor Day Promo - 3GB KVM</a></td>
+</tr>
+<tr>
+<td>200</td>
+<td>3C</td>
+<td>75G</td>
+<td>2GB</td>
+<td>2000GB</td>
+<td>$22.79 Monthly</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=200">2GB KVM VPS (DDoS Protected Network)</a></td>
+</tr>
+<tr>
+<td>201</td>
+<td>4C</td>
+<td>130G</td>
+<td>4GB</td>
+<td>3000GB</td>
+<td>$26.59 Monthly</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=201">4GB KVM VPS (DDoS Protected Network)</a></td>
+</tr>
+<tr>
+<td>202</td>
+<td>5C</td>
+<td>170G</td>
+<td>6GB</td>
+<td>4000GB</td>
+<td>$39.49 Monthly</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=202">6GB KVM VPS (DDoS Protected Network)</a></td>
+</tr>
+<tr>
+<td>203</td>
+<td>6C</td>
+<td>220G</td>
+<td>8GB</td>
+<td>5000GB</td>
+<td>$52.29 Monthly</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=203">8GB KVM VPS (DDoS Protected Network)</a></td>
+</tr>
+<tr>
+<td>207</td>
+<td>1C</td>
+<td>18G</td>
+<td>1GB</td>
+<td>1000GB</td>
+<td>$23 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=207">1GB KVM VPS Special (LA-DC05)</a></td>
+</tr>
+<tr>
+<td>209</td>
+<td>3C</td>
+<td>35G</td>
+<td>3GB</td>
+<td>5000GB</td>
+<td>$43 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=209">3GB KVM VPS Special (LA-DC05)</a></td>
+</tr>
+<tr>
+<td>210</td>
+<td>1C</td>
+<td>25G</td>
+<td>1.5GB</td>
+<td>3000GB</td>
+<td>$24.39 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=210">1.5GB KVM VPS</a></td>
+</tr>
+<tr>
+<td>211</td>
+<td>2C</td>
+<td>40G</td>
+<td>2.5GB</td>
+<td>5000GB</td>
+<td>$29.50 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=211">2.5GB KVM VPS</a></td>
+</tr>
+<tr>
+<td>212</td>
+<td>4C</td>
+<td>60G</td>
+<td>4.5GB</td>
+<td>8000GB</td>
+<td>$55.89 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=212">4.5GB KVM VPS</a></td>
+</tr>
+<tr>
+<td>213</td>
+<td>1C</td>
+<td>18G</td>
+<td>1.8GB</td>
+<td>2500GB</td>
+<td>$20.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=213">Mother's Day Special - 1.8GB KVM</a></td>
+</tr>
+<tr>
+<td>214</td>
+<td>2C</td>
+<td>38G</td>
+<td>2.8GB</td>
+<td>4000GB</td>
+<td>$26.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=214">Mother's Day Special - 2.8GB KVM</a></td>
+</tr>
+<tr>
+<td>215</td>
+<td>3C</td>
+<td>48G</td>
+<td>3.8GB</td>
+<td>5000GB</td>
+<td>$33.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=215">Mother's Day Special - 3.8GB KVM</a></td>
+</tr>
+<tr>
+<td>231</td>
+<td>1C</td>
+<td>20G</td>
+<td>1GB</td>
+<td>500GB</td>
+<td>$24.00 Annually</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=231">Custom KVM 1GB (Faizan)</a></td>
+</tr>
+<tr>
+<td>232</td>
+<td>1C</td>
+<td>16G</td>
+<td>1GB</td>
+<td>3000GB</td>
+<td>$14.25 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=232">1GB KVM VPS Sale</a></td>
+</tr>
+<tr>
+<td>234</td>
+<td>3C</td>
+<td>42G</td>
+<td>3GB</td>
+<td>5000GB</td>
+<td>$28.20 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=234">3GB KVM VPS Sale</a></td>
+</tr>
+<tr>
+<td>236</td>
+<td>1C</td>
+<td>15G</td>
+<td>1GB</td>
+<td>2000GB</td>
+<td>$15.30 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=236">June Flash Sale - 1GB</a></td>
+</tr>
+<tr>
+<td>237</td>
+<td>2C</td>
+<td>25G</td>
+<td>2GB</td>
+<td>4000GB</td>
+<td>$24.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=237">June Flash Sale - 2GB</a></td>
+</tr>
+<tr>
+<td>240</td>
+<td>2C</td>
+<td>33G</td>
+<td>2.5GB</td>
+<td>4000GB</td>
+<td>$25.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=240">DC-02 Flash Sale - 2.5GB</a></td>
+</tr>
+<tr>
+<td>241</td>
+<td>3C</td>
+<td>50G</td>
+<td>4GB</td>
+<td>5000GB</td>
+<td>$42.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=241">DC-02 Flash Sale - 4GB</a></td>
+</tr>
+<tr>
+<td>246</td>
+<td>1C</td>
+<td>25G</td>
+<td>1.5GB</td>
+<td>6000GB</td>
+<td>$17.68 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=246">6.18 Sale - 1.5GB KVM</a></td>
+</tr>
+<tr>
+<td>247</td>
+<td>2C</td>
+<td>45G</td>
+<td>2.5GB</td>
+<td>8000GB</td>
+<td>$29.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=247">6.18 Sale - 2.5GB KVM</a></td>
+</tr>
+<tr>
+<td>252</td>
+<td>1C</td>
+<td>20G</td>
+<td>1GB</td>
+<td>5000GB</td>
+<td>$15.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=252">June EOM - 1GB KVM</a></td>
+</tr>
+<tr>
+<td>253</td>
+<td>3C</td>
+<td>48G</td>
+<td>3GB</td>
+<td>7000GB</td>
+<td>$31.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=253">June EOM - 3GB KVM</a></td>
+</tr>
+<tr>
+<td>259</td>
+<td>1C</td>
+<td>20G</td>
+<td>1.5GB</td>
+<td>2000GB</td>
+<td>$25.40 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=259">1.5GB KVM VPS (DDoS Protected Network)</a></td>
+</tr>
+<tr>
+<td>260</td>
+<td>2C</td>
+<td>30G</td>
+<td>2.5GB</td>
+<td>4000GB</td>
+<td>$32.50 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=260">2.5GB KVM VPS (DDoS Protected Network)</a></td>
+</tr>
+<tr>
+<td>261</td>
+<td>3C</td>
+<td>40G</td>
+<td>3.5GB</td>
+<td>6000GB</td>
+<td>$39.20 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=261">3.5GB KVM VPS (DDoS Protected Network)</a></td>
+</tr>
+<tr>
+<td>262</td>
+<td>1C</td>
+<td>27G</td>
+<td>1.74GB</td>
+<td>4000GB</td>
+<td>$17.38 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=262">4th of July Sale - 1.74GB KVM</a></td>
+</tr>
+<tr>
+<td>263</td>
+<td>2C</td>
+<td>43G</td>
+<td>2.74GB</td>
+<td>6000GB</td>
+<td>$27.40 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=263">4th of July Sale - 2.74GB KVM</a></td>
+</tr>
+<tr>
+<td>264</td>
+<td>3C</td>
+<td>57G</td>
+<td>3.74GB</td>
+<td>8000GB</td>
+<td>$37.40 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=264">4th of July Sale - 3.74GB KVM</a></td>
+</tr>
+<tr>
+<td>279</td>
+<td>1C</td>
+<td>25G</td>
+<td>1GB</td>
+<td>3000GB</td>
+<td>$6.89 /quarterly</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=279">July 2020 Sale - 1GB KVM</a></td>
+</tr>
+<tr>
+<td>280</td>
+<td>2C</td>
+<td>35G</td>
+<td>2GB</td>
+<td>4000GB</td>
+<td>$9.89 /quarterly</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=280">July 2020 Sale - 2GB KVM</a></td>
+</tr>
+<tr>
+<td>281</td>
+<td>2C</td>
+<td>50G</td>
+<td>3GB</td>
+<td>6000GB</td>
+<td>$12.39 /quarterly</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=281">July 2020 Sale - 3GB KVM</a></td>
+</tr>
+<tr>
+<td>285</td>
+<td>2C</td>
+<td>50G</td>
+<td>3.5GB</td>
+<td>6500GB</td>
+<td>$34.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=285">July EOM - 3.5GB KVM</a></td>
+</tr>
+<tr>
+<td>286</td>
+<td>1C</td>
+<td>18G</td>
+<td>1GB</td>
+<td>1000GB</td>
+<td>$19 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=286">1GB KVM VPS Special (LA-DC05)</a></td>
+</tr>
+<tr>
+<td>288</td>
+<td>3C</td>
+<td>35G</td>
+<td>3GB</td>
+<td>5000GB</td>
+<td>$35 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=288">3GB KVM VPS Special (LA-DC05)</a></td>
+</tr>
+<tr>
+<td>290</td>
+<td>1C</td>
+<td>25G</td>
+<td>2.5GB</td>
+<td>3000GB</td>
+<td>$23.59 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=290">August 2020 Sale - 2.5GB KVM</a></td>
+</tr>
+<tr>
+<td>291</td>
+<td>2C</td>
+<td>40G</td>
+<td>3GB</td>
+<td>5000GB</td>
+<td>$28.99 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=291">August 2020 Sale - 3GB KVM</a></td>
+</tr>
+<tr>
+<td>300</td>
+<td>4C</td>
+<td>45G</td>
+<td>4.5GB</td>
+<td>4000GB</td>
+<td>$1800.00 Monthly</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=300">300x 4.5 GB KVM VPS</a></td>
+</tr>
+<tr>
+<td>311</td>
+<td>2C</td>
+<td>40G</td>
+<td>2GB</td>
+<td>5000GB</td>
+<td>$20.88 /Year</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=311">FLASH SALE - 2GB KVM Intel Xeon VPS</a></td>
+</tr>
+<tr>
+<td>312</td>
+<td>4C</td>
+<td>100G</td>
+<td>8GB</td>
+<td>1000GB</td>
+<td>$65.00 Annually</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=312">Custom 8GB VPS Plan -- TT#806952</a></td>
+</tr>
+<tr>
+<td>316</td>
+<td>1C</td>
+<td>20G</td>
+<td>1GB</td>
+<td>2000GB</td>
+<td>$11.95 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=316">Mooncake Festival Sale - 1GB KVM VPS</a></td>
+</tr>
+<tr>
+<td>317</td>
+<td>2C</td>
+<td>50G</td>
+<td>2GB</td>
+<td>4000GB</td>
+<td>$19.95 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=317">Mooncake Festival Sale - 2GB KVM VPS</a></td>
+</tr>
+<tr>
+<td>318</td>
+<td>3C</td>
+<td>55G</td>
+<td>2GB</td>
+<td>2000GB</td>
+<td>$88.00 Annually</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=318">Geekzone Deal - 2GB KVM VPS</a></td>
+</tr>
+<tr>
+<td>319</td>
+<td>1C</td>
+<td>30G</td>
+<td>1.5GB</td>
+<td>3000GB</td>
+<td>$25.95 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=319">New Locations Launch Sale - 1.5GB KVM VPS</a></td>
+</tr>
+<tr>
+<td>320</td>
+<td>2C</td>
+<td>50G</td>
+<td>2.5GB</td>
+<td>5000GB</td>
+<td>$39.95 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=320">New Locations Launch Sale - 2.5GB KVM VPS</a></td>
+</tr>
+<tr>
+<td>326</td>
+<td>1C</td>
+<td>25G</td>
+<td>1.5GB</td>
+<td>3000GB</td>
+<td>$16.99 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=326">National Day Sale - 1.5GB KVM VPS</a></td>
+</tr>
+<tr>
+<td>327</td>
+<td>2C</td>
+<td>40G</td>
+<td>2.5GB</td>
+<td>5000GB</td>
+<td>$25.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=327">National Day Sale - 2.5GB KVM VPS</a></td>
+</tr>
+<tr>
+<td>335</td>
+<td>4C</td>
+<td>45G</td>
+<td>4.5GB</td>
+<td>3000GB</td>
+<td>$2395.00 Monthly</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=335">500x 4.5 GB KVM VPS</a></td>
+</tr>
+<tr>
+<td>358</td>
+<td>1C</td>
+<td>17G</td>
+<td>1GB</td>
+<td>3000GB</td>
+<td>$10.98 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=358">1GB KVM VPS Special (LEB Exclusive)</a></td>
+</tr>
+<tr>
+<td>409</td>
+<td>1C</td>
+<td>20G</td>
+<td>1GB</td>
+<td>3000GB</td>
+<td>$16.38 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=409">1 GB KVM VPS Special (Amsterdam)</a></td>
+</tr>
+<tr>
+<td>410</td>
+<td>2C</td>
+<td>35G</td>
+<td>2GB</td>
+<td>5000GB</td>
+<td>$22.38 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=410">2 GB KVM VPS Special (Amsterdam)</a></td>
+</tr>
+<tr>
+<td>416</td>
+<td>1C</td>
+<td>27G</td>
+<td>1.2GB</td>
+<td>3500GB</td>
+<td>$11.89 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=416">FLASH SALE - 1.2 GB KVM VPS Amsterdam</a></td>
+</tr>
+<tr>
+<td>421</td>
+<td>2C</td>
+<td>30G</td>
+<td>2GB</td>
+<td>3500GB</td>
+<td>$19.89 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=421">2 GB KVM Christmas VPS Special</a></td>
+</tr>
+<tr>
+<td>422</td>
+<td>3C</td>
+<td>50G</td>
+<td>3GB</td>
+<td>8000GB</td>
+<td>$29.49 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=422">3 GB KVM Christmas VPS Special</a></td>
+</tr>
+<tr>
+<td>423</td>
+<td>1C</td>
+<td>20G</td>
+<td>1.5GB</td>
+<td>2500GB</td>
+<td>$16.81 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=423">1.5 GB KVM Christmas VPS Special</a></td>
+</tr>
+</tbody>
+</table>
+<p>都是 KVM 的机器，SolusVM的壳子。挑个便宜的买不错。</p>
+<p>btw 本来想 awk 搞定，发现自己太弱了。于是换 <code>perl -ne</code> 发现更弱。最后只有拉起 python。。囧。</p>
+<p>然后又遇到了表格字体太大导致行内换行。于是又折腾了 Markdown 改 <code>font-size</code> 的 hack 。。囧。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '202012/stderr-012';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

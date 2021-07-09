@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>语音编程 设想 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="语音编程 设想" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">语音编程 设想</h2>
+    <p class="post-date">Posted <time datetime="2020-02-25T01:21:34+00:00">2020-02-25</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>在 <a href="https://news.ycombinator.com/item?id=22404264">HN头条</a> 上看到有人说用语音识别 写代码。</p>
+<p>现在是疫情在家上班期间，感觉还是可以试试。毕竟公共办公环境搞这个不太现实，怕打扰别人用 TNT 了。也怕自己被打扰。23333</p>
+<p>想起了 13 年前就有大神尝试用 Vista 自带的语音识别在 notepad 写 perl。。。</p>
+<p><a href="https://www.youtube.com/watch?v=MzJ0CytAsec">https://www.youtube.com/watch?v=MzJ0CytAsec</a></p>
+<p>不过这篇帖子想说的不是这个 语音编程(voice assisted programming)，我想说的是 可编程语音 (programmable speech)</p>
+<p>现在市面上有很多「智障音响」比如 Alexa、小爱，手机上都可以直接说 ok boomer，但是我设想的 可编程音响 的使用场景是这样的：</p>
+<ol>
+<li>离线wakup word +　离线识别。数据隐私值得付费</li>
+<li>比如我开始计数，让音响听到3的倍数发音说 Fizz，听到5的倍数说 Buzz，听到同时为3和5的倍数说 <a href="https://wiki.c2.com/?FizzBuzzTest">Fizzbuzz</a></li>
+<li>比如让音响听对话，当我们谈论某些话题的时候发出提醒。这就是等同于计算机编程语言里的 <code>if</code> 关键字</li>
+<li>比如我可以录制一首古诗，让音响监听孩子背诵，把背错的漏的字词在下一轮复述中强调出来。</li>
+<li>可以在家庭聚会里充当 出谜语 的角色。dungeon master 的角色。可以人工录入一些游戏规则。</li>
+<li>实时召唤背景音乐。比如说「来段鼓点，我要闪亮登场了！」</li>
+<li>可以存储一些全局list/map变量。比如我家老二是谁？今晚谁最后一个睡觉？</li>
+<li>语音备忘簿和检索工具。安全的离线存储在我的 NAS 里</li>
+<li>教小孩外语。但是这个可以由家长录制、出题，并且可以分享</li>
+<li>如果说字节是文本编程的基本单位，语音编程的话应该是 phoneme ？现在苦于孩子学习外语没法暂停、复读。把困难的地方重音出来，放慢速度反复听。</li>
+<li>听电视节目的片头曲、片尾曲让看完之后休息眼睛。定时休息比较死板可能看一半要求休息，现在都是点播时代，按 集 掌控作息规律更有意义。</li>
+<li>语音 todolist 。比如提醒老人吃药。老人回答一句 吃啦 就不再反复提醒了。</li>
+<li>家里不准说脏话 计数器。谁说了多少次。需要辨别出说话人，外加一个可以持久化的计数器。脏话可以由家长(或admin)定义增删</li>
+</ol>
+<p>总之，现在「Smart speaker」 感觉还像机器码时代，一问一答很笨。需要一个更高层的「C语言」甚至对话「库」来更自然的搭配人们的生活。</p>
+<p>很期待市面上有这样的硬件 or 开源软件出现！</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '202002/stdout-002';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

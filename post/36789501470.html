@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>context switching is expensive - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="context switching is expensive" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">context switching is expensive</h2>
+    <p class="post-date">Posted <time datetime="2012-11-28T23:13:00+00:00">2012-11-28</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>用了好几个chrome的time tracking扩展，用来跟踪我上网都把时间浪费在哪些网站上了。</p>
+<p>这几天的发现：</p>
+<ol>
+<li>1/5的时间没有被跟踪到，也就是说浪费在调整浏览器窗口，切换tab上了，或者等待loading上了。</li>
+<li>1/6的时间浪费在一个中心主题上，比如今天最有趣的某帖子</li>
+<li>1/4的时间浪费在“长尾”网站。零碎的时间</li>
+<li>参与回复一个帖子需要消耗至少2x的时间。嘴炮真是浪费时间啊。</li>
+</ol>
+<p>这是跟进程线程有点类似啊，context switching贵啊。。80%的核心任务其实只花20%左右时间。</p>
+<p>过几天有其他心得继续补充。目前发现比较准确的扩展是这个：</p>
+<p><a href="https://chrome.google.com/webstore/detail/web-timer/ggnjbdfgigejghknieofeahaknkjafim">https://chrome.google.com/webstore/detail/web-timer/ggnjbdfgigejghknieofeahaknkjafim</a></p>
+<p>其他扩展，要么跟踪不准确，比如一天下来只算了40多分钟的上网时间</p>
+<p>要么2年没更新了。</p>
+<p>其实这些扩展都不是很好，主要的问题是</p>
+<ol>
+<li>不知道是否是处于成功跟踪状态</li>
+<li>idle一段时间应该自动暂停跟踪，可能afk了。</li>
+<li>没有统计 untracked 时间有多长。</li>
+</ol>
+<p>我有点想挖个坑自己去轮这个了。最好的time tracker应该是7x24无侧漏全覆盖的。展现形式应该有</p>
+<ul>
+<li>pie chart</li>
+<li>top board</li>
+<li>timeline</li>
+</ul>
+<p>其实timeline是我最想要的~~~tab切换之类的可以直接通过一段一段方块展现出来~~~</p>
+<p>其他的几个功能：</p>
+<ul>
+<li>跨浏览器统计aggregation。由于工作需要是需要躲开几个profile同时浏览的。还有个用来翻墙。</li>
+<li>share &amp; compare。大家来战谁的拖沓病最渣吧。</li>
+</ul>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/36789501470';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

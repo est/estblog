@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>HTML5 fantasy and facts - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="HTML5 fantasy and facts" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">HTML5 fantasy and facts</h2>
+    <p class="post-date">Posted <time datetime="2010-01-26T23:47:12+00:00">2010-01-26</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p><strong>Fantasy:</strong> HTML5 is great for iPhone and other mobile devices<br>
+<strong>Fact:</strong> iPhone is the new IE6.<br>
+Consider the amount of effort &amp; hacks you invested into Trident-Webkit-Gecko test suits, now multiply it by 20 if you want to make a decent cross-platform webpage for mobiles</p>
+
+<p><strong>Fantasy:</strong> HTML5 is standard<br>
+<strong>Fact:</strong> HTML5 is like the new <code>&lt;applet&gt;</code> which no one will bother install. <br>
+It’s just a bunch of code monkeys and tech-savvy hype around it, real end-users and consumers don’t give a shit. The <em>de facto</em> standard for the Web in the past decade was IE6.</p>
+
+<p><strong>Fantasy:</strong> Flash video sucks, it hogs my CPU!<br>
+<strong>Fact:</strong> Blame Adobe <em>and</em> Apple.<br>
+<a href="http://radnan.public.iastate.edu/procedural/">HTML5 hogging is more deadly</a>, and since the HTML5 rendering is done inside the same process of normal HTML layout, the hogging is global and you can’t solve browser crashes by using a separate process for each plugin.<br>
+<a href="http://blogs.adobe.com/penguin.swf/2010/01/solving_different_problems.html">According to Adobe</a>, YUV-RGB and rich compositing is a performance penalty which  HTML5 <code>&lt;video&gt;</code> tag can not avoid, too.</p>
+
+<p><strong>Fantasy:</strong> Flash ads is visual pollution to webpages<br>
+<strong>Fact:</strong> ads made by &lt;canvas&gt; or SVG, generated dynamically via inline obsfucated Javascript is impossible to disable or block. You should rejoice that Flash is a thirdparty and can be easily blocked by NoFlash</p>
+
+<p><strong>Fantasy:</strong> <code>&lt;canvas&gt;</code> can overtake Flash<br>
+<strong>Fact:</strong> Oh yeah? You expect artists &amp; designers to create vector animations by writing numerous <code>for</code> and <code>setTimeout</code>? OK, you can invent a competent authoring tool against Flash or Flex that generates lots of <code>for</code> and <code>setTimeout</code>? Good. Now try stream a 1MB <code>&lt;canvas&gt;</code> animation full of <code>for</code> and <code>setTimeout</code>, and please provide a progress bar for a user to do arbitrary timeline jumps. Oh, btw, call me when WHATWG added FPS settings for <code>&lt;canvas&gt;</code><br>
+Just FYI: Flash does <em>much much</em> more than a just plain canvas. If you think I am wrong, think again. If still, think <em>harder</em>.</p>
+
+<p><strong>Fantasy:</strong> WebGL can do 3D, yeah!<br>
+<strong>Fact:</strong> So does DirectAnimation and VRML decades ago. It was limited only because scripting speed was limited those days. And still O3D and Unity3D is better than WebGL in many levels and has more realworld applications.</p>
+
+<p><strong>Fantasy:</strong> <code>video</code> tag is better than Flash<br>
+<strong>Fact:</strong> native codec is better than Flash. What’s the difference between <code>&lt;video&gt;</code> and <code>&lt;embed&gt;</code> really? I was waiting to see WHATWG fail by re-inventing a full stack media player wheel, because soon the consumers will ask volume control over <code>&lt;video&gt;</code>, and brightness, tilt &amp; rotate, stereo &amp; DFX, subtitles, AV out, ahhhh fuck those shit.</p>
+
+<p><strong>Summary:</strong> HTML5 is a wonderful promise and well celebrated by developer communities, but let’s face it, it doesn’t really changes anything, and nobody talks about its awkwardness. CSS3 is still not re-usable, HTTP is still plaintext protocol which anyone can eavesdropping, tamper and censor. HCI improved a lot but the Web is extremely slow towards these changes. Perhaps the HTML5 was really designed to solve ‘how to stare at a 2D monitor properly with a mouse and keyboard’ problem only.</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/830';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

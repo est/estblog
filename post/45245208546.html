@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>Unix Socket 点滴[转载] - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Unix Socket 点滴[转载]" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Unix Socket 点滴[转载]</h2>
+    <p class="post-date">Posted <time datetime="2013-03-12T23:49:00+00:00">2013-03-12</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>【Unix Socket 点滴 1】使用unix socket时，把路径名的第一个字节设为null byte（\x00），这样就不会产生实际的文件，使用起了比较方便，也不用纠结选哪个路径，随便一个字符串就行了。netstat的时候会发现，第一个字节变成了蜗牛符号</p>
+<p><img alt="" src="http://ww4.sinaimg.cn/large/622a9970gw1e2g8r9fny2j.jpg" /></p>
+<p>【Unix Socket 点滴 2】unix socket的DGRAM模式可以传输大数据块，而UDP单个包最大65507字节。</p>
+<p>【Unix Socket 点滴 3】unix socket可以发送文件句柄。特别是大数据量交互的时候可以放在tmpfs共享内存，只把文件句柄发送过去，这样可以做到0-copy。</p>
+<p>【Unix Socket 点滴 4】unix socket可以校验对端的uid和pid，这在某些场合下是一种可依赖的鉴权手段。</p>
+<p>【Unix Socket 点滴 5】uninx DGRAM句柄在对端关闭时，会自动解除连接关系，端口变成unconnect状态，后续使用可以重新connect。</p>
+<p>来自 <a href="http://weibo.com/codebox">CodeBox-腾讯</a> 腾讯云平台资深还是浅就那么回事儿工程师。 </p>
+<p>第一点和第三点很重要~</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/45245208546';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

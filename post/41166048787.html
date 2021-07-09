@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>接触Datomic - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="接触Datomic" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">接触Datomic</h2>
+    <p class="post-date">Posted <time datetime="2013-01-21T22:23:00+00:00">2013-01-21</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>从<a href="http://news.ycombinator.com/item?id=5093037">HN</a>上看到过好多次 Datomic，但是今天才仔细看了下。</p>
+<p>看不到Infoq视频的可以看这里中文 <a href="http://www.infoq.com/cn/articles/Architecture-Datomic">Datomic的架构</a></p>
+<p>so far的一些观点：</p>
+<ul>
+<li>这货的Datom不就是典型的EAV设计么。带一个timestamp，不错。只是一般EAV的entity是类似一个class，而Datom的EAV只是一个flat展开的，entity仅仅作为类似PrimiaryKey的存在。</li>
+<li>(RDF Triple](http://www.w3.org/TR/rdf-concepts/#section-triples)跟EAV类似的思想，今天学习到了。主语 - 谓词 - 宾语 来表达数据</li>
+<li>这货的backend非常灵活，可以是传统SQL或NoSQL数据库。存储方式也可以localStorage或者MEM DB</li>
+<li>这货的query接口非常好，居然是用的Datalog。这种deductive思路跟Prolog一样都是很高阶的东西。</li>
+<li>因为Datom带了timestamp，所以数据DML模式不再是 CRUD，而是 CRA (Create Read Append)。好东西！这个就达到了data immutability。然后就可以被各种函数轮了。</li>
+<li>跟graph db一样，默认全局m2m join的。</li>
+<li>在上边这些概念的基础上，做到ACID 和 scaling。但是价格贼贵啊。我擦。</li>
+<li>抛弃传统的查询模型。传统的查询模型是C/S架构，客户端组织好结构化查询语言，服务器db container负责解析，db engine负责数据输出。Datomic可以在本地Peer做过滤和数据处理。服务器Transactor可以做更加神奇的事情</li>
+<li>服务器Transactor神奇之处在于支持<strong>自定义first-class函数</strong>。这就牛逼了。等会儿我专门写写这个。</li>
+</ul>
+<p>仔细想了下，这个完美的大饼还是有很多弱点的。</p>
+<p>比如CRA模式就不能很容易实现counter，比如类似reddit、HN那种多少人赞成/反对。</p>
+<p>看到<a href="https://groups.google.com/forum/?fromgroups=#!topic/datomic/eZl2hLuNiRo">Datomic官方论坛</a>里也承认了，aggregation的支持还是WIP。</p>
+<p>但是如果Datomic做好了，那种演绎式查询还是可以做得非常强大的。比如可以按人群区分赞成/反对。传统rdbms做起来就麻烦了。</p>
+<p>同时也想到了time series db的<a href="https://groups.google.com/forum/?fromgroups=#!topic/datomic/lZ45COQluaI">问题</a>，Datomic做起来似乎也比较吃力。</p>
+<p>乱写一点，继续看。这个<a href="http://datablend.be/?p=1641">入门文章</a>看起来不错。</p>
+<p>btw 自己挖坑轮ORM的一定要看这篇文章<a href="http://en.wikipedia.org/wiki/Object-relational_impedance_mismatch">O/R impedance mismatch</a>。精彩。Datomic号称解决了这个问题。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/41166048787';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

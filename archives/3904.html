@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>Entity-attribute-value模型到底好不好 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Entity-attribute-value模型到底好不好" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Entity-attribute-value模型到底好不好</h2>
+    <p class="post-date">Posted <time datetime="2011-04-14T02:25:23+00:00">2011-04-14</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>最近看NoSQL发现entity-attribute-value（简称EAV）这个模型真王道啊，<a href="http://code.google.com/appengine/docs/python/datastore/overview.html">Google App Engine的 datastore</a>就是个典型的entity-attribute-value模型：</p>
+
+<blockquote>
+  <p>The App Engine datastore saves data objects, known as <em>entities</em>. An entity has one or more <em>properties</em>, named <em>values</em> of one of several supported data types. For instance, a property can be a string, an integer, or even a <strong>reference</strong> to another entity.</p>
+</blockquote>
+
+<p>但是在Stackoverflow上发现大家对EAV评价非常低，<a href="http://stackoverflow.com/questions/5499371/does-sql-server-have-native-support-for-eav">都</a>说这是个<a href="http://www.simple-talk.com/sql/database-administration/five-simple--database-design-errors-you-should-avoid/">very bad design</a></p>
+
+<p>比如把一个表</p>
+
+<p><img src="http://www.simple-talk.com/iwritefor/articlefiles/843-Fig7.jpg" alt=""></p>
+
+<p>搞成这种EAV模型的设计：</p>
+
+<p><img src="http://www.simple-talk.com/iwritefor/articlefiles/843-Fig8.jpg" alt=""></p>
+
+<p>然后一个简单的SQL就从</p>
+
+<pre><code>SELECT first_name, last_name
+FROM Employees
+WHERE date_of_birth &gt; &#39;12/31/1950&#39; ;
+</code></pre>
+
+<p>变成了</p>
+
+<pre><code>SELECT MAX( CASE emp_property WHEN &#39;first_name&#39;
+                              THEN value
+           END ) AS first_name,
+      MAX( CASE emp_property WHEN &#39;last_name&#39;
+                             THEN value
+           END ) AS last_name
+  FROM EmployeeValues
+ WHERE emp_nbr IN ( SELECT emp_nbr
+                      FROM EmployeeValues
+                     WHERE emp_property = &#39;date_of_birth&#39;
+                       AND CAST( value AS DATETIME ) &gt; &#39;12/31/1950&#39; )
+   AND emp_property IN ( &#39;first_name&#39;, &#39;last_name&#39; )
+ GROUP BY emp_nbr ; 
+</code></pre>
+
+<p>缺点太多了：</p>
+
+<ul>
+<li>太多row了，无法方便直接管理，甚至造成性能低下</li>
+<li>想限制下数据很困难</li>
+<li>无法利用外键</li>
+<li>写query就是一坨浆糊</li>
+<li>基本不可能生成复杂的分析和报告</li>
+</ul>
+
+<p>但是我突然想到，类似memcached和redis这种key-value不是恰好避免了这些缺点而发挥了EAV的优点吗？在<a href="http://stackoverflow.com/questions/870808/entity-attribute-value-database-vs-strict-relational-model-ecommerce-question">stackoverflow上</a>看到类似的评价：</p>
+
+<p>为是么entity-attribute-value不好？</p>
+
+<p>because they are inefficient usage of <strong>relational databases</strong>. A purely key/value store works great with this model.</p>
+
+<p>类似MongoDB这种document db就更好了，非常适合做EAV模型的数据存储和处理。</p>
+
+<p>现在觉得，NoSQL 其实代表 NoACID，而真正替代 Relational 的革命性的东西就是 EAV。</p>
+
+<p>关于EAV的一些trivia：</p>
+
+<ul>
+<li>EAV的最早期起源是LISP association lists，为了AI研究里的knowledge representation。其实这个association list就是n多attribute-value对。说白了就是n个key-value值。</li>
+<li>一些EAV的实际例子：浏览器cookie，Microsoft Windows注册表，ASN.1</li>
+<li>EAV可以用sematic web里的RDF来描述，metadata用RDF Schema来描述。但是我个人而言是讨厌一大坨XML的。</li>
+<li>EAV和Subject-Predicate-Object本质是等价的</li>
+<li>XML可以被看成带tag的EAV。</li>
+<li>比tagging更加高级的metadata玩法就是EAV</li>
+<li>object-oriented db其实在对象和逻辑上都不如EAV直观，我觉得EAV/CR是OO的超集</li>
+<li>EAV的代价就是非常复杂和容易出错的metadata处理。菜鸟玩metadata玩着玩着就把自己给meta了。</li>
+<li>EAV的特点是  <br>
+<br>
+<ul>
+<li>超灵活</li>
+<li>稀疏属性存储空间最优</li>
+<li>EAV的数据就是简洁直观的物理fact，而且很大程度上是自我描述的。</li>
+<li>开放式物理schema，所以有的时候EAV也被称为open schema，而且EAV模型就是简化schema的主要手段。</li>
+<li>和传统数据库不同，EAV的逻辑schema和物理schema非常不同。EAV的逻辑schema必须保存为metadata形式</li>
+<li>足够丰富的EAV可以用来直接执行主动数据操作，相比而言传统数据库只能被动描述数据。（我又在YY这个传说中的deductive特性了）</li>
+</ul></li>
+<li>云计算厂商搞的数据存储基本都是EAV。前面说的Google的datastore，支持GQL，支持的value数据类型也是最丰富的；Microsoft的Windows Azure Table Storage，在URL上调用LinQ provider；Amazon的SimpleDB支持查询语法和数据类型最少。</li>
+</ul>
+
+<p>参考</p>
+
+<p>1: <a href="http://ycmi.med.yale.edu/nadkarni/eav_cr_contents.htm">http://ycmi.med.yale.edu/nadkarni/eav_cr_contents.htm</a><br>
+2: <a href="http://en.wikipedia.org/wiki/Entity-attribute-value_model">http://en.wikipedia.org/wiki/Entity-attribute-value_model</a></p>
+
+<p>ps 中文搜索<a href="http://203.208.39.104/search?lr=lang_zh-CN&amp;q=EAV%E6%A8%A1%E5%9E%8B">EAV模型</a>全是关于magento的。。。或许现实中最急迫的EAV应用就是电子商务吧？</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/3904';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

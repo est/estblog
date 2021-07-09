@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>Flash的开放和不开放 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Flash的开放和不开放" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Flash的开放和不开放</h2>
+    <p class="post-date">Posted <time datetime="2010-02-08T08:08:43+00:00">2010-02-08</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>我们说Flash基本上是完全开放的架构了，.swf的格式，各种通信协议，Flex，等等，基本都是开源的。但是今天还是<a href="http://news.ycombinator.com/item?id=1107539">看到</a>一些不完全开放的细节：</p>
+
+<ul>
+<li>Flash Player不开源。<a href="http://blogs.adobe.com/open/2010/02/following_the_open_trail.html">官方说</a>原因是Flash Player里H.264的License规定不能开源</li>
+<li>Adobe用DMCA去把在sourceforge上的rtmpdump强行取下了。</li>
+<li>RTMP协议的handshake一直没写，而且每次Flash Player升级这个握手协议就要变，逆向出来的山寨Flash Media Server就不能用了</li>
+<li>Flash Player规范里没有Pixel Blender部分</li>
+</ul>
+
+<p>总的感觉Flash Player没开源还是有道理的。Chrome和Chromium的区别就是，Chromium不支持H.264的HTML5 Video，也不支持Bookmark Sync，因为Bookmark Sync里有Google的proprietary code，所以Chromium里只有个stub。Chrome<strong>不是</strong>开源的浏览器，开源的是Chromium项目。，其实Windows下那个Google Talk单exe客户端本来开源的，我跟Google的开源主管沟通过，因为有个GlobalIPSound的模块，所以不能开源。不过现在Google Talk改用Speex了。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/1082';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>裸眼3D原理之一Parallax Barrier研究心得 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="裸眼3D原理之一Parallax Barrier研究心得" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">裸眼3D原理之一Parallax Barrier研究心得</h2>
+    <p class="post-date">Posted <time datetime="2011-03-12T15:21:26+00:00">2011-03-12</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>今晚花时间研究了下裸眼3D其中一种实现方法<a href="http://en.wikipedia.org/wiki/Parallax_barrier">Parallax Barrier</a>的原理。顺便写了个HTML5 canvas来玩，有如下心得：</p>
+
+<ul>
+<li>格栅的空隙/阻碍最佳比是1:1，如果不是1:1则可以用静态图案做parallax motion</li>
+<li>Parallax Barrier的缺陷是：观看3D最佳位置是固定的，我推了个公式：<br>
+　显示器厚度　　　　显示器眼睛距离<br>
+——————— == ——————————<br>
+　格栅遮光长度　　　　　双眼距离<br>
+也就是说垂直距离必须保持，而可以水平横移。</li>
+<li>小孩和大人的双眼距离不一样，所以需要离显示器更近才能得到最佳3D观赏位置。</li>
+<li>如果格栅不动，Parallax Barrier需要更加精密的显示点阵和双倍的显示亮度才能达到普通显示器同等分辨率和亮度。或许采用6边形蜂窝状的显示阵列有更加好的亮度。</li>
+</ul>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2011/03/2011-03-12_231419.png" alt=""></p>
+
+<p>不保证结论正确性，仅供参考 :)</p>
+
+<p>ps 继续研究宽幅打印机+丙烯的可玩性 :)</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/3762';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

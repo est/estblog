@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>我艹啊，Evernote上的笔记全丢了 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="我艹啊，Evernote上的笔记全丢了" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">我艹啊，Evernote上的笔记全丢了</h2>
+    <p class="post-date">Posted <time datetime="2011-02-16T04:04:51+00:00">2011-02-16</time> | <span>archive</span></p>
+  </header>
+
+  
+  <h2>TL;DR</h2>
+
+<p><strong>千万不要把Evernote的database路径设置成现有的database所在文件夹。</strong></p>
+
+<p>当初抛弃Onenote开始用Evernote是因为Onenote的整理归类功能太鸡肋。</p>
+
+<p>昨天电脑有点问题把C:系统盘用笔记本自带的恢复功能恢复到第一次启动状态了</p>
+
+<p>Evernote装在 <code>D:\text\evernote</code>，database是保存在<code>D:\text\evernote\profile</code>。</p>
+
+<p>今天打开Evernote，登录，打开选项，把 database 设置指向了 <code>D:\text\evernote\profile</code></p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2011/02/2011-02-16_163843.png" alt=""></p>
+
+<p>然后，弹了个尼玛的对话框说已存在一个名字叫Evernote的文件夹，是否跳过？我点了个 是</p>
+
+<p>然后。。。然后，悲剧就发生了，劳资的几百篇笔记就灰飞烟灭了。狗日的Evernote！！！！！！！那个<code>.exb</code>文件以瞬间就缩水到只有2MB大了。</p>
+
+<p>就说Onenote吧，新系统里安装好Onenote，然后可以打开其他路径的<code>.one</code>笔记文件。Evernote这个垃圾的软件没有打开功能，而且笔记保存在<code>%LOCALAPPDATA%</code>这种刮千刀的地方，所以只能在选项里设置路径。选项里把database路径设置成旧database路径就直接把旧database删求了么？这要多么日他妈的开发人员才能做出这么神经病的特性啊。</p>
+
+<p>尼玛啊啊啊啊啊啊！！！！！！！</p>
+
+<p>本来不同步的目的就是有些东西不想让洋鬼子给索引了，这下倒好，本地的database全丢了，同步的几个笔记本，结果最后同步的还是去年12月份的。30分钟同步一次的设置都吃屎去了啊！！！！！！一个鸟托盘占用内存不用来同步是为了好看么？</p>
+
+<p>看来Evernote这种表面功夫做得足的垃圾软件，要是靠得住，母猪都上树。</p>
+
+<h2>教训：</h2>
+
+<ol>
+<li>备份 备份 备份 备份 备份 备份 备份 备份。</li>
+<li>不要用垃圾商业软件，特别是这种database二进制文件格式又是私有非开放结构的。</li>
+<li>处理重要的东西的工具，稳定性和靠谱性最重要，功能神马的都是浮云。劳资为了存几个图片和富文本，把自己很多笔记都毁在Evernote手上了，太不值了。</li>
+<li>喜欢把数据往%localappdata%塞的，这种软件公司里的人都是一群蛋痛菊紧的王八蛋！(I am looking at you, Google!)</li>
+</ol>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/3723';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

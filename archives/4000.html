@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>用VBScript实现IE 6,7,8的javascript getter/setter - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="用VBScript实现IE 6,7,8的javascript getter/setter" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">用VBScript实现IE 6,7,8的javascript getter/setter</h2>
+    <p class="post-date">Posted <time datetime="2011-05-02T14:17:24+00:00">2011-05-02</time> | <span>archive</span></p>
+  </header>
+
+  
+  <pre><code>
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;A Crazy Getter/Setter Hack&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;  
+  &lt;script language=&quot;VBScript&quot; type=&quot;text/VBScript&quot;&gt; 
+    Function exec_vb_global(code)
+      ExecuteGlobal(code)
+    End Function
+  &lt;/script&gt;
+  &lt;script type=&quot;text/javascript&quot;&gt;
+
+    // Create the main default thing object, we will proxy this later
+    function ThingBase() {
+      // Private
+      var space = &#39;something about the awesome&#39;;
+
+      this.getSpace = function() {
+        alert(&#39;getting&#39;);
+        return space;
+      }
+      this.setSpace = function(value) {
+        alert(&#39;setting&#39;);
+        space = value;
+      }
+      this.groove = function() {
+        alert(&#39;nn ts nn ts nn ts nn ts&#39;);
+      }
+    }
+
+    // We need a factory to build this becuase we can&#39;t call &#39;new&#39; from vbscript
+    function ThingBaseFactory() {
+      return new ThingBase();
+    }
+
+    // Eventually this text construction will be automated for the proxy
+    // All you need to do is build the proxy for each property set*, get*
+    // and stub each method 
+    var obj = &quot;&quot;+
+      &quot;Class ThingProxy\n&quot;+
+      &quot;  Private obj__\n&quot;+
+      &quot;  Public Property Get space\n&quot;+
+      &quot;    space = obj__.getSpace()\n&quot;+
+      &quot;  End Property\n&quot;+
+      &quot;  Public Property Let space(value)\n&quot;+
+      &quot;    obj__.setSpace(value)\n&quot;+
+      &quot;  End Property\n&quot;+      
+      &quot;  Public Function groove\n&quot;+
+      &quot;    obj__.groove()\n&quot;+
+      &quot;  End Function\n&quot;+  
+      &quot;  Private Sub Class_Initialize()\n&quot;+
+      &quot;    Set obj__ = ThingBaseFactory()\n&quot;+
+      &quot;  End Sub\n&quot;+
+      &quot;End Class\n&quot;+
+      &quot;&#39; We need a factory because we can&#39;t call &#39;New&#39; from javascript\n&quot;+
+      &quot;Function thingProxyFactory()\n&quot;+
+      &quot;  Dim tmp\n&quot;+
+      &quot;  Set tmp = New ThingProxy\n&quot;+
+      &quot;  Set thingProxyFactory = tmp\n&quot;+
+      &quot;End Function\n&quot;;
+
+    // Register the proxy class in the global context, make the factory global
+    exec_vb_global(obj);
+
+    // The actual thing constructor
+    var Thing = function() { return (window[&quot;thingProxyFactory&quot;]()) }    
+
+    // Use the thing
+    var t = new Thing();
+    t.groove();
+    alert(t.space);
+    t.space = &quot;Imma let you finish&quot;;
+    alert(t.space);
+
+
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;  
+</code></pre>
+
+<p>太疯狂了，据说Dojo用这个hack也有很多年了。牛啊～～</p>
+
+<p><a href="http://webreflection.blogspot.com/2011/02/btw-getters-setters-for-ie-6-7-and-8.html">via</a></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/4000';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

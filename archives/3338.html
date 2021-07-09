@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>调试.pac javascript的4种方法 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="调试.pac javascript的4种方法" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">调试.pac javascript的4种方法</h2>
+    <p class="post-date">Posted <time datetime="2010-11-28T11:47:04+00:00">2010-11-28</time> | <span>archive</span></p>
+  </header>
+
+  
+  <h3>1. PacTester</h3>
+
+<p>下载：<a href="http://pactester.googlecode.com/files/pactester-pacparser-1.0.8-1.0.4-win32.zip">Win</a> | <a href="http://pactester.googlecode.com/files/pactester-1.0.8.tar.gz">Linux</a> | <a href="http://code.google.com/p/pactester/">Google Code</a></p>
+
+<pre><code>Usage:  ./pactester &lt;-p pacfile&gt; &lt;-u url&gt; [-h host] [-c client_ip]
+        ./pactester &lt;-p pacfile&gt; &lt;-f urlslist&gt; [-c client_ip]
+
+Options:
+  -p pacfile: PAC file to test
+  -u url: URL to test
+  -h host: Host part of the URL
+  -c client_ip: client IP address (defaults to IP address of the machine on which script is running)
+  -f urlslist: a file containing list of URLs to be tested.
+
+Example:
+  ./pactester -p wpad.dat -u http://www.google.com
+  ./pactester -p wpad.dat -u http://www.google.com -c 192.168.1.105
+  ./pactester -p wpad.dat -f url_list
+</code></pre>
+
+<p>有个更加新的 PacParser 项目 <a href="http://code.google.com/p/pacparser">http://code.google.com/p/pacparser</a></p>
+
+<h3>2. Internet Explorer (Visual InterDev)</h3>
+
+<p><a href="http://support.microsoft.com/kb/274356">http://support.microsoft.com/kb/274356</a></p>
+
+<p>打开注册表 <code>HKCU/Software/Microsoft/Windows Script/Settings</code>，新建个<code>JITDebug</code>，类型<code>DWORD</code>，值为1</p>
+
+<p>然后在IE里设置.pac，在.pac文件里<code>alert("Blah");</code>几行，就可以在Visual InterDev里 新建工程，调试 - 进程 选中iexplore.exe，打开任意网站调试。</p>
+
+<h3>3. Chrome</h3>
+
+<p>启动Chrome用这个命令行： <code>chrome.exe --proxy-pac-url="file://E:/foo/bar.pac"</code></p>
+
+<p>地址栏打开 <code>chrome://net-internals/#events</code></p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/11/17.png" alt=""></p>
+
+<p>如果出错了有一些提示。简单的调试够用了。。。</p>
+
+<h3>4. Firefox</h3>
+
+<p>在.pac的javascript里直接用 <code>alert()</code> 这个非标准函数即可在Error Console里看到出错。超方便。</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/11/21.png" alt=""></p>
+
+<p>参考：<a href="http://stackoverflow.com/questions/1033867/debugging-autoproxy-pac-javascript-with-alert">1</a>, <a href="http://stackoverflow.com/questions/1033867/debugging-autoproxy-pac-javascript-with-alert">2</a></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/3338';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

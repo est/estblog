@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>为什么现在的变压器很小[zz] - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="为什么现在的变压器很小[zz]" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">为什么现在的变压器很小[zz]</h2>
+    <p class="post-date">Posted <time datetime="2012-06-27T22:13:00+00:00">2012-06-27</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>发信人: hcl (盐酸), 信区: DigiHome<br />
+标  题: 问一下现在小家电的变压器都是什么原理？<br />
+发信站: 水木社区 (Thu Jun 28 02:26:13 2012), 站内  </p>
+<p>我记得十几年前的时候吧，那时候什么随身听的变压器里面就是个大铁疙瘩，输出电流也才不到500ma，而且还发热量巨猛。现在随便一个usb充电器就是2A的输出电流，平时不用基本上没有发热，体积还巨小，请问是什么新技术呢？开关电源？还是别的什么？  </p>
+<p>发信人: lvsoft (Lv(The Last Guardian)), 信区: DigiHome<br />
+标  题: Re: 问一下现在小家电的变压器都是什么原理？<br />
+发信站: 水木社区 (Thu Jun 28 02:44:17 2012), 站内  </p>
+<p>就是开关电源。<br />
+变压器那种叫线性电源。  </p>
+<p>基本原理是220V交流-&gt;整流-&gt;滤波变成300V左右的直流。<br />
+然后这个直流-&gt;开关-&gt;电容-&gt;输出-&gt;负载。  </p>
+<p>这个开关的控制频率很高，以至于即使是300V的电压，在很短的时间内也只能往电容<br />
+送少量的电荷，形成你所需要的电压（比如5V）。<br />
+当负载消耗掉一部分电荷，造成电容上的电压下降的话，开关就再次开启一个很小的瞬<br />
+间再放一些电荷过去。  </p>
+<p>说的再直白一点，开关电源之所以体积小效率高，就是因为他根本就没有变压的过<br />
+程。你可以认为负载是直接接在一个300V的电源上。只不过这个电源在开关的控制下<br />
+输出的是300V的脉冲，然后被电容滤平了，变成一个诸如5V这样的低电压。  </p>
+<p>所以开关电源结构紧凑成本低效率高，但对控制有很高的要求。以前不这么搞是那个年<br />
+代没有现在这么低成本高精度的控制技术。<br />
+变压器费铜费铁而且还效率不高（一般情况下，超大功率情况下又是另一回事情）  </p>
+<p>so，感谢IC技术的发展吧。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'post/26042634878';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>
