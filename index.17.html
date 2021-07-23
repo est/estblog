@@ -55,6 +55,29 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/26475262922"  rel="bookmark" >
+              <h2 class="card-title">如何让python强制认为2+2==5</h2>
+            </a>
+            <p class="card-text"><p>让你丫的2+2不等于5！！！！</p>
+<pre><code>import sys
+import ctypes
+pyint_p = ctypes.POINTER(ctypes.c_byte*sys.getsizeof(5))
+five = ctypes.cast(id(5), pyint_p)
+print(2 + 2 == 5) # False
+five.contents[five.contents[:].index(5)] = 4
+print(2 + 2 == 5) # True (must be sufficiently large values of 2 there...)
+</code></pre>
+<p><a href="http://news.ycombinator.com/item?id=4197576">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-07-04T01:33:02+00:00">2012-07-04</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/26457041818"  rel="bookmark" >
               <h2 class="card-title">[视频]成都panda taxi恶搞英皇室</h2>
             </a>
@@ -409,36 +432,6 @@ AND    v.sex = 'F' …</code></pre></p>
 <pre><code>import urllib2,os; pf='Package Control.sublime-package'; ipp=sublime.installed_packages_path(); os.makedirs(ipp) if not os.path.exists(ipp) else None; urllib2.install_opener(urllib2.build_opener(urllib2.ProxyHandler())); open(os.path.join(ipp,pf),'wb').write(urllib2 …</code></pre></li></ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-04-18T02:19:31+00:00">2012-04-18</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/4574"  rel="bookmark" >
-              <h2 class="card-title">脱羧乙酸的16种形态</h2>
-            </a>
-            <p class="card-text"><p><img src="http://blog.est.im/wp-content/uploads/2012/04/3.png" alt=""></p>
-
-<p><img src="http://blog.est.im/wp-content/uploads/2012/04/w041219b055.jpg" alt=""></p>
-
-<p><img src="http://blog.est.im/wp-content/uploads/2012/04/z-machine.jpg" alt=""></p>
-
-<p><a href="http://news.ycombinator.com/item?id=3844309">via</a></p>
-
-<p>另附：<br>
-喝过隔夜水吗？CCAV告诉你很危险，里面含有致癌物质一氧化二氢<br>
-<a href="http://www.acfun.tv/v/ac327082/">http://www.acfun.tv/v/ac327082/</a><br>
-不能喝隔夜水，科学研究表明隔夜水中含有零醇、氧酚、羟基氢、氢羟酸、苛性氢、二零醚、正氧烷、氧乙烯、氢氧化氢、脱碳甲醛、一氧化二氢、氢化超氧酰、脱氰零醛肟、二聚氢氧酸酐、氢化脱磺硫酸、氧化脱羧乙酸、氢化脱苄苯甲醇等。过量食用会致人死亡，为了你的健康，请转发 <br>
-<a href="http://www.guokr.com/post/140450/">http://www.guokr.com/post/140450/</a></p>
-
-<p>发信人: jungleford (風淸揚╬孤城斩菜羊), 信区: MilitaryJoke<br>
-标  题: 让你们钓鱼！<br>
-发信站: 水木社区 (Sat …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2012-04-16T09:29:56+00:00">2012-04-16</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

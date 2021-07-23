@@ -55,6 +55,28 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/202101/stdout-002"  rel="bookmark" >
+              <h2 class="card-title">OpenWRT 实现 Cloudflare 动态域名 dynamic DNS</h2>
+            </a>
+            <p class="card-text"><p>首先得有公网 IP （废话），然后你得 OpenWRT 路由器桥接直拨。</p>
+<p>这个方法的核心是通过 <code>ifstatus wan |  jsonfilter -e '@["ipv4-address"][0].address'</code> 命令得到本机 WAN 的公网 IP。</p>
+<p>根据官方的<a href="https://support.cloudflare.com/hc/en-us/articles/360020524512-Manage-dynamic-IPs-in-Cloudflare-DNS-programmatically">说明</a>走</p>
+<ol>
+<li>创建 <a href="https://dash.cloudflare.com/profile/api-tokens">API Token</a> 。权限选 <code>All Zones</code>，得到 <code>TOKEN</code></li>
+<li>验证 API 是否 ok<br />
+        curl - X GET "https://api.cloudflare.com/client/v4/user/tokens/verify" \<br />
+          -H "Authorization: Bearer TOKEN" \<br />
+          -H …</li></ol></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-01-05T23:36:09+00:00">2021-01-05</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/202101/stdout-001"  rel="bookmark" >
               <h2 class="card-title">OpenWRT 随机设置 PPPoE 拨号的 MAC 地址 Randomize WAN MAC address in OpenWRT PPPoE</h2>
             </a>
@@ -417,28 +439,6 @@ for i in $(seq 1 423); do wget -t 0 -T 5  -U 'Mozilla/5.0 (iPhone; CPU iPhone OS
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-07-06T17:01:55+00:00">2020-07-06</time></p>
 <p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202007/stdin-006"  rel="bookmark" >
-              <h2 class="card-title">成绩单和名次的副作用</h2>
-            </a>
-            <p class="card-text"><blockquote>
-<p>日本思想家 大前研一 有一本著作叫《低智商社会》提到：日本的新一代，读的书越来越幼稚，对各种谣言丝毫不会思考，很容易遭到媒体的操纵。为啥呢？ <br />
-其中一个小原因，大前研一认为，是日本政府推行的“偏差值教育制度”造成的。简单说，就是对学生进行能力测试，把各项能力数字化。给某项技能找到一个中间值，然后每个人就知道自己的这项能力，跟中间值相比是高还是低。 <br />
-这种技术本身可能是善意的，但是当大家都接受了技术的权威性，问题就出现了。 <br />
-很多低偏差值的人就会认为，自己怎么努力也是没用的，社会问题，会由那些高偏差值的人去解决。而自己，只要照着别人说的做就可以了。 </p>
-</blockquote>
-<p>via <a href="https://m.igetget.com/share/course/article?id=0kzlWERBr6meVbByWV2j7LD4Od3ZpP">罗辑思维335期：奶头乐理论</a></p>
-<p>罗胖的看法是：技术越发达，人对技术的依赖就越严重。最后，意志力不强的人在技术面前，就会彻底放弃自己的主动性。技术的发展，固化了人类的分层。</p>
-<p>我的看法是：这个技术问题也可以通过技术手段解决，比如不告知成绩排第几名，而是告知如果在 X、Y、Z 地方进行改进，那么还可以再前进多少名次 …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2020-07-01T10:38:09+00:00">2020-07-01</time></p>
-<p>stdin</p>            </div>
           </article>
         </div>
 
