@@ -55,6 +55,50 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/44271333529"  rel="bookmark" >
+              <h2 class="card-title">Return twice in a python function</h2>
+            </a>
+            <p class="card-text"><p>1.py:</p>
+<pre><code>def foo():
+ try:
+  return 'foo'
+ finally:
+  return 'bar'
+
+
+print foo()
+</code></pre>
+<p>2.py</p>
+<pre><code>def foo():
+ try:
+  return 'foo'
+ finally:
+  print 'bar'
+
+
+print foo()
+</code></pre>
+<p>The result is shocking...</p>
+<pre><code>$ python 1.py 
+bar
+$ python 2.py 
+bar
+foo
+</code></pre>
+<p>I think this particular behavior is well abused in <a href="http://code.google.com/p/modwsgi/wiki/RegisteringCleanupCode">WSGI</a></p>
+<p>two cents:</p>
+<ul>
+<li><code>return …</code></li></ul></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-02-28T22:59:00+00:00">2013-02-28</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/44258937988"  rel="bookmark" >
               <h2 class="card-title">pypy 10年黑历史——精彩回顾</h2>
             </a>
@@ -486,27 +530,6 @@ f.cleaned_data['key'] = 'value' # won't work
 <p>虽然是一个过时的概念，还是拿出来玩一玩。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-20T20:20:03+00:00">2013-01-20</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/40724647124"  rel="bookmark" >
-              <h2 class="card-title">圣多美的Pico Cão Grande这座山碉堡了</h2>
-            </a>
-            <p class="card-text"><p><img alt="" src="/images/tumblr/40724647124_0.jpg" /></p>
-<p><img alt="" src="/images/tumblr/40724647124_1.jpg" /></p>
-<p><img alt="" src="/images/tumblr/40724647124_2.jpg" /></p>
-<p><img alt="" src="/images/tumblr/40724647124_3.jpg" /></p>
-<p><img alt="" src="/images/tumblr/40724647124_4.jpg" /></p>
-<p>一座300米高，拔地而起成jj状的山。。。。。。。。。。。。名字叫 Pico Cão Grande ，人称 大狗峰</p>
-<p>São Tomé and Príncipe 圣多美这个国家在沙哈拉以南，非洲大陆西边的一个岛上。</p>
-<p><a href="http://www.reddit.com/r/geography/comments/16p6yr/10_spectacular_volcanic_plugs_and_natural/">via</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-01-16T20:16:00+00:00">2013-01-16</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
