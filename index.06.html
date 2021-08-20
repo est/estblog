@@ -55,6 +55,29 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/92537193330"  rel="bookmark" >
+              <h2 class="card-title">iOS后门笔记</h2>
+            </a>
+            <p class="card-text"><p>lockdownd的tcp端口62078，文档 libimobiledevice.org，厂家有Cellebrite，AccessData (Mobile Phone Examiner)，Elcomsoft</p>
+<p>com.apple.pcapd  抓包服务</p>
+<p>com.apple.mobile.file_relay 文件传输服务。就不说文件了，SQLite库，Voicemail（AMR格式）等啥都包括了。甚至最后一次键盘拼写自动修正是什么单词！一开始是iTunes用来传输用的。</p>
+<p>其他自动启动服务：</p>
+<p>com.apple.iosdiagnostics.relay 统计app数据上网流量</p>
+<p>com.apple.mobile.installation_proxy 企业证书安装app的</p>
+<p>com.apple.syslog_relay 用来NSLog()的</p>
+<p>iOS 7做了一个重要的安全改进：不能连接到localhost或者本地IP了。比如localhost:62078</p>
+<p>如何在Info.plist指定后台运行的app</p>
+<pre><code>&lt;key …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2014-07-22T11:14:54+00:00">2014-07-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/92489743305"  rel="bookmark" >
               <h2 class="card-title">Python的Dictzip实现</h2>
             </a>
@@ -442,28 +465,6 @@ catch KeyError:
 <p>感叹python再不拥抱realtime web就要被node和go淘汰了 :)</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-12-29T07:00:12+00:00">2013-12-29</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/69464913766"  rel="bookmark" >
-              <h2 class="card-title">8皇后问题 - python解</h2>
-            </a>
-            <p class="card-text"><p>看到<a href="http://www.newsmth.net/bbscon.php?bid=284&amp;id=109693">javaboy在python版的发言</a> 然后发现<a href="http://rosettacode.org/wiki/N-queens_problem#Python">Raymond Hettinger的解</a></p>
-<pre><code>from itertools import permutations
-
-n = 8 # number of bitches
-cols = range(n)
-for vec in permutations(cols):
-    if n == len(set(vec[i]+i for i in cols)) \
-         == len(set(vec[i]-i for i in cols)):
-        print ("\n".join('.' * i + 'Q' + '.' * (n-i-1) for i …</code></pre></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-12-09T01:34:00+00:00">2013-12-09</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>shell script to graceful restart gunicorn with source code reloading - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="shell script to graceful restart gunicorn with source code reloading" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">shell script to graceful restart gunicorn with source code reloading</h2>
+    <p class="post-date">Posted <time datetime="2021-08-21T00:53:20+00:00">2021-08-21</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>I always thought restart <a href="https://gunicorn.org/">gnicorn</a> is as easy as <code>kill -HUP &lt;pid&gt;</code></p>
+<p>But it's not as easy as it seems.</p>
+<p>First of all the code might be loaded in master process then fork'ed into workers, so <code>HUP</code> signals won't reload the source code.</p>
+<p>Then there might be some bugs and your code won't boot correctly, the worker will quit and drags the master process with it.</p>
+<p>I discovered a gem from github issues that can spawn new worker first, check if new code loads correctly then restart the whole rack.</p>
+<p>According to <a href="https://docs.gunicorn.org/en/latest/signals.html#upgrading-to-a-new-binary-on-the-fly">the docs</a> you need to send several signals and blah blah, the author tried to explain in great detail of how it works rather than providing a simple option to do so.</p>
+<p>So I wrote a shell script to do exactly that instead.</p>
+<p>```</p>
+<h1>!/bin/bash</h1>
+<p>oldpid=$(&lt;./deploy/gunicorn.pid)</p>
+<h1>forget the old kill -HUP</h1>
+<p>kill -USR2 $oldpid<br />
+sleep 1<br />
+timeout=5<br />
+while [[ $timeout -gt 0 ]]; do<br />
+  newpid=$(&lt;./deploy/gunicorn.pid.2) &amp;&amp; kill -0 $newpid<br />
+  if [[ $? -eq 0 ]]; then<br />
+    break<br />
+  else<br />
+    sleep 0.5<br />
+    (( timeout-- ))<br />
+  fi<br />
+done;</p>
+<h1>shutdown old</h1>
+<p>echo "success. newpid=$newpid"<br />
+kill -WINCH $oldpid<br />
+sleep 1<br />
+kill -TERM $oldpid    </p>
+<p>```</p>
+<p>The script will check for new master pid to be alive then kill the old master in a maximium timeout of 5 seconds.</p>
+<p>It works as perfectly to replace the simple <code>HUP</code> signal as intended.</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2021/stdout-010';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

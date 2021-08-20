@@ -55,6 +55,23 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2021/stdout-010"  rel="bookmark" >
+              <h2 class="card-title">shell script to graceful restart gunicorn with source code reloading</h2>
+            </a>
+            <p class="card-text"><p>I always thought restart <a href="https://gunicorn.org/">gnicorn</a> is as easy as <code>kill -HUP &lt;pid&gt;</code></p>
+<p>But it's not as easy as it seems.</p>
+<p>First of all the code might be loaded in master process then fork'ed into workers, so <code>HUP</code> signals won't reload the source code.</p>
+<p>Then there might be some bugs and …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-08-21T00:53:20+00:00">2021-08-21</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2021/stderr-008"  rel="bookmark" >
               <h2 class="card-title">记一次离奇的梦</h2>
             </a>
@@ -465,26 +482,6 @@ async def other_api(other_path: str, req: Request):
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-01-26T05:49:36+00:00">2021-01-26</time></p>
 <p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202101/stdin-002"  rel="bookmark" >
-              <h2 class="card-title">阶级滑落已经在发生</h2>
-            </a>
-            <p class="card-text"><p>刷到个视频</p>
-<div class="div-iframe"><iframe src="https://www.youtube.com/embed/XXWYPeEfOb8?start=12:10" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-
-<p>12:10 开始那个哥说的话，很有感触</p>
-<blockquote>
-<p>I think a lot of the anger stems from people who grew up believing their life was going to be a certain way and then it's not. right? And they don't have the opportunities their parents did.<br />
-I think my generation is the first one …</p></blockquote></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-01-19T20:53:44+00:00">2021-01-19</time></p>
-<p>stdin</p>            </div>
           </article>
         </div>
 
