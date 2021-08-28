@@ -55,6 +55,26 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/56833809714"  rel="bookmark" >
+              <h2 class="card-title">alternate-protocol:80:quic</h2>
+            </a>
+            <p class="card-text"><p>今天发现youtube 的视频cache服务器支持UDP 上的 QUIC SPDY了。</p>
+<p>accept-ranges:bytes<br />
+alternate-protocol:80:quic<br />
+cache-control:private, max-age=24288<br />
+content-type:video/mp4</p>
+<p>好玩的是youtube的URL有：<br />
+fallback_host:tc.v11.cache6.c.youtube.com</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-07-29T21:30:21+00:00">2013-07-29</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/56693166618"  rel="bookmark" >
               <h2 class="card-title">Google的代码质量</h2>
             </a>
@@ -464,30 +484,6 @@ $ brew install rtlsdr gr-osmosdr …</code></pre></p>
 <p><a href="http://www.reddit.com/r/videos/comments/1fm4lt/arya_starks_reaction_vid/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-06-04T02:54:15+00:00">2013-06-04</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/51872792337"  rel="bookmark" >
-              <h2 class="card-title">bluetooth dongle blacklist otg android linux</h2>
-            </a>
-            <p class="card-text"><p>贪便宜去淘宝买了个10元的USB蓝牙适配器</p>
-<p>一查：Cambridge Silicon Radio Ltd</p>
-<p>USB\VID_0A12&amp;PID_0001&amp;REV_1989</p>
-<p>结果linux内核屏蔽了这个设备。</p>
-<p>http://lxr.free-electrons.com/source/drivers/bluetooth/btusb.c?v=3.0#L96</p>
-<pre><code>static struct usb_device_id blacklist_table[] = {
-    /* CSR BlueCore devices */
-    { USB_DEVICE(0x0a12, 0x0001), .driver_info = BTUSB_CSR },
-</code></pre>
-<p>所以如果你也有CSR芯片(BlueCore® BC7820™)的蓝牙，那么恭喜你，Android OTG和Linux都没法用。</p>
-<p>当时觉得悲剧了。<a href="http://www.slatedroid.com/topic/46457-bluetooth-dongle/page__view__findpost__p__504113">via</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-06-01T06:12:00+00:00">2013-06-01</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

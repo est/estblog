@@ -58,10 +58,9 @@
             <a href="/2021/stdout-010"  rel="bookmark" >
               <h2 class="card-title">shell script to graceful restart gunicorn with source code reloading</h2>
             </a>
-            <p class="card-text"><p>I always thought restart <a href="https://gunicorn.org/">gnicorn</a> is as easy as <code>kill -HUP &lt;pid&gt;</code></p>
-<p>But it's not as easy as it seems.</p>
-<p>First of all the code might be loaded in master process then fork'ed into workers, so <code>HUP</code> signals won't reload the source code.</p>
-<p>Then there might be some bugs and …</p></p>
+            <p class="card-text"><p>I always thought restart <a href="https://gunicorn.org/">gnicorn</a> is as easy as <code>kill -HUP &lt;pid&gt;</code>, but there are two pitfalls:</p>
+<p>First of all the code might be loaded in master process then fork'ed into workers, so the <code>HUP</code> signal won't reload the source code, only gunicorn config is updated.</p>
+<p>Then there might be …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-08-21T00:53:20+00:00">2021-08-21</time></p>
 <p>stdout</p>            </div>

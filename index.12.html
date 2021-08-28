@@ -55,6 +55,29 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/41166048787"  rel="bookmark" >
+              <h2 class="card-title">接触Datomic</h2>
+            </a>
+            <p class="card-text"><p>从<a href="http://news.ycombinator.com/item?id=5093037">HN</a>上看到过好多次 Datomic，但是今天才仔细看了下。</p>
+<p>看不到Infoq视频的可以看这里中文 <a href="http://www.infoq.com/cn/articles/Architecture-Datomic">Datomic的架构</a></p>
+<p>so far的一些观点：</p>
+<ul>
+<li>这货的Datom不就是典型的EAV设计么。带一个timestamp，不错。只是一般EAV的entity是类似一个class，而Datom的EAV只是一个flat展开的，entity仅仅作为类似PrimiaryKey的存在。</li>
+<li>(RDF Triple](http://www.w3.org/TR/rdf-concepts/#section-triples)跟EAV类似的思想，今天学习到了。主语 - 谓词 - 宾语 来表达数据</li>
+<li>这货的backend非常灵活，可以是传统SQL或NoSQL数据库。存储方式也可以localStorage或者MEM DB</li>
+<li>这货的query接口非常好，居然是用的Datalog。这种deductive思路跟Prolog一样都是很高阶的东西。</li>
+<li>因为Datom带了timestamp，所以数据DML模式不再是 CRUD，而是 CRA (Create Read Append)。好东西！这个就达到了data immutability。然后就可以被各种函数轮了。</li>
+<li>跟graph …</li></ul></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-01-21T22:23:00+00:00">2013-01-21</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/41061230598"  rel="bookmark" >
               <h2 class="card-title">你熟悉的计算机语言是第几代的？</h2>
             </a>
@@ -504,32 +527,6 @@ IdentitiesOnly yes
 <p>最后，让我们端起手中的热翔，为这片奇葩的土地翻开新的一页，干了它！</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-12-03T01:14:00+00:00">2012-12-03</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/37078448806"  rel="bookmark" >
-              <h2 class="card-title">如何用假象传播真话</h2>
-            </a>
-            <p class="card-text"><p>先看这个视频</p>
-<p><a href="http://news.cntv.cn/program/xinwenzhoukan/20120630/109536.shtml">http://news.cntv.cn/program/xinwenzhoukan/20120630/109536.shtml</a></p>
-<p>觉得这种骑车的够危险了吧。</p>
-<p>再看这个视频</p>
-<p><a href="http://www.56.com/u21/v_Nzc0NDQyMzQ.html">http://www.56.com/u21/v_Nzc0NDQyMzQ.html</a></p>
-<p>觉得这人是不是很傻比，为死飞辩护？</p>
-<p>而为什么死飞玩家会这么愤怒呢？</p>
-<blockquote>
-<p>某ccav记者，到成都，接触死飞玩家，说要帮助他们发扬死飞文化，请玩家们帮助拍摄一个短篇。  <br />
-按照记者的要求，死飞玩家们进行了表演，并且按照记者要求拍摄了一段在公路上车流里穿梭的视频。  <br />
-结果，节目播出后，是抨击死飞玩家不守交通规则的内容。    </p>
-</blockquote>
-<p>来自d版1091974贴。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2012-12-02T20:30:00+00:00">2012-12-02</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

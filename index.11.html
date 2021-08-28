@@ -55,6 +55,32 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/44511368373"  rel="bookmark" >
+              <h2 class="card-title">Python 3.3很多激动人心的新特性啊</h2>
+            </a>
+            <p class="card-text"><p>最近粗浅把玩了一下libev，感受颇深</p>
+<p>首先是瞻仰了libuv python binding - pyuv 作者 @saghul 的博客</p>
+<p>特别是<a href="http://code.saghul.net/index.php/2013/02/04/how-do-event-loops-work-in-python/">这个slides</a>很是学习了点东西</p>
+<p><img alt="" src="/images/tumblr/44511368373.png" /></p>
+<p>里边还提到，Twisted, Tornade和Gevent都有其对应libuv实现了。猛啊。</p>
+<p>其中一个重要的东西，就是 Python 3.3里边的<a href="http://www.python.org/dev/peps/pep-3156/">PEP-3156</a>，和其参考实现<a href="https://code.google.com/p/tulip/">Tulip</a>，基于Pyuv的也有个实现叫<a href="https://github.com/saghul/rose">Rose</a>。</p>
+<p>可以大胆估计，PEP 3156是以后最重要的Python标准接口之一了。其重要性超过PEP 333 WSGI</p>
+<p>libuv和 Boost.ASIO的比较<a href="http://stackoverflow.com/questions/11423426/">看这里</a>：</p>
+<pre><code>                         libuv          Boost
+Event Loop:              yes            Asio
+Threadpool:              yes            Asio + Threads
+Threading:              
+  Threads:               yes            Threads …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-03-03T21:46:00+00:00">2013-03-03</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/44450449051"  rel="bookmark" >
               <h2 class="card-title">客厅android的一些感受</h2>
             </a>
@@ -482,29 +508,6 @@ f.cleaned_data['key'] = 'value' # won't work
 <p>妈的居然还有存活。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-22T02:01:00+00:00">2013-01-22</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/41166048787"  rel="bookmark" >
-              <h2 class="card-title">接触Datomic</h2>
-            </a>
-            <p class="card-text"><p>从<a href="http://news.ycombinator.com/item?id=5093037">HN</a>上看到过好多次 Datomic，但是今天才仔细看了下。</p>
-<p>看不到Infoq视频的可以看这里中文 <a href="http://www.infoq.com/cn/articles/Architecture-Datomic">Datomic的架构</a></p>
-<p>so far的一些观点：</p>
-<ul>
-<li>这货的Datom不就是典型的EAV设计么。带一个timestamp，不错。只是一般EAV的entity是类似一个class，而Datom的EAV只是一个flat展开的，entity仅仅作为类似PrimiaryKey的存在。</li>
-<li>(RDF Triple](http://www.w3.org/TR/rdf-concepts/#section-triples)跟EAV类似的思想，今天学习到了。主语 - 谓词 - 宾语 来表达数据</li>
-<li>这货的backend非常灵活，可以是传统SQL或NoSQL数据库。存储方式也可以localStorage或者MEM DB</li>
-<li>这货的query接口非常好，居然是用的Datalog。这种deductive思路跟Prolog一样都是很高阶的东西。</li>
-<li>因为Datom带了timestamp，所以数据DML模式不再是 CRUD，而是 CRA (Create Read Append)。好东西！这个就达到了data immutability。然后就可以被各种函数轮了。</li>
-<li>跟graph …</li></ul></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-01-21T22:23:00+00:00">2013-01-21</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
