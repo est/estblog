@@ -1,5 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Est's Blog</title><link>https://blog.est.im/</link><description>This blog is rated&amp;nbsp;&amp;nbsp;R⃣ , viewer discretion is advised</description><lastBuildDate>Sun, 29 Aug 2021 00:07:35 +0000</lastBuildDate><item><title>Reddit UGC ranking (2021-09)</title><link>https://blog.est.im/2021/stdin-007</link><description>&lt;p&gt;Subs ranking by daily comments&lt;/p&gt;
+<rss version="2.0"><channel><title>Est's Blog</title><link>https://blog.est.im/</link><description>This blog is rated&amp;nbsp;&amp;nbsp;R⃣ , viewer discretion is advised</description><lastBuildDate>Thu, 16 Sep 2021 15:29:47 +0000</lastBuildDate><item><title>Steam China要拜拜了</title><link>https://blog.est.im/2021/stdin-008</link><description>&lt;p&gt;出自一个&lt;a href="https://www.zhihu.com/question/398634825/answer/2116167003"&gt;被删的zhihu回答&lt;/a&gt;，&lt;a href="http://web.archive.org/web/20210915085925/https://www.zhihu.com/question/398634825/answer/2116167003"&gt;存档&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在我被裁员前，我是坚定的乐观派。每天和同事们一起处理中国区和steam China的客服案件，尽我所能帮助国内玩家。&lt;/p&gt;
+&lt;p&gt;然而，九月初的一天，我休着周末的假。一个电话告诉我被裁员了。&lt;/p&gt;
+&lt;p&gt;steam国区所有，这里的所有就是哪怕你转了港区和阿根廷，或者其他地区，steam China也查得到，也能拿到你的信息，因为太明显，太简单了，只是抓不抓封不封的问题。所有的国内玩家都被steam切割了。被彻底卖给完美世界了。至于完美世界上边是谁，会有什么后果，哪怕身在海外我也不敢揣测，不敢说。以后想好好玩steam，只能肉身翻墙了。&lt;/p&gt;
+&lt;p&gt;第一张是纪念我于2021年6月7号经手了88888个客服案件：&lt;br /&gt;
+第二张是公司聊一个trending issue，这个是纪念我写了报告，然后Valve马上给了回复：&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;图片我转存一下 &lt;a href="/images/2021/stdin-008-1.jpg"&gt;1&lt;/a&gt;, &lt;a href="/images/2021/stdin-008-2.jpg"&gt;2&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;谨纪念自2009-02-06以来俺在 Steam 上度过的快乐时光，6336h小时玩过92/229款游戏&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://steamdb.info/calculator/76561198005996380/?cc=us"&gt;https://steamdb.info/calculator/76561198005996380/?cc=us&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 16 Sep 2021 15:29:47 +0000</pubDate><guid isPermaLink="false">tag:None,2021-09-16:/2021/stdin-008</guid></item><item><title>TiDB 的日期比较和 MySQL 不兼容</title><link>https://blog.est.im/2021/stdout-011</link><description>&lt;p&gt;MySQL的&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; select VERSION()
++-----------+
+| VERSION() |
++-----------+
+| 8.0.15-6  |
++-----------+
+
+
+&amp;gt; select NOW() &amp;gt; '';
++------------+
+| NOW() &amp;gt; '' |
++------------+
+| 1          |
++------------+
+
+&amp;gt; show warnings;
++---------+------+----------------------------------------+
+| Level   | Code | Message                                |
++---------+------+----------------------------------------+
+| Warning | 1292 | Truncated incorrect datetime value: '' |
++---------+------+----------------------------------------+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;TiDB:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; select VERSION()
++--------------------+
+| VERSION()          |
++--------------------+
+| 5.7.25-TiDB-v5.1.0 |
++--------------------+
+1 row in set
+
+&amp;gt; select NOW() &amp;gt; '';
++------------+
+| NOW() &amp;gt; '' |
++------------+
+| &amp;lt;null&amp;gt;     |
++------------+
+
+&amp;gt; show warnings;
++---------+------+------------------------------+
+| Level   | Code | Message                      |
++---------+------+------------------------------+
+| Warning | 1292 | Incorrect datetime value: '' |
++---------+------+------------------------------+
+1 …&lt;/code&gt;&lt;/pre&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 07 Sep 2021 17:52:51 +0000</pubDate><guid isPermaLink="false">tag:None,2021-09-07:/2021/stdout-011</guid></item><item><title>Reddit UGC ranking (2021-09)</title><link>https://blog.est.im/2021/stdin-007</link><description>&lt;p&gt;Subs ranking by daily comments&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -216,15 +271,4 @@ async def other_api(other_path: str, req: Request):
     r = requests.request(
         req.method, url,
         headers={
-            'Cookie': req.headers …&lt;/code&gt;&lt;/pre&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 30 Mar 2021 15:07:01 +0000</pubDate><guid isPermaLink="false">tag:None,2021-03-30:/202103/stdout-003</guid></item><item><title>纪念 Sewall Wright</title><link>https://blog.est.im/202103/stderr-003</link><description>&lt;p&gt;在这个3月即将结束的特殊日子里，纪念 Sewall Wright。尤其是那石破天惊的从相关性反推因果性的豚鼠花色实验。&lt;/p&gt;
-&lt;p&gt;豚鼠的花色，按照我们一般的理解是遗传的。但是两只豚鼠很多代近亲繁殖也不可能生产出纯色的豚鼠。那花色和遗传的因果性能通过相关性推出吗？&lt;/p&gt;
-&lt;p&gt;这位大神还真推断出来了&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Sewall Wright first path diagram guinea pigs" src="/images/2021/stderr-003-1.jpg" /&gt;&lt;/p&gt;
-&lt;p&gt;插图来自最近听的一本书 &lt;em&gt;The Book of Why: The New Science of Cause and Effect&lt;/em&gt; 第二章 From Buccaneers to Guinea Pigs: The Genesis of Causal Inference 。网上有 pdf 直接看：&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://bayes.cs.ucla.edu/WHY/why-ch2.pdf"&gt;http://bayes.cs.ucla.edu/WHY/why-ch2.pdf&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;要知道他做出这个研究的时候，遗传学也就孟德尔水平，DNA 尚未发现！他假设豚鼠双亲各自有遗传因素 &lt;code&gt;H'' …&lt;/code&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 25 Mar 2021 23:56:41 +0000</pubDate><guid isPermaLink="false">tag:None,2021-03-25:/202103/stderr-003</guid></item><item><title>Clubhouse 一些感受</title><link>https://blog.est.im/202102/stderr-002</link><description>&lt;p&gt;clubhouse 总体感觉，自从被那啥之后，群体就基本一岸两地的人，和大陆留学生为主了。而且真的以学生为主。如果有家业压力人，要么就是创投圈要么就是币圈大佬。&lt;/p&gt;
-&lt;p&gt;第一次发言是在一个 English Lounge 里面有几个英语老师在聊 dyslexia 。这单词我都不认识但是还是强行尬聊了。&lt;/p&gt;
-&lt;p&gt;我当时就胡扯说中文这种文字为载体的语言，符号和读音分离，可能压根就不存在拼音字母类语言的发音乱序导致的理解能力的问题。&lt;/p&gt;
-&lt;p&gt;房主后来因为要去讨论女权，就早早的关闭了房间。不知道是被我的暴论或无知吓到了。我也因为时间太晚就睡了。第二天醒来，觉得不过瘾，就去搜了一下  dyslexia 这个概念。发现果然汉语里也是存在的。而且 HK 有个调查发现有这个问题的学生比例(10%)比 UK (5%-7%) 还高。&lt;/p&gt;
-&lt;p&gt;我又自己回味了一下，可能真的有这么回事。于是去 V 站发了个贴《&lt;a href="https://www.v2ex.com/t/752905"&gt;有哪些你一直认错、读反的词语你过了很久才发现？&lt;/a&gt;》。第一个回帖就给我当头一棒，天赋异禀这个词，我是的确很长时间读成  天赋bing yi 的。&lt;/p&gt;
-&lt;p&gt;但是这个问题也有有趣 …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 12 Feb 2021 23:18:45 +0000</pubDate><guid isPermaLink="false">tag:None,2021-02-12:/202102/stderr-002</guid></item></channel></rss>
+            'Cookie': req.headers …&lt;/code&gt;&lt;/pre&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 30 Mar 2021 15:07:01 +0000</pubDate><guid isPermaLink="false">tag:None,2021-03-30:/202103/stdout-003</guid></item></channel></rss>

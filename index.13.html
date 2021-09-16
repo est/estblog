@@ -55,6 +55,68 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/37177478685"  rel="bookmark" >
+              <h2 class="card-title">github多账户马甲之间ssh key切换</h2>
+            </a>
+            <p class="card-text"><p>场景：有多个github账号，比如公司一个，私人一个。现在想在同一台主机上同时维护公司的和私人的repo</p>
+<p>大家可能会尝试把一个公钥贴到两个github账户，实践告诉我们</p>
+<blockquote>
+<p>Key is already in use</p>
+</blockquote>
+<p>解决办法：</p>
+<ol>
+<li>生成第二个key <code>ssh-keygen -t rsa  -f ~/.ssh/id_rsa.est</code></li>
+<li>
+<p>编辑ssh_config <code>vim ~/.ssh/config</code> 粘贴下边的东东： </p>
+<pre><code>Host estgit
+HostName github.com
+User git
+IdentityFile "~/.ssh/id_rsa.est"
+IdentitiesOnly yes
+</code></pre>
+</li>
+<li>
+<p>用这个方式来操作git：<code>git clone estgit:/username/repo</code> ，或者编辑 <code>.git/config</code> 里边的 remote …</p></li></ol></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-12-04T03:17:00+00:00">2012-12-04</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/37097635731"  rel="bookmark" >
+              <h2 class="card-title">[zt]eMule的乱序协议加密已经玩完了……</h2>
+            </a>
+            <p class="card-text"><p>看到这个报道 <a href="http://chinadigitaltimes.net/chinese/2012/11/gfw%E5%B0%81%E9%94%81openvpn-%E4%B8%8E-%E5%8A%A0%E5%AF%86%E6%B5%81%E5%88%86%E7%B1%BB%E7%9A%84%E5%AD%A6%E6%9C%AF%E8%AE%BA%E6%96%87/">封锁OpenVPN与加密流分类的学术论文</a></p>
+<p>突然觉得几年前的事情现在应该又走到了一个拐点。</p>
+<p>6年前我们会用squid都很容易绕过限制了，然后是socks，加密socks，dns还原，然后是ssh，openvpn。</p>
+<p>现在都开始搞机器学习来封锁了。</p>
+<p>那么这就是一个策略问题了：</p>
+<ol>
+<li>封锁的研究是针对公开协议的，而且是黑盒。</li>
+<li>任何破解技术都会被封锁黑盒反馈。敌人在暗处，大众在明处，这显然不是一个有利位置。</li>
+</ol>
+<p>所以，任何公开的破解策略，都会最终被封锁技术打败。</p>
+<p>我觉得任何分享<a href="http://initiative.yo2.cn/archives/641313"></a>hosts什么技术的都是傻逼行为。</p>
+<p>以后的破解，一定是地下组织，单向联系，各自之间无交集，经常变换自定义二进制协议隧道。</p>
+<p>这样才有的搞。</p>
+<p>btw 另外我觉得大家应该学习下<a href="http://www.i-programmer.info/news/105-artificial-intelligence/4526-poison-attacks-against-machine-learning.html">SVM投毒</a>。这个是未来的必要生存手段。</p>
+<p>bbtw 另外<a href="http://tech.slashdot.org/story/12/07/22/1331245/poison-attacks-against-machine-learning">slashdot上</a>这帮人开始思考人脑投毒了。认知科学和心理学的逆袭？</p>
+<p>bbbtw 关键字：adversarial machine learning</p>
+<p>最后，让我们端起手中的热翔，为这片奇葩的土地翻开新的一页，干了它！</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-12-03T01:14:00+00:00">2012-12-03</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/37078448806"  rel="bookmark" >
               <h2 class="card-title">如何用假象传播真话</h2>
             </a>
@@ -448,47 +510,6 @@
 <p>tg是不可能被大棒轻易敲掉了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-12T20:32:00+00:00">2012-11-12</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/35312346182"  rel="bookmark" >
-              <h2 class="card-title">口才技能点到90以上会有什么效果</h2>
-            </a>
-            <p class="card-text"><iframe width="640" height="360" src="http://www.youtube.com/embed/BQx6nG3tPmA?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
-
-<p>就是在街上和任意陌生人对话，装作认识</p>
-<p><a href="http://www.reddit.com/r/videos/comments/12vknq/guy_convinces_complete_strangers_that_they_know/">via</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2012-11-08T21:22:18+00:00">2012-11-08</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/35307341738"  rel="bookmark" >
-              <h2 class="card-title">我擦，这生成器是要逆天了么</h2>
-            </a>
-            <p class="card-text"><p>我去看了下，的确太强了</p>
-<blockquote>
-<p>发信人: temporary (昙花一现), 信区: NetNovel<br />
-标  题: 网文自动化到这种程度了咩<br />
-发信站: 水木社区 (Thu Nov  8 15:32:29 2012), 站内</p>
-<p>码字辅助工具<br />
-http://xuanpai.sinaapp.com/work/</p>
-<p>随便试了下境界的自动生成，给跪了，一个字：比我强</p>
-</blockquote>
-<p>估计这样发展下去，结合tvtropes.org的思路，电视剧编剧可以下岗了。</p>
-<p>做游戏什么的直接一按，物品道具法术什么的就直接出来了</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2012-11-08T20:13:00+00:00">2012-11-08</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

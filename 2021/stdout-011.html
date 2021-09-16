@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html">
+  <head>
+    <title>TiDB 的日期比较和 MySQL 不兼容 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta charset="utf-8" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="TiDB 的日期比较和 MySQL 不兼容" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">TiDB 的日期比较和 MySQL 不兼容</h2>
+    <p class="post-date">Posted <time datetime="2021-09-07T17:52:51+00:00">2021-09-07</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>MySQL的</p>
+<pre><code>&gt; select VERSION()
++-----------+
+| VERSION() |
++-----------+
+| 8.0.15-6  |
++-----------+
+
+
+&gt; select NOW() &gt; '';
++------------+
+| NOW() &gt; '' |
++------------+
+| 1          |
++------------+
+
+&gt; show warnings;
++---------+------+----------------------------------------+
+| Level   | Code | Message                                |
++---------+------+----------------------------------------+
+| Warning | 1292 | Truncated incorrect datetime value: '' |
++---------+------+----------------------------------------+
+</code></pre>
+<p>TiDB:</p>
+<pre><code>&gt; select VERSION()
++--------------------+
+| VERSION()          |
++--------------------+
+| 5.7.25-TiDB-v5.1.0 |
++--------------------+
+1 row in set
+
+&gt; select NOW() &gt; '';
++------------+
+| NOW() &gt; '' |
++------------+
+| &lt;null&gt;     |
++------------+
+
+&gt; show warnings;
++---------+------+------------------------------+
+| Level   | Code | Message                      |
++---------+------+------------------------------+
+| Warning | 1292 | Incorrect datetime value: '' |
++---------+------+------------------------------+
+1 row in set
+</code></pre>
+<p>记录一下 <a href="https://github.com/pingcap/tidb/issues/21354">相关 issue</a></p>
+<p>btw 顺便吐槽一下，</p>
+<p><code>json_extract('{"a": null}', '$.a')</code> 返回的值是 <code>CAST('null' AS JSON)</code></p>
+<p>注意区分  <code>json_extract('{"a": null}', '$.b') IS NULL</code> </p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2021/stdout-011';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+<script type="text/javascript">
+    if(location.protocol === "http:") location.protocol = "https:"
+</script>
+
+  </body>
+
+</html>

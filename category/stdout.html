@@ -55,6 +55,65 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2021/stdout-011"  rel="bookmark" >
+              <h2 class="card-title">TiDB 的日期比较和 MySQL 不兼容</h2>
+            </a>
+            <p class="card-text"><p>MySQL的</p>
+<pre><code>&gt; select VERSION()
++-----------+
+| VERSION() |
++-----------+
+| 8.0.15-6  |
++-----------+
+
+
+&gt; select NOW() &gt; '';
++------------+
+| NOW() &gt; '' |
++------------+
+| 1          |
++------------+
+
+&gt; show warnings;
++---------+------+----------------------------------------+
+| Level   | Code | Message                                |
++---------+------+----------------------------------------+
+| Warning | 1292 | Truncated incorrect datetime value: '' |
++---------+------+----------------------------------------+
+</code></pre>
+<p>TiDB:</p>
+<pre><code>&gt; select VERSION()
++--------------------+
+| VERSION()          |
++--------------------+
+| 5.7.25-TiDB-v5.1.0 |
++--------------------+
+1 row in set
+
+&gt; select NOW() &gt; '';
++------------+
+| NOW() &gt; '' |
++------------+
+| &lt;null&gt;     |
++------------+
+
+&gt; show warnings;
++---------+------+------------------------------+
+| Level   | Code | Message                      |
++---------+------+------------------------------+
+| Warning | 1292 | Incorrect datetime value: '' |
++---------+------+------------------------------+
+1 …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-09-07T17:52:51+00:00">2021-09-07</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2021/stdout-010"  rel="bookmark" >
               <h2 class="card-title">shell script to graceful restart gunicorn with source code reloading</h2>
             </a>
