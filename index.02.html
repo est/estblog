@@ -55,6 +55,32 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/202103/stdout-003"  rel="bookmark" >
+              <h2 class="card-title">FastAPI/Starlette+Requests实现反向代理</h2>
+            </a>
+            <p class="card-text"><p>因为某些拉垮的业务需要，不得不在代码里去反向代理别的 HTTP API</p>
+<p>一般格式如下：</p>
+<pre><code>@app.get('/other/{other_path:path}')
+@app.post('/other/{other_path:path}')
+async def other_api(other_path: str, req: Request):
+    """透传 API"""
+    host = 'http://example.intranet'
+    url = '{}/other/{}'.format(host, other_path)
+    body = bytes(await req.body()) or None
+    r = requests.request(
+        req.method, url,
+        headers={
+            'Cookie': req.headers …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-03-30T15:07:01+00:00">2021-03-30</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/202103/stderr-003"  rel="bookmark" >
               <h2 class="card-title">纪念 Sewall Wright</h2>
             </a>
@@ -427,24 +453,6 @@ for i in $(seq 1 423); do wget -t 0 -T 5  -U 'Mozilla/5.0 (iPhone; CPU iPhone OS
 <p>Joe为什么要参加那么多课外活动？因为这些活动是美国学生评价体系的重要组成部分，像考试分数一样重要。跟小明刷GPA（平均学分绩点）一样，Joe刷课外活动的经验值也只不过是完成各种考核指标而已。每天忙得焦头烂额的Joe，对这些事情并没有真正的热情 …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-09-24T22:42:45+00:00">2020-09-24</time></p>
-<p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202009/stdin-010"  rel="bookmark" >
-              <h2 class="card-title">罗马教廷要整顿一下中国传教事务</h2>
-            </a>
-            <p class="card-text"><blockquote>
-<p>利玛窦也是很有弹性，也在儒家学说和天主教之间和稀泥。他说，儒家和天主教本就是一回事。儒家所崇尚的“天”，和天主教的上帝，没有什么不同啊。“天道”和天主教教义，也没有什么不同啊。<br />
-你看，很有弹性吧？很智慧吧？其实，跳出来一看，你想，如果你的公司派你到一个人生地不熟的陌生市场推销一个当地人从来没有见过的产品，你也能想出这样的招。核心就是两条。第一，借用当地成熟的社会网络。第二，把陌生的东西包装成当地人熟悉的东西。当年利玛窦这么干，和我们今天一个普通的推销员这么干，底层原因都一样：这个时候的耶稣会或者今天的一个推销公司，都是一个绩效导向的组织，只要能传教、能卖东西，怎么有效怎么来。<br />
-但是到了清朝康熙皇帝时期，这时间可又过去了100多年，欧洲的政治形势出现了很多变化。比如教廷的靠山从葡萄牙变成了法国。比如，耶稣会觉得在中国已经有了几十万信众，传教成功，站稳脚跟了。<br />
-总之，这个时候的罗马教廷，觉得有可能要整顿一下中国传教事务，和中国文化的那些陋习要掰掰腕子了。看看谁才是真理。具体过程就不细说了，过程中很多八卦。到了1704年，罗马教皇克雷芒十一世就最终搞了七条专门针对中国天主教徒的规定。简单说说 …</p></blockquote></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2020-09-17T23:21:57+00:00">2020-09-17</time></p>
 <p>stdin</p>            </div>
           </article>
         </div>

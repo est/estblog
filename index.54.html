@@ -55,6 +55,35 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/964"  rel="bookmark" >
+              <h2 class="card-title">EFF的浏览器指纹追踪技术</h2>
+            </a>
+            <p class="card-text"><p>EFF那个不用IP或者cookie追踪用户的<a href="http://internet.solidot.org/article.pl?sid=10/01/28/1111221&amp;threshold=-1">新闻</a>大家可能都看了，但是估计好多人没有<a href="http://panopticlick.eff.org/index.php?action=log&amp;js=yes">亲自去试</a>过</p>
+
+<p>我去玩了下，还是很能启发人的。EFF这个panopticlick技术是通过下面几个特征来区分浏览器指纹的</p>
+
+<ul>
+<li>User Agent</li>
+<li>HTTP_ACCEPT Headers 这个其实可以把所有HTTP头都算进来</li>
+<li>Browser Plugin Details 这个是通过DOM里一个接口enum的（貌似是<code>displayComponent</code>？）。貌似IE和Mozilla里还有更多私有接口</li>
+<li>Time Zone 这个还少了<a href="http://blog.est.im/archives/538">一堆</a> <code>toLocal*()</code> 方法</li>
+<li>Screen Size and Color Depth</li>
+<li>System Fonts 这个是通过Flash得到的。Flash被禁用了会尝试Java applet</li>
+<li>Are Cookies Enabled?</li>
+<li>Limited supercookie test 这个还少了一个HTC Behavior里的存储方法</li>
+</ul>
+
+<p>我觉得这里面最有趣的就是搜集系统字体这个技术了。。。呵呵。。。假如Flash和Java applet都被禁用了，我们就安全了吗 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-02-02T04:25:26+00:00">2010-02-02</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/961"  rel="bookmark" >
               <h2 class="card-title">HTML5 sketchpad</h2>
             </a>
@@ -506,31 +535,6 @@ _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 <p><a href="http://www.reddit.com/r/programming/comments/auqpc/the_sickest_obfuscated_and_the_most_beautiful_way/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-01-28T01:14:48+00:00">2010-01-28</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/874"  rel="bookmark" >
-              <h2 class="card-title">Spam IRC with Javascript</h2>
-            </a>
-            <p class="card-text"><pre><code>&lt;form method=&quot;post&quot; target=&quot;y&quot; action=&quot;http://irc.freenode.net:6667/&quot; enctype=&quot;text/plain&quot; id=&quot;f&quot; style=&quot;display:none&quot;&gt;
-    &lt;textarea name=&quot;x&quot; id=&quot;x&quot;&gt;&lt;/textarea&gt;
-&lt;/form&gt;
-
-&lt;script type=&quot;text/javascript&quot;&gt;
-    /* 
-     * Generate a random string of characters to use for an IRC nick
-     */
-    function rnd(){
-        var chars=&quot;abcdefghijklmnopqrstuvwxyz&quot;;
-        var r=&#39;&#39;;
-        var …</code></pre></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2010-01-28T01:05:20+00:00">2010-01-28</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

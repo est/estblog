@@ -55,6 +55,31 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/57568901987"  rel="bookmark" >
+              <h2 class="card-title">关于BREACH/CRIME的一些思考</h2>
+            </a>
+            <p class="card-text"><p>最近<a href="https://news.ycombinator.com/item?id=6166292">很火</a>的一个问题就是暴破TLS/SSL的  BREACH 攻击。我觉得有一些解决办法：</p>
+<ol>
+<li>
+<p>hack一种兼容gzip，但是能对内容进行adaptive compression的技术。比如把用户输入不纳入Huffman coding范围，只压缩页面的其他部分。这样无论你在user input 做什么花样也不能影响最终conten length</p>
+</li>
+<li>
+<p>csrf上做文章。由于大多数场景下，web framework是需要保证 csrf 是 per session的。目前基本都是服务器生成什么csrf，客户端下一次就需要传入一模一样的。我们可以发明一种聪明的技术，给客户端的csrf加入一些per request的变长noise，需要通过特定算法，最简单的比如XOR，才能还原csrf。其中这个变长的noise不是随机生成，因为随机生成可能被概率统计出noise level然后过滤掉，而是根据用户输入用一种变长散列生成的。比如用户输入为空，csrf为e0bc6e08a2fda853eef，用户输入为 user@gmail.com，csrf为 b594e902c7fe6b1748d13aefaf63a ，但是实际服务器端的csrf都一直是 04b58236f5 。</p>
+</li>
+</ol>
+<p>目前业界的mitigation我觉得比较搓：</p>
+<ol>
+<li>禁用gzip。这个没意思了 …</li></ol></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-08-06T21:19:50+00:00">2013-08-06</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/57017854092"  rel="bookmark" >
               <h2 class="card-title">肉鸡国真的有那么多网络部队天天去黑美帝吗？</h2>
             </a>
@@ -466,29 +491,6 @@ $ brew install rtlsdr gr-osmosdr …</code></pre></p>
 1 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-06-07T01:34:00+00:00">2013-06-07</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/52286630594"  rel="bookmark" >
-              <h2 class="card-title">WinRT绝壁是实习生赶工出来的。</h2>
-            </a>
-            <p class="card-text"><p><a href="http://msdn.microsoft.com/en-us/library/windows/apps/hh465407.aspx">证据1</a></p>
-<p><img alt="" src="/images/tumblr/52286630594_0.png" /></p>
-<p><a href="http://msdn.microsoft.com/en-us/library/windows/apps/hh868252.aspx">证据2</a></p>
-<p><img alt="" src="/images/tumblr/52286630594_1.png" /></p>
-<p>这么多2b的错误，到处都是！真心怀疑是应届实习生做的啊！！！！</p>
-<p>记得<a href="http://blog.est.im/post/50147253283">上一篇blog</a>：</p>
-<blockquote>
-<p>Another reason for the quality gap is that that we've been having trouble keeping talented people. Google and other large Seattle-area companies keep poaching our best, most experienced developers, and we <em>hire youths straight from college to replace them</em>.</p>
-</blockquote>
-<p>至于wns和mpns为毛区分成两陀米田共我就不吐槽了。这API设计更加奇葩的是：使用X-* 返回头作为返回成功与否标志 …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-06-06T03:14:00+00:00">2013-06-06</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

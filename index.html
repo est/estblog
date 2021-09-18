@@ -55,6 +55,42 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2021/stdin-009"  rel="bookmark" >
+              <h2 class="card-title">小册子，报纸，无线电和电视</h2>
+            </a>
+            <p class="card-text"><p>住：下面的内容全文复制之zhihu用户 <a href="https://www.zhihu.com/people/tuo-qia-ma-ke-zhi-guan/pins">托卡马克之冠</a>，TA的自我介绍是 不首先使用种族歧视和双重标准。</p>
+<p>比较长，列个大纲</p>
+<ol>
+<li><a href="#p1">欧洲的反思</a></li>
+<li><a href="#p2">欧洲是否追随美国</a></li>
+<li><a href="#p3">德法和解</a></li>
+<li><a href="#p4">法国如何是赢家</a></li>
+<li><a href="#p5">如何理解欧盟的组成</a></li>
+<li><a href="#p6">小册子，报纸，无线电和电视</a></li>
+<li><a href="#p7">宗族究竟是什么</a></li>
+<li><a href="#p8">报纸时代</a></li>
+<li><a href="#p9">无线电时代</a></li>
+<li><a href="#p10">电视机时代·上</a></li>
+<li><a href="#p11">电视机时代·下</a></li>
+<li><a href="#p12">番外篇</a></li>
+</ol>
+<p><a name="p1"></a></p>
+<h3><a href="https://www.zhihu.com/pin/1418274545199976448">发布于 2021-09-06</a></h3>
+<p>最近欧洲国家有个动向，就是开始批判和反思最近这几十年在全球搞制度输出和颜色革命的行为。</p>
+<p>这种批判在学界从来没有消失过，但进入政策层面，特别是欧洲议会这种经学大讲坛还是第一次。以往在政府层面，对于“教权高于主权”这种观点别说是批判，鼓掌的时候不够用力都会被斗死斗倒斗臭。</p>
+<p>二战后人类政治构建的核心逻辑是政权教授、主权教有，遇事不论实情只谈心性，形式逻辑高于现实逻辑，狠斗异教一闪念，灵魂深处闹革命，得势时吉哈德，失势时塔基亚。</p>
+<p>这可以称之为经本位。</p>
+<p>这一思路在二战后成为道统，冷战后进入高潮，西方教会在冷战中打垮东方教会后达到顶峰，伊拉克战争和阿富汗战争是强弩之末，叙利亚战争则进入扩张势能的极限，伴随着东西两大教会对外输出革命的企图相继破产开始全面瓦解 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-09-18T18:30:14+00:00">2021-09-18</time></p>
+<p>stdin</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2021/stdin-008"  rel="bookmark" >
               <h2 class="card-title">Steam China要拜拜了</h2>
             </a>
@@ -142,6 +178,12 @@
               <h2 class="card-title">Reddit UGC ranking (2021-09)</h2>
             </a>
             <p class="card-text"><p>Subs ranking by daily comments</p>
+<style type="text/css" id="pre-table">
+    style#pre-table + table{
+        font-size: 65%;
+    }
+</style>
+
 <table>
 <thead>
 <tr>
@@ -213,16 +255,7 @@
 </tr>
 <tr>
 <td>13</td>
-<td>PublicFreakout</td>
-<td>19597</td>
-</tr>
-<tr>
-<td>14</td>
-<td>wallstreetbets</td>
-<td>16828</td>
-</tr>
-<tr>
-<td>15 …</td></tr></tbody></table></p>
+<td>PublicFreakout …</td></tr></tbody></table></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-08-29T00:07:35+00:00">2021-08-29</time></p>
 <p>stdin</p>            </div>
@@ -573,32 +606,6 @@ var sPath = oShell.ExpandEnvironmentStrings('%LOCALAPPDATA%\\Packages\\Microsoft
 <p>来自 <a href="https://superuser.com/questions/1024894/">superuser</a> 。真是神一般的设定。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-04-04T12:01:30+00:00">2021-04-04</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202103/stdout-003"  rel="bookmark" >
-              <h2 class="card-title">FastAPI/Starlette+Requests实现反向代理</h2>
-            </a>
-            <p class="card-text"><p>因为某些拉垮的业务需要，不得不在代码里去反向代理别的 HTTP API</p>
-<p>一般格式如下：</p>
-<pre><code>@app.get('/other/{other_path:path}')
-@app.post('/other/{other_path:path}')
-async def other_api(other_path: str, req: Request):
-    """透传 API"""
-    host = 'http://example.intranet'
-    url = '{}/other/{}'.format(host, other_path)
-    body = bytes(await req.body()) or None
-    r = requests.request(
-        req.method, url,
-        headers={
-            'Cookie': req.headers …</code></pre></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-03-30T15:07:01+00:00">2021-03-30</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
