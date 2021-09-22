@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<html">
+<html>
   <head>
     <title>macOS 设置 TCP 握手连接超时，提升浏览器在糟糕网络下的访问体验 - Est's Blog</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-
-    <meta charset="utf-8" />
     <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -72,6 +70,10 @@ tcp.keepinit Timeout, in milliseconds, for new, non-established TCP connections.
 <p>2021-07-06 补充：</p>
 <p>重启保持有效：</p>
 <pre><code>echo net.inet.tcp.keepinit=3000 | sudo tee -a /etc/sysctl.conf
+</code></pre>
+<p>2021-09-21 补充：</p>
+<p>新版macOS 把 /etc/sysctl.conf 这文件给换位置了。应该是</p>
+<pre><code>"/Users/Shared/Relocated Items/Configuration/private/etc/sysctl.conf"
 </code></pre>
 
 </article>
