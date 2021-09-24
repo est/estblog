@@ -53,6 +53,31 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/48319644529"  rel="bookmark" >
+              <h2 class="card-title">Re: python标准库貌似没有实现链表？</h2>
+            </a>
+            <p class="card-text"><p>发信人: draculalord ( 嗯？), 信区: Python   <br />
+标  题: 也谈链表及其他Re: python标准库貌似没有实现链表？   <br />
+发信站: 水木社区 (Mon Mar 21 18:49:46 2011), 转信     </p>
+<p>实际上刚开始学习一些高级语言的时候我也有同样的疑问，而且即使有链表对应物的语言，链表常常也很少被实际使用。   <br />
+如果是在国外听数据结构的课，老师一般会警告你这只是一个理论概念，实际应用应该实际考察，在通常情况下链表不是一个很好的结构。   <br />
+通常链表会作为一个很好的反例，告诉大家脱离实际硬件环境来谈论所谓算法复杂度是没有任何意义的。   <br />
+这是因为，链表已经不适合当今的计算机硬件发展。当今的计算机硬件对内存是否连续更为敏感，而链表恰恰会破坏这种顺序读取。   <br />
+由于locality很差所以常常造成page fault和cache miss   <br />
+这也是为什么大多数教师不再推荐使用链表的原因。而且现今的硬件内存拷贝实际相当迅速。   <br />
+并且python的list算法不是通常的单项表，也不是通常的数组。   <br />
+具体可以看这里：http://wiki.python.org/moin/TimeComplexity   <br />
+在List末尾append/pop都是O(1)的 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-04-18T20:54:56+00:00">2013-04-18</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/48106626563"  rel="bookmark" >
               <h2 class="card-title">Boston爆炸后偷衣服</h2>
             </a>
@@ -410,25 +435,6 @@ day 0 productivity.</p></p>
 <p>Circus的让我想起uWSGI。大部分 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-12T02:55:00+00:00">2013-03-12</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/44824022057"  rel="bookmark" >
-              <h2 class="card-title">yes, wsgi is such pain in the ass</h2>
-            </a>
-            <p class="card-text"><p>found this <a href="http://lucumr.pocoo.org/2011/7/27/the-pluggable-pipedream/">gem</a></p>
-<blockquote>
-<p>While it is indeed now possible to utilize greenlets to convert multiple function calls into yields in a generator, it's still something you would not do.</p>
-<p>In general JSON via HTTP or zeromq is so much cooler and more flexible than WSGI could ever be.</p>
-</blockquote>
-<p><a href="http://uwsgi-docs.readthedocs.org/en/latest/Gevent.html">Gevent</a> is …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-03-07T20:13:52+00:00">2013-03-07</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
