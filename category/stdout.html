@@ -53,6 +53,36 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2021/stdout-013"  rel="bookmark" >
+              <h2 class="card-title">Letsencrypt 在老版本macOS Ubuntu 上修复TLS证书错误</h2>
+            </a>
+            <p class="card-text"><p>一觉醒来，打开浏览器，各种连不上，调试了一下发现说lets encrypt 的 acme https证书错误</p>
+<p>仿佛记得 V站 讨论过这个事，以为和自己无关，结果也中招了。DST Root CA X3 根证书在国庆前过期了。</p>
+<p>老版本 Ubuntu 修复：</p>
+<pre><code>sudo apt update
+sudo apt install ca-certificates
+</code></pre>
+<p>老版本 macOS 修复：</p>
+<p>保存下列为 <code>1.pem</code></p>
+<pre><code>-----BEGIN CERTIFICATE-----
+MIIFYDCCBEigAwIBAgIQQAF3ITfU6UK47naqPGQKtzANBgkqhkiG9w0BAQsFADA/
+MSQwIgYDVQQKExtEaWdpdGFsIFNpZ25hdHVyZSBUcnVzdCBDby4xFzAVBgNVBAMT
+DkRTVCBSb290IENBIFgzMB4XDTIxMDEyMDE5MTQwM1oXDTI0MDkzMDE4MTQwM1ow
+TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh
+cmNoIEdyb3VwMRUwEwYDVQQDEwxJU1JHIFJvb3QgWDEwggIiMA0GCSqGSIb3DQEB
+AQUAA4ICDwAwggIKAoICAQCt6CRz9BQ385ueK1coHIe+3LffOJCMbjzmV6B493XC
+ov71am72AE8o295ohmxEk7axY/0UEmu/H9LqMZshftEzPLpI9d1537O4/xLxIZpL
+wYqGcWlKZmZsj348cL+tKSIG8+TA5oCu4kuPt5l …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-09-24T21:34:44+00:00">2021-09-24</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2021/stdout-012"  rel="bookmark" >
               <h2 class="card-title">美国自来水 TDS 这么高？</h2>
             </a>

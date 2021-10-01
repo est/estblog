@@ -53,6 +53,24 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/33678828555"  rel="bookmark" >
+              <h2 class="card-title">windows下nslookup的bug</h2>
+            </a>
+            <p class="card-text"><p>今天才知道的。windows下，干净hosts，可以nslookup 和 ping 的 ip 不一样。</p>
+<p>主要是 Primary DNS suffix of this computer 这个功能。</p>
+<p>解决方法也很简单，<code>nslookup my.domain.tld. dns.server.ip</code></p>
+<p>注意 tld 后边一个点。这样强制从根域来解析。</p>
+<p>用这个方法可以来欺骗一些人，前提是获得主机域权限。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-10-15T21:05:25+00:00">2012-10-15</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/33418164605"  rel="bookmark" >
               <h2 class="card-title">Holland House Library, 1940</h2>
             </a>
@@ -442,38 +460,6 @@ xcar.com.cn           爱卡汽车 …</code></pre></p>
 <p>比如门禁卡 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-08-30T23:35:00+00:00">2012-08-30</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/30512755425"  rel="bookmark" >
-              <h2 class="card-title">on github wiki</h2>
-            </a>
-            <p class="card-text"><p>对github wiki的一些感受</p>
-<ul>
-<li>
-<p>wiki和source code是分开的repo。其实像google code那样内嵌的多好。</p>
-</li>
-<li>
-<p>由于分开的repo导致git submodule操作起来不方便。</p>
-</li>
-<li>
-<p>markdown语法太弱。<a href="https://github.com/github/markup/issues/6">不支持anchor</a>？</p>
-</li>
-<li>
-<p>wiki无法自动生成段落交互导航，长一点的文档就不适合了。</p>
-</li>
-<li>
-<p>wiki pages显示不支持用户格式，比如txt之类的。</p>
-</li>
-</ul>
-<p>恩。总之没有完美的东西。但是别人hosting的东西就是不如自己可以折腾的爽。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2012-08-30T05:44:48+00:00">2012-08-30</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

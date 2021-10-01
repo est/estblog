@@ -53,6 +53,36 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2021/stdout-013"  rel="bookmark" >
+              <h2 class="card-title">Letsencrypt 在老版本macOS Ubuntu 上修复TLS证书错误</h2>
+            </a>
+            <p class="card-text"><p>一觉醒来，打开浏览器，各种连不上，调试了一下发现说lets encrypt 的 acme https证书错误</p>
+<p>仿佛记得 V站 讨论过这个事，以为和自己无关，结果也中招了。DST Root CA X3 根证书在国庆前过期了。</p>
+<p>老版本 Ubuntu 修复：</p>
+<pre><code>sudo apt update
+sudo apt install ca-certificates
+</code></pre>
+<p>老版本 macOS 修复：</p>
+<p>保存下列为 <code>1.pem</code></p>
+<pre><code>-----BEGIN CERTIFICATE-----
+MIIFYDCCBEigAwIBAgIQQAF3ITfU6UK47naqPGQKtzANBgkqhkiG9w0BAQsFADA/
+MSQwIgYDVQQKExtEaWdpdGFsIFNpZ25hdHVyZSBUcnVzdCBDby4xFzAVBgNVBAMT
+DkRTVCBSb290IENBIFgzMB4XDTIxMDEyMDE5MTQwM1oXDTI0MDkzMDE4MTQwM1ow
+TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh
+cmNoIEdyb3VwMRUwEwYDVQQDEwxJU1JHIFJvb3QgWDEwggIiMA0GCSqGSIb3DQEB
+AQUAA4ICDwAwggIKAoICAQCt6CRz9BQ385ueK1coHIe+3LffOJCMbjzmV6B493XC
+ov71am72AE8o295ohmxEk7axY/0UEmu/H9LqMZshftEzPLpI9d1537O4/xLxIZpL
+wYqGcWlKZmZsj348cL+tKSIG8+TA5oCu4kuPt5l …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-09-24T21:34:44+00:00">2021-09-24</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2021/stdout-012"  rel="bookmark" >
               <h2 class="card-title">美国自来水 TDS 这么高？</h2>
             </a>
@@ -77,6 +107,7 @@
               <h2 class="card-title">小册子，报纸，无线电和电视</h2>
             </a>
             <p class="card-text"><p>住：下面的内容全文复制之zhihu用户 <a href="https://www.zhihu.com/people/tuo-qia-ma-ke-zhi-guan/pins">托卡马克之冠</a>，TA的自我介绍是 不首先使用种族歧视和双重标准。</p>
+<p>文后的部分引用是用来释经。。。</p>
 <p>比较长，列个大纲</p>
 <ol>
 <li><a href="#p1">欧洲的反思</a></li>
@@ -99,15 +130,15 @@
 <li><a href="#p18">后现代三大案</a></li>
 <li><a href="#p19">奥特曼下架</a></li>
 <li><a href="#p20">中国教改</a></li>
-<li><a href="#p21">小册子政权为什么能够存在</a></li>
-<li><a href="#p22">小册子政权在互联网时代的生存</a></li>
+<li><a href="#p21">小册子政权为什么能够存在(震旦还是骑士教团)</a></li>
+<li><a href="#p22">小册子政权的互联网治理（上）</a></li>
+<li><a href="#p23">小册子政权的互联网治理（下）</a></li>
 <li><a href="#23">番外篇</a></li>
 </ol>
 <p><a name="p1"></a></p>
 <h3><a href="https://www.zhihu.com/pin/1418274545199976448">发布于 2021-09-06</a></h3>
 <p>最近欧洲国家有个动向，就是开始批判和反思最近这几十年在全球搞制度输出和颜色革命的行为。</p>
-<p>这种批判在学界从来没有消失过，但进入政策层面，特别是欧洲议会这种经学大讲坛还是第一次。以往在政府层面，对于“教权高于主权”这种观点别说是批判，鼓掌的时候不够用力都会被斗死斗倒斗臭。</p>
-<p>二战后人类政治构建的核心逻辑是政权教授、主权教有 …</p></p>
+<p>这种批判在学界从来没有消失过，但进入政策层面，特别是欧洲议会这种经学大讲坛还是第一次。以往在政府层面，对于 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-09-18T18:30:14+00:00">2021-09-18</time></p>
 <p>stdin</p>            </div>
@@ -586,34 +617,6 @@
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-05-10T22:01:21+00:00">2021-05-10</time></p>
 <p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202104/stdout-005"  rel="bookmark" >
-              <h2 class="card-title">Win10 自动设置开机锁屏壁纸</h2>
-            </a>
-            <p class="card-text"><p>Win10启动后，锁屏界面有一些每天更新的漂亮的墙纸，但是每个用户进去却只能看到默认的墙纸，不能自动切换。很是遗憾，于是搞了一段小脚本弥补。</p>
-<p>找个地方比如桌面，右键新建一个 <code>est_win10_auto_wallpaper.bat</code></p>
-<pre><code>@if (@X)==(@Y) @end /* JScript comment
-@echo off
-
-cscript //E:JScript %~n0.bat
-
-exit /b %errorlevel%
-*/
-
-var oShell = new ActiveXObject("WScript.Shell") ;
-var oFSO = new ActiveXObject("Scripting.FileSystemObject");
-
-var sWinDir = oFSO.GetSpecialFolder(0);
-var sPath = oShell.ExpandEnvironmentStrings('%LOCALAPPDATA%\\Packages\\Microsoft …</code></pre></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-04-11T22:35:12+00:00">2021-04-11</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 
