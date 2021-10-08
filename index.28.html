@@ -53,6 +53,26 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/3706"  rel="bookmark" >
+              <h2 class="card-title">Google OpenSocial Gadgets Proxy</h2>
+            </a>
+            <p class="card-text"><p>Just found Google's most generous proxy service.</p>
+
+<p>Some <a href="http://svn.apache.org/repos/asf/shindig/trunk/java/gadgets/src/main/java/org/apache/shindig/gadgets/servlet/ProxyHandler.java">core code</a> (in Java):</p>
+
+<pre><code>protected void setResponseContentHeaders(HttpResponseBuilder response, HttpResponse results) {
+  // We're skipping the content disposition header for flash due to an issue with Flash player 10
+  // This does make some sites a higher value phishing target, but this can be mitigated …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-02-09T08:02:53+00:00">2011-02-09</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/3696"  rel="bookmark" >
               <h2 class="card-title">美剧《Outsourced/服务外包/外包服务》</h2>
             </a>
@@ -567,56 +587,6 @@ pps …</p></p>
 <p><a href="http://news.ycombinator.com/item?id=2070025">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-01-06T07:29:10+00:00">2011-01-06</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/3575"  rel="bookmark" >
-              <h2 class="card-title">恶搞javascript来对付盗链</h2>
-            </a>
-            <p class="card-text"><p>如果有人盗链网站的 .js ，那么你可以考虑悄悄把js替换成这个文件</p>
-
-<pre><code>(function () {
-  var Math = this.Math,
-  isNaN = this.isNaN,
-  reverse = Array.prototype.reverse,
-  toUpperCase = String.prototype.toUpperCase,
-  hasOwnProperty = Object.prototype.hasOwnProperty,
-  toString = Object.prototype.toString,
-
-  shiftMap = {
-    &#39;`&#39;: &#39;~&#39;,
-    &#39;1&#39;: &#39;!&#39;,
-    &#39;2&#39;: &#39;@&#39;,
-    &#39;3&#39;: &#39;#&#39;,
-    &#39;4&#39;: &#39;$&#39;,
-    &#39;5&#39;: &#39;%&#39;,
-    &#39;6&#39;: &#39;^&#39;,
-    &#39;7&#39;: &#39;&amp;&#39;,
-    &#39;8&#39;: &#39;*&#39;,
-    &#39;9&#39;: &#39;(&#39;,
-    &#39;-&#39;: &#39;_&#39;,
-    &#39;=&#39;: &#39;+&#39;,
-    &#39;[&#39;: &#39;{&#39;,
-    &#39;]&#39;: &#39;}&#39;,
-    &#39;\\&#39;: &#39;|&#39;,
-    &#39;;&#39;: &#39;:&#39;,
-    &#39;\&#39;&#39;: &#39;&quot;&#39;,
-    &#39;,&#39;: &#39;&lt;&#39;,
-    &#39;.&#39;: &#39;&gt;&#39;,
-    &#39;/&#39;: &#39;?&#39;
-  };
-
-  this.undefined = this.NaN = Infinity;
-
-  this.isNaN = function (value) {
-    return !(isFinite(value …</code></pre></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2011-01-01T12:16:13+00:00">2011-01-01</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
