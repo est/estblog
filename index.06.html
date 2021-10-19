@@ -53,6 +53,49 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/128169614555"  rel="bookmark" >
+              <h2 class="card-title">创新的真谛</h2>
+            </a>
+            <p class="card-text"><p>最近5年发现我自己患了一种认知上的“时差病”。就是看到过一段话，当时心有窃窃焉，然后就过去了。但是过了几天，几周后就开始发酵，越来越回味觉得有道理，然后刻骨铭心的想找到当时的出处。</p>
+<p>一个月前我在reddit某个板块看到一段语录，大意就是：人们在各种限制下才会发挥最大的创造性！</p>
+<p>当时觉得挺新奇的。说创新我们很自然想到自由，无限制，无拘束无羁绊，那才能创新，但是其实不是这样的。我以前一直以为创新的唯一来源就是学科交叉，领域边缘。</p>
+<p>后来又在proggit和HN看到视频 《How "oldschool" graphics worked》</p>
+<p>https://www.youtube.com/watch?v=Tfh0ytz8S0k</p>
+<p>讲 C64 6502，在320x240，16K内存的限制下，如何绘制彩图。</p>
+<p>简单计算：320x240每个RGB像素占用24bit，16KB内存就立刻泪流满面了。。。。当时还没有显存的概念，显存就是一块低位内存范围。前人是怎么做到的呢？上一半的色彩拉伸，或者每16x16的像素hack出只包含4种颜色！这他妈碉堡了。Super Mario甚至还在这基础上做出动画！</p>
+<p>今天又念念不忘的想起这个事情 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2015-09-02T02:27:53+00:00">2015-09-02</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/126388086480"  rel="bookmark" >
+              <h2 class="card-title">现有git项目同步到一个新svn</h2>
+            </a>
+            <p class="card-text"><p>不要问我为什么这么脑残，反正这个世界就这样。自己好好的用git管理的项目，项目组又用的是svn，把git同步更新到svn，看git-scm的教程也他妈扯蛋，所以东拼西凑撸了个方法：</p>
+<pre><code>svn mkdir svn://DEST/repo/projectname/{trunk,branches,tags}
+git svn init svn://DEST/repo/projectname/{trunk,branches,tags}
+git svn fetch --username blah
+git rebase --onto remotes/git-svn --root master
+git svn dcommit
+</code></pre>
+<p>搞定。</p>
+<p>btw 提交日期全部被fuck。。。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2015-08-10T22:06:56+00:00">2015-08-10</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/126387391475"  rel="bookmark" >
               <h2 class="card-title">小白涨姿势之GIS系统</h2>
             </a>
@@ -428,64 +471,6 @@ catch KeyError:
 <p><a href="http://www.reddit.com/r/Python/comments/209k8h/pep_463_exceptioncatching_expressions_has_been/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2014-03-13T04:49:33+00:00">2014-03-13</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/79140954808"  rel="bookmark" >
-              <h2 class="card-title">minor key 的音乐好神奇！！！满满的苏联草原风！</h2>
-            </a>
-            <p class="card-text"><p>Indiana Jones Theme</p>
-<iframe width="420" height="315" src="//www.youtube.com/embed/O2Ex798eGxE" frameborder="0" allowfullscreen></iframe>
-
-<p>Hey Jude</p>
-<iframe width="420" height="315" src="//www.youtube.com/embed/8dcfpH8oJoM" frameborder="0" allowfullscreen></iframe>
-
-<p>Star Wars Theme</p>
-<iframe width="420" height="315" src="//www.youtube.com/embed/3ppoRHBtwCY" frameborder="0" allowfullscreen></iframe>
-
-<p>Super Mario Bros</p>
-<iframe width="420" height="315" src="//www.youtube.com/embed/2GAGM9feOcI" frameborder="0" allowfullscreen></iframe>
-
-<p>Bad romance</p>
-<iframe width="420" height="315" src="//www.youtube.com/embed/dp68rCaijuY" frameborder="0" allowfullscreen></iframe>
-
-<p>The Happy Godfather </p>
-<iframe width="420" height="315" src="//www.youtube.com/embed/J-gf_bxV00s" frameborder="0" allowfullscreen></iframe>
-
-<p>从minor key变成major key。youtube评论说：</p>
-<blockquote>
-<p>The charming story of cheerful Italian immigrants who build a completely legitimate olive oil importing business, and live long, happy lives pursuing the American dream.﻿</p>
-</blockquote>
-<p><a href="http://www.reddit.com/r/videos/comments/1zz87m/star_wars_theme_theme_done_minorly_different/">via</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2014-03-10T01:27:30+00:00">2014-03-10</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/78727610262"  rel="bookmark" >
-              <h2 class="card-title">[zz]果然，现实更加奇葩</h2>
-            </a>
-            <p class="card-text"><p>发信人: kamisama (神大人), 信区: NetNovel<br />
-标  题: 果然，现实更加奇葩<br />
-发信站: 水木社区 (Wed Mar  5 23:35:26 2014), 站内</p>
-<p>老老王的PS，看了忍不住想笑</p>
-<p>http://www.wcxiaoshuo.com/wcxs-23716-10509604/</p>
-<p>PS：唉，乌克兰如今的“公共知识分子”政府，当真是卖萌无极限，逗逼指数爆表了。</p>
-<pre><code>首先是上次说过的Facebook脸书征兵，虽然绝大部分壮丁都表示不在家，但居然还是有一万多人应征报到，据说主要是大学生和失业青年，也就是前些日子在广场上COSPLAY《中世纪全面战争》的那一帮人——这倒是情有可原，但如果他们把跟俄军打仗看成了之前的广场群殴……估计肯定会死得很惨。
-
-其次。乌克兰新政府在这短短的几天里，把一切匪夷所思的作死昏招都出了一遍，屁股明明坐在火山口上。依然不管不顾地反攻倒算：逼着“金雕 …</code></pre></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2014-03-06T01:09:19+00:00">2014-03-06</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
