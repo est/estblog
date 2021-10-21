@@ -53,6 +53,42 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/3940"  rel="bookmark" >
+              <h2 class="card-title">解决Win7在TP-Link R402上狂掉线问题</h2>
+            </a>
+            <p class="card-text"><p>在中文网站搜索了一下，有下面几个办法</p>
+
+<ul>
+<li>Intel 网卡会自作聪明电源管理，所以掉线，关掉网卡的电源选项；</li>
+<li>本地连接 IPv6关掉就不会掉线了；</li>
+<li>禁用TP-Link R402上的 DHCP，UPnP，防火墙；</li>
+</ul>
+
+<p>我最近越来越发现这问题严重了。ping 192.168.1.1有的时候居然会出现&gt;6ms甚至&gt;10ms，&gt;20ms的rtt延迟。开始以为是网线问题，后来弄了很久这个问题依然持续。</p>
+
+<p>但是我注意到：</p>
+
+<ul>
+<li>TP-Link R402的 DHCP服务器 - 客户端列表 下只显示我这一台PC的IP和MAC地址</li>
+<li>arp -a里居然没有路由器的IP和MAC</li>
+<li>禁用 启用 本地连接，又能上一会儿的网</li>
+</ul>
+
+<p>所以估计多半是脑残的微软又在Win7里改DHCP的什么东东了。Google一搜索Win7 dhcp bug果然<a href="http://hardforum.com/showthread.php?t=1471670">找到</a>了<a href="http://blogs.technet.com/b/teamdhcp/archive/2009/02/12/dhcp-broadcast-flag-handling-in-windows-7.aspx">办法</a>：</p>
+
+<p>regedit打开</p>
+
+<p><code>HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters …</code></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-04-20T15:16:43+00:00">2011-04-20</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/3936"  rel="bookmark" >
               <h2 class="card-title">开复威武</h2>
             </a>
@@ -464,36 +500,6 @@ print udid
 <p>都可以在iphones Settings - General -About里看到</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-04-01T07:50:56+00:00">2011-04-01</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/3838"  rel="bookmark" >
-              <h2 class="card-title">2011-04-01 collection</h2>
-            </a>
-            <p class="card-text"><p>Portal 2 Demo <a href="http://www.reddit.com/r/gaming/comments/gfwh8/portal_2_sp_demo_leaked/">偷跑</a> <a href="http://blog.est.im/wp-content/uploads/2011/04/1.png">截图</a>  <a href="http://www.reddit.com/r/gaming/comments/gfwh8/portal_2_sp_demo_leaked/">来自</a></p>
-
-<p>Adblock Chrome推出IRL版本<a href="http://chromeadblock.com/freedom/">AdBlock Freedom</a>。话说我早就想ps个这个来玩了。可惜很少坐车出远门~~</p>
-
-<p><img src="http://chromeadblock.com/freedom/example.jpg" alt=""></p>
-
-<p>Flask推出企业级开发组件 <a href="http://massive.immersedcode.org/2011/staging/projects/default/python/flask-enterprise/">Flask-Enterprise</a>，包括了对SOAP/WSDL/XMLRPC的完善支持！ <a href="http://www.reddit.com/r/Python/comments/gfxzf/we_just_released_flaskenterprise_enterprise_level/">来自</a></p>
-
-<p>IETF搞了个<a href="http://tools.ietf.org/html/rfc6217">rfc6217</a>Regional Broadcast Using an Atmospheric Link Layer</p>
-
-<p><a href="http://www.iteye.com/news/20605">JavaEye.com收到Oracle律师函</a>，这个……貌似是真的。</p>
-
-<p>Google推出 <a href="http://www.google.com/romance/">Google Remance</a>，还有就是招<a href="http://www.google.com/intl/en/jobs/uslocations/mountain-view/autocompleter/index.html">人工拼写检查和搜索建议</a>这个职位。<a href="http://www.cnbeta.com/articles/138831.htm">G.CN</a>和<a href="http://www.cnbeta.com/articles/138891.htm">Gmail团队</a>的那个就不说了。到处都报道了。</p>
-
-<p>Debian他们搞了个 Canterbury Distribution。很NB，这么多网站一起改主页啊。<a href="http://blog.est.im/wp-content/uploads/2011/04/2.png">截图</a></p>
-
-<p>reddit …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2011-04-01T06:24:49+00:00">2011-04-01</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

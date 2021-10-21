@@ -53,6 +53,31 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/202106/stdout-006"  rel="bookmark" >
+              <h2 class="card-title">行车记录仪视频ffmpeg合并转录存档，跳过重复的漏秒</h2>
+            </a>
+            <p class="card-text"><p>手上有几个行车记录仪</p>
+<ul>
+<li>VOSONIC 勤宇V10，也叫群华 路不平，用的 联咏 Novatek NT96550BG 的芯片，1080p</li>
+<li>BLACKVIEW 凌度A12，采用 安霸(Ambarella) A12 方案，2k</li>
+<li>PAPAGO 趴趴狗，GoSafe 560WiFi，采用 NT96670 芯片+IMX415的 sony CMOS，4k</li>
+</ul>
+<p>特点是每5分钟切割成一个单独的文件，为了防止每两个视频之间漏秒，所以会额外重复写入1秒的内容</p>
+<p>现在想把一段时间的视频合并成一个存档，并且要<a href="https://www.v2ex.com/t/248037">跳过那些额外的1秒</a>，上 ffmpeg。</p>
+<p>首先前摇，生成需要合并的视频文件路径列表</p>
+<p><code>ls -fd1 /Volumes/SD_CARD/DCIM/xxxxx/*</code> </p>
+<p>的结果写成如下格式：</p>
+<pre><code>file 'input1.mov' …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-06-05T20:42:15+00:00">2021-06-05</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/202105/stdin-004"  rel="bookmark" >
               <h2 class="card-title">Sandy Munro 看不懂 美的Midea 的注塑工艺</h2>
             </a>
@@ -446,25 +471,6 @@ for i in $(seq 1 423); do wget -t 0 -T 5  -U 'Mozilla/5.0 (iPhone; CPU iPhone OS
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-11-01T23:44:37+00:00">2020-11-01</time></p>
 <p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202010/stdout-011"  rel="bookmark" >
-              <h2 class="card-title">nsq-py, pynsq, gnsq compared</h2>
-            </a>
-            <p class="card-text"><p><a href="https://nsq.io">nsq</a> is a lightweight message queue like Kafka/RabbitMQ/RocketMQ/RedisQueue/Celery.</p>
-<p>For python bindings there ware three libraries out there:</p>
-<ul>
-<li>pynsq: the official build, but requires <code>tornado</code></li>
-<li>gnsq: the gevent only consumer/publisher, might have race condition in state machine. Don't use.</li>
-<li>nsq-py: <code>select()</code> based, but compatible with gevent …</li></ul></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2020-10-30T15:35:45+00:00">2020-10-30</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 
