@@ -53,6 +53,31 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/64187857134"  rel="bookmark" >
+              <h2 class="card-title">ubuntu / python编码坑一则</h2>
+            </a>
+            <p class="card-text"><p>一个django文件上传老是出现unicode error</p>
+<pre><code>UnicodeEncodeError: 'ascii' codec can't encode character u'\uWTFH' in position 0: ordinal not in range(128)
+</code></pre>
+<p>折腾了好久 reload(sys) sys.setdefaultencoding() locale.setdefaultlocale() </p>
+<p>后来发现是os.environ["LANG"]居然为空。这尼玛为毛啊。</p>
+<p>LANG为空也就算了，发现另外一个神奇的bug：</p>
+<pre><code>$ export LC_ALL=en_US.UTF8
+$ python -c "print __import__('locale').getdefaultlocale()"
+('en_US', 'UTF8')
+
+$ export LC_ALL=en_US
+$ python -c "print …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-10-16T01:59:00+00:00">2013-10-16</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/63515206207"  rel="bookmark" >
               <h2 class="card-title">为什么说Google已经没救了。</h2>
             </a>
@@ -444,35 +469,11 @@ CID=61E00</p>
           </article>
         </div>
 
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/53995049770"  rel="bookmark" >
-              <h2 class="card-title">[zz]百度地图的研发们</h2>
-            </a>
-            <p class="card-text"><p>http://www.douban.com/note/284760511/   </p>
-<p>三鲜 <br />
-主页 广播 相册 喜欢 活动 发豆邮 <br />
-去年我开始有抬头纹 <br />
-2013-06-27 01:11:37 <br />
-今天发现，百度地图的研发们都玩起新浪微博，互相 at 得不亦乐乎，看样子是经常齐刷刷地去登山、长跑。在我心中他们都是同一类的人，龙叔也如是说。   </p>
-<p>这种感觉很奇怪，我离开快一年了，他们看上去变得更凝聚温馨。以前我高嗓门的架构讲座、开会时候对项目代码的怒斥，突然感觉就像只是破坏团队氛围的东西。记得我写的那个树状脑图，讲模块劣化的现象、原因、改进措施，21寸显示器两屏才显示得完，经理看了一个劲的笑，其他同事充满不理解不赞同，有人还公然拥护全局变量，我操。   </p>
-<p>去年我一个人重构搜索后端，披星戴月，脑浆迸裂。说是重构实际上就是重写。除非当时内部的人，很少人愿意相信地图搜索引擎的代码的所有函数都只传一个参数，而这个参数就是传说中的全局变量，每个服务模块这个全局结构体的成员变量大概四五百个吧 …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-06-27T01:48:00+00:00">2013-06-27</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
     </main>
     <nav class="pagination-nav side-padding">
 <a href="/index.07.html" class="pagination-newer">&lt; Newer Posts</a><a href="/index.09.html" class="pagination-older">Older Posts &gt;</a>    </nav>
 
 <script src="/theme/js/core.js"></script>
-<script type="text/javascript">
-    if(location.protocol === "http:") location.protocol = "https:"
-</script>
 
   </body>
 </html>

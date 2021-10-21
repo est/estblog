@@ -53,6 +53,25 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/36043910933"  rel="bookmark" >
+              <h2 class="card-title">django extra where clause (bitwise OR) with a Q object</h2>
+            </a>
+            <p class="card-text"><p>So if you want to write a Queryset in Django like this:</p>
+<pre><code>models.MyModel.objects.filter( Q(a=1) | Q(b=2).extra(where=[""]) )
+</code></pre>
+<p>It desn't work, because <code>extra()</code> can not be used on a <code>django.db.models.Q</code> object</p>
+<p>Instead, you can <a href="http://simeonfranklin.com/blog/2011/feb/20/hidden-django-queryset-features-II/">write like this</a>:</p>
+<pre><code>qs = models.MyModel.objects …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-11-18T23:01:00+00:00">2012-11-18</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/35816288387"  rel="bookmark" >
               <h2 class="card-title">install uwsgi 1.4 on Ubuntu Lucid 10.04.2 LTS</h2>
             </a>
@@ -459,28 +478,11 @@ http://xuanpai.sinaapp.com/work/</p>
           </article>
         </div>
 
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/34288214582"  rel="bookmark" >
-              <h2 class="card-title">fix bottle.py / wsgiref.simple_server slow</h2>
-            </a>
-            <p class="card-text"><p>Running bottlepy with default server (<code>wsgiref.simple_server</code>) is always dog slow for me, after some digging I found that the fucking server is trying to resolve the IP address of 10.x.x.x, both the server and client, into hostnames so the fucking logger can 'properly' display them. FUCK …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2012-10-25T04:53:00+00:00">2012-10-25</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
     </main>
     <nav class="pagination-nav side-padding">
 <a href="/index.13.html" class="pagination-newer">&lt; Newer Posts</a><a href="/index.15.html" class="pagination-older">Older Posts &gt;</a>    </nav>
 
 <script src="/theme/js/core.js"></script>
-<script type="text/javascript">
-    if(location.protocol === "http:") location.protocol = "https:"
-</script>
 
   </body>
 </html>

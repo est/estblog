@@ -53,6 +53,24 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/80234879432"  rel="bookmark" >
+              <h2 class="card-title">Process 流程</h2>
+            </a>
+            <p class="card-text"><p>Bob：这涉及到职业分工的问题，每个人特长不同，不是吗？</p>
+<p>乔布斯：不，这不是擅长与否的问题，而是他们犯糊涂，公司在犯糊涂。公司规模扩大之后，就会变得因循守旧，他们觉得只要遵守流程，就能奇迹般地继续成功，于是开始推行严格的流程制度，很快员工就把遵守流程和纪律当作工作本身。</p>
+<p>IBM就是这样走下坡路的，IBM的员工是世界上最守纪律的，他们恰恰忽略了产品。苹果也有这个问题，我们有很多擅长管理流程的人才，但是他们忽略了产品本身。</p>
+<p>经验告诉我，优秀的人才是那些一心想着产品的人，虽然这些人很难管理，但是我宁愿和他们一起工作，光靠流程和制度做不出好产品。苹果也有这方面的问题，这些问题最终导致Lisa电脑失败。</p>
+<p>People get confused; companies get confused. When they start getting bigger, they want to replicate their initial success. And a lot of …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2014-03-21T00:33:49+00:00">2014-03-21</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/79446013561"  rel="bookmark" >
               <h2 class="card-title">LBYL vs EAFP</h2>
             </a>
@@ -446,39 +464,11 @@ fUWlLfAlsHpGFDfI4XsFOUWkA7Q=
           </article>
         </div>
 
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/64187857134"  rel="bookmark" >
-              <h2 class="card-title">ubuntu / python编码坑一则</h2>
-            </a>
-            <p class="card-text"><p>一个django文件上传老是出现unicode error</p>
-<pre><code>UnicodeEncodeError: 'ascii' codec can't encode character u'\uWTFH' in position 0: ordinal not in range(128)
-</code></pre>
-<p>折腾了好久 reload(sys) sys.setdefaultencoding() locale.setdefaultlocale() </p>
-<p>后来发现是os.environ["LANG"]居然为空。这尼玛为毛啊。</p>
-<p>LANG为空也就算了，发现另外一个神奇的bug：</p>
-<pre><code>$ export LC_ALL=en_US.UTF8
-$ python -c "print __import__('locale').getdefaultlocale()"
-('en_US', 'UTF8')
-
-$ export LC_ALL=en_US
-$ python -c "print …</code></pre></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-10-16T01:59:00+00:00">2013-10-16</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
     </main>
     <nav class="pagination-nav side-padding">
 <a href="/index.06.html" class="pagination-newer">&lt; Newer Posts</a><a href="/index.08.html" class="pagination-older">Older Posts &gt;</a>    </nav>
 
 <script src="/theme/js/core.js"></script>
-<script type="text/javascript">
-    if(location.protocol === "http:") location.protocol = "https:"
-</script>
 
   </body>
 </html>
