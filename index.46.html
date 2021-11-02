@@ -53,6 +53,30 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/1859"  rel="bookmark" >
+              <h2 class="card-title">Google Chrome支持迅雷右键下载指日可待了</h2>
+            </a>
+            <p class="card-text"><p>Chrome对Flash这类外部程序插件是通过NPAPI实现的，<a href="https://developer.mozilla.org/en/Gecko_Plugin_API_Reference:Scripting_plugins">NPAPI</a>有个缺点就是要调用外部组件必须注册一个MIME。我对Windows里MIME机制还不熟悉，不知道可不可以不通过dll而直接通过修改注册表实现。迅雷官方的Firefox插件就是通过ThunderComponent.dll+thunder.xpi实现的，可惜这个是XPCOM Only，CyberArticle推出的KB系统，WizKnowledge在Chrome里的<a href="http://cn.wizbrother.com/wizknowledge/copy.js">调用</a>，也是通过注册一个<code>application/x-wizbrother-wizknowledge-ax</code>的MIME实现的。</p>
+
+<p>不过Chrome更加牛逼的是还支持ActiveX的。启动chrome.exe的时候加一个<code>--enable-all-activex</code> 就可以了。原理是通过一个叫<a href="http://src.chromium.org/svn/branches/official/build_149/src/webkit/activex_shim/">ActiveX Shim</a>的东东实现的。不过似乎后面把这个ActiveX Shim写死成只支持Windows Media Player的CLSID了。。。。所以这条路估计不太好走。</p>
+
+<p>ActiveX Shim这玩意儿现在还不是很完善，用网银的时候界面能显示出来，但是招行的网银登录界面显示ATL error。可能还不完善吧。但是普通调用例如Windows Media Player是绝对没问题的。我估计调用thunderagent那个COM+组件也没多大问题。</p>
+
+<p><a href="http://www.google.org.cn/posts/chromium-dev-update-27-mar-2010.html">最近</a>Chromium更是增加了<a href="http://code.google.com/chrome/extensions/trunk/experimental.contextMenu.html">右键菜单的api</a></p>
+
+<p>所以，我很乐观的估计很快支持迅雷右键下载的扩展会很快出现。</p>
+
+<p>如果没人做的话，等哪天有时间了来折腾一下这个玩意儿 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-04-02T05:20:52+00:00">2010-04-02</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/1834"  rel="bookmark" >
               <h2 class="card-title">Avatar.2009.bdrip.xvid-imbt</h2>
             </a>
@@ -449,23 +473,6 @@ Culture            +         +++
 <p><a href="http://www.reddit.com/r/pics/comments/betnw/porn_sfw/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-03-18T11:36:27+00:00">2010-03-18</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/1745"  rel="bookmark" >
-              <h2 class="card-title">Topgun原来是部内涵片啊。。。</h2>
-            </a>
-            <p class="card-text"><p><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://www.youtube.com/v/vyN8VN4BSzM%26hl%3Den_US%26fs%3D1%26&amp;width=480&amp;height=385" width="480" height="385"></iframe></p>
-
-<blockquote>
-  <p>And what is the last fucking line that they have together? They're all hugging and kissing and happy with each other, and Ice comes up to Maverick, and he says, "Man, you can ride my tail, anytime!" And what does Maverick say? "You can ride mine!" Swordfight! Swordfight! Fuckin' A …</p></blockquote></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2010-03-18T11:11:17+00:00">2010-03-18</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

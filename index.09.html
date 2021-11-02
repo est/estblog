@@ -53,6 +53,27 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/54663265757"  rel="bookmark" >
+              <h2 class="card-title">RSS · Next</h2>
+            </a>
+            <p class="card-text"><p>YY一下下一代RSS应该提供怎么样的技术：</p>
+<ul>
+<li>share aggregation。跨平台跨服务的分布式分享聚合，用于分析和排名</li>
+<li>inline comments in readers，RSS里提供一个特殊的字段，用来标记Disquz/G+/Twitter的嵌入评论框的id。阅读器可以选择提供一个UI按钮嵌入或者弹出评论窗口。Wordpress这样的生成平台也应该提供一个评论交互API</li>
+<li>支持HTML5 Push和浏览器notification。</li>
+<li>RSS over APNS/GCM/MPNS</li>
+<li>或许应该有一个统一的JSON feeds标准？</li>
+</ul></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-07-05T05:44:31+00:00">2013-07-05</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/53995049770"  rel="bookmark" >
               <h2 class="card-title">[zz]百度地图的研发们</h2>
             </a>
@@ -462,33 +483,6 @@ D(8,9/4) 也类似2个质心。。。</p>
 <p><a href="http://www.reddit.com/r/math/comments/1dnjd1/really_cool_example_of_calculus_of_variations/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-05-04T02:46:00+00:00">2013-05-04</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/49564925054"  rel="bookmark" >
-              <h2 class="card-title">PonyORM - python的新一代黑魔法级别ORM</h2>
-            </a>
-            <p class="card-text"><p>简单的例子，来自<a href="http://ponyorm.com/">官网</a></p>
-<p>python的查询代码：</p>
-<pre><code>select(c for c in Customer
-     if sum(c.orders.price) &gt; 1000)
-</code></pre>
-<p>通过PonyORM翻译成SQL：</p>
-<pre><code>SELECT "c"."id"
-FROM "Customer" "c"
-  LEFT JOIN "Order" "order-1"
-    ON "c"."id" = "order-1"."customer"
-GROUP BY "c"."id"
-HAVING coalesce(SUM("order-1"."total_price"), 0) &gt; 1000
-</code></pre>
-<p>以前觉得<a href="http://peewee.readthedocs.org/en/latest/peewee/querying.html">peewee的查询语法</a>很clever，比Django那种丑爆的 <code>price__gt=1000</code> 好出一条街 …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-05-03T23:33:00+00:00">2013-05-03</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

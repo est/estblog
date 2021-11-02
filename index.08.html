@@ -53,6 +53,24 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/65507202324"  rel="bookmark" >
+              <h2 class="card-title">pin ssl fingerprint with Chrome HSTS</h2>
+            </a>
+            <p class="card-text"><p>code:</p>
+<pre><code>$ openssl x509 -noout -fingerprint -sha1 -in &lt;(openssl s_client -connect weibo.cn:443 -prexit 2&gt;/dev/null) | python -c "print __import__('sys').stdin.read().partition('=')[2][:-1].replace(':','').decode('hex').encode('base64')"
+fUWlLfAlsHpGFDfI4XsFOUWkA7Q=
+</code></pre>
+<p>website: https://www.grc.com/fingerprints.htm</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-10-30T03:06:00+00:00">2013-10-30</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/64187857134"  rel="bookmark" >
               <h2 class="card-title">ubuntu / python编码坑一则</h2>
             </a>
@@ -444,27 +462,6 @@ CID=61E00</p>
 <p><a href="https://news.ycombinator.com/item?id=6007187">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-07-09T03:01:00+00:00">2013-07-09</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/54663265757"  rel="bookmark" >
-              <h2 class="card-title">RSS · Next</h2>
-            </a>
-            <p class="card-text"><p>YY一下下一代RSS应该提供怎么样的技术：</p>
-<ul>
-<li>share aggregation。跨平台跨服务的分布式分享聚合，用于分析和排名</li>
-<li>inline comments in readers，RSS里提供一个特殊的字段，用来标记Disquz/G+/Twitter的嵌入评论框的id。阅读器可以选择提供一个UI按钮嵌入或者弹出评论窗口。Wordpress这样的生成平台也应该提供一个评论交互API</li>
-<li>支持HTML5 Push和浏览器notification。</li>
-<li>RSS over APNS/GCM/MPNS</li>
-<li>或许应该有一个统一的JSON feeds标准？</li>
-</ul></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-07-05T05:44:31+00:00">2013-07-05</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

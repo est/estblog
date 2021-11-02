@@ -53,6 +53,28 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/3854"  rel="bookmark" >
+              <h2 class="card-title">两个ssl非常酷的hack</h2>
+            </a>
+            <p class="card-text"><p><a href="http://news.ycombinator.com/item?id=2396933">第一个</a>是Google Certificate Catalog</p>
+
+<pre><code>$ openssl s_client -connect www.google.com:443 &lt; /dev/null | openssl x509 -outform DER | openssl sha1
+depth=1 /C=ZA/O=Thawte Consulting (Pty) Ltd./CN=Thawte SGC CA
+verify error:num=20:unable to get local issuer certificate
+verify return:0
+DONE
+405062e5befde4af97e9382af16cc87c8fb7c4e2
+$ dig +short 405062e5befde4af97e9382af16cc87c8fb7c4e2 …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-04-03T14:26:42+00:00">2011-04-03</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/3847"  rel="bookmark" >
               <h2 class="card-title">iPhone Unique Device Identifier的40位udid key算法</h2>
             </a>
@@ -494,24 +516,6 @@ print udid
 <p>以后tg开发出<a href="http://half-life.wikia.com/wiki/Manhack">manhack</a>，就可以定点消灭目标人士了。LOL</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-03-02T04:32:36+00:00">2011-03-02</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/3741"  rel="bookmark" >
-              <h2 class="card-title">煮鸡蛋都能做成这样，太强了</h2>
-            </a>
-            <p class="card-text"><p><img src="http://i.imgur.com/lzUr1.jpg" alt=""></p>
-
-<p>又学了一招啊</p>
-
-<p>from <a href="http://www.annathered.com/2010/09/29/how-to-make-a-heart-shaped-egg/">annathered.com</a> via <a href="http://www.reddit.com/r/pics/comments/fq9ss/how_to_make_an_heart_egg/">reddit</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2011-02-23T03:38:46+00:00">2011-02-23</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

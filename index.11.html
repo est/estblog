@@ -53,6 +53,35 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/46935375645"  rel="bookmark" >
+              <h2 class="card-title">OS X Mountain Lion 修改 openssh sshd_config 配置</h2>
+            </a>
+            <p class="card-text"><p>OS X的蛋痛特性是  <code>`launched</code> 。如果你需要修改sshd的监听端口，那么</p>
+<p>编辑 /System/Library/LaunchDaemons/ssh.plist </p>
+<pre><code>        &lt;key&gt;Listeners&lt;/key&gt;
+        &lt;dict&gt;
+                &lt;key&gt;SockServiceName&lt;/key&gt;
+                &lt;string&gt;ssh-alt&lt;/string&gt;
+        &lt;/dict&gt;
+</code></pre>
+<p>然后在<code>/etc/services</code>里定义：</p>
+<pre><code> ssh-alt 12345/tcp # ssh-alt
+</code></pre>
+<p>然后重启sshd服务：</p>
+<pre><code>sudo launchctl uload /System/Library/LaunchDaemons/ssh.plist 
+sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist
+</code></pre>
+<p>蛋碎！</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-04-02T09:52:47+00:00">2013-04-02</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/46390709551"  rel="bookmark" >
               <h2 class="card-title">HAProxy like zero-copy in Python with memoryview</h2>
             </a>
@@ -462,29 +491,6 @@ CFLAGS=-I/usr/include/libev sudo pip install bjoern
 <p>灌了个水的哟。。。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-19T22:26:50+00:00">2013-02-19</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/43472256396"  rel="bookmark" >
-              <h2 class="card-title">dynamic app routing for Bottle.py based on hostname / domain</h2>
-            </a>
-            <p class="card-text"><p>Problem:</p>
-<p>I want ONE bottle project to display different pages for:</p>
-<ul>
-<li>http://foo.est.im</li>
-<li>http://bar.est.im</li>
-</ul>
-<p>These should be separate Bottle apps.</p>
-<p>There's <a href="http://permalink.gmane.org/gmane.comp.python.bottle.general/730">an ugly hack</a> from the official maillist, I think I can make it better.</p>
-<p>The secret is to create a customized WSGI app:</p>
-<pre><code>from …</code></pre></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-02-19T01:59:57+00:00">2013-02-19</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
