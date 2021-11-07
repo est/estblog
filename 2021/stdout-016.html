@@ -70,6 +70,19 @@ For example:<br />
 <p>Starting Chrome with --host-resolver-rules="MAP the.hostname.com [dead::beef]" where the.hostname.com is the hostname to allow resolving and dead::beef is the IPv6 address to resolve it to. net::MappedHostResolver acts at a level before IPv6 connectivity checks, and if a hostname is remapped to an IP literal, connectivity checks do not apply.</p>
 </blockquote>
 <p>还有很多 <a href="https://chromium.googlesource.com/chromium/src/+/HEAD/net/docs/proxy.md">proxy的参数</a></p>
+<h2>curl 的参数</h2>
+<p>也顺便贴一下。调试的时候用得上</p>
+<p>参数：</p>
+<ul>
+<li><code>-4</code>, <code>--ipv4</code></li>
+<li><code>-6</code>, <code>--ipv6</code></li>
+<li><code>--dns-interface &lt;interface&gt;</code></li>
+<li><code>--dns-ipv4-addr &lt;ip-address&gt;</code> Tell curl to bind to <code>&lt;ip-address&gt;</code> when making IPv4 DNS requests</li>
+<li><code>--dns-ipv6-addr &lt;ip-address&gt;</code> Tell curl to bind to <code>&lt;ip-address&gt;</code> when making IPv6 DNS requests</li>
+<li><code>--dns-servers &lt;ip-address,ip-address&gt;</code> Set the list of DNS servers to be used instead of the system default. The  list  of  IP  addresses should  be  separated  with commas. Port numbers may also optionally be given as <code>:&lt;port-number&gt;</code> after each IP address.</li>
+<li><code>--resolve &lt;host:port:address&gt;</code> Make the curl requests(s) use a specified address and prevent the otherwise normally resolved address to  be  used. Consider  it a sort of /etc/hosts alternative provided on the command line. The port number should be the number used for the specific protocol the host will be  used  for.  It  means  you  need  several entries if you want to provide address for the same host but different ports. This option can be used many times to add many host names to resolve. (Added in 7.21.3)</li>
+</ul>
+<p>最后一个很有用 😹</p>
 
 </article>
 
