@@ -53,6 +53,31 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/45"  rel="bookmark" >
+              <h2 class="card-title">How to block all robots but allow feed crawlers</h2>
+            </a>
+            <p class="card-text"><p>Here’s a way to have little fun with our robot friends.</p>
+
+<p>Edit the <code>wp-includes/functions.php</code> for the following function:</p>
+
+<pre><code>function do_robots() {
+
+    $rss_bot_ip_list = array(&#39;74.125.44.136&#39;, &#39;74.125.158&#39;, &#39;61.4.177.&#39;); 
+    //IP for feedburner and feedsky
+    $robots_allow = 0;
+
+    for ($j = 0; $j &lt; count($rss_bot_ip_list); $j++) {
+        if …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-12-27T04:15:47+00:00">2009-12-27</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/31"  rel="bookmark" >
               <h2 class="card-title">parabolic glass fronted building is WRONG</h2>
             </a>

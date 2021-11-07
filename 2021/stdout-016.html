@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chrome 指定域名解析，绕过 hosts - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Chrome 指定域名解析，绕过 hosts" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Chrome 指定域名解析，绕过 hosts</h2>
+    <p class="post-date">Posted <time datetime="2021-11-07T16:01:19+00:00">2021-11-07</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>看到 <a href="https://www.v2ex.com/t/813626">V站有人问</a>这个，随手一记</p>
+<p>可以参考<a href="https://chromium.googlesource.com/chromium/src/+/refs/heads/main/components/network_session_configurator/common/network_switch_list.h">源码里的注释文档</a></p>
+<h2>--host-resolver-rules=rules</h2>
+<p>Like <code>--host-rules</code> but these rules only apply to the host resolver.<br />
+A comma-separated list of rules that control how hostnames are mapped.<br />
+For example:<br />
+- <code>MAP * 127.0.0.1</code> Forces all hostnames to be mapped to <code>127.0.0.1</code><br />
+- <code>MAP *.google.com proxy</code> Forces all google.com subdomains to be resolved to <code>proxy</code>.<br />
+- <code>MAP test.com [::1]:77</code> Forces <code>test.com</code> to resolve to IPv6 loopback. Will also force the port of the resulting socket address to be 77.<br />
+- <code>MAP * baz, EXCLUDE www.google.com</code> Remaps everything to <code>baz</code>, except for <code>www.google.com</code>.</p>
+<p>These mappings apply to the endpoint host in a net request (the TCP connect and host resolver in a direct connection, and the CONNECT in an HTTP proxy connection, and the endpoint host in a SOCKS proxy connection).</p>
+<p>官方文档有语焉不详的提到过</p>
+<p>https://chromium.googlesource.com/chromium/src/+/refs/heads/main/net/dns/README.md</p>
+<blockquote>
+<p>Starting Chrome with --host-resolver-rules="MAP the.hostname.com [dead::beef]" where the.hostname.com is the hostname to allow resolving and dead::beef is the IPv6 address to resolve it to. net::MappedHostResolver acts at a level before IPv6 connectivity checks, and if a hostname is remapped to an IP literal, connectivity checks do not apply.</p>
+</blockquote>
+<p>还有很多 <a href="https://chromium.googlesource.com/chromium/src/+/HEAD/net/docs/proxy.md">proxy的参数</a></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2021/stdout-016';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

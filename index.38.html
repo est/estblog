@@ -53,6 +53,30 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/2539"  rel="bookmark" >
+              <h2 class="card-title">好吧，终于搞定新空间了</h2>
+            </a>
+            <p class="card-text"><p>感谢<a href="http://www.douban.com/people/zuroc/">zsp007</a>师兄的VPS空间，和他的帮助 :)</p>
+
+<p>第一次折腾gentoo的portage，对layman非常不熟悉导致php-fpm没装成功，偷懒装了spawn-fcgi+nginx。。。。。</p>
+
+<p>wordpress 3.0很囧。。。装个插件都要FTP支持。所以还是继续2.x版本好了。况且我也修改了那么多wordpress内核文件，也懒得重新修改一次了。</p>
+
+<p>然后就是让我异常头大的MySQL乱码问题。我才发现，Dreamhost空间的MySQL配置是有点异样的。主要是<code>character_set_server</code>设置成了<code>latin1</code>，然后就是一大陀杯具。比如说汉字的 <code>看</code> 的UTF8编码本来应该是<code>\xe7\x9c\x8b</code>，但是从<code>SELECT HEX(columnname) FROM table</code>的结果来看，居然是 C3A7C593E280B9。两重编码。然后鼓捣鼓捣了2个晚上才把dump文件搞定，然后才没有乱码导入</p>
+
+<p>觉得最爽的工具组合是ssh TCP端口转发到本地，然后用Navicat 8来直接操作MySQL。省去了再去调节PuTTY终端编码这又一层复杂度。</p>
+
+<p>就是这样。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-07-18T05:32:32+00:00">2010-07-18</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/2534"  rel="bookmark" >
               <h2 class="card-title">迁移空间，暂停博客一段时间</h2>
             </a>
@@ -459,27 +483,6 @@
   <p>In the last decades the WTO created a new open and global economy. But an often untold story is that the European Union, U.S. and Japan deliberately left <strong>agriculture</strong> out of it, purely for internal political reasons (farmers=votes). Agriculture markets in rich countries are …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-06-03T03:16:00+00:00">2010-06-03</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/2456"  rel="bookmark" >
-              <h2 class="card-title">How We Beat the Nazis with Bureaucracy</h2>
-            </a>
-            <p class="card-text"><blockquote>
-  <p>(a) Organizations and Conferences<br>
-  (1) Insist on doing everything through “channels.”  Never permit short-cuts to be taken in order to expedite decisions.</p>
-
-  <hr>
-
-  <p>(3) When possible, refer all matters to committees, for “further study and consideration.”  Attempt to make the committees as large as possible–never less than five.<br>
-  (4) Bring …</p></blockquote></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2010-06-03T02:05:51+00:00">2010-06-03</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

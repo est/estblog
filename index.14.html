@@ -53,6 +53,32 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/36341183105"  rel="bookmark" >
+              <h2 class="card-title">uWSGI features you want to abuse</h2>
+            </a>
+            <p class="card-text"><p>按照这个<a href="http://www.v2ex.com/t/52964#reply15">帖子</a>，挖个坑</p>
+<p>现代网站架构一般不能缺这几个东西：</p>
+<ul>
+<li>serialization tool like Protobuf, Apache Thrift, JSON, etc. 跨进程、服务器共享数据</li>
+<li>Pub-sub system, or RPC system 远程跨语言调用功能</li>
+<li>async background workers 用于处理繁重数据</li>
+<li>task queue/message queue 用于离线消息缓存和TTL支持，以及一些routing和过滤功能</li>
+<li>signal system 跨进程异步操作</li>
+<li>Key-value based cache or memory db 公用共享数据</li>
+<li>task scheduler or cronjob 周期性任务</li>
+</ul>
+<p>而这一切都可以在一个强大小巧稳定的Web服务器主进程中实现。这就是适合我这种偏执狂滥用的东西——uWSGI。</p>
+<p>以后慢慢写了</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-11-23T01:59:00+00:00">2012-11-23</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/36189970509"  rel="bookmark" >
               <h2 class="card-title">HackRF这个碉堡了</h2>
             </a>
@@ -459,31 +485,6 @@ http://xuanpai.sinaapp.com/work/</p>
 <p><a href="http://news.ycombinator.com/item?id=4719705">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-30T22:40:12+00:00">2012-10-30</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/34673796115"  rel="bookmark" >
-              <h2 class="card-title">The Web Is A Mess</h2>
-            </a>
-            <p class="card-text"><p>《<a href="http://mkronline.com/2012/10/30/you-arent-imagining-it-the-web-is-a-mess/">You aren’t imagining it: The web is a mess</a>》这篇文章提出了一些比较犀利的观点：</p>
-<p>Web已经乱死了。</p>
-<ul>
-<li>人们在本世纪初，网上写的东西还是给人看的。都是浓缩精华</li>
-<li>Google出现之后，人们写东西就不是给人看的了，而是给Google看的。为了各种关键字超高命中率，而不惜篇幅急剧膨胀灌水</li>
-<li>普通的个体再也不可能每天认真读完例如TechCrunch, LifeHacker这样网站的 每 一 篇 报道。</li>
-</ul>
-<p>我觉得，同理，现在blog圈子基本已经死了。不是外力杀死的，而死blog太讨好搜索引擎自杀的。Blog还没有 长微博 这种怪胎混得好。这是一种莫大的讽刺。</p>
-<p>我突然想到一个指标用来判断网站好坏，阅读量。单位：人天。</p>
-<p>一个标准人一天的阅读量是固定的。假设阅读效率为s。一个人每天花t时间上网，那么整天阅读量 R 就是：</p>
-<p>R = s x t</p>
-<p>如果一个网站每天更新的内容超过了 …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2012-10-30T21:22:00+00:00">2012-10-30</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
