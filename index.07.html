@@ -53,6 +53,40 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/84684285685"  rel="bookmark" >
+              <h2 class="card-title">Haskell, Ruby, Python, Nodejs如何把一个句子的词语倒序</h2>
+            </a>
+            <p class="card-text"><p>Haskell:   </p>
+<pre><code>unwords . reverse . words $ sentence
+</code></pre>
+<p>Ruby:   </p>
+<pre><code>sentence.split.reverse.join ' '
+</code></pre>
+<p>Python:   </p>
+<pre><code>" ".join(reversed(sentence.split()))
+</code></pre>
+<p>Node.js:    </p>
+<pre><code>var EventEmitter = require('events').EventEmitter;
+
+var emitter = new EventEmitter();
+
+emitter.on('got sentence', function(sentence) {
+    emitter.emit('split sentense', sentence.split(' '));
+});
+emitter.on('split sentense', function(splitted) {
+    emitter.emit('reversed', splitted.reverse());
+});
+emitter …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2014-05-04T00:05:00+00:00">2014-05-04</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/84292694490"  rel="bookmark" >
               <h2 class="card-title">蓝翔技校的黑阔暴露了</h2>
             </a>
@@ -445,22 +479,6 @@ for vec in permutations(cols):
     "cmd": ["go …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-12-02T01:25:18+00:00">2013-12-02</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/68445610297"  rel="bookmark" >
-              <h2 class="card-title">SSRF - 看了这个slides，再也不相信procfs里的fd了</h2>
-            </a>
-            <p class="card-text"><iframe src="http://www.slideshare.net/slideshow/embed_code/15264310" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen> </iframe>
-
-<p><div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/d0znpp/ssrf-attacks-and-sockets-smorgasbord-of-vulnerabilities" title="SSRF attacks and sockets: smorgasbord of vulnerabilities" target="_blank">SSRF attacks and sockets: smorgasbord of vulnerabilities</a> </strong> from <strong><a href="http://www.slideshare.net/d0znpp" target="_blank">Ivan Novikov</a></strong> </div></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-11-29T03:02:37+00:00">2013-11-29</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
