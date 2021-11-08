@@ -53,6 +53,50 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/34741235628"  rel="bookmark" >
+              <h2 class="card-title">Miracast, DLNA</h2>
+            </a>
+            <p class="card-text"><p>终于搞清楚了几个概念。</p>
+<p>DLNA是一套基于UPnP的4层协议，基于HTTP+SOAP的，是Sony在2004年提出的。</p>
+<p>有如下几个角色：</p>
+<ul>
+<li>Digital Media Server (DMS) 存储内容，供pull</li>
+<li>Digital Media Player (DMP) 播放pull下来的内容</li>
+<li>Digital Media Renderer (DMR) 接受push的内容并播放</li>
+<li>Digital Media Controller (DMC) 远程遥控，播放/暂停/音量 等</li>
+</ul>
+<p>DLNA没有去实现屏幕镜像。主要用于内容传输和播放。</p>
+<p>Miracast是Android 4.2搞的，基于Wifi Direct技术</p>
+<p>简单的说，就是同一个wifi AP下完成协议握手，然后两个设备之间wifi信号直连。这样效率高实时传输无延迟。Miracast也包含了DLNA的设备发现功能，和视频播放能力，但同时：</p>
+<ul>
+<li>不支持纯音频（比如无线音箱）设备（见 …</li></ul></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-10-31T23:21:00+00:00">2012-10-31</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/34679157351"  rel="bookmark" >
+              <h2 class="card-title">用tcmalloc代替glibc的malloc()。无须重编译</h2>
+            </a>
+            <p class="card-text"><p>据说这样就行了</p>
+<pre><code>$ LD_PRELOAD="/usr/lib/libtcmalloc.so"
+</code></pre>
+<p><a href="http://news.ycombinator.com/item?id=4719705">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-10-30T22:40:12+00:00">2012-10-30</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/34673796115"  rel="bookmark" >
               <h2 class="card-title">The Web Is A Mess</h2>
             </a>
@@ -411,48 +455,6 @@ get_id = lambda s: s + '1X864209753'[int(s, 13) % 11]
 : &gt;&gt;&gt; get_id = lambda s: s …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-09-17T21:38:00+00:00">2012-09-17</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/31766533896"  rel="bookmark" >
-              <h2 class="card-title">人类花几个月工资买几克拉的碳晶体弱爆了</h2>
-            </a>
-            <p class="card-text"><p>钻石其实是宇宙中——最常见的晶体之一。。。本来应该非常便宜，但是价格是人为捧高的。</p>
-<p>毛子在70年代发现了一个陨石坑。。。。。。。。。。大概有<a href="http://www.csmonitor.com/World/Global-News/2012/0917/Russia-reveals-shiny-state-secret-It-s-awash-in-diamonds">几万亿克拉的钻石</a>。。。</p>
-<p>世界上：</p>
-<p>最稀有的宝石top 10: <br />
-Jeremejevite, Black Opal, Red Beryl Emerald, Musgravite, Grandidierite, Painite, Blue Garnet, Serendibite, Red Diamonds, Jadeite</p>
-<p>最贵重的金属top 10:<br />
-Indium, Silver, Rhenium, Palladium, Osmium, Iridium, Ruthenium, Gold, Platinum, Rhodium</p>
-<p>Rhodium就是铑，Two.And.A.Half.Men.S09E10里边Walden的那颗价值不菲的铂铑戒指。。。但是这货2007年价格崩了，从$10,000/oz垮到$1 …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2012-09-17T21:04:00+00:00">2012-09-17</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/31703069009"  rel="bookmark" >
-              <h2 class="card-title">iPhone 5/HTC One X/Galaxy S III 性能跑分之geekbench</h2>
-            </a>
-            <p class="card-text"><p>iPhone 5 1601分<br />
-<a href="http://browser.primatelabs.com/geekbench2/1030202">http://browser.primatelabs.com/geekbench2/1030202</a></p>
-<p>HTC One X 1697分<br />
-<a href="http://browser.primatelabs.com/geekbench2/989732">http://browser.primatelabs.com/geekbench2/989732</a></p>
-<p>Galaxy S III 1781分<br />
-<a href="http://browser.primatelabs.com/geekbench2/1026099">http://browser.primatelabs.com/geekbench2/1026099</a></p>
-<p>值得注意的是，iPhone 5的内存和stream IO性能屌爆了。Android被爆出翔了。</p>
-<p><a href="http://news.ycombinator.com/item?id=4530188">via</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2012-09-16T21:45:00+00:00">2012-09-16</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

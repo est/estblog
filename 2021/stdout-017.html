@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>reverse proxy FastCGI (fcgi) with uWSGI - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="reverse proxy FastCGI (fcgi) with uWSGI" />
+
+
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">reverse proxy FastCGI (fcgi) with uWSGI</h2>
+    <p class="post-date">Posted <time datetime="2021-11-05T18:12:45+00:00">2021-11-05</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>People are still using FastCGI, and it's hard. I used uWSGI to convert FCGI traffic to regular http/1.0 so I can keep my existing http service running without apache mod_fcgi shit.</p>
+<h2>CGI environ variables</h2>
+<p>This is some ancient knowledge, better keep them noted</p>
+<p>|  KEY       |  description  |<br />
+|---|-----------|--------|<br />
+| AUTH_TYPE    | ignore this | <br />
+| REMOTE_IDENT     | The user making the request. | <br />
+| REMOTE_USER  | The authenticated name of the user making the query. | <br />
+| CONTENT_LENGTH   | byte length of body | <br />
+| CONTENT_TYPE     | MIME such as text/html, without the charset shit| <br />
+| DOCUMENT_ROOT    | NEW. The directory from which web documents are served. | <br />
+| REQUEST_URI  | NEW. confusing shit similar with PATH_INFO |<br />
+| HTTP_*  | HTTP headers | <br />
+| PATH_INFO    | like /a/b/c | <br />
+| PATH_TRANSLATED  | not really used | <br />
+| QUERY_STRING     |  the part after ? in an URL | <br />
+| REMOTE_ADDR  | client IP | <br />
+| REMOTE_HOST  | client host name by lookup ip | <br />
+| REQUEST_METHOD   | GET/POST | <br />
+| SCRIPT_NAME  | The virtual path (e.g., /cgi-bin/program.pl) of the script being executed. | <br />
+| SCRIPT_FILENAME | confusing shit similar with SCRIPT_NAME |<br />
+| SERVER_NAME  | The server's hostname or IP address. | <br />
+| SERVER_PORT  | The port number of the host on which the server is running. | <br />
+| SERVER_PROTOCOL  | The name and revision number of the server protocol. | </p>
+<h2>reverse proxy FastCGI with uWSGI</h2>
+<p>slap this into <code>my_conf.ini</code></p>
+<pre><code>[uwsgi]
+my_port = 9000  # can be set otherwise
+route-run = addvar:SERVER_NAME=%h
+route-run = addvar:SERVER_PORT=%(my_port)
+route-if  = empty:${REQUEST_METHOD} addvar:REQUEST_METHOD=GET
+route-if  = empty:${HTTP_HOST} addvar:HTTP_HOST=%h:%(my_port)
+route-run = seturi:/fcgi-proxy${PATH_INFO}
+route-run = http:127.0.0.1:9527
+fastcgi-socket = 0.0.0.0:%(my_port)
+http-socket = 0.0.0.0:8000  # for testing purpose.
+</code></pre>
+<p>Install uWSGI, install the binary from pypi wheels instead of compiling uwsgi.c shit</p>
+<pre><code>pip install pyuwsgi
+</code></pre>
+<p>Run it</p>
+<pre><code>uwsgi --ini my_conf.ini
+</code></pre>
+<p>Now you can run your regular http service behind <code>127.0.0.1:9527</code>, while serving fcgi on <code>127.0.0.1:9000</code></p>
+<p>Requests like <code>fcgi://127.0.0.1:9000/hello</code> will be fowwarded to <code>http://127.0.0.1:9527/fcgi-proxy/hello</code></p>
+<p>You may ask why adding a <code>/fcgi-proxy</code> in path? Because there's a gotcha.</p>
+<h2>fuckedup FastCGI requests</h2>
+<p>Learned this from some php-fpm tutorial, first install the standard fcgi client tool because <code>curl</code> doesn't speak fcgi.</p>
+<pre><code>apt-get install libfcgi0ldbl
+yum --enablerepo=epel install fcgi
+SCRIPT_NAME=/ping SCRIPT_FILENAME=/ping REQUEST_METHOD=GET cgi-fcgi -bind -connect 127.0.0.1:9000
+</code></pre>
+<p>You can observe from uWSGI logs that <code>cgi-fcgi</code> command sends flawed requests, the <code>PATH_INFO</code> was unset.</p>
+<p>After hours wasted, I came up with a clever hack to force uWSGI's internal router to force <code>seturi</code> with a path prefix</p>
+<h2>ToDo</h2>
+<p>There are further problems that can be improved, for example, my http service is running <code>uvicorn</code>, it can not guess the client ip:port infor from its stupid <code>get_remote_addr</code></p>
+<p>what's worse, the uWSGI <code>addheader</code> directive are for <em>responses</em>, so I can't add that to <code>x-forwared-for</code>.</p>
+<p>Also the reverse proxy is HTTP/1.0 only. to make the <code>Connection: Keep-alive</code> happen needs some further work.</p>
+<h2>Q&amp;A</h2>
+<p>Thanks for reading my shitpost. You can ask me questions in the comments section.</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2021/stdout-017';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

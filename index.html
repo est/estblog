@@ -74,6 +74,25 @@ For example:<br />
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2021/stdout-017"  rel="bookmark" >
+              <h2 class="card-title">reverse proxy FastCGI (fcgi) with uWSGI</h2>
+            </a>
+            <p class="card-text"><p>People are still using FastCGI, and it's hard. I used uWSGI to convert FCGI traffic to regular http/1.0 so I can keep my existing http service running without apache mod_fcgi shit.</p>
+<h2>CGI environ variables</h2>
+<p>This is some ancient knowledge, better keep them noted</p>
+<p>|  KEY       |  description  |<br />
+|---|-----------|--------|<br />
+| AUTH_TYPE    | ignore this …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-11-05T18:12:45+00:00">2021-11-05</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2021/stdin-012"  rel="bookmark" >
               <h2 class="card-title">20211102币圈的古诗词大会</h2>
             </a>
@@ -117,6 +136,29 @@ Humankind
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-11-02T22:46:55+00:00">2021-11-02</time></p>
 <p>stdin</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/2021/stdout-018"  rel="bookmark" >
+              <h2 class="card-title">淘宝同一手机最多绑定6个小号</h2>
+            </a>
+            <p class="card-text"><p>总结一些没用的知识</p>
+<ol>
+<li>
+<p>淘宝/阿里账号，可以一个手机最多绑定6个账号。淘宝注册的时候点击「企业注册」然后用邮箱注册，最后用同一个手机验证即可</p>
+</li>
+<li>
+<p>「支付宝」在淘宝/阿里系里app里是和「账号」一一绑定的，这就产生了很多冲突。比如你一个第三方外卖app，支付的时候可以选择 微信/支付宝，一般不会限制下单手机号和支付手机号是否一样，你甚至可以帮别人支付订单，但是淘宝/阿里的app不一样，只能自己账号支付自己账号的订单。如果你有两个手机号和两个支付宝账号，那么没法交叉支付。</p>
+</li>
+</ol>
+<p>还有一个想不起了，想起了再补充。2333</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-10-28T16:21:23+00:00">2021-10-28</time></p>
+<p>stdout</p>            </div>
           </article>
         </div>
 
@@ -614,50 +656,6 @@ TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh …</code></pre
 <p>TCP_CONNECTIONTIMEOUT  The TCP_CONNECTIONTIMEOUT option allows to specify the timeout, in seconds, for new …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-07-02T15:51:19+00:00">2021-07-02</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202106/stdout-008"  rel="bookmark" >
-              <h2 class="card-title">MySQL on duplicate key in SQLAlchemy</h2>
-            </a>
-            <p class="card-text"><p>A simple function to upsert something atomically into MySQL</p>
-<pre><code>def upsert(val1, val2, **kwargs):
-    """upsert val1-val2 pair into mysql and return the pk"""
-    from sqlalchemy.dialects.mysql import insert
-    from sqlalchemy.sql.expression import func
-
-    # this val1-val2 pair should have UNIQUE KEY constraint in MySQL table.
-    stmt = insert(MyModel.__table__ …</code></pre></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-06-29T11:55:13+00:00">2021-06-29</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202106/stdout-007"  rel="bookmark" >
-              <h2 class="card-title">古墓丽影9（Tomb Raider 2013）治3D眩晕必备FOV补丁+禁镜头晃动</h2>
-            </a>
-            <p class="card-text"><p>断断续续把<a href="https://steamcommunity.com/id/electronixtar/recommended/203160">买</a>的<a href="https://store.steampowered.com/app/203160/Tomb_Raider/">古墓丽影9</a>打完了。这款2013年的游戏放在今天看也很不错。</p>
-<p>唯一的巨大问题就是3D头晕。网上找了一些办法。</p>
-<h3>禁止镜头晃动</h3>
-<p>虽然故事和镜头都很好，但是这晃动太烦人了，很容易头晕。值得庆幸的是 PC 平台可以彻底根治这问题。下载 <a href="https://community.pcgamingwiki.com/files/file/1166-tomb-raider-2013-yamatai-patch/">Yamatai Patch</a>。按图修改</p>
-<p><img alt="" src="/images/2021/stdout-007-1.png" /></p>
-<h3>增大 FOV</h3>
-<p>这是多年的经验。头晕的主要问题就是视野太窄。</p>
-<p>去下载 <a href="https://cheatengine.org/">Cheat Engine</a> 安装并打开，然后下载<a href="https://community.pcgamingwiki.com/files/file/1148-tomb-raider-2013-fov-cheat-table/">内存修改表</a>，按图修改。</p>
-<p><img alt="" src="/images/2021/stdout-007-2.jpg" /></p>
-<p>以上修改都需要有管理员权限并且保证游戏正在进行中。顺便说下 Yamatai patch 还可以治好 Lara Croft 胸部发育不良的毛病。好顶赞！</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-06-26T14:32:36+00:00">2021-06-26</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
