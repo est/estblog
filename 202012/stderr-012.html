@@ -62,7 +62,14 @@ for f in $(ls -rt .); do python -c 'm=__import__("re").search(r"product-title\"&
 <p>得到下面的表格：</p>
 <style type="text/css" id="pre-table">
     style#pre-table + table{
-        font-size: 65%;
+        font-size: 80%;
+        line-height: 1;
+    }
+    style#pre-table + table td,th {
+        padding: 0.1em 0.3em;
+    }
+    style#pre-table + table thead tr th:last-child{
+        width: 30%;
     }
 </style>
 
