@@ -51,6 +51,33 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/56422892861"  rel="bookmark" >
+              <h2 class="card-title">Google ChromeCast的问题</h2>
+            </a>
+            <p class="card-text"><p>目前我觉得的问题：</p>
+<ol>
+<li>授权问题：</li>
+</ol>
+<blockquote>
+<p>You may not publicly distribute or ship your Google Cast application without written permission from Google, per the terms of service described below</p>
+</blockquote>
+<ol start="2">
+<li>无论是pad/phone通过wifi，还是红外遥控，延迟是否巨大？</li>
+<li>是否支持外挂字幕？.ass 特效字幕？</li>
+<li>是否支持音频输出？</li>
+<li>是否支持HDMI passing through</li>
+</ol>
+<p>同时，我越来越觉得Google像Microsoft了。很多 NIH 综合症。Airplay不支持也就算了，现有的Miracast，DLNA都被华丽的无视了。非得自己搞个专有的websocket协议。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-07-25T09:17:50+00:00">2013-07-25</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/55847613758"  rel="bookmark" >
               <h2 class="card-title">菊花塞个涡喷发动机 + 滑雪</h2>
             </a>
@@ -460,28 +487,6 @@ $ brew install rtlsdr gr-osmosdr …</code></pre></p>
     at Lv …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-05-21T09:18:42+00:00">2013-05-21</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/50975299198"  rel="bookmark" >
-              <h2 class="card-title">Python zfec howto/example</h2>
-            </a>
-            <p class="card-text"><p>To install</p>
-<pre><code>$ pip install zfec
-</code></pre>
-<p>Suppose I have two blocks of data and want a third block as redundancy</p>
-<pre><code>&gt;&gt;&gt; zfec.Encoder(2, 3).encode(['ab', 'cd'])
-['ab', 'cd', 'en']
-&gt;&gt;&gt; zfec.Decoder(2, 3).decode(['ab', 'cd', ], [0, 1])
-['ab', 'cd']
-# somehow lost the second block, use the third block the …</code></pre></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-05-21T03:07:00+00:00">2013-05-21</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
