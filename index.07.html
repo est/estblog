@@ -51,6 +51,69 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/93106779235"  rel="bookmark" >
+              <h2 class="card-title">Java 的本质[ZZ]</h2>
+            </a>
+            <p class="card-text"><p>发信人: nimi (泥股拉不二八雞), 信区: Java <br />
+标  题: Java 的本质 <br />
+发信站: 水木社区 (Thu Jul 24 00:02:37 2014), 站内   </p>
+<p>==请勿对号入座==   </p>
+<p>Java 在业界得到广泛应用理所当然，因为再也找不到更好的异化奴役程序员的编程语言。   </p>
+<p>OO，Frameworks，IOC，你的代码不再是你的，甚至连 main 函数都不是你的。在框架底下你就是一颗螺丝钉，随时等待着被回收。   </p>
+<p>每天打开公司帮你配好的 IDE，调用指定的库，遵循一堆咒语般的 patterns。默默无闻的螺丝钉，即使是名校毕业，也不再用思考。为什么这里要这么写？这里框架到底做了什么？谁知道呢？就算读完 500 页的文档也找不到答案。管他呢。   </p>
+<p>久而久之，自己也变成了这个系统里的一员，张口闭口也是各种架构 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2014-07-28T08:30:00+00:00">2014-07-28</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/92537193330"  rel="bookmark" >
+              <h2 class="card-title">iOS后门笔记</h2>
+            </a>
+            <p class="card-text"><p>lockdownd的tcp端口62078，文档 libimobiledevice.org，厂家有Cellebrite，AccessData (Mobile Phone Examiner)，Elcomsoft</p>
+<p>com.apple.pcapd  抓包服务</p>
+<p>com.apple.mobile.file_relay 文件传输服务。就不说文件了，SQLite库，Voicemail（AMR格式）等啥都包括了。甚至最后一次键盘拼写自动修正是什么单词！一开始是iTunes用来传输用的。</p>
+<p>其他自动启动服务：</p>
+<p>com.apple.iosdiagnostics.relay 统计app数据上网流量</p>
+<p>com.apple.mobile.installation_proxy 企业证书安装app的</p>
+<p>com.apple.syslog_relay 用来NSLog()的</p>
+<p>iOS 7做了一个重要的安全改进：不能连接到localhost或者本地IP了。比如localhost:62078</p>
+<p>如何在Info.plist指定后台运行的app</p>
+<pre><code>&lt;key …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2014-07-22T11:14:54+00:00">2014-07-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/92489743305"  rel="bookmark" >
+              <h2 class="card-title">Python的Dictzip实现</h2>
+            </a>
+            <p class="card-text"><p>https://github.com/CGATOxford/cgat/blob/master/CGAT/dictzip.py</p>
+<p>http://code.google.com/p/pytoolkits/source/browse/trunk/utils/stardict/dictzip.py</p>
+<p>http://code.google.com/p/idzip/source/browse/idzip/decompressor.py</p>
+<p>另外有两个库提供了很吊的gzip和bz2 random access</p>
+<p>http://svn.ghostscript.com/ghostscript/tags/zlib-1.2.3/examples/zran.c</p>
+<p>https …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2014-07-21T22:15:43+00:00">2014-07-21</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/91924699155"  rel="bookmark" >
               <h2 class="card-title">if you don't read</h2>
             </a>
@@ -398,76 +461,6 @@ catch KeyError:
 <p><a href="https://news.ycombinator.com/item?id=6991309">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2014-01-01T01:01:42+00:00">2014-01-01</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/71512957062"  rel="bookmark" >
-              <h2 class="card-title">mptcp一些乱猜想</h2>
-            </a>
-            <p class="card-text"><p>很老的一个新闻了 <a href="http://appleinsider.com/articles/13/09/20/apple-found-to-be-using-advanced-multipath-tcp-networking-in-ios-7">ios7 支持 multipath tcp</a></p>
-<p><img alt="" src="http://cdn1.appleinsider.com/13.09.20-Multipath_TCP.jpg" /></p>
-<p><a href="http://www.slashroot.in/what-tcp-multipath-and-how-does-multipath-tcp-work">原理</a>也很简单，就是个inverse  multiplexer</p>
-<p><img alt="" src="http://www.slashroot.in/sites/default/files/Multipath%20TCP%20handshake.png" /></p>
-<p>我越来越觉得现在技术变化太快了。</p>
-<p>比如nginx现在就不支持MPTCP。假设一个客户端下载一个MP3文件，经历了有线 -&gt; WIFI -&gt; 3G 三个步骤，那么access_log该怎么记录呢？记录几个IP呢？是否需要记录channel join和 断开时间呢？</p>
-<p>太多了问题了。</p>
-<p>感叹python再不拥抱realtime web就要被node和go淘汰了 :)</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-12-29T07:00:12+00:00">2013-12-29</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/69464913766"  rel="bookmark" >
-              <h2 class="card-title">8皇后问题 - python解</h2>
-            </a>
-            <p class="card-text"><p>看到<a href="http://www.newsmth.net/bbscon.php?bid=284&amp;id=109693">javaboy在python版的发言</a> 然后发现<a href="http://rosettacode.org/wiki/N-queens_problem#Python">Raymond Hettinger的解</a></p>
-<pre><code>from itertools import permutations
-
-n = 8 # number of bitches
-cols = range(n)
-for vec in permutations(cols):
-    if n == len(set(vec[i]+i for i in cols)) \
-         == len(set(vec[i]-i for i in cols)):
-        print ("\n".join('.' * i + 'Q' + '.' * (n-i-1) for i …</code></pre></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-12-09T01:34:00+00:00">2013-12-09</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/69161031446"  rel="bookmark" >
-              <h2 class="card-title">疑Google员工把8w行Python项目用4w行Java重写了</h2>
-            </a>
-            <p class="card-text"><p>看发帖IP是亮点。后面后贴的一堆喷子。   </p>
-<p>发信人: daluobu (阿土仔), 信区: Python    <br />
-标  题: 终于把一个8万行的Python程序用Java重写了    <br />
-发信站: 水木社区 (Fri Dec  6 08:10:26 2013), 转信      </p>
-<p>在噩梦般地维护了一年多一个8万多行的Python程序之后，终于争取到机会把这个破烂玩意用Java重写了一遍，大概是4万行Java左右。说说效果吧：    <br />
-1. 从过去平均每周down一次，到现在连续运转近半年只down过一次。    <br />
-2. 节省超过80%的cpu和内存    <br />
-3. 代码多了很多功能，过去无数因为系统太复杂无法实现的功能现在都能简单清爽地实现了。    <br />
-4. 单元测试真管用了，不是过去那种把代码反过来写一遍的滥用mock了。  <br />
-前后代码都是同一个team写的，写代码的人都不是菜鸟（顶级公司的核心团队）区别只有语言和几年的经验积累。      </p>
-<p>总结一句话就是：动态语言滥用起来真是可怕      </p>
-<p>珍惜生命，远离Python。      </p>
-<p>--      </p>
-<p>※ 来源:·水木社区 http://newsmth.net·[FROM …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-12-06T05:50:00+00:00">2013-12-06</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

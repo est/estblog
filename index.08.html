@@ -51,6 +51,76 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/71512957062"  rel="bookmark" >
+              <h2 class="card-title">mptcp一些乱猜想</h2>
+            </a>
+            <p class="card-text"><p>很老的一个新闻了 <a href="http://appleinsider.com/articles/13/09/20/apple-found-to-be-using-advanced-multipath-tcp-networking-in-ios-7">ios7 支持 multipath tcp</a></p>
+<p><img alt="" src="http://cdn1.appleinsider.com/13.09.20-Multipath_TCP.jpg" /></p>
+<p><a href="http://www.slashroot.in/what-tcp-multipath-and-how-does-multipath-tcp-work">原理</a>也很简单，就是个inverse  multiplexer</p>
+<p><img alt="" src="http://www.slashroot.in/sites/default/files/Multipath%20TCP%20handshake.png" /></p>
+<p>我越来越觉得现在技术变化太快了。</p>
+<p>比如nginx现在就不支持MPTCP。假设一个客户端下载一个MP3文件，经历了有线 -&gt; WIFI -&gt; 3G 三个步骤，那么access_log该怎么记录呢？记录几个IP呢？是否需要记录channel join和 断开时间呢？</p>
+<p>太多了问题了。</p>
+<p>感叹python再不拥抱realtime web就要被node和go淘汰了 :)</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-12-29T07:00:12+00:00">2013-12-29</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/69464913766"  rel="bookmark" >
+              <h2 class="card-title">8皇后问题 - python解</h2>
+            </a>
+            <p class="card-text"><p>看到<a href="http://www.newsmth.net/bbscon.php?bid=284&amp;id=109693">javaboy在python版的发言</a> 然后发现<a href="http://rosettacode.org/wiki/N-queens_problem#Python">Raymond Hettinger的解</a></p>
+<pre><code>from itertools import permutations
+
+n = 8 # number of bitches
+cols = range(n)
+for vec in permutations(cols):
+    if n == len(set(vec[i]+i for i in cols)) \
+         == len(set(vec[i]-i for i in cols)):
+        print ("\n".join('.' * i + 'Q' + '.' * (n-i-1) for i …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-12-09T01:34:00+00:00">2013-12-09</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/69161031446"  rel="bookmark" >
+              <h2 class="card-title">疑Google员工把8w行Python项目用4w行Java重写了</h2>
+            </a>
+            <p class="card-text"><p>看发帖IP是亮点。后面后贴的一堆喷子。   </p>
+<p>发信人: daluobu (阿土仔), 信区: Python    <br />
+标  题: 终于把一个8万行的Python程序用Java重写了    <br />
+发信站: 水木社区 (Fri Dec  6 08:10:26 2013), 转信      </p>
+<p>在噩梦般地维护了一年多一个8万多行的Python程序之后，终于争取到机会把这个破烂玩意用Java重写了一遍，大概是4万行Java左右。说说效果吧：    <br />
+1. 从过去平均每周down一次，到现在连续运转近半年只down过一次。    <br />
+2. 节省超过80%的cpu和内存    <br />
+3. 代码多了很多功能，过去无数因为系统太复杂无法实现的功能现在都能简单清爽地实现了。    <br />
+4. 单元测试真管用了，不是过去那种把代码反过来写一遍的滥用mock了。  <br />
+前后代码都是同一个team写的，写代码的人都不是菜鸟（顶级公司的核心团队）区别只有语言和几年的经验积累。      </p>
+<p>总结一句话就是：动态语言滥用起来真是可怕      </p>
+<p>珍惜生命，远离Python。      </p>
+<p>--      </p>
+<p>※ 来源:·水木社区 http://newsmth.net·[FROM …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-12-06T05:50:00+00:00">2013-12-06</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/68859719896"  rel="bookmark" >
               <h2 class="card-title">1995年预言的互联网</h2>
             </a>
@@ -386,64 +456,6 @@ Also don't forget it places pressure on the rest …</p></blockquote></p>
 <p>http://www.mediatek.com …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-07-30T00:35:00+00:00">2013-07-30</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/56833809714"  rel="bookmark" >
-              <h2 class="card-title">alternate-protocol:80:quic</h2>
-            </a>
-            <p class="card-text"><p>今天发现youtube 的视频cache服务器支持UDP 上的 QUIC SPDY了。</p>
-<p>accept-ranges:bytes<br />
-alternate-protocol:80:quic<br />
-cache-control:private, max-age=24288<br />
-content-type:video/mp4</p>
-<p>好玩的是youtube的URL有：<br />
-fallback_host:tc.v11.cache6.c.youtube.com</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-07-29T21:30:21+00:00">2013-07-29</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/56693166618"  rel="bookmark" >
-              <h2 class="card-title">Google的代码质量</h2>
-            </a>
-            <p class="card-text"><p><img alt="" src="/images/tumblr/56693166618.png" /></p>
-<p>世界上的代码就没有不是面条形状的。</p>
-<p><a href="http://talks.golang.org/2013/oscon-dl.slide#21">via</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-07-28T11:00:28+00:00">2013-07-28</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/56475148693"  rel="bookmark" >
-              <h2 class="card-title">为什么很多机器不能升级Android 4.3 (4.0/4.x/ICS/JB)</h2>
-            </a>
-            <p class="card-text"><p>Android 4.3发布了。最好用的功能不是媒体报道的那些，而是可以<a href="http://www.reddit.com/r/Android/comments/1j10zq/app_ops_android_43s_hidden_app_permission_manager/">对每个app进行单独的权限设置</a></p>
-<p>今天在<a href="http://www.reddit.com/r/Android/comments/1j13xd/how_oems_havent_announced_43_updates_for_the/">reddit上看到一个帖子</a>，解释了为啥很多Android机器不提供ICS和JB升级，我蛋痛，所以就来翻译下：</p>
-<ul>
-<li>OEM不直接从Google得到Android的源码</li>
-<li>做SoC芯片的厂商可以从Google得到源码，然后开发BSP(Board Support Package)。里边包含了驱动和优化</li>
-<li>BSP就交付给OEM厂商，厂商就可以给设备发布Android升级包。</li>
-</ul>
-<p>所以。现在的手机厂商都在等SoC厂商发布Android 4.3 BSP</p>
-<p>例如，高通(Qualcomm)前不久宣布对Snapdragon S3芯片放弃Android 4.2.2的BSP开发。所以HTC就不得不宣布 One S 不再有升级。骚尼(Sony)的Xperia S, SL, Acro S 和 ION 同理。因为都是基于 S3 SoC …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-07-25T21:34:00+00:00">2013-07-25</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

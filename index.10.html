@@ -51,6 +51,71 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/51872792337"  rel="bookmark" >
+              <h2 class="card-title">bluetooth dongle blacklist otg android linux</h2>
+            </a>
+            <p class="card-text"><p>贪便宜去淘宝买了个10元的USB蓝牙适配器</p>
+<p>一查：Cambridge Silicon Radio Ltd</p>
+<p>USB\VID_0A12&amp;PID_0001&amp;REV_1989</p>
+<p>结果linux内核屏蔽了这个设备。</p>
+<p>http://lxr.free-electrons.com/source/drivers/bluetooth/btusb.c?v=3.0#L96</p>
+<pre><code>static struct usb_device_id blacklist_table[] = {
+    /* CSR BlueCore devices */
+    { USB_DEVICE(0x0a12, 0x0001), .driver_info = BTUSB_CSR },
+</code></pre>
+<p>所以如果你也有CSR芯片(BlueCore® BC7820™)的蓝牙，那么恭喜你，Android OTG和Linux都没法用。</p>
+<p>当时觉得悲剧了。<a href="http://www.slatedroid.com/topic/46457-bluetooth-dongle/page__view__findpost__p__504113">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-06-01T06:12:00+00:00">2013-06-01</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/51282970824"  rel="bookmark" >
+              <h2 class="card-title">绿色版JRE</h2>
+            </a>
+            <p class="card-text"><p>Windows下一些程序打包进了JRE</p>
+<p>一些没有。</p>
+<p>对于没有的，可以共享嘛。导入下边的注册表</p>
+<pre><code>Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\JavaSoft\Java Runtime Environment\1.6]
+"JavaHome"="D:\\Media\\images\\yEd\\jre"
+"RuntimeLib"="D:\\Media\\images\\yEd\\jre\\bin\\client\\jvm.dll"
+</code></pre>
+<p>这样就可以公用JRE了。</p>
+<p><a href="http://www.cnblogs.com/shenhaocn/archive/2010/04/08/1707729.html">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-05-25T01:31:00+00:00">2013-05-25</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/50987189916"  rel="bookmark" >
+              <h2 class="card-title">Google Plus is a piece of crap</h2>
+            </a>
+            <p class="card-text"><p>That's what happens when you put together a bunch of Indian PM and Indian coders</p>
+<pre><code>trace:CustomError
+    at new Wza (https://plus.google.com/_/scs/apps-static/_/js/k=oz.home.en.MM2nmUD9sr4.O/m=b,s/am=AAHhGADElx2FYAJBBsgAAIAxAB-ggWQIklGAYP7_-397BHABAAAC/rt=h/d=1/rs=AItRSTN8InaGcWBwBsF5rTap5RX6vnBjtw:607:24)
+    at Lv …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-05-21T09:18:42+00:00">2013-05-21</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/50975299198"  rel="bookmark" >
               <h2 class="card-title">Python zfec howto/example</h2>
             </a>
@@ -413,60 +478,6 @@ port_auxiliary=8000   </p>
 <p>集群规模越来越大，最后发现确实搞不定了，一边开始上各种歪招，比如云梯居然在优化jvm；另一方面开始组织力量研发自己的系统，后者三大互联网公司貌似都尝试过 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-04-10T23:45:00+00:00">2013-04-10</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/47665235603"  rel="bookmark" >
-              <h2 class="card-title">Google Street View Hyperlapse</h2>
-            </a>
-            <p class="card-text"><iframe src="http://player.vimeo.com/video/63653873" width="400" height="300" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-
-<p><a href="http://www.reddit.com/r/videos/comments/1bzvdt/incredible_hyperlapse_made_with_google_street_view/">via</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-04-10T21:21:10+00:00">2013-04-10</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/47664941306"  rel="bookmark" >
-              <h2 class="card-title">跟 @igrigorik 大神学前端</h2>
-            </a>
-            <p class="card-text"><p><a href="http://www.reddit.com/r/programming/comments/1c24s9/video_by_a_google_engineer_about_what_it_takes_to/">reddit上</a>看到的</p>
-<p>ppt在<a href="https://docs.google.com/presentation/d/1qbqqcfjz3YwocRZu2led3CzhjHjcTvvQVSYET0QYyL4/preview?sle=true#slide=id.gd101c179_2_64">这里 </a></p>
-<p>做点笔记：</p>
-<ol>
-<li>现代浏览器可以通过  performance.timing 看到载入和渲染时间记录。</li>
-<li>Chrome的pagespeed插件和audit工具很有用</li>
-<li>在线pagespeed <a href="https://developers.google.com/speed/pagespeed/insights">分析 critical path</a></li>
-</ol>
-<p>其实 @igrigorik 大神的<a href="http://www.igvita.com/">博客</a>和<a href="https://github.com/igrigorik?tab=repositories">github</a>有不少好东西！</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-04-10T21:17:00+00:00">2013-04-10</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/47527143469"  rel="bookmark" >
-              <h2 class="card-title">1915年，北京 盆糕 【老照片】</h2>
-            </a>
-            <p class="card-text"><p><img alt="" src="http://farm3.staticflickr.com/2756/4104642924_14e615c38f_z.jpg" /></p>
-<p>国内把切糕的英语翻译说成 Xinjiang glutinous rice cake, nut  cake，不如这个1915年照片名字起的好：Cake Of Millet &amp; Jujubes。感觉盆糕和切糕差不多？</p>
-<p>From <a href="http://www.flickr.com/photos/ralphrepo_photolog/4104642924/in/set-72157622725544786">Flickr</a> via <a href="http://www.reddit.com/r/China/comments/1bxhfr/in_light_of_the_popular_album_uploaded_a_few_days/">reddit</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-04-09T04:11:00+00:00">2013-04-09</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

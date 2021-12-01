@@ -51,6 +51,102 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/41166048787"  rel="bookmark" >
+              <h2 class="card-title">接触Datomic</h2>
+            </a>
+            <p class="card-text"><p>从<a href="http://news.ycombinator.com/item?id=5093037">HN</a>上看到过好多次 Datomic，但是今天才仔细看了下。</p>
+<p>看不到Infoq视频的可以看这里中文 <a href="http://www.infoq.com/cn/articles/Architecture-Datomic">Datomic的架构</a></p>
+<p>so far的一些观点：</p>
+<ul>
+<li>这货的Datom不就是典型的EAV设计么。带一个timestamp，不错。只是一般EAV的entity是类似一个class，而Datom的EAV只是一个flat展开的，entity仅仅作为类似PrimiaryKey的存在。</li>
+<li>(RDF Triple](http://www.w3.org/TR/rdf-concepts/#section-triples)跟EAV类似的思想，今天学习到了。主语 - 谓词 - 宾语 来表达数据</li>
+<li>这货的backend非常灵活，可以是传统SQL或NoSQL数据库。存储方式也可以localStorage或者MEM DB</li>
+<li>这货的query接口非常好，居然是用的Datalog。这种deductive思路跟Prolog一样都是很高阶的东西。</li>
+<li>因为Datom带了timestamp，所以数据DML模式不再是 CRUD，而是 CRA (Create Read Append)。好东西！这个就达到了data immutability。然后就可以被各种函数轮了。</li>
+<li>跟graph …</li></ul></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-01-21T22:23:00+00:00">2013-01-21</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/41061230598"  rel="bookmark" >
+              <h2 class="card-title">你熟悉的计算机语言是第几代的？</h2>
+            </a>
+            <p class="card-text"><p><a href="http://en.wikipedia.org/wiki/1GL">1GL</a> (First-generation programming language)</p>
+<p>机器语言 —— 就是传说中小刀刻光盘那哥们儿去美国之后发明的</p>
+<p><a href="http://en.wikipedia.org/wiki/Second-generation_programming_language">2GL</a>:</p>
+<ul>
+<li>汇编</li>
+</ul>
+<p><a href="http://en.wikipedia.org/wiki/Third-generation_programming_language">3GL</a>:</p>
+<ul>
+<li>Fortran</li>
+<li>COBOL</li>
+<li>Pascal</li>
+<li>C</li>
+<li>C++</li>
+<li>C#</li>
+<li>Java</li>
+<li>BASIC</li>
+<li>Delphi</li>
+<li>Ada</li>
+</ul>
+<p><a href="http://en.wikipedia.org/wiki/Fourth-generation_programming_language">4GL</a>:</p>
+<ul>
+<li>LabVIEW</li>
+<li>Progress 4GL (OpenEdge Advanced Business Language)</li>
+<li>SQL 和  PL/SQL</li>
+<li>MATLAB</li>
+<li>R</li>
+<li>Scilab</li>
+<li>XQuery</li>
+<li>XUL</li>
+<li>ColdFusion</li>
+</ul>
+<p><a href="http://en.wikipedia.org/wiki/Fifth-generation_programming_language">5GL</a></p>
+<ul>
+<li>Prolog</li>
+<li>Haskell</li>
+<li>ML</li>
+<li>Erlang</li>
+</ul>
+<p>虽然是一个过时的概念，还是拿出来玩一玩。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-01-20T20:20:03+00:00">2013-01-20</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/40724647124"  rel="bookmark" >
+              <h2 class="card-title">圣多美的Pico Cão Grande这座山碉堡了</h2>
+            </a>
+            <p class="card-text"><p><img alt="" src="/images/tumblr/40724647124_0.jpg" /></p>
+<p><img alt="" src="/images/tumblr/40724647124_1.jpg" /></p>
+<p><img alt="" src="/images/tumblr/40724647124_2.jpg" /></p>
+<p><img alt="" src="/images/tumblr/40724647124_3.jpg" /></p>
+<p><img alt="" src="/images/tumblr/40724647124_4.jpg" /></p>
+<p>一座300米高，拔地而起成jj状的山。。。。。。。。。。。。名字叫 Pico Cão Grande ，人称 大狗峰</p>
+<p>São Tomé and Príncipe 圣多美这个国家在沙哈拉以南，非洲大陆西边的一个岛上。</p>
+<p><a href="http://www.reddit.com/r/geography/comments/16p6yr/10_spectacular_volcanic_plugs_and_natural/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-01-16T20:16:00+00:00">2013-01-16</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/40669670540"  rel="bookmark" >
               <h2 class="card-title">Google的Chrome云太混乱了</h2>
             </a>
@@ -427,81 +523,6 @@ IdentitiesOnly yes
 <p>最后，让我们端起手中的热翔，为这片奇葩的土地翻开新的一页，干了它！</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-12-03T01:14:00+00:00">2012-12-03</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/37078448806"  rel="bookmark" >
-              <h2 class="card-title">如何用假象传播真话</h2>
-            </a>
-            <p class="card-text"><p>先看这个视频</p>
-<p><a href="http://news.cntv.cn/program/xinwenzhoukan/20120630/109536.shtml">http://news.cntv.cn/program/xinwenzhoukan/20120630/109536.shtml</a></p>
-<p>觉得这种骑车的够危险了吧。</p>
-<p>再看这个视频</p>
-<p><a href="http://www.56.com/u21/v_Nzc0NDQyMzQ.html">http://www.56.com/u21/v_Nzc0NDQyMzQ.html</a></p>
-<p>觉得这人是不是很傻比，为死飞辩护？</p>
-<p>而为什么死飞玩家会这么愤怒呢？</p>
-<blockquote>
-<p>某ccav记者，到成都，接触死飞玩家，说要帮助他们发扬死飞文化，请玩家们帮助拍摄一个短篇。  <br />
-按照记者的要求，死飞玩家们进行了表演，并且按照记者要求拍摄了一段在公路上车流里穿梭的视频。  <br />
-结果，节目播出后，是抨击死飞玩家不守交通规则的内容。    </p>
-</blockquote>
-<p>来自d版1091974贴。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2012-12-02T20:30:00+00:00">2012-12-02</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/36853096538"  rel="bookmark" >
-              <h2 class="card-title">断句换行是门艺术。艺术啊懂不懂</h2>
-            </a>
-            <p class="card-text"><p><img alt="" src="/images/tumblr/36853096538.png" /></p>
-<p>最后那个  (╯°□°）╯︵ ┻━┻  真是破坏这么好一片文章了。</p>
-<p>from <a href="http://www.economist.com/blogs/johnson/2012/11/language-internet">Economist</a> via <a href="http://www.reddit.com/r/linguistics/comments/1407fk/economist_linguistic_blog_mentions_reddit_and/">reddit</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2012-11-29T21:40:21+00:00">2012-11-29</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/36789501470"  rel="bookmark" >
-              <h2 class="card-title">context switching is expensive</h2>
-            </a>
-            <p class="card-text"><p>用了好几个chrome的time tracking扩展，用来跟踪我上网都把时间浪费在哪些网站上了。</p>
-<p>这几天的发现：</p>
-<ol>
-<li>1/5的时间没有被跟踪到，也就是说浪费在调整浏览器窗口，切换tab上了，或者等待loading上了。</li>
-<li>1/6的时间浪费在一个中心主题上，比如今天最有趣的某帖子</li>
-<li>1/4的时间浪费在“长尾”网站。零碎的时间</li>
-<li>参与回复一个帖子需要消耗至少2x的时间。嘴炮真是浪费时间啊。</li>
-</ol>
-<p>这是跟进程线程有点类似啊，context switching贵啊。。80%的核心任务其实只花20%左右时间。</p>
-<p>过几天有其他心得继续补充。目前发现比较准确的扩展是这个：</p>
-<p><a href="https://chrome.google.com/webstore/detail/web-timer/ggnjbdfgigejghknieofeahaknkjafim">https://chrome.google.com/webstore/detail/web-timer/ggnjbdfgigejghknieofeahaknkjafim</a></p>
-<p>其他扩展，要么跟踪不准确，比如一天下来只算了40多分钟的上网时间</p>
-<p>要么2年没更新了。</p>
-<p>其实这些扩展都不是很好，主要的问题是</p>
-<ol>
-<li>不知道是否是处于成功跟踪状态</li>
-<li>idle一段时间应该自动暂停跟踪，可能afk了。</li>
-<li>没有统计 untracked 时间有多长。</li>
-</ol>
-<p>我有点想挖个坑自己去轮这个了。最好的time tracker应该是7x24无侧漏全覆盖的 …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2012-11-28T23:13:00+00:00">2012-11-28</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

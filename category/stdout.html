@@ -51,6 +51,66 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2021/stdout-021"  rel="bookmark" >
+              <h2 class="card-title">Python 3.X ctypes 和 greenlet size changed 坑三则</h2>
+            </a>
+            <p class="card-text"><h2>安装 setup.py 的时候 <code>No module named '_ctypes'</code> 报错</h2>
+<p><code>Traceback (most recent call last):
+    File "&lt;string&gt;", line 1, in &lt;module&gt;
+    File "/usr/local/python3/lib/python3.9/site-packages/setuptools/__init__.py", line 18, in &lt;module&gt;
+      from setuptools.dist import Distribution
+    File "/usr/local/python3/lib/python3.9/site-packages/setuptools/dist …</code></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-12-01T17:41:32+00:00">2021-12-01</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/2021/stdout-020"  rel="bookmark" >
+              <h2 class="card-title">Edge调教指南——如何设置本地PAC代理和首页天气</h2>
+            </a>
+            <p class="card-text"><p>之前一直用的chrome v70，为什么呢？</p>
+<p>第一是这个老版本允许 <code>--proxy-pac-url="file:///Users/me/1.pac</code> 这样设置，但是<a href="https://bugs.chromium.org/p/chromium/issues/detail?id=839566">Chromium项目的大爷们觉得</a>你本地的.pac不够安全，要网上的.pac才安全，所以一刀切给禁了。当然有热心人士觉得这没啥大不了的。不外乎装个插件就可以切PAC。但是chrome插件其实会有一个fingerprint。Extension一启用，隔壁老王都知道你开代理了。</p>
+<p>第二，也是最重要的原因，这是最后一个chrome版本支持 <code>about://net-internals</code> 在本地查看浏览器底层网络请求。现在无论是 Edge 还是 Chrome 都必须把 .json 文件从 https://netlog-viewer.appspot.com/ 加载才能看了。很尼玛保护了隐私有没有啊。</p>
+<p>但是坚持老版本，也付出了巨大的代价。很多新的 ES 语法不支持，比如说 Grafana 最新版 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-11-30T11:32:33+00:00">2021-11-30</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/2021/stdout-019"  rel="bookmark" >
+              <h2 class="card-title">TiDB不支持JSON字段默认值</h2>
+            </a>
+            <p class="card-text"><p>继前面的<a href="/2021/stdout-011">日期不兼容</a>坑，又发现<a href="https://docs.pingcap.com/tidb/stable/data-type-default-values">一个</a></p>
+<blockquote>
+<p>The BLOB, TEXT, and JSON columns cannot be assigned a default value.</p>
+</blockquote>
+<p>虽然 <a href="https://dev.mysql.com/doc/refman/5.7/en/json.html">MySQL 5.7 也是这么说</a>的：</p>
+<blockquote>
+<p>A JSON column cannot have a non-NULL default value.</p>
+</blockquote>
+<p>但是 <a href="https://dev.mysql.com/doc/refman/8.0/en/data-type-defaults.html">MySQL 8.0.13 就支持指定默认值</a>了</p>
+<blockquote>
+<p>Prior to MySQL 8.0.13, a JSON column cannot have …</p></blockquote></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-11-19T09:14:28+00:00">2021-11-19</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2021/stdout-016"  rel="bookmark" >
               <h2 class="card-title">Chrome 指定域名解析，绕过 hosts</h2>
             </a>

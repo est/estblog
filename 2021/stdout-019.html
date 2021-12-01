@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TiDB不支持JSON字段默认值 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="TiDB不支持JSON字段默认值" />
+
+      <link rel="canonical" href="https://blog.est.im/2021/stdout-019" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">TiDB不支持JSON字段默认值</h2>
+    <p class="post-date">Posted <time datetime="2021-11-19T09:14:28+00:00">2021-11-19</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>继前面的<a href="/2021/stdout-011">日期不兼容</a>坑，又发现<a href="https://docs.pingcap.com/tidb/stable/data-type-default-values">一个</a></p>
+<blockquote>
+<p>The BLOB, TEXT, and JSON columns cannot be assigned a default value.</p>
+</blockquote>
+<p>虽然 <a href="https://dev.mysql.com/doc/refman/5.7/en/json.html">MySQL 5.7 也是这么说</a>的：</p>
+<blockquote>
+<p>A JSON column cannot have a non-NULL default value.</p>
+</blockquote>
+<p>但是 <a href="https://dev.mysql.com/doc/refman/8.0/en/data-type-defaults.html">MySQL 8.0.13 就支持指定默认值</a>了</p>
+<blockquote>
+<p>Prior to MySQL 8.0.13, a JSON column cannot have a non-NULL default value.<br />
+The default value specified in a DEFAULT clause can be a literal constant or an expression. With one exception, enclose expression default values within parentheses to distinguish them from literal constant default values. Examples:</p>
+</blockquote>
+<p>虽然语法很丑但是很实用啊。</p>
+<p>所以这种语句</p>
+<pre><code>ALTER TABLE mytable MODIFY COLUMN my_json JSON DEFAULT (json_object());
+</code></pre>
+<p>在 TiDB 里就没法支持。这也带来一个问题，就是要 upsert 这个 字段的时候，写起来就很拧巴，以 <code>peewee</code> 这个ORM为例：</p>
+<pre><code>MyTable.update({
+    'my_json' = fn.json_set(
+        fn.COALESCE(MyTable.my_json, Cast('{}', 'JSON')),
+        '%.some_key', 'some_value',
+)})
+</code></pre>
+<p>必须用 COALESCE 预防默认值为 <code>NULL</code> 的情况。太麻烦了。</p>
+<p>btw 玩MySQL/TiDB的 JSON 有个坑的，那就是 json 的 <code>null</code> 是有值的，和 sql 的 <code>NULL</code> 是不同的。</p>
+<p>也就是说</p>
+<pre><code>select json_extract('{}', '$.hey') IS NULL;
+select json_extract('{"hey": null}', '$.hey') = Cast('null' as JSON);
+</code></pre>
+<p>要注意。</p>
+<p>btw2 MySQL的JSON数据抽取 <code>-&gt;&gt;</code> 是返回真正的值，等价于TiDB里的 json_unquote(json_extract(t.json_field, '$.key1.key2'))</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2021/stdout-019';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>
