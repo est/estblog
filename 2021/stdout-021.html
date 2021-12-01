@@ -53,29 +53,32 @@
 
   
   <h2>安装 setup.py 的时候 <code>No module named '_ctypes'</code> 报错</h2>
-<p><code>Traceback (most recent call last):
-    File "&lt;string&gt;", line 1, in &lt;module&gt;
-    File "/usr/local/python3/lib/python3.9/site-packages/setuptools/__init__.py", line 18, in &lt;module&gt;
+<pre><code>  Traceback (most recent call last):
+    File &quot;&lt;string&gt;&quot;, line 1, in &lt;module&gt;
+    File &quot;/usr/local/python3/lib/python3.9/site-packages/setuptools/__init__.py&quot;, line 18, in &lt;module&gt;
       from setuptools.dist import Distribution
-    File "/usr/local/python3/lib/python3.9/site-packages/setuptools/dist.py", line 34, in &lt;module&gt;
+    File &quot;/usr/local/python3/lib/python3.9/site-packages/setuptools/dist.py&quot;, line 34, in &lt;module&gt;
       from setuptools import windows_support
-    File "/usr/local/python3/lib/python3.9/site-packages/setuptools/windows_support.py", line 2, in &lt;module&gt;
+    File &quot;/usr/local/python3/lib/python3.9/site-packages/setuptools/windows_support.py&quot;, line 2, in &lt;module&gt;
       import ctypes
-    File "/usr/local/python3/lib/python3.9/ctypes/__init__.py", line 8, in &lt;module&gt;
+    File &quot;/usr/local/python3/lib/python3.9/ctypes/__init__.py&quot;, line 8, in &lt;module&gt;
       from _ctypes import Union, Structure, Array
-  ModuleNotFoundError: No module named '_ctypes'</code></p>
+  ModuleNotFoundError: No module named '_ctypes'
+</code></pre>
+
 <p>解决办法是不要用 3.9。</p>
 <p>如果实在要用，则自己编译前需要加上 <code>yum install libffi-devel</code> 或者 <code>sudo apt-get install libffi-dev</code></p>
 <p>来自<a href="https://stackoverflow.com/a/48045929">SO</a></p>
 <h2><code>greenlet.greenlet size changed</code> 然后出错</h2>
-<p>```<br />
-/usr/local/lib/python3.7/importlib/_bootstrap.py:219: RuntimeWarning: greenlet.greenlet size changed, may indicate binary incompatibility. Expected 144 from C header, got 152 from PyObject<br />
-  return f(*args, <strong>kwds)<br />
-/usr/local/lib/python3.7/importlib/_bootstrap.py:219: RuntimeWarning: greenlet.greenlet size changed, may indicate binary incompatibility. Expected 144 from C header, got 152 from PyObject<br />
-  return f(*args, </strong>kwds)</p>
-<p>Segmentation fault (core dumped)<br />
-```<br />
-这个摘自<a href="https://github.com/gevent/gevent/issues/1260">官方 iseue</a></p>
+<pre><code>/usr/local/lib/python3.7/importlib/_bootstrap.py:219: RuntimeWarning: greenlet.greenlet size changed, may indicate binary incompatibility. Expected 144 from C header, got 152 from PyObject
+  return f(*args, **kwds)
+/usr/local/lib/python3.7/importlib/_bootstrap.py:219: RuntimeWarning: greenlet.greenlet size changed, may indicate binary incompatibility. Expected 144 from C header, got 152 from PyObject
+  return f(*args, **kwds)
+
+Segmentation fault (core dumped)
+</code></pre>
+
+<p>这个摘自<a href="https://github.com/gevent/gevent/issues/1260">官方 iseue</a></p>
 <blockquote>
 <p>On Python 3.7 and higher, gevent 20.9.0 is required to use (a standard build of) greenlet 0.4.17.</p>
 </blockquote>
