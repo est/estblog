@@ -51,6 +51,25 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/202009/stdout-008"  rel="bookmark" >
+              <h2 class="card-title">javascript 一句话算农历</h2>
+            </a>
+            <p class="card-text"><p>同步发帖在 <a href="https://www.v2ex.com/t/705897">v2ex</a></p>
+<p>今天发现 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl">Intl</a> 这个 ECMAscript 内置对象，可以一句话算农历。</p>
+<pre><code>new Date().toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)\s*?年/, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子丑寅卯辰巳午未申酉戌亥".charAt((y-4)%12))
+</code></pre>
+<p>算农历最麻烦就是跨年。这个 API 处理得还挺好的。比如2020年1月的除夕夜+春节</p>
+<pre><code>new Date(2020, 0, 24).toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)年 /, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子丑寅卯辰巳午未申酉戌亥".charAt …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2020-09-10T22:39:01+00:00">2020-09-10</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/202008/stdin-008"  rel="bookmark" >
               <h2 class="card-title">策略性同理心：小孩哭闹不穿衣服怎么办</h2>
             </a>
@@ -466,32 +485,6 @@
 <li>中药的精髓是道地药材。比如2018年人民日报报道 …</li></ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-02-22T00:26:16+00:00">2020-02-22</time></p>
-<p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202002/stderr-002"  rel="bookmark" >
-              <h2 class="card-title">后工业化时代的老师，和主播应该是同一类职业</h2>
-            </a>
-            <p class="card-text"><p>最近新冠病毒带来的疫情，导致很多家庭被隔离在家，包括我。小孩都不能上课，一些中学、高中纷纷开始网课。</p>
-<p>今晚微信朋友圈里传播一个截图，英语老师，网课上完之后忘记关直播了，听上去就是跟男友开始嘿咻嘿咻，结果学生的小弟弟一个一个都震惊了。</p>
-<p><img alt="仙桃一中教学事故" src="/images/2020/stder-002-1.jpg" /></p>
-<p>话说回来，其实可能大多数人都觉得老师变身主播怪怪的，我这几天也在思考这个问题。先说我的观点结论</p>
-<ul>
-<li>直播才是教育的本质。</li>
-<li>教师和主播应该是同一类职业</li>
-<li>或许21世纪，正经的职业就是主播——这个观点是罗辑思维的。我比较赞同。</li>
-</ul>
-<p>其实近现代学校不是一个常见的社会机构。古人猿时代，都是氏族群居，集体扶养后代。甚至小孩不能分辨自己的父亲是谁。</p>
-<p>由于没有避孕措施，人们定居或者游牧的生活里，一般小孩根本没有受教育的机会，稍微长大就要干活，大的带小的。子承父业，家族传承，比如英语 Smith 就表示祖宗是个匠人。</p>
-<p>就算现在的印度的种姓制度，也是跟职业挂钩的，其实就等同一个受教育范围选择器。中国就算在明朝也有军籍、贱籍的继承制。</p>
-<p>由于子嗣众多，中世纪的贵族和上流社会，城堡领主一般会让孩子去别的城堡学习长大；中国的士大夫阶层，会有私塾，让教书先生来教育一个最有学习潜力的。其他的可能喜欢体力的，喜欢武术的，喜欢经商的 …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2020-02-11T21:24:55+00:00">2020-02-11</time></p>
 <p>stderr</p>            </div>
           </article>
         </div>

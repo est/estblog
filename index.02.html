@@ -51,6 +51,65 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2021/stdout-011"  rel="bookmark" >
+              <h2 class="card-title">TiDB 的日期比较和 MySQL 不兼容</h2>
+            </a>
+            <p class="card-text"><p>MySQL的</p>
+<pre><code>&gt; select VERSION()
++-----------+
+| VERSION() |
++-----------+
+| 8.0.15-6  |
++-----------+
+
+
+&gt; select NOW() &gt; '';
++------------+
+| NOW() &gt; '' |
++------------+
+| 1          |
++------------+
+
+&gt; show warnings;
++---------+------+----------------------------------------+
+| Level   | Code | Message                                |
++---------+------+----------------------------------------+
+| Warning | 1292 | Truncated incorrect datetime value: '' |
++---------+------+----------------------------------------+
+</code></pre>
+<p>TiDB:</p>
+<pre><code>&gt; select VERSION()
++--------------------+
+| VERSION()          |
++--------------------+
+| 5.7.25-TiDB-v5.1.0 |
++--------------------+
+1 row in set
+
+&gt; select NOW() &gt; '';
++------------+
+| NOW() &gt; '' |
++------------+
+| &lt;null&gt;     |
++------------+
+
+&gt; show warnings;
++---------+------+------------------------------+
+| Level   | Code | Message                      |
++---------+------+------------------------------+
+| Warning | 1292 | Incorrect datetime value: '' |
++---------+------+------------------------------+
+1 …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-09-07T17:52:51+00:00">2021-09-07</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2021/stdin-007"  rel="bookmark" >
               <h2 class="card-title">Reddit UGC ranking (2021-09)</h2>
             </a>
@@ -529,25 +588,6 @@ async def other_api(other_path: str, req: Request):
 <p>要知道他做出这个研究的时候，遗传学也就孟德尔水平，DNA 尚未发现！他假设豚鼠双亲各自有遗传因素 <code>H'' …</code></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-03-25T23:56:41+00:00">2021-03-25</time></p>
-<p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202102/stderr-002"  rel="bookmark" >
-              <h2 class="card-title">Clubhouse 一些感受</h2>
-            </a>
-            <p class="card-text"><p>clubhouse 总体感觉，自从被那啥之后，群体就基本一岸两地的人，和大陆留学生为主了。而且真的以学生为主。如果有家业压力人，要么就是创投圈要么就是币圈大佬。</p>
-<p>第一次发言是在一个 English Lounge 里面有几个英语老师在聊 dyslexia 。这单词我都不认识但是还是强行尬聊了。</p>
-<p>我当时就胡扯说中文这种文字为载体的语言，符号和读音分离，可能压根就不存在拼音字母类语言的发音乱序导致的理解能力的问题。</p>
-<p>房主后来因为要去讨论女权，就早早的关闭了房间。不知道是被我的暴论或无知吓到了。我也因为时间太晚就睡了。第二天醒来，觉得不过瘾，就去搜了一下  dyslexia 这个概念。发现果然汉语里也是存在的。而且 HK 有个调查发现有这个问题的学生比例(10%)比 UK (5%-7%) 还高。</p>
-<p>我又自己回味了一下，可能真的有这么回事。于是去 V 站发了个贴《<a href="https://www.v2ex.com/t/752905">有哪些你一直认错、读反的词语你过了很久才发现？</a>》。第一个回帖就给我当头一棒，天赋异禀这个词，我是的确很长时间读成  天赋bing yi 的。</p>
-<p>但是这个问题也有有趣 …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-02-12T23:18:45+00:00">2021-02-12</time></p>
 <p>stderr</p>            </div>
           </article>
         </div>

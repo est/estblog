@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Est's Blog</title><link>https://blog.est.im/</link><description>This blog is rated&amp;nbsp;&amp;nbsp;R⃣ , viewer discretion is advised</description><lastBuildDate>Wed, 01 Dec 2021 17:41:32 +0000</lastBuildDate><item><title>Python 3.X ctypes 和 greenlet size changed 坑三则</title><link>https://blog.est.im/2021/stdout-021</link><description>&lt;h2&gt;安装 setup.py 的时候 &lt;code&gt;No module named '_ctypes'&lt;/code&gt; 报错&lt;/h2&gt;
+<rss version="2.0"><channel><title>Est's Blog</title><link>https://blog.est.im/</link><description>This blog is rated&amp;nbsp;&amp;nbsp;R⃣ , viewer discretion is advised</description><lastBuildDate>Thu, 02 Dec 2021 07:20:03 +0000</lastBuildDate><item><title>苏35的UI汉化</title><link>https://blog.est.im/2021/stdin-016</link><description>&lt;p&gt;&lt;a href="https://www.zhihu.com/question/304693612/answer/2250648177"&gt;原文&lt;/a&gt;禁止转载，那我就转载原文的&lt;a href="https://mil.sina.cn/sd/2016-10-11/detail-ifxwrhpm2928730.d.html"&gt;原文&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;日前，俄罗斯《消息报》采访了俄罗斯无线电电子技术集团（俄罗斯技术集团下属企业）副总经理吉维∙占季加夫，该集团是苏-35几乎所有航电系统的研制生产单位。&lt;br /&gt;
+占季加夫表示，“根据订购方的国情要求改装机载设备是重要的技术程序之一，一年多来我们都在致力于将驾驶舱内的信息翻译成汉语。但是，不像斯拉夫和拉丁字母，汉语的象形文字“很难”在LCD显示器上阅读。最终，中方要求维持原样，即显示器上保留西里尔字母。中国飞行员已有驾驶俄苏-27战机的飞行经验，该飞机的驾驶舱同样没有为中国进行改装，但飞行员们‘阅读’俄语的机上信息。”&lt;br /&gt;
+该报称，苏-35显示器上译成汉语的仪表读数说明和指令太过微小和模糊，以致难以阅读。通过扩大显示器的尺寸可以解决该问题，但这样就要彻底改造驾驶舱，研制和试验需要额外的资金和时间，中方伙伴并不希望这样。&lt;br /&gt;
+报道还指出，提供给中国的苏-35飞机唯一的特殊之处是在机载系统中加入了中国的“北斗”卫星导航系统。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;中文字库还是很大的，渲染也麻烦。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 02 Dec 2021 07:20:03 +0000</pubDate><guid isPermaLink="false">tag:None,2021-12-02:/2021/stdin-016</guid></item><item><title>Python 3.X ctypes 和 greenlet size changed 坑三则</title><link>https://blog.est.im/2021/stdout-021</link><description>&lt;h3&gt;安装 setup.py 的时候 &lt;code&gt;No module named '_ctypes'&lt;/code&gt; 报错&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;  Traceback (most recent call last):
     File &amp;quot;&amp;lt;string&amp;gt;&amp;quot;, line 1, in &amp;lt;module&amp;gt;
     File &amp;quot;/usr/local/python3/lib/python3.9/site-packages/setuptools/__init__.py&amp;quot;, line 18, in &amp;lt;module&amp;gt;
@@ -224,49 +231,4 @@ TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh …&lt;/code&gt
 &lt;/blockquote&gt;
 &lt;p&gt;图片我转存一下 &lt;a href="/images/2021/stdin-008-1.jpg"&gt;1&lt;/a&gt;, &lt;a href="/images/2021/stdin-008-2.jpg"&gt;2&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;谨纪念自2009-02-06以来俺在 Steam 上度过的快乐时光，6336h小时玩过92/229款游戏&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://steamdb.info/calculator/76561198005996380/?cc=us"&gt;https://steamdb.info/calculator/76561198005996380/?cc=us&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 16 Sep 2021 15:29:47 +0000</pubDate><guid isPermaLink="false">tag:None,2021-09-16:/2021/stdin-008</guid></item><item><title>TiDB 的日期比较和 MySQL 不兼容</title><link>https://blog.est.im/2021/stdout-011</link><description>&lt;p&gt;MySQL的&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;gt; select VERSION()
-+-----------+
-| VERSION() |
-+-----------+
-| 8.0.15-6  |
-+-----------+
-
-
-&amp;gt; select NOW() &amp;gt; '';
-+------------+
-| NOW() &amp;gt; '' |
-+------------+
-| 1          |
-+------------+
-
-&amp;gt; show warnings;
-+---------+------+----------------------------------------+
-| Level   | Code | Message                                |
-+---------+------+----------------------------------------+
-| Warning | 1292 | Truncated incorrect datetime value: '' |
-+---------+------+----------------------------------------+
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;TiDB:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;gt; select VERSION()
-+--------------------+
-| VERSION()          |
-+--------------------+
-| 5.7.25-TiDB-v5.1.0 |
-+--------------------+
-1 row in set
-
-&amp;gt; select NOW() &amp;gt; '';
-+------------+
-| NOW() &amp;gt; '' |
-+------------+
-| &amp;lt;null&amp;gt;     |
-+------------+
-
-&amp;gt; show warnings;
-+---------+------+------------------------------+
-| Level   | Code | Message                      |
-+---------+------+------------------------------+
-| Warning | 1292 | Incorrect datetime value: '' |
-+---------+------+------------------------------+
-1 …&lt;/code&gt;&lt;/pre&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 07 Sep 2021 17:52:51 +0000</pubDate><guid isPermaLink="false">tag:None,2021-09-07:/2021/stdout-011</guid></item></channel></rss>
+&lt;p&gt;&lt;a href="https://steamdb.info/calculator/76561198005996380/?cc=us"&gt;https://steamdb.info/calculator/76561198005996380/?cc=us&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 16 Sep 2021 15:29:47 +0000</pubDate><guid isPermaLink="false">tag:None,2021-09-16:/2021/stdin-008</guid></item></channel></rss>
