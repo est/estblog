@@ -51,6 +51,28 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/41430119724"  rel="bookmark" >
+              <h2 class="card-title">modify or update values django.utils.datastructures.MergeDict</h2>
+            </a>
+            <p class="card-text"><p>suppose you have a django form</p>
+<pre><code>f = django.forms.Form()
+f.is_valid()
+f.data['field'] = 'new value' # won't work
+f.cleaned_data['key'] = 'value' # won't work
+</code></pre>
+<p>the output of <code>f.as_p()</code> is still the old value because the <code>f.data</code> is a MergeDict.</p>
+<p>The way to modify it:</p>
+<pre><code>d = dict(f …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-01-25T03:55:00+00:00">2013-01-25</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/41181091688"  rel="bookmark" >
               <h2 class="card-title">Google Dict API</h2>
             </a>
@@ -477,38 +499,6 @@ cat &lt;&amp;3
 <p>btw 最近看到好多openvpn被k掉了。看了下sshd的[源码](xasprintf(&amp;server_version_string, "SSH-%d.%d- …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-12-06T21:38:00+00:00">2012-12-06</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/37177478685"  rel="bookmark" >
-              <h2 class="card-title">github多账户马甲之间ssh key切换</h2>
-            </a>
-            <p class="card-text"><p>场景：有多个github账号，比如公司一个，私人一个。现在想在同一台主机上同时维护公司的和私人的repo</p>
-<p>大家可能会尝试把一个公钥贴到两个github账户，实践告诉我们</p>
-<blockquote>
-<p>Key is already in use</p>
-</blockquote>
-<p>解决办法：</p>
-<ol>
-<li>生成第二个key <code>ssh-keygen -t rsa  -f ~/.ssh/id_rsa.est</code></li>
-<li>
-<p>编辑ssh_config <code>vim ~/.ssh/config</code> 粘贴下边的东东： </p>
-<pre><code>Host estgit
-HostName github.com
-User git
-IdentityFile "~/.ssh/id_rsa.est"
-IdentitiesOnly yes
-</code></pre>
-</li>
-<li>
-<p>用这个方式来操作git：<code>git clone estgit:/username/repo</code> ，或者编辑 <code>.git/config</code> 里边的 remote …</p></li></ol></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2012-12-04T03:17:00+00:00">2012-12-04</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

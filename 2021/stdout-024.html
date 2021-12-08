@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>4句话自动换win10壁纸 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="4句话自动换win10壁纸" />
+
+      <link rel="canonical" href="https://blog.est.im/2021/stdout-024" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link active">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">4句话自动换win10壁纸</h2>
+    <p class="post-date">Posted <time datetime="2021-12-08T21:39:36+00:00">2021-12-08</time> | <span>stderr</span></p>
+  </header>
+
+  
+  <ol>
+<li>获取当前用户 <code>sid</code></li>
+<li>读取 LogonUI 的自动壁纸</li>
+<li>设置为当前桌面</li>
+<li>刷新</li>
+</ol>
+<pre><code>for /f %%g in ('wmic useraccount where name^=&quot;%USERNAME%&quot; get sid ^| findstr ^S\-d*') do set USERSID=%%g
+For /f &quot;tokens=3&quot; %%k IN ('reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Creative\%USERSID%  /s /v  landscapeImage /t REG_SZ ^| findstr /ri &quot;REG_SZ&quot;') do set img_path=%%k
+reg add &quot;HKEY_CURRENT_USER\Control Panel\Desktop&quot; /v Wallpaper /t REG_SZ /d %img_path% /f
+RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters 
+</code></pre>
+
+<p><a href="/202104/stdout-005">之前的方法</a>搞复杂了</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2021/stdout-024';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>
