@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>4句话自动换win10壁纸 - Est's Blog</title>
+    <title>人工构造Flask session模拟cookie登陆 - Est's Blog</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="4句话自动换win10壁纸" />
+    <meta name="description" content="人工构造Flask session模拟cookie登陆" />
 
-      <link rel="canonical" href="https://blog.est.im/2021/stdout-024" />
+      <link rel="canonical" href="https://blog.est.im/2021/stdout-022" />
 
     <link rel="stylesheet" href="/theme/css/normalize.min.css" />
     <link rel="stylesheet" href="/theme/css/style.css" />
@@ -36,9 +36,9 @@
       <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
 
         <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
-        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link active">stderr</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
         <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
-        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link active">stdout</a></li>
 
     </ul>
   </div>
@@ -47,24 +47,25 @@
 
 <article class="post">
   <header class="post-header">
-    <h2 class="post-title">4句话自动换win10壁纸</h2>
-    <p class="post-date">Posted <time datetime="2021-12-08T21:39:36+00:00">2021-12-08</time> | <span>stderr</span></p>
+    <h2 class="post-title">人工构造Flask session模拟cookie登陆</h2>
+    <p class="post-date">Posted <time datetime="2021-12-08T07:15:03+00:00">2021-12-08</time> | <span>stdout</span></p>
   </header>
 
   
-  <ol>
-<li>获取当前用户 <code>sid</code>。cmd下设变量如此复杂。而且 <code>|</code> 的转义字符居然是 <code>^|</code></li>
-<li>读取 LogonUI 的自动壁纸。<code>reg query</code>输出极其不友好。需要 tokens=3</li>
-<li>设置为当前桌面。</li>
-<li>刷新。这个属于按运气成功。真正刷新的需要调用 dll 。算了</li>
-</ol>
-<pre><code>for /f %%g in ('wmic useraccount where name^=&quot;%USERNAME%&quot; get sid ^| findstr ^S\-d*') do set USERSID=%%g
-For /f &quot;tokens=3&quot; %%k IN ('reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Creative\%USERSID%  /s /v  landscapeImage /t REG_SZ ^| findstr /ri &quot;REG_SZ&quot;') do set img_path=%%k
-reg add &quot;HKEY_CURRENT_USER\Control Panel\Desktop&quot; /v Wallpaper /t REG_SZ /d %img_path% /f
-RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters 
+  <p>有没有好奇为什么 Flask 配置必须要求一个 <a href="https://flask.palletsprojects.com/en/latest/config/#SECRET_KEY">SECRET_KEY</a>，然后就可以在浏览器保存一个 session 状态读写数据。</p>
+<p>这里记一下它的底层实现，其实需要依赖的包是 <a href="https://itsdangerous.palletsprojects.com/">itsdangerous</a></p>
+<pre><code>import hashlib
+from itsdangerous import URLSafeTimedSerializer
+URLSafeTimedSerializer(
+        'YOUR_SECRET_KEY',  # from pyxis/config/prod.py
+        'cookie-session',  # from flask.sessions.SecureCookieSessionInterface.salt
+        # serializer=TaggedJSONSerializer(),
+        signer_kwargs={'key_derivation': 'hmac', 'digest_method': hashlib.sha1}
+).dumps({
+    "your_key": "your_value"
+})
 </code></pre>
-
-<p><a href="/202104/stdout-005">之前的方法</a>搞复杂了</p>
+<p>别人如果拿到你的 <code>SECRET_KEY</code> 就可以伪造任意 session cookie 了</p>
 
 </article>
 
@@ -74,7 +75,7 @@ RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters
   <div id="disqus_thread"></div>
   <script type="text/javascript">
     var disqus_shortname = 'estblog';
-    var disqus_identifier = '2021/stdout-024';
+    var disqus_identifier = '2021/stdout-022';
     var disqus_url = location.href;
     (function() {
     var dsq = document.createElement('script'); 

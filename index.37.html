@@ -51,6 +51,66 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/2678"  rel="bookmark" >
+              <h2 class="card-title">从垃圾站看技术：Chrome也能调用ActiveX版的Flash</h2>
+            </a>
+            <p class="card-text"><p>无聊逛豆瓣无意中点到一个垃圾站，很让我震惊的是，这玩意儿居然是用Windows Media Player作为Adobe Flash的容器</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/08/12.png" alt=""></p>
+
+<p>看源码</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/08/21.png" alt=""></p>
+
+<p>居然是<code>type="application/x-mplayer2"</code>里嵌入一个sina video的swf视频播放器。。。</p>
+
+<p>从dll加载的角度证实了我这个猜想</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/08/31.png" alt=""></p>
+
+<p>系统里的Flash插件分两种</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/08/41.png" alt=""></p>
+
+<p>一个是<code>Flash10h.ocx</code>，这个是所有Windows本地播放器的核心，也是IE的Flash插件的核心，基于ActiveX技术。</p>
+
+<p>另一个是<code>NPSWF32.dll</code>，这个是支持所有NPAPI的浏览器插件。支持NPAPI的有：Netscape, Firefox, Opera, Safari, Chrome等等。</p>
+
+<p>我还猜想通过Windows Media Player加载的swf可能会绕过Chrome自身的HTTP协议栈，而直接通过WinINET发出请求，也就是说，IE的cookie可以被Chrome读取到～～～～IE的exp也有可能在Chrome下被加载和诱发～～～～</p>
+
+<p>第二个猜想：Firefox里即使用了Noflash, NoScript插件，通过WMP容器加载的Flash依然能够显示。手里暂时没Firefox所以就没试了。</p>
+
+<p>我又邪恶了～～～muh ha ha ha～～～～垃圾站里这种囧技术真能启发思维啊。。。。</p>
+
+<p><ins>更新 …</ins></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-08-07T03:28:24+00:00">2010-08-07</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/2675"  rel="bookmark" >
+              <h2 class="card-title">Jackass 3D - Official Trailer</h2>
+            </a>
+            <p class="card-text"><p><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://www.youtube.com/v/pFK6Ih8KOis%26hl%3Den_US%26fs%3D1&amp;width=640&amp;height=385" width="640" height="385"></iframe></p>
+
+<p>最后那个hive five。。。。</p>
+
+<p><a href="http://www.reddit.com/r/movies/comments/cy3lf/jackass_3d_trailer/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-08-07T02:40:50+00:00">2010-08-07</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/2672"  rel="bookmark" >
               <h2 class="card-title">[zz]SSL体系目前的问题和隐患</h2>
             </a>
@@ -445,44 +505,6 @@ rt
 <p>Dreamhost的FTP就很扯蛋。。。中文文件名的文件的上传上去没问题。。。下载的时候提示 <code>550 中文名.mp3: No such file or directory</code>。。。。WTF？</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-07-30T10:56:19+00:00">2010-07-30</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/2592"  rel="bookmark" >
-              <h2 class="card-title">战争即和平，自由即奴役，无知即力量</h2>
-            </a>
-            <p class="card-text"><p>tg牛逼！！！兲朝砖家提醒您：<strong>有害</strong>气体是<strong>无害</strong>的。。。。</p>
-
-<p><img src="http://blog.est.im/wp-content/uploads/2010/07/11.png" alt=""></p>
-
-<p>via <a href="http://blog.dotnil.org/84504.html">1</a>, <a href="http://twitter.com/rtmeme/statuses/19827342984">2</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2010-07-30T10:13:55+00:00">2010-07-30</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/2589"  rel="bookmark" >
-              <h2 class="card-title">石头剪子布 大师级必胜秘诀【图】</h2>
-            </a>
-            <p class="card-text"><p><img src="http://akhost.chacha.com/chacha.com/infographics/rock-paper-scissors-original.jpg" alt=""></p>
-
-<p>谢耳朵的 蜥蜴-Spock-石头剪子布 同理～～～</p>
-
-<p>此图绝非扯蛋，背后有深刻的心理学原理～～～我记得高中的时候我和同学超无聊玩石头剪子布，赢了前进一步，输了后退一步，我把同学从教学楼走廊左边逼到右边了～～～而且基本一赢就会连续好几次赢～～～～有意思～～～</p>
-
-<p><a href="http://flowingdata.com/2010/07/30/how-to-win-rock-paper-scissors-every-time/">via</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2010-07-30T09:03:53+00:00">2010-07-30</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

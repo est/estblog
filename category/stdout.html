@@ -51,6 +51,54 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2021/stdout-023"  rel="bookmark" >
+              <h2 class="card-title">FastAPI/Starlette支持静态文件支持SPA</h2>
+            </a>
+            <p class="card-text"><p>FastAPI 官方支持 <code>from fastapi.staticfiles import StaticFiles</code> 充当一个静态文件服务器</p>
+<p>其实实现是 starlette。这玩意可以在 <code>directory</code> 下放一个 <code>404.html</code>，恰好单页应用也需要用 <code>index.html</code> 充当所有 javascript 框架注册的 router</p>
+<p>只是有一个毛病，这货返回的 HTTP status code 是 404。用起来没啥大毛病，但是就是浏览器不会记录网址，导致没法匹配浏览历史快速找到之前访问过的页面。</p>
+<p>拿来改改继续用</p>
+<pre><code>from starlette.staticfiles import StaticFiles, Scope, Headers, Response, FileResponse
+
+class StaticFilesWithout404(StaticFiles):
+    async def get_response(self, path …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-12-08T07:38:38+00:00">2021-12-08</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/2021/stdout-022"  rel="bookmark" >
+              <h2 class="card-title">人工构造Flask session模拟cookie登陆</h2>
+            </a>
+            <p class="card-text"><p>有没有好奇为什么 Flask 配置必须要求一个 <a href="https://flask.palletsprojects.com/en/latest/config/#SECRET_KEY">SECRET_KEY</a>，然后就可以在浏览器保存一个 session 状态读写数据。</p>
+<p>这里记一下它的底层实现，其实需要依赖的包是 <a href="https://itsdangerous.palletsprojects.com/">itsdangerous</a></p>
+<pre><code>import hashlib
+from itsdangerous import URLSafeTimedSerializer
+URLSafeTimedSerializer(
+        'YOUR_SECRET_KEY',  # from pyxis/config/prod.py
+        'cookie-session',  # from flask.sessions.SecureCookieSessionInterface.salt
+        # serializer=TaggedJSONSerializer(),
+        signer_kwargs={'key_derivation': 'hmac', 'digest_method': hashlib.sha1}
+).dumps({
+    "your_key": "your_value"
+})
+</code></pre>
+<p>别人如果拿到你的 <code>SECRET_KEY</code> 就可以伪造任意 session cookie 了</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-12-08T07:15:03+00:00">2021-12-08</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2021/stdout-021"  rel="bookmark" >
               <h2 class="card-title">Python 3.X ctypes 和 greenlet size changed 坑三则</h2>
             </a>

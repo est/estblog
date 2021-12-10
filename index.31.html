@@ -51,6 +51,66 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/3375"  rel="bookmark" >
+              <h2 class="card-title">wordpress+spawn-fcgi+nginx经常502解决</h2>
+            </a>
+            <p class="card-text"><p>我的blog经常出现这个</p>
+
+<blockquote>
+  <p>502 Bad Gateway</p>
+
+  <p>nginx/0.7.65</p>
+</blockquote>
+
+<p>以前用了个很ugly的办法就是在cron里每隔一段时间restart一下spawn-fcgi。。。</p>
+
+<p>昨天被一个IP为77.232.66.20用工具扫站的家伙弄郁闷了。服务器坚持几秒钟就铁定502。所以今天查了几个（<a href="http://forum.slicehost.com/comments.php?DiscussionID=4523">1</a>, <a href="http://devblog.streamy.com/2009/04/24/debugging-fastcgi-and-lighttpd-with-spawn-fcgi-and-fcgi-debug/">2</a>, <a href="http://serverfault.com/questions/129465/spawn-fcgi-fast-cgi-php-crashes-without-traces-in-logs-on-gentoo">3</a>）帖子，把这个问题<strong>似乎</strong>解决了。方法很简单，在nginx配置文件wordpress这一段加上一行环境变量：</p>
+
+<pre><code>location ~ \.php$ {
+    #这里略去了一大堆 fastcgi_param，在最后一个fastcgi_param加上下面的：
+    fastcgi_param PHP_FCGI_MAX_REQUESTS 500;
+}
+</code></pre>
+
+<p>然后<code>kill -HUP <code>pgrep -f "nginx: master"</code></code> 就可以了。</p>
+
+<p><ins>更新</ins>：Gentoo的php终于5.3了。。。改用php-fpm了。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-12-01T05:48:37+00:00">2010-12-01</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/3369"  rel="bookmark" >
+              <h2 class="card-title">Rage Face Contest</h2>
+            </a>
+            <p class="card-text"><p>第二个真人<a href="http://www.reddit.com/r/fffffffuuuuuuuuuuuu/comments/duacs/it_hurts_my_face_to_troll_rage_face_contest/">trollface那哥们儿</a>太牛了。。。</p>
+
+<blockquote>
+  <p>Second guy trying the troll face--he has that shit mastered.</p>
+</blockquote>
+
+<p><img src="http://i.imgur.com/r7CrE.jpg" alt=""></p>
+
+<p>其实第一个laughing face<del>有点像</del>应该是姚明。。。。</p>
+
+<p><img src="http://i.imgur.com/dbMmg.jpg" alt=""></p>
+
+<p><a href="http://www.reddit.com/r/pics/comments/edylt/just_in_case_you_didnt_know_there_was_a_rage_face/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-12-01T01:32:57+00:00">2010-12-01</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/3366"  rel="bookmark" >
               <h2 class="card-title">两平米的太阳光聚焦</h2>
             </a>
@@ -617,57 +677,6 @@ Chromium-discuss <a href="http://groups.google.com/a/chromium.org/group/chromium
 <a href="http://www.theregister.co.uk/2010/06/09/google_to_include_remote_access_in_chrome_os/">Google morphs Chrome OS into netbook thin …</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-11-15T12:49:20+00:00">2010-11-15</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/3238"  rel="bookmark" >
-              <h2 class="card-title">能够360°旋转观看的那啥。。。</h2>
-            </a>
-            <p class="card-text"><p><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://www.youtube.com/v/7QrnwoO1-8A?fs%3D1%26hl%3Den_US&amp;width=480&amp;height=385" width="480" height="385"></iframe></p>
-
-<p>用Kinect实现能在视频播放中实时旋转镜头。。。。以后看那啥，就能全方位360°，从不同角度不同镜头仔细一帧一帧的观摩了。</p>
-
-<p><a href="http://www.reddit.com/r/technology/comments/e60k0/3d_video_capture_with_kinect_very_impressive/">via</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2010-11-15T04:58:44+00:00">2010-11-15</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/3229"  rel="bookmark" >
-              <h2 class="card-title">基于正则的URL匹配安全性考虑</h2>
-            </a>
-            <p class="card-text"><p><a href="http://www.reddit.com/r/programming/comments/e5lud/never_use_regular_expressions_to_enforce_type/">reddit上</a>讨论的这个问题比较有意思。</p>
-
-<p>假设django里有这样一个URL匹配</p>
-
-<pre><code>(r'^(\d\d\d\d)/$', 'jl6.core.views.showyear'),
-</code></pre>
-
-<p>那么下面两个网址能否命中这个匹配呢？</p>
-
-<pre><code>http://james.lab6.com/%D9%A2%D9%A0%D9%A0%D9%A8/
-
-http://james.lab6.com/%F0%9D%9F%AE%F0%9D%9F%AC%F0%9D%9F%AC%F0%9D%9F%B4/
-
-</code></pre>
-
-<p>结果是可以命中的。</p>
-
-<p>第一个URL是/٢٠٠٨/，包含了4个unicode字符</p>
-
-<pre><code>٢ …</code></pre></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2010-11-14T10:17:42+00:00">2010-11-14</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

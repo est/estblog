@@ -51,6 +51,40 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/76525559026"  rel="bookmark" >
+              <h2 class="card-title">Frozen快被玩坏了！</h2>
+            </a>
+            <p class="card-text"><p><img alt="" src="/images/tumblr/76525559026.gif" /></p>
+<p><a href="http://www.reddit.com/r/Frozen/comments/1xr3k3/i_dont_even_know_why/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2014-02-13T09:09:19+00:00">2014-02-13</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/73498209959"  rel="bookmark" >
+              <h2 class="card-title">Manually resolve any DNS A record</h2>
+            </a>
+            <p class="card-text"><pre><code>printf "\0\1\1\0\0\1\0\0\0\0\0\0\6reddit\3com\0\0\1\0\1" |nc -vvuq1 8.8.8.8  53 |xxd
+</code></pre>
+<p>Explain:</p>
+<p>0x0001 means transaction ID. Invent one as you like  <br />
+0x0100 Flag. Always this for all requests  <br />
+0x0001 number of requests: always …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2014-01-16T03:31:00+00:00">2014-01-16</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/73082214124"  rel="bookmark" >
               <h2 class="card-title">The Girl With The Dragon Tattoo</h2>
             </a>
@@ -407,47 +441,6 @@ Also don't forget it places pressure on the rest …</p></blockquote></p>
 <p>PyPy performance post is very misleading. PyPy only has better printf performance than C in the particular case where you print the same expression twice. Specifically, their JIT figures out that it can decode the value only once instead of twice, which C cannot do because libc's printf is all …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-08-15T02:06:22+00:00">2013-08-15</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/57663601114"  rel="bookmark" >
-              <h2 class="card-title">Chromecast的操作系统和硬件是什么</h2>
-            </a>
-            <p class="card-text"><p>前几天的<a href="http://blog.gtvhacker.com/2013/chromecast-exploiting-the-newest-device-by-google/">chromecast签名绕过破解</a>)</p>
-<p>Is it really ChromeOS?</p>
-<p>No, it’s not. We had a lot of internal discussion on this, and have concluded that it’s more Android than ChromeOS. To be specific, it’s actually a modified Google TV release, but with all of the Bionic / Dalvik stripped out and …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-08-07T21:56:00+00:00">2013-08-07</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/57568901987"  rel="bookmark" >
-              <h2 class="card-title">关于BREACH/CRIME的一些思考</h2>
-            </a>
-            <p class="card-text"><p>最近<a href="https://news.ycombinator.com/item?id=6166292">很火</a>的一个问题就是暴破TLS/SSL的  BREACH 攻击。我觉得有一些解决办法：</p>
-<ol>
-<li>
-<p>hack一种兼容gzip，但是能对内容进行adaptive compression的技术。比如把用户输入不纳入Huffman coding范围，只压缩页面的其他部分。这样无论你在user input 做什么花样也不能影响最终conten length</p>
-</li>
-<li>
-<p>csrf上做文章。由于大多数场景下，web framework是需要保证 csrf 是 per session的。目前基本都是服务器生成什么csrf，客户端下一次就需要传入一模一样的。我们可以发明一种聪明的技术，给客户端的csrf加入一些per request的变长noise，需要通过特定算法，最简单的比如XOR，才能还原csrf。其中这个变长的noise不是随机生成，因为随机生成可能被概率统计出noise level然后过滤掉，而是根据用户输入用一种变长散列生成的。比如用户输入为空，csrf为e0bc6e08a2fda853eef，用户输入为 user@gmail.com，csrf为 b594e902c7fe6b1748d13aefaf63a ，但是实际服务器端的csrf都一直是 04b58236f5 。</p>
-</li>
-</ol>
-<p>目前业界的mitigation我觉得比较搓：</p>
-<ol>
-<li>禁用gzip。这个没意思了 …</li></ol></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-08-06T21:19:50+00:00">2013-08-06</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

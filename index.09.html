@@ -51,6 +51,47 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/57663601114"  rel="bookmark" >
+              <h2 class="card-title">Chromecast的操作系统和硬件是什么</h2>
+            </a>
+            <p class="card-text"><p>前几天的<a href="http://blog.gtvhacker.com/2013/chromecast-exploiting-the-newest-device-by-google/">chromecast签名绕过破解</a>)</p>
+<p>Is it really ChromeOS?</p>
+<p>No, it’s not. We had a lot of internal discussion on this, and have concluded that it’s more Android than ChromeOS. To be specific, it’s actually a modified Google TV release, but with all of the Bionic / Dalvik stripped out and …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-08-07T21:56:00+00:00">2013-08-07</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/57568901987"  rel="bookmark" >
+              <h2 class="card-title">关于BREACH/CRIME的一些思考</h2>
+            </a>
+            <p class="card-text"><p>最近<a href="https://news.ycombinator.com/item?id=6166292">很火</a>的一个问题就是暴破TLS/SSL的  BREACH 攻击。我觉得有一些解决办法：</p>
+<ol>
+<li>
+<p>hack一种兼容gzip，但是能对内容进行adaptive compression的技术。比如把用户输入不纳入Huffman coding范围，只压缩页面的其他部分。这样无论你在user input 做什么花样也不能影响最终conten length</p>
+</li>
+<li>
+<p>csrf上做文章。由于大多数场景下，web framework是需要保证 csrf 是 per session的。目前基本都是服务器生成什么csrf，客户端下一次就需要传入一模一样的。我们可以发明一种聪明的技术，给客户端的csrf加入一些per request的变长noise，需要通过特定算法，最简单的比如XOR，才能还原csrf。其中这个变长的noise不是随机生成，因为随机生成可能被概率统计出noise level然后过滤掉，而是根据用户输入用一种变长散列生成的。比如用户输入为空，csrf为e0bc6e08a2fda853eef，用户输入为 user@gmail.com，csrf为 b594e902c7fe6b1748d13aefaf63a ，但是实际服务器端的csrf都一直是 04b58236f5 。</p>
+</li>
+</ol>
+<p>目前业界的mitigation我觉得比较搓：</p>
+<ol>
+<li>禁用gzip。这个没意思了 …</li></ol></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-08-06T21:19:50+00:00">2013-08-06</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/57017854092"  rel="bookmark" >
               <h2 class="card-title">肉鸡国真的有那么多网络部队天天去黑美帝吗？</h2>
             </a>
@@ -431,60 +472,6 @@ $ brew install rtlsdr gr-osmosdr …</code></pre></p>
 <p><a href="http://www.reddit.com/r/gifs/comments/1fuxl3/the_truth_about_reddit_oc/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-06-07T21:09:17+00:00">2013-06-07</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/52361093859"  rel="bookmark" >
-              <h2 class="card-title">2007-2012 法国 高考作文 题目</h2>
-            </a>
-            <p class="card-text"><p><img alt="" src="http://s8.sinaimg.cn/middle/5d961668g752acc888207&amp;690" /></p>
-<p>法国高考叫 <a href="http://en.wikipedia.org/wiki/Baccalaur%C3%A9at">Le Baccalauréat</a>，简称 le bac 。按照分科，三道题目任选一道。</p>
-<p>2012年   </p>
-<p>文科   </p>
-<p>1、人们在工作中到底获得了什么？ <br />
-2、是否所有的信仰都是与理性相悖的？ <br />
-3、评点斯宾诺莎《神学政治论》一段关于“国家”的论述。   </p>
-<p>经济社会科   </p>
-<p>1、与生俱来（无法抑制）的欲望是否存在？ <br />
-2、工作，仅仅就是为了做个有用的人吗？ <br />
-3、评点伯克利在《论消极服从》中关于“公权力”的一段论述。   </p>
-<p>理科 <br />
-1、没有国家（政府）我们是否会更自由？ <br />
-2、我们是否有责任追求真理？ <br />
-3、评点卢梭《爱弥尔》中关于“教育”的一段论述。   </p>
-<p>2011年   </p>
-<p>文科 <br />
-1 …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-06-07T01:34:00+00:00">2013-06-07</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/52286630594"  rel="bookmark" >
-              <h2 class="card-title">WinRT绝壁是实习生赶工出来的。</h2>
-            </a>
-            <p class="card-text"><p><a href="http://msdn.microsoft.com/en-us/library/windows/apps/hh465407.aspx">证据1</a></p>
-<p><img alt="" src="/images/tumblr/52286630594_0.png" /></p>
-<p><a href="http://msdn.microsoft.com/en-us/library/windows/apps/hh868252.aspx">证据2</a></p>
-<p><img alt="" src="/images/tumblr/52286630594_1.png" /></p>
-<p>这么多2b的错误，到处都是！真心怀疑是应届实习生做的啊！！！！</p>
-<p>记得<a href="http://blog.est.im/post/50147253283">上一篇blog</a>：</p>
-<blockquote>
-<p>Another reason for the quality gap is that that we've been having trouble keeping talented people. Google and other large Seattle-area companies keep poaching our best, most experienced developers, and we <em>hire youths straight from college to replace them</em>.</p>
-</blockquote>
-<p>至于wns和mpns为毛区分成两陀米田共我就不吐槽了。这API设计更加奇葩的是：使用X-* 返回头作为返回成功与否标志 …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-06-06T03:14:00+00:00">2013-06-06</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
