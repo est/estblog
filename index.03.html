@@ -51,6 +51,34 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/202104/stdout-005"  rel="bookmark" >
+              <h2 class="card-title">Win10 自动设置开机锁屏壁纸</h2>
+            </a>
+            <p class="card-text"><p>Win10启动后，锁屏界面有一些每天更新的漂亮的墙纸，但是每个用户进去却只能看到默认的墙纸，不能自动切换。很是遗憾，于是搞了一段小脚本弥补。</p>
+<p>找个地方比如桌面，右键新建一个 <code>est_win10_auto_wallpaper.bat</code></p>
+<pre><code>@if (@X)==(@Y) @end /* JScript comment
+@echo off
+
+cscript //E:JScript %~n0.bat
+
+exit /b %errorlevel%
+*/
+
+var oShell = new ActiveXObject("WScript.Shell") ;
+var oFSO = new ActiveXObject("Scripting.FileSystemObject");
+
+var sWinDir = oFSO.GetSpecialFolder(0);
+var sPath = oShell.ExpandEnvironmentStrings('%LOCALAPPDATA%\\Packages\\Microsoft …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-04-11T22:35:12+00:00">2021-04-11</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/202104/stdout-004"  rel="bookmark" >
               <h2 class="card-title">Mac 命令行终端里获得视频文件的长度</h2>
             </a>
@@ -426,27 +454,6 @@ for i in $(seq 1 423); do wget -t 0 -T 5  -U 'Mozilla/5.0 (iPhone; CPU iPhone OS
 <p>这两句话区别很大。作者举了个例子，第一句话表达的其实更加 demanding，比如 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-10-06T08:07:56+00:00">2020-10-06</time></p>
-<p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202009/stdin-012"  rel="bookmark" >
-              <h2 class="card-title">儿童是一种阶级</h2>
-            </a>
-            <p class="card-text"><blockquote>
-<p>儿童这个阶层的成型是很近的事情，这是美国传播学者尼尔·波兹曼的一个洞见。<br />
-在传统社会，儿童和成年之间的界限是非常模糊的。因为大家用的都是一套学习和传播工具，那就是口语。只要都会说话，听得懂别人的话，那小孩和大人，就只有体能和见识上的区别。那小孩做大人的工作，就也没有什么了不起。<br />
-但是印刷机出现之后，人类文化的传承，主要靠文字了。而熟练使用文字，那是需要漫长的学习和训练的。你才能熟练用文字表达，或者说阅读文本。是因为传播媒介的这个变化，才塑造了“童年”这个概念。<br />
-所以越是文明社会，儿童就越是面临两个问题。第一，儿童和成人的知识差距迅速拉开。成人的工作，儿童是干不了的，因为儿童阅读不了那么复杂的文字；第二，儿童如果不抓紧这个时间接受教育，将来长大了，还会严重影响成人之后的社会竞争力。</p>
-</blockquote>
-<p>来自《<a href="https://m.igetget.com/share/course/article?id=bqzNakylrn9WVaZZZNJ7DOop10vZwL">罗辑思维 第785期 | 为什么你的观点是正确的？</a>》</p>
-<p>以上观点来自《童年的消逝 The disappearance of childhood》，算这是我近几年认识事物比较升华的一个收获。之前一次升华是，人要区分性，爱情，婚姻和家庭 …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2020-09-29T23:34:07+00:00">2020-09-29</time></p>
 <p>stdin</p>            </div>
           </article>
         </div>

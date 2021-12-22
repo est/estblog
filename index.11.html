@@ -51,6 +51,27 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/48433661723"  rel="bookmark" >
+              <h2 class="card-title">对于通讯的一些感受</h2>
+            </a>
+            <p class="card-text"><p><img alt="" src="/images/tumblr/48433661723.png" /></p>
+<p>今天地震，然后家里就断网了，就无聊听电台。然后就听了下350MHz - 370MHz。一开始以为是跳频，后来发现是多频道时断时续而已。一些感受：</p>
+<p>我觉得普通JC是最苦逼的职业。基本就是被总台呼来唤去的民工。半个小时处理的事情基本就是解决停车纠纷啊，菜市场打架啊，银行卡被盗刷500元啊之类的鸡毛蒜皮事。真心蛋痛啊我日。</p>
+<p>模拟信号语音交流感觉在“微信”时代真的落后了。</p>
+<p>我们需要一个更加原子化、更加 IP 化的交流通讯方式。总台可以PUSH任务到人员，人员可以update情况，这一切需要一个更加优良的 UX 设计。我观察到比如一个很苦逼的事情就是手台里说手机号码。。这个在21世纪是很尴尬的。从市民报告，到总台分配，到解决，都应该数字化。</p>
+<p>前几天看到reddit众在互相通气Boston PD的scanner，后来mod出来阻止这种严重泄密危害警员安全的行为。但是同时也感觉别人社会发达，居然有人把scanner做成了Internet Radio向所有人开放！</p>
+<p>加上今天地震的一些报道，我觉得这个社会的信息化还有很大发展空间。感谢伟大的MTK，智能终端的普及指日可待，智能社会正在以势不可挡地到来。</p>
+<p>个人觉得码农要以时代责任感去下岗一大批吃干饭的社会工作文科生。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-04-20T08:58:33+00:00">2013-04-20</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/48319644529"  rel="bookmark" >
               <h2 class="card-title">Re: python标准库貌似没有实现链表？</h2>
             </a>
@@ -409,30 +430,6 @@ day 0 productivity.</p></p>
 <p>来自 <a href="http://weibo.com/codebox">CodeBox-腾讯</a> 腾讯云平台资深还是浅就那么回事儿工程师 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-12T23:49:00+00:00">2013-03-12</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/45176433551"  rel="bookmark" >
-              <h2 class="card-title">Web服这个屎盆子不够装了——记inetd的现代版Mozilla Circus</h2>
-            </a>
-            <p class="card-text"><p>今天瞄了下<a href="circus.rtfd.org">Mozilla Circus</a>这个项目，黑有意思。</p>
-<p>简单的说，目前Web服务器基本模型都是一个总瓢把子Nginx，后边一大堆苦力worker进程。比如Python世界的Gunicorn是这个样子的粗暴简单：</p>
-<p><img alt="" src="http://circus.readthedocs.org/en/0.5/_images/classical-stack.png" /></p>
-<p>worker基本都是日出而耕，日落而息。（顺便一喷，Supervisord这些都弱爆了。djb大牛的<a href="https://news.ycombinator.com/item?id=5346871">runit</a>才是王道）</p>
-<p>要做到聪明的运维，和可小可大硬又黑的HA scaling，就需要一个高级一点的worker进程管理器于是——哐当当，Mozilla的Circus闪亮登场！</p>
-<p><img alt="" src="http://circus.readthedocs.org/en/0.5/_images/circus-stack.png" /></p>
-<p>中文介绍在这里<a href="https://github.com/PyCodersCN/PyCodersCN/blob/master/issue16/mongrel2-amp-circus-full-control-of-your-web-stack.rst">Mongrel2&amp;Circul = web栈的完全控制</a></p>
-<p>我觉得这项目很不错，至少有了Web Console码农不用再去砸400多元的机械键盘去 <code>kill -HUP</code>和 <code>cat pidfile</code> 啪啪啪了</p>
-<p>但是Circus只这样就太大材小用了。都进程了，那么<a href="http://blog.ziade.org/2012/06/12/shared-sockets-in-circus/">socket、fd也一并托管了</a>吧。以后业务逻辑就只管去轮fd就是了。这就是<a href="https://stripe.com/blog/meet-einhorn">einhorn</a>项目的思路。</p>
-<p>同时我突然觉得Mongrel2这个项目有点2，居然是用json把http完整序列化一遍再pubsub分发到处理点。。。。这效率。。</p>
-<p>Circus的让我想起uWSGI。大部分 …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-03-12T02:55:00+00:00">2013-03-12</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

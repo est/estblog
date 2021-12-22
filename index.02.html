@@ -51,6 +51,33 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2021/stdout-013"  rel="bookmark" >
+              <h2 class="card-title">Letsencrypt 在老版本macOS Ubuntu 上修复TLS证书错误</h2>
+            </a>
+            <p class="card-text"><p>一觉醒来，打开浏览器，各种连不上，调试了一下发现说lets encrypt 的 acme https证书错误</p>
+<p>仿佛记得<a href="https://www.v2ex.com/t/805339">V站讨论</a>过这个事，以为和自己无关，结果也中招了。DST Root CA X3 根证书在国庆前过期了。</p>
+<h2>老版本 Ubuntu 修复：</h2>
+<pre><code>sudo apt update
+sudo apt install ca-certificates
+</code></pre>
+<h2>老版本 macOS 修复：</h2>
+<p>需要手动导入并信任新的 ISRG Root X1 根证书。来自<a href="https://letsencrypt.org/certificates/">https://letsencrypt.org/certificates/</a>。</p>
+<p>保存下列为 <code>1.pem</code></p>
+<pre><code>-----BEGIN CERTIFICATE-----
+MIIFYDCCBEigAwIBAgIQQAF3ITfU6UK47naqPGQKtzANBgkqhkiG9w0BAQsFADA/
+MSQwIgYDVQQKExtEaWdpdGFsIFNpZ25hdHVyZSBUcnVzdCBDby4xFzAVBgNVBAMT
+DkRTVCBSb290IENBIFgzMB4XDTIxMDEyMDE5MTQwM1oXDTI0MDkzMDE4MTQwM1ow
+TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-10-01T10:56:13+00:00">2021-10-01</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2021/stdout-012"  rel="bookmark" >
               <h2 class="card-title">美国自来水 TDS 这么高？</h2>
             </a>
@@ -586,34 +613,6 @@
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-05-10T22:01:21+00:00">2021-05-10</time></p>
 <p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202104/stdout-005"  rel="bookmark" >
-              <h2 class="card-title">Win10 自动设置开机锁屏壁纸</h2>
-            </a>
-            <p class="card-text"><p>Win10启动后，锁屏界面有一些每天更新的漂亮的墙纸，但是每个用户进去却只能看到默认的墙纸，不能自动切换。很是遗憾，于是搞了一段小脚本弥补。</p>
-<p>找个地方比如桌面，右键新建一个 <code>est_win10_auto_wallpaper.bat</code></p>
-<pre><code>@if (@X)==(@Y) @end /* JScript comment
-@echo off
-
-cscript //E:JScript %~n0.bat
-
-exit /b %errorlevel%
-*/
-
-var oShell = new ActiveXObject("WScript.Shell") ;
-var oFSO = new ActiveXObject("Scripting.FileSystemObject");
-
-var sWinDir = oFSO.GetSpecialFolder(0);
-var sPath = oShell.ExpandEnvironmentStrings('%LOCALAPPDATA%\\Packages\\Microsoft …</code></pre></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-04-11T22:35:12+00:00">2021-04-11</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 
