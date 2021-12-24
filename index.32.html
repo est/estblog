@@ -51,6 +51,43 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/3248"  rel="bookmark" >
+              <h2 class="card-title">三陆零的libdefa.dat解密工具</h2>
+            </a>
+            <p class="card-text"><p>小狮子娱乐公司挺牛逼的，三陆零的<a href="http://www.360.cn/xukexieyi.html">使用协议</a>说：</p>
+
+<blockquote>
+  <p>用户不得对本软件产品进行反向工程（reverse engineer）、反向编译（decompile）或反汇编（disassemble），违者属于侵权行为</p>
+</blockquote>
+
+<p>但是还是被<a href="http://cnbeta.com/articles/127119.htm">公开</a>反编译<a href="http://it.sohu.com/20101115/n277646683.shtml">羞辱</a>了。</p>
+
+<p>不过小狮子娱乐公司提供的这个<a href="http://rsdownload.rising.com.cn/for_down/decodegui.exe">decodegui.exe</a>还是挺好玩的，调用件AntiAdwa.dll来解密三陆零的libdefa.dat。这个libdefa.dat应该不是小狮子娱乐公司所说的“数万用户隐私”，而是三陆零用来防钓鱼的识别特征库。这个解密结果非常有意思，可以用来一窥大陆<strong>整个插件行业</strong>的大概。</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/11/14.png" alt=""></p>
+
+<p>我当小白鼠已经把提取出来了。大家来围观吧：</p>
+
+<p><ins>更新</ins>：出于版权考虑，下载地址就不提供了。</p>
+
+<p>其实有了这个CLSID库好多人都可以山寨一个三陆零了。LOL。</p>
+
+<p>一个最简单的山寨应用就是企业<strong>官方网站</strong>查询。</p>
+
+<p>解密过后的libdefa.dat.txt文件9991行就是：</p>
+
+<blockquote>
+  <p>0 1 6 &quot;招商银行&quot; &quot;招商银行 …</p></blockquote></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-11-15T14:48:51+00:00">2010-11-15</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/3241"  rel="bookmark" >
               <h2 class="card-title">Chrome的Remoting Host (chromoting)</h2>
             </a>
@@ -550,43 +587,6 @@ code/ized</p>
 <p>btw 推上的idea很NB：<a href="http://twitter.com/rtmeme/status/29561786817">卸360送Q币活动</a>，<a href="http://twitter.com/rtmeme/status/29561482866">成为qq会员，可以同时使用360软件。</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-11-03T15:37:21+00:00">2010-11-03</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/3122"  rel="bookmark" >
-              <h2 class="card-title">WP-ban屏蔽user-agent正则bug</h2>
-            </a>
-            <p class="card-text"><p>这几周blog没怎么更新，倒是被一个botnet留了几百页的spam。发现user-agent都是统一的。<a href="http://wordpress.org/extend/plugins/wp-ban/">WP-Ban</a>这个插件可以屏蔽user-agent，但是设置了之后发现没有效果。一看源码这作者太n00b了。</p>
-
-<p>修改wp-ban.php文件91行左右： <code>vim ./wordpress/wp-content/plugins/wp-ban/wp-ban.php</code></p>
-
-<pre><code>foreach($banarray as $cban) {
-    #就是在这里注释掉2行，新增两行
-    #$regexp = str_replace ('.', '\\.', $cban);
-    #$regexp = str_replace ('*', '.+', $regexp);
-
-    $regexp = quotemeta ($cban) ;
-    $regexp = str_replace ('\\*', '.+', $regexp);
-
-    if(ereg("^$regexp$", $against)) {
-        print_banned_message();
-    }
-}
-</code></pre>
-
-<p>我的wordpress 2.9.1硬monkey patch改动太多没法升级了。囧rz。</p>
-
-<p><ins>更新1：</ins></p>
-
-<p>好吧，有漏网之鱼，User-agent是<br>
-<code>Mozilla …</code></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2010-11-03T10:55:36+00:00">2010-11-03</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

@@ -51,6 +51,32 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/30566340794"  rel="bookmark" >
+              <h2 class="card-title">为神马android NFC不能模拟RFID Tag</h2>
+            </a>
+            <p class="card-text"><p>今天研究了一下这个玩意。先说结论：</p>
+<ol>
+<li>Android手机的NFC芯片本质只是一个tag reader/writer，要把自身模拟成tag，需要在驱动里把自己改造成可以控制的Secure Element</li>
+<li>Galaxy Nexus的2.3 ROM可以用<code>com.pocketluxus.nfclassic</code> 这个 nfca.apk模拟。有人成功过</li>
+<li>Nexus S可以用一个定制过的firmware来<a href="http://forum.xda-developers.com/showthread.php?t=1281946">打开</a>驱动的 卡模拟 模式，模拟任意RFID Tag。步骤非常麻烦。需要编译android源码（我日）</li>
+<li>i9300用的NFC芯片是NXP PN65N，和<a href="http://www.nfcworld.com/2011/02/13/35913/uncovered-the-hidden-nfc-potential-of-the-google-nexus-s-and-the-nokia-c7/">Nexus S的</a>一样</li>
+</ol>
+<p><img alt="" src="http://cdn3.nfcworld.net/wp-content/uploads/2011/02/pn65n-nexus-s-250x187.jpg" /></p>
+<p>至于什么普通手机可以读取RFID Tag，而不能模拟呢？</p>
+<p>国内的一些说法是，rfid卡加密了，没法模拟。其实这是错误的。</p>
+<p>我在XDA翻了下一些理论，大概是这样的：</p>
+<p>RFID/ID卡分两种，一种是只读的，一种是可写的。</p>
+<p>比如门禁卡 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-08-30T23:35:00+00:00">2012-08-30</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/30512755425"  rel="bookmark" >
               <h2 class="card-title">on github wiki</h2>
             </a>
@@ -437,22 +463,6 @@ http://cache.pack.google.com/edgedl/chrome/win/22.0.1229.2_chrome_installer.exe<
 They typically use two types of plastic filament, ABS (think Lego plastic) and …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-07-26T00:27:00+00:00">2012-07-26</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/28017921333"  rel="bookmark" >
-              <h2 class="card-title">pantent systems</h2>
-            </a>
-            <p class="card-text"><p><a href="http://news.ycombinator.com/item?id=4291966">hetman</a> wrote:</p>
-<blockquote>
-<p>The idea of the patent system in itself is actually quite elegant. Government grants a <strong>temporary monopoly</strong> in exchange for the <strong>public disclosure</strong> of an invention. Everyone wins! The person issued the patent can more easily profit from their invention because they can work in the open. Society …</p></blockquote></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2012-07-25T20:39:00+00:00">2012-07-25</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
