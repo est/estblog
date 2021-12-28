@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chrome 阉割指南 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Chrome 阉割指南" />
+
+      <link rel="canonical" href="https://blog.est.im/2021/stdout-027" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Chrome 阉割指南</h2>
+    <p class="post-date">Posted <time datetime="2021-12-28T23:00:05+00:00">2021-12-28</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>不折腾不舒服。继之前 <a href="/2021/stdout-029">Edge调教</a> 之后记录一下 Chrome V70怎么阉割。</p>
+<p>下载：</p>
+<p><a href="https://dl.google.com/edgedl/release2/chrome/ALiXMYM2w8-h_70.0.3538.77/70.0.3538.77_chrome_installer.exe">win 32</a> | <a href="https://dl.google.com/edgedl/release2/chrome/AJ7ozxk4OLvN_70.0.3538.77/70.0.3538.77_chrome_installer.exe">win 64</a> | <a href="https://redirector.gvt1.com/release2/chrome/AIJolai8dEil_70.0.3538.67/GoogleChrome-70.0.3538.67.dmg">Mac</a></p>
+<p>上面的链接已经年久失修了，对比了一下获取最新版本的脚本发现 Google 已经不提供老链接了。</p>
+<p>curl -vsk 'https://tools.google.com/service/update2' -HContent-Type:text/xml --data-binary "&lt;?xml version='1.0' encoding='UTF-8'?&gt;<br />
+<request protocol='3.0' sessionid='{est-blog}' installsource='ondemandcheckforupdate' dedup='cr'><br />
+<os platform='mac' version='66.6.6666.66' arch='x64'/><br />
+<app appid='com.google.Chrome' ap='' version='' nextversion='' lang='' brand='GGLS' client=''><updatecheck/></app><br />
+</request>"</p>
+<p>安装完毕之后</p>
+<pre><code>cd '/Applications/Google Chrome.app/Contents'
+touch Frameworks
+sudo chown root:wheel Frameworks
+sudo chmod 000 Frameworks
+
+cd ~/Library/Google
+rm -rf GoogleSoftwareUpdate
+touch GoogleSoftwareUpdate
+sudo chown root:wheel GoogleSoftwareUpdate
+sudo chmod 000 GoogleSoftwareUpdate
+</code></pre>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2021/stdout-027';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

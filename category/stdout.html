@@ -51,6 +51,33 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2021/stdout-027"  rel="bookmark" >
+              <h2 class="card-title">Chrome 阉割指南</h2>
+            </a>
+            <p class="card-text"><p>不折腾不舒服。继之前 <a href="/2021/stdout-029">Edge调教</a> 之后记录一下 Chrome V70怎么阉割。</p>
+<p>下载：</p>
+<p><a href="https://dl.google.com/edgedl/release2/chrome/ALiXMYM2w8-h_70.0.3538.77/70.0.3538.77_chrome_installer.exe">win 32</a> | <a href="https://dl.google.com/edgedl/release2/chrome/AJ7ozxk4OLvN_70.0.3538.77/70.0.3538.77_chrome_installer.exe">win 64</a> | <a href="https://redirector.gvt1.com/release2/chrome/AIJolai8dEil_70.0.3538.67/GoogleChrome-70.0.3538.67.dmg">Mac</a></p>
+<p>上面的链接已经年久失修了，对比了一下获取最新版本的脚本发现 Google 已经不提供老链接了。</p>
+<p>curl -vsk 'https://tools.google.com/service/update2' -HContent-Type:text/xml --data-binary "&lt;?xml version='1.0' encoding='UTF-8'?&gt;<br />
+<request protocol='3.0' sessionid='{est-blog}' installsource='ondemandcheckforupdate' dedup='cr'><br />
+<os platform='mac' version='66.6.6666.66' arch='x64'/><br />
+<app appid='com.google.Chrome' ap='' version='' nextversion='' lang='' brand='GGLS' client=''><updatecheck/></app><br />
+</request>"</p>
+<p>安装完毕之后</p>
+<pre><code>cd '/Applications/Google Chrome.app/Contents'
+touch Frameworks
+sudo chown root:wheel Frameworks
+sudo chmod …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-12-28T23:00:05+00:00">2021-12-28</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2021/stdout-026"  rel="bookmark" >
               <h2 class="card-title">认识「洋节」</h2>
             </a>
@@ -58,7 +85,7 @@
 <ol>
 <li>元旦1月1日。由北「洋」军阀袁世凯设立。依据是内务部总长朱启钤《定四季节假呈》，把原来农历（夏历）的正月初一的「元旦」挪用到了格里历一月一日。格里历(Gregorian calendar)引入中国是1912，元旦正式生效是1914年。</li>
 <li>春节。严格的来说，传统春节是二十四节气中的“立春”，是太阳历。后来被袁世凯直接拍板成农历正月初一。而夏历正月初一一般被认为是最接近立春之朔日（月缺之日）。农历最后一次农历大改版为《授时历》，发生在崇祯二年（1629年）九月，由礼部左侍郎徐光启发起，编撰者：耶稣会的龙华民（西西里人）、罗雅谷（米兰人）、邓玉函（瑞士人）、汤若望（日耳曼人）。</li>
-<li>生肖其实不跟农历绑定，而是跟 二十四节气绑定。比如春分那一天恰好开始白羊座，其实我最近才知道二十四节气就约等于12星座，也就是黄道十二宫 …</li></ol></p>
+<li>生肖其实不跟农历绑定，而是跟 二十四节气绑定。二十四节气最后一次改版，也是上面那个《时宪历 …</li></ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-12-24T23:59:59+00:00">2021-12-24</time></p>
 <p>stdout</p>            </div>

@@ -51,6 +51,30 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/34207514410"  rel="bookmark" >
+              <h2 class="card-title">测试ssh连接速度和带宽</h2>
+            </a>
+            <p class="card-text"><p>安装pv： <br />
+<code>sudo apt-get install pv</code></p>
+<p>下行： <br />
+<code>$ ssh est@my_host 'cat /dev/zero'  | pv &gt; /dev/null</code> <br />
+<code>144kB 0:00:05 [ 121kB/s] [ &lt;=&gt;                                               ]</code></p>
+<p>上行：   <br />
+<code>$ yes | pv | ssh est@my_host "cat &gt; /dev/null"</code>   <br />
+<code>2.06MB 0:00:05 [1.96MB/s] [  &lt;=&gt;                                              ]</code></p>
+<p>测试本机IO能力：  <br />
+<code>$ pv /dev/zero &gt; /dev/null</code> <br />
+<code>75.3GB 0:00:09 [8 …</code></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-10-23T22:30:00+00:00">2012-10-23</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/33682210269"  rel="bookmark" >
               <h2 class="card-title">Web墨卡托</h2>
             </a>
@@ -439,20 +463,6 @@ xcar.com.cn           爱卡汽车 …</code></pre></p>
 <p>出了问题怎么办？再多hire一个人，再多增加一个用于fix bug的项目！把一个bug变成两个，就可以把当前的bug推脱成别的bug了。当前的bug就解决了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-09-05T23:40:00+00:00">2012-09-05</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/30966653688"  rel="bookmark" >
-              <h2 class="card-title">r/gifsound</h2>
-            </a>
-            <p class="card-text"><iframe width="640" height="360" src="http://www.youtube.com/embed/KR0EHW6IpSw?feature=player_detailpage" frameborder="0" allowfullscreen></iframe></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2012-09-05T20:55:17+00:00">2012-09-05</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
