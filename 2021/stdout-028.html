@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Chrome 阉割指南 - Est's Blog</title>
+    <title>Microsoft 官网的 403 错误 - Est's Blog</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Chrome 阉割指南" />
+    <meta name="description" content="Microsoft 官网的 403 错误" />
 
-      <link rel="canonical" href="https://blog.est.im/2021/stdout-027" />
+      <link rel="canonical" href="https://blog.est.im/2021/stdout-028" />
 
     <link rel="stylesheet" href="/theme/css/normalize.min.css" />
     <link rel="stylesheet" href="/theme/css/style.css" />
@@ -47,34 +47,45 @@
 
 <article class="post">
   <header class="post-header">
-    <h2 class="post-title">Chrome 阉割指南</h2>
-    <p class="post-date">Posted <time datetime="2021-12-28T23:00:05+00:00">2021-12-28</time> | <span>stdout</span></p>
+    <h2 class="post-title">Microsoft 官网的 403 错误</h2>
+    <p class="post-date">Posted <time datetime="2021-12-29T22:42:14+00:00">2021-12-29</time> | <span>stdout</span></p>
   </header>
 
   
-  <p>不折腾不舒服。继之前 <a href="/2021/stdout-020">Edge调教</a> 之后记录一下 Chrome V70怎么阉割。</p>
-<p>下载：</p>
-<p><a href="https://dl.google.com/edgedl/release2/chrome/ALiXMYM2w8-h_70.0.3538.77/70.0.3538.77_chrome_installer.exe">win 32</a> | <a href="https://dl.google.com/edgedl/release2/chrome/AJ7ozxk4OLvN_70.0.3538.77/70.0.3538.77_chrome_installer.exe">win 64</a> | <a href="https://redirector.gvt1.com/release2/chrome/AIJolai8dEil_70.0.3538.67/GoogleChrome-70.0.3538.67.dmg">Mac</a></p>
-<p>上面的链接已经年久失修了，对比了一下获取最新版本的脚本发现 Google 已经不提供老链接了。</p>
-<pre><code>curl -vsk 'https://tools.google.com/service/update2' -HContent-Type:text/xml --data-binary &quot;&lt;?xml version='1.0' encoding='UTF-8'?&gt;
-&lt;request protocol='3.0' sessionid='{est-blog}' installsource='ondemandcheckforupdate' dedup='cr'&gt;
-&lt;os platform='mac' version='66.6.6666.66' arch='x64'/&gt;
-&lt;app appid='com.google.Chrome' ap='' version='' nextversion='' lang='' brand='GGLS' client=''&gt;&lt;updatecheck/&gt;&lt;/app&gt;
-&lt;/request&gt;&quot;
+  <pre><code>$ curl -H &quot;User-Agent: User-Agent: Mozilla/5&quot; -kvs 'http://www.microsoft.com'
+*   Trying 118.123.102.107...
+* TCP_NODELAY set
+* Connected to www.microsoft.com (118.123.102.107) port 80 (#0)
+&gt; GET / HTTP/1.1
+&gt; Host: www.microsoft.com
+&gt; Accept: */*
+&gt; User-Agent: User-Agent: Mozilla/5
+&gt;
+&lt; HTTP/1.1 403 Forbidden
+&lt; Server: GHost
+&lt; Content-Length: 306
+&lt; Content-Type: text/html
+&lt; Mime-Version: 1.0
+&lt; Expires: Wed, 29 Dec 2021 14:42:28 GMT
+&lt; Cache-Control: max-age=0, no-cache
+&lt; Pragma: no-cache
+&lt; Date: Wed, 29 Dec 2021 14:42:28 GMT
+&lt; Connection: keep-alive
+&lt;
+&lt;HTML&gt;&lt;HEAD&gt;
+&lt;TITLE&gt;Access Denied&lt;/TITLE&gt;
+&lt;/HEAD&gt;&lt;BODY&gt;
+&lt;H1&gt;Access Denied&lt;/H1&gt;
+
+You don't have permission to access &quot;http&amp;#58;&amp;#47;&amp;#47;mscom&amp;#46;errorpage&amp;#46;failover&amp;#46;com&amp;#47;403&amp;#47;403&amp;#46;htm&amp;#63;&quot; on this server.&lt;P&gt;
+Reference&amp;#32;&amp;#35;18&amp;#46;1c697b76&amp;#46;1640788948&amp;#46;3b971c1f
+&lt;/BODY&gt;
+&lt;/HTML&gt;
+* Connection #0 to host www.microsoft.com left intact
+* Closing connection 0
 </code></pre>
 
-<p>安装完毕之后</p>
-<pre><code>cd '/Applications/Google Chrome.app/Contents'
-touch Frameworks
-sudo chown root:wheel Frameworks
-sudo chmod 000 Frameworks
-
-cd ~/Library/Google
-rm -rf GoogleSoftwareUpdate
-touch GoogleSoftwareUpdate
-sudo chown root:wheel GoogleSoftwareUpdate
-sudo chmod 000 GoogleSoftwareUpdate
-</code></pre>
+<p>不知道为何会指向  <code>http://mscom.errorpage.failover.com</code> 这域名也不是微软的。</p>
 
 </article>
 
@@ -84,7 +95,7 @@ sudo chmod 000 GoogleSoftwareUpdate
   <div id="disqus_thread"></div>
   <script type="text/javascript">
     var disqus_shortname = 'estblog';
-    var disqus_identifier = '2021/stdout-027';
+    var disqus_identifier = '2021/stdout-028';
     var disqus_url = location.href;
     (function() {
     var dsq = document.createElement('script'); 
