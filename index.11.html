@@ -51,6 +51,32 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/49498875576"  rel="bookmark" >
+              <h2 class="card-title">I/O模型</h2>
+            </a>
+            <p class="card-text"><p>I/O模型<br />
+看了<a href="https://www.v2ex.com/t/65058">这个帖子</a>，归纳了一下自己理解的 I/O 模型，不知道对不对。</p>
+<p>下边我们假设这样一个场景：</p>
+<p>我 去食堂打饭。需要从3个得到3样东西：4两米饭，回锅肉，素菜。</p>
+<ol>
+<li>blocking： 打饭的人多啊，哥一直排队等，知道买到3样东西完毕。</li>
+<li>non-blocking 去食堂一看，卧槽，那么jb多人排队，算了不吃了。这里的我就是一个 fd (file descriptor)，这样做急性子的人就叫做 O_NONBLOCK 属性。如果你尝试让一个急性子买饭，人少还好，人多了他会直接抛出一个异常报错。</li>
+<li>sync 先买米饭，再买回锅肉，再买素菜。如果临时回锅肉卖完了怎么办？等食堂师傅一直炒出下一锅为止。而且必须先买到回锅肉再买素菜！</li>
+<li>async 哪个窗口人少就先买哪个，哪个窗口先出锅就先买那个。</li>
+</ol>
+<p>再说说unix 5种IO模型：</p>
+<ol start="5">
+<li>复用 (multiplexing)： 寝室5个好基友一起去买饭 …</li></ol></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-05-03T15:11:00+00:00">2013-05-03</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/49510419228"  rel="bookmark" >
               <h2 class="card-title">关于码畜的定义</h2>
             </a>
@@ -414,29 +440,6 @@ sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist
 <p>蛋碎！</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-04-02T09:52:47+00:00">2013-04-02</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/46390709551"  rel="bookmark" >
-              <h2 class="card-title">HAProxy like zero-copy in Python with memoryview</h2>
-            </a>
-            <p class="card-text"><p>开篇帖子侃一下HAProxy这个神器有什么神器之处。</p>
-<p><a href="http://xiaoxia.org/2011/03/29/written-by-python-socks5-server/">写过proxy的人</a>都会写类似的语句：</p>
-<pre><code>localstream.write(upstream.read(1024))
-upstream.write(localstream.read(1024))
-</code></pre>
-<p>其中1024为业界良心艹榴网的chunk或者一个buffer size。这样的操作在各种router, proxy, firewall 里太常见了。</p>
-<p>那么HAProxy有什么<a href="http://stackoverflow.com/a/2120295/41948">特别的地方</a>呢？秘密就是，上游socket的接受buffer和本地socket的发送buffer为同一块内存。也就是说，上游socket数据来了，本地socket自动发送这一块buffer的数据。效率真是高爆了。这块buffer数据还可以用内核调用<code>splice()</code> 和 <code>tee()</code> 来达到分流和分离信号的目的。</p>
-<p>btw sendfile() 是不行的，源必须是可以mmap的buffer，目标必须是个socket。</p>
-<p>那么弱爆了的python可否跪舔这种高级特性呢？2.7和3.X里是可以的，因为现在PEP 3118统一了各种streaming object 的buffer protocol。只需要用一个<a href="http://docs.python.org/2/library/stdtypes.html#memoryview">叫memoryview的引用</a><br />
-就可以实现共享buffer而达到zero-copy的目的了 …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-03-26T22:39:00+00:00">2013-03-26</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

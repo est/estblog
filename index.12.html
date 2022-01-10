@@ -51,6 +51,29 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/46390709551"  rel="bookmark" >
+              <h2 class="card-title">HAProxy like zero-copy in Python with memoryview</h2>
+            </a>
+            <p class="card-text"><p>开篇帖子侃一下HAProxy这个神器有什么神器之处。</p>
+<p><a href="http://xiaoxia.org/2011/03/29/written-by-python-socks5-server/">写过proxy的人</a>都会写类似的语句：</p>
+<pre><code>localstream.write(upstream.read(1024))
+upstream.write(localstream.read(1024))
+</code></pre>
+<p>其中1024为业界良心艹榴网的chunk或者一个buffer size。这样的操作在各种router, proxy, firewall 里太常见了。</p>
+<p>那么HAProxy有什么<a href="http://stackoverflow.com/a/2120295/41948">特别的地方</a>呢？秘密就是，上游socket的接受buffer和本地socket的发送buffer为同一块内存。也就是说，上游socket数据来了，本地socket自动发送这一块buffer的数据。效率真是高爆了。这块buffer数据还可以用内核调用<code>splice()</code> 和 <code>tee()</code> 来达到分流和分离信号的目的。</p>
+<p>btw sendfile() 是不行的，源必须是可以mmap的buffer，目标必须是个socket。</p>
+<p>那么弱爆了的python可否跪舔这种高级特性呢？2.7和3.X里是可以的，因为现在PEP 3118统一了各种streaming object 的buffer protocol。只需要用一个<a href="http://docs.python.org/2/library/stdtypes.html#memoryview">叫memoryview的引用</a><br />
+就可以实现共享buffer而达到zero-copy的目的了 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-03-26T22:39:00+00:00">2013-03-26</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/46316452252"  rel="bookmark" >
               <h2 class="card-title">GOOG 的生态系统已经完了。欢迎来到私家花园</h2>
             </a>
@@ -460,34 +483,6 @@ CFLAGS=-I/usr/include/libev sudo pip install bjoern
 <pre><code>from …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-19T01:59:57+00:00">2013-02-19</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/43183143601"  rel="bookmark" >
-              <h2 class="card-title">Google Apps Script生成动态网页碉堡了。</h2>
-            </a>
-            <p class="card-text"><p>Google Docs自己搞了一套类似Google App Engine的体系，只不过服务器端语言是Javascript，运行环境是 云JS——Google Apps Script</p>
-<p><a href="https://developers.google.com/apps-script/html_service">https://developers.google.com/apps-script/html_service</a></p>
-<p>看了下文档，类似php的语法，在html里嵌入js，然后服务器渲染得到一个网页。</p>
-<pre><code>&lt;table&gt;
-  &lt;? var data = getData();
-     for (var i = 0; i &lt; data.length; ++i) { ?&gt;
-    &lt;tr&gt;
-      &lt;? for  (var j = 0; j &lt; data[i].length; ++j) { ?&gt;
-        &lt;td&gt;&lt;?= data[i][j]?&gt;&lt;/td&gt;
-      &lt;? } ?&gt;
-    &lt;/tr&gt;
-  &lt;? } ?&gt;
-&lt;/table&gt;
-</code></pre>
-<p>这是得有多蛋痛啊 …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-02-15T18:59:56+00:00">2013-02-15</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
