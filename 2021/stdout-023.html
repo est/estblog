@@ -64,7 +64,7 @@ class StaticFilesWithout404(StaticFiles):
         h = Headers(scope=scope)
         full_path, stat_result = await self.lookup_path('404.html')
         if isinstance(r, FileResponse) and r.path == full_path:
-            if 'text/html' in h.get('accept') or '':
+            if 'text/html' in (h.get('accept') or ''):
                 r.status_code = 200
             else:
                 return Response('', status_code=404)

@@ -51,6 +51,57 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/82389333364"  rel="bookmark" >
+              <h2 class="card-title">系统IO一些数据</h2>
+            </a>
+            <p class="card-text"><p>Macmini 下</p>
+<p>$ pv /dev/zero  &gt; /dev/null<br />
+[11.6GiB/s]</p>
+<p>这个应该是DDR3内存带宽了。</p>
+<p>$ pv /dev/zero  &gt; 1.dat<br />
+[ 102MiB/s] </p>
+<p>Macmini的硬盘速度还是不错。没有SSD快。</p>
+<p>$ yes | pv &gt; /dev/null<br />
+ [20.3MiB/s] </p>
+<p>yes这么慢没想到啊。</p>
+<p>$ pv /dev/urandom  &gt; /dev/null<br />
+[11.9MiB/s]</p>
+<p>过一下CPU速度就减半了。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2014-04-11T11:20:00+00:00">2014-04-11</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/81367181037"  rel="bookmark" >
+              <h2 class="card-title">HUAWEI ec315</h2>
+            </a>
+            <p class="card-text"><p>上市时间：2012年 5月 15日<br />
+目标人群：多Wi-Fi设备连接上网需求用户<br />
+标准配置：无配件<br />
+外观设计：直插<br />
+产品尺寸：90.6×28.6×12.6 mm            重量： &lt; 50 g   <br />
+屏幕显示：无屏幕<br />
+电池容量: 无电池<br />
+网络支持： CDMA2000 1x/EVDO Rev.A,800MHz<br />
+基带芯片： Qualcomm MDM6600      应用处理器：无<br />
+操作系统： Qualcomm REX<br />
+内存： RAM：  64 MByte，       Flash内存：  128 MByte<br />
+扩展内存：外置存储卡 MicroSD …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2014-04-01T01:32:35+00:00">2014-04-01</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/80234879432"  rel="bookmark" >
               <h2 class="card-title">Process 流程</h2>
             </a>
@@ -420,44 +471,6 @@ for vec in permutations(cols):
 <p>http …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-11-02T22:05:18+00:00">2013-11-02</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/65574918947"  rel="bookmark" >
-              <h2 class="card-title">Google Read-time Bidding (doubleclick RTB)</h2>
-            </a>
-            <p class="card-text"><p>http://www.youtube.com/watch?v=NoGgLxky1FE</p>
-<p>视频大概这么个意思：</p>
-<ul>
-<li>Google Ads会花100ms告诉广告买主，用户IP，所在位置，广告大小，网站分类</li>
-<li>Google Ads在100ms把广告位卖给出价最高的。</li>
-</ul>
-<p>真是碉堡了。If You're Not Paying for It; You're the Product</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-10-30T21:33:58+00:00">2013-10-30</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/65507202324"  rel="bookmark" >
-              <h2 class="card-title">pin ssl fingerprint with Chrome HSTS</h2>
-            </a>
-            <p class="card-text"><p>code:</p>
-<pre><code>$ openssl x509 -noout -fingerprint -sha1 -in &lt;(openssl s_client -connect weibo.cn:443 -prexit 2&gt;/dev/null) | python -c "print __import__('sys').stdin.read().partition('=')[2][:-1].replace(':','').decode('hex').encode('base64')"
-fUWlLfAlsHpGFDfI4XsFOUWkA7Q=
-</code></pre>
-<p>website: https://www.grc.com/fingerprints.htm</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-10-30T03:06:00+00:00">2013-10-30</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

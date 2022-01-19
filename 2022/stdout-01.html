@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>python-phoenixdb 设置读取超时 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="python-phoenixdb 设置读取超时" />
+
+      <link rel="canonical" href="https://blog.est.im/2022/stdout-01" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">python-phoenixdb 设置读取超时</h2>
+    <p class="post-date">Posted <time datetime="2022-01-11T12:00:56+00:00">2022-01-11</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>PhoenixDB 居然是基于 requests + pb2 做的传输层协议。连接的是 queryserver 的 http 接口</p>
+<p>看 <a href="https://git-wip-us.apache.org/repos/asf?p=phoenix-queryserver.git;a=blob;f=python-phoenixdb/phoenixdb/avatica/client.py">avatica/client.py 源码</a> 可以得知这玩意默认是不支持设置read timeout的。强行hack一个：</p>
+<pre><code>import phoenixdb
+import functools
+c = phoenixdb.connect('http://localhost:8765/', autocommit=True, auth=&quot;SPNEGO&quot;)
+c._client.session.request = functools.partial(c._client.session.request, timeout=2)
+</code></pre>
+
+<p><code>partial</code> 这个神奇的魔法可以设置一个默认参数。其它地方传入了别的timeout也可以自行覆盖，无缝兼容。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2022/stdout-01';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

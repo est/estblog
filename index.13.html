@@ -51,6 +51,51 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/43538960448"  rel="bookmark" >
+              <h2 class="card-title">Install bjoern on Gentoo</h2>
+            </a>
+            <p class="card-text"><p>VPS内存小，连uWSGI这种都玩不起，只能玩玩<a href="https://github.com/jonashaag/bjoern">bjoern</a>这个神器了。<a href="http://bottlepy.org/docs/dev/deployment.html#switching-the-server-backend">Bottle.py支持的WSGI容器</a>还真多啊！</p>
+<pre><code>curl -O http://python-distribute.org/distribute_setup.py
+sudo  python distribute_setup.py
+curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
+sudo python get-pip.py
+sudo emerge libev
+CFLAGS=-I/usr/include/libev sudo pip install bjoern
+</code></pre>
+<p>灌了个水的哟。。。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-02-19T22:26:50+00:00">2013-02-19</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/43472256396"  rel="bookmark" >
+              <h2 class="card-title">dynamic app routing for Bottle.py based on hostname / domain</h2>
+            </a>
+            <p class="card-text"><p>Problem:</p>
+<p>I want ONE bottle project to display different pages for:</p>
+<ul>
+<li>http://foo.est.im</li>
+<li>http://bar.est.im</li>
+</ul>
+<p>These should be separate Bottle apps.</p>
+<p>There's <a href="http://permalink.gmane.org/gmane.comp.python.bottle.general/730">an ugly hack</a> from the official maillist, I think I can make it better.</p>
+<p>The secret is to create a customized WSGI app:</p>
+<pre><code>from …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-02-19T01:59:57+00:00">2013-02-19</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/43183143601"  rel="bookmark" >
               <h2 class="card-title">Google Apps Script生成动态网页碉堡了。</h2>
             </a>
@@ -477,47 +522,6 @@ f.cleaned_data['key'] = 'value' # won't work
 <p>(Larrabee's Law) Half of everything you hear …</p></li></ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-14T22:15:00+00:00">2013-01-14</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/40503548806"  rel="bookmark" >
-              <h2 class="card-title">为啥中文没有发展出这种设计风格？</h2>
-            </a>
-            <p class="card-text"><iframe width="640" height="360" src="http://www.youtube.com/embed/yOyS8mLVb0Q?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
-
-<iframe width="640" height="360" src="http://www.youtube.com/embed/3OYhq6HbJ4U?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
-
-<p>准确的说，为啥中文没有在计算机上发展出连笔字体？</p>
-<p><a href="http://www.reddit.com/r/videos/comments/16iaun/calligraphy_penmanship_like_youve_never_seen/">via</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-01-14T01:28:00+00:00">2013-01-14</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/40237390809"  rel="bookmark" >
-              <h2 class="card-title">这段视频看得我心惊肉跳</h2>
-            </a>
-            <p class="card-text"><iframe width="640" height="360" src="http://www.youtube.com/embed/8bWlTZZN3DY?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
-
-<p><a href="http://i.imgur.com/0dAnS.jpg">人性</a>啊<a href="http://www.reddit.com/r/science/comments/16ay7i/brown_eyed_people_are_judged_to_be_more/">人性</a>。认知造就的人类阶级，真是震撼。</p>
-<p>习惯了每天在网上喷来喷去，第一次见到Ms. Jane Elliott这么镇定而犀利的人。这种老师才是人类的灵魂工程师啊。。。。</p>
-<p>看到中间的时候简直有点痛哭流涕的感觉，看到最后真的是被感动了</p>
-<p>美国在1968年就由这样的老师和孩子。而现在不仅不可能有，而且可能永远没有了。</p>
-<p><a href="http://www.reddit.com/r/psychology/comments/16babu/ms_jane_elliotts_experiment_brown_eyes_blue_eyes/">via</a></p>
-<p>btw 一个纪录片</p>
-<p>http://movie.douban.com/subject/3883396/</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-01-11T00:40:00+00:00">2013-01-11</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

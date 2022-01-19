@@ -51,17 +51,58 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/2022/stderr-001"  rel="bookmark" >
+            <a href="/2022/stdout-02"  rel="bookmark" >
+              <h2 class="card-title">老中笑话了2千年刻舟求剑，有效水面搜救的算法却叫Victor Sierra</h2>
+            </a>
+            <p class="card-text"><p>今天的第一个收获，Victor Sierra这个搜救图案</p>
+<p><img alt="" src="/images/2022/stdout-02-01.jpg" /></p>
+<p><img alt="" src="/images/2022/stdout-02-02.jpg" /></p>
+<p>来自 <a href="https://www.youtube.com/watch?v=aoXJfuPaFF8">Why This Zig-Zag Coast Guard Search Pattern is Actually Genius - Smarter Every Day 268</a>，是美国 coast guard 标准化的水面搜救路线。这种图案覆盖的面最大并且效率最高，而且最重要的一点，考虑到水是流动的，能够跟随一起漂流的相对速度去找到 POW (person in water)</p>
+<p>于是我就想起大家都熟悉的成语——「刻舟求剑」。这是2000多年前一个河南贩子吕不韦编的一个讥讽九头鸟的段子，由于这个成语太熟悉了，我甚至开始怀疑课本上是不是掐头去尾没讲完，跟之前那个「<a href="/202004/stdin-001">守株待兔</a>」恶毒的政治隐喻一样，于是去翻了下原文。好家伙，不能说雷同，简直就是一模一样。它出自《<a href="https://ctext.org/lv-shi-chun-qiu/cha-jin/zhs">吕氏春秋·察今</a>》</p>
+<p>察今一共三段，第一段说，按着先人制度惯性因循守旧的人都是大沙雕；第二段说，荆州人拿了过期的水文资料强行过河结果沙币了 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2022-01-19T23:15:24+00:00">2022-01-19</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/2022/stdout-01"  rel="bookmark" >
+              <h2 class="card-title">python-phoenixdb 设置读取超时</h2>
+            </a>
+            <p class="card-text"><p>PhoenixDB 居然是基于 requests + pb2 做的传输层协议。连接的是 queryserver 的 http 接口</p>
+<p>看 <a href="https://git-wip-us.apache.org/repos/asf?p=phoenix-queryserver.git;a=blob;f=python-phoenixdb/phoenixdb/avatica/client.py">avatica/client.py 源码</a> 可以得知这玩意默认是不支持设置read timeout的。强行hack一个：</p>
+<pre><code>import phoenixdb
+import functools
+c = phoenixdb.connect('http://localhost:8765/', autocommit=True, auth=&quot;SPNEGO&quot;)
+c._client.session.request = functools.partial(c._client.session.request, timeout=2)
+</code></pre>
+
+<p><code>partial</code> 这个神奇的魔法可以设置一个默认参数。其它地方传入了别的timeout也可以自行覆盖，无缝兼容。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2022-01-11T12:00:56+00:00">2022-01-11</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/2022/stderr-01"  rel="bookmark" >
               <h2 class="card-title">信息时代 的 娃</h2>
             </a>
-            <p class="card-text"><p>家里的娃逐渐长大，TA在车上喜欢听的歌曲就翻来覆去奥特曼的 OP 和 ED。然后想引导TA 们听点别的，QQ音乐又没有买会员，所以能搜出来的就是各种翻唱或者自媒体的同标题蹭流量的垃圾作品，很无奈。</p>
-<p>想起来自己小时候虽然家庭条件一般，但是也是买了收录机和一些经典磁带，能够把自己喜欢的歌曲反复听个够。反复听歌有个好处，那就是专注力的训练，和重复带来的高准确度记忆。现在的娃听歌，由于点播太方便，经常听一半就切歌，然后上一次点的不一定能反复点出来。还有版权的原因，前一阵加星的歌可能过一阵就听不了了。</p>
-<p>从<a href="https://www.bilibili.com/video/BV1Gx411J7Qe">【箭厂视频】消失了20年后，中国黑胶唱片工厂复活</a> 看到一个评论，很是有感触</p>
+            <p class="card-text"><p>家里的娃逐渐长大，TA在车上喜欢听的歌曲就翻来覆去奥特曼的 OP 和 ED。然后想引导TA 们听点别的，QQ音乐又没有买会员，一些好的大部头作品，能搜出来的就是各种翻唱或者自媒体的同标题蹭流量的垃圾作品，很无奈。</p>
+<p>想起来自己小时候虽然家庭条件一般，但是也是买了收录机和一些经典磁带，能够把自己喜欢的歌曲反复听个够。反复听歌有个好处，那就是专注力的训练，和重复带来的高准确度记忆。现在的娃听歌，由于点播太方便，经常听一半就切歌，然后上一次点的不一定能recall点出来。还有版权的原因，前一阵加星的歌可能过一阵就听不了了。这样的环境，只能培养出很糟糕的听众和很低的欣赏水平吧。</p>
+<p>也恰好从<a href="https://www.bilibili.com/video/BV1Gx411J7Qe">【箭厂视频】消失了20年后，中国黑胶唱片工厂复活</a> 看到一个评论，很是有感触</p>
 <blockquote>
 <p>ikyokyo 2017-08-18 13:27<br />
 作为一个黑胶时代过来，并且家里曾经有过黑胶唱片机的人，我想分享一些当年的旁门左道和玩黑胶奇技yin巧，这些事不是每个听黑胶的人都知道，有些人知道也不会说。<br />
 1.黑胶唱片机到后期，已经十分自动化了，按下播放键以后，唱针会自动挪到唱片开始的位置，然后缓缓下降，按下停止键或者放完以后也会自动停止并归位，一切都是由机械实现的。<br />
-2.换歌需要手动把唱针抬起来，然后把摇杆掰到对应位置，因为唱片不像CD那样有专门的区域存储时间码，至于怎么判断一首歌在什么位置 …</p></blockquote></p>
+2.换歌需要手动把唱针抬起来 …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-01-10T22:13:39+00:00">2022-01-10</time></p>
 <p>stderr</p>            </div>
@@ -419,79 +460,6 @@ For example:<br />
 <td>ignore this …</td></tr></tbody></table></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-11-05T18:12:45+00:00">2021-11-05</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2021/stdin-012"  rel="bookmark" >
-              <h2 class="card-title">20211102币圈的古诗词大会</h2>
-            </a>
-            <p class="card-text"><p>第一个是 Elon Musk 的</p>
-<p><a href="https://twitter.com/elonmusk/status/1455327010302087173">https://twitter.com/elonmusk/status/1455327010302087173</a></p>
-<div style="
-    font-family: Baskerville, Georgia, &quot;Liberation Serif&quot;, &quot;Kaiti SC&quot;, STKaiti, &quot;AR PL UKai CN&quot;, &quot;AR PL UKai HK&quot;, &quot;AR PL UKai TW&quot;, &quot;AR PL UKai TW MBE&quot;, &quot;AR PL KaitiM GB&quot;, KaiTi, KaiTi_GB2312, DFKai-SB, &quot;TW\-Kai&quot;, serif;
-    writing-mode: vertical-rl;
-    width: 100%;
-    word-break: break-all;
-    white-space: pre;
-    text-spacing: ideograph-alpha;
-    border-right: 0.2em solid #e00711;
-    text-align: justify;
-    text-justify: inter-ideograph;
-">
-Humankind
-煮豆燃豆萁
-豆在釜中泣
-本是同根生
-相煎何太急
-</div>
-
-<p>Shiba 大战 Dogecoin，然后SpaceX 大战 Blue Origin，然后怼 WFP David Beasley。</p>
-<p>我觉得 DeepL <a href="https://twitter.com/i/web/status/1455328151941353475">翻译</a>得真好！</p>
-<p><img alt="" src="/images/2021/stdin-012-1.jpg" /></p>
-<p>当然也有<a href="https://www.chinanews.com/gn/cns60/news/89.shtml">长者的</a>，微博上有个 大弟子Leo 找到了视频，看水印是 AP 的，我去搜了下发现真的有 <a href="https://youtu.be/oSG01RUdUUg?t=71">https://youtu.be/oSG01RUdUUg?t=71</a></p>
-<p>然后学习了一下，这首诗原来是六句，最早出现在南北朝刘宋的《世说新语》：</p>
-<div style="
-    font-family: Baskerville, Georgia, &quot;Liberation Serif&quot;, &quot;Kaiti SC&quot;, STKaiti, &quot;AR PL UKai CN&quot;, &quot;AR PL UKai HK&quot;, &quot;AR PL UKai TW&quot;, &quot;AR PL UKai TW MBE&quot;, &quot;AR PL KaitiM GB&quot;, KaiTi, KaiTi_GB2312, DFKai-SB, &quot;TW\-Kai&quot;, serif;
-    writing-mode: vertical-rl;
-    width: 100%;
-    word-break: break-all;
-    white-space: pre;
-    text-spacing: ideograph-alpha;
-    border-right: 0.2em solid #e00711;
-    text-align: justify;
-    text-justify: inter-ideograph;
-">
-煮豆持作羹 …</div></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-11-02T22:46:55+00:00">2021-11-02</time></p>
-<p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2021/stdout-018"  rel="bookmark" >
-              <h2 class="card-title">淘宝同一手机最多绑定6个小号</h2>
-            </a>
-            <p class="card-text"><p>总结一些没用的知识</p>
-<ol>
-<li>
-<p>淘宝/阿里账号，可以一个手机最多绑定6个账号。淘宝注册的时候点击「企业注册」然后用邮箱注册，最后用同一个手机验证即可</p>
-</li>
-<li>
-<p>「支付宝」在淘宝/阿里系里app里是和「账号」一一绑定的，这就产生了很多冲突。比如你一个第三方外卖app，支付的时候可以选择 微信/支付宝，一般不会限制下单手机号和支付手机号是否一样，你甚至可以帮别人支付订单，但是淘宝/阿里的app不一样，只能自己账号支付自己账号的订单。如果你有两个手机号和两个支付宝账号，那么没法交叉支付。</p>
-</li>
-</ol>
-<p>还有一个想不起了，想起了再补充。2333</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-10-28T16:21:23+00:00">2021-10-28</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

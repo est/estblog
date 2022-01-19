@@ -51,6 +51,51 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/49575878820"  rel="bookmark" >
+              <h2 class="card-title">一个NP-complete问题</h2>
+            </a>
+            <p class="card-text"><iframe width="640" height="360" src="http://www.youtube.com/embed/dAyDi1aa40E" frameborder="0"></iframe>
+
+<p>Steiner tree problem<br />
+好酷！的解法！中间的点叫做 <a href="http://zh.wikipedia.org/wiki/%E8%B4%B9%E9%A9%AC%E7%82%B9">费马点</a></p>
+<p><a href="http://www.reddit.com/r/math/comments/1dnjd1/really_cool_example_of_calculus_of_variations/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-05-04T02:46:00+00:00">2013-05-04</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/49564925054"  rel="bookmark" >
+              <h2 class="card-title">PonyORM - python的新一代黑魔法级别ORM</h2>
+            </a>
+            <p class="card-text"><p>简单的例子，来自<a href="http://ponyorm.com/">官网</a></p>
+<p>python的查询代码：</p>
+<pre><code>select(c for c in Customer
+     if sum(c.orders.price) &gt; 1000)
+</code></pre>
+<p>通过PonyORM翻译成SQL：</p>
+<pre><code>SELECT "c"."id"
+FROM "Customer" "c"
+  LEFT JOIN "Order" "order-1"
+    ON "c"."id" = "order-1"."customer"
+GROUP BY "c"."id"
+HAVING coalesce(SUM("order-1"."total_price"), 0) &gt; 1000
+</code></pre>
+<p>以前觉得<a href="http://peewee.readthedocs.org/en/latest/peewee/querying.html">peewee的查询语法</a>很clever，比Django那种丑爆的 <code>price__gt=1000</code> 好出一条街 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-05-03T23:33:00+00:00">2013-05-03</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/49498875576"  rel="bookmark" >
               <h2 class="card-title">I/O模型</h2>
             </a>
@@ -392,54 +437,6 @@ Basically, we are trying to split up all the resources in such a way as to maxim
 <p><a href="https://news.ycombinator.com/item?id=5491826">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-04-04T10:11:58+00:00">2013-04-04</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/47007003400"  rel="bookmark" >
-              <h2 class="card-title">Google Spreadsheet API pitfalls</h2>
-            </a>
-            <p class="card-text"><ol>
-<li>
-<p>Don't use OAuth 2 for "Google Apps for Business", coz admin may set share option to "limit to xxx domain only", thus your poor nigga API account like "30000000000@developer.gserviceaccount.com" won't work.</p>
-</li>
-<li>
-<p>Google Spreadsheets' CSV output format is terrible shit. Never bother touch it. It does not handle …</p></li></ol></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-04-03T02:41:00+00:00">2013-04-03</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/46935375645"  rel="bookmark" >
-              <h2 class="card-title">OS X Mountain Lion 修改 openssh sshd_config 配置</h2>
-            </a>
-            <p class="card-text"><p>OS X的蛋痛特性是  <code>`launched</code> 。如果你需要修改sshd的监听端口，那么</p>
-<p>编辑 /System/Library/LaunchDaemons/ssh.plist </p>
-<pre><code>        &lt;key&gt;Listeners&lt;/key&gt;
-        &lt;dict&gt;
-                &lt;key&gt;SockServiceName&lt;/key&gt;
-                &lt;string&gt;ssh-alt&lt;/string&gt;
-        &lt;/dict&gt;
-</code></pre>
-<p>然后在<code>/etc/services</code>里定义：</p>
-<pre><code> ssh-alt 12345/tcp # ssh-alt
-</code></pre>
-<p>然后重启sshd服务：</p>
-<pre><code>sudo launchctl uload /System/Library/LaunchDaemons/ssh.plist 
-sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist
-</code></pre>
-<p>蛋碎！</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-04-02T09:52:47+00:00">2013-04-02</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
