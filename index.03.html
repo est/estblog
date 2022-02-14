@@ -51,6 +51,27 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/202106/stdout-008"  rel="bookmark" >
+              <h2 class="card-title">MySQL on duplicate key in SQLAlchemy</h2>
+            </a>
+            <p class="card-text"><p>A simple function to upsert something atomically into MySQL</p>
+<pre><code>def upsert(val1, val2, **kwargs):
+    """upsert val1-val2 pair into mysql and return the pk"""
+    from sqlalchemy.dialects.mysql import insert
+    from sqlalchemy.sql.expression import func
+
+    # this val1-val2 pair should have UNIQUE KEY constraint in MySQL table.
+    stmt = insert(MyModel.__table__ …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-06-29T11:55:13+00:00">2021-06-29</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/202106/stdout-007"  rel="bookmark" >
               <h2 class="card-title">古墓丽影9（Tomb Raider 2013）治3D眩晕必备FOV补丁+禁镜头晃动</h2>
             </a>
@@ -457,27 +478,6 @@ for i in $(seq 1 423); do wget -t 0 -T 5  -U 'Mozilla/5.0 (iPhone; CPU iPhone OS
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-12-26T01:03:36+00:00">2020-12-26</time></p>
 <p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202011/stdin-017"  rel="bookmark" >
-              <h2 class="card-title">为什么不受欢迎更能「客观」的看这个世界</h2>
-            </a>
-            <p class="card-text"><p>美国心理学博士 普林斯汀(Mitch Prinstein)写了本书叫 《欢迎度 Popular》，里面讲到按欢迎度可以给人分为5种类型：</p>
-<p><img alt="" src="/images/2020/stdin-017-1.jpg" /></p>
-<p>里面讲到最重要的结论就是，受欢迎是人本身的一个特性，不会随着群体和环境的变化而变化。作为比较劣势的，被拒绝者，其实还是有一些优点的</p>
-<blockquote>
-<p>而普林斯汀这本书说，这个实验你还可以从另一个角度解释。经常被接受的人，自信心太强，做事比较主观。而经常被拒绝的人，因为善于察觉社交中的蛛丝马迹，所以更能够体察别人的情绪，能用别人的视角来保护自己<br />
-这在很多时候是一个优势。比如你们公司要说服另一个公司跟你们合作。领导作报告说得眉飞色舞，对方公司听得也是频频点头 —— 那么如果在场的你们公司的人都是被接受的类型，可能就会过分乐观，认为合作肯定能谈成。但是如果这时候你们有个高中时代有过被拒绝枷锁的人，他就能察觉到，领导讲到某某处的时候，对方反应不太好。这个关键信息就给你们带来一个改进的提示。<br />
-所以这个世界虽然不怎么公平，但毕竟还是各有所长。从小被接受，你固然获得了自信和乐观，但是你可能是个傲慢的人，缺少真正的智慧；从小被拒绝，虽然你的生活可能不太愉快，但是黑夜给了你黑色的眼睛。<br />
-如果一个国家一个民族曾经有过长期被人欺负的历史，她看问题的眼光恐怕也会有所不同。中国的近代史上历经了屈辱，几十年前的中国并不是“被接受”的角色 …</p></blockquote></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2020-11-30T22:49:51+00:00">2020-11-30</time></p>
-<p>stdin</p>            </div>
           </article>
         </div>
 
