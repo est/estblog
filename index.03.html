@@ -36,7 +36,7 @@
 
         <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
         <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
-        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin:</a></li>
         <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
 
     </ul>
@@ -46,6 +46,25 @@
         <p class="list-header-subtext">This blog is rated&nbsp;&nbsp;R⃣ , viewer discretion is advised</p>
         <!-- <h1 class="list-header-title">Est's Blog</h1> -->
       </header>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/2021/stdin-006"  rel="bookmark" >
+              <h2 class="card-title">美国国家航空航天局（NASA）在1966年的黑科技</h2>
+            </a>
+            <p class="card-text"><p>我 2018-09-29 在 <a href="https://www.zhihu.com/question/61925305/answer/500667495">zhihu 上</a>回答一个老贴。问题是「美国国家航空航天局（NASA）有什么黑科技」，存到自己 blog 上留档</p>
+<p>转载一个故事 <a href="http://www.worldofindie.co.uk/?p=682">McMoon: How the Earliest Images of the Moon Were so Much Better than we Realised</a></p>
+<h3>1966 年</h3>
+<p>这个时候我国在做什么，大家可以回忆一下。这是一个胶片相机还是精密仪器的时代，2年前，东京奥运会被称为第一个有电视机奥运会。</p>
+<p>NASA为了探测月球，发射了5个探测器Lunar Orbiter I 到 V。需要传回月球图片</p>
+<p>那么请问没有任何数码手段如何把图片传回来？那个时候的美国间谍飞机到我国上空侦查，是要派飞行员来飞，而且要回去洗照片的。美国的侦察卫星，也是需要定期弹射胶卷回地球，然后地面部队回收 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-07-06T23:13:17+00:00">2021-07-06</time></p>
+<p>stdin</p>            </div>
+          </article>
+        </div>
 
 
         <!-- new article -->
@@ -464,25 +483,6 @@ I think my generation is the first one …</p></blockquote></p>
           -H …</li></ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-01-05T23:36:09+00:00">2021-01-05</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202101/stdout-001"  rel="bookmark" >
-              <h2 class="card-title">OpenWRT 随机设置 PPPoE 拨号的 MAC 地址 Randomize WAN MAC address in OpenWRT PPPoE</h2>
-            </a>
-            <p class="card-text"><p>新年第一贴！</p>
-<p>Run the command before connect to PPPoE or as cronjob</p>
-<p>添加一个重启的定时任务，在重启之间执行一个命令：</p>
-<pre><code>uci set network.wan.mac_addr=$(hexdump -n3 -e'1/3 "8c:8d:8e" 3/1 ":%02X" "\n"' /dev/random) &amp;&amp; uci commit network
-</code></pre>
-<p>为什么要在拨号前随机生成WAN口的 MAC 地址呢？嘿嘿。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-01-01T00:27:52+00:00">2021-01-01</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

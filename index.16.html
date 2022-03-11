@@ -36,7 +36,7 @@
 
         <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
         <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
-        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin:</a></li>
         <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
 
     </ul>
@@ -46,6 +46,29 @@
         <p class="list-header-subtext">This blog is rated&nbsp;&nbsp;R⃣ , viewer discretion is advised</p>
         <!-- <h1 class="list-header-title">Est's Blog</h1> -->
       </header>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/34892432623"  rel="bookmark" >
+              <h2 class="card-title">1073 DLNA = Internet Radio</h2>
+            </a>
+            <p class="card-text"><p>家里有个老机器 海美迪HD 300B，用的是Realtek 1073DD+方案，发现一个很猛的固件：</p>
+<p><a href="http://www.hdpfans.com/thread-120536-1-1.html">http://www.hdpfans.com/thread-120536-1-1.html</a></p>
+<p>吐槽一下，DLNA被国内翻译成 多屏互动 。搞了半天我一个关键字搜索不到是这个原因。。。囧。</p>
+<p>刷机之后真的能支持了，Win7上网络设备刷出来一个</p>
+<p><img alt="" src="/images/tumblr/34892432623.png" /></p>
+<p>连WMP和BubbleUPnP都支持很好。赞美一个。</p>
+<p>继续玩Intel UPnP Device Spy想到一个比较好玩的功能：</p>
+<p><code>SetAVTransportURI()</code> 是支持任意HTTP地址的，而很多shoutcast/icecast等Internet Radio，本质上就是HTTP流媒体的mp3/aac</p>
+<p>于是我试了下，还真成功了。比如3fm alternative</p>
+<p><a href="http://ics2oss.omroep.nl/3fm-alternative-mp3?q=/npo/mp3/3fm_alternative.pls&amp;stream=ok&amp;esthack=1073.mp3">http://ics2oss.omroep.nl/3fm-alternative-mp3?q=/npo/mp3/3fm_alternative.pls&amp;stream=ok&amp;esthack …</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-11-03T06:43:00+00:00">2012-11-03</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
 
 
         <!-- new article -->
@@ -430,28 +453,6 @@ def ping_uwsgi(sock_file):
 <p><a href="http://www.reddit.com/r/Physics/comments/10dbbt/the_iphone_5_commercial_this_is_insulting_right/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-09-24T03:03:46+00:00">2012-09-24</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/31780723732"  rel="bookmark" >
-              <h2 class="card-title">Google的天顶星技术——Google Spanner</h2>
-            </a>
-            <p class="card-text"><p>上次看到 <a href="http://www.csdn.net/article/2012-08-20/2808870">Google后Hadoop时代的新“三驾马车”——Caffeine、Pregel、Dremel</a></p>
-<p>感觉碉堡了。</p>
-<p>Pregel是一个graph db。这是逆NoSQL运动行之的潮流——NoSQL倡导没有<code>join</code>，而graph db则是——所有数据都可以默认join起来。</p>
-<p>Dremel 是一个query interface。</p>
-<p>Caffeine的背后是Google True Time API，这是基于Google Spanner的一个碉堡技术。。</p>
-<p>什么是Google Spanner？Spanner是一个行星级别的db系统——通过GPS、原子钟实现全球数据中心timestamp同步的MVCC。</p>
-<p>和BigTable相比，BigTable的cell是mutable，Spanner是Datomic，类似函数式变成里的常量；Spanner还提供了BigTable不具备的——分布式transaction支持。比如lock-free read transaction</p>
-<p>隐隐的感觉Google的天顶星科技碉堡了。paper都非常值得一读。。。虽然不明，但觉历。</p>
-<p><a href="http://news.ycombinator.com/item?id=4526710">via</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2012-09-18T00:38:14+00:00">2012-09-18</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

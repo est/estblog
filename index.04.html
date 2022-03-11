@@ -36,7 +36,7 @@
 
         <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
         <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
-        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin:</a></li>
         <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
 
     </ul>
@@ -46,6 +46,25 @@
         <p class="list-header-subtext">This blog is rated&nbsp;&nbsp;R⃣ , viewer discretion is advised</p>
         <!-- <h1 class="list-header-title">Est's Blog</h1> -->
       </header>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/202101/stdout-001"  rel="bookmark" >
+              <h2 class="card-title">OpenWRT 随机设置 PPPoE 拨号的 MAC 地址 Randomize WAN MAC address in OpenWRT PPPoE</h2>
+            </a>
+            <p class="card-text"><p>新年第一贴！</p>
+<p>Run the command before connect to PPPoE or as cronjob</p>
+<p>添加一个重启的定时任务，在重启之间执行一个命令：</p>
+<pre><code>uci set network.wan.mac_addr=$(hexdump -n3 -e'1/3 "8c:8d:8e" 3/1 ":%02X" "\n"' /dev/random) &amp;&amp; uci commit network
+</code></pre>
+<p>为什么要在拨号前随机生成WAN口的 MAC 地址呢？嘿嘿。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-01-01T00:27:52+00:00">2021-01-01</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
 
 
         <!-- new article -->
@@ -416,23 +435,6 @@ for i in $(seq 1 423); do wget -t 0 -T 5  -U 'Mozilla/5.0 (iPhone; CPU iPhone OS
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-07-01T10:38:09+00:00">2020-07-01</time></p>
 <p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202006/stderr-009"  rel="bookmark" >
-              <h2 class="card-title">梦 和 虚拟机</h2>
-            </a>
-            <p class="card-text"><p>小时候，有一天上学迟到了。一路奔跑到学校，气喘吁吁的做到自己座位上，非常紧张。这个时候尴尬的事情发生了：作业忘记带了，眼看老师就要走过来挨个检查作业了，啊啊啊。心里砰砰砰直跳。突然，抬头向窗外一往，咦，怎么天空是黑色的。再一看熟悉的教室，哎，怎么墙也是黑色的。整个世界似乎都是灰度的。这个时候灵机一动，嗨，这肯定是在做梦！然后就突然自己从座位上站了起来大笑，这肯定不是现实世界。同学都用异样的目光看着我。然后我居然。。笑醒了。</p>
-<p>这是我第一次做清醒梦。也能通过观察和推理得知自己是在做梦。回想起来，梦境里的东西似乎不重要的外景都是黑白或者灰色的，大脑这个神经网络处理不重要的图像信息也是先把RGB转换成灰度的方便计算罢。</p>
-<p>做梦有的时候也是半清醒的，比如飞翔，跳楼，悬空，失重，自由下落等场景。我甚至有的时候自己故意纵身一跃享受这种刺激。但是并没有意识到自己在做梦。</p>
-<p>还有一次做梦，特别奇葩。梦见自己跟小朋友讲解算术题。加减法还能算出来。突然黑板上出现了一道四位数乘法。这个时候我居然不能列出算式了。奇了怪了。于是掏出手机，找计算器 app。翻来翻去居然那个app图标消失了 …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2020-06-30T10:31:42+00:00">2020-06-30</time></p>
-<p>stderr</p>            </div>
           </article>
         </div>
 

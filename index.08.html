@@ -36,7 +36,7 @@
 
         <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
         <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
-        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin:</a></li>
         <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
 
     </ul>
@@ -46,6 +46,23 @@
         <p class="list-header-subtext">This blog is rated&nbsp;&nbsp;R⃣ , viewer discretion is advised</p>
         <!-- <h1 class="list-header-title">Est's Blog</h1> -->
       </header>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/91803677460"  rel="bookmark" >
+              <h2 class="card-title">A rule of thumb is that you have security by obscurity</h2>
+            </a>
+            <p class="card-text"><p>摘录一些</p>
+<blockquote>
+<p>Jack Voth, Algenol’s information technology chief, stumbled on something odd: a telnet connection to its videoconference camera from an Internet Protocol address in China</p>
+<p>Hacking attacks come from many countries, he says, but most are efforts to steal credit-card information. Chinese hackers, by contrast, tend to target trade …</p></blockquote></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2014-07-14T22:01:22+00:00">2014-07-14</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
 
 
         <!-- new article -->
@@ -452,31 +469,6 @@ for vec in permutations(cols):
 <p><a href="http://www.reddit.com/r/technology/comments/1rwuhw/predictions_about_the_web_from_1995_the_truth_in/cdrx2ep">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-12-03T01:27:50+00:00">2013-12-03</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/68759151296"  rel="bookmark" >
-              <h2 class="card-title">GoLang with Sublime on Windows</h2>
-            </a>
-            <p class="card-text"><p>好吧。还在力战渣windows。非管理员权限。<a href="http://code.google.com/p/go/downloads/list?q=OpSys-Windows+Type%3DArchive">下载zip包</a>解压到 D:\dev\go</p>
-<p>sublime处理中文路径一直很bug。需要修改 /Data/Packages/Default/exec.py:45 行：</p>
-<pre><code>    for k, v in proc_env.iteritems():
-        nv =  os.path.expandvars(v)
-        if isinstance(v, unicode):
-            import locale
-            nv = nv.encode(locale.getdefaultlocale()[1])
-        proc_env[k] = nv
-</code></pre>
-<p>然后菜单 Tools -&gt; Build System -&gt; New...</p>
-<pre><code>{
-    "cmd": ["go …</code></pre></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-12-02T01:25:18+00:00">2013-12-02</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

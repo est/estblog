@@ -36,7 +36,7 @@
 
         <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
         <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
-        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin:</a></li>
         <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
 
     </ul>
@@ -46,6 +46,32 @@
         <p class="list-header-subtext">This blog is rated&nbsp;&nbsp;R⃣ , viewer discretion is advised</p>
         <!-- <h1 class="list-header-title">Est's Blog</h1> -->
       </header>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/1160"  rel="bookmark" >
+              <h2 class="card-title">禁用wordpress的texturize</h2>
+            </a>
+            <p class="card-text"><p>Wordpress有一个很脑残的功能，把半角引号自动替换成全角的。我一开始也以为是CSS做的。折腾了半天没结果。原来这个功能叫<a href="http://wordpress.org/tags/texturize">Texturize</a>，是在<code>wp-includes/formatting.php</code>里实现的</p>
+
+<p>网上找到<a href="http://www.ibjx.com/2009/11/%E9%98%B2%E6%AD%A2wordpress%E8%8B%B1%E6%96%87%E6%A0%87%E7%82%B9%E7%AC%A6%E5%8F%B7%E5%8D%8A%E8%A7%92%E8%BD%AC%E5%85%A8%E8%A7%92/">一篇教程</a>，如下修改代码：</p>
+
+<p>把</p>
+
+<pre><code>// static strings 
+$curl = str_replace($static_characters, $static_replacements, $curl); 
+// regular e-xpressions 
+$curl = preg_replace($dynamic_characters, $dynamic_replacements, $curl);
+</code></pre>
+
+<p>都注释掉就OK了。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-02-09T14:32:17+00:00">2010-02-09</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
 
 
         <!-- new article -->
@@ -449,42 +475,6 @@ Shanghai Electronic Certification Authority Co.Ltd. (SHECA)<br>
 标 …</blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-02-07T06:20:03+00:00">2010-02-07</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/1040"  rel="bookmark" >
-              <h2 class="card-title">[转载]高人解读《三国演义》魏之武将</h2>
-            </a>
-            <p class="card-text"><p>NewSMTH上看到一个吐槽神物，转载至此。。。。</p>
-
-<p>发信人: changjiu (唱酒), 信区: Sanguo<br>
-标  题: 高人解读魏之武将<br>
-发信站: 水木社区 (Fri Feb  5 22:08:00 2010), 站内</p>
-
-<p><a href="http://tieba.baidu.com/f?kz=693600790">http://tieba.baidu.com/f?kz=693600790</a></p>
-
-<p>该楼主十分强大。。。另请关注回帖。。</p>
-
-<blockquote><br>
-本人熟读三国十遍，于此发表对魏国武将之评论。<br>
- <br>
-魏之神将张文顺<br>
-<br>
-1位粉丝<br>
-<br>
-1楼<br>
-　　大家好，今天我将介绍魏国武将，以供吧友学习参考。<br>
-<br>
-　　首先，我介绍的是魏国最有名气，也是在正史中唯一可以和五虎上将平起平坐的组合！     ‘五良子将’他们五人分别是张辽，李典，徐晃，于禁，庞德和乐进。<br>
-<br>
-　　先说乐进，字文谦。原是文官出身，后弃文从武 …</blockquote></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2010-02-07T06:12:55+00:00">2010-02-07</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
