@@ -36,7 +36,7 @@
 
         <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
         <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
-        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin:</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
         <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
 
     </ul>
@@ -51,15 +51,44 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/202101/stdin-001"  rel="bookmark" >
+              <h2 class="card-title">古之学者为己</h2>
+            </a>
+            <p class="card-text"><blockquote>
+<p>科文的所有道理，都是以“我”为主，这可是个特别难得的品格。很多人接触文化艺术，是为了别人。英文中有个专门的名词 —— “art snob …</p></blockquote></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-01-07T20:50:42+00:00">2021-01-07</time></p>
+<p>stdin</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/202101/stdout-002"  rel="bookmark" >
+              <h2 class="card-title">OpenWRT 实现 Cloudflare 动态域名 dynamic DNS</h2>
+            </a>
+            <p class="card-text"><p>首先得有公网 IP （废话），然后你得 OpenWRT 路由器桥接直拨。</p>
+<p>这个方法的核心是通过 <code>ifstatus wan |  jsonfilter -e '@["ipv4-address"][0].address'</code> 命令得到本机 WAN 的公网 IP。</p>
+<p>根 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-01-05T23:36:09+00:00">2021-01-05</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/202101/stdout-001"  rel="bookmark" >
               <h2 class="card-title">OpenWRT 随机设置 PPPoE 拨号的 MAC 地址 Randomize WAN MAC address in OpenWRT PPPoE</h2>
             </a>
             <p class="card-text"><p>新年第一贴！</p>
 <p>Run the command before connect to PPPoE or as cronjob</p>
 <p>添加一个重启的定时任务，在重启之间执行一个命令：</p>
-<pre><code>uci set network.wan.mac_addr=$(hexdump -n3 -e'1/3 "8c:8d:8e" 3/1 ":%02X" "\n"' /dev/random) &amp;&amp; uci commit network
-</code></pre>
-<p>为什么要在拨号前随机生成WAN口的 MAC 地址呢？嘿嘿。</p></p>
+<pre><code>uci set network.wan.mac_addr=$(hexdump -n3 -e'1/3 "8c:8d:8e …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-01-01T00:27:52+00:00">2021-01-01</time></p>
 <p>stdout</p>            </div>
@@ -74,9 +103,7 @@
               <h2 class="card-title">北美 VPS 推荐：Racknerd</h2>
             </a>
             <p class="card-text"><p>以前买的 hostmem 总感觉高峰期速度不行。Racknerd 这家看上去英语比较地道，感觉还行？于是跑了个脚本把它家的套餐遍历了一下：</p>
-<pre><code>mkdir -p ~/Downloads/racknerd; cd $_
-
-for i in $(seq 1 423); do wget -t 0 -T 5  -U 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 …</code></pre></p>
+<pre><code>mkdir …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-12-26T01:03:36+00:00">2020-12-26</time></p>
 <p>stderr</p>            </div>
@@ -92,12 +119,7 @@ for i in $(seq 1 423); do wget -t 0 -T 5  -U 'Mozilla/5.0 (iPhone; CPU iPhone OS
             </a>
             <p class="card-text"><p>美国心理学博士 普林斯汀(Mitch Prinstein)写了本书叫 《欢迎度 Popular》，里面讲到按欢迎度可以给人分为5种类型：</p>
 <p><img alt="" src="/images/2020/stdin-017-1.jpg" /></p>
-<p>里面讲到最重要的结论就是，受欢迎是人本身的一个特性，不会随着群体和环境的变化而变化。作为比较劣势的，被拒绝者，其实还是有一些优点的</p>
-<blockquote>
-<p>而普林斯汀这本书说，这个实验你还可以从另一个角度解释。经常被接受的人，自信心太强，做事比较主观。而经常被拒绝的人，因为善于察觉社交中的蛛丝马迹，所以更能够体察别人的情绪，能用别人的视角来保护自己<br />
-这在很多时候是一个优势。比如你们公司要说服另一个公司跟你们合作。领导作报告说得眉飞色舞，对方公司听得也是频频点头 —— 那么如果在场的你们公司的人都是被接受的类型，可能就会过分乐观，认为合作肯定能谈成。但是如果这时候你们有个高中时代有过被拒绝枷锁的人，他就能察觉到，领导讲到某某处的时候，对方反应不太好。这个关键信息就给你们带来一个改进的提示。<br />
-所以这个世界虽然不怎么公平，但毕竟还是各有所长。从小被接受，你固然获得了自信和乐观，但是你可能是个傲慢的人，缺少真正的智慧；从小被拒绝，虽然你的生活可能不太愉快，但是黑夜给了你黑色的眼睛。<br />
-如果一个国家一个民族曾经有过长期被人欺负的历史，她看问题的眼光恐怕也会有所不同。中国的近代史上历经了屈辱，几十年前的中国并不是“被接受”的角色 …</p></blockquote></p>
+<p>里面讲到最重要的结论 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-11-30T22:49:51+00:00">2020-11-30</time></p>
 <p>stdin</p>            </div>
@@ -116,12 +138,7 @@ for i in $(seq 1 423); do wget -t 0 -T 5  -U 'Mozilla/5.0 (iPhone; CPU iPhone OS
 
 <p>然后这个赔偿，很久网上有另外一个帖子说：</p>
 <blockquote>
-<p>去年1月，西安的旅友驾车去九寨沟路上撞伤一只牦牛。当时天已经黑了视线不是很好，加上路也不怎么好，车速不高。拐过一个弯，看到迎面一辆车，就变了个近光，就在即将汇车的一瞬间，车前两三米处有两头牦牛横穿马路，一个猛刹车也来不及了，就这样，牦牛被撞伤了，车的右前侧也撞坏了，右大灯也撞坏了。 <br />
-他停车报警，约好第二天找牛主人商量赔偿的事。对方说撞伤的是母牛，以后会生小崽子，小崽子还会生小崽子.....开口3.5万。旅友瞬间蒙逼，说牛只是受伤并没有死亡，不应该赔那么多。前后谈了两天，经过一番实力悬殊的讨价还价，最后事情以旅友赔偿牛主人一万八千元达成赔偿协议而告终。原本出行的满满的愉快心情，已被破坏殆尽。</p>
-</blockquote>
-<p>很多人会对大牛生小牛这个说法不屑一顾，觉得这是偏离了牦牛的市场价格漫天要价的野蛮行为，但是最近看了《<a href="https://m.igetget.com/share/course/article?id=g258WANERjwQJDzzDrKbOMG1rZqkPl">罗辑思维811期 | 为什么这场厮杀延续千年？</a>》却提供了一个不一样的视角：</p>
-<blockquote>
-<p>很多人可能误以为游牧者经常吃肉。可能现代社会是如此，古代的游牧者可不是这样。他们吃肉的机会其实很少。为啥？因为对游牧民族来说，牲畜就是把草转换成乳制品、皮、毛、牛羊粪的转换器。吃牲畜 …</p></blockquote></p>
+<p>去年1月，西安的旅友驾车去九寨沟路上撞伤一只牦牛。当时 …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-11-18T21:08:24+00:00">2020-11-18</time></p>
 <p>stdin</p>            </div>
@@ -166,16 +183,7 @@ for i in $(seq 1 423); do wget -t 0 -T 5  -U 'Mozilla/5.0 (iPhone; CPU iPhone OS
               <h2 class="card-title">一部上个世纪50年代拍的陪审团12个白人讨论凶杀案的电影 观后感</h2>
             </a>
             <p class="card-text"><p>在 ddrk 上看完了，想到什么说什么吧。</p>
-<p>《<a href="https://movie.douban.com/subject/1293182/">12 Angry Men</a> 十二怒汉》，这是我第二次打开这个电影了。50年代的，黑白的，第一次真没兴致看下去，这种靠演员演技和铺垫的老电影，很难静下心来专注的看。今天机缘巧合就看完了。</p>
-<p>有部分剧透。没看过的就不要看了。</p>
-<p>首先第一个感觉是，那个年代的白人之间感觉很平等啊。虽然嘴上要 BB，但是投票表决什么都还是好严肃。不会因为动怒了当面唱反调，骂娘这些。</p>
-<p>第二个感觉是，人们都好闲啊。不用担心当 jury 的时候耽误 996 了？</p>
-<p>说老头走得慢，还真的去掐着秒表试了试。这个居然不尬？也太有实证主义精神了。</p>
-<p>最囧的是，为了案子还居然去当地五金店买了一把违禁折叠刀！WTF？</p>
-<p>然后里面各个人的个性都很强，没有谁含蓄 迁就大家 跟风什么的。</p>
-<p>大部分人都善于表达和思考，为了别人的生死也敢于犯众怒。真是需要勇气和正值啊。</p>
-<p>但是，抽烟真是的。。满屋子都是。</p>
-<p>我感觉吧，「民主 …</p></p>
+<p>《<a href="https://movie.douban.com/subject/1293182/">12 Angry Men</a> 十二怒汉》，这是我第二次打开这个电影了。50年代的，黑白的，第一次真没兴致看下 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-11-01T23:44:37+00:00">2020-11-01</time></p>
 <p>stderr</p>            </div>
@@ -208,11 +216,7 @@ for i in $(seq 1 423); do wget -t 0 -T 5  -U 'Mozilla/5.0 (iPhone; CPU iPhone OS
             <a href="/202010/stdout-010"  rel="bookmark" >
               <h2 class="card-title">人和动物有什么区别</h2>
             </a>
-            <p class="card-text"><p>上下班通勤极度无聊，就趁着罗胖的10元优惠券买了 学而时嘻之 博主开设的 199元的 精英日课。之前一直讨厌这个名字，但是很喜欢 <a href="http://www.geekonomics10000.com">学而时嘻之  geekonomics10000</a> 这个博客，就买了当付费 podcast 了。听第二课就讲了《未来简史2：我有意识，它有吗》，就提到了本篇的问题：</p>
-<p>人和动物的区别是什么？</p>
-<p>马克思认为是使用工具。很多人不认同，觉得这纯粹是为了引出劳动论，其二的确很多动物也会用工具。</p>
-<p>《Homo Deus 未来简史》的作者 尤瓦尔·赫拉利 说，人和动物的区别区别是意识。但<a href="https://en.wikipedia.org/wiki/Animal_consciousness">动物也是有意识</a>的，甚至自我意识。比如鹦鹉会照镜子，认出自己，并且梳妆脸上的异物。和人相处的宠物很明显有情绪表达。</p>
-<p>我认为，人类是地球上第一个进化出来能<strong>远程攻击</strong>的动物，而且是大规模群体协作那种，脱离了近身肉搏的低级趣味。如果你玩 RTS 就知道，远程兵种出现的意义是多么牛逼 …</p></p>
+            <p class="card-text"><p>上下班通勤极度无聊，就趁着罗胖的10元优惠券买了 学而时嘻之 博主开设的 199元的 精英日课。之前一直讨厌这个名字，但 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-10-21T23:39:55+00:00">2020-10-21</time></p>
 <p>stdout</p>            </div>
@@ -227,13 +231,7 @@ for i in $(seq 1 423); do wget -t 0 -T 5  -U 'Mozilla/5.0 (iPhone; CPU iPhone OS
               <h2 class="card-title">996的内在机制是什么（提示：并不是劳动剥削）</h2>
             </a>
             <p class="card-text"><blockquote>
-<p>1955年，有位英国的政治学家，叫帕金森，提出了一个“帕金森定律”。简单说就是：一个组织，总是会趋向于层级越来越多，规模越来越膨胀，人越来越忙，但组织效率越来越低下。<br />
-组织变大不是因为要干的事越来越多，而是因为只要有资源，组织就会大到把资源用满而且还渴求新的资源的程度。反过来，把资源砍掉，未必影响干事的效果。<br />
-回到时间资源，也就是拖延症这个话题。上面讲的这个规律也适用于时间资源：并不是需要多少用多少，而是有多少你就会用光多少。<br />
-为什么会有拖延症？不仅是因为自我管理不严格，而是因为只要时间资源在那里，你就会倾向于把它用光用尽。<br />
-你可能会说，不对啊，做一件事需要的时间资源应该是有限的啊。从拧一颗螺丝到造一台汽车，不仅需要的时间是有数的，而且还是可以持续优化的。怎么会需要无限的时间资源呢？<br />
-这就牵涉到人类社会的一个新变化了。用管理学家包政老师的话说，这是因为人类工作要处理的对象，从“物品”变成了“事情”。<br />
-以前，无论是农业时代还是工业时代，我们的工作对象主要是物品，无论种一亩地的庄稼，还是在流水线上加工一个零件，物品的边界是清晰的，所需要的工作时间就是有限的。我们努力的方向，就是通过各种工具和创新，节省时间资源 …</p></blockquote></p>
+<p>1955年，有位英国的政治学家，叫帕金森，提出了一个“帕金森定律”。简单说就是：一个组织，总是会趋向于层级越来越多，规模越来 …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-10-09T21:26:07+00:00">2020-10-09</time></p>
 <p>stdin</p>            </div>
@@ -253,11 +251,7 @@ for i in $(seq 1 423); do wget -t 0 -T 5  -U 'Mozilla/5.0 (iPhone; CPU iPhone OS
 <blockquote>
 <p>Do unto others as you would have them do unto you</p>
 </blockquote>
-<p>这句话是按作者的说法，是《圣经》《Torah》《圣训》里 Golden rule of morality 。但是 恕 还有一层意思是我之前完全没预料到的，那就是</p>
-<blockquote>
-<p>Do not do to others what you wouldn't want them to do to you</p>
-</blockquote>
-<p>这两句话区别很大。作者举了个例子，第一句话表达的其实更加 demanding，比如 …</p></p>
+<p>这句话是按作者的说法，是《圣经》《Torah》《圣训》里 Golden rule of morality 。但是 恕 还有 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-10-06T08:07:56+00:00">2020-10-06</time></p>
 <p>stdin</p>            </div>
@@ -273,12 +267,7 @@ for i in $(seq 1 423); do wget -t 0 -T 5  -U 'Mozilla/5.0 (iPhone; CPU iPhone OS
             </a>
             <p class="card-text"><blockquote>
 <p>儿童这个阶层的成型是很近的事情，这是美国传播学者尼尔·波兹曼的一个洞见。<br />
-在传统社会，儿童和成年之间的界限是非常模糊的。因为大家用的都是一套学习和传播工具，那就是口语。只要都会说话，听得懂别人的话，那小孩和大人，就只有体能和见识上的区别。那小孩做大人的工作，就也没有什么了不起。<br />
-但是印刷机出现之后，人类文化的传承，主要靠文字了。而熟练使用文字，那是需要漫长的学习和训练的。你才能熟练用文字表达，或者说阅读文本。是因为传播媒介的这个变化，才塑造了“童年”这个概念。<br />
-所以越是文明社会，儿童就越是面临两个问题。第一，儿童和成人的知识差距迅速拉开。成人的工作，儿童是干不了的，因为儿童阅读不了那么复杂的文字；第二，儿童如果不抓紧这个时间接受教育，将来长大了，还会严重影响成人之后的社会竞争力。</p>
-</blockquote>
-<p>来自《<a href="https://m.igetget.com/share/course/article?id=bqzNakylrn9WVaZZZNJ7DOop10vZwL">罗辑思维 第785期 | 为什么你的观点是正确的？</a>》</p>
-<p>以上观点来自《童年的消逝 The disappearance of childhood》，算这是我近几年认识事物比较升华的一个收获。之前一次升华是，人要区分性，爱情，婚姻和家庭 …</p></p>
+在传统社会，儿童和成年之间的界限是非 …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-09-29T23:34:07+00:00">2020-09-29</time></p>
 <p>stdin</p>            </div>
@@ -293,14 +282,7 @@ for i in $(seq 1 423); do wget -t 0 -T 5  -U 'Mozilla/5.0 (iPhone; CPU iPhone OS
               <h2 class="card-title">创意类工作应该怎么算绩效奖励</h2>
             </a>
             <p class="card-text"><blockquote>
-<p>Mayo Clinic 梅奥诊所是全美规模最大、设备最先进的综合性医院。有多大呢？梅奥总部所在的罗切斯特市一共有十一万人，梅奥就占了三万多。现在医学体系上的很多创新，比如第一台救护车，第一个重症监护室，第一个病历系统，都是梅奥诊所率先创造出来的。<br />
-聚集了那么多高级知识分子，那么多世界顶级医生的梅奥诊所，用的居然是固定工资制度。就是没有任何绩效激励，对，没有奖金、没有销售提成、也没有分红，所有我们熟悉的，一系列工资激励制度，什么都没有。当然，梅奥每年也会对一些医生涨薪，但如果你在梅奥待够5年之后，工资基本就固定了，再也不会涨了。<br />
-不同的工资水平评定，靠的是什么？当然是人。是同行评议</p>
-</blockquote>
-<p>很是神奇。来自《<a href="https://m.igetget.com/share/course/article?id=5Yejy8dqoQD9JoQmy5KR1r0xpgmWk3">罗辑思维 第706期 | 创造性的工作怎么激励？</a>》</p>
-<p>另外又看到一篇《<a href="https://www.sohu.com/a/25179920_105067">精致的利己主义者和常青藤的绵羊 by 万维钢</a>》</p>
-<blockquote>
-<p>Joe为什么要参加那么多课外活动？因为这些活动是美国学生评价体系的重要组成部分，像考试分数一样重要。跟小明刷GPA（平均学分绩点）一样，Joe刷课外活动的经验值也只不过是完成各种考核指标而已。每天忙得焦头烂额的Joe，对这些事情并没有真正的热情 …</p></blockquote></p>
+<p>Mayo Clinic 梅奥诊所是全美规模最大、设备最先进的综合性医院。有多大呢？梅奥总部所在的罗切斯特市一共有十一万人，梅奥就 …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-09-24T22:42:45+00:00">2020-09-24</time></p>
 <p>stdin</p>            </div>
@@ -315,10 +297,7 @@ for i in $(seq 1 423); do wget -t 0 -T 5  -U 'Mozilla/5.0 (iPhone; CPU iPhone OS
               <h2 class="card-title">罗马教廷要整顿一下中国传教事务</h2>
             </a>
             <p class="card-text"><blockquote>
-<p>利玛窦也是很有弹性，也在儒家学说和天主教之间和稀泥。他说，儒家和天主教本就是一回事。儒家所崇尚的“天”，和天主教的上帝，没有什么不同啊。“天道”和天主教教义，也没有什么不同啊。<br />
-你看，很有弹性吧？很智慧吧？其实，跳出来一看，你想，如果你的公司派你到一个人生地不熟的陌生市场推销一个当地人从来没有见过的产品，你也能想出这样的招。核心就是两条。第一，借用当地成熟的社会网络。第二，把陌生的东西包装成当地人熟悉的东西。当年利玛窦这么干，和我们今天一个普通的推销员这么干，底层原因都一样：这个时候的耶稣会或者今天的一个推销公司，都是一个绩效导向的组织，只要能传教、能卖东西，怎么有效怎么来。<br />
-但是到了清朝康熙皇帝时期，这时间可又过去了100多年，欧洲的政治形势出现了很多变化。比如教廷的靠山从葡萄牙变成了法国。比如，耶稣会觉得在中国已经有了几十万信众，传教成功，站稳脚跟了。<br />
-总之，这个时候的罗马教廷，觉得有可能要整顿一下中国传教事务，和中国文化的那些陋习要掰掰腕子了。看看谁才是真理。具体过程就不细说了，过程中很多八卦。到了1704年，罗马教皇克雷芒十一世就最终搞了七条专门针对中国天主教徒的规定。简单说说 …</p></blockquote></p>
+<p>利玛窦也是很有弹性，也在儒家学说和天主教之间和稀泥。他说，儒家和天主教本就是一回事。儒家所崇尚的“天”，和天主教的 …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-09-17T23:21:57+00:00">2020-09-17</time></p>
 <p>stdin</p>            </div>
@@ -333,12 +312,7 @@ for i in $(seq 1 423); do wget -t 0 -T 5  -U 'Mozilla/5.0 (iPhone; CPU iPhone OS
               <h2 class="card-title">褚时健去世，网上出现了两种评价的声音</h2>
             </a>
             <p class="card-text"><blockquote>
-<p>褚时健老爷子，前一阵去世。网上出现了两种评价的声音。一种说老爷子了不起，人生大起大落，一直在努力。还有一种说，这个人犯过法、坐过牢，你们咋还这么吹捧他呢？<br />
-这两种观点都各有道理。但是，如果从我们今天节目的这个逻辑来说，还是有高下之分的。<br />
-我们先看第一种观点，如果你说老爷子了不起。请注意，在你的生命中，这不是一个对你不认识的人的评价。而是你有自己的总目标，你把褚时健的人生当成了自己人生舞台上要模仿的那个角色。他的某些套路，会变成你的套路。他的某些做法，会激发你自己的做法。你在夸奖褚时健，但其实你是在努力演好自己的角色。<br />
-如果你说，这是个犯过法的人，所以不值得吹捧。道理也许没错。那请问，你说这句话的时候，你心里的总目标是啥呢？你想扮演一个推进社会正义的人？国家司法机构都释放他了啊，你代表谁在追求社会正义，穷追猛打呢？也就是说，你在说这句话的时候，可能是在没有总目标，没有自己的角色，没有舞台的情况下，在讲一句你自己以为正确的话。你不在表演，所以，即使观点没错，这种观点你也没有收获。</p>
-</blockquote>
-<p>有意思。来自 …</p></p>
+<p>褚时健老爷子，前一阵去世。网上出现了两种评价的声音。一种说老爷子了不起，人生大起大落，一直在努力。还有一种说，这个 …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-09-13T00:18:01+00:00">2020-09-13</time></p>
 <p>stderr</p>            </div>
@@ -354,10 +328,7 @@ for i in $(seq 1 423); do wget -t 0 -T 5  -U 'Mozilla/5.0 (iPhone; CPU iPhone OS
             </a>
             <p class="card-text"><p>同步发帖在 <a href="https://www.v2ex.com/t/705897">v2ex</a></p>
 <p>今天发现 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl">Intl</a> 这个 ECMAscript 内置对象，可以一句话算农历。</p>
-<pre><code>new Date().toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)\s*?年/, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子丑寅卯辰巳午未申酉戌亥".charAt((y-4)%12))
-</code></pre>
-<p>算农历最麻烦就是跨年。这个 API 处理得还挺好的。比如2020年1月的除夕夜+春节</p>
-<pre><code>new Date(2020, 0, 24).toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)年 /, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子丑寅卯辰巳午未申酉戌亥".charAt …</code></pre></p>
+<pre><code>new Date().toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)\s*?年/, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子丑 …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-09-10T22:39:01+00:00">2020-09-10</time></p>
 <p>stdout</p>            </div>
@@ -372,10 +343,7 @@ for i in $(seq 1 423); do wget -t 0 -T 5  -U 'Mozilla/5.0 (iPhone; CPU iPhone OS
               <h2 class="card-title">策略性同理心：小孩哭闹不穿衣服怎么办</h2>
             </a>
             <p class="card-text"><blockquote>
-<p>我们大脑里的一个结构，叫杏仁核。杏仁核是掌管情绪的，杏仁核越活跃，人的情绪就越高涨，人就不能理性地思考和做事。那怎么对付杏仁核呢？有一个办法，那就是让它去思考一件严肃的事，杏仁核不能思考，一思考，立刻就歇菜了，就懵了。<br />
-为什么？因为杏仁核是大脑中非常原始的一部分，它有一个绰号，叫爬行脑，就是当动物还是爬行动物的时候就已经进化出来的部分，所以它的情绪功能强大，但是智力不行。你一给它出难题，它不管多活跃，都只好把大脑的控制权交出来，交给理性能力更发达的大脑皮层。这个时候杏仁核就歇菜了，情绪就平复了。<br />
-比如我家女儿，两岁多，正是情绪不太稳定的时候，如果她要是哭闹，就是不穿衣服，这时候讲道理是没有用的。最好用的办法，是让她们思考问题，比如问她们，你是要穿绿色的衣服还是红色的衣服呀？她一思考，一选择，情绪性的反抗马上就停止了。这就是把杏仁核打败的方法。<br />
-我们刚才说的“策略性同理心”，其实用的是一样的机制。替谈判对手把他现在的情绪说出来，其实就是利用了这个机制。他正在被杏仁核的情绪控制，你替他说出来，他马上就要启动大脑皮层思考，我是这个情绪么？我是对方说的这样吗 …</p></blockquote></p>
+<p>我们大脑里的一个结构，叫杏仁核。杏仁核是掌管情绪的，杏仁核越活跃，人的情绪就越高涨，人就不能理性地思考和做事。那 …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-08-26T08:22:14+00:00">2020-08-26</time></p>
 <p>stdin</p>            </div>
@@ -391,49 +359,9 @@ for i in $(seq 1 423); do wget -t 0 -T 5  -U 'Mozilla/5.0 (iPhone; CPU iPhone OS
             </a>
             <p class="card-text"><p>海盗团体居然是一个民主社会：<a href="https://m.igetget.com/share/course/article?id=qzk8vQM4oYjrXmD0wJw6bEOLl5GPxN">海盗的世界你懂吗</a></p>
 <p>现代社会和传统社会的区别，就是从身份到契约。<a href="https://m.igetget.com/share/course/article?id=0kzlWERBr6meVbbpWV2j7LD4Od3ZpP">第102期</a></p>
-<p>哪家机构是德国的第一大机构呢？不是什么奔驰、宝马、西门子，而是天主教的明爱会，它就是一个社会救助产业，一共50万雇员；那这是天主教的，对面还有一个新教的，45万雇员。这些福利机构大概在全国有10万个分支机构，这是什么概念？就是德国所有的肉铺、面包店、加油站全部加起来，也没有这个数量，大街小巷到处都是。<a href="https://m.igetget.com/share/course/article?id=ov5WgnrDGd8bKNGd7VMNRm1wO264yA">第193期丨共同体的意义</a></p>
-<p>一般都以为，脏话基本上都和性、排泄功能有关。但是，如果你理解了我们上面说的原理，你就会发现，脏话其实只和禁忌有关，有什么样的禁忌，就有什么样的脏话。<a href="https://m.igetget.com/share/audio/aid/Vo8Yvhb1tRY4Q4C99q1K">第219期丨脏话</a>。 想起现在 tg 在打击祖安文化。hhhh</p>
-<p>丹麦的一所正常中学，跟同一水平的中国黑龙江省一所正常中学的孩子组织起来比赛了一下，分别从阅读、数学、英语、团队协作能力和创新能力五个方面衡量两个国家学生的水平。你猜猜结果怎样？中国孩子们会在哪些方面胜出？结果你可能没想到：除了英语之外，中国孩子在阅读、数学、团队协作能力和创新能力上全部大比分胜出丹麦孩子 …</p></p>
+<p>哪家机构是德 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-08-14T22:26:12+00:00">2020-08-14</time></p>
-<p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202007/stdout-007"  rel="bookmark" >
-              <h2 class="card-title">China's AI Dominance Does Not Depend On Math</h2>
-            </a>
-            <p class="card-text"><p>There was a not-so-interesting article on reddit that says <a href="https://www.reddit.com/r/technology/comments/hlttg0/why_chinas_race_for_ai_dominance_depends_on_math/">China's Race For AI Dominance Depends On Math</a></p>
-<p>The arguments looks flawed in several ways.</p>
-<p>First of all, yes Chinese students <em>do</em> performs well in math, but only in one narrow specific branch of math: alrithmetics. Once they graduate into college …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2020-07-06T17:01:55+00:00">2020-07-06</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202007/stdin-006"  rel="bookmark" >
-              <h2 class="card-title">成绩单和名次的副作用</h2>
-            </a>
-            <p class="card-text"><blockquote>
-<p>日本思想家 大前研一 有一本著作叫《低智商社会》提到：日本的新一代，读的书越来越幼稚，对各种谣言丝毫不会思考，很容易遭到媒体的操纵。为啥呢？ <br />
-其中一个小原因，大前研一认为，是日本政府推行的“偏差值教育制度”造成的。简单说，就是对学生进行能力测试，把各项能力数字化。给某项技能找到一个中间值，然后每个人就知道自己的这项能力，跟中间值相比是高还是低。 <br />
-这种技术本身可能是善意的，但是当大家都接受了技术的权威性，问题就出现了。 <br />
-很多低偏差值的人就会认为，自己怎么努力也是没用的，社会问题，会由那些高偏差值的人去解决。而自己，只要照着别人说的做就可以了。 </p>
-</blockquote>
-<p>via <a href="https://m.igetget.com/share/course/article?id=0kzlWERBr6meVbByWV2j7LD4Od3ZpP">罗辑思维335期：奶头乐理论</a></p>
-<p>罗胖的看法是：技术越发达，人对技术的依赖就越严重。最后，意志力不强的人在技术面前，就会彻底放弃自己的主动性。技术的发展，固化了人类的分层。</p>
-<p>我的看法是：这个技术问题也可以通过技术手段解决，比如不告知成绩排第几名，而是告知如果在 X、Y、Z 地方进行改进，那么还可以再前进多少名次 …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2020-07-01T10:38:09+00:00">2020-07-01</time></p>
 <p>stdin</p>            </div>
           </article>
         </div>

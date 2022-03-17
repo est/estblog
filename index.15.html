@@ -36,7 +36,7 @@
 
         <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
         <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
-        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin:</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
         <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
 
     </ul>
@@ -46,6 +46,41 @@
         <p class="list-header-subtext">This blog is rated&nbsp;&nbsp;R⃣ , viewer discretion is advised</p>
         <!-- <h1 class="list-header-title">Est's Blog</h1> -->
       </header>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/36789501470"  rel="bookmark" >
+              <h2 class="card-title">context switching is expensive</h2>
+            </a>
+            <p class="card-text"><p>用了好几个chrome的time tracking扩展，用来跟踪我上网都把时间浪费在哪些网站上了。</p>
+<p>这几天的发现：</p>
+<ol>
+<li>1/5的时间没有被跟踪到，也就 …</li></ol></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-11-28T23:13:00+00:00">2012-11-28</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/36708513156"  rel="bookmark" >
+              <h2 class="card-title">“没有什么事情在技术上做不到”</h2>
+            </a>
+            <p class="card-text"><p>看到一条<a href="http://weibo.com/1577794853/z7a8Zh3Ij">微博</a></p>
+<blockquote>
+<p>@互联网的一些事  ： 马化腾说过：“在腾讯不允许说什么事情在技术上做不到。”</p>
+</blockquote>
+<p>让我想起来了这个经典的<a href="http://www.perlmonks.org/index.pl?node_id=542341">XY problem</a>，今 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-11-27T21:12:00+00:00">2012-11-27</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
 
 
         <!-- new article -->
@@ -80,13 +115,7 @@
             </a>
             <p class="card-text"><p>dump一个db的时候发现有个 INT 类型居然保存的数据是 20121126</p>
 <p>问了下，对方说，就是这个样子设计的，方便用来比较日期</p>
-<p>我这种老实人都是老老实实datetime类型，看好时区然后UTC的timestamp转换，最后才比较的。。。</p>
-<p>对方丢了一句：</p>
-<p>还不是一回事。。。效率还高一点</p>
-<p>想了一下，我擦，果然。</p>
-<p>20121125 &lt; 20121126 直接这样啊有木有！单位数月份也可以比较。</p>
-<p>对方又丢了一句，连用string直接比较都可以。</p>
-<p>算是领教了神代码，彻底打败了。被这种糙快猛开发爆出翔了。</p></p>
+<p>我这种老 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-26T01:17:25+00:00">2012-11-26</time></p>
 <p>archive</p>            </div>
@@ -103,7 +132,7 @@
             <p class="card-text"><p>从<a href="http://news.ycombinator.com/item?id=4828431">HN上</a>看到这篇帖子 <a href="http://www.avc.com/a_vc/2012/11/what-has-changed.html">What Has Changed</a>，觉得对未来很糟糕的样子。</p>
 <p>特别是这一段：</p>
 <blockquote>
-<p>the consumer web has matured. we are almost 20 years into the consumer web and we have large platforms that are starting to suck up a lot of the oxygen. google, facebook/instagram, amazon, microsoft, apple, twitter, ebay, yahoo, AOL, craigslist, wordpress …</p></blockquote></p>
+<p>the consumer web has matured. we are almost 20 years into the consumer web and we have large platforms that are …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-25T23:40:00+00:00">2012-11-25</time></p>
 <p>archive</p>            </div>
@@ -136,15 +165,7 @@
 <p>现代网站架构一般不能缺这几个东西：</p>
 <ul>
 <li>serialization tool like Protobuf, Apache Thrift, JSON, etc. 跨进程、服务器共享数据</li>
-<li>Pub-sub system, or RPC system 远程跨语言调用功能</li>
-<li>async background workers 用于处理繁重数据</li>
-<li>task queue/message queue 用于离线消息缓存和TTL支持，以及一些routing和过滤功能</li>
-<li>signal system 跨进程异步操作</li>
-<li>Key-value based cache or memory db 公用共享数据</li>
-<li>task scheduler or cronjob 周期性任务</li>
-</ul>
-<p>而这一切都可以在一个强大小巧稳定的Web服务器主进程中实现。这就是适合我这种偏执狂滥用的东西——uWSGI。</p>
-<p>以后慢慢写了</p></p>
+<li>Pub-sub system, or RPC system 远程 …</li></ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-23T01:59:00+00:00">2012-11-23</time></p>
 <p>archive</p>            </div>
@@ -164,14 +185,7 @@
 <li>64MHz - 1700 MHz (50 - 2200 MHz also possible)</li>
 <li>Sample rate: 3.2 MS/s</li>
 <li>Resolution: 8 bits/sample</li>
-<li>receive only</li>
-</ul>
-<p>关键是很便宜，大概$10左右。</p>
-<p>今天无意中又翻到另外一个<a href="http://tech.slashdot.org/story/12/10/22/0518231/darpa-funds-a-300-software-defined-radio-for-hackers">HackRF</a>更加碉堡了。大概是$300左右价位，DARPA资助，具体<a href="http://ossmann.blogspot.com.au/2012/06/introducing-hackrf.html">参数</a>为：</p>
-<ul>
-<li>transmit and receive</li>
-<li>operating frequency: 100 MHz to 6 GHz</li>
-<li>maximum sample rate: 20 …</li></ul></p>
+<li>receive only …</li></ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-20T23:30:46+00:00">2012-11-20</time></p>
 <p>archive</p>            </div>
@@ -224,12 +238,7 @@
             </a>
             <p class="card-text"><p>几天前看到<a href="http://opensource.solidot.org/article.pl?sid=12/11/11/063250">这个新闻</a>：</p>
 <blockquote>
-<p>知名FreeBSD开发者、 Varnish web-server缓存作者Poul-Henning Kamp认为，开源软件的市集开发模式（见ESR的《大教堂和市集》）创造了一代只知道拷贝粘贴的无能IT专业人士，混乱的软件毁灭了优雅的Unix教堂及其著名的简约设计理念，他认为一代人迷失在了市集中。Theregister的评论称，无数采用GPL许可的开源软件分裂，Linux没有分裂是因为它有一个强有力的、富有魅力的领袖Linus Torvalds，但Linus只有一个，很少有开源项目拥有类似Torvalds那样的领袖。</p>
-</blockquote>
-<p>今天又在reddit看到一则讨论，<a href="http://www.reddit.com/r/programming/comments/137kd9/18_months_ago_termkit_a_nextgeneration_terminal/">github上一个top 5加星的项目，为什么会死掉？</a></p>
-<p>原作者看得出来是充满了怨念愤怒恨的。引用：</p>
-<blockquote>
-<p>A terminal run off a websocket with complete decoupling of front and back-end ignores network transparency? Yeah see, stupid comments like these are why I …</p></blockquote></p>
+<p>知名FreeBSD开发者、 Varnish web-server缓存作者Poul-Henning Kamp认为，开源软件的市集开发模式（见ESR的《大教堂和市集》）创造了一代 …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-14T22:03:00+00:00">2012-11-14</time></p>
 <p>archive</p>            </div>
@@ -245,8 +254,7 @@
             </a>
             <p class="card-text"><p>微博上看到这个<a href="http://weibo.com/1729408273/z5a9txQza">段子</a>，赶快收集下来了。</p>
 <ul>
-<li>During his own Google interview, Jeff Dean was asked the  implications if P=NP were true.  He said, "P = 0 or N = 1." Then, before  the interviewer had even finished laughing, Jeff examined Google’s  public certificate and wrote the private key on the whiteboard.   </li>
-<li>Compilers don …</li></ul></p>
+<li>During his own Google interview, Jeff Dean was asked the  implications if P=NP were true.  He said, "P = 0 or N = 1." Then, before  the interviewer had even finished laughing, Jeff examined Google …</li></ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-14T04:10:27+00:00">2012-11-14</time></p>
 <p>archive</p>            </div>
@@ -265,15 +273,7 @@
 <p>今天看到一个讨论：</p>
 <blockquote>
 <p>发信人: i3721pp (noosa), 信区: Aero <br />
-标  题: 王华明的报告“航空高性能大型复杂整体构件激光直接制造技术研 <br />
-发信站: 水木社区 (Mon Nov 12 23:16:08 2012), 站内   </p>
-<p>【 以下文字转载自 MilitaryTech 讨论区 】 <br />
-发信人: navigate (逆水行舟), 信区: MilitaryTech <br />
-标  题: 王华明的报告“航空高性能大型复杂整体构件激光直接制造技术研 <br />
-发信站: 水木社区 (Mon Nov 12 22:16:10 2012), 站内   </p>
-<p>这个有这么神么 ？   </p>
-<p>王华明的报告“航空高性能大型复杂整体构件激光直接制造技术研究进展”   </p>
-<p>http://www …</p></blockquote></p>
+标  题: 王华明的报告“航空高性能大型复杂整体构 …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-13T07:50:44+00:00">2012-11-13</time></p>
 <p>archive</p>            </div>
@@ -288,8 +288,7 @@
               <h2 class="card-title">禅宗 vs 武士</h2>
             </a>
             <p class="card-text"><p>突然觉得这个joke好经典</p>
-<p>@法门寺释者慧：#禅宗公案#武士手握一条鱼到一休禅师房间说道：“咱打赌，我手中这鱼是死是活？”一休知道若说是死的，武士定会松手；而说是活的，武士定会暗中使劲把鱼捏死。于是一休说：“死的。”武士把手松开，笑道：“哈！你输了，鱼是活的。”一休淡淡一笑道：“是的，我输了。”但是他却救了一条实实在在的鱼。</p>
-<p>@冥王哈：#禅宗微小说#一天，一个武士抓着一条活鱼来找禅师，说：“你猜这是活鱼还是死鱼，如果是活鱼我就杀了它。”禅师不想打诓语，又不能害了这只鱼，便十分苦恼，深深思考，半小时后，禅师说：“是死的。”武士看看手中的鱼，说：“你妹啊！半个小时前活着呢！”</p></p>
+<p>@法门寺释者慧：#禅宗公案#武士手握一条鱼到一休禅师房间说道：“咱打赌，我手中这鱼是死是活？”一休 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-13T07:11:07+00:00">2012-11-13</time></p>
 <p>archive</p>            </div>
@@ -318,10 +317,7 @@
 <h1>x11 （见<a href="http://initiative.yo2.cn/archives/628146">这个</a>）</h1>
 </li>
 </ul>
-<p>官方文档在这里 <a href="http://www.w3.org/TR/xml/#charsets">http://www.w3.org/TR/xml/#charsets</a></p>
-<pre><code>Char       ::=      #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
-</code></pre>
-<p><a href="http://www.reddit.com/r/programming/comments/1322te/what_every_programmer_absolutely_positively_needs/">via</a></p></p>
+<p>官方文档在这里 <a href="http://www.w3.org/TR/xml/#charsets">http://www.w3.org …</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-13T00:27:15+00:00">2012-11-13</time></p>
 <p>archive</p>            </div>
@@ -372,13 +368,7 @@
 <blockquote>
 <p>发信人: temporary (昙花一现), 信区: NetNovel<br />
 标  题: 网文自动化到这种程度了咩<br />
-发信站: 水木社区 (Thu Nov  8 15:32:29 2012), 站内</p>
-<p>码字辅助工具<br />
-http://xuanpai.sinaapp.com/work/</p>
-<p>随便试了下境界的自动生成，给跪了，一个字：比我强</p>
-</blockquote>
-<p>估计这样发展下去，结合tvtropes.org的思路，电视剧编剧可以下岗了。</p>
-<p>做游戏什么的直接一按，物品道具法术什么的就直接出来了</p></p>
+发信站: 水木社区 (Thu Nov  8 15:32:29 2012), 站 …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-08T20:13:00+00:00">2012-11-08</time></p>
 <p>archive</p>            </div>
@@ -414,62 +404,9 @@ http://xuanpai.sinaapp.com/work/</p>
 <blockquote>
 <p>Hi!PDA论坛坛友francisngl发布了一篇有关预测Surface前景的文章</p>
 </blockquote>
-<p>然后被tech2ipo转，然后被cnbeta转：<a href="http://www.cnbeta.com/articles/211806.htm">Surface必将惨败三理由：用户不待见，核心竞争力低下，硬伤明显</a></p>
-<p>我艹什么破玩意。</p>
-<p>然后又看到 <a href="http://www.v2ex.com/t/51825">http://www.v2ex.com/t/51825</a> 这里，装马甲发帖。</p>
-<blockquote>
-<p>来自匿名人士hackerTom的这篇文章能让我们从一个更加直观的角度向大家讲述一个与以往大家认知截然不同的创新工场和李开复形象，Ta告诉我们为什么创业者不要选择创新工场。</p>
-</blockquote>
-<p>tech2ipo这算什么破鸡巴网站。整天发些什么破鸡巴帖子。</p></p>
+<p>然后被tech2ipo转，然后被cnbeta转：<a href="http://www.cnbeta.com/articles/211806.htm">Surface必将 …</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-06T20:43:56+00:00">2012-11-06</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/35047040748"  rel="bookmark" >
-              <h2 class="card-title">小米TV如果这样设计，可以称霸客厅20年</h2>
-            </a>
-            <p class="card-text"><p>看到一则消息 <a href="http://weibo.com/1895520105/z3MDU9728">http://weibo.com/1895520105/z3MDU9728</a></p>
-<p><img alt="" src="http://ww4.sinaimg.cn/large/70fb5769jw1dyk6gd8dpaj.jpg" /></p>
-<p>据说是小米TV。</p>
-<p>不管内容实质如何了，但是我希望有几个功能：</p>
-<ol>
-<li>联合地方广电，实现插卡收看有线频道。</li>
-<li>支持同轴输入，最好是能直接处理卫星锅高频头下来的信号。软解加密。</li>
-<li>SDR实现地面数字高清和DAB之类的功能，一定要SDR，以便以后升级。</li>
-<li>支持电话线输入，实现ADSL猫的拨号和多拨</li>
-<li>电话线输入，就顺便把家庭语音网关和PBX实现了吧。任意2.4G/蓝牙话筒/耳麦/远程app接听座机通话。</li>
-<li>支持无线话筒和简单卡拉OK混音</li>
-<li>因为有电话线输入，所以实现类似WinFAX的传真网关，然后MIUI上支持远程控制家里收发传真</li>
-<li>HDMI多路输入和分发。这个成本有点高，但是普通家庭TV都有HDMI不够用的现象。</li>
-<li>蓝牙/802.11ac/千兆网卡</li>
-<li>USB3.0/ESATA支持的NAS。</li>
-<li>支持DTS 5.1的audio输出。</li>
-<li>一个支持多点触控的遥控板。效果要接近apple的Magic Trackpad</li>
-<li>遥控板能学习其他红外遥控板信号。</li>
-<li>如果是ARM的板子，一定要支持NEON，内存大于2G …</li></ol></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2012-11-05T03:07:00+00:00">2012-11-05</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/35029136186"  rel="bookmark" >
-              <h2 class="card-title">各位驾照考C照失败的可以去死了</h2>
-            </a>
-            <p class="card-text"><p><embed src="http://static.video.qq.com/TPout.swf?auto=1&vid=r010673xh67" quality="high" width="460" height="372" align="middle" allowScriptAccess="sameDomain" allowFullscreen="true" type="application/x-shockwave-flash"></embed></p>
-<p>这他妈不科学。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2012-11-04T21:15:57+00:00">2012-11-04</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

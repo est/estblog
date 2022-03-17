@@ -36,7 +36,7 @@
 
         <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
         <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
-        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin:</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
         <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
 
     </ul>
@@ -51,17 +51,67 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/26483115741"  rel="bookmark" >
+              <h2 class="card-title">replay attack on Apple IAP receipt</h2>
+            </a>
+            <p class="card-text"><p>in <a href="http://developer.apple.com/library/ios/#documentation/NetworkingInternet/Conceptual/StoreKitGuide/APIOverview/OverviewoftheStoreKitAPI.html#//apple_ref/doc/uid/TP40008267-CH100-SW1">this senario</a></p>
+<p><img alt="" src="http://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/StoreKitGuide/Art/store_transactions.png" /></p>
+<p>Before client sends verify receipt to developer server, the receipt data can be recorded and replayed to developer server,</p>
+<ol>
+<li>
+<p>suppose the receipt data is <code>&lt;receipt-something&gt;</code>, it's verified, and buy transaction has finished.</p>
+</li>
+<li>
+<p>add a space to receipt data <code>&lt;receipt-something&gt;&lt;space&gt;</code></p>
+</li>
+<li>
+<p>submit to developer server again</p>
+</li>
+<li>
+<p>developer server …</p></li></ol></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-07-04T05:10:00+00:00">2012-07-04</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/26475262922"  rel="bookmark" >
+              <h2 class="card-title">如何让python强制认为2+2==5</h2>
+            </a>
+            <p class="card-text"><p>让你丫的2+2不等于5！！！！</p>
+<pre><code>import sys
+import ctypes
+pyint_p = ctypes.POINTER(ctypes.c_byte*sys.getsizeof(5))
+five = ctypes.cast(id(5), pyint_p)
+print(2 + 2 == 5) # False
+five.contents[five.contents[:].index(5)] = 4
+print(2 + 2 == 5) # True (must be …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-07-04T01:33:02+00:00">2012-07-04</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/26457041818"  rel="bookmark" >
               <h2 class="card-title">[视频]成都panda taxi恶搞英皇室</h2>
             </a>
             <p class="card-text"><p>youtube看这里：</p>
-<p><object style="height: 390px; width: 640px"><param name="movie" value="http://www.youtube.com/v/SYwDESi8PGM?version=3&feature=player_detailpage"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="http://www.youtube.com/v/SYwDESi8PGM?version=3&feature=player_detailpage" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="640" height="360"></object></p>
+<object style="height: 390px; width: 640px"><param name="movie" value="http://www.youtube.com/v/SYwDESi8PGM?version=3&feature=player_detailpage"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="http://www.youtube.com/v/SYwDESi8PGM?version=3&feature=player_detailpage" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="640" height="360"></object>
+
 <p>youku看这里：</p>
 <p><embed src="http://player.youku.com/player.php/sid/XNDIyNzE2OTg0/v.swf" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed></p>
 <p>其实这个片子是<a href="http://www.youtube.com/watch?v=2M-XPnldcEI">一群留学生拍的</a>，不是成都zf拍的。</p>
 <blockquote>
 <p>Published on Jun 5, 2012 by Moore Mandy<br />
-We are group of Chinese students study media in the UK,we love pandas and our hometown,so we made this video because we saw panda cabs running in London, We spent two days to make this …</p></blockquote></p>
+We are group of Chinese students study media in the UK,we love …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-07-03T20:42:00+00:00">2012-07-03</time></p>
 <p>archive</p>            </div>
@@ -78,8 +128,7 @@ We are group of Chinese students study media in the UK,we love pandas and our ho
             <p class="card-text"><pre><code>['radio_option6393', 'radio_option6398', 'radio_option6403', 'radio_option6408', 'radio_option6413', 'radio_option6418', 'radio_option6423', 'radio_option6428', 'radio_option6433'].map(function(s){document.getElementById(s).checked='checked'});document.getElementById('radioq10').textContent='ok';form1.submit()
 </code></pre>
 <p>因为鼠标点击那个页面太蛋痛了。</p>
-<p>评价大于100元的订单可以获得2个积分，蚊子肉也是肉，所以还是坚决要。</p>
-<p>btw 360最大化薅羊毛办法：移动支付 -&gt; 各种券  -&gt; 返利 -&gt; 评价+晒单</p></p>
+<p>评价大 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-07-02T22:01:00+00:00">2012-07-02</time></p>
 <p>archive</p>            </div>
@@ -95,14 +144,7 @@ We are group of Chinese students study media in the UK,we love pandas and our ho
             </a>
             <p class="card-text"><p>新闻在<a href="http://news.163.com/12/0627/17/8517P2J000014JB6.html">这里</a></p>
 <p>LG和三星AMOLED核心技术外泄 或流入中国和台湾   </p>
-<p>韩国三星和LG下一代显示器面板“AM-OLED”和“WHITE-OLED”的核心技术被曝遭外泄。资料或流向中国大陆和台湾地区等韩国企业的竞争对手。   </p>
-<p>韩国三星和LG下一代显示器面板“AM-OLED”和“WHITE-OLED”的核心技术被曝遭外泄。其中部分技术被指流入中国最大的面板生产公司。 <br />
-报导称，首尔中央地方法院尖端犯罪搜查1部27日以涉嫌盗窃三星移动显示器和LG显示器的“AM-OLED”技术，拘捕并起诉了以色列某公司（下称O公司）韩国分公司职员金某等三人。韩国检方还以同样的理由对上述三人的三名上司进行不??拘留起诉，并依法起诉了某公司的韩国分公司。 <br />
-韩国检方称，嫌疑人从去年11月至今年1月分多次窃取三星移动显示器和LG显示器的55英寸电视机用“AM-OLED”面板实物电路图等核心技术。嫌疑人将窃取的资料提供给以色列总部职员以及中国大陆和台湾地区等韩国企业的竞争对手。 <br />
-韩国检方表示，这次外泄的技术是两家公司的秘密资料，也是韩国核心技术。若国外竞争对手获取该技术，可能会在短期内缩小技术差距。检方计划对O公司总部和海外分公司职员进行进一步调查，杜绝该技术进一步外泄。   </p>
-<p>@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   </p>
-<p>Samsung, LG's key display technologies leaked by Israeli firm  <br />
-SEOUL, June 27 …</p></p>
+<p>韩国三星和LG下一代显示器面板“AM-OLED”和“WHITE-OLED”的核心技术被曝遭外 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-06-27T22:34:00+00:00">2012-06-27</time></p>
 <p>archive</p>            </div>
@@ -119,10 +161,7 @@ SEOUL, June 27 …</p></p>
             <p class="card-text"><p>发信人: hcl (盐酸), 信区: DigiHome<br />
 标  题: 问一下现在小家电的变压器都是什么原理？<br />
 发信站: 水木社区 (Thu Jun 28 02:26:13 2012), 站内  </p>
-<p>我记得十几年前的时候吧，那时候什么随身听的变压器里面就是个大铁疙瘩，输出电流也才不到500ma，而且还发热量巨猛。现在随便一个usb充电器就是2A的输出电流，平时不用基本上没有发热，体积还巨小，请问是什么新技术呢？开关电源？还是别的什么？  </p>
-<p>发信人: lvsoft (Lv(The Last Guardian)), 信区: DigiHome<br />
-标  题: Re: 问一下现在小家电的变压器都是什么原理？<br />
-发信站: 水木社区 (Thu Jun 28 02:44:17 2012), 站内 …</p></p>
+<p>我记得十几 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-06-27T22:13:00+00:00">2012-06-27</time></p>
 <p>archive</p>            </div>
@@ -153,14 +192,7 @@ SEOUL, June 27 …</p></p>
             <a href="/post/25348900812"  rel="bookmark" >
               <h2 class="card-title">吐槽一下日本“珍珠生活” “纯铁” 炒锅</h2>
             </a>
-            <p class="card-text"><p>今日忙着装修，想买一个炒锅，家里的建议都是说，现在的不锈、无油烟、不粘锅的炒锅，用了特富龙，可能会中毒。于是下定决心买铸铁炒锅。。</p>
-<p>又碰上618，发现有一种日本制造的，号称“纯铁”的炒锅，“珍珠生活”牌的。</p>
-<p>于是在网上挖了很久才发现它的官网：<a href="http://www.p-life.co.jp">http://www.p-life.co.jp</a></p>
-<p>又挖了很久才发现它的 炒锅 产品列表，这个kitchen-tool.com 是属于 パール金属 (Pearl Metal) 的。</p>
-<p><a href="http://www.kitchen-tool.com/category_2_2.html">http://www.kitchen-tool.com/category_2_2.html</a></p>
-<p>ホーム 調理器具 フライパン</p>
-<p>Home Cookware Frying pan</p>
-<p>不看不知道，一看吓一跳，尼玛基本所有型号（除了 <a href="http://www.kitchen-tool.com/category_19.html">H-8532 …</a></p></p>
+            <p class="card-text"><p>今日忙着装修，想买一个炒锅，家里的建议都是说，现在的不锈、无油烟、不粘锅的炒锅，用了特富龙，可能会中毒。于是下定决心 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-06-18T02:08:00+00:00">2012-06-18</time></p>
 <p>archive</p>            </div>
@@ -210,7 +242,8 @@ SEOUL, June 27 …</p></p>
             <p class="card-text"><p>A Song of Ice and Fire的Westeros众城堡们！</p>
 <p>[<img alt="" src="/images/tumblr/24587788415_0.jpg" /></p>
 <p>[<img alt="" src="/images/tumblr/24587788415_1.jpg" /></p>
-<p><object style="height: 390px; width: 640px"><param name="movie" value="http://www.youtube.com/v/w0gLX_Kn_S8?version=3&feature=player_profilepage"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="http://www.youtube.com/v/w0gLX_Kn_S8?version=3&feature=player_profilepage" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="640" height="360"></object></p>
+<object style="height: 390px; width: 640px"><param name="movie" value="http://www.youtube.com/v/w0gLX_Kn_S8?version=3&feature=player_profilepage"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="http://www.youtube.com/v/w0gLX_Kn_S8?version=3&feature=player_profilepage" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="640" height="360"></object>
+
 <p><a href="http://www.reddit.com/r/Minecraft/comments/uo05j/castle_black/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-06-06T23:35:00+00:00">2012-06-06</time></p>
@@ -230,13 +263,7 @@ SEOUL, June 27 …</p></p>
 <p><img alt="" src="/images/tumblr/24186096702_0.png" /></p>
 <p><a href="http://www.reddit.com/r/gaming/comments/udznp/improbably_good_morrigan_cosplay_ii/">Morrigan cosplay</a> <a href="http://kirawinter.deviantart.com/art/Morrigan-Dragon-Age-273748310">作者</a></p>
 <p><img alt="" src="/images/tumblr/24186096702_1.jpg" /></p>
-<p>我觉得dragon age最好玩的mod之一就是这个<a href="http://dragonage.nexusmods.com/mods/1464">Slap Morrigan</a>。很多quest你做完了大家都赞同，就Morrigan 来一个 disapprove -5 。一个耳光送上。赶紧的。</p>
-<p><a href="http://www.reddit.com/r/gaming/comments/udv4c/the_elder_scrolls_v_skyrim_dawnguard_official/">Skyrim Dawnguard trailer</a></p>
-<p><object style="height: 390px; width: 640px"><param name="movie" value="http://www.youtube.com/v/3PjBSicSVqI?version=3&feature=player_detailpage"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="http://www.youtube.com/v/3PjBSicSVqI?version=3&feature=player_detailpage" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="640" height="360"></object></p>
-<p><a href="http://www.reddit.com/r/gaming/comments/ud286/starforge_a_3d_game_with_infinite_procedural/">Starforge</a> 碉堡了的超级版Minecraft。</p>
-<p><object style="height: 390px; width: 640px"><param name="movie" value="http://www.youtube.com/v/YxBSYit49c8?version=3&feature=player_detailpage"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="http://www.youtube.com/v/YxBSYit49c8?version=3&feature=player_detailpage" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="640" height="360"></object></p>
-<p><a href="http://www.reddit.com/r/gaming/comments/u57vu/not_again_bomberman/">bomberman</a></p>
-<p><img alt="" src="http://i.imgur.com/cO8fU.gif" /></p></p>
+<p>我觉得dragon age最好玩的mod之一就是这个<a href="http://dragonage.nexusmods.com/mods/1464">Slap Morrigan</a>。很多quest你做完 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-06-01T04:26:00+00:00">2012-06-01</time></p>
 <p>archive</p>            </div>
@@ -258,7 +285,7 @@ FROM   Incident AS i
        LEFT JOIN Keyword AS k ON k.incident_id = i.id
 WHERE  i.year BETWEEN 1947 AND 1966
 AND    i.type = 'HOMICIDE'
-AND    v.sex = 'F' …</code></pre></p>
+AND …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-05-31T23:10:41+00:00">2012-05-31</time></p>
 <p>archive</p>            </div>
@@ -274,9 +301,7 @@ AND    v.sex = 'F' …</code></pre></p>
             </a>
             <p class="card-text"><p>挂了好久的blog又出来招摇撞骗了。</p>
 <p>在<a href="http://zuroc.42qu.com/">zuroc</a>大神的Gentoo VPS上编译php不成功，所以懒得折腾Wordpress了。于是就用Tumblr将就了。</p>
-<p>做了个简单的reverse proxy，大家也可以通过 <a href="http://estblog.tumblr.com/">http://estblog.tumblr.com/</a> 访问。</p>
-<p>欢迎老朋友们，新朋友们，小朋友们，基佬们来访。</p>
-<p>儿童节快乐。</p></p>
+<p>做了个简单的 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-05-31T21:04:49+00:00">2012-05-31</time></p>
 <p>archive</p>            </div>
@@ -311,7 +336,7 @@ AND    v.sex = 'F' …</code></pre></p>
 <p>一句话点中3D打印的要害：</p>
 
 <blockquote>
-  <p>The geography of supply chains will change. An engineer working in the middle of a desert who finds he lacks a certain tool no longer has to have it delivered from the nearest city. He can simply download the design and …</p></blockquote></p>
+  <p>The geography of supply chains will change. An engineer working in the middle of a desert who finds he lacks a certain tool …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-04-27T07:21:32+00:00">2012-04-27</time></p>
 <p>archive</p>            </div>
@@ -386,55 +411,6 @@ AND    v.sex = 'F' …</code></pre></p>
 <p>我觉得吐槽点是 迅雷看看 不能用用。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-04-19T00:42:25+00:00">2012-04-19</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/4579"  rel="bookmark" >
-              <h2 class="card-title">sublime 2下一键格式化任意位置的javascript</h2>
-            </a>
-            <p class="card-text"><p>推荐用Sublime Text 2的这个插件：<a href="https://github.com/jdc0589/JsFormat">JsFormat</a>来格式化任意段落的javascript。</p>
-
-<ol>
-<li><p>安装<a href="http://wbond.net/sublime_packages/package_control">Package Control</a>。在Sublime Text 2按下<code>Ctrl+`</code>键，复制粘贴回车下列代码：</p>
-
-<pre><code>import urllib2,os; pf='Package Control.sublime-package'; ipp=sublime.installed_packages_path(); os.makedirs(ipp) if not os.path.exists(ipp) else None; urllib2.install_opener(urllib2.build_opener(urllib2.ProxyHandler())); open(os.path.join(ipp,pf),'wb').write(urllib2 …</code></pre></li></ol></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2012-04-18T02:19:31+00:00">2012-04-18</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/4574"  rel="bookmark" >
-              <h2 class="card-title">脱羧乙酸的16种形态</h2>
-            </a>
-            <p class="card-text"><p><img src="http://blog.est.im/wp-content/uploads/2012/04/3.png" alt=""></p>
-
-<p><img src="http://blog.est.im/wp-content/uploads/2012/04/w041219b055.jpg" alt=""></p>
-
-<p><img src="http://blog.est.im/wp-content/uploads/2012/04/z-machine.jpg" alt=""></p>
-
-<p><a href="http://news.ycombinator.com/item?id=3844309">via</a></p>
-
-<p>另附：<br>
-喝过隔夜水吗？CCAV告诉你很危险，里面含有致癌物质一氧化二氢<br>
-<a href="http://www.acfun.tv/v/ac327082/">http://www.acfun.tv/v/ac327082/</a><br>
-不能喝隔夜水，科学研究表明隔夜水中含有零醇、氧酚、羟基氢、氢羟酸、苛性氢、二零醚、正氧烷、氧乙烯、氢氧化氢、脱碳甲醛、一氧化二氢、氢化超氧酰、脱氰零醛肟、二聚氢氧酸酐、氢化脱磺硫酸、氧化脱羧乙酸、氢化脱苄苯甲醇等。过量食用会致人死亡，为了你的健康，请转发 <br>
-<a href="http://www.guokr.com/post/140450/">http://www.guokr.com/post/140450/</a></p>
-
-<p>发信人: jungleford (風淸揚╬孤城斩菜羊), 信区: MilitaryJoke<br>
-标  题: 让你们钓鱼！<br>
-发信站: 水木社区 (Sat …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2012-04-16T09:29:56+00:00">2012-04-16</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

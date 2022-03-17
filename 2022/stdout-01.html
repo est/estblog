@@ -37,7 +37,7 @@
 
         <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
         <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
-        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin:</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
         <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link active">stdout</a></li>
 
     </ul>
@@ -59,7 +59,6 @@ import functools
 c = phoenixdb.connect('http://localhost:8765/', autocommit=True, auth=&quot;SPNEGO&quot;)
 c._client.session.request = functools.partial(c._client.session.request, timeout=2)
 </code></pre>
-
 <p><code>partial</code> 这个神奇的魔法可以设置一个默认参数。其它地方传入了别的timeout也可以自行覆盖，无缝兼容。</p>
 
 </article>

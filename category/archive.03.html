@@ -36,7 +36,7 @@
 
         <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
         <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
-        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin:</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
         <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
 
     </ul>
@@ -71,10 +71,7 @@
               <h2 class="card-title">施华洛世奇元素 vs 施华洛世奇</h2>
             </a>
             <p class="card-text"><blockquote>
-<p>施华洛世奇（Swarovski）实际上有两种含义，很多情况下这两种含义容易被混同。首先他是世界首屈一指的水晶制造商和水晶奢侈品生产商，两百年来，施华洛世奇一直独享和水晶切割有关的所有技术，并以此作为最高色商业秘密。由于其垄断地位和巨大名声，施华洛世奇在很多情况下已经成为水晶的代名词。而第二种含义，则是所谓的施华洛世奇元素(Swarovski Elements)，实际上，这代表的是这种产品制造中使用到人造水晶，而这很可能和真正的施华洛世奇毫无关系。</p>
-</blockquote>
-<p>又想起了 美素丽儿 美素佳儿，康师傅，康帅傅 了。</p>
-<p>我日真坑爹。</p></p>
+<p>施华洛世奇（Swarovski）实际上有两种含义，很多情况下这两种含义容易被混同。首先他是世界首屈一指的水晶制造商和水晶奢侈 …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-04-08T22:29:23+00:00">2013-04-08</time></p>
 <p>archive</p>            </div>
@@ -130,14 +127,7 @@
                 &lt;string&gt;ssh-alt&lt;/string&gt;
         &lt;/dict&gt;
 </code></pre>
-<p>然后在<code>/etc/services</code>里定义：</p>
-<pre><code> ssh-alt 12345/tcp # ssh-alt
-</code></pre>
-<p>然后重启sshd服务：</p>
-<pre><code>sudo launchctl uload /System/Library/LaunchDaemons/ssh.plist 
-sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist
-</code></pre>
-<p>蛋碎！</p></p>
+<p>然后在<code>/etc/services</code>里定义 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-04-02T09:52:47+00:00">2013-04-02</time></p>
 <p>archive</p>            </div>
@@ -156,11 +146,7 @@ sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist
 <pre><code>localstream.write(upstream.read(1024))
 upstream.write(localstream.read(1024))
 </code></pre>
-<p>其中1024为业界良心艹榴网的chunk或者一个buffer size。这样的操作在各种router, proxy, firewall 里太常见了。</p>
-<p>那么HAProxy有什么<a href="http://stackoverflow.com/a/2120295/41948">特别的地方</a>呢？秘密就是，上游socket的接受buffer和本地socket的发送buffer为同一块内存。也就是说，上游socket数据来了，本地socket自动发送这一块buffer的数据。效率真是高爆了。这块buffer数据还可以用内核调用<code>splice()</code> 和 <code>tee()</code> 来达到分流和分离信号的目的。</p>
-<p>btw sendfile() 是不行的，源必须是可以mmap的buffer，目标必须是个socket。</p>
-<p>那么弱爆了的python可否跪舔这种高级特性呢？2.7和3.X里是可以的，因为现在PEP 3118统一了各种streaming object 的buffer protocol。只需要用一个<a href="http://docs.python.org/2/library/stdtypes.html#memoryview">叫memoryview的引用</a><br />
-就可以实现共享buffer而达到zero-copy的目的了 …</p></p>
+<p>其中1024为业界良心 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-26T22:39:00+00:00">2013-03-26</time></p>
 <p>archive</p>            </div>
@@ -180,10 +166,7 @@ upstream.write(localstream.read(1024))
 <p>G+团队的官方博客：<a href="http://gplusproject.appspot.com/new-apps-iphone-android">http://gplusproject.appspot.com/new-apps-iphone-android</a> 这是个什么jb飞机玩意？为啥不<a href="http://googleplusplatform.blogspot.com/">用blogger</a>?</p>
 </li>
 <li>
-<p>看这个关于代码测试的google官方博客 <a href="http://googletesting.blogspot.sg/2013/03/testing-on-toilet-testing-state-vs.html">http://googletesting.blogspot.sg/2013/03/testing-on-toilet-testing-state-vs.html</a> 用它妈这么多javascript特效干嘛？关键是——禁用了js之后，页面就一片空白了。</p>
-</li>
-</ol>
-<p>欢迎来到后web 2.0时代——没有首页，没有订阅，没有js就神马都不显示的web app时代。</p></p>
+<p>看这个关于代码测试的google官方 …</p></li></ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-26T00:48:33+00:00">2013-03-26</time></p>
 <p>archive</p>            </div>
@@ -230,13 +213,7 @@ day 0 productivity.</p></p>
             <a href="/post/45245208546"  rel="bookmark" >
               <h2 class="card-title">Unix Socket 点滴[转载]</h2>
             </a>
-            <p class="card-text"><p>【Unix Socket 点滴 1】使用unix socket时，把路径名的第一个字节设为null byte（\x00），这样就不会产生实际的文件，使用起了比较方便，也不用纠结选哪个路径，随便一个字符串就行了。netstat的时候会发现，第一个字节变成了蜗牛符号</p>
-<p><img alt="" src="http://ww4.sinaimg.cn/large/622a9970gw1e2g8r9fny2j.jpg" /></p>
-<p>【Unix Socket 点滴 2】unix socket的DGRAM模式可以传输大数据块，而UDP单个包最大65507字节。</p>
-<p>【Unix Socket 点滴 3】unix socket可以发送文件句柄。特别是大数据量交互的时候可以放在tmpfs共享内存，只把文件句柄发送过去，这样可以做到0-copy。</p>
-<p>【Unix Socket 点滴 4】unix socket可以校验对端的uid和pid，这在某些场合下是一种可依赖的鉴权手段。</p>
-<p>【Unix Socket 点滴 5】uninx DGRAM句柄在对端关闭时，会自动解除连接关系，端口变成unconnect状态，后续使用可以重新connect。</p>
-<p>来自 <a href="http://weibo.com/codebox">CodeBox-腾讯</a> 腾讯云平台资深还是浅就那么回事儿工程师 …</p></p>
+            <p class="card-text"><p>【Unix Socket 点滴 1】使用unix socket时，把路径名的第一个字节设为null byte（\x00），这样就不会产生实际的文件，使用起了比较方便，也不用纠结 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-12T23:49:00+00:00">2013-03-12</time></p>
 <p>archive</p>            </div>
@@ -251,16 +228,7 @@ day 0 productivity.</p></p>
               <h2 class="card-title">Web服这个屎盆子不够装了——记inetd的现代版Mozilla Circus</h2>
             </a>
             <p class="card-text"><p>今天瞄了下<a href="circus.rtfd.org">Mozilla Circus</a>这个项目，黑有意思。</p>
-<p>简单的说，目前Web服务器基本模型都是一个总瓢把子Nginx，后边一大堆苦力worker进程。比如Python世界的Gunicorn是这个样子的粗暴简单：</p>
-<p><img alt="" src="http://circus.readthedocs.org/en/0.5/_images/classical-stack.png" /></p>
-<p>worker基本都是日出而耕，日落而息。（顺便一喷，Supervisord这些都弱爆了。djb大牛的<a href="https://news.ycombinator.com/item?id=5346871">runit</a>才是王道）</p>
-<p>要做到聪明的运维，和可小可大硬又黑的HA scaling，就需要一个高级一点的worker进程管理器于是——哐当当，Mozilla的Circus闪亮登场！</p>
-<p><img alt="" src="http://circus.readthedocs.org/en/0.5/_images/circus-stack.png" /></p>
-<p>中文介绍在这里<a href="https://github.com/PyCodersCN/PyCodersCN/blob/master/issue16/mongrel2-amp-circus-full-control-of-your-web-stack.rst">Mongrel2&amp;Circul = web栈的完全控制</a></p>
-<p>我觉得这项目很不错，至少有了Web Console码农不用再去砸400多元的机械键盘去 <code>kill -HUP</code>和 <code>cat pidfile</code> 啪啪啪了</p>
-<p>但是Circus只这样就太大材小用了。都进程了，那么<a href="http://blog.ziade.org/2012/06/12/shared-sockets-in-circus/">socket、fd也一并托管了</a>吧。以后业务逻辑就只管去轮fd就是了。这就是<a href="https://stripe.com/blog/meet-einhorn">einhorn</a>项目的思路。</p>
-<p>同时我突然觉得Mongrel2这个项目有点2，居然是用json把http完整序列化一遍再pubsub分发到处理点。。。。这效率。。</p>
-<p>Circus的让我想起uWSGI。大部分 …</p></p>
+<p>简单的说，目前Web服务器基本模型都是一个总瓢把子Nginx，后边一大堆苦力worker进程。比如 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-12T02:55:00+00:00">2013-03-12</time></p>
 <p>archive</p>            </div>
@@ -336,8 +304,7 @@ day 0 productivity.</p></p>
               <h2 class="card-title">再刷第三方ROM就剁手！</h2>
             </a>
             <p class="card-text"><p>今天刷了下第三方ROM，我擦，搜狗的两个渣app删不掉，用RE浏览器删掉了。。。</p>
-<p>结果。。。尼玛android的默认浏览器选项给屏蔽了。启动默认首页，弄死都是作者lishuo0427的JB烂博客</p>
-<p>找到了个办法刷回官方包了。坑爹啊。我草！</p></p>
+<p>结果。。。尼玛android的默认浏览器选项给屏蔽了。启动默认 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-05T08:33:43+00:00">2013-03-05</time></p>
 <p>archive</p>            </div>
@@ -355,15 +322,7 @@ day 0 productivity.</p></p>
 <p>首先是瞻仰了libuv python binding - pyuv 作者 @saghul 的博客</p>
 <p>特别是<a href="http://code.saghul.net/index.php/2013/02/04/how-do-event-loops-work-in-python/">这个slides</a>很是学习了点东西</p>
 <p><img alt="" src="/images/tumblr/44511368373.png" /></p>
-<p>里边还提到，Twisted, Tornade和Gevent都有其对应libuv实现了。猛啊。</p>
-<p>其中一个重要的东西，就是 Python 3.3里边的<a href="http://www.python.org/dev/peps/pep-3156/">PEP-3156</a>，和其参考实现<a href="https://code.google.com/p/tulip/">Tulip</a>，基于Pyuv的也有个实现叫<a href="https://github.com/saghul/rose">Rose</a>。</p>
-<p>可以大胆估计，PEP 3156是以后最重要的Python标准接口之一了。其重要性超过PEP 333 WSGI</p>
-<p>libuv和 Boost.ASIO的比较<a href="http://stackoverflow.com/questions/11423426/">看这里</a>：</p>
-<pre><code>                         libuv          Boost
-Event Loop:              yes            Asio
-Threadpool:              yes            Asio + Threads
-Threading:              
-  Threads:               yes            Threads …</code></pre></p>
+<p>里边还提到，Twisted …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-03T21:46:00+00:00">2013-03-03</time></p>
 <p>archive</p>            </div>
@@ -379,18 +338,7 @@ Threading:
             </a>
             <p class="card-text"><ol>
 <li><code>com.yinyuetai.ui</code> 这个JB设计居然只能竖屏。我擦。<code>com.tencent.qqmusic</code> 居然也是强制竖屏。在1080p电视上感谢这两款软件治好了我多年的颈椎病。</li>
-<li><code>com.tencent.qqmusicpad</code> 还是很赞的。</li>
-<li>最讨厌android软件锁区</li>
-<li>在<a href="http://www.v2ex.com/t/60885">v2ex上</a> 看到HiHex这个只能电视团队，现在觉得如果要搞大屏交互还是很有搞头的。</li>
-</ol>
-<p>对于交互我的一些粗浅看法：</p>
-<ol>
-<li>传统键盘只是高速输入设备</li>
-<li>鼠标是放大型的<em>绝对</em>精确定位设备，屏幕上的光标是实现了一种代入感，单个hot spot</li>
-<li>touchscreen是一种拟物的创新。多指就是多个hot spot</li>
-<li>客厅大屏交互，这个交互必须是<em>相对</em>的。而且没有hot spot，只有dynamic area。</li>
-</ol>
-<p>也就是说，桌面或者home screen放一排图标绝对是sb设计。这种老太太穿针的设计真的不适合大屏。最好的设计应该是类似iTunes cover flow那样的，简单一维的。传统遥控板就是两个一维：音量 和 频道 …</p></p>
+<li><code>com …</code></li></ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-03T08:02:18+00:00">2013-03-03</time></p>
 <p>archive</p>            </div>
@@ -452,13 +400,7 @@ foo
 <ul>
 <li>2007年欧盟觉得pypy这货是典型的烂尾钓鱼工程于是就停止拨款了。   </li>
 <li>尝试过RPython -&gt; Javascript。失败告终</li>
-<li>至少4次用LLVM。全部失败。</li>
-<li>2次尝试写了个Rpython版的ctypes，叫rctypes，均失败。</li>
-<li>JIT引擎写过3个版本，第四个个版本才成功</li>
-<li>第一个成功C编译版本的pypy直接segfault了——本来应该unsigned int写成了signed int</li>
-<li>在当年的欧盟砖家评审会上，Pypy画了一个惊天地泣鬼神的大饼——几乎包含了所有编程语言最新最酷的特性。后来这些累赘在一次sprint中被砍掉70%精简了30%代码量</li>
-</ul>
-<p>from <a href="http://morepypy.blogspot.com/2013/02/10-years-of-pypy.html">pypy blog</a> via <a href="http://www.reddit.com/r/Python/comments/19f413/10_years_of_pypy/">reddit</a>, <a href="http://news.ycombinator.com/item?id=5301141">HN</a></p></p>
+<li>至少4次用LLVM。全部失败 …</li></ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-28T20:24:00+00:00">2013-02-28</time></p>
 <p>archive</p>            </div>
@@ -498,8 +440,7 @@ foo
 <blockquote>
 <p>One reason they don't already have cameras built in is a combination of power requirements</p>
 </blockquote>
-<p>突然想到，一个由思轴组成的飞行swarm网络，如果每个节点都自带摄像头输入的话，网络可以p2p通信，那么这个swarm的战术能力比士兵组成的战术分队强大多少倍啊。。。。。</p>
-<p>看来得加紧研制大功率激光近防武器了。这种小虫子势不可挡啊。</p></p>
+<p>突然想到，一个由思轴组成的飞行swarm网络，如果每 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-22T02:52:00+00:00">2013-02-22</time></p>
 <p>archive</p>            </div>
@@ -549,12 +490,7 @@ foo
             <p class="card-text"><p>VPS内存小，连uWSGI这种都玩不起，只能玩玩<a href="https://github.com/jonashaag/bjoern">bjoern</a>这个神器了。<a href="http://bottlepy.org/docs/dev/deployment.html#switching-the-server-backend">Bottle.py支持的WSGI容器</a>还真多啊！</p>
 <pre><code>curl -O http://python-distribute.org/distribute_setup.py
 sudo  python distribute_setup.py
-curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
-sudo python get-pip.py
-sudo emerge libev
-CFLAGS=-I/usr/include/libev sudo pip install bjoern
-</code></pre>
-<p>灌了个水的哟。。。</p></p>
+curl -O https …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-19T22:26:50+00:00">2013-02-19</time></p>
 <p>archive</p>            </div>
@@ -593,19 +529,7 @@ CFLAGS=-I/usr/include/libev sudo pip install bjoern
             </a>
             <p class="card-text"><p>Google Docs自己搞了一套类似Google App Engine的体系，只不过服务器端语言是Javascript，运行环境是 云JS——Google Apps Script</p>
 <p><a href="https://developers.google.com/apps-script/html_service">https://developers.google.com/apps-script/html_service</a></p>
-<p>看了下文档，类似php的语法，在html里嵌入js，然后服务器渲染得到一个网页。</p>
-<pre><code>&lt;table&gt;
-  &lt;? var data = getData();
-     for (var i = 0; i &lt; data.length; ++i) { ?&gt;
-    &lt;tr&gt;
-      &lt;? for  (var j = 0; j &lt; data[i].length; ++j) { ?&gt;
-        &lt;td&gt;&lt;?= data[i][j]?&gt;&lt;/td&gt;
-      &lt;? } ?&gt;
-    &lt;/tr&gt;
-  &lt;? } ?&gt;
-&lt;/table&gt;
-</code></pre>
-<p>这是得有多蛋痛啊 …</p></p>
+<p>看了下文档，类 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-15T18:59:56+00:00">2013-02-15</time></p>
 <p>archive</p>            </div>
@@ -676,7 +600,7 @@ of what it really is</p></p>
               <h2 class="card-title">火控雷达意味着什么</h2>
             </a>
             <p class="card-text"><p>形象生动</p>
-<p>&gt; Military ships and planes do not "lock onto other vessels all the time". Not with targeting radar, and not in international waters - doing so is proscribed under international law as an act of aggression. It is the high-tech equivalent of sticking a gun in someone's face and cocking the …</p></p>
+<p>&gt; Military ships and planes do not "lock onto other vessels all the time". Not with targeting radar, and not in international waters - doing so is proscribed under international law as an act of aggression. It is the high-tech equivalent of sticking a gun in someone's face …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-07T02:52:00+00:00">2013-02-07</time></p>
 <p>archive</p>            </div>
@@ -704,7 +628,7 @@ Content-Type: application/json
 <p>返回：</p>
 <pre><code>HTTP/1.1 200 OK
 Content-Type: application/json; charset=UTF-8
-Cache-Control: no-cache, no-store, max-age …</code></pre></p>
+Cache-Control: no-cache …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-01T02:02:00+00:00">2013-02-01</time></p>
 <p>archive</p>            </div>
@@ -721,16 +645,7 @@ Cache-Control: no-cache, no-store, max-age …</code></pre></p>
             <p class="card-text"><p>看到<a href="http://weibo.com/1455643221/zgI6wA2AP">一则微博</a></p>
 <blockquote>
 <p>@刘兴亮<br />
-HTML5的突出优点是多设备、跨平台。“HTML5 for TV”是由美国Cable Labs牵头组成的国际性开源协作项目，为推动HTML5技术在电视终端上的应用。预计2013年会有更多的开发者投入到基于智能电视的应用开发。针对大屏的应用开发是个“富矿”。2013年，智能电视终端应用的重要特点是——跨屏，跨终端互操作。</p>
-</blockquote>
-<p>然后就跑去看了下他们的文档：</p>
-<p><a href="http://www.cablelabs.com/specifications/CL-SP-HTML5-MAP-I02-120510.pdf">http://www.cablelabs.com/specifications/CL-SP-HTML5-MAP-I02-120510.pdf</a></p>
-<p>觉得这个只是定制了一个节目厂商嵌入HTML的规范，然后他们的Tru2way®设备可以推送网页节目到电视。</p>
-<p>这个只解决了一部分问题。首先限定了是线性内容，其次格式居然限定死是MPEG-2 TS。这个H.265的时代来看真的有点匪夷所思。</p>
-<p>个人觉得最大的问题，是解决了HTML5 to TV，但是没有解决TV内嵌HTML5渲染引擎的问题。比如一个现实的问题：</p>
-<p>vod.xunlei.com 我已经大部分视频在这里看了。但是</p>
-<ul>
-<li>多媒体键盘的media key没法响应。这个是browser vendor的问题 …</li></ul></p>
+HTML5的突出优点是多设备、跨平台。“HTML5 for TV”是由美国Cable Labs牵头组成的国际性开源协作项目，为推动HTML5技 …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-29T03:34:05+00:00">2013-01-29</time></p>
 <p>archive</p>            </div>
@@ -781,8 +696,7 @@ f.data['field'] = 'new value' # won't work
 f.cleaned_data['key'] = 'value' # won't work
 </code></pre>
 <p>the output of <code>f.as_p()</code> is still the old value because the <code>f.data</code> is a MergeDict.</p>
-<p>The way to modify it:</p>
-<pre><code>d = dict(f …</code></pre></p>
+<p>The way to modify it …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-25T03:55:00+00:00">2013-01-25</time></p>
 <p>archive</p>            </div>
@@ -798,7 +712,7 @@ f.cleaned_data['key'] = 'value' # won't work
             </a>
             <p class="card-text"><p>http://www.google.com/dictionary/json?callback=dict_api.callbacks.id102&amp;q=wtf&amp;sl=en&amp;tl=en&amp;restrict=pr%2Cde%2Csy&amp;client=te</p>
 <p>https://www.google.com/dictionary/json?callback=dict_api.callbacks.id100&amp;q=test&amp;sl=en&amp;tl=en&amp;restrict=pr%2Cde%2Csy</p>
-<p>妈的居然还有存活。</p></p>
+<p>妈的居然还有 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-22T02:01:00+00:00">2013-01-22</time></p>
 <p>archive</p>            </div>
@@ -816,12 +730,7 @@ f.cleaned_data['key'] = 'value' # won't work
 <p>看不到Infoq视频的可以看这里中文 <a href="http://www.infoq.com/cn/articles/Architecture-Datomic">Datomic的架构</a></p>
 <p>so far的一些观点：</p>
 <ul>
-<li>这货的Datom不就是典型的EAV设计么。带一个timestamp，不错。只是一般EAV的entity是类似一个class，而Datom的EAV只是一个flat展开的，entity仅仅作为类似PrimiaryKey的存在。</li>
-<li>(RDF Triple](http://www.w3.org/TR/rdf-concepts/#section-triples)跟EAV类似的思想，今天学习到了。主语 - 谓词 - 宾语 来表达数据</li>
-<li>这货的backend非常灵活，可以是传统SQL或NoSQL数据库。存储方式也可以localStorage或者MEM DB</li>
-<li>这货的query接口非常好，居然是用的Datalog。这种deductive思路跟Prolog一样都是很高阶的东西。</li>
-<li>因为Datom带了timestamp，所以数据DML模式不再是 CRUD，而是 CRA (Create Read Append)。好东西！这个就达到了data immutability。然后就可以被各种函数轮了。</li>
-<li>跟graph …</li></ul></p>
+<li>这货的Datom不 …</li></ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-21T22:23:00+00:00">2013-01-21</time></p>
 <p>archive</p>            </div>
@@ -857,23 +766,7 @@ f.cleaned_data['key'] = 'value' # won't work
 <p><a href="http://en.wikipedia.org/wiki/Fourth-generation_programming_language">4GL</a>:</p>
 <ul>
 <li>LabVIEW</li>
-<li>Progress 4GL (OpenEdge Advanced Business Language)</li>
-<li>SQL 和  PL/SQL</li>
-<li>MATLAB</li>
-<li>R</li>
-<li>Scilab</li>
-<li>XQuery</li>
-<li>XUL</li>
-<li>ColdFusion</li>
-</ul>
-<p><a href="http://en.wikipedia.org/wiki/Fifth-generation_programming_language">5GL</a></p>
-<ul>
-<li>Prolog</li>
-<li>Haskell</li>
-<li>ML</li>
-<li>Erlang</li>
-</ul>
-<p>虽然是一个过时的概念，还是拿出来玩一玩。</p></p>
+<li>Progress 4GL (OpenEdge Advanced …</li></ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-20T20:20:03+00:00">2013-01-20</time></p>
 <p>archive</p>            </div>
@@ -893,8 +786,7 @@ f.cleaned_data['key'] = 'value' # won't work
 <p><img alt="" src="/images/tumblr/40724647124_3.jpg" /></p>
 <p><img alt="" src="/images/tumblr/40724647124_4.jpg" /></p>
 <p>一座300米高，拔地而起成jj状的山。。。。。。。。。。。。名字叫 Pico Cão Grande ，人称 大狗峰</p>
-<p>São Tomé and Príncipe 圣多美这个国家在沙哈拉以南，非洲大陆西边的一个岛上。</p>
-<p><a href="http://www.reddit.com/r/geography/comments/16p6yr/10_spectacular_volcanic_plugs_and_natural/">via</a></p></p>
+<p>São Tomé and Príncipe 圣多美这个国家在沙哈拉以南，非洲大陆西边的一 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-16T20:16:00+00:00">2013-01-16</time></p>
 <p>archive</p>            </div>
@@ -912,15 +804,7 @@ f.cleaned_data['key'] = 'value' # won't work
 <p>Google Chrome <br />
 这个不仅是浏览器，而且是一整套生态系统体系</p>
 <p>Google Chrome Extensions  <br />
-大家常见的 “扩展” 体系</p>
-<p>Hosted Apps <br />
-又叫 Installable Web Apps。本质还是网站，但是提供一些本地特性用来整合 <br />
-文档： https://developers.google.com/chrome/apps/ <br />
-主要特色就是：权限比普通网站更加开放，可以一次设定永久有效。支持<code>manifest.json</code>。比如在里边通过<code>background_page</code>指定一个网站URL作为后台运行的机制</p>
-<p>Packaged Apps <br />
-又叫Chrome App<br />
-这就是可以看成exe或者dmg的东西了。本质是本地离线应用。<br />
-文档：http://developer.chrome.com/trunk/apps …</p></p>
+大 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-16T02:44:00+00:00">2013-01-16</time></p>
 <p>archive</p>            </div>
@@ -938,17 +822,7 @@ f.cleaned_data['key'] = 'value' # won't work
 <p>猪脚是<del>Verizon</del>美国一位顶级资深码农，该公司为政府关键IT系统服务</p>
 <ul>
 <li>6位数的薪水</li>
-<li>把关键架构外包给沈阳一家公司（或者说一个作坊）了。</li>
-<li>把RSA SecurID直接快递到中国。。。。</li>
-<li>每个月把1/5的薪水用来支付</li>
-<li>然后每天上reddit看猫猫视频</li>
-</ul>
-<p>我艹，真是天才。</p>
-<p>附上Onion新闻一则：</p>
-<iframe width="640" height="360" src="http://www.youtube.com/embed/rYaZ57Bn4pQ?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
-
-<p>via <a href="http://www.reddit.com/r/technology/comments/16nxtu/man_outsources_his_own_job_to_china_spends_free/">1</a>, <a href="http://www.reddit.com/r/netsec/comments/16n1mj/the_tale_of_vpn_logs_an_rsa_key_and_and_the_best/">2</a></p>
-<p>Update: solidot和cnbeta都报道了。我out了</p></p>
+<li>把关键架构外包给 …</li></ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-16T01:44:00+00:00">2013-01-16</time></p>
 <p>archive</p>            </div>
@@ -964,9 +838,7 @@ f.cleaned_data['key'] = 'value' # won't work
             </a>
             <p class="card-text"><p>看了这篇文章《<a href="http://sunng.info/blog/2012/12/%e8%9e%ba%e6%97%8b%e5%8f%91%e5%b1%95%e7%9a%84%e6%8a%80%e6%9c%af/">螺旋发展的技术</a> 》</p>
 <p>觉得很有意思。以前我也喜欢喷技术的倒退啊之类的。现在看来不是这么回事。</p>
-<p>我们理解的技术，只是现实技术 <strong><em>T</em></strong> 的绝对高度 <strong>|T|</strong>  在我们理想中的投影罢了 。一个技术的可见高度 = |<strong>T</strong>| * cos(心态) 。而技术的绝对高度的成长，则是不均衡发展的，非平衡的发展，造成的就是一种螺旋结构。</p>
-<p>这是一种自然规律，但是是人为可控的。只是工业界太大不可能有一个中心指挥机制。</p>
-<p>再也不愤了哈哈。</p></p>
+<p>我们理解的 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-15T03:04:00+00:00">2013-01-15</time></p>
 <p>archive</p>            </div>
@@ -1008,10 +880,7 @@ f.cleaned_data['key'] = 'value' # won't work
 <p>There is never a single right solution. There are always multiple wrong ones, though.</p>
 </li>
 <li>
-<p>A bad design with a good presentation is doomed eventually. A good design with a bad presentation is doomed immediately. （PPT的重要性。。。）</p>
-</li>
-<li>
-<p>(Larrabee's Law) Half of everything you hear …</p></li></ul></p>
+<p>A bad design with a good presentation is doomed eventually. A good design with a bad presentation is doomed immediately. （PPT …</p></li></ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-14T22:15:00+00:00">2013-01-14</time></p>
 <p>archive</p>            </div>
@@ -1047,12 +916,7 @@ f.cleaned_data['key'] = 'value' # won't work
             <p class="card-text"><iframe width="640" height="360" src="http://www.youtube.com/embed/8bWlTZZN3DY?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
 
 <p><a href="http://i.imgur.com/0dAnS.jpg">人性</a>啊<a href="http://www.reddit.com/r/science/comments/16ay7i/brown_eyed_people_are_judged_to_be_more/">人性</a>。认知造就的人类阶级，真是震撼。</p>
-<p>习惯了每天在网上喷来喷去，第一次见到Ms. Jane Elliott这么镇定而犀利的人。这种老师才是人类的灵魂工程师啊。。。。</p>
-<p>看到中间的时候简直有点痛哭流涕的感觉，看到最后真的是被感动了</p>
-<p>美国在1968年就由这样的老师和孩子。而现在不仅不可能有，而且可能永远没有了。</p>
-<p><a href="http://www.reddit.com/r/psychology/comments/16babu/ms_jane_elliotts_experiment_brown_eyes_blue_eyes/">via</a></p>
-<p>btw 一个纪录片</p>
-<p>http://movie.douban.com/subject/3883396/</p></p>
+<p>习惯了每天在网上喷来喷去，第一次见到Ms. Jane Elliott这么镇定而犀利的人。这种老 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-11T00:40:00+00:00">2013-01-11</time></p>
 <p>archive</p>            </div>
@@ -1075,8 +939,7 @@ $ tar cf result.py !$
 tar cf result.py "exec __import__('base64').b64decode('cHJpbnQgImhlbGxvLCB3b3JsZCI=')"
 $ python result.py 
 hello, world
-$ tar xvf result.py
-x exec __import__ …</code></pre></p>
+$ tar xvf result …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-08T22:26:00+00:00">2013-01-08</time></p>
 <p>archive</p>            </div>
@@ -1095,7 +958,7 @@ x exec __import__ …</code></pre></p>
 <p>SDR前面几篇博客也关注了。i500这个软modem性能应该不俗。就看RF前端的性能了。</p>
 <p>有个老外评论：</p>
 <blockquote>
-<p>Modems from High End RF chipset vendors are all soft modems. The limitation is the RF Front End. Unfortunately there are no PA's, LNA's, Duplexer, Diplexers, filters that can cover every damn band over there and hence …</p></blockquote></p>
+<p>Modems from …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-07T04:25:58+00:00">2013-01-07</time></p>
 <p>archive</p>            </div>
@@ -1115,7 +978,7 @@ x exec __import__ …</code></pre></p>
 &lt;type 'exceptions.UnicodeDecodeError'&gt; at /req_history_play_list/req_num/30/req_offset/0
 </code></pre>
 <p>'utf8' codec can't decode byte 0xd7 in position 16: invalid continuation byte</p>
-<pre><code>Python  /usr/local/lib/python2.7/json/encoder.py in iterencode, line 263 …</code></pre></p>
+<pre><code>Python  /usr/local …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-12-24T05:41:00+00:00">2012-12-24</time></p>
 <p>archive</p>            </div>
@@ -1132,10 +995,7 @@ x exec __import__ …</code></pre></p>
             <p class="card-text"><p>看到这个博客《搜狐微访谈：方舟子揭露微波炉烹饪致癌谣言》</p>
 <p>方舟子跟网友互动啦， blah blah一大堆。。看到这个问答，笑喷了。</p>
 <blockquote>
-<p>鹏赋Franklin： 向 @方舟子 提问： 用微波热中药怎么样？   </p>
-<p>方舟子： 用什么炉热中药都不怎么样。   </p>
-</blockquote>
-<p>trolling is a art</p></p>
+<p>鹏赋 …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-12-11T22:41:44+00:00">2012-12-11</time></p>
 <p>archive</p>            </div>
