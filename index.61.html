@@ -51,6 +51,26 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/381"  rel="bookmark" >
+              <h2 class="card-title">invoke GetUName() from getuname.dll using ctypes in python</h2>
+            </a>
+            <p class="card-text"><p>Here’s a way to lookup a <a href="http://www.unicode.org/Public/UNIDATA/NamesList.txt">Unicode character’s full name</a>, using Windows built-in getuname.dll, which is the core component of <code>CharMap.exe</code>.</p>
+
+<pre><code>&gt;&gt;&gt; import ctypes, ctypes.wintypes
+&gt;&gt;&gt; dwCodePoint = ctypes.wintypes.DWORD( ord(&#39;&amp;&#39;) )
+&gt;&gt;&gt; lpBuffer = ctypes.create_unicode_buffer(255)
+&gt;&gt;&gt; ctypes.windll.getuname.GetUName(dwCodePoint , ctypes.byref(lpBuffer))
+2 #length …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-01-09T15:57:16+00:00">2010-01-09</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/379"  rel="bookmark" >
               <h2 class="card-title">Finite Simple Group – The Klein Four</h2>
             </a>
@@ -390,30 +410,6 @@
 <p><a href="http://www.reddit.com/r/videos/comments/aloyq/the_guy_who_is_good_at_everything_came_out_with_a/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-01-05T17:10:23+00:00">2010-01-05</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/292"  rel="bookmark" >
-              <h2 class="card-title">Brutal Scream</h2>
-            </a>
-            <p class="card-text"><p>First it was like</p>
-
-<p><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://www.youtube.com/v/rlecFrRDZII%26hl%3Den_US%26fs%3D1%26&amp;width=425&amp;height=344" width="425" height="344"></iframe></p>
-
-<p>then</p>
-
-<p><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://www.youtube.com/v/7GGd1UH9UpA%26hl%3Den_US%26fs%3D1%26&amp;width=560&amp;height=340" width="560" height="340"></iframe></p>
-
-<p>LOL</p>
-
-<p><a href="http://www.reddit.com/r/videos/comments/alfuz/brutal_scream/">via</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2010-01-05T17:10:10+00:00">2010-01-05</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
