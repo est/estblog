@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Est's Blog</title><link>https://blog.est.im/</link><description>This blog is rated&amp;nbsp;&amp;nbsp;R⃣ , viewer discretion is advised</description><lastBuildDate>Thu, 21 Apr 2022 23:35:07 +0000</lastBuildDate><item><title>Kubelka-Munk 颜料混色理论以及mixbox源码</title><link>https://blog.est.im/2022/stdin-06</link><description>&lt;iframe src="//player.bilibili.com/player.html?bvid=BV1Tr4y1e7vN" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="100%" height="400px"&gt; &lt;/iframe&gt;
+<rss version="2.0"><channel><title>Est's Blog</title><link>https://blog.est.im/</link><description>This blog is rated&amp;nbsp;&amp;nbsp;R⃣ , viewer discretion is advised</description><lastBuildDate>Tue, 26 Apr 2022 21:27:41 +0000</lastBuildDate><item><title>SpaceX的员工如何与公司目标「对齐」</title><link>https://blog.est.im/2022/stdin-07</link><description>&lt;blockquote&gt;
+&lt;p&gt;As a Phase 1 CEO, you are the lead rower on the boat. But in a Phase 2 startup, your job is no longer to row. Instead, it’s to define the purpose of the voyage, set the direction of the boat, and measure the pace and performance of a …&lt;/p&gt;&lt;/blockquote&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 26 Apr 2022 17:47:36 +0000</pubDate><guid isPermaLink="false">tag:None,2022-04-26:/2022/stdin-07</guid><category>stdin</category></item><item><title>Kubelka-Munk 颜料混色理论以及mixbox源码</title><link>https://blog.est.im/2022/stdin-06</link><description>&lt;iframe src="//player.bilibili.com/player.html?bvid=BV1Tr4y1e7vN" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="100%" height="500px"&gt; &lt;/iframe&gt;
 
 &lt;p&gt;论文发表在 SIGGRAPH Asia 2021 &lt;a href="https://scrtwpns.com/mixbox/"&gt;https://scrtwpns.com/mixbox/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;传统的 RGB 平均值混色 vs mixbox 混色&lt;/p&gt;
 &lt;p&gt;&lt;img alt="" src="/images/2022/stdin-06-01.jpg" /&gt;&lt;/p&gt;
-&lt;p&gt;原因是光学混色取平均值没问题，很多色彩混出来就是中间 …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 21 Apr 2022 23:08:57 +0000</pubDate><guid isPermaLink="false">tag:None,2022-04-21:/2022/stdin-06</guid><category>stdin</category></item><item><title>为什么拜登这么喜欢说别人 Genocide</title><link>https://blog.est.im/2022/stderr-04</link><description>&lt;p&gt;今日键政一把，看到几则新闻&lt;/p&gt;
+&lt;p&gt;原因是光学混色取平均值没问题，很多色彩混出来就是中间 …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 21 Apr 2022 23:08:57 +0000</pubDate><guid isPermaLink="false">tag:None,2022-04-21:/2022/stdin-06</guid><category>stdin</category></item><item><title>Add UTF-8 BOM header to Flask-Admin export</title><link>https://blog.est.im/2022/stdout-05</link><description>&lt;p&gt;A simple trick to add additional bytes prepending Flask's &lt;code&gt;stream_with_context&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;from flask_admin.contrib.sqla import ModelView
+from itertools import chain
+
+class MyAdminView(ModelView):
+    can_export = True
+    column_export_list = ['field1', 'field2']
+
+    def _export_csv(self, return_url):
+        r = super(MyAdminView, self)._export_csv(return_url)
+        r.response …&lt;/code&gt;&lt;/pre&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 14 Apr 2022 15:47:17 +0000</pubDate><guid isPermaLink="false">tag:None,2022-04-14:/2022/stdout-05</guid><category>stdout</category></item><item><title>为什么拜登这么喜欢说别人 Genocide</title><link>https://blog.est.im/2022/stderr-04</link><description>&lt;p&gt;今日键政一把，看到几则新闻&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://np.reddit.com/r/worldnews/comments/u2951c/"&gt;Biden says Putin committing ‘genocide’&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://np.reddit.com/r/worldnews/comments/u2fhtj/"&gt;Zelenskyy thanks Biden for saying Russia is committing 'genocide' in Ukraine: 'True words of a true leader'&lt;/a&gt;&lt;/li&gt;
@@ -57,11 +68,4 @@ neurostimulant 8 minutes …&lt;/p&gt;&lt;/blockquote&gt;</description><dc:creat
 &lt;p&gt;&lt;a href="https://dl.google.com/edgedl/release2/chrome/ALiXMYM2w8-h_70.0.3538.77/70.0.3538.77_chrome_installer.exe"&gt;win 32&lt;/a&gt; | &lt;a href="https://dl.google.com/edgedl/release2/chrome/AJ7ozxk4OLvN_70.0.3538.77/70.0.3538.77_chrome_installer.exe"&gt;win 64&lt;/a&gt; | &lt;a href="https://redirector.gvt1.com/release2/chrome/AIJolai8dEil_70.0.3538.67/GoogleChrome-70.0.3538.67.dmg"&gt;Mac&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;上面的链接已经年久失修了，对比了一下获取 …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 28 Dec 2021 23:00:05 +0000</pubDate><guid isPermaLink="false">tag:None,2021-12-28:/2021/stdout-027</guid><category>stdout</category></item><item><title>认识「洋节」</title><link>https://blog.est.im/2021/stdout-026</link><description>&lt;p&gt;都说 xmas eve 是洋节，我们就来数一数到底有哪些洋节&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;元旦1月1日。由北「洋」军阀袁世凯设立。依据是内务部总长朱启钤《定四 …&lt;/li&gt;&lt;/ol&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 24 Dec 2021 23:59:59 +0000</pubDate><guid isPermaLink="false">tag:None,2021-12-24:/2021/stdout-026</guid><category>stdout</category></item><item><title>如何可视化跟踪分析 Python import 耗时</title><link>https://blog.est.im/2021/stdout-025</link><description>&lt;p&gt;首先在本地安装 &lt;code&gt;pip install tuna&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;然后跑个分，需要 &lt;code&gt;CPython &amp;gt;= 3.7&lt;/code&gt;，输入&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;PYTHONPROFILEIMPORTTIME=1 python3 myscript.py 2&amp;gt;1.log&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="tuna" src="https://camo.githubusercontent.com/d76ac242a42f9c394c1ae66da655173a51d9ed9c09107dd8d42b684c15aa2d05/68747470733a2f2f6e7363686c6f652e6769746875622e696f2f74756e612f666f6f2e706e67" /&gt;&lt;/p&gt;
-&lt;p&gt;然后 &lt;code&gt;tuna 1.log&lt;/code&gt; ，会自动打开浏览器围观 &lt;code&gt;import&lt;/code&gt; 耗时分布 …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 22 Dec 2021 14:00:28 +0000</pubDate><guid isPermaLink="false">tag:None,2021-12-22:/2021/stdout-025</guid><category>stdout</category></item><item><title>4句话自动换win10壁纸</title><link>https://blog.est.im/2021/stdout-024</link><description>&lt;ol&gt;
-&lt;li&gt;获取当前用户 &lt;code&gt;sid&lt;/code&gt;。cmd下设变量如此复杂。而且 &lt;code&gt;|&lt;/code&gt; 的转义字符居然是 &lt;code&gt;^|&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;读取 LogonUI 的自动壁纸。&lt;code&gt;reg query&lt;/code&gt;输出极其不友好。需要 tokens=3&lt;/li&gt;
-&lt;li&gt;设置为 …&lt;/li&gt;&lt;/ol&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 08 Dec 2021 21:39:36 +0000</pubDate><guid isPermaLink="false">tag:None,2021-12-08:/2021/stdout-024</guid><category>stderr</category></item></channel></rss>
+&lt;li&gt;元旦1月1日。由北「洋」军阀袁世凯设立。依据是内务部总长朱启钤《定四 …&lt;/li&gt;&lt;/ol&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 24 Dec 2021 23:59:59 +0000</pubDate><guid isPermaLink="false">tag:None,2021-12-24:/2021/stdout-026</guid><category>stdout</category></item></channel></rss>
