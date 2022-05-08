@@ -57,7 +57,7 @@
 <pre><code>import hashlib
 from itsdangerous import URLSafeTimedSerializer
 URLSafeTimedSerializer(
-        'YOUR_SECRET_KEY',  # from pyxis/config/prod.py
+        'YOUR_SECRET_KEY',  # flask SECRET_KEY
         'cookie-session',  # from flask.sessions.SecureCookieSessionInterface.salt
         # serializer=TaggedJSONSerializer(),
         signer_kwargs={'key_derivation': 'hmac', 'digest_method': hashlib.sha1}
