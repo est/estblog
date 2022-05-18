@@ -51,6 +51,30 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/34212978554"  rel="bookmark" >
+              <h2 class="card-title">@cached_property</h2>
+            </a>
+            <p class="card-text"><p>在<code>django.utils.functional</code> 里发现的。</p>
+<pre><code>class cached_property(object):
+    """
+    Decorator that creates converts a method with a single
+    self argument into a property cached on the instance.
+    """
+    def __init__(self, func):
+        self.func = func
+
+    def __get__(self, instance, type):
+        res = instance.__dict__[self.func.__name__] = self.func …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-10-24T00:00:00+00:00">2012-10-24</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/34207514410"  rel="bookmark" >
               <h2 class="card-title">测试ssh连接速度和带宽</h2>
             </a>
@@ -393,26 +417,6 @@ fengniao.com          蜂鸟网 …</code></pre></p>
 <p>帝都 <a href="https://twitter.com/BeijingAir">https://twitter.com/BeijingAir</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-09-07T02:44:00+00:00">2012-09-07</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/30977835168"  rel="bookmark" >
-              <h2 class="card-title">一些感受</h2>
-            </a>
-            <p class="card-text"><p>最近一些项目感受：</p>
-<p>关于主管：</p>
-<ol>
-<li>拿个解决方案来寻找问题。Finding a nail with a hammer?</li>
-<li>没有客观可度量指标来盲目“优化”。</li>
-</ol>
-<p>盲目造成的附加 …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2012-09-05T23:40:00+00:00">2012-09-05</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
