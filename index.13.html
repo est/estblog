@@ -60,7 +60,7 @@
 <p>G+团队的官方博客：<a href="http://gplusproject.appspot.com/new-apps-iphone-android">http://gplusproject.appspot.com/new-apps-iphone-android</a> 这是个什么jb飞机玩意？为啥不<a href="http://googleplusplatform.blogspot.com/">用blogger</a>?</p>
 </li>
 <li>
-<p>看这个关于代码测试的google官方 …</p></li></ol></p>
+<p>看这个关于代码测试的google官方博客 <a href="http://googletesting.blogspot.sg/2013/03/testing-on-toilet-testing-state-vs.html">http://googletesting.blogspot.sg/2013/03 …</a></p></li></ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-26T00:48:33+00:00">2013-03-26</time></p>
 <p>archive</p>            </div>
@@ -107,7 +107,7 @@ day 0 productivity.</p></p>
             <a href="/post/45245208546"  rel="bookmark" >
               <h2 class="card-title">Unix Socket 点滴[转载]</h2>
             </a>
-            <p class="card-text"><p>【Unix Socket 点滴 1】使用unix socket时，把路径名的第一个字节设为null byte（\x00），这样就不会产生实际的文件，使用起了比较方便，也不用纠结 …</p></p>
+            <p class="card-text"><p>【Unix Socket 点滴 1】使用unix socket时，把路径名的第一个字节设为null byte（\x00），这样就不会产生实际的文件，使用起了比较方便，也不用纠结选 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-12T23:49:00+00:00">2013-03-12</time></p>
 <p>archive</p>            </div>
@@ -122,7 +122,10 @@ day 0 productivity.</p></p>
               <h2 class="card-title">Web服这个屎盆子不够装了——记inetd的现代版Mozilla Circus</h2>
             </a>
             <p class="card-text"><p>今天瞄了下<a href="circus.rtfd.org">Mozilla Circus</a>这个项目，黑有意思。</p>
-<p>简单的说，目前Web服务器基本模型都是一个总瓢把子Nginx，后边一大堆苦力worker进程。比如 …</p></p>
+<p>简单的说，目前Web服务器基本模型都是一个总瓢把子Nginx，后边一大堆苦力worker进程。比如Python世界的Gunicorn是这个样子的粗暴简单：</p>
+<p><img alt="" src="http://circus.readthedocs.org/en/0.5/_images/classical-stack.png" /></p>
+<p>worker基本都是日出而耕，日落而息。（顺便一喷，Supervisord这些都弱爆了。djb大牛的<a href="https://news.ycombinator.com/item?id=5346871">runit</a>才是王道）</p>
+<p>要 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-12T02:55:00+00:00">2013-03-12</time></p>
 <p>archive</p>            </div>
@@ -198,7 +201,8 @@ day 0 productivity.</p></p>
               <h2 class="card-title">再刷第三方ROM就剁手！</h2>
             </a>
             <p class="card-text"><p>今天刷了下第三方ROM，我擦，搜狗的两个渣app删不掉，用RE浏览器删掉了。。。</p>
-<p>结果。。。尼玛android的默认浏览器选项给屏蔽了。启动默认 …</p></p>
+<p>结果。。。尼玛android的默认浏览器选项给屏蔽了。启动默认首页，弄死都是作者lishuo0427的JB烂博客</p>
+<p>找到了个办法刷回官方包了 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-05T08:33:43+00:00">2013-03-05</time></p>
 <p>archive</p>            </div>
@@ -232,7 +236,9 @@ day 0 productivity.</p></p>
             </a>
             <p class="card-text"><ol>
 <li><code>com.yinyuetai.ui</code> 这个JB设计居然只能竖屏。我擦。<code>com.tencent.qqmusic</code> 居然也是强制竖屏。在1080p电视上感谢这两款软件治好了我多年的颈椎病。</li>
-<li><code>com …</code></li></ol></p>
+<li><code>com.tencent.qqmusicpad</code> 还是很赞的。</li>
+<li>最讨厌android软件锁区</li>
+<li>在<a href="http://www.v2ex.com/t/60885">v2ex上</a> 看到HiHex这个只能电视团队，现在觉得如果要搞大屏交互 …</li></ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-03T08:02:18+00:00">2013-03-03</time></p>
 <p>archive</p>            </div>
@@ -294,7 +300,10 @@ foo
 <ul>
 <li>2007年欧盟觉得pypy这货是典型的烂尾钓鱼工程于是就停止拨款了。   </li>
 <li>尝试过RPython -&gt; Javascript。失败告终</li>
-<li>至少4次用LLVM。全部失败 …</li></ul></p>
+<li>至少4次用LLVM。全部失败。</li>
+<li>2次尝试写了个Rpython版的ctypes，叫rctypes，均失败。</li>
+<li>JIT引擎写过3个版本，第四个个版本才成功</li>
+<li>第一个成功C编译版本的pypy直接segfault了——本来应该unsigned int写成了signed int …</li></ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-28T20:24:00+00:00">2013-02-28</time></p>
 <p>archive</p>            </div>
@@ -334,7 +343,7 @@ foo
 <blockquote>
 <p>One reason they don't already have cameras built in is a combination of power requirements</p>
 </blockquote>
-<p>突然想到，一个由思轴组成的飞行swarm网络，如果每 …</p></p>
+<p>突然想到，一个由思轴组成的飞行swarm网络，如果每个节 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-22T02:52:00+00:00">2013-02-22</time></p>
 <p>archive</p>            </div>
@@ -384,7 +393,10 @@ foo
             <p class="card-text"><p>VPS内存小，连uWSGI这种都玩不起，只能玩玩<a href="https://github.com/jonashaag/bjoern">bjoern</a>这个神器了。<a href="http://bottlepy.org/docs/dev/deployment.html#switching-the-server-backend">Bottle.py支持的WSGI容器</a>还真多啊！</p>
 <pre><code>curl -O http://python-distribute.org/distribute_setup.py
 sudo  python distribute_setup.py
-curl -O https …</code></pre></p>
+curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
+sudo python get-pip.py
+sudo emerge libev
+CFLAGS …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-19T22:26:50+00:00">2013-02-19</time></p>
 <p>archive</p>            </div>
@@ -423,7 +435,7 @@ curl -O https …</code></pre></p>
             </a>
             <p class="card-text"><p>Google Docs自己搞了一套类似Google App Engine的体系，只不过服务器端语言是Javascript，运行环境是 云JS——Google Apps Script</p>
 <p><a href="https://developers.google.com/apps-script/html_service">https://developers.google.com/apps-script/html_service</a></p>
-<p>看了下文档，类 …</p></p>
+<p>看了下文档，类似php的语法，在html里嵌入js，然后服务器渲染得到 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-15T18:59:56+00:00">2013-02-15</time></p>
 <p>archive</p>            </div>

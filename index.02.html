@@ -79,7 +79,7 @@
 &gt; User-Agent: User-Agent: Mozilla/5
 &gt;
 &lt; HTTP/1.1 403 Forbidden
-&lt; Server …</code></pre></p>
+&lt; Server: GHost …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-12-29T22:42:14+00:00">2021-12-29</time></p>
 <p>stdout</p>            </div>
@@ -96,7 +96,7 @@
             <p class="card-text"><p>不折腾不舒服。继之前 <a href="/2021/stdout-020">Edge调教</a> 之后记录一下 Chrome V70怎么阉割。</p>
 <p>下载：</p>
 <p><a href="https://dl.google.com/edgedl/release2/chrome/ALiXMYM2w8-h_70.0.3538.77/70.0.3538.77_chrome_installer.exe">win 32</a> | <a href="https://dl.google.com/edgedl/release2/chrome/AJ7ozxk4OLvN_70.0.3538.77/70.0.3538.77_chrome_installer.exe">win 64</a> | <a href="https://redirector.gvt1.com/release2/chrome/AIJolai8dEil_70.0.3538.67/GoogleChrome-70.0.3538.67.dmg">Mac</a></p>
-<p>上面的链接已经年久失修了，对比了一下获取 …</p></p>
+<p>上面的链接已经年久失修了，对比了一下获取最新版本的脚 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-12-28T23:00:05+00:00">2021-12-28</time></p>
 <p>stdout</p>            </div>
@@ -112,7 +112,7 @@
             </a>
             <p class="card-text"><p>都说 xmas eve 是洋节，我们就来数一数到底有哪些洋节</p>
 <ol>
-<li>元旦1月1日。由北「洋」军阀袁世凯设立。依据是内务部总长朱启钤《定四 …</li></ol></p>
+<li>元旦1月1日。由北「洋」军阀袁世凯设立。依据是内务部总长朱启钤《定四季节假 …</li></ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-12-24T23:59:59+00:00">2021-12-24</time></p>
 <p>stdout</p>            </div>
@@ -147,7 +147,8 @@
             <p class="card-text"><ol>
 <li>获取当前用户 <code>sid</code>。cmd下设变量如此复杂。而且 <code>|</code> 的转义字符居然是 <code>^|</code></li>
 <li>读取 LogonUI 的自动壁纸。<code>reg query</code>输出极其不友好。需要 tokens=3</li>
-<li>设置为 …</li></ol></p>
+<li>设置为当前桌面。</li>
+<li>刷新。这个 …</li></ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-12-08T21:39:36+00:00">2021-12-08</time></p>
 <p>stderr</p>            </div>
@@ -177,7 +178,7 @@
               <h2 class="card-title">人工构造Flask session模拟cookie登陆</h2>
             </a>
             <p class="card-text"><p>有没有好奇为什么 Flask 配置必须要求一个 <a href="https://flask.palletsprojects.com/en/latest/config/#SECRET_KEY">SECRET_KEY</a>，然后就可以在浏览器保存一个 session 状态读写数据。</p>
-<p>这里记一下它的底层实现 …</p></p>
+<p>这里记一下它的底层实现，其 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-12-08T07:15:03+00:00">2021-12-08</time></p>
 <p>stdout</p>            </div>
@@ -227,7 +228,7 @@
               <h2 class="card-title">Edge调教指南——如何设置本地PAC代理和首页天气</h2>
             </a>
             <p class="card-text"><p>之前一直用的chrome v70，为什么呢？</p>
-<p>第一是这个老版本允许 <code>--proxy-pac-url="file:///Users/me/1.pac</code> 这样设置，但是<a href="https://bugs.chromium.org/p/chromium/issues/detail?id=839566">Chromium项目的大爷们觉得</a>你本地的.pac不够 …</p></p>
+<p>第一是这个老版本允许 <code>--proxy-pac-url="file:///Users/me/1.pac</code> 这样设置，但是<a href="https://bugs.chromium.org/p/chromium/issues/detail?id=839566">Chromium项目的大爷们觉得</a>你本地的.pac不够安全，要网上的.pac才安全，所以一刀切 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-11-30T11:32:33+00:00">2021-11-30</time></p>
 <p>stdout</p>            </div>
@@ -319,7 +320,8 @@
 <h2>--host-resolver-rules=rules</h2>
 <p>Like <code>--host-rules</code> but these rules only apply to the host resolver.<br />
 A comma-separated list of rules that control how hostnames are mapped.<br />
-For …</p></p>
+For example:<br />
+- <code>MAP * 127.0 …</code></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-11-07T16:01:19+00:00">2021-11-07</time></p>
 <p>stdout</p>            </div>
@@ -345,7 +347,8 @@ For …</p></p>
 </thead>
 <tbody>
 <tr>
-<td>AUTH_TYPE …</td></tr></tbody></table></p>
+<td>AUTH_TYPE</td>
+<td>ignore this …</td></tr></tbody></table></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-11-05T18:12:45+00:00">2021-11-05</time></p>
 <p>stdout</p>            </div>
@@ -396,7 +399,7 @@ Humankind
             <p class="card-text"><p>总结一些没用的知识</p>
 <ol>
 <li>
-<p>淘宝/阿里账号，可以一个手机最多绑定6个账号。淘宝注册的时候点击「企业注册」然后用邮箱注册，最 …</p></li></ol></p>
+<p>淘宝/阿里账号，可以一个手机最多绑定6个账号。淘宝注册的时候点击「企业注册」然后用邮箱注册，最后用同 …</p></li></ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-10-28T16:21:23+00:00">2021-10-28</time></p>
 <p>stdout</p>            </div>

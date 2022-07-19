@@ -95,7 +95,7 @@ echo -e "GET / HTTP/1.1\n\n"&gt;&amp;3
 cat &lt;&amp;3
 </code></pre>
 <p>简单的端口扫描：</p>
-<pre><code>$ for p in {1..1023}; do(echo …</code></pre></p>
+<pre><code>$ for p in {1..1023}; do(echo &gt;/dev/tcp/localhost/$p) &gt;/dev/null 2&gt;&amp;1 &amp;&amp; echo "$p open"; done …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-12-06T21:38:00+00:00">2012-12-06</time></p>
 <p>archive</p>            </div>
@@ -110,7 +110,7 @@ cat &lt;&amp;3
               <h2 class="card-title">github多账户马甲之间ssh key切换</h2>
             </a>
             <p class="card-text"><p>场景：有多个github账号，比如公司一个，私人一个。现在想在同一台主机上同时维护公司的和私人的repo</p>
-<p>大家可能会尝试把一个 …</p></p>
+<p>大家可能会尝试把一个公钥 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-12-04T03:17:00+00:00">2012-12-04</time></p>
 <p>archive</p>            </div>
@@ -126,7 +126,8 @@ cat &lt;&amp;3
             </a>
             <p class="card-text"><p>看到这个报道 <a href="http://chinadigitaltimes.net/chinese/2012/11/gfw%E5%B0%81%E9%94%81openvpn-%E4%B8%8E-%E5%8A%A0%E5%AF%86%E6%B5%81%E5%88%86%E7%B1%BB%E7%9A%84%E5%AD%A6%E6%9C%AF%E8%AE%BA%E6%96%87/">封锁OpenVPN与加密流分类的学术论文</a></p>
 <p>突然觉得几年前的事情现在应该又走到了一个拐点。</p>
-<p>6年前我们会用squid …</p></p>
+<p>6年前我们会用squid都很容易绕过限制了，然后是socks，加密socks，dns还原，然后是ssh，openvpn。</p>
+<p>现在都开始 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-12-03T01:14:00+00:00">2012-12-03</time></p>
 <p>archive</p>            </div>
@@ -145,7 +146,7 @@ cat &lt;&amp;3
 <p>觉得这种骑车的够危险了吧。</p>
 <p>再看这个视频</p>
 <p><a href="http://www.56.com/u21/v_Nzc0NDQyMzQ.html">http://www.56.com/u21/v_Nzc0NDQyMzQ.html</a></p>
-<p>觉得这人是不是很傻 …</p></p>
+<p>觉得这人是不是很傻比 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-12-02T20:30:00+00:00">2012-12-02</time></p>
 <p>archive</p>            </div>
@@ -178,7 +179,7 @@ cat &lt;&amp;3
             <p class="card-text"><p>用了好几个chrome的time tracking扩展，用来跟踪我上网都把时间浪费在哪些网站上了。</p>
 <p>这几天的发现：</p>
 <ol>
-<li>1/5的时间没有被跟踪到，也就 …</li></ol></p>
+<li>1/5的时间没有被跟踪到，也就是说浪费在调整浏览器窗口，切 …</li></ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-28T23:13:00+00:00">2012-11-28</time></p>
 <p>archive</p>            </div>
@@ -236,7 +237,7 @@ cat &lt;&amp;3
             </a>
             <p class="card-text"><p>dump一个db的时候发现有个 INT 类型居然保存的数据是 20121126</p>
 <p>问了下，对方说，就是这个样子设计的，方便用来比较日期</p>
-<p>我这种老 …</p></p>
+<p>我这种老实人都是老老实实datetime类型，看 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-26T01:17:25+00:00">2012-11-26</time></p>
 <p>archive</p>            </div>
@@ -253,7 +254,7 @@ cat &lt;&amp;3
             <p class="card-text"><p>从<a href="http://news.ycombinator.com/item?id=4828431">HN上</a>看到这篇帖子 <a href="http://www.avc.com/a_vc/2012/11/what-has-changed.html">What Has Changed</a>，觉得对未来很糟糕的样子。</p>
 <p>特别是这一段：</p>
 <blockquote>
-<p>the consumer web has matured. we are almost 20 years into the consumer web and we have large platforms that are …</p></blockquote></p>
+<p>the consumer web has matured. we are almost 20 years into the consumer web and we have large platforms that are starting …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-25T23:40:00+00:00">2012-11-25</time></p>
 <p>archive</p>            </div>
@@ -306,7 +307,10 @@ cat &lt;&amp;3
 <li>64MHz - 1700 MHz (50 - 2200 MHz also possible)</li>
 <li>Sample rate: 3.2 MS/s</li>
 <li>Resolution: 8 bits/sample</li>
-<li>receive only …</li></ul></p>
+<li>receive only</li>
+</ul>
+<p>关键是很便宜，大概$10左右。</p>
+<p>今天无 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-20T23:30:46+00:00">2012-11-20</time></p>
 <p>archive</p>            </div>
@@ -359,7 +363,7 @@ cat &lt;&amp;3
             </a>
             <p class="card-text"><p>几天前看到<a href="http://opensource.solidot.org/article.pl?sid=12/11/11/063250">这个新闻</a>：</p>
 <blockquote>
-<p>知名FreeBSD开发者、 Varnish web-server缓存作者Poul-Henning Kamp认为，开源软件的市集开发模式（见ESR的《大教堂和市集》）创造了一代 …</p></blockquote></p>
+<p>知名FreeBSD开发者、 Varnish web-server缓存作者Poul-Henning Kamp认为，开源软件的市集开发模式（见ESR的《大教堂和市集》）创造了一代只知道拷贝粘贴的无能IT专业人士 …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-14T22:03:00+00:00">2012-11-14</time></p>
 <p>archive</p>            </div>
@@ -394,7 +398,7 @@ cat &lt;&amp;3
 <p>今天看到一个讨论：</p>
 <blockquote>
 <p>发信人: i3721pp (noosa), 信区: Aero <br />
-标  题: 王华明的报告“航空高性能大型复杂整体构 …</p></blockquote></p>
+标  题: 王华明的报告“航空高性能大型复杂整体构件激光 …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-13T07:50:44+00:00">2012-11-13</time></p>
 <p>archive</p>            </div>
@@ -409,7 +413,7 @@ cat &lt;&amp;3
               <h2 class="card-title">禅宗 vs 武士</h2>
             </a>
             <p class="card-text"><p>突然觉得这个joke好经典</p>
-<p>@法门寺释者慧：#禅宗公案#武士手握一条鱼到一休禅师房间说道：“咱打赌，我手中这鱼是死是活？”一休 …</p></p>
+<p>@法门寺释者慧：#禅宗公案#武士手握一条鱼到一休禅师房间说道：“咱打赌，我手中这鱼是死是活？”一休知道若 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-13T07:11:07+00:00">2012-11-13</time></p>
 <p>archive</p>            </div>
@@ -438,7 +442,7 @@ cat &lt;&amp;3
 <h1>x11 （见<a href="http://initiative.yo2.cn/archives/628146">这个</a>）</h1>
 </li>
 </ul>
-<p>官方文档在这里 <a href="http://www.w3.org/TR/xml/#charsets">http://www.w3.org …</a></p></p>
+<p>官方文档在这里 <a href="http://www.w3.org/TR/xml/#charsets">http://www.w3.org/TR/xml/#charsets …</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-13T00:27:15+00:00">2012-11-13</time></p>
 <p>archive</p>            </div>
@@ -525,7 +529,9 @@ cat &lt;&amp;3
 <blockquote>
 <p>Hi!PDA论坛坛友francisngl发布了一篇有关预测Surface前景的文章</p>
 </blockquote>
-<p>然后被tech2ipo转，然后被cnbeta转：<a href="http://www.cnbeta.com/articles/211806.htm">Surface必将 …</a></p></p>
+<p>然后被tech2ipo转，然后被cnbeta转：<a href="http://www.cnbeta.com/articles/211806.htm">Surface必将惨败三理由：用户不待见，核心竞争力低下，硬伤明显</a></p>
+<p>我艹什么破玩意。</p>
+<p>然 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-06T20:43:56+00:00">2012-11-06</time></p>
 <p>archive</p>            </div>
@@ -575,7 +581,7 @@ cat &lt;&amp;3
             </a>
             <p class="card-text"><p>家里有个老机器 海美迪HD 300B，用的是Realtek 1073DD+方案，发现一个很猛的固件：</p>
 <p><a href="http://www.hdpfans.com/thread-120536-1-1.html">http://www.hdpfans.com/thread-120536-1-1.html</a></p>
-<p>吐槽一下，DLNA被国内翻译成 多屏互动 。搞 …</p></p>
+<p>吐槽一下，DLNA被国内翻译成 多屏互动 。搞了半天我一个 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-03T06:43:00+00:00">2012-11-03</time></p>
 <p>archive</p>            </div>
@@ -597,7 +603,8 @@ cat &lt;&amp;3
 <li>调用Play()</li>
 </ol>
 <p><img alt="" src="/images/tumblr/34761834868.png" /></p>
-<p>就OK了 …</p></p>
+<p>就OK了。</p>
+<p>家里 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-01T11:06:00+00:00">2012-11-01</time></p>
 <p>archive</p>            </div>
@@ -615,7 +622,10 @@ cat &lt;&amp;3
 <p>DLNA是一套基于UPnP的4层协议，基于HTTP+SOAP的，是Sony在2004年提出的。</p>
 <p>有如下几个角色：</p>
 <ul>
-<li>Digital Media Server (DMS) 存储内容 …</li></ul></p>
+<li>Digital Media Server (DMS) 存储内容，供pull</li>
+<li>Digital Media Player (DMP) 播放pull下来的内容</li>
+<li>Digital Media Renderer (DMR) 接受push的内容并播放</li>
+<li>Digital Media …</li></ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-31T23:21:00+00:00">2012-10-31</time></p>
 <p>archive</p>            </div>
@@ -649,7 +659,7 @@ cat &lt;&amp;3
             <p class="card-text"><p>《<a href="http://mkronline.com/2012/10/30/you-arent-imagining-it-the-web-is-a-mess/">You aren’t imagining it: The web is a mess</a>》这篇文章提出了一些比较犀利的观点：</p>
 <p>Web已经乱死了。</p>
 <ul>
-<li>人们在本世纪初，网上写的东西还是给人看 …</li></ul></p>
+<li>人们在本世纪初，网上写的东西还是给人看的。都是浓缩 …</li></ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-30T21:22:00+00:00">2012-10-30</time></p>
 <p>archive</p>            </div>
@@ -666,7 +676,7 @@ cat &lt;&amp;3
             <p class="card-text"><p>The most depression thing today, is I found a solution to a problem from <a href="http://initiative.yo2.cn/archives/625499">my OWN BLOG FOUR years ago</a>!</p>
 <p>Bottle.py's dev server <a href="http://bottlepy.org/docs/stable/tutorial.html#auto-reloading">auto-reloading</a> sucks hell. </p>
 <blockquote>
-<p>The child process will have os.environ['BOTTLE_CHILD'] set to True and start as a normal non-reloading app server. As soon as …</p></blockquote></p>
+<p>The child process will have os.environ['BOTTLE_CHILD'] set to True and start as a normal non-reloading app server. As soon as any …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-25T23:42:00+00:00">2012-10-25</time></p>
 <p>archive</p>            </div>
@@ -680,7 +690,7 @@ cat &lt;&amp;3
             <a href="/post/34288214582"  rel="bookmark" >
               <h2 class="card-title">fix bottle.py / wsgiref.simple_server slow</h2>
             </a>
-            <p class="card-text"><p>Running bottlepy with default server (<code>wsgiref.simple_server</code>) is always dog slow for me, after some digging I found that the fucking server is trying to resolve the IP address of 10.x.x.x, both the server and client, into hostnames so the fucking logger can 'properly' display them …</p></p>
+            <p class="card-text"><p>Running bottlepy with default server (<code>wsgiref.simple_server</code>) is always dog slow for me, after some digging I found that the fucking server is trying to resolve the IP address of 10.x.x.x, both the server and client, into hostnames so the fucking logger can 'properly' display them. FUCK …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-25T04:53:00+00:00">2012-10-25</time></p>
 <p>archive</p>            </div>
@@ -719,7 +729,7 @@ cat &lt;&amp;3
         self.func = func
 
     def __get__(self, instance, type):
-        res = instance.__dict__[self.func.__name__] = self.func …</code></pre></p>
+        res = instance.__dict__[self.func.__name__] = self.func(instance …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-24T00:00:00+00:00">2012-10-24</time></p>
 <p>archive</p>            </div>
@@ -741,7 +751,8 @@ cat &lt;&amp;3
 <p>上行：   <br />
 <code>$ yes | pv | ssh est@my_host "cat &gt; /dev/null"</code>   <br />
 <code>2.06MB 0:00:05 [1.96MB/s] [  &lt;=&gt;                                              ]</code></p>
-<p>测试本机IO能 …</p></p>
+<p>测试本机IO能力：  <br />
+<code>$ pv /dev/zero …</code></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-23T22:30:00+00:00">2012-10-23</time></p>
 <p>archive</p>            </div>
@@ -756,7 +767,8 @@ cat &lt;&amp;3
               <h2 class="card-title">Web墨卡托</h2>
             </a>
             <p class="card-text"><p>最近在android上玩RMaps Ext和Mobile Atlas Creator (MOBAC)</p>
-<p>一直觉得tg的<a href="www.tianditu.cn">天地图</a>其实道路信息和POI做的比其他厂商都好，所以网上找到了这个<a href="http://www.doyouhike.net/forum/comm_nav/585383,0,0,1.html">天地 …</a></p></p>
+<p>一直觉得tg的<a href="www.tianditu.cn">天地图</a>其实道路信息和POI做的比其他厂商都好，所以网上找到了这个<a href="http://www.doyouhike.net/forum/comm_nav/585383,0,0,1.html">天地图版MOBAC</a></p>
+<p>但是我发现一个很好玩的信 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-15T21:48:19+00:00">2012-10-15</time></p>
 <p>archive</p>            </div>
@@ -773,7 +785,7 @@ cat &lt;&amp;3
             <p class="card-text"><p>今天才知道的。windows下，干净hosts，可以nslookup 和 ping 的 ip 不一样。</p>
 <p>主要是 Primary DNS suffix of this computer 这个功能。</p>
 <p>解决方法也很简单，<code>nslookup my.domain.tld. dns.server.ip</code></p>
-<p>注 …</p></p>
+<p>注意 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-15T21:05:25+00:00">2012-10-15</time></p>
 <p>archive</p>            </div>
@@ -821,7 +833,10 @@ cat &lt;&amp;3
               <h2 class="card-title">ownCloud, csync</h2>
             </a>
             <p class="card-text"><p>KDE那帮人觉得Dropbox不错于是搞了个山寨品 ownCloud.org 。我很是喜欢。</p>
-<p>其中双向同步的关键核心组件是 csync，看了下，是<a href="http://news.opensuse.org/2009/01/08/opensuse-project-announces-csync/">OpenSUSE一帮人搞的</a>类 …</p></p>
+<p>其中双向同步的关键核心组件是 csync，看了下，是<a href="http://news.opensuse.org/2009/01/08/opensuse-project-announces-csync/">OpenSUSE一帮人搞的</a>类unison工具。</p>
+<p>unison/csync 区别在于：</p>
+<blockquote>
+<p>csync is a bidirectional file synchronizer like unison. csync is written in C and …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-10T05:41:14+00:00">2012-10-10</time></p>
 <p>archive</p>            </div>
@@ -839,7 +854,7 @@ cat &lt;&amp;3
 <code>&gt;&gt;&gt; p=lambda:json.loads(urllib2.urlopen('http://radioplayer.omroep.nl/helper/now-on-air.json?ac=%s&amp;channel_id=3' % datetime.datetime.now().strftime('%Y%m%d%H%M')).read())</code> <br />
 <code>&gt;&gt;&gt; pprint.pprint(p()['current_song'])</code></p>
 <p>or parsing this HTML</p>
-<p>http://radioplayer.omroep.nl/helper/playlist.html?ac …</p></p>
+<p>http://radioplayer.omroep.nl/helper/playlist.html?ac=201210101540&amp;channel_id …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-10T03:49:00+00:00">2012-10-10</time></p>
 <p>archive</p>            </div>
@@ -866,7 +881,8 @@ import struct
 def ping_uwsgi(sock_file):
     '''
     Ping UWSGI process trought socket. Return [True,...] if OK,
-    return [False,error] if UWSGO not pinging …</code></pre></p>
+    return [False,error] if UWSGO not pinging, or
+    [None,error] if …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-09T05:33:00+00:00">2012-10-09</time></p>
 <p>archive</p>            </div>
@@ -903,7 +919,7 @@ def ping_uwsgi(sock_file):
             <p class="card-text"><p>难得夜深人静反思一下。我个人每天12个小时在网上闲逛，自个觉得我现在有几个值得警惕的危险趋势：</p>
 <ol>
 <li>
-<p>输入越来越多，输 …</p></li></ol></p>
+<p>输入越来越多，输出越来越少。创作能 …</p></li></ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-06T14:31:00+00:00">2012-10-06</time></p>
 <p>archive</p>            </div>
@@ -936,7 +952,9 @@ def ping_uwsgi(sock_file):
             </a>
             <p class="card-text"><p>上次看到 <a href="http://www.csdn.net/article/2012-08-20/2808870">Google后Hadoop时代的新“三驾马车”——Caffeine、Pregel、Dremel</a></p>
 <p>感觉碉堡了。</p>
-<p>Pregel是一个graph db。这是逆NoSQL运动行之的潮流——NoSQL倡导没有<code>join</code>，而graph db则 …</p></p>
+<p>Pregel是一个graph db。这是逆NoSQL运动行之的潮流——NoSQL倡导没有<code>join</code>，而graph db则是——所有数据都可以默认join起来。</p>
+<p>Dremel 是一个query interface。</p>
+<p>Caffeine的背后是Google True Time API，这是 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-09-18T00:38:14+00:00">2012-09-18</time></p>
 <p>archive</p>            </div>

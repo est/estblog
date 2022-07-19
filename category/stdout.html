@@ -55,7 +55,7 @@
               <h2 class="card-title">袁亚湘院士数学不错，但是历史不行</h2>
             </a>
             <p class="card-text"><p>网上看到一个院士的段子 <a href="https://m.weibo.cn/detail/4764029988111490">1</a> <a href="https://m.weibo.cn/detail/4763768209540706">2</a></p>
-<p>搜了下，2020年3月14日，在中国工业与应用数学学会举办的网络科普活动中，中国科学院院 …</p></p>
+<p>搜了下，2020年3月14日，在中国工业与应用数学学会举办的网络科普活动中，中国科学院院士袁亚湘带 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-05-06T12:03:50+00:00">2022-05-06</time></p>
 <p>stdout</p>            </div>
@@ -79,7 +79,10 @@ class MyAdminView(ModelView):
 
     def _export_csv(self, return_url):
         r = super(MyAdminView, self)._export_csv(return_url)
-        r.response …</code></pre></p>
+        r.response = chain((b'\xef\xbb\xbf',), r.response)
+        return r
+</code></pre>
+<p>I …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-04-14T15:47:17+00:00">2022-04-14</time></p>
 <p>stdout</p>            </div>
@@ -127,7 +130,7 @@ class MyAdminView(ModelView):
             <p class="card-text"><p>今天的第一个收获，Victor Sierra这个搜救图案</p>
 <p><img alt="" src="/images/2022/stdout-02-01.jpg" /></p>
 <p><img alt="" src="/images/2022/stdout-02-02.jpg" /></p>
-<p>来自 <a href="https://www.youtube.com/watch?v=aoXJfuPaFF8">Why This Zig-Zag Coast Guard Search Pattern is Actually Genius - Smarter Every Day 268</a>，是美国 coast guard 标准化的水面搜救路线<strong>之一</strong>。这 …</p></p>
+<p>来自 <a href="https://www.youtube.com/watch?v=aoXJfuPaFF8">Why This Zig-Zag Coast Guard Search Pattern is Actually Genius - Smarter Every Day 268</a>，是美国 coast guard 标准化的水面搜救路线<strong>之一</strong>。这种图案覆盖的 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-01-19T23:15:24+00:00">2022-01-19</time></p>
 <p>stdout</p>            </div>
@@ -142,7 +145,7 @@ class MyAdminView(ModelView):
               <h2 class="card-title">python-phoenixdb 设置读取超时</h2>
             </a>
             <p class="card-text"><p>PhoenixDB 居然是基于 requests + pb2 做的传输层协议。连接的是 queryserver 的 http 接口</p>
-<p>看 <a href="https://git-wip-us.apache.org/repos/asf?p=phoenix-queryserver.git;a=blob;f=python-phoenixdb/phoenixdb/avatica/client.py">avatica/client.py 源码</a> 可以得知这玩意默认是不支持设置read timeout的。强行 …</p></p>
+<p>看 <a href="https://git-wip-us.apache.org/repos/asf?p=phoenix-queryserver.git;a=blob;f=python-phoenixdb/phoenixdb/avatica/client.py">avatica/client.py 源码</a> 可以得知这玩意默认是不支持设置read timeout的。强行hack一个 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-01-11T12:00:56+00:00">2022-01-11</time></p>
 <p>stdout</p>            </div>
@@ -166,7 +169,7 @@ class MyAdminView(ModelView):
 &gt; User-Agent: User-Agent: Mozilla/5
 &gt;
 &lt; HTTP/1.1 403 Forbidden
-&lt; Server …</code></pre></p>
+&lt; Server: GHost …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-12-29T22:42:14+00:00">2021-12-29</time></p>
 <p>stdout</p>            </div>
@@ -183,7 +186,7 @@ class MyAdminView(ModelView):
             <p class="card-text"><p>不折腾不舒服。继之前 <a href="/2021/stdout-020">Edge调教</a> 之后记录一下 Chrome V70怎么阉割。</p>
 <p>下载：</p>
 <p><a href="https://dl.google.com/edgedl/release2/chrome/ALiXMYM2w8-h_70.0.3538.77/70.0.3538.77_chrome_installer.exe">win 32</a> | <a href="https://dl.google.com/edgedl/release2/chrome/AJ7ozxk4OLvN_70.0.3538.77/70.0.3538.77_chrome_installer.exe">win 64</a> | <a href="https://redirector.gvt1.com/release2/chrome/AIJolai8dEil_70.0.3538.67/GoogleChrome-70.0.3538.67.dmg">Mac</a></p>
-<p>上面的链接已经年久失修了，对比了一下获取 …</p></p>
+<p>上面的链接已经年久失修了，对比了一下获取最新版本的脚 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-12-28T23:00:05+00:00">2021-12-28</time></p>
 <p>stdout</p>            </div>
@@ -199,7 +202,7 @@ class MyAdminView(ModelView):
             </a>
             <p class="card-text"><p>都说 xmas eve 是洋节，我们就来数一数到底有哪些洋节</p>
 <ol>
-<li>元旦1月1日。由北「洋」军阀袁世凯设立。依据是内务部总长朱启钤《定四 …</li></ol></p>
+<li>元旦1月1日。由北「洋」军阀袁世凯设立。依据是内务部总长朱启钤《定四季节假 …</li></ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-12-24T23:59:59+00:00">2021-12-24</time></p>
 <p>stdout</p>            </div>
@@ -247,7 +250,7 @@ class MyAdminView(ModelView):
               <h2 class="card-title">人工构造Flask session模拟cookie登陆</h2>
             </a>
             <p class="card-text"><p>有没有好奇为什么 Flask 配置必须要求一个 <a href="https://flask.palletsprojects.com/en/latest/config/#SECRET_KEY">SECRET_KEY</a>，然后就可以在浏览器保存一个 session 状态读写数据。</p>
-<p>这里记一下它的底层实现 …</p></p>
+<p>这里记一下它的底层实现，其 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-12-08T07:15:03+00:00">2021-12-08</time></p>
 <p>stdout</p>            </div>
@@ -281,7 +284,7 @@ class MyAdminView(ModelView):
               <h2 class="card-title">Edge调教指南——如何设置本地PAC代理和首页天气</h2>
             </a>
             <p class="card-text"><p>之前一直用的chrome v70，为什么呢？</p>
-<p>第一是这个老版本允许 <code>--proxy-pac-url="file:///Users/me/1.pac</code> 这样设置，但是<a href="https://bugs.chromium.org/p/chromium/issues/detail?id=839566">Chromium项目的大爷们觉得</a>你本地的.pac不够 …</p></p>
+<p>第一是这个老版本允许 <code>--proxy-pac-url="file:///Users/me/1.pac</code> 这样设置，但是<a href="https://bugs.chromium.org/p/chromium/issues/detail?id=839566">Chromium项目的大爷们觉得</a>你本地的.pac不够安全，要网上的.pac才安全，所以一刀切 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-11-30T11:32:33+00:00">2021-11-30</time></p>
 <p>stdout</p>            </div>
@@ -322,7 +325,8 @@ class MyAdminView(ModelView):
 <h2>--host-resolver-rules=rules</h2>
 <p>Like <code>--host-rules</code> but these rules only apply to the host resolver.<br />
 A comma-separated list of rules that control how hostnames are mapped.<br />
-For …</p></p>
+For example:<br />
+- <code>MAP * 127.0 …</code></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-11-07T16:01:19+00:00">2021-11-07</time></p>
 <p>stdout</p>            </div>
@@ -348,7 +352,8 @@ For …</p></p>
 </thead>
 <tbody>
 <tr>
-<td>AUTH_TYPE …</td></tr></tbody></table></p>
+<td>AUTH_TYPE</td>
+<td>ignore this …</td></tr></tbody></table></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-11-05T18:12:45+00:00">2021-11-05</time></p>
 <p>stdout</p>            </div>
@@ -365,7 +370,7 @@ For …</p></p>
             <p class="card-text"><p>总结一些没用的知识</p>
 <ol>
 <li>
-<p>淘宝/阿里账号，可以一个手机最多绑定6个账号。淘宝注册的时候点击「企业注册」然后用邮箱注册，最 …</p></li></ol></p>
+<p>淘宝/阿里账号，可以一个手机最多绑定6个账号。淘宝注册的时候点击「企业注册」然后用邮箱注册，最后用同 …</p></li></ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-10-28T16:21:23+00:00">2021-10-28</time></p>
 <p>stdout</p>            </div>
@@ -423,7 +428,7 @@ For …</p></p>
               <h2 class="card-title">Letsencrypt 在老版本macOS Ubuntu 上修复TLS证书错误</h2>
             </a>
             <p class="card-text"><p>一觉醒来，打开浏览器，各种连不上，调试了一下发现说lets encrypt 的 acme https证书错误</p>
-<p>仿佛记得<a href="https://www.v2ex.com/t/805339">V站讨论</a>过这个事，以为和自己无关 …</p></p>
+<p>仿佛记得<a href="https://www.v2ex.com/t/805339">V站讨论</a>过这个事，以为和自己无关，结果也中招了。DST …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-10-01T10:56:13+00:00">2021-10-01</time></p>
 <p>stdout</p>            </div>
@@ -498,7 +503,9 @@ For …</p></p>
 +---------+------+------------------------------+
 | Level   | Code | Message                      |
 +---------+------+------------------------------+
-| Warning | 1292 | Incorrect datetime value …</code></pre></p>
+| Warning | 1292 | Incorrect datetime value: '' |
++---------+------+------------------------------+
+1 …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-09-07T17:52:51+00:00">2021-09-07</time></p>
 <p>stdout</p>            </div>
@@ -530,7 +537,7 @@ For …</p></p>
             </a>
             <p class="card-text"><p>多年的疑惑今天居然被偶然解开了。</p>
 <p>由于墙内糟糕的网络环境，而且ISP甚至wifi内还有墙中墙，所以很多域名是打不开的。</p>
-<p>每 …</p></p>
+<p>每次看浏览器在傻乎乎 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-07-02T15:51:19+00:00">2021-07-02</time></p>
 <p>stdout</p>            </div>
@@ -551,7 +558,7 @@ For …</p></p>
     from sqlalchemy.sql.expression import func
 
     # this val1-val2 pair should have UNIQUE KEY constraint in MySQL table.
-    stmt = insert(MyModel.__table …</code></pre></p>
+    stmt = insert(MyModel.__table__ …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-06-29T11:55:13+00:00">2021-06-29</time></p>
 <p>stdout</p>            </div>
@@ -566,7 +573,9 @@ For …</p></p>
               <h2 class="card-title">古墓丽影9（Tomb Raider 2013）治3D眩晕必备FOV补丁+禁镜头晃动</h2>
             </a>
             <p class="card-text"><p>断断续续把<a href="https://steamcommunity.com/id/electronixtar/recommended/203160">买</a>的<a href="https://store.steampowered.com/app/203160/Tomb_Raider/">古墓丽影9</a>打完了。这款2013年的游戏放在今天看也很不错。</p>
-<p>唯一的巨大问题就是3D头晕。网上找了一些办 …</p></p>
+<p>唯一的巨大问题就是3D头晕。网上找了一些办法。</p>
+<h3>禁止镜头晃动</h3>
+<p>虽然故事和镜头都 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-06-26T14:32:36+00:00">2021-06-26</time></p>
 <p>stdout</p>            </div>
@@ -598,7 +607,7 @@ For …</p></p>
             <a href="/202104/stdout-005"  rel="bookmark" >
               <h2 class="card-title">Win10 自动设置开机锁屏壁纸</h2>
             </a>
-            <p class="card-text"><p>Win10启动后，锁屏界面有一些每天更新的漂亮的墙纸，但是每个用户进去却只能看到默认的墙纸，不能自动切换。很是遗憾，于 …</p></p>
+            <p class="card-text"><p>Win10启动后，锁屏界面有一些每天更新的漂亮的墙纸，但是每个用户进去却只能看到默认的墙纸，不能自动切换。很是遗憾，于是搞了 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-04-11T22:35:12+00:00">2021-04-11</time></p>
 <p>stdout</p>            </div>
@@ -633,7 +642,7 @@ For …</p></p>
 <p>一般格式如下：</p>
 <pre><code>@app.get('/other/{other_path:path}')
 @app.post('/other/{other_path:path}')
-async def other_api(other …</code></pre></p>
+async def other_api(other_path: str, req: Request …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-03-30T15:07:01+00:00">2021-03-30</time></p>
 <p>stdout</p>            </div>
@@ -666,7 +675,7 @@ async def other_api(other …</code></pre></p>
             <p class="card-text"><p>新年第一贴！</p>
 <p>Run the command before connect to PPPoE or as cronjob</p>
 <p>添加一个重启的定时任务，在重启之间执行一个命令：</p>
-<pre><code>uci set network.wan.mac_addr=$(hexdump -n3 -e'1/3 "8c:8d:8e …</code></pre></p>
+<pre><code>uci set network.wan.mac_addr=$(hexdump -n3 -e'1/3 "8c:8d:8e" 3 …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-01-01T00:27:52+00:00">2021-01-01</time></p>
 <p>stdout</p>            </div>
@@ -699,7 +708,7 @@ async def other_api(other …</code></pre></p>
             <a href="/202010/stdout-010"  rel="bookmark" >
               <h2 class="card-title">人和动物有什么区别</h2>
             </a>
-            <p class="card-text"><p>上下班通勤极度无聊，就趁着罗胖的10元优惠券买了 学而时嘻之 博主开设的 199元的 精英日课。之前一直讨厌这个名字，但 …</p></p>
+            <p class="card-text"><p>上下班通勤极度无聊，就趁着罗胖的10元优惠券买了 学而时嘻之 博主开设的 199元的 精英日课。之前一直讨厌这个名字，但是很喜欢 <a href="http://www.geekonomics10000.com">学而时嘻 …</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-10-21T23:39:55+00:00">2020-10-21</time></p>
 <p>stdout</p>            </div>
@@ -715,7 +724,7 @@ async def other_api(other …</code></pre></p>
             </a>
             <p class="card-text"><p>同步发帖在 <a href="https://www.v2ex.com/t/705897">v2ex</a></p>
 <p>今天发现 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl">Intl</a> 这个 ECMAscript 内置对象，可以一句话算农历。</p>
-<pre><code>new Date().toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)\s*?年/, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子丑 …</code></pre></p>
+<pre><code>new Date().toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)\s*?年/, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子 …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-09-10T22:39:01+00:00">2020-09-10</time></p>
 <p>stdout</p>            </div>
@@ -752,7 +761,7 @@ async def other_api(other …</code></pre></p>
 <li>症状。比如发烧，呼吸困难，血氧浓度低</li>
 <li>影像。比如胸部 CT</li>
 <li>抗体。IgG/IgM。耗时短。比如15分钟。但是正确率 75% </li>
-<li>核酸 …</li></ul></p>
+<li>核酸。用 PCR …</li></ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-03-26T17:34:30+00:00">2020-03-26</time></p>
 <p>stdout</p>            </div>
@@ -782,7 +791,7 @@ async def other_api(other …</code></pre></p>
               <h2 class="card-title">语音编程 设想</h2>
             </a>
             <p class="card-text"><p>在 <a href="https://news.ycombinator.com/item?id=22404264">HN头条</a> 上看到有人说用语音识别 写代码。</p>
-<p>现在是疫情在家上班期间，感觉还是可以试试。毕竟公共办公环境搞这个不太 …</p></p>
+<p>现在是疫情在家上班期间，感觉还是可以试试。毕竟公共办公环境搞这个不太现实 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-02-25T01:21:34+00:00">2020-02-25</time></p>
 <p>stdout</p>            </div>
@@ -846,7 +855,7 @@ async def other_api(other …</code></pre></p>
             <a href="/201907/stdout-004"  rel="bookmark" >
               <h2 class="card-title">公司文化的三种类型</h2>
             </a>
-            <p class="card-text"><p>最近播音737两次空难闹得全球沸沸扬扬，中国民航局敢为天下先直接停飞，FAA 最后也只能跟进然后全球停飞，风暴的中心 …</p></p>
+            <p class="card-text"><p>最近播音737两次空难闹得全球沸沸扬扬，中国民航局敢为天下先直接停飞，FAA 最后也只能跟进然后全球停飞，风暴的中心就是波音公司。看到一篇报道 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2019-07-06T05:42:42+00:00">2019-07-06</time></p>
 <p>stdout</p>            </div>
@@ -878,7 +887,7 @@ async def other_api(other …</code></pre></p>
             <p class="card-text"><p>从 <a href="https://www.thoughtworks.com/cn/radar">https://www.thoughtworks.com/cn/radar</a> 看到的一个新概念，Wardley mapping</p>
 <p>其实也不新了，2014年就出来了。见：</p>
 <p><a href="https://www.youtube.com/watch?v=NnFeIt-uaEc">Simon Wardley OSCON 2014 Keynote: "Introduction to Value Chain Mapping"</a></p>
-<p>如果你觉得各种软件工 …</p></p>
+<p>如果你觉得各种软件工程 和 商业 diagram …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2019-04-24T18:28:35+00:00">2019-04-24</time></p>
 <p>stdout</p>            </div>

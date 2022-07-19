@@ -127,7 +127,11 @@
                 &lt;string&gt;ssh-alt&lt;/string&gt;
         &lt;/dict&gt;
 </code></pre>
-<p>然后在<code>/etc/services</code>里定义 …</p></p>
+<p>然后在<code>/etc/services</code>里定义：</p>
+<pre><code> ssh-alt 12345/tcp # ssh-alt
+</code></pre>
+<p>然后重启sshd服务：</p>
+<pre><code>sudo launchctl …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-04-02T09:52:47+00:00">2013-04-02</time></p>
 <p>archive</p>            </div>
@@ -146,7 +150,8 @@
 <pre><code>localstream.write(upstream.read(1024))
 upstream.write(localstream.read(1024))
 </code></pre>
-<p>其中1024为业界良心 …</p></p>
+<p>其中1024为业界良心艹榴网的chunk或者一个buffer size。这样的操作在各种router, proxy, firewall 里太常见了。</p>
+<p>那 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-26T22:39:00+00:00">2013-03-26</time></p>
 <p>archive</p>            </div>
@@ -166,7 +171,7 @@ upstream.write(localstream.read(1024))
 <p>G+团队的官方博客：<a href="http://gplusproject.appspot.com/new-apps-iphone-android">http://gplusproject.appspot.com/new-apps-iphone-android</a> 这是个什么jb飞机玩意？为啥不<a href="http://googleplusplatform.blogspot.com/">用blogger</a>?</p>
 </li>
 <li>
-<p>看这个关于代码测试的google官方 …</p></li></ol></p>
+<p>看这个关于代码测试的google官方博客 <a href="http://googletesting.blogspot.sg/2013/03/testing-on-toilet-testing-state-vs.html">http://googletesting.blogspot.sg/2013/03 …</a></p></li></ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-26T00:48:33+00:00">2013-03-26</time></p>
 <p>archive</p>            </div>
@@ -213,7 +218,7 @@ day 0 productivity.</p></p>
             <a href="/post/45245208546"  rel="bookmark" >
               <h2 class="card-title">Unix Socket 点滴[转载]</h2>
             </a>
-            <p class="card-text"><p>【Unix Socket 点滴 1】使用unix socket时，把路径名的第一个字节设为null byte（\x00），这样就不会产生实际的文件，使用起了比较方便，也不用纠结 …</p></p>
+            <p class="card-text"><p>【Unix Socket 点滴 1】使用unix socket时，把路径名的第一个字节设为null byte（\x00），这样就不会产生实际的文件，使用起了比较方便，也不用纠结选 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-12T23:49:00+00:00">2013-03-12</time></p>
 <p>archive</p>            </div>
@@ -228,7 +233,10 @@ day 0 productivity.</p></p>
               <h2 class="card-title">Web服这个屎盆子不够装了——记inetd的现代版Mozilla Circus</h2>
             </a>
             <p class="card-text"><p>今天瞄了下<a href="circus.rtfd.org">Mozilla Circus</a>这个项目，黑有意思。</p>
-<p>简单的说，目前Web服务器基本模型都是一个总瓢把子Nginx，后边一大堆苦力worker进程。比如 …</p></p>
+<p>简单的说，目前Web服务器基本模型都是一个总瓢把子Nginx，后边一大堆苦力worker进程。比如Python世界的Gunicorn是这个样子的粗暴简单：</p>
+<p><img alt="" src="http://circus.readthedocs.org/en/0.5/_images/classical-stack.png" /></p>
+<p>worker基本都是日出而耕，日落而息。（顺便一喷，Supervisord这些都弱爆了。djb大牛的<a href="https://news.ycombinator.com/item?id=5346871">runit</a>才是王道）</p>
+<p>要 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-12T02:55:00+00:00">2013-03-12</time></p>
 <p>archive</p>            </div>
@@ -304,7 +312,8 @@ day 0 productivity.</p></p>
               <h2 class="card-title">再刷第三方ROM就剁手！</h2>
             </a>
             <p class="card-text"><p>今天刷了下第三方ROM，我擦，搜狗的两个渣app删不掉，用RE浏览器删掉了。。。</p>
-<p>结果。。。尼玛android的默认浏览器选项给屏蔽了。启动默认 …</p></p>
+<p>结果。。。尼玛android的默认浏览器选项给屏蔽了。启动默认首页，弄死都是作者lishuo0427的JB烂博客</p>
+<p>找到了个办法刷回官方包了 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-05T08:33:43+00:00">2013-03-05</time></p>
 <p>archive</p>            </div>
@@ -338,7 +347,9 @@ day 0 productivity.</p></p>
             </a>
             <p class="card-text"><ol>
 <li><code>com.yinyuetai.ui</code> 这个JB设计居然只能竖屏。我擦。<code>com.tencent.qqmusic</code> 居然也是强制竖屏。在1080p电视上感谢这两款软件治好了我多年的颈椎病。</li>
-<li><code>com …</code></li></ol></p>
+<li><code>com.tencent.qqmusicpad</code> 还是很赞的。</li>
+<li>最讨厌android软件锁区</li>
+<li>在<a href="http://www.v2ex.com/t/60885">v2ex上</a> 看到HiHex这个只能电视团队，现在觉得如果要搞大屏交互 …</li></ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-03T08:02:18+00:00">2013-03-03</time></p>
 <p>archive</p>            </div>
@@ -400,7 +411,10 @@ foo
 <ul>
 <li>2007年欧盟觉得pypy这货是典型的烂尾钓鱼工程于是就停止拨款了。   </li>
 <li>尝试过RPython -&gt; Javascript。失败告终</li>
-<li>至少4次用LLVM。全部失败 …</li></ul></p>
+<li>至少4次用LLVM。全部失败。</li>
+<li>2次尝试写了个Rpython版的ctypes，叫rctypes，均失败。</li>
+<li>JIT引擎写过3个版本，第四个个版本才成功</li>
+<li>第一个成功C编译版本的pypy直接segfault了——本来应该unsigned int写成了signed int …</li></ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-28T20:24:00+00:00">2013-02-28</time></p>
 <p>archive</p>            </div>
@@ -440,7 +454,7 @@ foo
 <blockquote>
 <p>One reason they don't already have cameras built in is a combination of power requirements</p>
 </blockquote>
-<p>突然想到，一个由思轴组成的飞行swarm网络，如果每 …</p></p>
+<p>突然想到，一个由思轴组成的飞行swarm网络，如果每个节 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-22T02:52:00+00:00">2013-02-22</time></p>
 <p>archive</p>            </div>
@@ -490,7 +504,10 @@ foo
             <p class="card-text"><p>VPS内存小，连uWSGI这种都玩不起，只能玩玩<a href="https://github.com/jonashaag/bjoern">bjoern</a>这个神器了。<a href="http://bottlepy.org/docs/dev/deployment.html#switching-the-server-backend">Bottle.py支持的WSGI容器</a>还真多啊！</p>
 <pre><code>curl -O http://python-distribute.org/distribute_setup.py
 sudo  python distribute_setup.py
-curl -O https …</code></pre></p>
+curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
+sudo python get-pip.py
+sudo emerge libev
+CFLAGS …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-19T22:26:50+00:00">2013-02-19</time></p>
 <p>archive</p>            </div>
@@ -529,7 +546,7 @@ curl -O https …</code></pre></p>
             </a>
             <p class="card-text"><p>Google Docs自己搞了一套类似Google App Engine的体系，只不过服务器端语言是Javascript，运行环境是 云JS——Google Apps Script</p>
 <p><a href="https://developers.google.com/apps-script/html_service">https://developers.google.com/apps-script/html_service</a></p>
-<p>看了下文档，类 …</p></p>
+<p>看了下文档，类似php的语法，在html里嵌入js，然后服务器渲染得到 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-15T18:59:56+00:00">2013-02-15</time></p>
 <p>archive</p>            </div>
@@ -645,7 +662,7 @@ Cache-Control: no-cache …</code></pre></p>
             <p class="card-text"><p>看到<a href="http://weibo.com/1455643221/zgI6wA2AP">一则微博</a></p>
 <blockquote>
 <p>@刘兴亮<br />
-HTML5的突出优点是多设备、跨平台。“HTML5 for TV”是由美国Cable Labs牵头组成的国际性开源协作项目，为推动HTML5技 …</p></blockquote></p>
+HTML5的突出优点是多设备、跨平台。“HTML5 for TV”是由美国Cable Labs牵头组成的国际性开源协作项目，为推动HTML5技术在电视终端上的应用。预计2013年会有更多的开发者投入到基于智能电视的应用开发。针对大屏的应用开发是个“富矿”。2013年，智能电视终端应 …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-29T03:34:05+00:00">2013-01-29</time></p>
 <p>archive</p>            </div>
@@ -696,7 +713,8 @@ f.data['field'] = 'new value' # won't work
 f.cleaned_data['key'] = 'value' # won't work
 </code></pre>
 <p>the output of <code>f.as_p()</code> is still the old value because the <code>f.data</code> is a MergeDict.</p>
-<p>The way to modify it …</p></p>
+<p>The way to modify it:</p>
+<pre><code>d = dict(f …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-25T03:55:00+00:00">2013-01-25</time></p>
 <p>archive</p>            </div>
@@ -712,7 +730,7 @@ f.cleaned_data['key'] = 'value' # won't work
             </a>
             <p class="card-text"><p>http://www.google.com/dictionary/json?callback=dict_api.callbacks.id102&amp;q=wtf&amp;sl=en&amp;tl=en&amp;restrict=pr%2Cde%2Csy&amp;client=te</p>
 <p>https://www.google.com/dictionary/json?callback=dict_api.callbacks.id100&amp;q=test&amp;sl=en&amp;tl=en&amp;restrict=pr%2Cde%2Csy</p>
-<p>妈的居然还有 …</p></p>
+<p>妈的居然还有存活 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-22T02:01:00+00:00">2013-01-22</time></p>
 <p>archive</p>            </div>
@@ -730,7 +748,8 @@ f.cleaned_data['key'] = 'value' # won't work
 <p>看不到Infoq视频的可以看这里中文 <a href="http://www.infoq.com/cn/articles/Architecture-Datomic">Datomic的架构</a></p>
 <p>so far的一些观点：</p>
 <ul>
-<li>这货的Datom不 …</li></ul></p>
+<li>这货的Datom不就是典型的EAV设计么。带一个timestamp，不错。只是一般EAV的entity是类似一个class，而Datom的EAV只是一个flat展开的，entity仅仅作为类似PrimiaryKey的存在。</li>
+<li>(RDF Triple](http://www.w3 …</li></ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-21T22:23:00+00:00">2013-01-21</time></p>
 <p>archive</p>            </div>
@@ -786,7 +805,8 @@ f.cleaned_data['key'] = 'value' # won't work
 <p><img alt="" src="/images/tumblr/40724647124_3.jpg" /></p>
 <p><img alt="" src="/images/tumblr/40724647124_4.jpg" /></p>
 <p>一座300米高，拔地而起成jj状的山。。。。。。。。。。。。名字叫 Pico Cão Grande ，人称 大狗峰</p>
-<p>São Tomé and Príncipe 圣多美这个国家在沙哈拉以南，非洲大陆西边的一 …</p></p>
+<p>São Tomé and Príncipe 圣多美这个国家在沙哈拉以南，非洲大陆西边的一个岛上。</p>
+<p><a href="http://www.reddit.com/r/geography/comments/16p6yr/10_spectacular_volcanic_plugs_and_natural/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-16T20:16:00+00:00">2013-01-16</time></p>
 <p>archive</p>            </div>
@@ -804,7 +824,7 @@ f.cleaned_data['key'] = 'value' # won't work
 <p>Google Chrome <br />
 这个不仅是浏览器，而且是一整套生态系统体系</p>
 <p>Google Chrome Extensions  <br />
-大 …</p></p>
+大家常见的 “扩 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-16T02:44:00+00:00">2013-01-16</time></p>
 <p>archive</p>            </div>
@@ -822,7 +842,7 @@ f.cleaned_data['key'] = 'value' # won't work
 <p>猪脚是<del>Verizon</del>美国一位顶级资深码农，该公司为政府关键IT系统服务</p>
 <ul>
 <li>6位数的薪水</li>
-<li>把关键架构外包给 …</li></ul></p>
+<li>把关键架构外包给沈阳一家公司（或者说 …</li></ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-16T01:44:00+00:00">2013-01-16</time></p>
 <p>archive</p>            </div>
@@ -880,7 +900,7 @@ f.cleaned_data['key'] = 'value' # won't work
 <p>There is never a single right solution. There are always multiple wrong ones, though.</p>
 </li>
 <li>
-<p>A bad design with a good presentation is doomed eventually. A good design with a bad presentation is doomed immediately. （PPT …</p></li></ul></p>
+<p>A bad design with a good presentation is doomed eventually. A good design with a bad presentation is doomed immediately. （PPT的重要性 …</p></li></ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-14T22:15:00+00:00">2013-01-14</time></p>
 <p>archive</p>            </div>
@@ -916,7 +936,7 @@ f.cleaned_data['key'] = 'value' # won't work
             <p class="card-text"><iframe width="640" height="360" src="http://www.youtube.com/embed/8bWlTZZN3DY?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
 
 <p><a href="http://i.imgur.com/0dAnS.jpg">人性</a>啊<a href="http://www.reddit.com/r/science/comments/16ay7i/brown_eyed_people_are_judged_to_be_more/">人性</a>。认知造就的人类阶级，真是震撼。</p>
-<p>习惯了每天在网上喷来喷去，第一次见到Ms. Jane Elliott这么镇定而犀利的人。这种老 …</p></p>
+<p>习惯了每天在网上喷来喷去，第一次见到Ms. Jane Elliott这么镇定而犀利的人。这种老师才是人类的灵魂工 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-11T00:40:00+00:00">2013-01-11</time></p>
 <p>archive</p>            </div>
@@ -939,7 +959,8 @@ $ tar cf result.py !$
 tar cf result.py "exec __import__('base64').b64decode('cHJpbnQgImhlbGxvLCB3b3JsZCI=')"
 $ python result.py 
 hello, world
-$ tar xvf result …</code></pre></p>
+$ tar xvf result.py
+x exec __import__ …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-08T22:26:00+00:00">2013-01-08</time></p>
 <p>archive</p>            </div>
@@ -958,7 +979,7 @@ $ tar xvf result …</code></pre></p>
 <p>SDR前面几篇博客也关注了。i500这个软modem性能应该不俗。就看RF前端的性能了。</p>
 <p>有个老外评论：</p>
 <blockquote>
-<p>Modems from …</p></blockquote></p>
+<p>Modems from High End RF chipset vendors are all soft modems. The limitation is the RF Front End. Unfortunately there are no PA's, LNA's, Duplexer, Diplexers, filters that …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-07T04:25:58+00:00">2013-01-07</time></p>
 <p>archive</p>            </div>
@@ -978,7 +999,7 @@ $ tar xvf result …</code></pre></p>
 &lt;type 'exceptions.UnicodeDecodeError'&gt; at /req_history_play_list/req_num/30/req_offset/0
 </code></pre>
 <p>'utf8' codec can't decode byte 0xd7 in position 16: invalid continuation byte</p>
-<pre><code>Python  /usr/local …</code></pre></p>
+<pre><code>Python  /usr/local/lib/python2.7/json/encoder.py in iterencode, line 263 …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-12-24T05:41:00+00:00">2012-12-24</time></p>
 <p>archive</p>            </div>
@@ -995,7 +1016,7 @@ $ tar xvf result …</code></pre></p>
             <p class="card-text"><p>看到这个博客《搜狐微访谈：方舟子揭露微波炉烹饪致癌谣言》</p>
 <p>方舟子跟网友互动啦， blah blah一大堆。。看到这个问答，笑喷了。</p>
 <blockquote>
-<p>鹏赋 …</p></blockquote></p>
+<p>鹏赋Franklin： 向 @方 …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-12-11T22:41:44+00:00">2012-12-11</time></p>
 <p>archive</p>            </div>

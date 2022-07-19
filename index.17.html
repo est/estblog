@@ -79,7 +79,7 @@
         self.func = func
 
     def __get__(self, instance, type):
-        res = instance.__dict__[self.func.__name__] = self.func …</code></pre></p>
+        res = instance.__dict__[self.func.__name__] = self.func(instance …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-24T00:00:00+00:00">2012-10-24</time></p>
 <p>archive</p>            </div>
@@ -101,7 +101,8 @@
 <p>上行：   <br />
 <code>$ yes | pv | ssh est@my_host "cat &gt; /dev/null"</code>   <br />
 <code>2.06MB 0:00:05 [1.96MB/s] [  &lt;=&gt;                                              ]</code></p>
-<p>测试本机IO能 …</p></p>
+<p>测试本机IO能力：  <br />
+<code>$ pv /dev/zero …</code></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-23T22:30:00+00:00">2012-10-23</time></p>
 <p>archive</p>            </div>
@@ -116,7 +117,8 @@
               <h2 class="card-title">Web墨卡托</h2>
             </a>
             <p class="card-text"><p>最近在android上玩RMaps Ext和Mobile Atlas Creator (MOBAC)</p>
-<p>一直觉得tg的<a href="www.tianditu.cn">天地图</a>其实道路信息和POI做的比其他厂商都好，所以网上找到了这个<a href="http://www.doyouhike.net/forum/comm_nav/585383,0,0,1.html">天地 …</a></p></p>
+<p>一直觉得tg的<a href="www.tianditu.cn">天地图</a>其实道路信息和POI做的比其他厂商都好，所以网上找到了这个<a href="http://www.doyouhike.net/forum/comm_nav/585383,0,0,1.html">天地图版MOBAC</a></p>
+<p>但是我发现一个很好玩的信 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-15T21:48:19+00:00">2012-10-15</time></p>
 <p>archive</p>            </div>
@@ -133,7 +135,7 @@
             <p class="card-text"><p>今天才知道的。windows下，干净hosts，可以nslookup 和 ping 的 ip 不一样。</p>
 <p>主要是 Primary DNS suffix of this computer 这个功能。</p>
 <p>解决方法也很简单，<code>nslookup my.domain.tld. dns.server.ip</code></p>
-<p>注 …</p></p>
+<p>注意 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-15T21:05:25+00:00">2012-10-15</time></p>
 <p>archive</p>            </div>
@@ -181,7 +183,10 @@
               <h2 class="card-title">ownCloud, csync</h2>
             </a>
             <p class="card-text"><p>KDE那帮人觉得Dropbox不错于是搞了个山寨品 ownCloud.org 。我很是喜欢。</p>
-<p>其中双向同步的关键核心组件是 csync，看了下，是<a href="http://news.opensuse.org/2009/01/08/opensuse-project-announces-csync/">OpenSUSE一帮人搞的</a>类 …</p></p>
+<p>其中双向同步的关键核心组件是 csync，看了下，是<a href="http://news.opensuse.org/2009/01/08/opensuse-project-announces-csync/">OpenSUSE一帮人搞的</a>类unison工具。</p>
+<p>unison/csync 区别在于：</p>
+<blockquote>
+<p>csync is a bidirectional file synchronizer like unison. csync is written in C and …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-10T05:41:14+00:00">2012-10-10</time></p>
 <p>archive</p>            </div>
@@ -199,7 +204,7 @@
 <code>&gt;&gt;&gt; p=lambda:json.loads(urllib2.urlopen('http://radioplayer.omroep.nl/helper/now-on-air.json?ac=%s&amp;channel_id=3' % datetime.datetime.now().strftime('%Y%m%d%H%M')).read())</code> <br />
 <code>&gt;&gt;&gt; pprint.pprint(p()['current_song'])</code></p>
 <p>or parsing this HTML</p>
-<p>http://radioplayer.omroep.nl/helper/playlist.html?ac …</p></p>
+<p>http://radioplayer.omroep.nl/helper/playlist.html?ac=201210101540&amp;channel_id …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-10T03:49:00+00:00">2012-10-10</time></p>
 <p>archive</p>            </div>
@@ -226,7 +231,8 @@ import struct
 def ping_uwsgi(sock_file):
     '''
     Ping UWSGI process trought socket. Return [True,...] if OK,
-    return [False,error] if UWSGO not pinging …</code></pre></p>
+    return [False,error] if UWSGO not pinging, or
+    [None,error] if …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-09T05:33:00+00:00">2012-10-09</time></p>
 <p>archive</p>            </div>
@@ -263,7 +269,7 @@ def ping_uwsgi(sock_file):
             <p class="card-text"><p>难得夜深人静反思一下。我个人每天12个小时在网上闲逛，自个觉得我现在有几个值得警惕的危险趋势：</p>
 <ol>
 <li>
-<p>输入越来越多，输 …</p></li></ol></p>
+<p>输入越来越多，输出越来越少。创作能 …</p></li></ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-06T14:31:00+00:00">2012-10-06</time></p>
 <p>archive</p>            </div>
@@ -296,7 +302,9 @@ def ping_uwsgi(sock_file):
             </a>
             <p class="card-text"><p>上次看到 <a href="http://www.csdn.net/article/2012-08-20/2808870">Google后Hadoop时代的新“三驾马车”——Caffeine、Pregel、Dremel</a></p>
 <p>感觉碉堡了。</p>
-<p>Pregel是一个graph db。这是逆NoSQL运动行之的潮流——NoSQL倡导没有<code>join</code>，而graph db则 …</p></p>
+<p>Pregel是一个graph db。这是逆NoSQL运动行之的潮流——NoSQL倡导没有<code>join</code>，而graph db则是——所有数据都可以默认join起来。</p>
+<p>Dremel 是一个query interface。</p>
+<p>Caffeine的背后是Google True Time API，这是 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-09-18T00:38:14+00:00">2012-09-18</time></p>
 <p>archive</p>            </div>
@@ -316,7 +324,7 @@ def ping_uwsgi(sock_file):
 </code></pre>
 <p>来自newsmth的python版：</p>
 <pre><code>发信人: Andor (珍惜), 信区: Python
-标 …</code></pre></p>
+标  题: Re: Python的良民证算法，有 …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-09-17T21:38:00+00:00">2012-09-17</time></p>
 <p>archive</p>            </div>
@@ -331,7 +339,8 @@ def ping_uwsgi(sock_file):
               <h2 class="card-title">人类花几个月工资买几克拉的碳晶体弱爆了</h2>
             </a>
             <p class="card-text"><p>钻石其实是宇宙中——最常见的晶体之一。。。本来应该非常便宜，但是价格是人为捧高的。</p>
-<p>毛子在70年代发现了一个陨石坑。。。。。。。。。。大概 …</p></p>
+<p>毛子在70年代发现了一个陨石坑。。。。。。。。。。大概有<a href="http://www.csmonitor.com/World/Global-News/2012/0917/Russia-reveals-shiny-state-secret-It-s-awash-in-diamonds">几万亿克拉的钻石</a>。。。</p>
+<p>世 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-09-17T21:04:00+00:00">2012-09-17</time></p>
 <p>archive</p>            </div>
@@ -351,7 +360,8 @@ def ping_uwsgi(sock_file):
 <a href="http://browser.primatelabs.com/geekbench2/989732">http://browser.primatelabs.com/geekbench2/989732</a></p>
 <p>Galaxy S III 1781分<br />
 <a href="http://browser.primatelabs.com/geekbench2/1026099">http://browser.primatelabs.com/geekbench2/1026099</a></p>
-<p>值得注意的是，iPhone 5的内存和stream IO性能屌爆 …</p></p>
+<p>值得注意的是，iPhone 5的内存和stream IO性能屌爆了。Android被爆出翔了。</p>
+<p><a href="http://news.ycombinator.com/item?id=4530188">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-09-16T21:45:00+00:00">2012-09-16</time></p>
 <p>archive</p>            </div>

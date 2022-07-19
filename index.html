@@ -54,7 +54,7 @@
             <a href="/2022/stderr-07"  rel="bookmark" >
               <h2 class="card-title">直播带货、视频导购是未来</h2>
             </a>
-            <p class="card-text"><p>今天菜鸟给我推了好几条消息说有快递24h未取，但是近期并没有网购下单，仔细问了一圈，原来是岳母在老家自己买了条 …</p></p>
+            <p class="card-text"><p>今天菜鸟给我推了好几条消息说有快递24h未取，但是近期并没有网购下单，仔细问了一圈，原来是岳母在老家自己买了条裤子 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-06-14T15:15:20+00:00">2022-06-14</time></p>
 <p>stderr</p>            </div>
@@ -85,7 +85,7 @@
             <p class="card-text"><iframe width="100%" height="600px" src="https://www.youtube.com/embed/EcoPl62l8K8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <p>有些感触，最近很多人在骂 Zelenskyy，正如他们2016年骂 Trump 这个《The Apprentice》男主角一样，戏子误国。</p>
-<p>但是反过来一想，主席台前三排的人，谁 tm …</p></p>
+<p>但是反过来一想，主席台前三排的人，谁 tm 又不 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-05-12T00:04:06+00:00">2022-05-12</time></p>
 <p>stderr</p>            </div>
@@ -100,7 +100,7 @@
               <h2 class="card-title">袁亚湘院士数学不错，但是历史不行</h2>
             </a>
             <p class="card-text"><p>网上看到一个院士的段子 <a href="https://m.weibo.cn/detail/4764029988111490">1</a> <a href="https://m.weibo.cn/detail/4763768209540706">2</a></p>
-<p>搜了下，2020年3月14日，在中国工业与应用数学学会举办的网络科普活动中，中国科学院院 …</p></p>
+<p>搜了下，2020年3月14日，在中国工业与应用数学学会举办的网络科普活动中，中国科学院院士袁亚湘带 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-05-06T12:03:50+00:00">2022-05-06</time></p>
 <p>stdout</p>            </div>
@@ -158,7 +158,10 @@ class MyAdminView(ModelView):
 
     def _export_csv(self, return_url):
         r = super(MyAdminView, self)._export_csv(return_url)
-        r.response …</code></pre></p>
+        r.response = chain((b'\xef\xbb\xbf',), r.response)
+        return r
+</code></pre>
+<p>I …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-04-14T15:47:17+00:00">2022-04-14</time></p>
 <p>stdout</p>            </div>
@@ -178,7 +181,7 @@ class MyAdminView(ModelView):
 <li><a href="https://np.reddit.com/r/worldnews/comments/u2fhtj/">Zelenskyy thanks Biden for saying Russia is committing 'genocide' in Ukraine: 'True words of a true leader'</a></li>
 <li><a href="https://np.reddit.com/r/worldnews/comments/u2oebt/russiaukraine_latest_news_emmanuel_macron_rejects/">Emmanuel Macron rejects Joe Biden's declaration Russia is carrying out 'genocide'</a></li>
 </ul>
-<p>老B登又说 …</p></p>
+<p>老B登又说别人 Genocide 了。之 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-04-13T14:51:33+00:00">2022-04-13</time></p>
 <p>stderr</p>            </div>
@@ -263,7 +266,7 @@ class MyAdminView(ModelView):
             <p class="card-text"><p>遍地都是疫情爆发，遍地都是HC被砍。在这个糟糕的时间WFT摸鱼发现一个神视频 <a href="https://www.bilibili.com/video/BV1Up4y1H7Jq">Rimworld无损放逐殖民者</a></p>
 <iframe src="//player.bilibili.com/player.html?bvid=BV1Up4y1H7Jq" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 
-<p>Rimworld 是一款模拟生存+基 …</p></p>
+<p>Rimworld 是一款模拟生存+基地经营类游戏，你需要控制几个「殖民者 Colonist」在 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-03-14T10:30:42+00:00">2022-03-14</time></p>
 <p>stdin</p>            </div>
@@ -283,7 +286,8 @@ class MyAdminView(ModelView):
 <li>pig=未成年家猪（未满18岁的猪，现在泛称猪）；</li>
 <li>shoat=已经断奶的小猪；</li>
 <li>barrow=没有蛋蛋的公猪；</li>
-<li>sow …</li></ul></p>
+<li>sow=成年的母猪；</li>
+<li>gilt …</li></ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-03-11T14:28:29+00:00">2022-03-11</time></p>
 <p>stdin</p>            </div>
@@ -348,7 +352,7 @@ neurostimulant 8 minutes …</p></blockquote></p>
             <p class="card-text"><p>今天的第一个收获，Victor Sierra这个搜救图案</p>
 <p><img alt="" src="/images/2022/stdout-02-01.jpg" /></p>
 <p><img alt="" src="/images/2022/stdout-02-02.jpg" /></p>
-<p>来自 <a href="https://www.youtube.com/watch?v=aoXJfuPaFF8">Why This Zig-Zag Coast Guard Search Pattern is Actually Genius - Smarter Every Day 268</a>，是美国 coast guard 标准化的水面搜救路线<strong>之一</strong>。这 …</p></p>
+<p>来自 <a href="https://www.youtube.com/watch?v=aoXJfuPaFF8">Why This Zig-Zag Coast Guard Search Pattern is Actually Genius - Smarter Every Day 268</a>，是美国 coast guard 标准化的水面搜救路线<strong>之一</strong>。这种图案覆盖的 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-01-19T23:15:24+00:00">2022-01-19</time></p>
 <p>stdout</p>            </div>
@@ -363,7 +367,7 @@ neurostimulant 8 minutes …</p></blockquote></p>
               <h2 class="card-title">python-phoenixdb 设置读取超时</h2>
             </a>
             <p class="card-text"><p>PhoenixDB 居然是基于 requests + pb2 做的传输层协议。连接的是 queryserver 的 http 接口</p>
-<p>看 <a href="https://git-wip-us.apache.org/repos/asf?p=phoenix-queryserver.git;a=blob;f=python-phoenixdb/phoenixdb/avatica/client.py">avatica/client.py 源码</a> 可以得知这玩意默认是不支持设置read timeout的。强行 …</p></p>
+<p>看 <a href="https://git-wip-us.apache.org/repos/asf?p=phoenix-queryserver.git;a=blob;f=python-phoenixdb/phoenixdb/avatica/client.py">avatica/client.py 源码</a> 可以得知这玩意默认是不支持设置read timeout的。强行hack一个 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-01-11T12:00:56+00:00">2022-01-11</time></p>
 <p>stdout</p>            </div>
@@ -377,7 +381,7 @@ neurostimulant 8 minutes …</p></blockquote></p>
             <a href="/2022/stderr-01"  rel="bookmark" >
               <h2 class="card-title">信息时代 的 娃</h2>
             </a>
-            <p class="card-text"><p>家里的娃逐渐长大，TA在车上喜欢听的歌曲就翻来覆去奥特曼的 OP 和 ED。然后想引导TA 们听点别的，QQ音乐又没有买会员 …</p></p>
+            <p class="card-text"><p>家里的娃逐渐长大，TA在车上喜欢听的歌曲就翻来覆去奥特曼的 OP 和 ED。然后想引导TA 们听点别的，QQ音乐又没有买会员，一些好的大部头作品，能搜出来的就是各种翻唱或者自媒体的 …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-01-10T22:13:39+00:00">2022-01-10</time></p>
 <p>stderr</p>            </div>
