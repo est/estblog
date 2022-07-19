@@ -51,6 +51,25 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/64187857134"  rel="bookmark" >
+              <h2 class="card-title">ubuntu / python编码坑一则</h2>
+            </a>
+            <p class="card-text"><p>一个django文件上传老是出现unicode error</p>
+<pre><code>UnicodeEncodeError: 'ascii' codec can't encode character u'\uWTFH' in position 0: ordinal not in range(128)
+</code></pre>
+<p>折腾了好久 reload(sys) sys.setdefaultencoding() locale.setdefaultlocale() </p>
+<p>后来发现是os.environ["LANG"]居然为空。这尼玛为毛啊。</p>
+<p>LANG为空也就算了 …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-10-16T01:59:00+00:00">2013-10-16</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/63515206207"  rel="bookmark" >
               <h2 class="card-title">为什么说Google已经没救了。</h2>
             </a>
@@ -385,25 +404,6 @@ CID=61E00</p>
 <li>支 …</li></ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-07-05T05:44:31+00:00">2013-07-05</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/53995049770"  rel="bookmark" >
-              <h2 class="card-title">[zz]百度地图的研发们</h2>
-            </a>
-            <p class="card-text"><p>http://www.douban.com/note/284760511/   </p>
-<p>三鲜 <br />
-主页 广播 相册 喜欢 活动 发豆邮 <br />
-去年我开始有抬头纹 <br />
-2013-06-27 01:11:37 <br />
-今天发现，百度地图的研发们都玩起新 …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-06-27T01:48:00+00:00">2013-06-27</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
