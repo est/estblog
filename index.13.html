@@ -51,6 +51,51 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/47007003400"  rel="bookmark" >
+              <h2 class="card-title">Google Spreadsheet API pitfalls</h2>
+            </a>
+            <p class="card-text"><ol>
+<li>
+<p>Don't use OAuth 2 for "Google Apps for Business", coz admin may set share option to "limit to xxx domain only", thus your poor nigga API account like "30000000000@developer.gserviceaccount.com" won't work.</p>
+</li>
+<li>
+<p>Google Spreadsheets' CSV output format is terrible shit. Never bother touch it. It does not handle …</p></li></ol></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-04-03T02:41:00+00:00">2013-04-03</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/46935375645"  rel="bookmark" >
+              <h2 class="card-title">OS X Mountain Lion 修改 openssh sshd_config 配置</h2>
+            </a>
+            <p class="card-text"><p>OS X的蛋痛特性是  <code>`launched</code> 。如果你需要修改sshd的监听端口，那么</p>
+<p>编辑 /System/Library/LaunchDaemons/ssh.plist </p>
+<pre><code>        &lt;key&gt;Listeners&lt;/key&gt;
+        &lt;dict&gt;
+                &lt;key&gt;SockServiceName&lt;/key&gt;
+                &lt;string&gt;ssh-alt&lt;/string&gt;
+        &lt;/dict&gt;
+</code></pre>
+<p>然后在<code>/etc/services</code>里定义：</p>
+<pre><code> ssh-alt 12345/tcp # ssh-alt
+</code></pre>
+<p>然后重启sshd服务：</p>
+<pre><code>sudo launchctl …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-04-02T09:52:47+00:00">2013-04-02</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/46390709551"  rel="bookmark" >
               <h2 class="card-title">HAProxy like zero-copy in Python with memoryview</h2>
             </a>
@@ -399,49 +444,6 @@ foo
 <p>Basically it’s the UNIX …</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-20T14:05:00+00:00">2013-02-20</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/43538960448"  rel="bookmark" >
-              <h2 class="card-title">Install bjoern on Gentoo</h2>
-            </a>
-            <p class="card-text"><p>VPS内存小，连uWSGI这种都玩不起，只能玩玩<a href="https://github.com/jonashaag/bjoern">bjoern</a>这个神器了。<a href="http://bottlepy.org/docs/dev/deployment.html#switching-the-server-backend">Bottle.py支持的WSGI容器</a>还真多啊！</p>
-<pre><code>curl -O http://python-distribute.org/distribute_setup.py
-sudo  python distribute_setup.py
-curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
-sudo python get-pip.py
-sudo emerge libev
-CFLAGS …</code></pre></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-02-19T22:26:50+00:00">2013-02-19</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/43472256396"  rel="bookmark" >
-              <h2 class="card-title">dynamic app routing for Bottle.py based on hostname / domain</h2>
-            </a>
-            <p class="card-text"><p>Problem:</p>
-<p>I want ONE bottle project to display different pages for:</p>
-<ul>
-<li>http://foo.est.im</li>
-<li>http://bar.est.im</li>
-</ul>
-<p>These should be separate Bottle apps.</p>
-<p>There's <a href="http://permalink.gmane.org/gmane.comp.python.bottle.general/730">an ugly hack</a> from the official maillist, I think I can make it better.</p>
-<p>The secret is to create a customized WSGI app:</p>
-<pre><code>from …</code></pre></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-02-19T01:59:57+00:00">2013-02-19</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>macOS动态定时弹提醒 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="macOS动态定时弹提醒" />
+
+      <link rel="canonical" href="https://blog.est.im/2022/stdout-08" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">macOS动态定时弹提醒</h2>
+    <p class="post-date">Posted <time datetime="2022-07-20T14:52:56+00:00">2022-07-20</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>上班地方有个付费计时，想在倒计时结束前在电脑弹个提醒，手动结束计费，趴下来API了。接下来就是如何弹窗了。</p>
+<p>本来想用macOS自带的 <code>UNUserNotificationCenter</code> 通过 PyObjC 撸个弹窗，遇到两个问题：</p>
+<ol>
+<li>系统自带的 PyObjC 太老了。还是Python2.7的。在<code>/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/PyObjC</code></li>
+<li>只能兼容旧款的 <code>NSUserNotification</code>，状态为 macOS 10.8–11.0 Deprecated<br />
+ 新的API调用需要进程签名。<br />
+<code>codesign -dv --verbose=4 /usr/bin/python2.7</code></li>
+</ol>
+<p>只有官方的python2.7签名了 anaconda/miniconda 的都没签名。算了。还是直接 AppleScript 走起</p>
+<pre><code>osascript  -e 'display notification "还有1分钟到达时辰" with title "准时付费" sound name "Frog"'
+</code></pre>
+<p>想在这个提示里加一个 snooze 1分钟功能，但是好像无法支持。罢了。2333</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2022/stdout-08';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>
