@@ -51,6 +51,27 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/202106/stdout-008"  rel="bookmark" >
+              <h2 class="card-title">MySQL on duplicate key in SQLAlchemy</h2>
+            </a>
+            <p class="card-text"><p>A simple function to upsert something atomically into MySQL</p>
+<pre><code>def upsert(val1, val2, **kwargs):
+    """upsert val1-val2 pair into mysql and return the pk"""
+    from sqlalchemy.dialects.mysql import insert
+    from sqlalchemy.sql.expression import func
+
+    # this val1-val2 pair should have UNIQUE KEY constraint in MySQL table.
+    stmt = insert(MyModel.__table__ …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-06-29T11:55:13+00:00">2021-06-29</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/202106/stdout-007"  rel="bookmark" >
               <h2 class="card-title">古墓丽影9（Tomb Raider 2013）治3D眩晕必备FOV补丁+禁镜头晃动</h2>
             </a>
@@ -350,22 +371,6 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-12-26T01:03:36+00:00">2020-12-26</time></p>
 <p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202011/stdin-017"  rel="bookmark" >
-              <h2 class="card-title">为什么不受欢迎更能「客观」的看这个世界</h2>
-            </a>
-            <p class="card-text"><p>美国心理学博士 普林斯汀(Mitch Prinstein)写了本书叫 《欢迎度 Popular》，里面讲到按欢迎度可以给人分为5种类型：</p>
-<p><img alt="" src="/images/2020/stdin-017-1.jpg" /></p>
-<p>里面讲到最重要的结论就是，受 …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2020-11-30T22:49:51+00:00">2020-11-30</time></p>
-<p>stdin</p>            </div>
           </article>
         </div>
 
