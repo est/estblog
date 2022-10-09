@@ -51,6 +51,28 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/50975299198"  rel="bookmark" >
+              <h2 class="card-title">Python zfec howto/example</h2>
+            </a>
+            <p class="card-text"><p>To install</p>
+<pre><code>$ pip install zfec
+</code></pre>
+<p>Suppose I have two blocks of data and want a third block as redundancy</p>
+<pre><code>&gt;&gt;&gt; zfec.Encoder(2, 3).encode(['ab', 'cd'])
+['ab', 'cd', 'en']
+&gt;&gt;&gt; zfec.Decoder(2, 3).decode(['ab', 'cd', ], [0, 1])
+['ab', 'cd']
+# somehow lost the second block, use the third block the …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-05-21T03:07:00+00:00">2013-05-21</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/50487021215"  rel="bookmark" >
               <h2 class="card-title">get rid of example.com for Django's default site</h2>
             </a>
@@ -395,23 +417,6 @@ port_auxiliary=8000   </p>
 <p>From <a href="http://www.flickr.com/photos/ralphrepo_photolog/4104642924/in/set-72157622725544786">Flickr</a> via <a href="http://www.reddit.com/r/China/comments/1bxhfr/in_light_of_the_popular_album_uploaded_a_few_days/">reddit</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-04-09T04:11:00+00:00">2013-04-09</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/47516526252"  rel="bookmark" >
-              <h2 class="card-title">如何艹渣度的烂广告，但是保留贴吧登陆/发回帖功能</h2>
-            </a>
-            <p class="card-text"><p>Chrome里打开：</p>
-<p>chrome://settings/contentExceptions#cookies</p>
-<p><img alt="" src="/images/tumblr/47516526252.png" /></p>
-<p>Chrome的通配符语法真是 奇葩！</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-04-09T00:07:00+00:00">2013-04-09</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

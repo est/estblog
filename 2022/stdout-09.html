@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cloudflare worker 返回浏览器ip:端口 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Cloudflare worker 返回浏览器ip:端口" />
+
+      <link rel="canonical" href="https://blog.est.im/2022/stdout-09" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Cloudflare worker 返回浏览器ip:端口</h2>
+    <p class="post-date">Posted <time datetime="2022-10-09T23:12:02+00:00">2022-10-09</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>看到个贴 <a href="https://www.v2ex.com/t/885568">返回客户端连接用的 IP 和端口号</a>，想起来也需要熟悉一下 Cloudflare worker，于是拿来练练手</p>
+<pre><code>export default {
+  async fetch(request, env) {
+    return await handleRequest(request).catch(
+      (err) =&gt; new Response(err.stack, { status: 500 })
+    )
+  }
+}
+
+async function handleRequest(request) {
+  const { pathname } = new URL(request.url);
+
+  if (pathname === "/ip") {
+    const ip = request.headers.get('CF-Connecting-IP');
+    return new Response(ip + '\n');
+  }
+
+  if (pathname === "/ip:port") {
+    const ip = request.headers.get('CF-Connecting-IP');
+    const port = request.headers.get('est-Connecting-Port') || '?'
+    return new Response(ip + ':' + port + '\n');
+  }
+
+  return new Response('Tools:\n /ip\n/ip:port\n');
+}
+</code></pre>
+<p>遇到一个问题，Cloudflare 官方有提供浏览器客户端IP变量 <a href="https://developers.cloudflare.com/workers/runtime-apis/headers/#cloudflare-headers"><code>CF-Connecting-IP</code></a> 但是缺少端口，查了下可以自己通过 <a href="https://developers.cloudflare.com/rules/transform/request-header-modification/reference/fields-functions"><code>cf.edge.client_port</code></a> 这个变量获得， <a href="https://community.cloudflare.com/t/need-cf-connecting-port-for-french-law/319505/8">方法</a>是在进入 CF网站管理 面板 → Rules → Transform Rules → HTTP Request Header Modification 里添加一条请求头规则。如图：</p>
+<p><img alt="" src="https://global.discourse-cdn.com/cloudflare/original/3X/b/a/ba21c8b28a8915bc57c6c6d82581827578e232ac.png" /></p>
+<p>但是 header 不能以  <code>CF-</code> 开头，所以这里改成 <code>est-Connecting-Port</code>，就能获得客户端请求的 IP+端口 了</p>
+<p>测试地址： t.本网站根域名/ip:port</p>
+<p>目前还缺：IPv6 的正确表示。。。。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2022/stdout-09';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

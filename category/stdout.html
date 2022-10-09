@@ -51,6 +51,24 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2022/stdout-09"  rel="bookmark" >
+              <h2 class="card-title">Cloudflare worker 返回浏览器ip:端口</h2>
+            </a>
+            <p class="card-text"><p>看到个贴 <a href="https://www.v2ex.com/t/885568">返回客户端连接用的 IP 和端口号</a>，想起来也需要熟悉一下 Cloudflare worker，于是拿来练练手</p>
+<pre><code>export default {
+  async fetch(request, env) {
+    return await handleRequest(request).catch(
+      (err) =&gt; new …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2022-10-09T23:12:02+00:00">2022-10-09</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2022/stdout-08"  rel="bookmark" >
               <h2 class="card-title">macOS动态定时弹提醒</h2>
             </a>
