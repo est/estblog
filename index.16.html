@@ -51,6 +51,30 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/36582833882"  rel="bookmark" >
+              <h2 class="card-title">retry alias for bash</h2>
+            </a>
+            <p class="card-text"><p>This is what you do when you have a shitting Internet connection:</p>
+<p>$ vim ~/.bash_aliases</p>
+<pre><code>function retry(){
+  false;
+  while [ $? -gt 0 ];
+    do $@;
+  done;
+}
+</code></pre>
+<p>To rape your server, just <code>retry ssh -o ConnectTimeout=1 blah@foobar</code></p>
+<p>Shit just got working for now.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-11-26T03:44:00+00:00">2012-11-26</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/36577593347"  rel="bookmark" >
               <h2 class="card-title">被爆出翔了了</h2>
             </a>
@@ -387,22 +411,6 @@
 <p>这他妈不科学。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-04T21:15:57+00:00">2012-11-04</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/34892432623"  rel="bookmark" >
-              <h2 class="card-title">1073 DLNA = Internet Radio</h2>
-            </a>
-            <p class="card-text"><p>家里有个老机器 海美迪HD 300B，用的是Realtek 1073DD+方案，发现一个很猛的固件：</p>
-<p><a href="http://www.hdpfans.com/thread-120536-1-1.html">http://www.hdpfans.com/thread-120536-1-1.html</a></p>
-<p>吐槽一下，DLNA被国内翻译成 多屏互动 。搞了半天我一个 …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2012-11-03T06:43:00+00:00">2012-11-03</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

@@ -51,6 +51,23 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/4148"  rel="bookmark" >
+              <h2 class="card-title">MongoDB之mapReduce()蛋痛</h2>
+            </a>
+            <p class="card-text"><ol>
+<li>直到发现 <code>printjson()</code>之前，调试起来麻烦。</li>
+<li>写起来很诡异，因为MongoDB本来就是诡异的BSON（用内置的Javascript操作起来就是JSON）数据结构，然后大量的Javascript Array的<code>forEach()</code>, <code>map()</code>就昏了。</li>
+<li>万幸的是MongoDB自带的SpiderMonkey还不支持Array.reduce(), yield …</li></ol></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2011-08-02T03:50:34+00:00">2011-08-02</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/4146"  rel="bookmark" >
               <h2 class="card-title">Unlimited Detail</h2>
             </a>
@@ -408,42 +425,6 @@ Expires: Thu, 01 Jan 1970 00:00:00 GMT</p>
 <p>搜房 和 东莞阳光网</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-06-16T02:54:37+00:00">2011-06-16</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/4071"  rel="bookmark" >
-              <h2 class="card-title">用lambda写python class</h2>
-            </a>
-            <p class="card-text"><p>原class：</p>
-
-<pre><code>class Foo:
-    classVariable = &#39;ImAClassVariable&#39;
-    def __init__(self, a, b, c):
-        self._a = a
-        self._b = b
-        self._c = c
-
-    def getA(self):
-        return self._a
-
-    @classmethod
-    def aClassMethod(cls):
-        return cls.classVariable
-
-    @staticmethod
-    def aStaticMethod(a, b):
-        return a + b
-
-    def __repr__(self):
-        return &#39;&lt;%s: %r&gt;&#39; % (
-            self.__class__ …</code></pre></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2011-06-14T06:10:13+00:00">2011-06-14</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
