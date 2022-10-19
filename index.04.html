@@ -51,6 +51,81 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2021/stdin-008"  rel="bookmark" >
+              <h2 class="card-title">Steam China要拜拜了</h2>
+            </a>
+            <p class="card-text"><p>出自一个<a href="https://www.zhihu.com/question/398634825/answer/2116167003">被删的zhihu回答</a>，<a href="http://web.archive.org/web/20210915085925/https://www.zhihu.com/question/398634825/answer/2116167003">存档</a></p>
+<blockquote>
+<p>在我被裁员前，我是坚定的乐观派。每天和同事们一起处理中国区和steam China的客服案件，尽我所能帮助国内玩家 …</p></blockquote></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-09-16T15:29:47+00:00">2021-09-16</time></p>
+<p>stdin</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/2021/stdout-011"  rel="bookmark" >
+              <h2 class="card-title">TiDB 的日期比较和 MySQL 不兼容</h2>
+            </a>
+            <p class="card-text"><p>MySQL的</p>
+<pre><code>&gt; select VERSION()
++-----------+
+| VERSION() |
++-----------+
+| 8.0.15-6  |
++-----------+
+
+
+&gt; select NOW() &gt; '';
++------------+
+| NOW() &gt; '' |
++------------+
+| 1          |
++------------+
+
+&gt; show warnings;
++---------+------+----------------------------------------+
+| Level   | Code | Message                                |
++---------+------+----------------------------------------+
+| Warning | 1292 | Truncated incorrect datetime value: '' |
++---------+------+----------------------------------------+
+</code></pre>
+<p>TiDB:</p>
+<pre><code>&gt; select VERSION()
++--------------------+
+| VERSION()          |
++--------------------+
+| 5.7.25-TiDB-v5.1.0 |
++--------------------+
+1 row in set
+
+&gt; select NOW() &gt; '';
++------------+
+| NOW() &gt; '' |
++------------+
+| &lt;null&gt;     |
++------------+
+
+&gt; show warnings;
++---------+------+------------------------------+
+| Level   | Code | Message                      |
++---------+------+------------------------------+
+| Warning | 1292 | Incorrect datetime value: '' |
++---------+------+------------------------------+
+1 …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-09-07T17:52:51+00:00">2021-09-07</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2021/stdin-007"  rel="bookmark" >
               <h2 class="card-title">Reddit UGC ranking (2021-09)</h2>
             </a>
@@ -414,35 +489,6 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-03-30T15:07:01+00:00">2021-03-30</time></p>
 <p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202103/stderr-003"  rel="bookmark" >
-              <h2 class="card-title">纪念 Sewall Wright</h2>
-            </a>
-            <p class="card-text"><p>在这个3月即将结束的特殊日子里，纪念 Sewall Wright。尤其是那石破天惊的从相关性反推因果性的豚鼠花色实验。</p>
-<p>豚鼠的花色，按照我们一般的理解是遗传 …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-03-25T23:56:41+00:00">2021-03-25</time></p>
-<p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202102/stderr-002"  rel="bookmark" >
-              <h2 class="card-title">Clubhouse 一些感受</h2>
-            </a>
-            <p class="card-text"><p>clubhouse 总体感觉，自从被那啥之后，群体就基本一岸两地的人，和大陆留学生为主了。而且真的以学生为主。如果有家业压力人，要 …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-02-12T23:18:45+00:00">2021-02-12</time></p>
-<p>stderr</p>            </div>
           </article>
         </div>
 
