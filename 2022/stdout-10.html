@@ -52,8 +52,50 @@
   </header>
 
   
-  <p>玩 WebRTC 的时候发现它居然内置<a href="https://hacks.mozilla.org/2015/11/webrtc-sending-dtmf-in-firefox/">支持了 DTMF 拨号音</a>。于是兴趣来了想做一个 demo 玩玩</p>
-<p>写了半天调试不通，报错</p>
+  <p>玩 WebRTC 的时候发现它居然内置<a href="https://hacks.mozilla.org/2015/11/webrtc-sending-dtmf-in-firefox/">支持了 DTMF 拨号音</a>。</p>
+<p>这里就简单科普一下，DTMF 就是手机电话拨号音，数字按键按下去嘟嘟嘟响那个。具体就2个频率调谐：</p>
+<table>
+<thead>
+<tr>
+<th>DTMF</th>
+<th>1209Hz</th>
+<th>1336Hz</th>
+<th>1477Hz</th>
+<th>1633Hz</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>697Hz</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>A</td>
+</tr>
+<tr>
+<td>770Hz</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>B</td>
+</tr>
+<tr>
+<td>852Hz</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>C</td>
+</tr>
+<tr>
+<td>941Hz</td>
+<td>*</td>
+<td>0</td>
+<td>#</td>
+<td>D</td>
+</tr>
+</tbody>
+</table>
+<p>于是兴趣来了想做一个 demo 玩玩，写了半天调试不通，报错</p>
 <blockquote>
 <p>VM987:1 Uncaught DOMException: Failed to execute 'insertDTMF' on 'RTCDTMFSender': The 'canInsertDTMF' attribute is false: this sender cannot send DTMF.</p>
 </blockquote>
