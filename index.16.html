@@ -51,6 +51,26 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/37376710723"  rel="bookmark" >
+              <h2 class="card-title">/dev/tcp</h2>
+            </a>
+            <p class="card-text"><p>马克一下。。。exec这个没想到shell里也可以用啊</p>
+<pre><code>exec 3&lt;&gt;/dev/tcp/www.google.com/80
+echo -e "GET / HTTP/1.1\n\n"&gt;&amp;3
+cat &lt;&amp;3
+</code></pre>
+<p>简单的端口扫描：</p>
+<pre><code>$ for p in {1..1023}; do(echo &gt;/dev/tcp/localhost/$p) &gt;/dev/null 2&gt;&amp;1 &amp;&amp; echo "$p open"; done …</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-12-06T21:38:00+00:00">2012-12-06</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/37177478685"  rel="bookmark" >
               <h2 class="card-title">github多账户马甲之间ssh key切换</h2>
             </a>
@@ -390,22 +410,6 @@
 <p>官方文档在这里 <a href="http://www.w3.org/TR/xml/#charsets">http://www.w3.org/TR/xml/#charsets …</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-13T00:27:15+00:00">2012-11-13</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/35606224436"  rel="bookmark" >
-              <h2 class="card-title">tg霸气外露</h2>
-            </a>
-            <p class="card-text"><p><img alt="" src="/images/tumblr/35606224436.jpg" /></p>
-<p>大图：<a href="http://att.newsmth.net/att.php?p.107.51216.290.jpg">http://att.newsmth.net/att.php?p.107.51216.290.jpg</a></p>
-<p>tg是不可能被大棒轻易敲掉了。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2012-11-12T20:32:00+00:00">2012-11-12</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

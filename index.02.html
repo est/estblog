@@ -51,6 +51,33 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2022/stdout-05"  rel="bookmark" >
+              <h2 class="card-title">Add UTF-8 BOM header to Flask-Admin export</h2>
+            </a>
+            <p class="card-text"><p>A simple trick to add additional bytes prepending Flask's <code>stream_with_context</code></p>
+<pre><code>from flask_admin.contrib.sqla import ModelView
+from itertools import chain
+
+class MyAdminView(ModelView):
+    can_export = True
+    column_export_list = ['field1', 'field2']
+
+    def _export_csv(self, return_url):
+        r = super(MyAdminView, self)._export_csv(return_url)
+        r.response = chain((b'\xef\xbb\xbf',), r.response)
+        return r
+</code></pre>
+<p>I …</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2022-04-14T15:47:17+00:00">2022-04-14</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2022/stderr-04"  rel="bookmark" >
               <h2 class="card-title">为什么拜登这么喜欢说别人 Genocide</h2>
             </a>
@@ -372,21 +399,6 @@ neurostimulant 8 minutes …</p></blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-12-08T21:39:36+00:00">2021-12-08</time></p>
 <p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2021/stdout-023"  rel="bookmark" >
-              <h2 class="card-title">FastAPI/Starlette支持静态文件支持SPA</h2>
-            </a>
-            <p class="card-text"><p>FastAPI 官方支持 <code>from fastapi.staticfiles import StaticFiles</code> 充当一个静态文件服务器</p>
-<p>其实实现是 starlette。这玩意可以在 <code>directory</code> 下放一个 <code>404.html</code>，恰好单页应用也需要用 …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-12-08T07:38:38+00:00">2021-12-08</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 

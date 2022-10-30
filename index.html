@@ -51,6 +51,23 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2022/stdout-10"  rel="bookmark" >
+              <h2 class="card-title">JS播放 DTMF</h2>
+            </a>
+            <p class="card-text"><p>玩 WebRTC 的时候发现它居然内置<a href="https://hacks.mozilla.org/2015/11/webrtc-sending-dtmf-in-firefox/">支持了 DTMF 拨号音</a>。于是兴趣来了想做一个 demo 玩玩</p>
+<p>写了半天调试不通，报错</p>
+<blockquote>
+<p>VM987:1 Uncaught DOMException: Failed to execute 'insertDTMF' …</p></blockquote></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2022-10-30T19:20:49+00:00">2022-10-30</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2022/stdin-14"  rel="bookmark" >
               <h2 class="card-title">如果伽利略在比萨斜塔扔的是正负电子？</h2>
             </a>
@@ -341,33 +358,6 @@
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-04-21T23:08:57+00:00">2022-04-21</time></p>
 <p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2022/stdout-05"  rel="bookmark" >
-              <h2 class="card-title">Add UTF-8 BOM header to Flask-Admin export</h2>
-            </a>
-            <p class="card-text"><p>A simple trick to add additional bytes prepending Flask's <code>stream_with_context</code></p>
-<pre><code>from flask_admin.contrib.sqla import ModelView
-from itertools import chain
-
-class MyAdminView(ModelView):
-    can_export = True
-    column_export_list = ['field1', 'field2']
-
-    def _export_csv(self, return_url):
-        r = super(MyAdminView, self)._export_csv(return_url)
-        r.response = chain((b'\xef\xbb\xbf',), r.response)
-        return r
-</code></pre>
-<p>I …</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2022-04-14T15:47:17+00:00">2022-04-14</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 
