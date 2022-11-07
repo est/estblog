@@ -60,7 +60,13 @@ echo -e "GET / HTTP/1.1\n\n"&gt;&amp;3
 cat &lt;&amp;3
 </code></pre>
 <p>简单的端口扫描：</p>
-<pre><code>$ for p in {1..1023}; do(echo &gt;/dev/tcp/localhost/$p) &gt;/dev/null 2&gt;&amp;1 &amp;&amp; echo "$p open"; done …</code></pre></p>
+<pre><code>$ for p in {1..1023}; do(echo &gt;/dev/tcp/localhost/$p) &gt;/dev/null 2&gt;&amp;1 &amp;&amp; echo "$p open"; done
+</code></pre>
+<p>btw 最近看到好多openvpn被k掉了。看了下sshd的[源码](xasprintf(&amp;server_version_string, "SSH-%d.%d-%.100s%s%s%s",)</p>
+<p>这一行： </p>
+<pre><code>  xasprintf(&amp;server_version_string, "SSH-%d.%d-%.100s%s%s%s",
+</code></pre>
+<p>真尼玛坑爹，真心不安全啊。还是brl的patch好用。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-12-06T21:38:00+00:00">2012-12-06</time></p>
 <p>archive</p>            </div>
@@ -75,7 +81,29 @@ cat &lt;&amp;3
               <h2 class="card-title">github多账户马甲之间ssh key切换</h2>
             </a>
             <p class="card-text"><p>场景：有多个github账号，比如公司一个，私人一个。现在想在同一台主机上同时维护公司的和私人的repo</p>
-<p>大家可能会尝试把一个公钥 …</p></p>
+<p>大家可能会尝试把一个公钥贴到两个github账户，实践告诉我们</p>
+<blockquote>
+<p>Key is already in use</p>
+</blockquote>
+<p>解决办法：</p>
+<ol>
+<li>生成第二个key <code>ssh-keygen -t rsa  -f ~/.ssh/id_rsa.est</code></li>
+<li>
+<p>编辑ssh_config <code>vim ~/.ssh/config</code> 粘贴下边的东东： </p>
+<pre><code>Host estgit
+HostName github.com
+User git
+IdentityFile "~/.ssh/id_rsa.est"
+IdentitiesOnly yes
+</code></pre>
+</li>
+<li>
+<p>用这个方式来操作git：<code>git clone estgit:/username/repo</code> ，或者编辑 <code>.git/config</code> 里边的 remote - url</p>
+</li>
+</ol>
+<p>原理就是，指定一个ssh的Host的单独IdentityFile，然后因为git是基于ssh的，所以用Host名称连接github.com就会用那个单独的公钥了。</p>
+<p>github真是好东西，免费的网盘啊有木有！</p>
+<p><a href="http://sealedabstract.com/code/github-ssh-with-multiple-identities-the-slightly-more-definitive-guide/">参考</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-12-04T03:17:00+00:00">2012-12-04</time></p>
 <p>archive</p>            </div>
@@ -92,7 +120,20 @@ cat &lt;&amp;3
             <p class="card-text"><p>看到这个报道 <a href="http://chinadigitaltimes.net/chinese/2012/11/gfw%E5%B0%81%E9%94%81openvpn-%E4%B8%8E-%E5%8A%A0%E5%AF%86%E6%B5%81%E5%88%86%E7%B1%BB%E7%9A%84%E5%AD%A6%E6%9C%AF%E8%AE%BA%E6%96%87/">封锁OpenVPN与加密流分类的学术论文</a></p>
 <p>突然觉得几年前的事情现在应该又走到了一个拐点。</p>
 <p>6年前我们会用squid都很容易绕过限制了，然后是socks，加密socks，dns还原，然后是ssh，openvpn。</p>
-<p>现在都开始 …</p></p>
+<p>现在都开始搞机器学习来封锁了。</p>
+<p>那么这就是一个策略问题了：</p>
+<ol>
+<li>封锁的研究是针对公开协议的，而且是黑盒。</li>
+<li>任何破解技术都会被封锁黑盒反馈。敌人在暗处，大众在明处，这显然不是一个有利位置。</li>
+</ol>
+<p>所以，任何公开的破解策略，都会最终被封锁技术打败。</p>
+<p>我觉得任何分享<a href="http://initiative.yo2.cn/archives/641313"></a>hosts什么技术的都是傻逼行为。</p>
+<p>以后的破解，一定是地下组织，单向联系，各自之间无交集，经常变换自定义二进制协议隧道。</p>
+<p>这样才有的搞。</p>
+<p>btw 另外我觉得大家应该学习下<a href="http://www.i-programmer.info/news/105-artificial-intelligence/4526-poison-attacks-against-machine-learning.html">SVM投毒</a>。这个是未来的必要生存手段。</p>
+<p>bbtw 另外<a href="http://tech.slashdot.org/story/12/07/22/1331245/poison-attacks-against-machine-learning">slashdot上</a>这帮人开始思考人脑投毒了。认知科学和心理学的逆袭？</p>
+<p>bbbtw 关键字：adversarial machine learning</p>
+<p>最后，让我们端起手中的热翔，为这片奇葩的土地翻开新的一页，干了它！</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-12-03T01:14:00+00:00">2012-12-03</time></p>
 <p>archive</p>            </div>
@@ -111,7 +152,14 @@ cat &lt;&amp;3
 <p>觉得这种骑车的够危险了吧。</p>
 <p>再看这个视频</p>
 <p><a href="http://www.56.com/u21/v_Nzc0NDQyMzQ.html">http://www.56.com/u21/v_Nzc0NDQyMzQ.html</a></p>
-<p>觉得这人是不是很傻比 …</p></p>
+<p>觉得这人是不是很傻比，为死飞辩护？</p>
+<p>而为什么死飞玩家会这么愤怒呢？</p>
+<blockquote>
+<p>某ccav记者，到成都，接触死飞玩家，说要帮助他们发扬死飞文化，请玩家们帮助拍摄一个短篇。  <br />
+按照记者的要求，死飞玩家们进行了表演，并且按照记者要求拍摄了一段在公路上车流里穿梭的视频。  <br />
+结果，节目播出后，是抨击死飞玩家不守交通规则的内容。    </p>
+</blockquote>
+<p>来自d版1091974贴。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-12-02T20:30:00+00:00">2012-12-02</time></p>
 <p>archive</p>            </div>
@@ -144,7 +192,34 @@ cat &lt;&amp;3
             <p class="card-text"><p>用了好几个chrome的time tracking扩展，用来跟踪我上网都把时间浪费在哪些网站上了。</p>
 <p>这几天的发现：</p>
 <ol>
-<li>1/5的时间没有被跟踪到，也就是说浪费在调整浏览器窗口，切 …</li></ol></p>
+<li>1/5的时间没有被跟踪到，也就是说浪费在调整浏览器窗口，切换tab上了，或者等待loading上了。</li>
+<li>1/6的时间浪费在一个中心主题上，比如今天最有趣的某帖子</li>
+<li>1/4的时间浪费在“长尾”网站。零碎的时间</li>
+<li>参与回复一个帖子需要消耗至少2x的时间。嘴炮真是浪费时间啊。</li>
+</ol>
+<p>这是跟进程线程有点类似啊，context switching贵啊。。80%的核心任务其实只花20%左右时间。</p>
+<p>过几天有其他心得继续补充。目前发现比较准确的扩展是这个：</p>
+<p><a href="https://chrome.google.com/webstore/detail/web-timer/ggnjbdfgigejghknieofeahaknkjafim">https://chrome.google.com/webstore/detail/web-timer/ggnjbdfgigejghknieofeahaknkjafim</a></p>
+<p>其他扩展，要么跟踪不准确，比如一天下来只算了40多分钟的上网时间</p>
+<p>要么2年没更新了。</p>
+<p>其实这些扩展都不是很好，主要的问题是</p>
+<ol>
+<li>不知道是否是处于成功跟踪状态</li>
+<li>idle一段时间应该自动暂停跟踪，可能afk了。</li>
+<li>没有统计 untracked 时间有多长。</li>
+</ol>
+<p>我有点想挖个坑自己去轮这个了。最好的time tracker应该是7x24无侧漏全覆盖的。展现形式应该有</p>
+<ul>
+<li>pie chart</li>
+<li>top board</li>
+<li>timeline</li>
+</ul>
+<p>其实timeline是我最想要的~~~tab切换之类的可以直接通过一段一段方块展现出来~~~</p>
+<p>其他的几个功能：</p>
+<ul>
+<li>跨浏览器统计aggregation。由于工作需要是需要躲开几个profile同时浏览的。还有个用来翻墙。</li>
+<li>share &amp; compare。大家来战谁的拖沓病最渣吧。</li>
+</ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-28T23:13:00+00:00">2012-11-28</time></p>
 <p>archive</p>            </div>
@@ -162,7 +237,31 @@ cat &lt;&amp;3
 <blockquote>
 <p>@互联网的一些事  ： 马化腾说过：“在腾讯不允许说什么事情在技术上做不到。”</p>
 </blockquote>
-<p>让我想起来了这个经典的<a href="http://www.perlmonks.org/index.pl?node_id=542341">XY problem</a>，今 …</p></p>
+<p>让我想起来了这个经典的<a href="http://www.perlmonks.org/index.pl?node_id=542341">XY problem</a>，今天恰好又在<a href="http://www.reddit.com/r/programming/comments/13w3st/til_the_name_of_an_antipattern_that_often_happens/">reddit上</a>看到了</p>
+<p>什么是XY 问题呢？用一个例子说明</p>
+<blockquote>
+<p>提问者：什么函数能返回两个分隔符之间的字符呢？  <br />
+路人甲：没有直接搞这个的函数吧？  <br />
+路人乙：split 然后 slice  <br />
+路人丙：partition也可以  <br />
+提问者：我试过 partition  <br />
+提问者：原始字串字符是这样的 "attribute1: 50.223, attribute2: 442.1"，现在我想得到50.223  <br />
+路人丁：为啥不直接写个函数来专门解析这样的字串  <br />
+提问者：有没有自带函数能直接搞定这个呀  <br />
+路人丁：pairs = [x.strip() for x in s.split(",")]; attribs = {k: v for x in pairs for k, v in x.split(": ")}  <br />
+路人丁：还有一些库可以解析各种格式的字符串的。  <br />
+路人丁：比如 json或yaml  <br />
+提问者：字串是来自html里边的  <br />
+提问者：但是我想找一个能解析Javascript的HTMLParser之类的  <br />
+路人丁：是需要解析一段html里的javascript，还是解析各种变形的html？  <br />
+提问者：是解析嵌入html的javascript  <br />
+路人丁：你去查一下json是不是差不多？  <br />
+提问者：呃，好像这的就是json。学习了。  <br />
+路人丁：解析json的库多了去了随便用一个  <br />
+提问者：果然如此。谢谢    </p>
+</blockquote>
+<p>回到本帖的主题，如果马化腾真说过这句话，那么看来腾讯这个PM说了算的帝国果然名不虚传。</p>
+<p>大多数PM定制的需求就是把用户的X问题，用自己的2b能力包装成了Y需求，然后苦逼码农在功能上做出了打折扣的Z实现。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-27T21:12:00+00:00">2012-11-27</time></p>
 <p>archive</p>            </div>
@@ -202,7 +301,13 @@ cat &lt;&amp;3
             </a>
             <p class="card-text"><p>dump一个db的时候发现有个 INT 类型居然保存的数据是 20121126</p>
 <p>问了下，对方说，就是这个样子设计的，方便用来比较日期</p>
-<p>我这种老实人都是老老实实datetime类型，看 …</p></p>
+<p>我这种老实人都是老老实实datetime类型，看好时区然后UTC的timestamp转换，最后才比较的。。。</p>
+<p>对方丢了一句：</p>
+<p>还不是一回事。。。效率还高一点</p>
+<p>想了一下，我擦，果然。</p>
+<p>20121125 &lt; 20121126 直接这样啊有木有！单位数月份也可以比较。</p>
+<p>对方又丢了一句，连用string直接比较都可以。</p>
+<p>算是领教了神代码，彻底打败了。被这种糙快猛开发爆出翔了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-26T01:17:25+00:00">2012-11-26</time></p>
 <p>archive</p>            </div>
@@ -219,7 +324,17 @@ cat &lt;&amp;3
             <p class="card-text"><p>从<a href="http://news.ycombinator.com/item?id=4828431">HN上</a>看到这篇帖子 <a href="http://www.avc.com/a_vc/2012/11/what-has-changed.html">What Has Changed</a>，觉得对未来很糟糕的样子。</p>
 <p>特别是这一段：</p>
 <blockquote>
-<p>the consumer web has matured. we are almost 20 years into the consumer web and we have large platforms that are starting …</p></blockquote></p>
+<p>the consumer web has matured. we are almost 20 years into the consumer web and we have large platforms that are starting to suck up a lot of the oxygen. google, facebook/instagram, amazon, microsoft, apple, twitter, ebay, yahoo, AOL, craigslist, wordpress, linkedin together make up a huge amount of the time spent online, particularly in the english speaking world. there are still occasional new entrants into this list and departures too. tumblr and pinterest have risen a lot in the past couple years while myspace has declined. but consumer behaviors are starting to ossify on the web and it is harder than ever to build a large audience from a standing start.</p>
+</blockquote>
+<p>我觉得有必要限制上边提到的网站的使用时间和频率了。这真的是 suck up oxygen 浪费时间。</p>
+<p>另外就是发现了这个 VoiceBunny ，这对国内一帮开podcast的喷子比较有启发吧。我还是比较欣赏这样的媒介形式的。我比较想上下班路上听听神侃。。。</p>
+<p>附带HN对VoiceBunny的讨论 <a href="http://news.ycombinator.com/item?id=4495786">1</a>, <a href="http://news.ycombinator.com/item?id=3619387">2</a></p>
+<p>但是感觉VoiceBunny这种在国内也火不起来，国内搞有深度的，拼【质】的东西，容易被靠spam堆【量】的东西秒。。。。所以也很少有人花代价去买这种专业语音服务。</p>
+<p>上一个周末花了 $6 买了个invitation设计，感觉很亏了。国外这种stockphoto, design交易市场真的很发达，国内没有这种 职业服务 交易市场，都还是物品/虚拟物品交易为主。不过 @avc 文章对 @voicebunny 的巨大推广作用也是一个成功营销的典范。值得学习~~</p>
+<p>PS: 后续<a href="http://news.ycombinator.com/item?id=4830044">讨论</a>：</p>
+<blockquote>
+<p>There are two kinds of apps: entertainment and utility. Retention is not a problem on the latter, almost by definition impossible with the former. How many movies would you watch every day of your life?</p>
+</blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-25T23:40:00+00:00">2012-11-25</time></p>
 <p>archive</p>            </div>
@@ -252,7 +367,15 @@ cat &lt;&amp;3
 <p>现代网站架构一般不能缺这几个东西：</p>
 <ul>
 <li>serialization tool like Protobuf, Apache Thrift, JSON, etc. 跨进程、服务器共享数据</li>
-<li>Pub-sub system, or RPC system 远程 …</li></ul></p>
+<li>Pub-sub system, or RPC system 远程跨语言调用功能</li>
+<li>async background workers 用于处理繁重数据</li>
+<li>task queue/message queue 用于离线消息缓存和TTL支持，以及一些routing和过滤功能</li>
+<li>signal system 跨进程异步操作</li>
+<li>Key-value based cache or memory db 公用共享数据</li>
+<li>task scheduler or cronjob 周期性任务</li>
+</ul>
+<p>而这一切都可以在一个强大小巧稳定的Web服务器主进程中实现。这就是适合我这种偏执狂滥用的东西——uWSGI。</p>
+<p>以后慢慢写了</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-23T01:59:00+00:00">2012-11-23</time></p>
 <p>archive</p>            </div>
@@ -275,7 +398,18 @@ cat &lt;&amp;3
 <li>receive only</li>
 </ul>
 <p>关键是很便宜，大概$10左右。</p>
-<p>今天无 …</p></p>
+<p>今天无意中又翻到另外一个<a href="http://tech.slashdot.org/story/12/10/22/0518231/darpa-funds-a-300-software-defined-radio-for-hackers">HackRF</a>更加碉堡了。大概是$300左右价位，DARPA资助，具体<a href="http://ossmann.blogspot.com.au/2012/06/introducing-hackrf.html">参数</a>为：</p>
+<ul>
+<li>transmit and receive</li>
+<li>operating frequency: 100 MHz to 6 GHz</li>
+<li>maximum sample rate: 20 Msps</li>
+<li>resolution: 8 bits</li>
+<li>interface: High Speed USB</li>
+<li>power supply: USB bus power</li>
+<li>open source hardware and software</li>
+</ul>
+<p>更喜欢HackRF的原因是其带宽。<a href="http://en.wikipedia.org/wiki/Digital_Terrestrial_Multimedia_Broadcast">DMB-TH</a>的<a href="http://dvb.lmtw.com/Print.asp?ArticleID=65513">带宽</a>是4.813 Mbit/s - 32.486 Mbit/s，所以rtlsdr没法搞这个。</p>
+<p>HackRF在github搞软件开源，同时也有<a href="https://github.com/mossmann/hackrf/tree/master/hardware">硬件开源</a>，很有意思。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-20T23:30:46+00:00">2012-11-20</time></p>
 <p>archive</p>            </div>
@@ -294,7 +428,10 @@ cat &lt;&amp;3
 </code></pre>
 <p>It desn't work, because <code>extra()</code> can not be used on a <code>django.db.models.Q</code> object</p>
 <p>Instead, you can <a href="http://simeonfranklin.com/blog/2011/feb/20/hidden-django-queryset-features-II/">write like this</a>:</p>
-<pre><code>qs = models.MyModel.objects …</code></pre></p>
+<pre><code>qs = models.MyModel.objects.filter(a=1)
+qs |= models.MyModel.objects.filte(b=2).extra(where=[""])
+</code></pre>
+<p>I guess it's cool.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-18T23:01:00+00:00">2012-11-18</time></p>
 <p>archive</p>            </div>
@@ -312,7 +449,13 @@ cat &lt;&amp;3
 <p>Uwsgi 1.4 includes some awesome new features using zeromq, but it's impossible to install directly using <code>pip</code>. So here's the patch</p>
 <ol>
 <li>Download <a href="https://launchpad.net/~mojocode/+archive/ppa/+build/3440831/+files/libpgm-5.1-0_5.1.116~dfsg-2~lucid1_i386.deb">libpgm 5.1.116</a>. This library is multicast protocol blah used by zmq.</li>
-<li><code>dpkg -i …</code></li></ol></p>
+<li><code>dpkg -i</code> that shit</li>
+<li>sudo apt-get install libzmq1</li>
+<li>sudo apt-get install libzmq-dev</li>
+<li>sudo pip install uwsgi</li>
+</ol>
+<p>Aaaaaaand you are done.</p>
+<p>Ubuntu Lucid 10.04.2 LTS is such old system, even the libc6 is lack behind, A LOT.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-15T21:40:50+00:00">2012-11-15</time></p>
 <p>archive</p>            </div>
@@ -328,7 +471,19 @@ cat &lt;&amp;3
             </a>
             <p class="card-text"><p>几天前看到<a href="http://opensource.solidot.org/article.pl?sid=12/11/11/063250">这个新闻</a>：</p>
 <blockquote>
-<p>知名FreeBSD开发者、 Varnish web-server缓存作者Poul-Henning Kamp认为，开源软件的市集开发模式（见ESR的《大教堂和市集》）创造了一代只知道拷贝粘贴的无能IT专业人士 …</p></blockquote></p>
+<p>知名FreeBSD开发者、 Varnish web-server缓存作者Poul-Henning Kamp认为，开源软件的市集开发模式（见ESR的《大教堂和市集》）创造了一代只知道拷贝粘贴的无能IT专业人士，混乱的软件毁灭了优雅的Unix教堂及其著名的简约设计理念，他认为一代人迷失在了市集中。Theregister的评论称，无数采用GPL许可的开源软件分裂，Linux没有分裂是因为它有一个强有力的、富有魅力的领袖Linus Torvalds，但Linus只有一个，很少有开源项目拥有类似Torvalds那样的领袖。</p>
+</blockquote>
+<p>今天又在reddit看到一则讨论，<a href="http://www.reddit.com/r/programming/comments/137kd9/18_months_ago_termkit_a_nextgeneration_terminal/">github上一个top 5加星的项目，为什么会死掉？</a></p>
+<p>原作者看得出来是充满了怨念愤怒恨的。引用：</p>
+<blockquote>
+<p>A terminal run off a websocket with complete decoupling of front and back-end ignores network transparency? Yeah see, stupid comments like these are why I stopped working on it. People never understood how much of a research prototype this was. Enjoy your VT100 terminal which still pretends to be a fucking teletype printer in the 21st century.</p>
+</blockquote>
+<p>（顺便说一下这个reddit链接指向的blog的3D页面滚动效果真他妈炫。帅得掉渣。卡逼的时候，老子还以为我的鼠标坏求了。）</p>
+<p>让我又想起以前看到的<a href="http://news.ycombinator.com/item?id=4340047">git的问题</a>是什么：</p>
+<blockquote>
+<p>Power for the maintainer, at the expense of the contributor</p>
+</blockquote>
+<p>有的时候觉得 git 就是<a href="http://news.ycombinator.com/item?id=4782133">Linus发明出来一个鞭子</a>，</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-14T22:03:00+00:00">2012-11-14</time></p>
 <p>archive</p>            </div>
@@ -344,7 +499,46 @@ cat &lt;&amp;3
             </a>
             <p class="card-text"><p>微博上看到这个<a href="http://weibo.com/1729408273/z5a9txQza">段子</a>，赶快收集下来了。</p>
 <ul>
-<li>During his own Google interview, Jeff Dean was asked the  implications if P=NP were true.  He said, "P = 0 or N = 1." Then, before  the interviewer had even finished laughing, Jeff examined Google …</li></ul></p>
+<li>During his own Google interview, Jeff Dean was asked the  implications if P=NP were true.  He said, "P = 0 or N = 1." Then, before  the interviewer had even finished laughing, Jeff examined Google’s  public certificate and wrote the private key on the whiteboard.   </li>
+<li>Compilers don’t warn Jeff Dean.   Jeff Dean warns compilers.   </li>
+<li>The rate at which Jeff Dean produces code jumped by a factor of 40  in late 2000 when he upgraded his keyboard to USB 2.0.   </li>
+<li>Jeff Dean builds his code before committing it, but only to check for compiler and linker bugs.   </li>
+<li>When Jeff Dean has an ergonomic evaluation, it is for the protection of his keyboard.   </li>
+<li>All pointers point to Jeff Dean.   </li>
+<li>gcc -O4 emails your code to Jeff Dean for a rewrite.   </li>
+<li>Jeff Dean once failed a Turing test when he correctly identified the 203rd Fibonacci number in less than a second."   </li>
+<li>The speed of light in a vacuum used to be about 35 mph. Then Jeff Dean spent a weekend optimizing physics."   </li>
+<li>Jeff Dean was born on December 31, 1969 at 11:48 PM. It took him twelve minutes to implement his first time counter."   </li>
+<li>Jeff Dean escews both Emacs and VI. He types his code into zcat, because it's faster that way.   </li>
+<li>When Jeff Dean sends an ethernet frame there are no collisions because the competing frames retreat back up into the buffer memory on their source nic.   </li>
+<li>Unsatisfied with constant time, Jeff Dean created the world's first O(1/n) algorithm.   </li>
+<li>When Jeff Dean goes on vacation, production services across Google mysteriously stop working within a few days. This is actually true.   </li>
+<li>Jeff Dean was forced to invent asynchronous APIs one day when he optimized a function so that it returned before it was invoked.   </li>
+<li>When Jeff Dean designs software, he first codes the binary and then writes the source as documentation.   </li>
+<li>Jeff Dean wrote an O(n^2) algorithm once. It was for the Traveling Salesman Problem.   </li>
+<li>Jeff Dean once implemented a web server in a single printf() call. Other engineers added thousands of lines of explanatory comments but still don't understand exactly how it works. Today that program is the front-end to Google Search.   </li>
+<li>True: Jeff once simultaneously reduced all binary sizes by 3% AND raised the severity of a previously known low-priority python bug to critical-priority in a single change that contained no python code.   </li>
+<li>Jeff Dean can beat you at connect four. In three moves.   </li>
+<li>When your code has undefined behavior, you get a seg fault and corrupted data. When Jeff Dean's code has undefined behavior, a unicorn rides in on a rainbow and gives everybody free ice cream.   </li>
+<li>When Jeff Dean fires up the profiler, loops unroll themselves in fear.   </li>
+<li>Jeff Dean is still waiting for mathematicians to discover the joke he hid in the digits of PI.   </li>
+<li><img alt="" src="http://qph.cf.quoracdn.net/main-qimg-1c2050524f0139397f3e7d68bed3a95f" /></li>
+<li>When Jeff has trouble sleeping, he Mapreduces sheep.   </li>
+<li>When Jeff Dean listens to mp3s, he just cats them to /dev/dsp and does the decoding in his head.   </li>
+<li>When Graham Bell invented the telephone, he saw a missed call from Jeff Dean.   </li>
+<li>Jeff Dean's watch displays seconds since January 1st, 1970. He is never late.   </li>
+<li>Jeff starts his programming sessions with 'cat &gt; /dev/mem'.   </li>
+<li>One day Jeff Dean grabbed his Etch-a-Sketch instead of his laptop on his way out the door. On his way back home to get his real laptop, he programmed the Etch-a-Sketch to play Tetris.   </li>
+<li>Jeff Dean writes directly in binary. He then writes the source code as a documentation for other developers.   </li>
+<li>Jeff Dean once shifted a bit so hard, it ended up on another computer.   </li>
+<li>The x86-64 spec includes several undocumented instructions marked 'private use'. They are actually for Jeff Dean's use.   </li>
+<li>When he heard that Jeff Dean's autobiography would be exclusive to the platform, Richard Stallman bought a Kindle.   </li>
+<li>Jeff Dean can write infinite recursion functions…and have them return.   </li>
+<li>Jeff Dean can unit test entire applications with a single assertJeff Dean can determine the exact position and velocity of an electron.   </li>
+<li>Jeff Dean doesn't kill processes, he slays them.   </li>
+<li>Why did Vint Cerf invent the Internet? Because Jeff Dean didn't have time.   </li>
+<li>All Jeff Dean's code is pure. For fun, he once wrote a function with a side effect, that side effect is known as Gmail.</li>
+</ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-14T04:10:27+00:00">2012-11-14</time></p>
 <p>archive</p>            </div>
@@ -363,7 +557,73 @@ cat &lt;&amp;3
 <p>今天看到一个讨论：</p>
 <blockquote>
 <p>发信人: i3721pp (noosa), 信区: Aero <br />
-标  题: 王华明的报告“航空高性能大型复杂整体构件激光 …</p></blockquote></p>
+标  题: 王华明的报告“航空高性能大型复杂整体构件激光直接制造技术研 <br />
+发信站: 水木社区 (Mon Nov 12 23:16:08 2012), 站内   </p>
+<p>【 以下文字转载自 MilitaryTech 讨论区 】 <br />
+发信人: navigate (逆水行舟), 信区: MilitaryTech <br />
+标  题: 王华明的报告“航空高性能大型复杂整体构件激光直接制造技术研 <br />
+发信站: 水木社区 (Mon Nov 12 22:16:10 2012), 站内   </p>
+<p>这个有这么神么 ？   </p>
+<p>王华明的报告“航空高性能大型复杂整体构件激光直接制造技术研究进展”   </p>
+<p>http://www.casad.cas.cn/document.action?docid=12916   </p>
+<p>内容提要。   </p>
+<p>1。2012年奥巴马在卡内基梅隆大学，宣布创立美国“制造创新国家网络”计划，成立1 <br />
+5个制造创新中心组成网络，投资10亿美元。经过5个多月的论证最后还是选了“增材制 <br />
+造”作为第一个中心的研究方向。   </p>
+<p>2。一个发动机叶盘，传统工艺制造属于“雕刻”，最后剩下来的只有7%。   </p>
+<p>3。f22钛框，面积5.53平方米。3万吨水压机模锻件能达到0.8平方米，8万吨能达到4.5 <br />
+平方米。   </p>
+<p>4。传统方法，铸锭，制胚，模具，模锻。举例一个很小飞机框，宝钢等温锻造，模具7 <br />
+千万，分摊到每一个零件，模具费就有几十万。又举例美国的一个飞机零件，压成一个 <br />
+饼3吨，到最后加工完成只有144公斤，材料利用率不到5%。   </p>
+<p>5。用他的增材制造，材料利用率80%左右。   </p>
+<p>6。我们打印出的最大的整体结构件5平方米，美国做不了。   </p>
+<p>7。激光打印出的零件，超过或者等同于锻件的性能，抗疲劳强度，比锻件高32-53%，疲 <br />
+劳裂纹扩散速率降低一个数量级。常规性能和锻件差不多，但高温、持久、抗疲劳性能 <br />
+比锻件好很多。   </p>
+<p>8。飞机起落架的超高强度钢，用此方法抗疲劳强度可以比锻件高20%。涡轮叶片用此方 <br />
+法900度疲劳强度可以比第二代单晶高40%。   </p>
+<p>9。应用方面，2005年开始，919是可以说的，其他的都不能说（涉及保密）。919，双曲 <br />
+面窗框，只有欧洲有有家公司能做，周期2年，先付200万美元模具费，而且零件非常贵 <br />
+。而我们55天就做好了，4大件，2件已经装上了飞机。   </p>
+<p>10。翅膀根的受力件，我们做出来136公斤，锻件1706公斤，节省材料90%+，节省了大量 <br />
+材料。10年，已经做完了性能测试，比锻件还要好。   </p>
+<p>11。05年做出图示零件（猜测是军用飞机上所使用），需要5天，现在只要几小时。   </p>
+<p>12。06年某飞机起落架的关键零部件，目前已经批生产，已经受2000多个起落。如果没 <br />
+有这个技术，这个飞机就出不来，可能要推两年。   </p>
+<p>13。某飞机上非常复杂的一个零件，钛合金，一架飞机好几个，现阶段传统技术无法做 <br />
+出来，国内三种方案去研究，两三年不成功，后又去找国外。国外先说能做，看到图纸 <br />
+以后，说做不了。我们临危受命，去年5月19号开始，现在已经装了很多架飞机。   </p>
+<p>14。某飞机零件原来锻胚580公斤，我们做出来36公斤。580公斤锻胚，我们没有这么大 <br />
+的锻造装备，锻不透，性能都不合格。就算加工出来，内应力很大，变形、开裂，成品 <br />
+率非常低。   </p>
+<p>15。（吐槽f22），f22的机翼和机身连接件，超大超复杂的钛合金构件，因为太复杂20 <br />
+、30万吨的水压机也做不出来。美国人就分成三个铸件，然后热等静压再焊接，铸件的 <br />
+性能很差，但美国人没办法，f22就是这样用的。（换了一个图片）我们激光成型就可以 <br />
+直接加工出如图示的这么大的零件，这是一个整体（意思是不用分段铸造然后焊接）， <br />
+上面站了一个人，大家可以看出它的尺度。他的性能比锻件还好（意思是当然就甩铸件 <br />
+几条街了），可以毫不谦虚地说，这是迄今世界上性能最好的、结构最复杂的构件，美 <br />
+国人也只能是铸造，锻是不可能的，焊也不可能，因为焊出来的性能不行。这个已经通 <br />
+过了8000小时的疲劳试验，一年多时间。就这个构件，铝合金、钢大家看看能不能做出 <br />
+来，更何况钛合金。   </p>
+<p>16。我们发动机不行，心脏病，未来发动机就是一肚子的整体叶盘，叶片和盘子分开的 <br />
+重量太重。而我们现在可以叶片和盘子同时出来，而且叶片我们可以随心所欲控制组织 <br />
+，让它长成柱状晶，他的高温性能就很好，这里我们让它长成等柱晶，**疲劳度就很好 <br />
+，如果温度再高，我们就可以换材料，它可以做到随心所欲，一种零件可以用很多种材 <br />
+料来做（不知是在同一个零件上的不同部位，还是同一种零件用不同材料）。   </p>
+<p>17。我这里面都没说具体的零件名称，牵涉到保密的大家都不要说，也不要拍照。我尽 <br />
+量做到没有放（图片）零件，只放毛胚，因为零件还是比较敏感。   </p>
+<p>18。这种加工方法，不能包打天下，适合难加工的、高性能的、贵的、别的方法做不出 <br />
+来的零件，优势是成本、周期、性能，这个方面我们走到了美国人前面。   </p>
+<p>19。设备用的激光器都是进口，担心被美国人卡脖子，希望国家在大功率激光器上重视 <br />
+。   </p>
+<p>20。5年前曾经和飞机总设计师聊天，说我们快速设计飞机，都是整体、大型、超长的结 <br />
+构，在2、3个月内就把飞机造出来，不开一套模具，不打一个锻件，不做一个焊缝。也 <br />
+许有人认为这是个梦想，但实际上这已经不是梦想了，我们已经有这样的潜力，只是目 <br />
+前能力有限。（这一段其实是欲言又止，应该是涉及保密，只好把能力藏着掖着了。这 <br />
+件事肯定在做，最近航空大爆发，绝对和他们这个技术有关。）</p>
+</blockquote>
+<p>3D打印果然是第四次工业革命的开启者啊。我擦。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-13T07:50:44+00:00">2012-11-13</time></p>
 <p>archive</p>            </div>
@@ -378,7 +638,8 @@ cat &lt;&amp;3
               <h2 class="card-title">禅宗 vs 武士</h2>
             </a>
             <p class="card-text"><p>突然觉得这个joke好经典</p>
-<p>@法门寺释者慧：#禅宗公案#武士手握一条鱼到一休禅师房间说道：“咱打赌，我手中这鱼是死是活？”一休知道若 …</p></p>
+<p>@法门寺释者慧：#禅宗公案#武士手握一条鱼到一休禅师房间说道：“咱打赌，我手中这鱼是死是活？”一休知道若说是死的，武士定会松手；而说是活的，武士定会暗中使劲把鱼捏死。于是一休说：“死的。”武士把手松开，笑道：“哈！你输了，鱼是活的。”一休淡淡一笑道：“是的，我输了。”但是他却救了一条实实在在的鱼。</p>
+<p>@冥王哈：#禅宗微小说#一天，一个武士抓着一条活鱼来找禅师，说：“你猜这是活鱼还是死鱼，如果是活鱼我就杀了它。”禅师不想打诓语，又不能害了这只鱼，便十分苦恼，深深思考，半小时后，禅师说：“是死的。”武士看看手中的鱼，说：“你妹啊！半个小时前活着呢！”</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-13T07:11:07+00:00">2012-11-13</time></p>
 <p>archive</p>            </div>
@@ -407,7 +668,10 @@ cat &lt;&amp;3
 <h1>x11 （见<a href="http://initiative.yo2.cn/archives/628146">这个</a>）</h1>
 </li>
 </ul>
-<p>官方文档在这里 <a href="http://www.w3.org/TR/xml/#charsets">http://www.w3.org/TR/xml/#charsets …</a></p></p>
+<p>官方文档在这里 <a href="http://www.w3.org/TR/xml/#charsets">http://www.w3.org/TR/xml/#charsets</a></p>
+<pre><code>Char       ::=      #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
+</code></pre>
+<p><a href="http://www.reddit.com/r/programming/comments/1322te/what_every_programmer_absolutely_positively_needs/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-13T00:27:15+00:00">2012-11-13</time></p>
 <p>archive</p>            </div>

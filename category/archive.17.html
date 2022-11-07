@@ -84,7 +84,13 @@
 
 <p><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://www.youtube.com/v/NH0aEp1oDOI%26hl%3Den_US%26fs%3D1%26&amp;width=480&amp;height=385" width="480" height="385"></iframe></p>
 
-<p>各大社区都讨论 …</p></p>
+<p>各大社区都讨论遍了。如果你觉得那个还不够惊讶，那么看看<a href="http://www.youtube.com/watch?v=3ScWu7pG7r0">这个</a>。。。。。这智能填充太智能了，可以自动补完数学方程题目；房间太乱了，不仅可以ps得干干净净，而且还可以在床上ps两个MM。。。。。这哥们儿视频演示里用的还是photoshop 7。。。。。真强大。。。。。</p>
+
+<p>本朝群众估计最期望的CS5功能是自动去马赛克。。。</p>
+
+<p>ps 我发现了Adobe Flash Player 10的一个bug，在RDP远程桌面的时候全屏会crash。哈哈。</p>
+
+<p><a href="http://www.reddit.com/r/photography/comments/blsi1/adobe_labs_demonstrates_puppet_warp_great_for/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-04-03T11:39:10+00:00">2010-04-03</time></p>
 <p>archive</p>            </div>
@@ -140,7 +146,23 @@
             <a href="/archives/1859"  rel="bookmark" >
               <h2 class="card-title">Google Chrome支持迅雷右键下载指日可待了</h2>
             </a>
-            <p class="card-text"><p>Chrome对Flash这类外部程序插件是通过NPAPI实现的，<a href="https://developer.mozilla.org/en/Gecko_Plugin_API_Reference:Scripting_plugins">NPAPI</a>有个缺点就是要调用外部组件必须注册一个MIME。我对Windows里MIME机制还不熟悉，不知道可不可以不通过dll而直接通过修改注册表实现。迅雷官方的Firefox插件就是通过ThunderComponent.dll+thunder.xpi实现的，可惜这个是 …</p></p>
+            <p class="card-text"><p>Chrome对Flash这类外部程序插件是通过NPAPI实现的，<a href="https://developer.mozilla.org/en/Gecko_Plugin_API_Reference:Scripting_plugins">NPAPI</a>有个缺点就是要调用外部组件必须注册一个MIME。我对Windows里MIME机制还不熟悉，不知道可不可以不通过dll而直接通过修改注册表实现。迅雷官方的Firefox插件就是通过ThunderComponent.dll+thunder.xpi实现的，可惜这个是XPCOM Only，CyberArticle推出的KB系统，WizKnowledge在Chrome里的<a href="http://cn.wizbrother.com/wizknowledge/copy.js">调用</a>，也是通过注册一个<code>application/x-wizbrother-wizknowledge-ax</code>的MIME实现的。</p>
+
+<p>不过Chrome更加牛逼的是还支持ActiveX的。启动chrome.exe的时候加一个<code>--enable-all-activex</code> 就可以了。原理是通过一个叫<a href="http://src.chromium.org/svn/branches/official/build_149/src/webkit/activex_shim/">ActiveX Shim</a>的东东实现的。不过似乎后面把这个ActiveX Shim写死成只支持Windows Media Player的CLSID了。。。。所以这条路估计不太好走。</p>
+
+<p>ActiveX Shim这玩意儿现在还不是很完善，用网银的时候界面能显示出来，但是招行的网银登录界面显示ATL error。可能还不完善吧。但是普通调用例如Windows Media Player是绝对没问题的。我估计调用thunderagent那个COM+组件也没多大问题。</p>
+
+<p><a href="http://www.google.org.cn/posts/chromium-dev-update-27-mar-2010.html">最近</a>Chromium更是增加了<a href="http://code.google.com/chrome/extensions/trunk/experimental.contextMenu.html">右键菜单的api</a></p>
+
+<p>所以，我很乐观的估计很快支持迅雷右键下载的扩展会很快出现。</p>
+
+<p>如果没人做的话，等哪天有时间了来折腾一下这个玩意儿 XD</p>
+
+<p>另外两则关于Chrome的新闻，一是<a href="http://www.google.org.cn/posts/chrome-dev-503604-integrated-adobe-flash-player-plugin.html">集成Flash插件</a>，这个要表扬一下Google，因为无论HTML5 vs Flash的口水战，实用主义至上，对用户来说永远都是一件好事。而且这个集成的主要优点是Flash通过Chrome一起升级。避免了麻烦和讨厌的Adobe Updater；</p>
+
+<p>另一个新闻是<a href="http://www.google.org.cn/posts/chrome-sync-everything.html">Chrome将支持更多同步内容</a>。这个功能是相当口水的。如果能自动同步快速启动面板和cookie就太爽了。想象一下你只需要记住一个gmail密码，无论在哪里上网，都直接免登录直接用老cookie。太爽了。而且可以<a href="http://src.chromium.org/svn/trunk/src/chrome/common/chrome_switches.cc">看到</a>chrome.exe还支持一个 <code>--sync-url</code> 参数，估计以后可以自己架一个同步服务器。这样就避免了隐私泄漏给Google的麻烦。</p>
+
+<p>其实Chrome的同步是libjingle做的，号称p2p。我希望Google能给这个p2p开放一个javascript的API，那么Chrome将成为翻墙和文件共享的神器！</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-04-02T05:20:52+00:00">2010-04-02</time></p>
 <p>archive</p>            </div>
@@ -162,7 +184,56 @@
 <img src="http://blog.est.im/wp-content/uploads/2010/04/1.jpg" alt=""><br>
 censor功能是亮点。。。还有人宣称<a href="http://www.reddit.com/r/reddit.com/comments/bkzcp/i_just_banned_karmanaut_test_test123_can_i_really/">把karmanaut大神给ban了</a>。。。</li>
 <li>Github<a href="http://github.com/blog/626-announcing-svn-support">宣布</a>支持SVN。。。这个太华丽了。。。。<br>
-<ins>更新：</ins>这个新feature居然是<a href="http://news.ycombinator.com/item?id=1234203">真的</a>。。。汗死。。。而且去年github的愚人节恶作剧正是<a href="http://news.ycombinator.com/item?id=1235021">谎称SVN支持 …</a></li></ul></p>
+<ins>更新：</ins>这个新feature居然是<a href="http://news.ycombinator.com/item?id=1234203">真的</a>。。。汗死。。。而且去年github的愚人节恶作剧正是<a href="http://news.ycombinator.com/item?id=1235021">谎称SVN支持</a></li>
+<li>Youtube的<a href="http://youtube-global.blogspot.com/2010/03/textp-saves-youtube-bandwidth-money.html">TEXTp模式</a>。youtube团队还是下功夫了的。因为是视频转换成文本是在客户端用Flash实现的。。。。。</li>
+<li>Google UK<a href="http://www.google.co.uk/intl/en/landing/translateforanimals/">宣布</a>翻译工具支持畜生语言。现在终于有办法搞懂领导演讲稿的意思了。</li>
+<li>在<a href="http://www.thegtaplace.com/downloads/f3563-gta-iv-simple-native-trainer-v1-0">GTA Place</a>下修改器的时候发现该死的网站把页面倒过来了。</li>
+<li>kernel.org也把页面倒过来了。。。<br>
+<img src="http://blog.est.im/wp-content/uploads/2010/04/2.jpg" alt=""><br>
+Chrome把文字识别成了印尼文。。。囧。。。</li>
+<li>4chan<a href="http://twitter.com/4chan/status/11409083836">说</a>要2.0界面要支持Facebook Connect。。。囧。。。</li>
+<li>山口山<a href="http://www.worldofwarcraft.com/info/races/two-headed-ogre.shtml">表示</a>，双头食人魔种族将由两个玩家同时控制。一个人只能控制一半。。。。<br>
+<ins>更正</ins>：感谢网友Hyrule的提示，看来<a href="http://techcrunch.com/april-fools-shenanigans/">TechCrunch</a>和我都火星了。。。<br>
+<img src="http://www.worldofwarcraft.com/info/races/images/ogres/ogre-circle.jpg" alt=""></li>
+<li>ArmorGames的首页是 RickRoll。。。。这个太低俗了。。。。</li>
+<li>国内的<a href="http://news.csdn.net/a/20100401/217695.html">CSDN</a>和<a href="http://news.cnblogs.com/n/60328/">cnblogs</a>爆料Google搜购baidu</li>
+<li>Science<a href="http://news.sciencemag.org/sciencenow/2010/04/science-nature-team-up-on-new-jo.html?rss=1">宣布</a> Science将和Nature合并。</li>
+<li>rlslog宣布<a href="http://www.rlslog.net/avatar-2009-bdrip-xvid-imbt/">Avatar.2009.bdrip.xvid-imbt</a>，连<a href="http://paste2.org/p/748655">nfo</a>都有。。。我擦。。。老夫今天处处小心，就意外栽在这个上头了。。。。。</li>
+</ul>
+
+<p><ins>更新</ins>：由于时差关系，继续补充漏掉的<br>
+<li>google和topeka互相换名字。这个joke很逊</li><li>XKCD增加commandline模式。这玩意儿很不错。<a href="http://github.com/chromakode/xkcdfools">源码</a>值得借鉴。</li><li>PostgreSQL<a href="http://archives.postgresql.org/pgsql-hackers/2010-04/msg00003.php">表示</a> 9.1 版本将全面转向NoSQL阵营，并且将用QUEL语言代替SQL。PostgreSQL也相应改名为 PostgreQUEL。这里 NoSQL 的发音是 no-sequel，no-se 只剩下 quel 了。。。。Postgres的核心开发人员Peter Eisentraut还冒了一句皮皮：</li></p>
+
+<blockquote>It's time for us to switch to something fresher.  I personally would have preferred XSLT, but QUEL is almost as good.</blockquote>
+
+<p><li>Google Code推出<a href="http://code.google.com/p/gag/">Google Annotations Gallery</a>。这介绍超汗的。。。</li></p>
+
+<blockquote>Have you ever resorted to leaving messages to fellow developers with the @Deprecated annotation? Wouldn't you rather leave a @LOL or @Facepalm instead? If so, then this is the gallery for you.</blockquote>
+
+<p><li>还出了另一个0day，720p的哦：Avatar.720p.Bluray.X264-DIMENSION</li><li>IETF隆重推出<a href="http://tools.ietf.org/html/rfc5841">RFC 5841</a>，为TCP增加一个表情符号的option</li></p>
+
+<pre><code>    ASCII                Mood
+    =====                ====
+    :)                   Happy
+    :(                   Sad
+    :D                   Amused
+    %(                   Confused
+    :o                   Bored
+    :O                   Surprised
+    :P                   Silly
+    :@                   Frustrated
+    &gt;:@                  Angry
+    :|                   Apathetic
+    ;)                   Sneaky
+    &gt;:)                  Evil
+</code></pre>
+
+<p><li>thedailywtf推出<a href="http://thedailywtf.com/Articles/Announcing-APDB-The-Worlds-Fastest-Database.aspx">APDB, the world's fastest and most flexible database</a>数据库系统</li><br>
+<li>Armin Ronacher推出了又一款python micro web framework：<a href="http://denied.immersedcode.org/">Denied</a>。基于jinja2 和 werkzeug。<a href="http://github.com/denied/denied/raw/master/deny.py">源码</a>很恶搞。全是base64加密过的</li></p>
+
+<p>更多的搜集中。。。去年reddit化妆成digg我觉得做得最好～～～～～</p>
+
+<p>via HN and reddit. Too many links to link up :P</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-04-01T13:50:09+00:00">2010-04-01</time></p>
 <p>archive</p>            </div>
@@ -179,7 +250,12 @@ censor功能是亮点。。。还有人宣称<a href="http://www.reddit.com/r/re
             <p class="card-text"><p>新闻<a href="http://bz.cenn.cn/gq/x_78614.html">中科院士朱清时 语惊四座——佛法释物理学 步入禅境</a></p>
 
 <blockquote>
-  <p>朱院士断然说：“不行。”他说：“高级计算机也只能处理小数点以后9位数的计算，如 …</p></blockquote></p>
+  <p>朱院士断然说：“不行。”他说：“高级计算机也只能处理小数点以后9位数的计算，如果9位数以后的数无限放大，计算机的结论就是错误的。”</p>
+</blockquote>
+
+<p>这太亮了。</p>
+
+<p>via doubangroup / 7911253</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-03-27T08:24:45+00:00">2010-03-27</time></p>
 <p>archive</p>            </div>
@@ -284,7 +360,13 @@ censor功能是亮点。。。还有人宣称<a href="http://www.reddit.com/r/re
             </a>
             <p class="card-text"><p>自从买了ssh之后就很少关注爬墙党和翻墙界的动静了。不过，为了方便手机上网，自己也建立了web proxy，也时不时会遇到内容被某墙DPI发现而被RST的情况。</p>
 
-<p>看到<a href="javascript:void(0);">列表</a>里有人的这个普通代理 …</p></p>
+<p>看到<a href="javascript:void(0);">列表</a>里有人的这个普通代理，这个启发很大</p>
+
+<p>在服务器上装上<a href="http://scholarzhang.googlecode.com/">这个</a>之后，本机就再也不需要装任何OOXX软件了，因为服务器IP是自己用，没有别人知道。而内容传输则是由<strong>服务器端</strong>CUI保护，每一个TCP连接之前就向某墙一耳光过去叫STFU。这小路不就永久不受监视畅通无阻了么。</p>
+
+<p>哈哈。这办法太经济实惠了。</p>
+
+<p>开始关注wchamber的时候这个计划已经<a href="javascript:void(0);">高调结束</a>了。不得不说这是一种遗憾。再次向默默无闻的anonymous researcher和code committer致以最崇高的敬意。You are the people respond to a great fucking wall with ACTION.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-03-25T14:12:38+00:00">2010-03-25</time></p>
 <p>archive</p>            </div>
@@ -302,7 +384,9 @@ censor功能是亮点。。。还有人宣称<a href="http://www.reddit.com/r/re
 
 <p>这是一个十分wtf的视频。前总统小树丛跟海地的难民握手之后，在克林顿的衣服上擦手 -_________-!</p>
 
-<p>囧。。。美帝领导人真不会表演啊。看俺们家 …</p></p>
+<p>囧。。。美帝领导人真不会表演啊。看俺们家的影帝又是摔电话又是挥指头多威武。</p>
+
+<p><a href="http://www.reddit.com/r/WTF/comments/bhluw/george_w_bush_shakes_hands_with_haitians_then/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-03-25T04:53:23+00:00">2010-03-25</time></p>
 <p>archive</p>            </div>
@@ -339,7 +423,22 @@ censor功能是亮点。。。还有人宣称<a href="http://www.reddit.com/r/re
 <p>I am sorry for your loss of Chinese search market and I hate PRC ruling class as much as you do. But please don't hijack <em>everything</em> to google.com.hk.</p>
 
 <ul>
-<li>The <em>Google.com in English</em> hyperlink on your fucking homepage won't fucking work. Is it a placebo button …</li></ul></p>
+<li>The <em>Google.com in English</em> hyperlink on your fucking homepage won't fucking work. Is it a placebo button?</li>
+<li>The hijack is IP based and mandatory. You can&#39;t choose google.com with hl=en_US or your settings in cookie &amp; Google Profile. You leave your faithful users no choice, no option, no alternative way of searching, just like what the Chinese government did to you.</li>
+<li>THe hijacking is FUCKING STUPID. Whenever I click <em>ANY</em> link start with www.google.com/*, it will be hijacked to google.com.hk. I don&#39;t see the point. <br>
+e.g.<br>
+<code>http://www.google.com/url?q=http://en.wikipedia.org/wiki/Query_(complexity)&amp;source=dictionary&amp;type=de&amp;usg=AFQjCNG79oEEFx_yppkBRnSnt3Oc4V7XTA</code><br>
+Would be redirected to<br>
+<code>http://www.google.com.hk/url?q=http://en.wikipedia.org/wiki/Query_(complexity)&amp;source=dictionary&amp;type=de&amp;usg=AFQjCNG79oEEFx_yppkBRnSnt3Oc4V7XTA</code><br>
+then redirected to<br>
+<code>http://en.wikipedia.org/wiki/Query_(complexity)</code><br>
+It's only a waste of bandwidth, and instead of making things <a href="http://code.google.com/speed/">faster</a>, it actually <em>slow down</em> my browsing experience, DRAMATICALLY!</li>
+<li>It creates problems. On Google Buzz and Twitter iphone users are complaining about redirection loop. <a href="http://64.233.183.147/search?hl=en&amp;q=redirect+loop+%22google.com.hk%22+-site:google.com.hk">See more</a></li>
+</ul>
+
+<p>Again I feel unfortunate about the current situation, but please fix it.</p>
+
+<p>A Google China user.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-03-23T14:56:12+00:00">2010-03-23</time></p>
 <p>archive</p>            </div>
@@ -362,7 +461,22 @@ censor功能是亮点。。。还有人宣称<a href="http://www.reddit.com/r/re
 <li>Win7默认输入法悲剧。可能是我还不习惯的原因吧。最讨厌识别率低下的整句输入了。</li>
 <li>explorer的渣设计 + DVD RW光驱的悲剧<br>
 <img src="http://blog.est.im/wp-content/uploads/2010/03/2.png" alt=""><br>
-随 …</li></ol></p>
+随便插一张CD或DVD都会准备写入这个desktop.ini么？囧</li>
+<li>我深刻体会到Vista那种渣UAC和渣控制面板设计的悲剧。</li>
+<li>由于根DoJ的斗争，微软不能像Apple一样集成很多很多功能然后流水线化设计。悲剧的微软。</li>
+<li>新任务条还很不习惯。看得出来Windows在刻意模仿Mac的UI paradigm。最不习惯的就是右击任务栏图标+C不能关闭窗口。悲剧。</li>
+<li>1344x768 + 14' 屏幕的悲剧，有些中文字体太小，眼睛都看痛了。囧。看来大屏幕+大分辨率潮流下设计界是应该超级改进下了。</li>
+<li>下载个Chrome Dev，用默认官方的Google Updater下载，1Mb的ADSL，居然下载了半个小时。云计算在兲朝就是个悲剧。万恶的软件、互联网巨头们你们不做bootstrapper会死啊？最让人厌烦的是，这些垃圾bootstrapper居然还不知吃断点续传~~NND</li>
+<li>IE8居然有这么多新加功能了。但是貌似和系统的 文字服务/微软拼音输入法 和 textarea 有冲突，一打字就狂跳。</li>
+<li>IE8收藏夹和右键居然都可以嵌入HTML了。挂马的好地方啊。Ctrl+F也学习Firefox那种非模态长条对话框了。</li>
+<li><ins>终于</ins>下载好<a href="http://dl.google.com/chrome/install/317.2/chrome_installer.exe">Chrome Dev</a>了。真一个爽字啊。强烈建议Google在云里自动同步cookie和浏览器首页。这样无论在哪里上网东东都是一样的了。</li>
+<li>Chrome Dev里发现了一个奇怪的新东东：自动翻译。<br>
+<img src="http://blog.est.im/wp-content/uploads/2010/03/3.png" alt=""><br>
+开源的东东的本地化做的之烂可见一斑。</li>
+<li>mspaint的界面变得好科幻。。。默认保存格式从XP的jpg变成png了。很好。</li>
+</ol>
+
+<p>其余的我想起来了再加。最喜欢Win7的一点是 休眠下载 功能。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-03-23T12:53:02+00:00">2010-03-23</time></p>
 <p>archive</p>            </div>
@@ -416,7 +530,39 @@ censor功能是亮点。。。还有人宣称<a href="http://www.reddit.com/r/re
             </a>
             <p class="card-text"><p>Web 2.0几条主线还是很清晰的。05年youtube的出现大力推动了北美互联网市场从拨号直接升级到高速宽带。</p>
 
-<p>没有AJAX，也就没有不需要安装任何客户端的Omegle；没有Omegle，就没有chatroulette。没有chatroulette就不会发现全球有那么多喜欢撸管子癖好的大叔；哦不对，这不是我想扯谈的。今天贴个视频 …</p></p>
+<p>没有AJAX，也就没有不需要安装任何客户端的Omegle；没有Omegle，就没有chatroulette。没有chatroulette就不会发现全球有那么多喜欢撸管子癖好的大叔；哦不对，这不是我想扯谈的。今天贴个视频</p>
+
+<p><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://www.youtube.com/v/LfamTmY5REw%26hl%3Den_US%26fs%3D1%26&amp;width=640&amp;height=385" width="640" height="385"></iframe></p>
+
+<p>演奏者 Ben Folds。是受到<a href="http://www.youtube.com/watch?v=32vpgNiAH60&amp;feature=related">这个</a>(<a href="http://www.reddit.com/r/offbeat/comments/bdpqk/quirky_pianist_impromptu_plays_and_sings_about/">reddit</a>)视频的启发。其实我很欣赏美国的一点就是，别人不仅有真正的互联网，还有SXSW这种arts的活动，欧洲有遍地的LANparty。youtube，<a href="http://www.twitvid.com/67269">twitter</a>和各个社区良性<a href="http://www.reddit.com/r/reddit.com/comments/bg74j/here_is_where_reddit_plans_to_punk_the_ben_folds/%EF%BC%8C%E6%AD%A3%E6%98%AF%E8%BF%99%E4%BA%9B%E6%94%AF%E7%A6%BB%E7%A0%B4%E7%A2%8E%E7%9A%84%E7%BB%86%E8%8A%82%E6%9E%84%E6%88%90%E4%BA%86%E6%88%91%E4%BB%AC%E7%A7%B0%E4%B9%8B%E4%B8%BAculture">互动</a>的东西，而正是五彩缤纷的culture构成了西方自由世界。<a href="http://www.ted.com/index.php/talks/hans_rosling_reveals_new_insights_on_poverty.html">Hans Rosling在TED上</a>说得好：</p>
+
+<pre><code>                   Means     Goal
+Human Rights       +         +++
+Environment        +         ++
+Governance         ++        +
+Economic growth    +++       0
+Education          ++        ++
+Health             +         ++
+Culture            +         +++
+</code></pre>
+
+<p>TED也是 技术·娱乐·设计 的首字母缩写，这也是TED精神和魅力所在</p>
+
+<p>===========================================</p>
+
+<p>Web的发展现在是流行realtime web。这个视频其实有一个缺陷，那就是对方没有互动。假如一个random stranger恰好也是一位音乐家，他会马上拿出他的乐器来演奏吗？答案是不行。我试过。chatroulette至少有500ms的延迟。而且音质和画质特别的烂。</p>
+
+<p>这里让我想到了人类互联网发展的终极极限。我算了下：</p>
+
+<p>延迟：人类大脑的反映速度大概是0.02秒，所以20ms的延迟足够个人使用了。</p>
+
+<p>其次是带宽。读G Reader的同学可能有体会，那就是 over share 和信息过载。一个正常社会的成年人大概能熟练和深度交往310个人，再多就记不住。所以：</p>
+
+<p>个人互联网终极带宽 = ( 视网膜分辨率 x 2 + 人耳能识别的频谱带宽 x 2 + 其他感官预留带宽 ) * 310</p>
+
+<p>有了这个带宽，那么你几乎就等于生活在Matrix里了。</p>
+
+<p>via <a href="http://news.ycombinator.com/item?id=1208169">HN</a>, <a href="http://www.reddit.com/r/reddit.com/comments/bg4n3/ben_folds_does_his_ode_to_merton_chatroulette/">reddit</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-03-22T11:19:53+00:00">2010-03-22</time></p>
 <p>archive</p>            </div>
@@ -433,7 +579,10 @@ censor功能是亮点。。。还有人宣称<a href="http://www.reddit.com/r/re
             <p class="card-text"><p><a href="http://news.ycombinator.com/item?id=1204505">HN上</a>看到一篇<a href="http://dyske.com/paper/778">Why Americans Don’t Like Jazz</a></p>
 
 <blockquote>
-  <p>This rather unfortunate trend in the American culture seems to be irreversible. The popularity of Rap music seems to be a clear sign of this trend. I can appreciate Rap music for what it is, and I see nothing …</p></blockquote></p>
+  <p>This rather unfortunate trend in the American culture seems to be irreversible. The popularity of Rap music seems to be a clear sign of this trend. I can appreciate Rap music for what it is, and I see nothing wrong with it, but it does not promote the full development of musical ears.</p>
+</blockquote>
+
+<p>深有同感。我就是喜欢器乐远远超过声乐的那种人。lol。对节奏单一曲风枯燥的唠叨怨念曲子很是不喜欢。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-03-21T11:13:34+00:00">2010-03-21</time></p>
 <p>archive</p>            </div>
@@ -459,7 +608,72 @@ censor功能是亮点。。。还有人宣称<a href="http://www.reddit.com/r/re
   <p>How do I install applications on my device?<br>
   Applications will automatically be installed when downloaded from MarketPlace.</p>
 
-  <p>Can I manually install applications …</p></blockquote></p>
+  <p>Can I manually install applications without using the MarketPlace?<br>
+  No, "side-loading" applications is not permitted.  The only way to get released applications on your device is through MarketPlace.</p>
+
+  <p>How can I test my application on a device if I can't install it?<br>
+  As a registered developer, you will be able to register some devices that you can directly deploy your application to for testing. It is not necessary to publish your application to MarketPlace just to test it.</p>
+
+  <p>My application is for my company / specific group of people only, how do I distribute the app only to them on MarketPlace?<br>
+  The MarketPlace does not currently have the ability to provide locked-off areas for private applications. Other than a few key exceptions for Mobile Operators,  there is no way to gate your application to a specific group of people or devices at this time.</p>
+</blockquote>
+
+<p>连Socket都不支持，只支持HTTP GET和WebService来传数据</p>
+
+<blockquote>
+  <p>System.Net.Socket Support</p>
+
+  <p>Where is the Socket class?<br>
+  Windows Phone 7 Series currently does not expose the Socket classes.  While the version of Silverlight on the phone follows closely the feature list for Silverlight 3 on the desktop, it is a subset of those features and will not contain all classes.  (It also holds a superset of classes not available in Silverlight 3.)<br>
+   <br>
+  How should I transfer information over the Internet?<br>
+  Web technologies such as HTTPGET and WebServices are supported as methods of communicating on the Internet.  You can also use Push Notifications for communication when your application is not running.<br>
+   <br>
+  How can I connect with another client in real-time?<br>
+  Peer-to-peer communication is not supported with this initial release of Windows Phone 7 Series. We are always evaluating the needs of our developers and users though and it may be determined that this feature be added in the future.</p>
+</blockquote>
+
+<p>本地没有数据库，要存只能存Web里。。。。。</p>
+
+<blockquote>
+  <p>Local Database</p>
+
+  <p>Is there a local database available on Windows Phone 7 Series devices?<br>
+  No, for this initial release of Windows Phone 7 Series, there are no local database API’s available. <br>
+   <br>
+  How should I store information for my application?<br>
+  Windows Phone 7 Series has support for WebServices, which enable you to easily access information that you store on the Internet.  With a database that is accessible to a webservice, your application can get data in real time while connected to the Internet.</p>
+
+  <p>My application is intended to run in an off-line scenario, What do I do if I can’t access the cloud?<br>
+  There are two options for this scenario:<br>
+  ? Build your own data storage scheme on the device to be stored within device memory<br>
+  ? Continue developing for Windows Phone 6.5 or previous versions, which continue to be supported and do support local databases.<br>
+   <br>
+  Will there be support for local databases in the future?  <br>
+  There are no currently announced plans to add this functionality; however we are closely monitoring the needs of the developers and users to identify features that would benefit everyone.</p>
+</blockquote>
+
+<p>只能用C#开发。不支持C++</p>
+
+<blockquote>
+  <p>Native Code Support</p>
+
+  <p>Can I write my application in C++?<br>
+  No, currently C# is the only supported language for developing on the Windows Phone 7 Series platform. <br>
+   <br>
+  Can I write my application in VB?<br>
+  Not at this time, however this is being strongly considered for a future release of the developer tools.<br>
+   <br>
+  Can I P/Invoke into System API’s?<br>
+  No, as an ISV there is no access to the system API’s using P/Invoke.  Any application that attempts to use P/Invoke will be rejected from being published to the MarketPlace.<br>
+   <br>
+  Can I P/Invoke my own native DLL?<br>
+  No, native code may not be run as any part of your application. P/Invokes are not permitted.</p>
+</blockquote>
+
+<p>加上今天的新闻<a href="http://cnbeta.com/articles/106588.htm">微软：Windows Phone 7用户根本不需要复制和粘贴</a></p>
+
+<p>微软脑子被烧坏了？</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-03-19T15:30:50+00:00">2010-03-19</time></p>
 <p>archive</p>            </div>
@@ -516,7 +730,12 @@ censor功能是亮点。。。还有人宣称<a href="http://www.reddit.com/r/re
             <p class="card-text"><p><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://www.youtube.com/v/vyN8VN4BSzM%26hl%3Den_US%26fs%3D1%26&amp;width=480&amp;height=385" width="480" height="385"></iframe></p>
 
 <blockquote>
-  <p>And what is the last fucking line that they have together? They're all hugging and kissing and happy with each other, and Ice comes up to Maverick, and he says, "Man, you can ride my tail, anytime!" And what does Maverick say? "You can ride mine!" Swordfight! Swordfight! Fuckin' A …</p></blockquote></p>
+  <p>And what is the last fucking line that they have together? They're all hugging and kissing and happy with each other, and Ice comes up to Maverick, and he says, "Man, you can ride my tail, anytime!" And what does Maverick say? "You can ride mine!" Swordfight! Swordfight! Fuckin' A, man!</p>
+</blockquote>
+
+<p>太内涵了。。。。</p>
+
+<p><a href="http://www.reddit.com/r/videos/comments/beqnh/top_gun_is_gay_quentin_tarantino/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-03-18T11:11:17+00:00">2010-03-18</time></p>
 <p>archive</p>            </div>
@@ -534,7 +753,7 @@ censor功能是亮点。。。还有人宣称<a href="http://www.reddit.com/r/re
 
 <p>我觉得那眼神很传神。这图片很容易让人产生太多联想。。。。。</p>
 
-<p><ins>更新：</ins> 一直在等<a href="http://www.reddit.com/r/pics/comments/behjt/so_i_was_riding_my_bike_to_work_today_and_saw_this/">原作者</a>贴老虎的图片，结果没有了。所以有这么个SB标题 …</p></p>
+<p><ins>更新：</ins> 一直在等<a href="http://www.reddit.com/r/pics/comments/behjt/so_i_was_riding_my_bike_to_work_today_and_saw_this/">原作者</a>贴老虎的图片，结果没有了。所以有这么个SB标题。囧。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-03-17T15:02:12+00:00">2010-03-17</time></p>
 <p>archive</p>            </div>
@@ -564,7 +783,22 @@ censor功能是亮点。。。还有人宣称<a href="http://www.reddit.com/r/re
 <li><a href="http://203.208.37.99/">一个北京的IP</a>居然没有备案号。</li>
 <li>来吧和问答消失</li>
 <li>iGoogle消失</li>
-<li>那几个图标消 …</li></ol></p>
+<li>那几个图标消失</li>
+<li>显示的是 中文（简体）。没有任何 谷歌 字样了</li>
+<li>谷歌音乐 的位置变成 购物，也就是Google Shopping</li>
+</ol>
+
+<p><a href="http://203.208.37.99/">203.208.37.99</a> 和 <a href="http://203.208.37.104/">203.208.37.104</a> 这两个就是以前 google.cn 的IP。说明Google在北京的服务器和机房已经开始撤了。物理都没了，要继续在大陆混下去不太可能了吧。</p>
+
+<p><ins>更新2</ins>：</p>
+
+<p>评论中的Larry同学发现了谷歌的<a href="http://blog.est.im/wp-content/uploads/2010/03/110.jpg">第三种形态</a></p>
+
+<p><ins>更新3：</ins></p>
+
+<p>正如楼下评论所说，第一个截图也说明不了什么问题。</p>
+
+<p>我弄错了～～～</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-03-17T10:43:10+00:00">2010-03-17</time></p>
 <p>archive</p>            </div>
@@ -586,7 +820,15 @@ censor功能是亮点。。。还有人宣称<a href="http://www.reddit.com/r/re
 
 <p>而且Tunnelier的tunnel似乎是并发的，开youtube的页面明显感觉比putty/plink/openssh快很多。</p>
 
-<p>Tunnelier最大的一个优点就是：一次登录，就可以<strong>同时</strong>打 …</p></p>
+<p>Tunnelier最大的一个优点就是：一次登录，就可以<strong>同时</strong>打开sftp和terminal。而且只需要<strong>一个</strong>ssh session，<strong>一个</strong>tcp连接。我<a href="http://www.reddit.com/r/linux/comments/9x7uh/asklinux_any_ssh_client_out_there_that_requires/">一直</a>在<a href="http://superuser.com/questions/58417/why-does-putty-sftp-has-to-be-logged-in-separately-i-thought-they-were-all-bas">寻找</a>这样的ssh客户端啊～～～</p>
+
+<p>而且这玩意儿牛逼的地方在于，不需要重新登录或验证，只要右下角图标没有关，维持这<strong>一个</strong>ssh连接，就可以随时新建一个terminal或sftp窗口，而<strong>不需要</strong>重新登录。这样连<code>screen</code>命令也省了。要多少个窗口开多少个就OK了。</p>
+
+<p>由于使用的是cmd作为终端，所以中文字符编码也不成问题了～～～～</p>
+
+<p>看来SecureCRT, ZModem, PuTTY和XShell都过时了。Tunnelier满塞！</p>
+
+<p>参考 <a href="http://omobox.com/memo/tunnelier-instead-of-myentunnel.html">1</a>, <a href="http://www.appinn.com/bitvise-tunnelier/">2</a>, <a href="http://plod.popoever.com/archives/001408.html">3</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-03-17T01:58:05+00:00">2010-03-17</time></p>
 <p>archive</p>            </div>
@@ -712,7 +954,14 @@ Quand il fait
 Psss psss
 Et refait 
 Psss psss
-En douce, il …</code></pre></p>
+En douce, il pousse gaiement
+Manneken-Pis
+Une immense innocence
+Sort à plein jet
+De son petit sifflet
+</code></pre>
+
+<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/8/83/2005_manneke_pis05.jpg/180px-2005_manneke_pis05.jpg" alt=""></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-03-12T07:44:56+00:00">2010-03-12</time></p>
 <p>archive</p>            </div>
@@ -752,7 +1001,17 @@ En douce, il …</code></pre></p>
 
 <pre><code>var canvas = document.createElement('canvas'),
     video = document.getElementsByTagName('video')[0],
-    ctx = canvas …</code></pre></p>
+    ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0, video.width, video.height);
+var block_width = 50;
+var pixels = ctx.getImageData(0, 0, block_width, canvas.height);
+</code></pre>
+
+<p><img src="http://chikuyonok.ru/u/2010/03/get-color.png" alt=""></p>
+
+<p>CPU在50%左右，那个Chrome内存占用在130MB到160MB之间徘徊。</p>
+
+<p><a href="http://www.reddit.com/r/programming/comments/bcaro/ambilight_for_the_html5_video_tag_written/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-03-12T03:37:52+00:00">2010-03-12</time></p>
 <p>archive</p>            </div>
@@ -846,7 +1105,21 @@ En douce, il …</code></pre></p>
 
 <p><img src="http://theoriens.com/wp-content/uploads/Anti_American_propaganda_9.jpg" alt="N Korea propaganda"></p>
 
-<p>我立刻就想起来了前一阵子看过的 <code>BBC.How.Art.Made.the.World.2005.WiTH.ExTRAS.DUALAUDiO.DVDRiP …</code></p></p>
+<p>我立刻就想起来了前一阵子看过的 <code>BBC.How.Art.Made.the.World.2005.WiTH.ExTRAS.DUALAUDiO.DVDRiP.X264-KiSS</code>。</p>
+
+<p>最后一集 To Death and Back，就专门讲Aztec这个嗜血的活人祭祀民族。在南美新墨西哥城那个金字塔里，</p>
+
+<blockquote>
+  <p>Aztec historians record that in 1487 at the great pyramid of Tenochtitlan executioners sacrificed four lines of prisoners, each <em>two miles</em> long</p>
+</blockquote>
+
+<p>Aztec很擅长用死亡的恐惧来掌控人心。</p>
+
+<p>北朝鲜何尝不是如此。</p>
+
+<p>艺术太可怕了。</p>
+
+<p>这片子很有意思。很西方，但是很说明了一些问题。李笑来老师<a href="http://www.lixiaolai.com/index.php/archives/8287.html">推荐</a>过。其实我当时期望这部片子是讲一些西方艺术史的，米开朗基罗之类的，期望是文艺复兴和工业时代的一些平时很难找到的材料。比如哥伦比亚公司引入唱片封面提高了销售这些鲜为人知但十分有趣的历史。结果这片子主要讲史前的。罗马希腊原始部落和岩居人的艺术。但是还是很有意思。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-03-11T04:07:25+00:00">2010-03-11</time></p>
 <p>archive</p>            </div>
@@ -882,7 +1155,50 @@ En douce, il …</code></pre></p>
 
 <p>其实早就想装个词典工具了，我目前用的是Chrome下的官方扩展 <a href="https://chrome.google.com/extensions/detail/mgijmajocgfcbeboacabfgobmjgjcoja">Google Dictionary (by Google) - 版本： 1.0.2</a></p>
 
-<p>这 …</p></p>
+<p>这玩意儿啥都好，就是俺还希望有个记忆我查过那些单词，能记住上下文最好。因为很多时候我觉得这个单词我肯定在哪里查过。如果我第二次查过就说明这单词真的很重要，应该直接记住。而且在英语上下文中查单词有个很大的好处就是语境很好，用法很地道。甚至有些拟声词活灵活现的写法你一辈子都不可能从书本上学来的。</p>
+
+<p>安装有道词典的时候提示 无法写入文件 rank.bmp</p>
+
+<p>原因是磁盘空间满了。。。囧。。。我的Sandboxie所在分区空间满了。。。</p>
+
+<p>用了下</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/03/16.jpg" alt="youdao dict fail"></p>
+
+<p>总体感觉还将就。我算比较苛刻的极端用户吧，还是有几点比较遗憾</p>
+
+<ul>
+<li>网络释义功能似乎还很薄弱，上面截图就是个例子。处于很原始的收录一些网贴然后分词分析的那个阶段。我觉得直接和Urbandictionary，互动和百度百科它们合作算了。</li>
+<li>没有德语。。。</li>
+<li>没有API。我希望能有个能在Chrome里直接调用的CLSID。其实国内公司还都是小农模式。做软件等于做零售，没有建立一个围绕软件的生态系统的意识。而生态系统托起来的软件例子太多了。从最找的的WinAMP开始，到后来的开源运动，其实都是一个生态系统的建立。</li>
+<li>发音的TTS还是比较僵硬。</li>
+<li>没法自定义辞典之类的。</li>
+<li>不支持 * 和  ? 的模糊查询。</li>
+</ul>
+
+<p>我试过的词典软件：</p>
+
+<ul>
+<li>mdict 界面过度简陋了，基本功能都缺乏。不过我手机上装的是这个</li>
+<li>stardict 用过的最好的。因为可以自定义词典。哈哈。不过GTK在Win32上跑实在是PITA</li>
+<li>lingoes 过期需要联网激活，一次在没法上网到时候想查个单词，怒删之。</li>
+<li>babylon 找破解麻烦</li>
+<li>东方快车 和 金山词霸（包括谷歌版） Win98时代用过的。印象还可以，不过都是古董了。哈哈。</li>
+</ul>
+
+<p>我对英语查询的要求比较高，有的时候需要用到Wordnet，有的时候会需要正则： <code>grep -e "ing$" /usr/share/dict/words</code></p>
+
+<p>假名和英文之间互相转换的工具：泥轰国dict <a href="http://www.nihongodict.com/">http://www.nihongodict.com/</a>。等你需要的时候就会发现有这样一个网站太有用了！</p>
+
+<p>Unicode.org官方的Unihan查询工具。有释义 <a href="http://unicode.org/charts/unihan.html">http://unicode.org/charts/unihan.html</a>。什么各种编码的什么码表的就自己Google了我就懒得贴了。</p>
+
+<p>现在接触古典和传统的东西也开始多了起来，用<a href="http://www.zdic.net/">汉典</a>也比较频繁。特别是它的说文解字和古代写法，很有意思。极少时候还用到<a href="http://cn.voicedic.com/">方言发音</a>工具和<a href="http://www.eastling.org/OC/oldage.aspx">上古汉语语音查询</a>工具</p>
+
+<p>有的字写起来比较复杂，我会用<a href="http://nciku.cn/">n词酷</a>的笔画手写功能查询。以前是用的微软拼音手写识别。不过现在什么都云计算了。哈～～</p>
+
+<p>在线的用得最多的是Urbandictionary，Google Dictionary的网络释义功能做得最好，Wikipedia左下角的不同语言跳转功能最精确最有用，比如简体繁体转换就可以很清楚得到大陆、香港、台湾、新加坡之间汉字的转换。</p>
+
+<p>极少情况下会用到希腊文和拉丁文的词典。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-03-10T12:07:56+00:00">2010-03-10</time></p>
 <p>archive</p>            </div>
@@ -902,7 +1218,30 @@ En douce, il …</code></pre></p>
 
 <blockquote>
   <p>When you do want to insert a <code>&lt;br /&gt;</code> break tag using Markdown, you end a line with two or more spaces, then type return.<br>
-  Yes, this takes a tad more effort to …</p></blockquote></p>
+  Yes, this takes a tad more effort to create a <code>&lt;br /&gt;</code>, but a simplistic "every line break is a <code>&lt;br /&gt;</code>" rule wouldn’t work for Markdown. Markdown’s email-style blockquoting and multi-paragraph list items work best — and look better — when you format them with hard breaks.</p>
+</blockquote>
+
+<p>But I really want a <code>&lt;br /&gt;</code> whenever I press enter in wordpress. Especially copy a lot of text from elsewhere or quoting some text.</p>
+
+<p>I am using <a href="http://wordpress.org/extend/plugins/markdown-for-wordpress-and-bbpress/">Markdown for WordPress and bbPress</a> on this blog, I tried to convince <a href="http://michelf.com/projects/php-markdown/">the author</a> to add an option for enter-as-&lt;br /&gt;, the author seems reluctant to do it</p>
+
+<p>So let's DIY, open <code>/wp-content/plugins/markdown-for-wordpress-and-bbpress/markdown.php</code>, line 702</p>
+
+<p>change</p>
+
+<pre><code>function doHardBreaks($text) {
+                # Do hard breaks:
+                return preg_replace_callback('/ {2,}\n/',
+</code></pre>
+
+<p>to</p>
+
+<pre><code>function doHardBreaks($text) {
+                # Do hard breaks:
+                return preg_replace_callback('/\n/',
+</code></pre>
+
+<p>Done.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-03-10T06:32:22+00:00">2010-03-10</time></p>
 <p>archive</p>            </div>
@@ -935,7 +1274,7 @@ CRC-32: fbdb635b
  SHA-1: e81c09cd933eb48f65793577b2010ad1924cb1d0
 </code></pre>
 
-<p>Microsoft Visual Studio .NET C++ Express is …</p></p>
+<p>Microsoft Visual Studio .NET C++ Express is a PITA to install, I used a <a href="http://www.xdowns.com/soft/38/121/2008/Soft_43859.html">ripped version</a> of VC2008 commandline compilation tools.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-03-10T05:33:27+00:00">2010-03-10</time></p>
 <p>archive</p>            </div>
@@ -952,7 +1291,14 @@ CRC-32: fbdb635b
             <p class="card-text"><p><a href="http://zh.wikipedia.org/zh-cn/%E9%AB%98%E5%BE%B7%E6%B8%A9%E6%B3%95%E5%88%99">高德温法则</a>（<a href="http://en.wikipedia.org/wiki/Godwins_law">Godwin's Law</a>，又称高德温反纳粹类比规则）</p>
 
 <blockquote>
-  <p>网上论坛，一个帖子长度越长，用户开始扣 纳粹 和 法西斯 的帽子的几率越会 …</p></blockquote></p>
+  <p>网上论坛，一个帖子长度越长，用户开始扣 纳粹 和 法西斯 的帽子的几率越会越趋近于 1</p>
+</blockquote>
+
+<p>这个law太经典了。</p>
+
+<p>另外强烈推荐Wikipedia的一个分类 <a href="http://en.wikipedia.org/wiki/Category:Adages">http://en.wikipedia.org/wiki/Category:Adages</a> 老外很喜欢引用 XXX's law，这样讨论起来引经据典看起来很有文化，装逼程度+++++</p>
+
+<p><a href="http://news.ycombinator.com/item?id=1179648">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-03-10T01:59:32+00:00">2010-03-10</time></p>
 <p>archive</p>            </div>
@@ -979,7 +1325,22 @@ CRC-32: fbdb635b
 <p><a href="http://tech.sina.com.cn/t/2010-03-10/00343922046.shtml">sina的</a>标题是这样的</p>
 
 <blockquote>
-  <p>思科推出新一 …</p></blockquote></p>
+  <p>思科推出新一代路由系统4分钟内传完一部电影</p>
+</blockquote>
+
+<p>sina的原文是这样的</p>
+
+<blockquote>
+  <p>思科还称，AT&amp;T已经对这种新产品进行了成功测试，“这是世界上首次针对100吉比特级骨干网技术的现场测试”。此外，这种新系统还能“让中国的每个人都能同时进行视频通话；<strong>迄今为止的每部电影</strong>都能在不到4分钟时间里传输完成”。</p>
+</blockquote>
+
+<p>随便<a href="http://www.reddit.com/r/technology/comments/bb6o5/cisco_announces_new_322_terabits_per_second_router/">找</a>了个<a href="http://money.cnn.com/news/newsfeeds/articles/marketwire/0594332.htm">英文报道</a></p>
+
+<blockquote>
+  <p>The Cisco CRS-3 triples the capacity of its predecessor, the [Cisco CRS-1 Carrier Routing System(http://www.cisco.com/en/US/products/ps5763/), with up to 322 Terabits per second, which enables the entire printed collection of the Library of Congress to be downloaded in just over one second; every man, woman and child in China to make a video call, simultaneously; and <strong>every motion picture ever created</strong> to be streamed in less than four minutes.</p>
+</blockquote>
+
+<p>这也是为什么简体字的新闻看多了会脑残的原因</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-03-10T01:34:05+00:00">2010-03-10</time></p>
 <p>archive</p>            </div>
@@ -1041,7 +1402,20 @@ CRC-32: fbdb635b
 
 <p><img src="http://blog.est.im/wp-content/uploads/2010/03/13.jpg" alt=""></p>
 
-<p>特别是中文 …</p></p>
+<p>特别是中文字体，简直惨不忍睹。</p>
+
+<p>其次是按钮焦点虚线框看起来错位了</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/03/14.jpg" alt=""><br>
+<img src="http://blog.est.im/wp-content/uploads/2010/03/22.jpg" alt=""></p>
+
+<p>好把，我过于苛刻了一点。但是我印象中混乱不一致的控件外观，只有在Web页上才会发生。</p>
+
+<p>其次，.NET程序首次启动慢，WPF耗内存和CPU，这些缺点就不说了。Inbox2用的技术十分杂，从它的依赖库来看就有IronPython和jQuery。</p>
+
+<p>反正至今为止还没有找到令人印象深刻的WPF客户端软件。</p>
+
+<p>reddit上看到n个人说WinForms已死，MSDN论坛上提出的WinForms的bug，微软都不怎么修复了，建议开发人员要么做传统VC++的原生界面开发，要么全面转移到WPF上来。微软为WPF提供了高效的开发语言，便捷的开发平台和强大的工具链，但是目前我还是为WPF感到担忧。或许是微软招了太多的<del>第三世界</del>廉价开发人员做不出来短小精悍而强大的复杂大型软件了。要知道当年Windows 98带GUI极限精简可以做到8MB，Windows 2003的极限完整GUI精简版才93MB。界面十分华丽的<a href="http://initiative.yo2.cn/archives/623848">Renoise</a>才11MB，而且还不用安装依赖库。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-03-07T12:09:39+00:00">2010-03-07</time></p>
 <p>archive</p>            </div>

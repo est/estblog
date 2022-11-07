@@ -92,7 +92,11 @@ f.cleaned_data['key'] = 'value' # won't work
 </code></pre>
 <p>the output of <code>f.as_p()</code> is still the old value because the <code>f.data</code> is a MergeDict.</p>
 <p>The way to modify it:</p>
-<pre><code>d = dict(f …</code></pre></p>
+<pre><code>d = dict(f.data, field='new value')
+f.data = d
+</code></pre>
+<p>MergeDict is for pussies.</p>
+<p><code>newdict = dict(mydict, key='new value')</code> is better than <code>newdict = mydict.copy()</code></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-25T03:55:00+00:00">2013-01-25</time></p>
 <p>archive</p>            </div>
@@ -108,7 +112,7 @@ f.cleaned_data['key'] = 'value' # won't work
             </a>
             <p class="card-text"><p>http://www.google.com/dictionary/json?callback=dict_api.callbacks.id102&amp;q=wtf&amp;sl=en&amp;tl=en&amp;restrict=pr%2Cde%2Csy&amp;client=te</p>
 <p>https://www.google.com/dictionary/json?callback=dict_api.callbacks.id100&amp;q=test&amp;sl=en&amp;tl=en&amp;restrict=pr%2Cde%2Csy</p>
-<p>妈的居然还有存活 …</p></p>
+<p>妈的居然还有存活。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-22T02:01:00+00:00">2013-01-22</time></p>
 <p>archive</p>            </div>
@@ -127,7 +131,22 @@ f.cleaned_data['key'] = 'value' # won't work
 <p>so far的一些观点：</p>
 <ul>
 <li>这货的Datom不就是典型的EAV设计么。带一个timestamp，不错。只是一般EAV的entity是类似一个class，而Datom的EAV只是一个flat展开的，entity仅仅作为类似PrimiaryKey的存在。</li>
-<li>(RDF Triple](http://www.w3 …</li></ul></p>
+<li>(RDF Triple](http://www.w3.org/TR/rdf-concepts/#section-triples)跟EAV类似的思想，今天学习到了。主语 - 谓词 - 宾语 来表达数据</li>
+<li>这货的backend非常灵活，可以是传统SQL或NoSQL数据库。存储方式也可以localStorage或者MEM DB</li>
+<li>这货的query接口非常好，居然是用的Datalog。这种deductive思路跟Prolog一样都是很高阶的东西。</li>
+<li>因为Datom带了timestamp，所以数据DML模式不再是 CRUD，而是 CRA (Create Read Append)。好东西！这个就达到了data immutability。然后就可以被各种函数轮了。</li>
+<li>跟graph db一样，默认全局m2m join的。</li>
+<li>在上边这些概念的基础上，做到ACID 和 scaling。但是价格贼贵啊。我擦。</li>
+<li>抛弃传统的查询模型。传统的查询模型是C/S架构，客户端组织好结构化查询语言，服务器db container负责解析，db engine负责数据输出。Datomic可以在本地Peer做过滤和数据处理。服务器Transactor可以做更加神奇的事情</li>
+<li>服务器Transactor神奇之处在于支持<strong>自定义first-class函数</strong>。这就牛逼了。等会儿我专门写写这个。</li>
+</ul>
+<p>仔细想了下，这个完美的大饼还是有很多弱点的。</p>
+<p>比如CRA模式就不能很容易实现counter，比如类似reddit、HN那种多少人赞成/反对。</p>
+<p>看到<a href="https://groups.google.com/forum/?fromgroups=#!topic/datomic/eZl2hLuNiRo">Datomic官方论坛</a>里也承认了，aggregation的支持还是WIP。</p>
+<p>但是如果Datomic做好了，那种演绎式查询还是可以做得非常强大的。比如可以按人群区分赞成/反对。传统rdbms做起来就麻烦了。</p>
+<p>同时也想到了time series db的<a href="https://groups.google.com/forum/?fromgroups=#!topic/datomic/lZ45COQluaI">问题</a>，Datomic做起来似乎也比较吃力。</p>
+<p>乱写一点，继续看。这个<a href="http://datablend.be/?p=1641">入门文章</a>看起来不错。</p>
+<p>btw 自己挖坑轮ORM的一定要看这篇文章<a href="http://en.wikipedia.org/wiki/Object-relational_impedance_mismatch">O/R impedance mismatch</a>。精彩。Datomic号称解决了这个问题。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-21T22:23:00+00:00">2013-01-21</time></p>
 <p>archive</p>            </div>
@@ -163,7 +182,23 @@ f.cleaned_data['key'] = 'value' # won't work
 <p><a href="http://en.wikipedia.org/wiki/Fourth-generation_programming_language">4GL</a>:</p>
 <ul>
 <li>LabVIEW</li>
-<li>Progress 4GL (OpenEdge Advanced …</li></ul></p>
+<li>Progress 4GL (OpenEdge Advanced Business Language)</li>
+<li>SQL 和  PL/SQL</li>
+<li>MATLAB</li>
+<li>R</li>
+<li>Scilab</li>
+<li>XQuery</li>
+<li>XUL</li>
+<li>ColdFusion</li>
+</ul>
+<p><a href="http://en.wikipedia.org/wiki/Fifth-generation_programming_language">5GL</a></p>
+<ul>
+<li>Prolog</li>
+<li>Haskell</li>
+<li>ML</li>
+<li>Erlang</li>
+</ul>
+<p>虽然是一个过时的概念，还是拿出来玩一玩。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-20T20:20:03+00:00">2013-01-20</time></p>
 <p>archive</p>            </div>
@@ -202,7 +237,23 @@ f.cleaned_data['key'] = 'value' # won't work
 <p>Google Chrome <br />
 这个不仅是浏览器，而且是一整套生态系统体系</p>
 <p>Google Chrome Extensions  <br />
-大家常见的 “扩 …</p></p>
+大家常见的 “扩展” 体系</p>
+<p>Hosted Apps <br />
+又叫 Installable Web Apps。本质还是网站，但是提供一些本地特性用来整合 <br />
+文档： https://developers.google.com/chrome/apps/ <br />
+主要特色就是：权限比普通网站更加开放，可以一次设定永久有效。支持<code>manifest.json</code>。比如在里边通过<code>background_page</code>指定一个网站URL作为后台运行的机制</p>
+<p>Packaged Apps <br />
+又叫Chrome App<br />
+这就是可以看成exe或者dmg的东西了。本质是本地离线应用。<br />
+文档：http://developer.chrome.com/trunk/apps/ <br />
+其中这一篇很核心：http://developer.chrome.com/trunk/apps/app_lifecycle.html <br />
+有比较严格的CSP安全机制和MVC开发体系。 <br />
+支持很多和OS整合的特性，比如控制计算机硬件，双击本地文件，在Chrome里用指定的intent打开 <br />
+支持Chrome Storage &amp; Sync，也就是说数据、配置可以云漫游。（碉堡啦）</p>
+<p>我非常郁闷，Packaged Apps不允许 <code>background_page</code> ，正在探索这是怎么一回事。</p>
+<p>有一篇又臭又长的文章专门讲这个区别。注意这个文章有很多错误，加深了概念的混淆。囧。</p>
+<p><a href="https://developers.google.com/chrome/web-store/articles/apps_vs_extensions">Extensions, Packaged Apps, and Hosted Apps in the Chrome Web Store</a></p>
+<p>我觉得Google正在建立一个新的walled garden。。。。上了贼船，就不容易下来了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-16T02:44:00+00:00">2013-01-16</time></p>
 <p>archive</p>            </div>
@@ -220,7 +271,17 @@ f.cleaned_data['key'] = 'value' # won't work
 <p>猪脚是<del>Verizon</del>美国一位顶级资深码农，该公司为政府关键IT系统服务</p>
 <ul>
 <li>6位数的薪水</li>
-<li>把关键架构外包给沈阳一家公司（或者说 …</li></ul></p>
+<li>把关键架构外包给沈阳一家公司（或者说一个作坊）了。</li>
+<li>把RSA SecurID直接快递到中国。。。。</li>
+<li>每个月把1/5的薪水用来支付</li>
+<li>然后每天上reddit看猫猫视频</li>
+</ul>
+<p>我艹，真是天才。</p>
+<p>附上Onion新闻一则：</p>
+<iframe width="640" height="360" src="http://www.youtube.com/embed/rYaZ57Bn4pQ?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
+
+<p>via <a href="http://www.reddit.com/r/technology/comments/16nxtu/man_outsources_his_own_job_to_china_spends_free/">1</a>, <a href="http://www.reddit.com/r/netsec/comments/16n1mj/the_tale_of_vpn_logs_an_rsa_key_and_and_the_best/">2</a></p>
+<p>Update: solidot和cnbeta都报道了。我out了</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-16T01:44:00+00:00">2013-01-16</time></p>
 <p>archive</p>            </div>
@@ -236,7 +297,9 @@ f.cleaned_data['key'] = 'value' # won't work
             </a>
             <p class="card-text"><p>看了这篇文章《<a href="http://sunng.info/blog/2012/12/%e8%9e%ba%e6%97%8b%e5%8f%91%e5%b1%95%e7%9a%84%e6%8a%80%e6%9c%af/">螺旋发展的技术</a> 》</p>
 <p>觉得很有意思。以前我也喜欢喷技术的倒退啊之类的。现在看来不是这么回事。</p>
-<p>我们理解的 …</p></p>
+<p>我们理解的技术，只是现实技术 <strong><em>T</em></strong> 的绝对高度 <strong>|T|</strong>  在我们理想中的投影罢了 。一个技术的可见高度 = |<strong>T</strong>| * cos(心态) 。而技术的绝对高度的成长，则是不均衡发展的，非平衡的发展，造成的就是一种螺旋结构。</p>
+<p>这是一种自然规律，但是是人为可控的。只是工业界太大不可能有一个中心指挥机制。</p>
+<p>再也不愤了哈哈。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-15T03:04:00+00:00">2013-01-15</time></p>
 <p>archive</p>            </div>
@@ -278,7 +341,14 @@ f.cleaned_data['key'] = 'value' # won't work
 <p>There is never a single right solution. There are always multiple wrong ones, though.</p>
 </li>
 <li>
-<p>A bad design with a good presentation is doomed eventually. A good design with a bad presentation is doomed immediately. （PPT的重要性 …</p></li></ul></p>
+<p>A bad design with a good presentation is doomed eventually. A good design with a bad presentation is doomed immediately. （PPT的重要性。。。）</p>
+</li>
+<li>
+<p>(Larrabee's Law) Half of everything you hear in a classroom is crap. Education is figuring out which half is which.</p>
+</li>
+</ul>
+<p>from <a href="http://spacecraft.ssl.umd.edu/old_site/academics/akins_laws.html">Akin's Laws of Spacecraft Design</a></p>
+<p><a href="http://news.ycombinator.com/item?id=5057507">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-14T22:15:00+00:00">2013-01-14</time></p>
 <p>archive</p>            </div>
@@ -314,7 +384,12 @@ f.cleaned_data['key'] = 'value' # won't work
             <p class="card-text"><iframe width="640" height="360" src="http://www.youtube.com/embed/8bWlTZZN3DY?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
 
 <p><a href="http://i.imgur.com/0dAnS.jpg">人性</a>啊<a href="http://www.reddit.com/r/science/comments/16ay7i/brown_eyed_people_are_judged_to_be_more/">人性</a>。认知造就的人类阶级，真是震撼。</p>
-<p>习惯了每天在网上喷来喷去，第一次见到Ms. Jane Elliott这么镇定而犀利的人。这种老师才是人类的灵魂工 …</p></p>
+<p>习惯了每天在网上喷来喷去，第一次见到Ms. Jane Elliott这么镇定而犀利的人。这种老师才是人类的灵魂工程师啊。。。。</p>
+<p>看到中间的时候简直有点痛哭流涕的感觉，看到最后真的是被感动了</p>
+<p>美国在1968年就由这样的老师和孩子。而现在不仅不可能有，而且可能永远没有了。</p>
+<p><a href="http://www.reddit.com/r/psychology/comments/16babu/ms_jane_elliotts_experiment_brown_eyes_blue_eyes/">via</a></p>
+<p>btw 一个纪录片</p>
+<p>http://movie.douban.com/subject/3883396/</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-11T00:40:00+00:00">2013-01-11</time></p>
 <p>archive</p>            </div>
@@ -338,7 +413,14 @@ tar cf result.py "exec __import__('base64').b64decode('cHJpbnQgImhlbGxvLCB3b3JsZ
 $ python result.py 
 hello, world
 $ tar xvf result.py
-x exec __import__ …</code></pre></p>
+x exec __import__('base64').b64decode('cHJpbnQgImhlbGxvLCB3b3JsZCI=')
+$
+</code></pre>
+<p>这个是0day的PoC。。。。</p>
+<p>简单的说，就是一个上传，既是合法的tar文件，又是合法的python代码。omg碉堡了。</p>
+<p>今天Ruby on Rails也被日了。</p>
+<p>什么时候来日django？</p>
+<p>via <a href="http://www.reddit.com/r/Python/comments/166mi3/announcement_wikipythonorg_compromised/">1</a>, <a href="http://www.reddit.com/r/netsec/comments/164pa7/debian_wiki_servers_compromised_using_0day_in/">2</a>, <a href="http://www.reddit.com/r/netsec/comments/1679t8/wikipythonorg_compromised/">3</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-08T22:26:00+00:00">2013-01-08</time></p>
 <p>archive</p>            </div>
@@ -357,7 +439,9 @@ x exec __import__ …</code></pre></p>
 <p>SDR前面几篇博客也关注了。i500这个软modem性能应该不俗。就看RF前端的性能了。</p>
 <p>有个老外评论：</p>
 <blockquote>
-<p>Modems from High End RF chipset vendors are all soft modems. The limitation is the RF Front End. Unfortunately there are no PA's, LNA's, Duplexer, Diplexers, filters that …</p></blockquote></p>
+<p>Modems from High End RF chipset vendors are all soft modems. The limitation is the RF Front End. Unfortunately there are no PA's, LNA's, Duplexer, Diplexers, filters that can cover every damn band over there and hence the customization to a particular operator's frequencies. There are some Penta band devices out there that have multiple RF Chains because of the above limitations. Its not the modem that is the restriction. On top of this add the multi technologies with different bandwidths(LTE can go up to 20MHz, WCDMA 5MHz etc.) it is next to impossible to create a phone of today's size with these limitations that can work with every band. </p>
+</blockquote>
+<p>我估计Tegra 4将替代RTL-SDR。成为新一代SDR神器。。。。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-07T04:25:58+00:00">2013-01-07</time></p>
 <p>archive</p>            </div>
@@ -377,7 +461,9 @@ x exec __import__ …</code></pre></p>
 &lt;type 'exceptions.UnicodeDecodeError'&gt; at /req_history_play_list/req_num/30/req_offset/0
 </code></pre>
 <p>'utf8' codec can't decode byte 0xd7 in position 16: invalid continuation byte</p>
-<pre><code>Python  /usr/local/lib/python2.7/json/encoder.py in iterencode, line 263 …</code></pre></p>
+<pre><code>Python  /usr/local/lib/python2.7/json/encoder.py in iterencode, line 263
+</code></pre>
+<p>Web GET http://i.vod.xunlei.com/req_history_play_list/req_num/30/req_offset/0</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-12-24T05:41:00+00:00">2012-12-24</time></p>
 <p>archive</p>            </div>
@@ -394,7 +480,10 @@ x exec __import__ …</code></pre></p>
             <p class="card-text"><p>看到这个博客《搜狐微访谈：方舟子揭露微波炉烹饪致癌谣言》</p>
 <p>方舟子跟网友互动啦， blah blah一大堆。。看到这个问答，笑喷了。</p>
 <blockquote>
-<p>鹏赋Franklin： 向 @方 …</p></blockquote></p>
+<p>鹏赋Franklin： 向 @方舟子 提问： 用微波热中药怎么样？   </p>
+<p>方舟子： 用什么炉热中药都不怎么样。   </p>
+</blockquote>
+<p>trolling is a art</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-12-11T22:41:44+00:00">2012-12-11</time></p>
 <p>archive</p>            </div>
@@ -446,7 +535,14 @@ x exec __import__ …</code></pre></p>
 <p><img alt="" src="/images/tumblr/37387606338.png" /></p>
 <p>信息<a href="http://dgj.miit.gov.cn/n11293472/n11295276/n11297699/13699771.html">二</a>：</p>
 <blockquote>
-<p>现查明，你公司擅自扩大国内因特网虚拟专用网业务覆盖范围，违反《电信业务经营许可管理办法》（工信部令 …</p></blockquote></p>
+<p>现查明，你公司擅自扩大国内因特网虚拟专用网业务覆盖范围，违反《电信业务经营许可管理办法》（工信部令第5号）第十六条规定，未取得国际通信业务经营许可、擅自与香港一公司合作跨境经营因特网虚拟专用网业务，违反《电信条例》（国务院令第291号）第五十九条和《国际通信出入口局管理办法》（原信息产业部令第22号）第十九条、第二十五条规定，依据《电信条例》第七十条规定，决定责令你公司改正违规行为，并处<strong>一百万元</strong>罚款。</p>
+</blockquote>
+<p>信息<a href="http://www.gov.cn/gongbao/content/2003/content_62630.htm">三</a>，注意这个2003年就出来了。</p>
+<blockquote>
+<p>第二十二条　以经营电信业务为目的，通过互联网国际出入口设置虚拟网络的，应当报信息产业部批准。以内部使用为目的，通过互联网国际出入口设置虚拟专用网的，应当报信息产业部备案。</p>
+</blockquote>
+<p>是不是觉得tg碉堡了？</p>
+<p>btw 大家<a href="http://news.xinhuanet.com/newmedia/2012-11/30/c_124026243.htm">一定注意</a>一个公司 烽火网络Fiberhome.com.cn  <a href="http://news.cnet.com/8301-13578_3-57557347-38/u.n-summit-votes-to-support-internet-eavesdropping/">via</a> ITU大会上的 Y.2770 就是他们搞的。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-12-07T00:27:00+00:00">2012-12-07</time></p>
 <p>archive</p>            </div>

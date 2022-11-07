@@ -72,7 +72,35 @@
             </a>
             <p class="card-text"><p>最近装修房子，想自己折腾一个手机可查看的视频监控，乱写点自己的感受。</p>
 
-<p>淘宝上最便宜的 720p + WiFi + 云台 摄像头都是600人刀。感觉 …</p></p>
+<p>淘宝上最便宜的 720p + WiFi + 云台 摄像头都是600人刀。感觉太贵了。640x480的VGA倒是便宜。220左右。</p>
+
+<p>同轴闭路信号的监控，基本都是380线这种悲剧的分辨率，Sony有750线的高清方案，但是依然悲剧。</p>
+
+<p>数字化摄像头，基本都是USB接口，USB接口上了5米就是渣。HDMI超过10米成本上升太吓人。而且需要额外的服务器端设备才能实现IP Cam/webcam的功能。</p>
+
+<p>想来想去，还是以太网 +RJ45好。说不定还可以PoE网线供电</p>
+
+<p>但是我又想到了一个山寨办法，最近Raspberry Pi的生产线测试已经<a href="http://www.raspberrypi.org/archives/676">接近尾声开始准备出货</a>了</p>
+
+<blockquote>
+  <p>Meanwhile, the manufacturing cogs continue to turn. We hope the Raspberry Pis from the first batch will be out of testing by the end of Thursday, and on their way to freight.</p>
+</blockquote>
+
+<p>要是能$25买到，随便配一个USB摄像头，就可以基本做成很好的监控+编码平台。而且http服务器可以自己折腾毫无压力。避免了产品化监控头的专用二进制封装协议，还要ActiveX才能看。</p>
+
+<p>现在想起来，智能家庭还是很有趣的话题。电源、信号、多路联网这些都是麻烦事。</p>
+
+<p>今天又得知，我们公司的打卡机考勤记录，居然是每周人工用优盘去拷贝。感觉好落后。直接连一根网线不就完了吗？</p>
+
+<p>但是又想到，上一个以太网或者WiFi模块，还不够，还得做一个服务器端，以供远程实时查询；</p>
+
+<p>做服务器端还远远不够，还得做权限和访问控制。</p>
+
+<p>这些都是麻烦的课题。如果有一套基于IP的协议能提供基本信息输入输出和权限业务，那是最好不过了。</p>
+
+<p>这尼玛不就是物联网么。</p>
+
+<p>40年前谁会知道，私人会有这么大的计算需求；现在谁也不能否定每个人都有联网数据需求。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-02-24T04:29:05+00:00">2012-02-24</time></p>
 <p>archive</p>            </div>
@@ -135,7 +163,14 @@
 <p>mp3 streaming:<br>
 http://145.58.33.95:8104<br>
 aac+<br>
-http://145.58.33.95 …</p></p>
+http://145.58.33.95:8134<br>
+aac+<br>
+
+http://145.58.33.95:8174</p>
+
+<p>official aac streaming<br>
+
+http://ics2ess.omroep.nl/3fm-bb.aac?q=/npo/aac/3fm-bb.pls&amp;stream=ok</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-02-13T13:46:55+00:00">2012-02-13</time></p>
 <p>archive</p>            </div>
@@ -159,7 +194,11 @@ http://145.58.33.95 …</p></p>
 
 <p><span>http://blog.est.im/wp-content/uploads/2012/02/6cecd243jw1dpwgwtlibdj.jpg<br>
 http://blog.est.im/wp-content/uploads/2012/02/53866c37jw1dpwhvq4if8j.jpg<br>
-http://blog.est.im/wp-content/uploads …</span></p></p>
+http://blog.est.im/wp-content/uploads/2012/02/66a50640jw1dpwinhl4zoj.jpg<br>
+
+http://blog.est.im/wp-content/uploads/2012/02/617bfe3fgw1dpwuvnfzaaj.jpg</span></p>
+
+<p>技术宅赢了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-02-09T17:21:29+00:00">2012-02-09</time></p>
 <p>archive</p>            </div>
@@ -196,7 +235,26 @@ http://blog.est.im/wp-content/uploads …</span></p></p>
             <p class="card-text"><p>看到吹嘘Basecamp好多年了。今天真正集体用了一下，觉得好挫啊。我承认我没法做一个更好的，但是还是要喷一下不爽的地方。</p>
 
 <ul>
-<li>注册的时候 …</li></ul></p>
+<li>注册的时候没有任何框框提示输入的是什么东西，或者到底哪里出错了。</li>
+<li>Messages远远没有普通web forum的layout做的好。</li>
+<li>Messages里，Go to message | 3 comments 这两个链接功能重复</li>
+<li>ToDo不能assign to multiple individual people</li>
+<li>ToDo不支持依赖关系。</li>
+<li>Whiteboards不支持realtime aggregation。这都神马年代了还save刷新？</li>
+<li>其实Message, To-Do, Calendar, Whiteboard, Chart, Time功能是完全一模一样，重复的。没有核心和重点。</li>
+</ul>
+
+<p>感觉Basecamp并不能解决异步远程协同工作和人数稍多的管理问题。如果Basecamp的成功真的是just works的话，这真的是一个奇迹。</p>
+
+<p>有人说basecamp不是project mangagement，只是issue tracker。我不同意。</p>
+
+<p>如果我来设计，我觉得Google Wave那种就很好。管理上有两种风格，要么通过职能职位，铁打的营盘流水的兵，要么就细化到具体人头小而精。</p>
+
+<p>基本组成单位应该是单条message，message构成thread，核心和重点就是thread。一个thread可以是todo，也可以是calendar event，也可以是whiteboard，也可以是chat。多个thread构成time。如果是whiteboard或者是collaboration这种mutable content，thread主帖之外message就应该是playback和revision。</p>
+
+<p>thread要突出metadata，entity-attribute-value体系，以及完整的active/passive event mechanism。thread之间可以构成<a href="http://en.wikipedia.org/wiki/Directed_acyclic_graph">有向无环图</a>的依赖关系。thread也是Knowledge Base的基本单位，thread的顶楼message是article，下面的是评论和回帖。article可以是文字，也可以是语音、文件和多媒体，甚至指针，通过MIME Multipart分割。一个thread的参与者可以动态加入或者退出，来去自由。</p>
+
+<p>技术上用etherpad那种realtime的，类markdown语法为主的就很好。辅助富文本，以及interactive canvas。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-02-04T01:11:28+00:00">2012-02-04</time></p>
 <p>archive</p>            </div>
@@ -215,7 +273,36 @@ http://blog.est.im/wp-content/uploads …</span></p></p>
 <p><a href="http://zqb.cyol.com/images/2012-02/02/02/2012020202_brief.jpg"><img src="http://blog.est.im/wp-content/uploads/2012/02/2012020202_brief.jpg" alt=""></a></p>
 
 <blockquote>
-  <p>但是，稍加思考便知，如此论证纯属胡扯。因 …</p></blockquote></p>
+  <p>但是，稍加思考便知，如此论证纯属胡扯。因为只有<strong>第一次</strong>折角两边边长相等，此后的折角两边边长就<strong>严重不等</strong>，最后得出圆周率为4的结论，类似于愚人节的搞笑。如果想不清这种论证也不要紧，不妨动手<strong>实际测量</strong>一下，也能很容易得出圆周率到底是多少。</p>
+</blockquote>
+
+<p>以上摘自：<br>
+<a href="http://zqb.cyol.com/html/2012-02/02/nw.D110000zgqnb_20120202_2-02.htm">别有用心的“圆周率谣言</a>  陈家兴《 中国青年报 》（ 2012年02月02日   02 版）</p>
+
+<p>不清楚前因后果的同学可以看看：<a href="http://www.eaglefantasy.com/archives/1730">为什么我要写钓鱼文</a> 宇宙的心弦</p>
+
+<p>关于pi = 4这个<a href="http://www.xamuel.com/troll-math/">troll mathematics</a>有点老了，<a href="http://www.reddit.com/r/fffffffuuuuuuuuuuuu/comments/e6jdw/pi_equals_4_trollface_proof">reddit</a>等社区很早就有讽刺<a href="http://en.wikipedia.org/wiki/Approximations_of_%CF%80#Biblical_value">《圣经》里反智</a>说法：pi is exactly three。两年前有人把troll physics发扬光大为troll math，去钓mathfags的鱼：</p>
+
+<p><img src="http://28.media.tumblr.com/tumblr_lbxrvcK4pk1qbylvso1_400.png" alt=""></p>
+
+<p>reddit上曾经有人<a href="http://www.reddit.com/r/fffffffuuuuuuuuuuuu/comments/e91ql/answering_the_infamous_pi_4_proof/">试着</a>回答</p>
+
+<p><img src="http://i.imgur.com/lesKQ.jpg" alt=""></p>
+
+<p>值得一提的是，reddit的这个<a href="http://www.reddit.com/r/fffffffuuuuuuuuuuuu/">r/fffffffuuuuuuuuuuuu</a> (aka f7u12) subreddit正是国内小流行“<a href="http://baozoumanhua.com/">暴走漫画</a>”的主要发源地</p>
+
+<p>troll physics系列meme起源于4chan，被各种宅发扬光大。比如这个：</p>
+
+<p><img src="http://i0.kym-cdn.com/photos/images/original/000/074/262/1285770751942.png" alt=""></p>
+
+<p><a href="http://www.reddit.com/r/science/comments/dwm2s/we_showed_troll_physics_comics_to_a_physics">这里</a>有个大学教授居然蛋痛的<a href="http://www.urlesque.com/2010/10/25/i-showed-troll-physics-comics-to-a-physics-professor/">解释</a>出来了。（新闻链接里最后一段。）</p>
+
+<p>再比如：</p>
+
+<p><img src="http://i0.kym-cdn.com/photos/images/original/000/074/256/1285770302993.jpg" alt=""></p>
+
+<p>btw, 1337% of pi == 42，这才是真相。<br>
+btw2, 水木的MJ版又要搞一个新的钓鱼了。鳖、三比较图，对数坐标。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-02-02T08:15:36+00:00">2012-02-02</time></p>
 <p>archive</p>            </div>
@@ -243,7 +330,11 @@ http://blog.est.im/wp-content/uploads …</span></p></p>
 
 <p><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://player.youku.com/player.php/sid/XMzQ3NzkyMjcy/v.swf&amp;width=480&amp;height=400" width="480" height="400"></iframe></p>
 
-<p>部分答案和原理解析。密码：二 …</p></p>
+<p>部分答案和原理解析。密码：二极管的英文单词</p>
+
+<p><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://player.youku.com/player.php/sid/XMzQ3NzkyNDY4/v.swf&amp;width=480&amp;height=400" width="480" height="400"></iframe></p>
+
+<p>亮点是<span style="color:black;background-color:black">74LV132和LED电感</span></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-02-02T06:20:16+00:00">2012-02-02</time></p>
 <p>archive</p>            </div>
@@ -300,7 +391,23 @@ The Girl with the Dragon Tattoo<br>
 Warrior (2011)<br>
 A Lonely Place to Die<br>
 Sanctum （惊天洞地）<br>
-战马 War Horse …</p></p>
+战马 War Horse<br>
+红犬历险记 Red Dog (2011)<br>
+利益风暴 Margin Call<br>
+柠檬大嘴巴 Lemonade Mouth<br>
+雇工人生 El Empleo<br>
+点球成金/魔球 Moneyball<br>
+另一个地球 Another Earth<br>
+公路杀手 Cat Run<br>
+时间规划局 In Time<br>
+命运规划局 The Adjustment Bureau<br>
+A.Separation<br>
+Mission: Impossible - Ghost Protocol<br>
+罪孽 The Debt<br>
+魔法奇幻秀 The Imaginarium of Doctor Parnassus<br>
+吾栖之肤 La piel que habito <br>
+阳光姐妹淘 써니 sunny<br>
+勇士 Magadheera</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-01-19T09:54:59+00:00">2012-01-19</time></p>
 <p>archive</p>            </div>
@@ -332,7 +439,30 @@ Sanctum （惊天洞地）<br>
 标  题: 威武的俄国人<br>
 发信站: 水木社区 (Tue Jan 17 00:15:10 2012), 站内</p>
 
-<p>http://upload.wikimedia …</p></p>
+<p>http://upload.wikimedia.org/wikipedia/en/f/fa/Letter_to_Russia_with_krokozyabry.jpg<br>
+俄国学生用email给法国朋友自己的通信地址，因编码错误，法国人看到的是俄文转成ISO-8859-1后的乱码，就直接把乱码抄在信封上，俄国邮递员很v5地正确译了码，把邮包送到。</p>
+
+<p><img src="http://upload.wikimedia.org/wikipedia/en/f/fa/Letter_to_Russia_with_krokozyabry.jpg" alt=""></p>
+
+<blockquote>
+  <p>the address was encoded in KOI8-R, it reads:</p>
+
+  <p>Россия Москва, 119415<br>
+  пр.Вернадского, 37,<br>
+  к.1817-1,<br>
+  Плетневой Светлане</p>
+
+  <p>encoded in a Western character encoding (or ISO-8859-1, aka Windows-1252), it reads:</p>
+
+  <p>òÏÓÓÉÑ íÏÓË×Á, 119415<br>
+  ÐÒ.÷ÅÒÎÁÄÓËÏÇÏ, 37,<br>
+  Ë.1817-1,<br>
+  ðÌÅÔÎÅ×ÏÊ ó×ÅÔÌÁÎÅ</p>
+</blockquote>
+
+<p>牛逼的Mojibake，牛逼的邮递员</p>
+
+<p><a href="http://www.weibo.com/1678314171/y0RydeuuN">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-01-17T06:15:06+00:00">2012-01-17</time></p>
 <p>archive</p>            </div>
@@ -361,7 +491,21 @@ Sanctum （惊天洞地）<br>
 <p>the instruction is like:</p>
 
 <ul>
-<li>switch your 3rd and 8th character …</li></ul></p>
+<li>switch your 3rd and 8th character in your password</li>
+<li>add an extra 3  after your 2nd character in your password</li>
+<li>append the result of 23+17 at the end of your password</li>
+<li>wrap your password with [] bracket</li>
+<li>separate every single character of your password with a dot</li>
+<li>move the last character in your password to the beginning</li>
+</ul>
+
+<p>Bots have a slow time correctly recognizing CAPTCHAs, needless to say doing NLP well and carry out the correct actions.</p>
+
+<p>You can cleverly design the CAPTCHA image distortion to trap the OCR AI program to make predictable mistakes, a honey pot that collect evidence and patterns and actively ban bad clients.</p>
+
+<p>In a secret underground forum, you can compile these instructions into a code, like <code>i3a9</code> means <code>insert a 3 after te 9th character</code>, outsiders can not enter even with the correct password.</p>
+
+<p>This method also protect the user's password from eavesdropping and mass-target MITM attacks.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-01-15T03:07:00+00:00">2012-01-15</time></p>
 <p>archive</p>            </div>
@@ -436,7 +580,10 @@ Sanctum （惊天洞地）<br>
 
   <p>2009年4月之前是明文，2009年4月之后是加密的，但部分明文密码未清理；2010年8月我来CSDN以后清理掉了所有明文密码。</p>
 
-  <p>历史 …</p></blockquote></p>
+  <p>历史遗留的安全隐患从2011年元旦起已经全部解决。CSDN帐号数据库已经迁移到了Linux平台上的MySQL数据库，进行了多方面的安全加固，密码加密强度也很高。</p>
+</blockquote>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2011/12/2011-12-22_001803.png" alt=""></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-12-21T16:22:11+00:00">2011-12-21</time></p>
 <p>archive</p>            </div>

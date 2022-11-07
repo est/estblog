@@ -59,7 +59,22 @@
 <p>一句话点中3D打印的要害：</p>
 
 <blockquote>
-  <p>The geography of supply chains will change. An engineer working in the middle of a desert who finds he lacks a certain tool no longer has to have it delivered from the nearest …</p></blockquote></p>
+  <p>The geography of supply chains will change. An engineer working in the middle of a desert who finds he lacks a certain tool no longer has to have it delivered from the nearest city. He can simply download the design and print it.</p>
+</blockquote>
+
+<p>关于制造业 vs 服务业：</p>
+
+<blockquote>
+  <p>They spend billions backing the new technologies which they, in their wisdom, think will prevail. And they cling to a romantic belief that manufacturing is superior to services, let alone finance.</p>
+
+  <p>The lines between manufacturing and services are blurring. Rolls-Royce no longer sells jet engines; it sells the hours that each engine is actually thrusting an aeroplane through the sky.</p>
+</blockquote>
+
+<p>越来越喜欢读Economist了，语言简单明了，废话少。</p>
+
+<p>第三次工业革命可能让tg有点吃惊，信息革命可不止是替代了邮局那么简单。</p>
+
+<p><a href="http://news.ycombinator.com/item?id=3895690">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-04-27T07:21:32+00:00">2012-04-27</time></p>
 <p>archive</p>            </div>
@@ -150,7 +165,18 @@
 <ol>
 <li><p>安装<a href="http://wbond.net/sublime_packages/package_control">Package Control</a>。在Sublime Text 2按下<code>Ctrl+`</code>键，复制粘贴回车下列代码：</p>
 
-<pre><code>import urllib2,os; pf='Package Control.sublime-package'; ipp=sublime.installed_packages_path(); os.makedirs(ipp …</code></pre></li></ol></p>
+<pre><code>import urllib2,os; pf='Package Control.sublime-package'; ipp=sublime.installed_packages_path(); os.makedirs(ipp) if not os.path.exists(ipp) else None; urllib2.install_opener(urllib2.build_opener(urllib2.ProxyHandler())); open(os.path.join(ipp,pf),'wb').write(urllib2.urlopen('http://sublime.wbond.net/'+pf.replace(' ','%20')).read()); print 'Please restart Sublime Text to finish installation'
+</code></pre></li>
+<li><p><code>Ctrl+Shift+P</code> 输入 <code>Install Package</code>，回车</p></li>
+<li>找到JsFormat，回车，安装完毕</li>
+</ol>
+
+<p>格式化javascript方法：</p>
+
+<ol>
+<li>复制一段文本</li>
+<li><code>Ctrl+Shift+P</code>，找到 <code>Format: Javascript</code> 回车即可。</li>
+</ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-04-18T02:19:31+00:00">2012-04-18</time></p>
 <p>archive</p>            </div>
@@ -175,7 +201,14 @@
 <p>另附：<br>
 喝过隔夜水吗？CCAV告诉你很危险，里面含有致癌物质一氧化二氢<br>
 <a href="http://www.acfun.tv/v/ac327082/">http://www.acfun.tv/v/ac327082/</a><br>
-不能喝隔夜水，科学研究表明隔夜水中含有零醇、氧 …</p></p>
+不能喝隔夜水，科学研究表明隔夜水中含有零醇、氧酚、羟基氢、氢羟酸、苛性氢、二零醚、正氧烷、氧乙烯、氢氧化氢、脱碳甲醛、一氧化二氢、氢化超氧酰、脱氰零醛肟、二聚氢氧酸酐、氢化脱磺硫酸、氧化脱羧乙酸、氢化脱苄苯甲醇等。过量食用会致人死亡，为了你的健康，请转发 <br>
+<a href="http://www.guokr.com/post/140450/">http://www.guokr.com/post/140450/</a></p>
+
+<p>发信人: jungleford (風淸揚╬孤城斩菜羊), 信区: MilitaryJoke<br>
+标  题: 让你们钓鱼！<br>
+发信站: 水木社区 (Sat Apr 14 20:46:21 2012), 站内</p>
+
+<p>CCAV新闻台现在在放一氧化二氢致癌</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-04-16T09:29:56+00:00">2012-04-16</time></p>
 <p>archive</p>            </div>
@@ -196,7 +229,12 @@
 <ol>
 <li><p>Go to the podcast page, like <a href="http://itunes.apple.com/us/podcast/stuff-to-blow-your-mind/id350359306">this</a></p></li>
 <li><p>Get its <strong>Apple ID</strong>, like the above example, <em>350359306</em>.</p></li>
-<li><p>Go to this page <a href="http://itunes.apple.com/lookup?id=350359306">http://itunes.apple.com …</a></p></li></ol></p>
+<li><p>Go to this page <a href="http://itunes.apple.com/lookup?id=350359306">http://itunes.apple.com/lookup?id=350359306</a></p></li>
+<li><p>See the <code>feedUrl</code> ?</p>
+
+<pre><code>"feedUrl":"http://www.howstuffworks.com/podcasts/stuff-to-blow-your-mind.rss"
+</code></pre></li>
+</ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-04-13T04:13:30+00:00">2012-04-13</time></p>
 <p>archive</p>            </div>
@@ -228,7 +266,33 @@
             <a href="/archives/4563"  rel="bookmark" >
               <h2 class="card-title">对电商的一些不爽</h2>
             </a>
-            <p class="card-text"><p>最近忙装修，东西在网上买了不少。几乎天天刷box-z，s.taobao.com，这样，然后一个目录一个目录的看，一个排行榜一个排行榜的看，累 …</p></p>
+            <p class="card-text"><p>最近忙装修，东西在网上买了不少。几乎天天刷box-z，s.taobao.com，这样，然后一个目录一个目录的看，一个排行榜一个排行榜的看，累啊。</p>
+
+<p>希望这些网站有一些功能：</p>
+
+<ul>
+<li><p>用户指定一个型号的产品，当有货/降价时提醒用户</p></li>
+<li><p>用户指定一类产品，当优惠、促销、套餐的时候提醒用户</p></li>
+<li><p>当指定一类产品有新功能、新型号、新货上架时提醒用户</p></li>
+<li><p>用户指定产品各种参数，比如对尺寸重量的要求，商家觉得自己的产品符合这个参数，主动bid。这个无法很好的用搜索引擎实现，因为很多东西是相对描述性的自然语言，比如“炉灶宽度不大于油烟机的宽度”。</p></li>
+</ul>
+
+<p>有些功能B2C实现了，比如降价提醒，但是淘宝没有实现，让人觉得每天去遍历很痛苦。</p>
+
+<p>整体来说现在的电商网站基本还只是 实体柜台 映射到 虚拟SKU 这样的模式，缺乏一些根本的信息化创新。</p>
+
+<p>对物流的一个想法：</p>
+
+<p>有的时候觉得在淘宝买东西，把自己电话和地址留给卖家是很危险的。一是垃圾广告促销短信，而是差评电话威胁。消费者信息应该实现对商家匿名化：</p>
+
+<ol>
+<li><p>消费者订购商品</p></li>
+<li><p>商家给消费者一个 <strong>快递单号</strong></p></li>
+<li><p>消费者在 物流公司/快递公司 的网站上把这个 <strong>快递单号</strong> 关联到自己的真实地址和电话</p></li>
+<li><p>快递公司接件之后，直接根据物流号送到指定位置。商家可以看到仓库之间的物流动态，进入市区，进入街道的动态，但是看不到消费者具体地址。</p></li>
+</ol>
+
+<p>/rant</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-04-10T04:28:36+00:00">2012-04-10</time></p>
 <p>archive</p>            </div>
@@ -246,7 +310,23 @@
 
 <p>今天有个同事没来上班，原因是不知道今天要上班；</p>
 
-<p>不知道今天要上班，是因为他没有收到清明节放假安 …</p></p>
+<p>不知道今天要上班，是因为他没有收到清明节放假安排；</p>
+
+<p>他没有收到清明节放假安排的邮件，是因为这封邮件是一个月之前发的；</p>
+
+<p>而他是一周前入职的。</p>
+
+<p>Email 作为一种定期过时通知机制，是不合适的。而且不能收到每个人的回馈是否“ACK”</p>
+
+<p>同时这个通知也发送到了RTX。但是RTX是实时的，更加接收不到。RTX的卖点其实就是个组织架构，其他方面也做得很烂。所以这个方面同步的IM和异步Email都不能很好解决，必须引入第三方信息渠道。</p>
+
+<p>由此感想，micro/small enterprise还是需要一个敏捷的，类似Google Wave的协作工具啊。</p>
+
+<p>但是目前市场上要么是hosted的，付费平台，总感觉内部的东西放到别人的篮子里很别扭；</p>
+
+<p>要么自己搭建的简陋系统，界面不友好，只有码农才会用；要么就是功能太弱。要么就不跨平台。</p>
+
+<p>要么就是不如email和IM这样靠谱，可依赖，稳定，可archive。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-03-31T01:28:46+00:00">2012-03-31</time></p>
 <p>archive</p>            </div>
@@ -266,7 +346,11 @@
 
 <p><img src="http://i.imgur.com/gY8D1.jpg" alt=""></p>
 
-<p>一个工程师文化为主导的公司，失去了能让工程师发挥创意的地方，还能存活多久？这种低级错误都能犯，而且发给了好几 …</p></p>
+<p>一个工程师文化为主导的公司，失去了能让工程师发挥创意的地方，还能存活多久？这种低级错误都能犯，而且发给了好几亿人。。。囧</p>
+
+<p>话说Google Wave真是一个超前的好东西，现在非常希望有个类似的替代品。</p>
+
+<p><a href="http://www.reddit.com/r/geek/comments/r51m9/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-03-20T17:00:50+00:00">2012-03-20</time></p>
 <p>archive</p>            </div>
@@ -290,7 +374,11 @@
 
 <p>Visual content administered by: Radio e Televisao Record</p>
 
-<p>如果有电视台制 …</p></p>
+<p>如果有电视台制作一期游行抗议的节目，是不是youtube上所有看起来、听起来类似的视频也可以以版权为理由封杀呢？</p>
+
+<p>你妹的youtube！操蛋的SOPA PIPA ACTA。</p>
+
+<p>后来又反思了一下，policy maker对待不同的entity真是不公平的。如果一个copyright claim是错误的，应该重罚这种不负责行为，并且赔偿损失。为什么平民有<a href="http://news.ycombinator.com/item?id=2738776">这种</a><a href="http://news.ycombinator.com/item?id=3721726">限制</a>，而版权方没有600 strikes这种限制呢？比如你发了600次错误的版权声明，那么应该马上失去issue copyright的权利，并且GTFO。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-03-20T02:34:00+00:00">2012-03-20</time></p>
 <p>archive</p>            </div>
@@ -323,7 +411,17 @@
             <p class="card-text"><ol>
 <li>触摸笔刷不好用。还是鼠标爽</li>
 <li>以前有个HTML5 canvas版本的多人画图猜字游戏，还可以打字交流。DST完全应该支持语音聊天的</li>
-<li>后来想了一下，这样异步对战还是可以搞的。因为很多人睡 …</li></ol></p>
+<li>后来想了一下，这样异步对战还是可以搞的。因为很多人睡觉起来第二天接着猜。</li>
+<li>没有多人模式和观战模式。多人游戏的好处是画的越好，猜对比例越大，可以评价双方的水平。</li>
+<li>没有排行榜和推荐榜。</li>
+<li>字体用得太烂了。我不止一次看到把 L 按成 I 而出错，本来猜对了，后来放弃的。</li>
+<li>输入框太诡异了，居然界面不能直接输入，要弹出输入框才能输入。</li>
+<li>iPad上界面太粗糙</li>
+<li>延迟太高，不支持直接对战</li>
+<li>不能防止直接用文字写出答案这种没意思的行为。至少有个简单的笔迹鉴定吧？</li>
+<li>不支持游戏交友，很多心有灵犀的人真的很棒。很想认识。</li>
+<li>没有桌面或Web版本。</li>
+</ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-03-17T07:42:56+00:00">2012-03-17</time></p>
 <p>archive</p>            </div>
@@ -341,7 +439,21 @@
 
 <p><img src="http://blog.est.im/wp-content/uploads/2012/03/google-semantic-search-11.png" alt=""></p>
 
-<p>感叹搜索引擎已经 …</p></p>
+<p>感叹搜索引擎已经完全成为过去时了。</p>
+
+<p>这个改变意味着什么？意味着，搜索引擎失去了避风港资格，而以后逐步地，必须为自己的“答案”直接负责了。而不同的人、不同的国家地区，对同一问题的回答的要求，是不同的，你可以在不同时间不同地点让不同的人满意，但是你很难让所有地点所有时间让所有人满意。</p>
+
+<p>不满意意味着什么？被封。</p>
+
+<p>如果每个人看到的搜索结果都不一样，那么搜索就失去了公平性、可比性和排名的意义。长此以往，搜索引擎就不再是客观的信息检索工具，而是被主观操控的谎言机器。</p>
+
+<p>机器产生的答案能勉强解决一部分问题，而且还仅仅是（不怎么赚钱）一部分而已。搜索引擎的颓势也不是从这一天开始的。搜索引擎崛起就在于.COM泡沫破灭后的Internet初期，大量的个人或组织机构独立网站多，而且分散，但是单个网站信息比较集中，有大量原始素材可供批量检索。</p>
+
+<p>但是现在独立网站内容基本都是spam和可有可无、无关紧要的东西了。内容的产生早已转移到信息流和社会化网站里面去了。而这些网站往往比较封闭，稍微好一点的都需要账号登入才能互动，由最终用户看到的HTML页面展示的二手信息可用价值大打折扣。有实力的网站原生数据挖掘早已被开发利用了，根本轮不到第三方搜索引擎来吃透多层信息了。</p>
+
+<p>加上移动互联网的崛起，信息的uplink接口基本被几家大的4层或者7层公司垄断死。“公网”的存在意义基本是岌岌可危了。公网的搜索引擎的作用，也就沦落为网站自身搜索技术不完善的补充了。</p>
+
+<p>就我个人现在而言，搜索引擎早已不是信息搜索工具，而是信息概览工具，看看自己覆盖面有没有漏掉的地方。其实Google出的行业特定搜索结果早已是烂得不行了。被搜索引擎踏平的互联网山头又开始竖立起来了。这种opt-in的信息世界会有一种什么样的未来呢？</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-03-15T07:40:20+00:00">2012-03-15</time></p>
 <p>archive</p>            </div>
@@ -411,7 +523,11 @@
 
 <p>这个太牛逼了。牛逼大发了。那个四轴阵列太可怕了！卧槽啊！！！！！Quadrotor屌爆了啊！</p>
 
-<p>能不能不要这么牛逼啊。把宅男喜欢的所有元素都集中到一 …</p></p>
+<p>能不能不要这么牛逼啊。把宅男喜欢的所有元素都集中到一起了！</p>
+
+<p>TED2012</p>
+
+<p>HiPDA/14521576, reddit/qdir2, reddit/qdg0i</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-03-02T03:13:45+00:00">2012-03-02</time></p>
 <p>archive</p>            </div>

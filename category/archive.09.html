@@ -60,7 +60,14 @@
 
 <blockquote>
   <p>A novice was trying to fix a broken Lisp machine by turning the power off and on.<br>
-  Knight, seeing what the student was doing, spoke sternly: "You cannot fix a machine …</p></blockquote></p>
+  Knight, seeing what the student was doing, spoke sternly: "You cannot fix a machine by just power-cycling it with no understanding of what is going wrong."<br>
+  Knight turned the machine off and on.<br>
+  The machine worked.</p>
+</blockquote>
+
+<p>Linus老大又发飙了（<a href="http://news.ycombinator.com/item?id=2469685">1</a>, <a href="http://www.reddit.com/r/programming/comments/gv17m/this_kind_of_i_broke_things_so_now_i_will_jiggle/">2</a>）</p>
+
+<p>关于这位Tom Knight，<a href="http://en.wikipedia.org/wiki/Software_transactional_memory">STM</a>就是他发明的。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-04-27T08:18:48+00:00">2011-04-27</time></p>
 <p>archive</p>            </div>
@@ -77,7 +84,25 @@
             <p class="card-text"><p>今天在玩Code Mirror 2，<a href="http://codemirror.net/internals.html">读到</a>这条 internal：</p>
 
 <blockquote>
-  <p>CodeMirror 1 was heavily reliant on designMode or contentEditable (depending on the browser). Neither of these are well specified (HTML5 tries to specify their basics), and, more importantly, they tend to be one of the more obscure and …</p></blockquote></p>
+  <p>CodeMirror 1 was heavily reliant on designMode or contentEditable (depending on the browser). Neither of these are well specified (HTML5 tries to specify their basics), and, more importantly, they tend to be one of the more obscure and buggy areas of browser functionality—CodeMirror, by using this functionality in a non-typical way, was constantly running up against browser bugs. WebKit wouldn't show an empty line at the end of the document, and in some releases would suddenly get unbearably slow. Firefox would show the cursor in the wrong place. Internet Explorer would insist on linkifying everything that looked like a URL or email address, a behaviour that can't be turned off. Some bugs I managed to work around (which was often a frustrating, painful process), others, such as the Firefox cursor placement, I gave up on, and had to tell user after user that they were known problems, but not something I could help.</p>
+</blockquote>
+
+<p>幸好我没上这条贼船啊。想起了沈大仙在《<a href="http://eishn.blog.163.com/blog/static/652318201102831731444/">程序员的 100 种境界</a>》中一句经典的话：</p>
+
+<blockquote>
+  <p>IE 的这个 BUG 只要用 IE 另外的一个 BUG 就可以解决了</p>
+</blockquote>
+
+<p>现在做HTML的rich WYSIWYG editor一般就这么几条路：</p>
+
+<ol>
+<li>iframe</li>
+<li>textarea</li>
+<li>div contentEditable</li>
+<li>place a micro textarea at cursor </li>
+</ol>
+
+<p><a href="http://lifesinger.org/blog/2010/07/goog-docs-copy-tech/">Google Docs</a>（此link<ins>目前</ins>挂了）也用了一个和4比较类似的YD技巧。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-04-26T10:45:34+00:00">2011-04-26</time></p>
 <p>archive</p>            </div>
@@ -145,7 +170,13 @@
 
 <p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/8/86/TalulahRileyAug09.jpg/500px-TalulahRileyAug09.jpg" alt=""></p>
 
-<p>觉得非常眼熟，<a href="http://en.wikipedia.org/wiki/Talulah_Riley">一看</a>原来演过St Trinian's，Inception，也是《Pirate Radio》里的Marianne （btw …</p></p>
+<p>觉得非常眼熟，<a href="http://en.wikipedia.org/wiki/Talulah_Riley">一看</a>原来演过St Trinian's，Inception，也是《Pirate Radio》里的Marianne （btw 看过IT crowd的一定要看Pirate Radio！）</p>
+
+<p>美女就不说了，<a href="http://www.telegraph.co.uk/news/celebritynews/7149397/Talulah-Riley-the-worlds-sexiest-quantum-physicist.html">别人还</a>在CalTech修Quantum Physics。。。。。</p>
+
+<p>稳拿啊！</p>
+
+<p><a href="http://www.reddit.com/r/technology/comments/gvwfs/spacex_aims_to_put_man_on_mars_in_1020_years/#c1qpn2y">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-04-24T14:45:26+00:00">2011-04-24</time></p>
 <p>archive</p>            </div>
@@ -188,7 +219,32 @@
 <ul>
 <li>Intel 网卡会自作聪明电源管理，所以掉线，关掉网卡的电源选项；</li>
 <li>本地连接 IPv6关掉就不会掉线了；</li>
-<li>禁用TP-Link …</li></ul></p>
+<li>禁用TP-Link R402上的 DHCP，UPnP，防火墙；</li>
+</ul>
+
+<p>我最近越来越发现这问题严重了。ping 192.168.1.1有的时候居然会出现&gt;6ms甚至&gt;10ms，&gt;20ms的rtt延迟。开始以为是网线问题，后来弄了很久这个问题依然持续。</p>
+
+<p>但是我注意到：</p>
+
+<ul>
+<li>TP-Link R402的 DHCP服务器 - 客户端列表 下只显示我这一台PC的IP和MAC地址</li>
+<li>arp -a里居然没有路由器的IP和MAC</li>
+<li>禁用 启用 本地连接，又能上一会儿的网</li>
+</ul>
+
+<p>所以估计多半是脑残的微软又在Win7里改DHCP的什么东东了。Google一搜索Win7 dhcp bug果然<a href="http://hardforum.com/showthread.php?t=1471670">找到</a>了<a href="http://blogs.technet.com/b/teamdhcp/archive/2009/02/12/dhcp-broadcast-flag-handling-in-windows-7.aspx">办法</a>：</p>
+
+<p>regedit打开</p>
+
+<p><code>HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\{GUID}</code></p>
+
+<p>这里的<code>{GUID}</code>要一个一个看，看你 “本地连接” 那个IP</p>
+
+<p>把 <code>DhcpConnForceBroadcastFlag</code> 设置为 <code>1</code></p>
+
+<p>问题解决。再反观国内互联网，搜索关键词 "Win7 掉线" 会有 1,080,000 个结果，而搜索 DhcpConnForceBroadcastFlag 只有 3,360 个结果。而且居然没有一个大站提出这个问题的准确解决方法。遗憾。</p>
+
+<p>第二个教训就是，TL-R402这种廉价低端路由器实在不靠谱。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-04-20T15:16:43+00:00">2011-04-20</time></p>
 <p>archive</p>            </div>
@@ -221,7 +277,16 @@
             <p class="card-text"><p>今天下午在手机上无聊，看到<a href="http://www.reddit.com/r/politics/comments/gshpd/the_storms_that_hit_the_us_this_weekend_killed/">reddit上</a>愤青们讨论一个话题：</p>
 
 <blockquote>
-  <p>The storms that hit the US this weekend killed more American civilians in a single day than terrorists have in the last 9 years. Yet NOAA funding is …</p></blockquote></p>
+  <p>The storms that hit the US this weekend killed more American civilians in a single day than terrorists have in the last 9 years. Yet NOAA funding is set to be cut. Good job America.</p>
+</blockquote>
+
+<p>吃饭的时候突然想到，这句话其实可以从另外一个角度理解：美国的反恐行动如此成功，以至于一场自然灾害死的人都比恐怖袭击死的人多。</p>
+
+<p>又想起来一句经典的场景，一个学生拿着书睡着了。</p>
+
+<p>舆论导向A：这学生真懒惰啊，一碰到书就想睡觉；</p>
+
+<p>舆论导向B：这学生真勤奋啊，睡觉时都还拿着书！</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-04-18T13:33:51+00:00">2011-04-18</time></p>
 <p>archive</p>            </div>
@@ -239,7 +304,13 @@
 标  题: 某人写的声律启蒙<br>
 发信站: 水木社区 (Sun Apr 17 11:14:47 2011), 站内</p>
 
-<p>偶尔在一个论坛看到的 …</p></p>
+<p>偶尔在一个论坛看到的，挺搞笑的</p>
+
+<p>歌对舞，笑对嘲，清新对傲娇。蛋疼对手贱，团购对直销。食盐贵，海浪高。牛奶对雀巢。情人拍兽兽，室友躲猫猫。跳水学俯卧，踢球练叉腰。小朋友还将书念，大学生已把粪掏。百年好合，老白配了郭芙蓉；千杯不醉，苍井陪着杜海涛。</p>
+
+<p>拆对建，苦对麻，优乐对益达。春哥对凤姐，纠结对拧巴。索马里，阿凡达，剩女对田娃。恋哥对坑爹，你妹对他妈。要关心牙齿，先感谢国家。慢跑碎步读春树，闲敲回车赋梨花。百病同方，茄子条且配绿豆，千年一叹，山楂树犹开红花。</p>
+
+<p>槑对囧， 蒜对姜，变态对迷茫。朱丹对绿豆，三鹿对四娘。人难老，夜未央，地久对天荒。一堆鸭梨大，四袋苹果香。大伙围脖短，小偷鞋带长。喝开水防噎防呛，打酱油别死别伤。一往无前，神马都苍茫寂寞，微斜向上，浮云样明媚忧伤</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-04-17T15:09:49+00:00">2011-04-17</time></p>
 <p>archive</p>            </div>
@@ -253,7 +324,13 @@
             <a href="/archives/3925"  rel="bookmark" >
               <h2 class="card-title">Rosetta Stone的tracking.db3</h2>
             </a>
-            <p class="card-text"><p>最近迷上了Rosetta Stone，学习SK-DEU-L1-NA-PE-NA-NA-Y-3中。用的是TPB的xx版。在 <code>%appdata%\Rosetta Stone\</code> 目录下有个 tracking.db3，一看就知道Rosetta Stone是用Flex写的，那么这个文件理所当然就是SQLite3的格式。打开一看果 …</p></p>
+            <p class="card-text"><p>最近迷上了Rosetta Stone，学习SK-DEU-L1-NA-PE-NA-NA-Y-3中。用的是TPB的xx版。在 <code>%appdata%\Rosetta Stone\</code> 目录下有个 tracking.db3，一看就知道Rosetta Stone是用Flex写的，那么这个文件理所当然就是SQLite3的格式。打开一看果然是</p>
+
+<p>成绩什么的都在这里呢</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2011/04/2011-04-17_224023.png" alt=""></p>
+
+<p>看来可以自己写个监督进度提醒的工具了。哈哈。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-04-17T14:42:13+00:00">2011-04-17</time></p>
 <p>archive</p>            </div>
@@ -281,7 +358,15 @@ Via: HTTP/1.1 webcache1-know.server.virginmedia.net (Traffic-Server/5.7.0-59705 
 <p>几点：</p>
 
 <ol>
-<li><p>The IWF are …</p></li></ol></p>
+<li><p>The IWF are the <em>quan﻿go</em> who have taken it upon themselves to filter bits of the Internet in the UK. ISPs then subscribe to a list of blocked domains and individual URLs.</p></li>
+<li><p>the IWF want to only block individual URLs. Unfortunately, this can only be done at the HTTP layer since URLs exist at this layer, which means its necessary to proxy all traffic through a HTTP proxy. This is done by your ISP routing any packets addressed to, say Fileserve’s IP address, to their <strong>own proxy</strong> instead of to Fileserve’s servers. Your ISP’s proxy then checks to see if the url is blocked. If it is, several different things may happen depending on your ISP. In some cases the connection is dropped. In others a 404 File Not Found (dishonest) or a 403 Forbidden (honest) is returned. If the URL isn’t blocked, the ISP’s proxy will make the request on your behalf to Fileserve and respond with Fileserve’s response.</p></li>
+<li><p>IWF这货在2008年就<a href="http://en.wikipedia.org/wiki/Internet_Watch_Foundation_and_Wikipedia">跟wikipedia干上了</a>。Scorpions的<em>Virgin Killer</em>又中枪了。</p></li>
+<li><p>当然，IWF官方也是很冠冕堂皇的说，我们<a href="http://www.iwf.org.uk/hotline/the-laws">只封XX内容</a>。</p></li>
+</ol>
+
+<p>我觉得这种ISP级别的全局代理是最贱的。天底下操蛋的东西都一个德行。</p>
+
+<p><a href="http://news.ycombinator.com/item?id=2455871">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-04-17T13:01:07+00:00">2011-04-17</time></p>
 <p>archive</p>            </div>
@@ -319,7 +404,29 @@ Via: HTTP/1.1 webcache1-know.server.virginmedia.net (Traffic-Server/5.7.0-59705 
             </a>
             <p class="card-text"><p>最近Google Code慢得跟狗屎一样，然后<code>svn export</code>或者<code>svn checkout</code>遇到大量文件，中途失败一下就悲剧了，因为没法断点续传。（或者我不知道）</p>
 
-<p>然后svn用代理也很sb，google的那个代理貌似不支持HTTP OPTIONS这种svn需要的语法，所以我 …</p></p>
+<p>然后svn用代理也很sb，google的那个代理貌似不支持HTTP OPTIONS这种svn需要的语法，所以我就只有很悲剧的用<code>wget -m</code>了</p>
+
+<p>折腾了一下发现<code>wget -m</code>这玩意很很sb，居然不支持中文URL或文件名。好吧，发现wget支持两个参数</p>
+
+<pre><code>--local-encoding=ENC      use ENC as the local encoding for IRIs.
+--remote-encoding=ENC     use ENC as the default remote encoding.
+</code></pre>
+
+<p>满怀欣喜的用着两个参数 =UTF-8 的运行，结果发现</p>
+
+<blockquote>
+  <p>This version does not have support for IRIs</p>
+</blockquote>
+
+<p>卧槽啊卧槽， 于是自己弄源码编译，已经都<code>--with-libidn</code>了，结果这JB烂玩意儿只能随机处理<strong>一个或两个</strong>中文字符，UTF-8尼玛伤不起啊！</p>
+
+<p>最后用了<a href="http://cocobear.info/blog/2008/04/19/wget-chinese-encode/">cocobear的patch</a>，搞定了中文URL和文件名的问题，顺利<code>wget -m</code>来下载Google Code的一个SVN。</p>
+
+<p>以前折腾sftpd发现中文路径要挂，记得也是源码里只处理32-127的ASCII。</p>
+
+<p>为了节省大家的时间，提供一个编译好的32bit wget ELF文件下载：</p>
+
+<p><a href="http://blog.est.im/wp-content/uploads/2011/04/wget.zip">http://blog.est.im/wp-content/uploads/2011/04/wget.zip</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-04-15T03:24:23+00:00">2011-04-15</time></p>
 <p>archive</p>            </div>
@@ -356,7 +463,93 @@ Via: HTTP/1.1 webcache1-know.server.virginmedia.net (Traffic-Server/5.7.0-59705 
             <p class="card-text"><p>最近看NoSQL发现entity-attribute-value（简称EAV）这个模型真王道啊，<a href="http://code.google.com/appengine/docs/python/datastore/overview.html">Google App Engine的 datastore</a>就是个典型的entity-attribute-value模型：</p>
 
 <blockquote>
-  <p>The App Engine datastore saves data objects, known as <em>entities</em>. An entity has one or more <em>properties</em>, named <em>values</em> of one of several supported …</p></blockquote></p>
+  <p>The App Engine datastore saves data objects, known as <em>entities</em>. An entity has one or more <em>properties</em>, named <em>values</em> of one of several supported data types. For instance, a property can be a string, an integer, or even a <strong>reference</strong> to another entity.</p>
+</blockquote>
+
+<p>但是在Stackoverflow上发现大家对EAV评价非常低，<a href="http://stackoverflow.com/questions/5499371/does-sql-server-have-native-support-for-eav">都</a>说这是个<a href="http://www.simple-talk.com/sql/database-administration/five-simple--database-design-errors-you-should-avoid/">very bad design</a></p>
+
+<p>比如把一个表</p>
+
+<p><img src="http://www.simple-talk.com/iwritefor/articlefiles/843-Fig7.jpg" alt=""></p>
+
+<p>搞成这种EAV模型的设计：</p>
+
+<p><img src="http://www.simple-talk.com/iwritefor/articlefiles/843-Fig8.jpg" alt=""></p>
+
+<p>然后一个简单的SQL就从</p>
+
+<pre><code>SELECT first_name, last_name
+FROM Employees
+WHERE date_of_birth &gt; &#39;12/31/1950&#39; ;
+</code></pre>
+
+<p>变成了</p>
+
+<pre><code>SELECT MAX( CASE emp_property WHEN &#39;first_name&#39;
+                              THEN value
+           END ) AS first_name,
+      MAX( CASE emp_property WHEN &#39;last_name&#39;
+                             THEN value
+           END ) AS last_name
+  FROM EmployeeValues
+ WHERE emp_nbr IN ( SELECT emp_nbr
+                      FROM EmployeeValues
+                     WHERE emp_property = &#39;date_of_birth&#39;
+                       AND CAST( value AS DATETIME ) &gt; &#39;12/31/1950&#39; )
+   AND emp_property IN ( &#39;first_name&#39;, &#39;last_name&#39; )
+ GROUP BY emp_nbr ; 
+</code></pre>
+
+<p>缺点太多了：</p>
+
+<ul>
+<li>太多row了，无法方便直接管理，甚至造成性能低下</li>
+<li>想限制下数据很困难</li>
+<li>无法利用外键</li>
+<li>写query就是一坨浆糊</li>
+<li>基本不可能生成复杂的分析和报告</li>
+</ul>
+
+<p>但是我突然想到，类似memcached和redis这种key-value不是恰好避免了这些缺点而发挥了EAV的优点吗？在<a href="http://stackoverflow.com/questions/870808/entity-attribute-value-database-vs-strict-relational-model-ecommerce-question">stackoverflow上</a>看到类似的评价：</p>
+
+<p>为是么entity-attribute-value不好？</p>
+
+<p>because they are inefficient usage of <strong>relational databases</strong>. A purely key/value store works great with this model.</p>
+
+<p>类似MongoDB这种document db就更好了，非常适合做EAV模型的数据存储和处理。</p>
+
+<p>现在觉得，NoSQL 其实代表 NoACID，而真正替代 Relational 的革命性的东西就是 EAV。</p>
+
+<p>关于EAV的一些trivia：</p>
+
+<ul>
+<li>EAV的最早期起源是LISP association lists，为了AI研究里的knowledge representation。其实这个association list就是n多attribute-value对。说白了就是n个key-value值。</li>
+<li>一些EAV的实际例子：浏览器cookie，Microsoft Windows注册表，ASN.1</li>
+<li>EAV可以用sematic web里的RDF来描述，metadata用RDF Schema来描述。但是我个人而言是讨厌一大坨XML的。</li>
+<li>EAV和Subject-Predicate-Object本质是等价的</li>
+<li>XML可以被看成带tag的EAV。</li>
+<li>比tagging更加高级的metadata玩法就是EAV</li>
+<li>object-oriented db其实在对象和逻辑上都不如EAV直观，我觉得EAV/CR是OO的超集</li>
+<li>EAV的代价就是非常复杂和容易出错的metadata处理。菜鸟玩metadata玩着玩着就把自己给meta了。</li>
+<li>EAV的特点是  <br>
+<br>
+<ul>
+<li>超灵活</li>
+<li>稀疏属性存储空间最优</li>
+<li>EAV的数据就是简洁直观的物理fact，而且很大程度上是自我描述的。</li>
+<li>开放式物理schema，所以有的时候EAV也被称为open schema，而且EAV模型就是简化schema的主要手段。</li>
+<li>和传统数据库不同，EAV的逻辑schema和物理schema非常不同。EAV的逻辑schema必须保存为metadata形式</li>
+<li>足够丰富的EAV可以用来直接执行主动数据操作，相比而言传统数据库只能被动描述数据。（我又在YY这个传说中的deductive特性了）</li>
+</ul></li>
+<li>云计算厂商搞的数据存储基本都是EAV。前面说的Google的datastore，支持GQL，支持的value数据类型也是最丰富的；Microsoft的Windows Azure Table Storage，在URL上调用LinQ provider；Amazon的SimpleDB支持查询语法和数据类型最少。</li>
+</ul>
+
+<p>参考</p>
+
+<p>1: <a href="http://ycmi.med.yale.edu/nadkarni/eav_cr_contents.htm">http://ycmi.med.yale.edu/nadkarni/eav_cr_contents.htm</a><br>
+2: <a href="http://en.wikipedia.org/wiki/Entity-attribute-value_model">http://en.wikipedia.org/wiki/Entity-attribute-value_model</a></p>
+
+<p>ps 中文搜索<a href="http://203.208.39.104/search?lr=lang_zh-CN&amp;q=EAV%E6%A8%A1%E5%9E%8B">EAV模型</a>全是关于magento的。。。或许现实中最急迫的EAV应用就是电子商务吧？</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-04-14T02:25:23+00:00">2011-04-14</time></p>
 <p>archive</p>            </div>
@@ -421,7 +614,14 @@ Via: HTTP/1.1 webcache1-know.server.virginmedia.net (Traffic-Server/5.7.0-59705 
 <p>一个有意思的观点：</p>
 
 <blockquote>
-  <p>This is not a test to <em>admit</em> people to Harvard; it's a …</p></blockquote></p>
+  <p>This is not a test to <em>admit</em> people to Harvard; it's a test to <em>reject</em> them</p>
+</blockquote>
+
+<p>因为当年的Harvard，有政治地位和有钱的即使过不了这些测试也能读Harvard。而女性，黑人，犹太人，爱尔兰人和穷人是不能读的。这个测试的作用就是把这些人给拒掉。（Chinaman当时貌似连人都不算。。。）</p>
+
+<p>作为比较，这里有MIT的：<a href="http://libraries.mit.edu/archives/exhibits/exam/algebra.html">http://libraries.mit.edu/archives/exhibits/exam/algebra.html</a>，值得<a href="http://news.ycombinator.com/item?id=1964071">注意</a>的是，MIT的兴起完全是在WWII时期，因为这个时候大量需要engineer and shit</p>
+
+<p>via <a href="http://www.reddit.com/r/reddit.com/comments/glws2/harvards_1899_entrance_exam/">1</a>, <a href="http://news.ycombinator.com/item?id=2426655">2</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-04-09T14:41:16+00:00">2011-04-09</time></p>
 <p>archive</p>            </div>
@@ -463,7 +663,13 @@ Via: HTTP/1.1 webcache1-know.server.virginmedia.net (Traffic-Server/5.7.0-59705 
 
 <p><img src="http://blog.est.im/wp-content/uploads/2011/04/1.jpg" alt=""></p>
 
-<p>严格的 …</p></p>
+<p>严格的来说这个不是贪吃蛇，是电影《tron》里面那种光轮摩托。</p>
+
+<p>发现一个道理：越是old school的东西发散创新的维度越多。在这个天下XX一大抄的时代回归到本质的返璞归真的境界，把所有问题原子化才能爆发新的奇异点。</p>
+
+<p><ins>更新</ins>：<a href="http://blog.est.im/wp-content/uploads/2011/04/11.jpg">所有关卡截图</a>，反编译的<a href="http://paste.ubuntu.com/589852/">javascript源码</a></p>
+
+<p><a href="http://www.reddit.com/r/programming/comments/giz2r/lightcycle_on_a_3d_surface_webgl/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-04-05T13:51:56+00:00">2011-04-05</time></p>
 <p>archive</p>            </div>
@@ -486,7 +692,14 @@ Via: HTTP/1.1 webcache1-know.server.virginmedia.net (Traffic-Server/5.7.0-59705 
 <p>详细介绍：</p>
 
 <blockquote>
-  <p>But you can't safely just …</p></blockquote></p>
+  <p>But you can't safely just forward TCP packets over a TCP session (like ssh), because TCP's performance depends fundamentally on packet loss; it must experience packet loss in order to know when to slow down! At the same time, the outer TCP session (ssh, in this case) is a reliable transport, which means that what you forward through the tunnel never experiences packet loss. The ssh session itself experiences packet loss, of course, but TCP fixes it up and ssh (and thus you) never know the difference. But neither does your inner TCP session, and extremely screwy performance ensues.</p>
+
+  <p>sshuttle assembles the TCP stream locally, multiplexes it statefully over an ssh session, and disassembles it back into packets at the other end. So it never ends up doing TCP-over-TCP. It's just data-over-TCP, which is safe.</p>
+</blockquote>
+
+<p>和VPN相比sshuttle是stateful的，和ssh相比sshuttle lets you use the "real" IP addresses of each host rather than faking port numbers on localhost.</p>
+
+<p><a href="http://news.ycombinator.com/item?id=2409090">还有</a>一篇essay说为神马<a href="http://sites.inka.de/bigred/devel/tcp-tcp.html">TCP Over TCP Is A Bad Idea</a>。简单的说，就是双层数据丢包性能底下。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-04-05T05:24:36+00:00">2011-04-05</time></p>
 <p>archive</p>            </div>
@@ -547,7 +760,43 @@ depth=1 /C=ZA/O=Thawte Consulting (Pty) Ltd./CN=Thawte SGC CA
 verify error:num=20:unable to get local issuer certificate
 verify return:0
 DONE
-405062e5befde4af97e9382af16cc87c8fb7c4e2 …</code></pre></p>
+405062e5befde4af97e9382af16cc87c8fb7c4e2
+$ dig +short 405062e5befde4af97e9382af16cc87c8fb7c4e2.certs.googlednstest.com TXT
+&quot;14867 15062 74&quot;
+</code></pre>
+
+<p><a href="http://news.ycombinator.com/item?id=2402136">第二个</a>是<a href="https://twitter.com/#!/zedshaw/status/54434747652390912">Zed Shaw写的</a>一个脚本，加密一个文件，只有用特定网站SSL私钥才能解密</p>
+
+<pre><code>set -e
+
+echo &quot;Encrypting $2 for $1.&quot;
+
+# make a directory to store results for this site
+mkdir -p results/$1
+
+# get that site&#39;s SSL certificate, validating it with the cacert.pem we have
+echo &quot;QUIT&quot; | openssl s_client -CAfile cacert.pem -connect $1:443 &gt; results/$1/cert.pem
+
+# generate a random password from urandom
+dd if=/dev/urandom of=results/$1/pass.txt bs=1 count=96
+
+# use the raw password and AES to encrypt the output
+openssl enc -a -aes-256-cbc -salt -in $2 -out results/$1/file.enc -pass file:results/$1/pass.txt
+
+# then, use the above public cert to encrypt the pass key
+openssl rsautl -encrypt -inkey results/$1/cert.pem -pubin -certin -in results/$1/pass.txt -out results/$1/pass.enc
+
+# finally, delete the password so it&#39;s not around and accidentally leaked
+rm results/$1/pass.txt
+
+echo &quot;ALL DONE&quot;
+</code></pre>
+
+<p>很酷。</p>
+
+<p>最后是今天的rant：（不喜勿看，真的。）</p>
+
+<p>Youtube那个全屏自动切换到高清分辨率的<a href="http://blog.est.im/archives/3187">bug</a>又出现了，尼玛的辛辛苦苦缓冲了半个小时的视频一点全屏就白下载了，你说复杂的东西出点bug也就算了，这种初中生写flash都不会犯的错误你他妈反复多次犯。我艹你妈youtube的工程师和QA都他妈吃屎的么？加上<a href="http://it.solidot.org/article.pl?sid=11/04/02/1041241">这样</a>的新闻，我真觉得这种垃圾公司早点倒闭算了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-04-03T14:26:42+00:00">2011-04-03</time></p>
 <p>archive</p>            </div>
@@ -589,7 +838,33 @@ print udid
 
 <p>IETF搞了个<a href="http://tools.ietf.org/html/rfc6217">rfc6217</a>Regional Broadcast Using an Atmospheric Link Layer</p>
 
-<p><a href="http://www.iteye.com/news/20605">JavaEye …</a></p></p>
+<p><a href="http://www.iteye.com/news/20605">JavaEye.com收到Oracle律师函</a>，这个……貌似是真的。</p>
+
+<p>Google推出 <a href="http://www.google.com/romance/">Google Remance</a>，还有就是招<a href="http://www.google.com/intl/en/jobs/uslocations/mountain-view/autocompleter/index.html">人工拼写检查和搜索建议</a>这个职位。<a href="http://www.cnbeta.com/articles/138831.htm">G.CN</a>和<a href="http://www.cnbeta.com/articles/138891.htm">Gmail团队</a>的那个就不说了。到处都报道了。</p>
+
+<p>Debian他们搞了个 Canterbury Distribution。很NB，这么多网站一起改主页啊。<a href="http://blog.est.im/wp-content/uploads/2011/04/2.png">截图</a></p>
+
+<p>reddit<a href="http://www.reddit.com/r/reddit.com/comments/gftr6/and_the_april_fools_video_for_2011_is/">民间</a>搞<a href="http://www.reddit.com/r/videos/comments/gftly/and_the_april_fools_video_for_2011_is/">无聊</a>视频假装认真，官方搞的是<a href="http://blog.reddit.com/2011/03/reddit-mold-is-now-live.html">Reddit Mold</a></p>
+
+<p>Notepad++宣布<a href="http://notepad-plus-plus.org/news/redirect-donation-to-scientology">向Scientology捐款</a></p>
+
+<p>Youtube貌似搞的是1911复古？</p>
+
+<p>TechCrunch<a href="http://eu.techcrunch.com/2011/04/01/spotify-announces-us-launch-closing-european-service-to-fund-it/">宣布</a>Spotify关闭欧洲市场以筹集向美国市场进军的资金</p>
+
+<p><a href="http://www.omgubuntu.co.uk">OmgUbuntu</a> 点进去就知道了</p>
+
+<p>SuperUser上<a href="http://superuser.com/questions/265114/getting-a-weird-error-running-windows">有人troll</a></p>
+
+<p><a href="http://listen.grooveshark.com/">Grooveshark</a>推出基于HTML5的 3D体验模式</p>
+
+<p>CNTV <a href="http://my.cntv.cn/html/index.html">http://my.cntv.cn/html/index.html</a><br>
+<img src="http://blog.est.im/wp-content/uploads/2011/04/2011-04-01_210552.png" alt=""><br>
+<img src="http://blog.est.im/wp-content/uploads/2011/04/2011-04-01_2106001.png" alt=""></p>
+
+<p>去年的2010-04-01看<a href="http://blog.est.im/archives/1834">这里</a></p>
+
+<p>更多的在<a href="http://news.ycombinator.com/item?id=2394349">这里</a> 和 <a href="http://techcrunch.com/2011/04/01/april-fools-2011-the-big-list/">这里</a> 有空再补充吧</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-04-01T06:24:49+00:00">2011-04-01</time></p>
 <p>archive</p>            </div>
@@ -673,7 +948,14 @@ print udid
 
 <p>1: Turn all ligatures off, and make sure the tracking is set to “0”.<br>
 2: Type values. Use “+” to connect values into the same chart.<br>
-3: Adjust colors …</p></p>
+3: Adjust colors if desired.<br>
+4: Turn standard ligatures on, and enjoy!</p>
+
+<p><a href="http://www.tktype.com/chartwell.php">Tk Type Chartwell</a>，牛逼的创意。按照这个思路可以做好多好多有趣的应用啊。</p>
+
+<p>via pinboard / popular</p>
+
+<p>btw 花$9.24注册了Pinboard。太堕落了。后悔当年$4没注册啊～～～～</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-03-26T14:03:45+00:00">2011-03-26</time></p>
 <p>archive</p>            </div>
@@ -692,7 +974,21 @@ print udid
 <blockquote>
   <p>发信人: baraka (美是一种信仰), 信区: Joke<br>
   标  题: 美国众议员建议将圆周率π法定为3<br>
-  发信站: 水木社区 (Thu Mar 24 15:09:30 2011), 站 …</p></blockquote></p>
+  发信站: 水木社区 (Thu Mar 24 15:09:30 2011), 站内</p>
+
+  <p>【 以下文字转载自 NewExpress 讨论区 】<br>
+  发信人: Radwanska (xx), 信区: NewExpress<br>
+  标  题: 美国众议员建议将圆周率π法定为3<br>
+  发信站: 水木社区 (Thu Mar 24 15:06:53 2011), 站内</p>
+
+  <p>美国阿拉巴马州的共和党女众议员Martha Roby在国会草拟法案，建议将圆周率π法定为3，以解决美国学生数学成绩在工业发达国家中排名殿后的情况。（via HuffingtonPost.com）</p>
+</blockquote>
+
+<p>不看故事原文下的<a href="http://www.huffingtonpost.com/ian-squires/republicans-introduce-leg_b_837828.html">评论</a>江海以为是真的。结果是comedy section下的satire。牛啊。H.R. 205其实是另外个<a href="http://www.govtrack.us/congress/bill.xpd?bill=h112-205">HEARTH Act of 2011</a>。话说我朝什么时候也能把NPC的bill都逐一编号公开呢？</p>
+
+<p>又看到另外一则新闻，顿时内牛满面了。</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2011/03/2011-03-25_141106.png" alt=""></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-03-25T00:36:05+00:00">2011-03-25</time></p>
 <p>archive</p>            </div>
@@ -724,7 +1020,15 @@ print udid
 
 <p><a href="http://news.ycombinator.com/item?id=2357835">via</a></p>
 
-<p><strong>update1:</strong> <a href="http://slides.html5rocks.com/#web-workers">这张slide</a>卡爆了。说HTML5不卡的人可以去死了。以后投放广 …</p></p>
+<p><strong>update1:</strong> <a href="http://slides.html5rocks.com/#web-workers">这张slide</a>卡爆了。说HTML5不卡的人可以去死了。以后投放广告一次性同时开10k个worker看你卡不卡。</p>
+
+<p><strong>Update2:</strong> <a href="http://slides.html5rocks.com/#new-form-types">shit</a>'s fucked up in Chrome</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2011/03/2011-03-23_195418.png" alt=""></p>
+
+<p><strong>Update3:</strong> Arrow keys don't fucking work in <a href="http://slides.html5rocks.com/#canvas-3d">this</a> slide.</p>
+
+<p>And after CSS3 transform and shit, it all feels like 1999 dHTML again.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-03-23T11:43:20+00:00">2011-03-23</time></p>
 <p>archive</p>            </div>
@@ -742,7 +1046,35 @@ print udid
 标  题: 也谈链表及其他Re: python标准库貌似没有实现链表？<br>
 发信站: 水木社区 (Mon Mar 21 18:49:46 2011), 转信</p>
 
-<p>实际上刚开始学习一些高级语言的 …</p></p>
+<p>实际上刚开始学习一些高级语言的时候我也有同样的疑问，而且即使有链表对应物的语言，链表常常也很少被实际使用。<br>
+如果是在国外听数据结构的课，老师一般会警告你这只是一个理论概念，实际应用应该实际考察，在通常情况下链表不是一个很好的结构。<br>
+通常链表会作为一个很好的反例，告诉大家脱离实际硬件环境来谈论所谓算法复杂度是没有任何意义的。<br>
+这是因为，链表已经不适合当今的计算机硬件发展。当今的计算机硬件对内存是否连续更为敏感，而链表恰恰会破坏这种顺序读取。<br>
+由于locality很差所以常常造成page fault和cache miss<br>
+这也是为什么大多数教师不再推荐使用链表的原因。而且现今的硬件内存拷贝实际相当迅速。<br>
+并且python的list算法不是通常的单项表，也不是通常的数组。<br>
+具体可以看这里：<a href="http://wiki.python.org/moin/TimeComplexity">http://wiki.python.org/moin/TimeComplexity</a><br>
+在List末尾append/pop都是O(1)的，<br>
+如果要在头部或者中部插入是O(n),任何破坏连续性的操作都会被要求realloc,所以任何此类操作都是O(n)<br>
+但是当今的常用硬件，使用C写的链表和python的list，在insert的时候只有n&gt;50000才让链表比list快那么一点点。<br>
+这还没有考虑其他实际操作的复杂度。加上前面说的破坏locality,导致链表完全没有吸引力。在对象特别多的时候通常我们直接抽象它为数据库，也不要去想什么链表了。</p>
+
+<p>在需要用到linked list特性的地方，比如常常需要从头部append或者pop<br>
+这时候有python的deque. (这里我记错了，特此更正，deque如果做insert还是会导致内存拷贝/移动，这里面的关键思想就是目前硬件的内存拷贝相当快，不是相当长的东西都可以接受)<br>
+deque也不是通常的简单数据结构，它是经过认真权衡过后得到的一种混合式数据结构。<br>
+他是一个链式块结构，每个块包含62个对象，以此来平衡对locality的优化和对push, pop的优化。有人问为啥是62个而不是其他数：那是因为deque是个双向链表，一个节点64个指针，一个指向前一个指向后，剩下就是62个指针用来指向对象</p>
+
+<p>要做到对insert到中间的优化是用btree和array结合的办法，有个第三方包blist<br>
+但是我估计很少有应用会真正用到这个。insert是O(log n)<br>
+<a href="http://pypi.python.org/pypi/blist/">http://pypi.python.org/pypi/blist/</a></p>
+
+<p>其实python是大师设计的语言，他们来决定底层具体的数据结构，作为一般人，你没有必要去质疑大师们精心设计的东西。<br>
+如果你真的对性能有很大要求，python也许并不适合你，python不是作为纯粹针对高性能计算诞生的东西，<br>
+他是一种胶水语言，它只对常见的List长度，常用的算法结构进行优化。他希望达到的目的是把现实的应用抽象出来，让使用者不用关心具体的数据结构和算法。<br>
+pythonic是一种面向大众的编程态度</p>
+
+<p>如果你要用它来做其他事情，可以看看有没有你需要的第三方模块,或者可以用C来实现自己的一个模块，python本来就是C写的，所以这实际上也一点不困难。<br>
+比如python里面没有一个数据结构是能用来很好表示数值运算中使用的大型矩阵或者数组的，这时候就诞生了第三方包：numpy</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-03-23T00:58:52+00:00">2011-03-23</time></p>
 <p>archive</p>            </div>
@@ -776,7 +1108,13 @@ print udid
 
 <p><img src="http://blog.est.im/wp-content/uploads/2011/03/1.jpg" alt=""></p>
 
-<p>尼玛连我这里这种产盐地都是到处都是一堆一堆的人有人屯NaCl …</p></p>
+<p>尼玛连我这里这种产盐地都是到处都是一堆一堆的人有人屯NaCl。生怕大家还不够PANIC!!!111!!11</p>
+
+<p>卧槽都疯了卧槽都疯了卧槽都疯了卧槽都疯了卧槽都疯了卧槽都疯了卧槽都疯了卧槽都疯了</p>
+
+<p>所有屯NaCl的人肯定是上辈子折翼到新疆NaCl湖的天使!!!111!!!!!</p>
+
+<p>This is a fucked up world. 我还是去搜集可乐盖子好了。这才是辐射生存的正经事儿。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-03-16T14:25:48+00:00">2011-03-16</time></p>
 <p>archive</p>            </div>
@@ -828,7 +1166,20 @@ print udid
 
 <ul>
 <li>格栅的空隙/阻碍最佳比是1:1，如果不是1:1则可以用静态图案做parallax motion</li>
-<li>Parallax …</li></ul></p>
+<li>Parallax Barrier的缺陷是：观看3D最佳位置是固定的，我推了个公式：<br>
+　显示器厚度　　　　显示器眼睛距离<br>
+——————— == ——————————<br>
+　格栅遮光长度　　　　　双眼距离<br>
+也就是说垂直距离必须保持，而可以水平横移。</li>
+<li>小孩和大人的双眼距离不一样，所以需要离显示器更近才能得到最佳3D观赏位置。</li>
+<li>如果格栅不动，Parallax Barrier需要更加精密的显示点阵和双倍的显示亮度才能达到普通显示器同等分辨率和亮度。或许采用6边形蜂窝状的显示阵列有更加好的亮度。</li>
+</ul>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2011/03/2011-03-12_231419.png" alt=""></p>
+
+<p>不保证结论正确性，仅供参考 :)</p>
+
+<p>ps 继续研究宽幅打印机+丙烯的可玩性 :)</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-03-12T15:21:26+00:00">2011-03-12</time></p>
 <p>archive</p>            </div>
@@ -869,7 +1220,11 @@ print udid
 <p>http://downloada.erdas.com/software/2011/apollo-erviewer-v11.0-win-x86/apollo-erviewer-v11.0-win-x86.zip</p>
 
 <blockquote>
-  <p>ERDAS ER Viewer …</p></blockquote></p>
+  <p>ERDAS ER Viewer is a free, easy-to-use image viewer featuring interactive roaming and zooming with very large JPEG 2000 and ECW files.  It can also read most other common file types.  Installing ERDAS ER Viewer also lets you embed large geospatial images in your Microsoft Word documents.<br>
+  File formats supported: JPEG 2000, ECW, Universal Data Format (UDF) images, ER Mapper images, TIFF and GeoTIFF images, SPOT View images, ESRI BIL (ARC/INFO and ArcView) images, Smart Data ER Mapper algorithms, National Imagery , ransmission Format (NITF), ERDAS Imagine (IMG), ArcInfo ASCII Grid (ASC), Portable Network Graphics (PNG), USGS SDTS (DEM)</p>
+</blockquote>
+
+<p>BTW my wallpaper project is completely insane. Each GeoTIFF tile is about 500 to 1,000 megabytes, and there are 32 tiles. I am looking for a tool that can merge these huge files. And God bless industrial large format printers can handle these files :)</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-03-10T01:33:01+00:00">2011-03-10</time></p>
 <p>archive</p>            </div>
@@ -911,7 +1266,15 @@ print udid
 
 <p><img src="http://ie6countdown.com/images/upgrade.jpg" alt=""></p>
 
-<p>从数据统计上来看，本朝 …</p></p>
+<p>从数据统计上来看，本朝和南棒真是两支独秀啊。。。</p>
+
+<p><img src="http://ie6countdown.com/images/030311-map.png" alt=""></p>
+
+<p><img src="http://ie6countdown.com/images/030311-mapList.png" alt=""></p>
+
+<p>我觉得本朝IE6流行的主要问题：大量GHOST和还原卡的存在。</p>
+
+<p><a href="http://news.ycombinator.com/item?id=2288550">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-03-05T03:19:26+00:00">2011-03-05</time></p>
 <p>archive</p>            </div>
@@ -928,7 +1291,11 @@ print udid
             <p class="card-text"><p>新闻<a href="http://news.163.com/11/0302/08/6U4JB02P00014JB5.html">《北京将通过手机数据掌握市民出行动态》</a></p>
 
 <blockquote>
-  <p>北京将以中国移动的北京1700万手机用户数据为基础，建立“北京市市民出行动态信息平台”，掌握选定 …</p></blockquote></p>
+  <p>北京将以中国移动的北京1700万手机用户数据为基础，建立“北京市市民出行动态信息平台”，掌握选定区域的人口数量分布以及人口在不同时间段的流动分布情况，为政府部门规划交通布局、人口管理等服务，并有望发展个人定制业务。<br>
+  目前的方案提出以中国移动1700万手机用户的数据为基础，通过蜂窝位置技术获取手机用户活动的实时信息，建立出行动态信息平台。项目实施将可获得居民的居住工作情况，选定区域的人口数量分布以及人口在不同时间段的流动分布情况，精准掌握市民出行行为，通过发布动态出行信息，提高市民出行效率，有效缓解交通拥堵。</p>
+</blockquote>
+
+<p>以后tg开发出<a href="http://half-life.wikia.com/wiki/Manhack">manhack</a>，就可以定点消灭目标人士了。LOL</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-03-02T04:32:36+00:00">2011-03-02</time></p>
 <p>archive</p>            </div>
@@ -968,7 +1335,32 @@ print udid
 
 <p>昨天电脑有点问题把C:系统盘用笔记本自带的恢复功能恢复到第一次启动状态了</p>
 
-<p>Evernote装在 <code>D …</code></p></p>
+<p>Evernote装在 <code>D:\text\evernote</code>，database是保存在<code>D:\text\evernote\profile</code>。</p>
+
+<p>今天打开Evernote，登录，打开选项，把 database 设置指向了 <code>D:\text\evernote\profile</code></p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2011/02/2011-02-16_163843.png" alt=""></p>
+
+<p>然后，弹了个尼玛的对话框说已存在一个名字叫Evernote的文件夹，是否跳过？我点了个 是</p>
+
+<p>然后。。。然后，悲剧就发生了，劳资的几百篇笔记就灰飞烟灭了。狗日的Evernote！！！！！！！那个<code>.exb</code>文件以瞬间就缩水到只有2MB大了。</p>
+
+<p>就说Onenote吧，新系统里安装好Onenote，然后可以打开其他路径的<code>.one</code>笔记文件。Evernote这个垃圾的软件没有打开功能，而且笔记保存在<code>%LOCALAPPDATA%</code>这种刮千刀的地方，所以只能在选项里设置路径。选项里把database路径设置成旧database路径就直接把旧database删求了么？这要多么日他妈的开发人员才能做出这么神经病的特性啊。</p>
+
+<p>尼玛啊啊啊啊啊啊！！！！！！！</p>
+
+<p>本来不同步的目的就是有些东西不想让洋鬼子给索引了，这下倒好，本地的database全丢了，同步的几个笔记本，结果最后同步的还是去年12月份的。30分钟同步一次的设置都吃屎去了啊！！！！！！一个鸟托盘占用内存不用来同步是为了好看么？</p>
+
+<p>看来Evernote这种表面功夫做得足的垃圾软件，要是靠得住，母猪都上树。</p>
+
+<h2>教训：</h2>
+
+<ol>
+<li>备份 备份 备份 备份 备份 备份 备份 备份。</li>
+<li>不要用垃圾商业软件，特别是这种database二进制文件格式又是私有非开放结构的。</li>
+<li>处理重要的东西的工具，稳定性和靠谱性最重要，功能神马的都是浮云。劳资为了存几个图片和富文本，把自己很多笔记都毁在Evernote手上了，太不值了。</li>
+<li>喜欢把数据往%localappdata%塞的，这种软件公司里的人都是一群蛋痛菊紧的王八蛋！(I am looking at you, Google!)</li>
+</ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-02-16T04:04:51+00:00">2011-02-16</time></p>
 <p>archive</p>            </div>
@@ -1005,7 +1397,28 @@ print udid
             <p class="card-text"><p>今天从<a href="http://justsven.net/2011/02/rosetta_stone/">这里</a>到<a href="http://www.douban.com/group/topic/6767868/">这里</a>发现了一个叫<a href="http://en.wikipedia.org/wiki/Kalama_Sutta">Kalama Sutta</a> / 羯腊摩经 / 卡拉玛经 的东西：</p>
 
 <p>不因为他人的口传、传说，就信以为真。<br>
-不因为奉行传统，就 …</p></p>
+不因为奉行传统，就信以为真。<br>
+不因为是正在流传的消息，就信以为真。<br>
+不因为是宗教经典书本，就信以为真。<br>
+不因为根据逻辑，就信以为真。<br>
+不因为根据哲理，就信以为真。<br>
+不因为符合常识外在推理，就信以为真。<br>
+不因为符合自己的预测、见解、观念，就信以为真。<br>
+不因为演说者的威信，就信以为真。<br>
+不因为他是导师、大师，就信以为真。</p>
+
+<p>Do not go upon what has been acquired by repeated hearing,<br>
+nor upon tradition,<br>
+nor upon rumor,<br>
+nor upon what is in a scripture,<br>
+nor upon surmise,<br>
+nor upon an axiom,<br>
+nor upon specious reasoning,<br>
+nor upon a bias towards a notion that has been pondered over,<br>
+nor upon another's seeming ability,<br>
+nor upon the consideration, "The monk is our teacher."</p>
+
+<p>佛陀是个神棍，因为他老人家自己说这些话是自我矛盾的。所以啊道不可说，一说就破。哦不对，又破了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-02-13T09:05:50+00:00">2011-02-13</time></p>
 <p>archive</p>            </div>
@@ -1043,7 +1456,61 @@ print udid
 
 <pre><code>protected void setResponseContentHeaders(HttpResponseBuilder response, HttpResponse results) {
   // We're skipping the content disposition header for flash due to an issue with Flash player 10
-  // This does make some sites a higher value phishing target, but this can be mitigated …</code></pre></p>
+  // This does make some sites a higher value phishing target, but this can be mitigated by
+  // additional referer checks.
+  if (!isFlash(response.getHeader("Content-Type"), results.getHeader("Content-Type"))) {
+    response.setHeader("Content-Disposition", "attachment;filename=p.txt");
+  }
+  if (results.getHeader("Content-Type") == null) {
+    response.setHeader("Content-Type", "application/octet-stream");
+  }
+}
+
+private static final String FLASH_CONTENT_TYPE = "application/x-shockwave-flash";
+
+/**
+ * Test for presence of flash
+ *
+ * @param responseContentType the Content-Type header from the HttpResponseBuilder
+ * @param resultsContentType the Content-Type header from the HttpResponse
+ * @return true if either content type matches that of Flash
+ */
+private boolean isFlash(String responseContentType, String resultsContentType) {
+  return StringUtils.startsWithIgnoreCase(responseContentType, FLASH_CONTENT_TYPE)
+      || StringUtils.startsWithIgnoreCase(resultsContentType, FLASH_CONTENT_TYPE);
+}
+</code></pre>
+
+<p>Or <a href="http://svn.apache.org/repos/asf/shindig/trunk/php/src/gadgets/ProxyHandler.php">PHP version</a>:</p>
+
+<pre><code>$isShockwaveFlash = false;
+
+foreach ($cleanedResponseHeaders as $key =&gt; $val) {
+  header(&quot;$key: $val&quot;, true);
+  if (strtoupper($key) == &#39;CONTENT-TYPE&#39; &amp;&amp; strtolower($val) == &#39;application/x-shockwave-flash&#39;) {
+    // We&#39;re skipping the content disposition header for flash due to an issue with Flash player 10
+    // This does make some sites a higher value phishing target, but this can be mitigated by
+    // additional referer checks.
+    $isShockwaveFlash = true;
+  }
+}
+if (! $isShockwaveFlash &amp;&amp; !Config::get(&#39;debug&#39;)) {
+  header(&#39;Content-Disposition: attachment;filename=p.txt&#39;);
+}
+</code></pre>
+
+<p>Here is what a proxy request looks like:</p>
+
+<pre><code>GET / HTTP/1.1
+User-Agent: Mozilla/5.0 (compatible) Feedfetcher-Google; (+http://www.google.com/feedfetcher.html)
+X-shindig-dos: on
+Cache-Control: no-cache, no-store
+Host: xxx.xxx.xxx
+X-Forwarded-For: xxx.xxx.xxx.xxx
+Accept-Encoding: gzip
+</code></pre>
+
+<p>One more note, you can use <code>&amp;rewriteMime=image/*&amp;</code> in your request to modify MIME.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-02-09T08:02:53+00:00">2011-02-09</time></p>
 <p>archive</p>            </div>

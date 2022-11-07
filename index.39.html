@@ -78,7 +78,15 @@
   <p>SSL is a fine protocol, but it's been badly misconfigured on the Internet. Among other things:<br>
   * The overwhelming majority of SSL-speaking sites don't have valid certificates.<br>
   * An untenably large number of organizations have been allowed to act as CAs.<br>
-  * Some of …</p></blockquote></p>
+  * Some of those CA's have in turn been allowed to set up sub-CA's.<br>
+  * Several CA's use cryptographically weak keys<br>
+  * Some CA's were spotted sharing keys<br>
+  * CA's have signed certs for RFC1918 private IP space, sometimes more than once.<br>
+  * CA's have signed certs for "localhost"<br>
+  The bad news is that all these things are devastating to the global security of SSL/TLS. The good news is that fixing them doesn't involve a change to SSL/TLS, or even any of the software that implements it. The bad news is that's unlikely to happen in our lifetimes.</p>
+</blockquote>
+
+<p>没想到CA的问题这么多。。。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-08-06T01:35:50+00:00">2010-08-06</time></p>
 <p>archive</p>            </div>
@@ -116,7 +124,9 @@
 
 <p>所以船就轻轻的浮起来了。</p>
 
-<p>网上那个著名的Adam Savage的“变声气体”也是用的这个SF<sub>6 …</sub></p></p>
+<p>网上那个著名的Adam Savage的“变声气体”也是用的这个SF<sub>6</sub>。</p>
+
+<p><a href="http://www.reddit.com/r/science/comments/cx5l9/it_has_come_to_my_attention_that_a_lot_of_people/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-08-04T14:26:43+00:00">2010-08-04</time></p>
 <p>archive</p>            </div>
@@ -132,7 +142,11 @@
             </a>
             <p class="card-text"><p><a href="http://ha.ckers.org/weird/safari_autofill.html">http://ha.ckers.org/weird/safari_autofill.html</a></p>
 
-<p>发送一个字母按键，然后把文本框的 自动填表 第一项移动到鼠标位置，然后文本框就被激活了，在文本框 …</p></p>
+<p>发送一个字母按键，然后把文本框的 自动填表 第一项移动到鼠标位置，然后文本框就被激活了，在文本框里抓信息，抓一个继续向下移动一格。。。。好聪明！</p>
+
+<p>虽然我这里一个都没抓出来，但是从这个原理来看抓email是没问题的～～～～</p>
+
+<p><a href="http://www.reddit.com/r/netsec/comments/cwy5x/stealing_entire_autocomplete_data_in_google_chrome/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-08-04T07:41:01+00:00">2010-08-04</time></p>
 <p>archive</p>            </div>
@@ -164,7 +178,21 @@
 
 <p>Bing.com</p>
 
-<p><a href="http://www.bing.com/search?scope=web&amp;mkt=en-US&amp;FORM=W0LH&amp;q=ti%D0%B0n%D0%B0nm%D0%B5n+square">http://www.bing.com/search?scope=web&amp;mkt=en-US&amp;FORM=W0LH&amp;q=tiаnаnmеn …</a></p></p>
+<p><a href="http://www.bing.com/search?scope=web&amp;mkt=en-US&amp;FORM=W0LH&amp;q=ti%D0%B0n%D0%B0nm%D0%B5n+square">http://www.bing.com/search?scope=web&amp;mkt=en-US&amp;FORM=W0LH&amp;q=tiаnаnmеn+square</a></p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/08/3.png" alt=""></p>
+
+<p>Youtube.com</p>
+
+<p><a href="http://www.youtube.com/results?search_query=tian%D0%B0nmen&amp;aq=f">http://www.youtube.com/results?search_query=tianаnmen&amp;aq=f</a></p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/08/4.png" alt=""></p>
+
+<p>帝国主义是纸老虎啊！！！！</p>
+
+<p>【造谣完毕】</p>
+
+<p>via HN: <a href="http://news.ycombinator.com/item?id=1571984">Homoglyph attacks: How to create an internet hoax</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-08-04T04:38:23+00:00">2010-08-04</time></p>
 <p>archive</p>            </div>
@@ -220,7 +248,44 @@
 
 <p>先扯远一点，说说下载软件的故事：</p>
 
-<p>国外为什么 …</p></p>
+<p>国外为什么一般都没人专门用多线程下载软件？因为别人网速好，如果网速不好QoS做得好，不会出现天朝垃圾ISP这种下载无故中断的情况。所以断点续传没有必要。IE，Firefox和Chrome那种默认自带的下载框就足够普通使用了。</p>
+
+<p>什么是多线程下载？多线程下载，用一种早期的说法，叫 leech。比Netants还早的一个下载软件就叫“网络吸血鬼”。</p>
+
+<p>而国内最牛逼的迅雷又做了其他几件事情，之一就是“抢占式下载”。什么叫抢占式？一个机器的带宽和网速是有限的，TCP包本来大家都按照秩序一个一个排队，排不动了就阻塞。直到轮到你收发包为止。</p>
+
+<p>而迅雷不会理你这么多，直接插队。强制用完带宽</p>
+
+<p>所以早期迅雷一般一启动整个LAN的网络就挂了。</p>
+
+<p>回到前面，为什么我看了那则新闻会笑呢？搜狗的这个“网速保护”，是不是又重新发明了一套TCP包排队的秩序呢？</p>
+
+<p><img src="http://failblog.files.wordpress.com/2009/07/fail-owned-hat-fail.jpg?w=300" alt=""></p>
+
+<p>废了这么一大堆劲儿，为什么不从一开始每一个程序都按照TCP默认队列收发包，不去故意抢占网速呢？</p>
+
+<p>就好比一个体育馆的出口，大家都按秩序挨个儿出去，比起了火灾大家都慌忙挤门逃生的速度快得多。最后大家都在挤，以至于还得在门口弄一个交通疏导员的位置出来指挥人流。。。囧。。。。</p>
+
+<p>搜狗的这个所谓的“网速保护”解决方案，彻底放弃了系统原生网络栈的民主分配了，而是搜狗的专制（ 国内最大的垄断独裁是什么东西我就不用说了吧？），搜狗有权利控制各个流量先后顺序的垄断权。短时间内可能解决了局部问题，但是既然有限制，必然有反制，说不定哪一天有更流氓更无耻的软件宣称可以突破“网速保护”进行高速下载呢？这个时候又该从LSP到ring3到ring0的驱动大战了吧？</p>
+
+<p>要问独裁怎么来的？首先就是规则博弈。规则博弈之后必定会有问题投机，问题投机之后肯定有“good guy”解决问题，然后good guy趁用解决问题的机会滥用权利。和后面引爆更多更大的多米诺牌问题相比，这个good guy的作恶甚至微不足道。</p>
+
+<p>又想起来了很久以前看到的一个wikipedia词条：<a href="http://en.wikipedia.org/wiki/Societal_collapse">Societal collapse</a>，里面一句话太有趣了</p>
+
+<blockquote>
+  <p>societies that develop great expertise in problem solving become incapable of solving new problems by overdeveloping their structures for solving old ones.</p>
+</blockquote>
+
+<p>大汉，罗马帝国，玛雅帝国和苏联是怎么崩溃的？一个文明为了解决一个自身问题，会超规模发展一个解决问题的机制，然后这个“解决问题”本身也成为一个问题，最后无法解决，最后自我坍塌。</p>
+
+<p>又想起来了编程里个一句非常经典的话：</p>
+
+<blockquote>
+  <p>Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.<br>
+  　　　　　　　　　　　　<em>Brian W. Kernighan</em></p>
+</blockquote>
+
+<p>PS: 什么是支那精神？支那精神的核心就一个字——贱</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-08-02T15:51:52+00:00">2010-08-02</time></p>
 <p>archive</p>            </div>
@@ -240,7 +305,11 @@
 
 <p>0:29那个从上面飞过去的。。。太夸张了。。。1:24那个真的算飞檐走壁了。。。。不知道最后是怎么下来的。。。要我的话肯定摔骨折。。。</p>
 
-<p>墙内镜 …</p></p>
+<p>墙内镜像</p>
+
+<p><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://player.youku.com/player.php/sid/XMTk0Njg4NDY0/v.swf&amp;width=480&amp;height=400" width="480" height="400"></iframe></p>
+
+<p><a href="http://www.reddit.com/r/videos/comments/cw447/amazing_parkour/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-08-02T08:23:11+00:00">2010-08-02</time></p>
 <p>archive</p>            </div>
@@ -258,7 +327,7 @@
 
 <p><img src="http://blog.est.im/wp-content/uploads/2010/08/1.png" alt=""></p>
 
-<p>如果耳机刚好在一个圈里，这个时候从圈里拿起来就有可能形成一个线结～～～～～以 …</p></p>
+<p>如果耳机刚好在一个圈里，这个时候从圈里拿起来就有可能形成一个线结～～～～～以后尽量不要把耳机线形成一个圈就OK了。。。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-08-01T11:39:27+00:00">2010-08-01</time></p>
 <p>archive</p>            </div>
@@ -354,7 +423,10 @@
 
 <blockquote>
   <p>A CMOS BCD-Decimal encoder locked in unholy union with a TTL Octal flip-flop. They're not even the same species! There should be a law against this sort of thing!!   <br>
-  Is …</p></blockquote></p>
+  Is this how they made the 74HC family?</p>
+</blockquote>
+
+<p>听这些笑话让我感到自己是个文盲。。。。。伤自尊啊。。。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-07-31T06:00:01+00:00">2010-07-31</time></p>
 <p>archive</p>            </div>
@@ -391,7 +463,19 @@
 
 <pre><code>发信人: beagle (b0210eb60aff5851b7607227b8530521), 信区: ITExpress
 标  题: 发个 这一期 The Economist杂志的封面
-发信站: 水木社区 (Fri Jul 30 19:03:57 2010), 站内 …</code></pre></p>
+发信站: 水木社区 (Fri Jul 30 19:03:57 2010), 站内
+
+富士康很有影响力。。。
+rt
+</code></pre>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/07/ROFL.png" alt=""></p>
+
+<p>文章在这里</p>
+
+<p><a href="http://www.economist.com/node/16693333?story_id=16693333">http://www.economist.com/node/16693333?story_id=16693333</a></p>
+
+<p>pdf附件见newsmth原帖～～～btw 手机上看水木用这个网站最爽了 <a href="http://hime.appspot.com">http://hime.appspot.com</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-07-30T11:42:50+00:00">2010-07-30</time></p>
 <p>archive</p>            </div>
@@ -413,7 +497,7 @@
 
 <p>FlashFXP里在 站点管理器 - 高级 - 字符编码 里设置</p>
 
-<p>Dreamhost的FTP就很扯蛋。。。中文文件名的文件的上 …</p></p>
+<p>Dreamhost的FTP就很扯蛋。。。中文文件名的文件的上传上去没问题。。。下载的时候提示 <code>550 中文名.mp3: No such file or directory</code>。。。。WTF？</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-07-30T10:56:19+00:00">2010-07-30</time></p>
 <p>archive</p>            </div>

@@ -57,7 +57,19 @@
             <p class="card-text"><p>最近<a href="https://news.ycombinator.com/item?id=6166292">很火</a>的一个问题就是暴破TLS/SSL的  BREACH 攻击。我觉得有一些解决办法：</p>
 <ol>
 <li>
-<p>hack一种兼容gzip，但是能对内容进行adaptive compression的技术。比如把用户输入不纳入Huffman …</p></li></ol></p>
+<p>hack一种兼容gzip，但是能对内容进行adaptive compression的技术。比如把用户输入不纳入Huffman coding范围，只压缩页面的其他部分。这样无论你在user input 做什么花样也不能影响最终conten length</p>
+</li>
+<li>
+<p>csrf上做文章。由于大多数场景下，web framework是需要保证 csrf 是 per session的。目前基本都是服务器生成什么csrf，客户端下一次就需要传入一模一样的。我们可以发明一种聪明的技术，给客户端的csrf加入一些per request的变长noise，需要通过特定算法，最简单的比如XOR，才能还原csrf。其中这个变长的noise不是随机生成，因为随机生成可能被概率统计出noise level然后过滤掉，而是根据用户输入用一种变长散列生成的。比如用户输入为空，csrf为e0bc6e08a2fda853eef，用户输入为 user@gmail.com，csrf为 b594e902c7fe6b1748d13aefaf63a ，但是实际服务器端的csrf都一直是 04b58236f5 。</p>
+</li>
+</ol>
+<p>目前业界的mitigation我觉得比较搓：</p>
+<ol>
+<li>禁用gzip。这个没意思了。</li>
+<li>给html添加一些随机padding垃圾数据。这个不是等于禁用了gzip么。浪费空间浪费传输</li>
+<li>在http头做文章。因为gzip只影响http body。这个缺点是需要js。兼容性不好</li>
+<li>禁止频繁请求。这个最直接。哈哈。</li>
+</ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-08-06T21:19:50+00:00">2013-08-06</time></p>
 <p>archive</p>            </div>
@@ -74,7 +86,9 @@
             <p class="card-text"><p>NSA笑而不语啊</p>
 <p><img alt="" src="/images/tumblr/57017854092.png" /></p>
 <p>看到<a href="http://www.theguardian.com/world/interactive/2013/jul/31/nsa-xkeyscore-program-full-presentation">XKS</a> 真心吓尿了！PRISM什么的比起来弱爆了。</p>
-<p>这一系列事件，最让人感到恐怖的，不是gov的强大能力，而是Snowden这个私人第三方承包商，一个在夏威夷年薪20万美元的网管，也就是乙方，非编制，派遣工 …</p></p>
+<p>这一系列事件，最让人感到恐怖的，不是gov的强大能力，而是Snowden这个私人第三方承包商，一个在夏威夷年薪20万美元的网管，也就是乙方，非编制，派遣工，都能接触到这么强大的工具。</p>
+<p>其实GFW的运营商，启明星辰，不也是这么屌的么。参考Freebuf的大作：《<a href="http://www.myhack58.com/Article/html/1/4/2013/39619.htm">揭秘黑客界：黑吃黑到底谁吃谁</a>》</p>
+<p>全世界的这些工具，被非公众利益滥用，也不远了。美帝当然就是好莱坞和各种版权组织来用NSA一阳指<a href="http://www.reddit.com/r/restorethefourth/comments/1h1hd0/proof_that_lobbyists_wanted_nsalike_spying/">戳死做盗版</a>的，肉鸡国当然就是各种河蟹，其实就是各级通管局用来收黑钱的工具罢了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-07-31T20:42:00+00:00">2013-07-31</time></p>
 <p>archive</p>            </div>
@@ -94,7 +108,14 @@
 <p>国际厂商LG率先采用了该方案，并且搭载三卡三待方案的LG Optimus L4II已经在巴西上市，真够迅速的。</p>
 </blockquote>
 <p>MediaTek Intros Triple-SIM Platform for Android Phones</p>
-<p>http://www.pcmag.com/article2/0,2817,2422336,00.asp …</p></p>
+<p>http://www.pcmag.com/article2/0,2817,2422336,00.asp</p>
+<blockquote>
+<p>LG Electronics utilized MediaTek's <strong>dual-SIM platform</strong> for its Optimus L4II smartphone, currently selling in Brazil.</p>
+</blockquote>
+<p>http://www.mediatek.com/_en/03_news/01-2_newsDetail.php?sn=1114</p>
+<blockquote>
+<p>The cutting-edge solution, which comes in response to widespread demand for multi-SIM devices in emerging markets, was recently commercialized in Brazil by Optimus L4II smartphone from LG Electronics.</p>
+</blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-07-30T00:35:00+00:00">2013-07-30</time></p>
 <p>archive</p>            </div>
@@ -148,7 +169,16 @@ fallback_host:tc.v11.cache6.c.youtube.com</p></p>
 <p>今天在<a href="http://www.reddit.com/r/Android/comments/1j13xd/how_oems_havent_announced_43_updates_for_the/">reddit上看到一个帖子</a>，解释了为啥很多Android机器不提供ICS和JB升级，我蛋痛，所以就来翻译下：</p>
 <ul>
 <li>OEM不直接从Google得到Android的源码</li>
-<li>做 …</li></ul></p>
+<li>做SoC芯片的厂商可以从Google得到源码，然后开发BSP(Board Support Package)。里边包含了驱动和优化</li>
+<li>BSP就交付给OEM厂商，厂商就可以给设备发布Android升级包。</li>
+</ul>
+<p>所以。现在的手机厂商都在等SoC厂商发布Android 4.3 BSP</p>
+<p>例如，高通(Qualcomm)前不久宣布对Snapdragon S3芯片放弃Android 4.2.2的BSP开发。所以HTC就不得不宣布 One S 不再有升级。骚尼(Sony)的Xperia S, SL, Acro S 和 ION 同理。因为都是基于 S3 SoC</p>
+<p>如果大家还记得的话，Thunderbolt 和 Sensation (包括LTE版本) 都用的是 Scorpion MSM8655，高通宣布不继续支持，所以用这个芯片的OEM也没得玩了。（译者注：狗日的海信EG900，原来我错怪你不能升级JB了）</p>
+<p>但是三爽(Samsung)是个例外。他们本身是SoC提供商(Exynos系列)，自身本身也是OEM厂商。所以自家的嫡系真是碉堡了。不过Galaxy S II 的 LTE 版本用了高通的Scorpion SoC，也就不再更新了</p>
+<p>虽然这个系统不完美，但是这就是业界的现状。</p>
+<p>译者补充：为什么G家亲儿子可以升级，因为G家牛逼，可以跟SoC谈判，保证超长时间的芯片支持周期。</p>
+<p>tl;dr 一句话：艹你娘的蛋的高通。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-07-25T21:34:00+00:00">2013-07-25</time></p>
 <p>archive</p>            </div>
@@ -170,7 +200,12 @@ fallback_host:tc.v11.cache6.c.youtube.com</p></p>
 <p>You may not publicly distribute or ship your Google Cast application without written permission from Google, per the terms of service described below</p>
 </blockquote>
 <ol start="2">
-<li>无论是pad/phone通过wifi，还是红外遥控，延迟是否 …</li></ol></p>
+<li>无论是pad/phone通过wifi，还是红外遥控，延迟是否巨大？</li>
+<li>是否支持外挂字幕？.ass 特效字幕？</li>
+<li>是否支持音频输出？</li>
+<li>是否支持HDMI passing through</li>
+</ol>
+<p>同时，我越来越觉得Google像Microsoft了。很多 NIH 综合症。Airplay不支持也就算了，现有的Miracast，DLNA都被华丽的无视了。非得自己搞个专有的websocket协议。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-07-25T09:17:50+00:00">2013-07-25</time></p>
 <p>archive</p>            </div>
@@ -207,7 +242,13 @@ fallback_host:tc.v11.cache6.c.youtube.com</p></p>
 <p>Sally有一个<strong>盒子</strong></p>
 <p>Anne有一个<strong>篮子</strong></p>
 <p>这两个容器都是有盖不透明的。</p>
-<p>现 …</p></p>
+<p>现在Sally把一块饼干放在<strong>盒子</strong>里，然后出门离开了</p>
+<p>Anne 随后，把饼干从 <strong>盒子</strong> 取出来，放到自己的<strong>篮子</strong>里，盖好。</p>
+<p>一会儿，Sally回到房间。这个时候她去寻找自己的饼干，请问Sally会去 盒子 还是 篮子 寻找？</p>
+<p>心智不成熟，小于四岁的孩子会回答：篮子。</p>
+<p>其他参考：</p>
+<p>译言： http://article.yeeyan.org/compare/322659</p>
+<p>http://www.huanqiukexue.com/html/newgc/2012/1031/22806.html</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-07-14T09:34:42+00:00">2013-07-14</time></p>
 <p>archive</p>            </div>
@@ -231,7 +272,12 @@ CID=61E00</p>
 <p>有这个信息之后，我们打开国产CID定位工具：</p>
 <p>http://www.minigps.net/map.html</p>
 <p><img alt="" src="/images/tumblr/55311741840_1.png" /></p>
-<p>就得 …</p></p>
+<p>就得到了基站位置。</p>
+<p>在自己手机上也可以直接通过下边命令来即时刷新：</p>
+<pre><code># logcat -b radio RILJ:D | grep SM | grep REGISTRATION_STATE
+# logcat -b radio RILJ:D | grep SM | grep OPERA
+</code></pre>
+<p>当然，这些信息可以通过Android的 <em>#</em>#INFO#<em>#</em>直接看到。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-07-12T23:30:03+00:00">2013-07-12</time></p>
 <p>archive</p>            </div>
@@ -245,7 +291,17 @@ CID=61E00</p>
             <a href="/post/55170346033"  rel="bookmark" >
               <h2 class="card-title">《以理服己》里边的逻辑bug</h2>
             </a>
-            <p class="card-text"><p>想去瞅瞅看看 李笑来 的 bitcoin 讲座，结果发现尼玛1200大洋收费的。屌丝就默默逆了。但是看到他其他讲座，有个叫《以理服己》，于是看了会儿。其 …</p></p>
+            <p class="card-text"><p>想去瞅瞅看看 李笑来 的 bitcoin 讲座，结果发现尼玛1200大洋收费的。屌丝就默默逆了。但是看到他其他讲座，有个叫《以理服己》，于是看了会儿。其中第二课第二页，出自：</p>
+<p>http://www.duobei.com/room/course/1057408405</p>
+<p><img alt="" src="/images/tumblr/55170346033.png" /></p>
+<p>大概就是说，生男生女全靠男性。跟女性无关吧。</p>
+<p>原因是男性染色体是 XY，女性是 XX，所以全靠男方决定。</p>
+<p>这个说法是错误的，逻辑有bug的。</p>
+<p>原因很简单，男性不是只提供一个X，或者一个Y，而是一次性一大批好几亿个。一个精子在皮质反应(Cortical reaction)之前，活性和前进速度是受到环境影响的。这个环境是否或者对X，或者对Y有选择性偏见呢？这个不能完全否定吧？</p>
+<p>一个结果（result） 是由提供者（provider）和选择者（filter）共同决定的。</p>
+<p>input -&gt; process -&gt; output</p>
+<p>第二个不算bug的bug，</p>
+<p>the Flat Earth Society，这个不是个普通社团，而是一种类似 trolling is a art 的搞笑的人。你去跟他们争就输了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-07-11T09:16:00+00:00">2013-07-11</time></p>
 <p>archive</p>            </div>
@@ -281,7 +337,10 @@ CID=61E00</p>
 <ul>
 <li>share aggregation。跨平台跨服务的分布式分享聚合，用于分析和排名</li>
 <li>inline comments in readers，RSS里提供一个特殊的字段，用来标记Disquz/G+/Twitter的嵌入评论框的id。阅读器可以选择提供一个UI按钮嵌入或者弹出评论窗口。Wordpress这样的生成平台也应该提供一个评论交互API</li>
-<li>支 …</li></ul></p>
+<li>支持HTML5 Push和浏览器notification。</li>
+<li>RSS over APNS/GCM/MPNS</li>
+<li>或许应该有一个统一的JSON feeds标准？</li>
+</ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-07-05T05:44:31+00:00">2013-07-05</time></p>
 <p>archive</p>            </div>
@@ -300,7 +359,19 @@ CID=61E00</p>
 主页 广播 相册 喜欢 活动 发豆邮 <br />
 去年我开始有抬头纹 <br />
 2013-06-27 01:11:37 <br />
-今天发现，百度地图的研发们都玩起新 …</p></p>
+今天发现，百度地图的研发们都玩起新浪微博，互相 at 得不亦乐乎，看样子是经常齐刷刷地去登山、长跑。在我心中他们都是同一类的人，龙叔也如是说。   </p>
+<p>这种感觉很奇怪，我离开快一年了，他们看上去变得更凝聚温馨。以前我高嗓门的架构讲座、开会时候对项目代码的怒斥，突然感觉就像只是破坏团队氛围的东西。记得我写的那个树状脑图，讲模块劣化的现象、原因、改进措施，21寸显示器两屏才显示得完，经理看了一个劲的笑，其他同事充满不理解不赞同，有人还公然拥护全局变量，我操。   </p>
+<p>去年我一个人重构搜索后端，披星戴月，脑浆迸裂。说是重构实际上就是重写。除非当时内部的人，很少人愿意相信地图搜索引擎的代码的所有函数都只传一个参数，而这个参数就是传说中的全局变量，每个服务模块这个全局结构体的成员变量大概四五百个吧，是的真的就是这样。你可以说出这种代码的弊端有啥吗？函数完全无法复用？函数功能不明确？函数涉及的变量不明确？函数相互依赖导致少调用一个就coredump？操，你完全错了，这些都不是重点，这样搞法会导致代码压根就没有函数的概念，每个「函数」都上千行，逻辑完全混乱、bug 横飞，没任何人知道程序真正做了什么，没人敢碰别人的全局变量，同样的数据只敢在刚接收到 request 的时候 copy 一个过来用，最终这个全局结构体就有了这样的变量：query, query1, query2, queryword, word, QueryWord, origin_query, search_query 等不甚枚举，各有各的归一化，各有各的分词，各有各加载的资源。   </p>
+<p>写到这里，发现沦为吐槽，其实我不喜欢在豆瓣写槽文。算了继续。   </p>
+<p>牛逼的是，对于这样一个还没引入用户行为调权的复杂系统，它竟然不是幂等的。也就是说，对于同样的请求，它结果是随机的。为啥随机？因为各种没初始化、各种变量混用。你说为啥现在线上百度地图的搜索是稳定的？你让那帮家伙把 cache 关了试试。其他不随机的 bug 就更不用说，那套 ranking 过程中全是整型溢出、double 被误转成 bool，鸡飞狗跳。   </p>
+<p>更牛逼的是，我重构的时候把那些扯鸡巴蛋的 bug 都修了，系统不再随机了，但是搜索质量下降了，PM 不让上线。这个现象倒是符合逻辑的，因为一旦系统在某个时期有 bug，之后的策略优化就会对这个 bug 有倾向性。当时项目排期很紧，其他几个人的项目都等着我重构完才能开搞，结果跟同事讨论之后决定让我去主动仿造原来那些 bug（是不是很厉害？是不是闻所未闻？），我一顿狂改之后搜索质量有所回升，但仍然达不到原来的效果。这时候唯一的出路大概只能加策略优化 ranking，但如果再经历几次立项、审批、测试沟通、写MRD/TDD，这次重构就彻底无法善终。万般无奈下我给偷偷调整了一堆参数，尼玛，搜索效果终于持平。   </p>
+<p>这时候又面临一个牛逼的事情。前俩月其他同事加的代码要 merge 到我的项目里来，diff 一下有上千行，我得看明白他们的逻辑才能穿插到新版来。又一轮闷头搞，途中又发现各种 bug，其中有个同事的函数让我很欣慰，因为它真的比其他人短，才十几行，不幸的是，他忘记写 return 了，于是又鸡巴是个随机的东西。   </p>
+<p>最终上线之前还被 OP 们摆了一道。OP 分为 searching 和 indexing 两堆人，我们需要更多的 searching 机器，还得约 OP 出来磨嘴皮子。这头 searching 机器申请还没个着落，那头 indexing 的 OP 又频繁找我谈，扯逼淡的是，我不知道他们想跟我谈什么，我敞开问那哥们就傻笑。后来才搞明白他们是想让我劣化 indexing 程序的性能，以降低机器闲置率，提高他们的 KPI。明白之后就再没理他们。   </p>
+<p>这个项目总共做了三个多月，比预期延了一个月。快结束的时候我经理离职了，结束之后测这个项目的 QA 也离职了。这坨新的东西不见得有多好，但可以称之为「可维护的」系统，代码量只有原来的 1/3，搜索性能提高50倍。   </p>
+<p>在某些部门，所谓优化搜索策略变成了研发人员乱搞的游戏，乱想一个法子，在代码堆里胡写那么几行，让 PM 评估个几百个随机 query，发现效果似乎提升了那么零点几个百分点，我操，立马上线！立马有 KPI！立马可以申请专利！   </p>
+<p>话虽如此，那帮同事都是纯朴善良的人，只是那个地方严重挫伤了我对技术的情感，所以后来选择离开。临走前又推了一次 code review 和 unit test，失败告终。在我看来写代码是工程师的基石，这个不达标其他都是扯逼蛋，代码写得有板有眼了，才有资格给我谈做项目、做事情、做人。工程师最终要的能力是「抽象」和「拆解」，这个百度很多人都听过，但是首先应该从代码上实践出来。百度人还喜欢谈「知行合一」，这个就是抽自己嘴巴的话。   </p>
+<p>本来想些的不是这些，先这么着，算是留个记录。   </p>
+<p>添加到豆列 分享到    推荐 98人 51人 喜欢  喜欢</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-06-27T01:48:00+00:00">2013-06-27</time></p>
 <p>archive</p>            </div>
@@ -323,7 +394,9 @@ $ brew tap ksnieck/homebrew-gnuradio
 $ cd /usr/local/Library/Taps/
 $ mv ksnieck-gnuradio/ titanous/homebrew-gnuradio
 $ brew install gnuradio
-$ brew install rtlsdr gr-osmosdr …</code></pre></p>
+$ brew install rtlsdr gr-osmosdr gr-baz --HEAD
+</code></pre>
+<p>There's like a shitton of dependency for GNURadio, you'll possibly need a fast Internet connection or wait.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-06-27T01:35:04+00:00">2013-06-27</time></p>
 <p>archive</p>            </div>
@@ -338,7 +411,11 @@ $ brew install rtlsdr gr-osmosdr …</code></pre></p>
               <h2 class="card-title">银行系统bug了？</h2>
             </a>
             <p class="card-text"><p>@老赵<br />
-打了招行和支付宝两边的客服，确认了：招行这边扣款已经发生，支付宝交易也已经提交，但是因为从昨晚开始招行这 …</p></p>
+打了招行和支付宝两边的客服，确认了：招行这边扣款已经发生，支付宝交易也已经提交，但是因为从昨晚开始招行这边系统出错，支付宝已经堆积了大量从招行这边没拿过来的款项，已经收到大量客户电话，但需要到周一两边交易核对成功之后再处理。假如我着急还款的话，需要我再换一次，但千万不要使用招行。<br />
+(1)| 转发(5) | 评论(4) 6月22日 16:18来自新浪微博</p>
+<p>@ACE1997：RT @Arctosia RT @jiezitui: 上海工商银行网络现全面崩溃，ATM等全面停止服务，工行内部系统一级抢修中……</p>
+<p><img alt="" src="/images/tumblr/53646144010.png" /></p>
+<p><img alt="" src="http://wp2.sina.cn/woriginal/7a0fab34gw1e5xvtkk63cj20gj0n0n05.jpg" /></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-06-22T23:47:44+00:00">2013-06-22</time></p>
 <p>archive</p>            </div>
@@ -352,7 +429,30 @@ $ brew install rtlsdr gr-osmosdr …</code></pre></p>
             <a href="/post/53501558487"  rel="bookmark" >
               <h2 class="card-title">2013-06-20 发生了啥事</h2>
             </a>
-            <p class="card-text"><p>【银行大闹钱荒 宏观信号拒绝“放水” 】没见过隔夜上30%的交易员，人生是不圆满的。6月20日，疯狂的一天，足以载入中国银行间市场史 …</p></p>
+            <p class="card-text"><p>【银行大闹钱荒 宏观信号拒绝“放水” 】没见过隔夜上30%的交易员，人生是不圆满的。6月20日，疯狂的一天，足以载入中国银行间市场史册。当日银行间隔夜回购利率最高达到史无前例的30%，7天回购利率最高达28%。近年这两项利率往往不到3%</p>
+<p><img alt="" src="http://ww1.sinaimg.cn/large/6438e10ejw1e5vq1wsjnnj20c81mm7el.jpg" /></p>
+<p>《央行择机推存款保险制度若破产每账户或赔50万》</p>
+<p><img alt="" src="http://ww4.sinaimg.cn/large/633151d5jw1e5v2sa1vxfj20c811o452.jpg" /></p>
+<p><img alt="" src="http://ww2.sinaimg.cn/large/626ece26jw1e5uw41m3znj20lg0b8myo.jpg" /></p>
+<p>第二件事：</p>
+<p>http://www.solidot.org/story?sid=35250</p>
+<blockquote>
+<p>今天(2013/06/20)下午三点左右，中国大陆的用户访问境外使用StartSSL、Thawte等提供的免费SSL证书作为HTTP加密访问方式的IP地址疑似被中国国家网络防火墙屏蔽。   </p>
+<p>陈少举(1916)  Neutral 发表于2013年06月21日 11时22分 星期五 <br />
+今天（2013/06/21）上午１０点左右，有推友报告开始陆续解封。<br />
+我自己的也在11:15分左右解封。    </p>
+<p>感觉这次是一个技术警告（或称为技术示威），告诉大家墙目前具备了什么样的能力。    </p>
+<p>买证书去。    </p>
+</blockquote>
+<p>我补充一下这个情况：</p>
+<ol>
+<li>
+<p>墙可以伪造TTL返回让人traceroute/mtr感觉是国内省级骨干网，或者是出国最后一跳出了故障。这个因为Unix和Windows的初始默认TTL值样本太显著了。</p>
+</li>
+<li>
+<p>IP屏蔽是单向的。</p>
+</li>
+</ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-06-21T02:57:00+00:00">2013-06-21</time></p>
 <p>archive</p>            </div>
@@ -405,7 +505,88 @@ $ brew install rtlsdr gr-osmosdr …</code></pre></p>
 <p>2012年   </p>
 <p>文科   </p>
 <p>1、人们在工作中到底获得了什么？ <br />
-2、是否所有的信仰都是 …</p></p>
+2、是否所有的信仰都是与理性相悖的？ <br />
+3、评点斯宾诺莎《神学政治论》一段关于“国家”的论述。   </p>
+<p>经济社会科   </p>
+<p>1、与生俱来（无法抑制）的欲望是否存在？ <br />
+2、工作，仅仅就是为了做个有用的人吗？ <br />
+3、评点伯克利在《论消极服从》中关于“公权力”的一段论述。   </p>
+<p>理科 <br />
+1、没有国家（政府）我们是否会更自由？ <br />
+2、我们是否有责任追求真理？ <br />
+3、评点卢梭《爱弥尔》中关于“教育”的一段论述。   </p>
+<p>2011年   </p>
+<p>文科 <br />
+1、人们是否可能证明一个科学假设 <br />
+2、人类是否必然对自身估计过高 <br />
+3、解读尼采的《快乐的知识》节录   </p>
+<p>理科 <br />
+1、文化是否使人类偏离自然 <br />
+2、违背事实是否仍可能坚持真理 <br />
+3、解读帕斯卡的《思想录》节录   </p>
+<p>经济社会科 <br />
+1、平等是否危及自由 <br />
+2、比起科学，艺术是否不那么必要 <br />
+3、解读古罗马哲学家塞内卡的《论恩惠》节录   </p>
+<p>音乐舞蹈科 <br />
+1、自制力是否取决于自知之明 <br />
+2、感受到不公正是否加深对公正的理解 <br />
+3、解读尼采的作品节录   </p>
+<p>2010年   </p>
+<p>文科 <br />
+1、对于真理（相）的追求是否可能没有利害关系 <br />
+2、为了给自己一个未来，是否应该忘记过去 <br />
+3、解释托马斯·阿奎那的《神学大全》节录   </p>
+<p>理科 <br />
+1、艺术是否可能避免（不要）规则 <br />
+2、快乐取决于我们吗 <br />
+3、解释霍布斯的《利维坦》节录   </p>
+<p>经济社会科 <br />
+1、某些科学真理是否有可能是危险的 <br />
+2、历史学家的作用是否是评判 <br />
+3、解释杜尔凯姆的《道德教育》节录   </p>
+<p>2009年   </p>
+<p>文科 <br />
+1、语言是否背离思维（或：语言是否可以忠实地反映思维） <br />
+2、历史的客观性是否以历史学家的公正性为前提 <br />
+3、评点叔本华在《作为意志和表象的世界》一书中的一段有关匮乏和欲望满足的论述：“欲望，也就是匮乏，是所有   快感的前提条件…所以，所谓心满意足不过是某种痛苦的释放。”   </p>
+<p>理科 <br />
+1、期盼得到不可能的事情是否荒谬 <br />
+2、世上是否存在任何科学都无法解释的问题 <br />
+3、评点法国哲学家亚历西斯·德·托克维尔在《论美国的民主》中有关鼓励民众参与民主的一段文字：“因此，给民众   以管理琐事的机会，比让他们参与管理国家大事更能激发民众对公共事务的关心。”   </p>
+<p>经济社会科 <br />
+1、从交换中我们能得到什么 <br />
+2、技术进步是否改变人类 <br />
+3、评点英国哲学家约翰·洛克在《人类理智论》中有关人的道德不是与生俱来的一段文字：“我承认，在违法分子的   社区内部，他们自己会遵守正义和平等的规则，但是，循规蹈矩并不是他们的天性，只是因为他们的社区内需要实行必要的规矩。”   </p>
+<p>2008年   </p>
+<p>文科 <br />
+1、感知能力是否可以来自教育 <br />
+2、对于活体的科学认知是否可能 <br />
+3、评述萨特的《伦理学笔记》中的一段文字   </p>
+<p>理科 <br />
+1、艺术是否改变我们的现实意识 <br />
+2、演示是否确认现实的唯一手段 <br />
+3、评论叔本华的《意志与表象的世界》中的一段文字   </p>
+<p>经济社会科 <br />
+1、人们是否可以不受磨难而满足欲望 <br />
+2、认识他人是否比认识自己更容易 <br />
+3、评述托克维尔的《论美国的民主》中的一段文字   </p>
+<p>2007年   </p>
+<p>文科 <br />
+1、若有所悟是否就是对于思想桎梏的解脱 <br />
+2、艺术品是否与其他物品一样属于现实 <br />
+3、解释亚里士多德在《尼格马科论伦理》中有关“责任”的论述   </p>
+<p>理科 <br />
+1、欲望是否可以在现实中得到满足 <br />
+2、脑力劳动与体力劳动的比较有什么意义 <br />
+3、解释休谟在《道德原则研究》中的有关“正义”的论述   </p>
+<p>经济社会科 <br />
+1、人们是否可以摆脱成见 <br />
+2、我们可以从劳动中获取什么 <br />
+3、解释尼采在《人性，太人性》中有关“德行”的论述   </p>
+<p>对比一下我们的：2013年江苏卷高考作文题：</p>
+<p>材料作文：一群探险者去山洞探险，进入后点燃蜡烛，发现有一群蝴蝶，于是退出去了。过了一段时间，探险者们再次进入，却发现蝴蝶飞到山洞深处了，小小蜡烛影响了蝴蝶的生活环境。作文要求考生根据一点点细微的变化，自定主题。</p>
+<p>还可以看看 <a href="http://wp1.sina.cn/woriginal/6541fc49jw1e5fe6v103ej20c8hjh1ky.jpg">我国1949-2012高考作文题</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-06-07T01:34:00+00:00">2013-06-07</time></p>
 <p>archive</p>            </div>

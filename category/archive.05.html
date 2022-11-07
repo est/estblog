@@ -60,7 +60,41 @@
 </code></pre>
 <p>来自newsmth的python版：</p>
 <pre><code>发信人: Andor (珍惜), 信区: Python
-标  题: Re: Python的良民证算法，有 …</code></pre></p>
+标  题: Re: Python的良民证算法，有没有更简单的写法？
+发信站: 水木社区 (Fri Sep 14 15:13:05 2012), 站内
+
+get_id = lambda s: s + '1X864209753'[int(s, 13) % 11]
+【 在 zxn0 (est) 的大作中提到: 】
+: &gt;&gt;&gt; get_id = lambda s: s+'10X98765432'[reduce(int.__add__, map(lambda 
+: a,b:int(a)*(ord(b)-64), s[0:17], 'GIJEHDBAFCGIJEHDB' )) % 11]
+: &gt;&gt;&gt; get_id('34052419800101001')
+: '34052419800101001X'
+: 大家看哪里还能精简字符不？
+
+
+
+
+发信人: Fermat (Fermat), 信区: Python
+标  题: Re: Python的良民证算法，有没有更简单的写法？
+发信站: 水木社区 (Mon Sep 17 01:41:42 2012), 站内
+
+既然 int(s, 13) 这么漂亮的都出来了，又何必把那么好记的 "10X98765432" 弄成一个 magic number 呢
+
+get_id = lambda s: s + '10X98765432'[(int(s, 13)*13) % 11]
+
+或者在有32位整数限制的地方使用类似的
+get_id = lambda s: s + '10X98765432'[((int(s, 13)%11)*13)%11]
+
+
+对于有算法洁癖的，下面的可能会好些
+
+from itertools import chain
+get_id = lambda s: s + '10X98765432'[reduce(lambda acc, x:
+    (acc*13 + int(x)) % 11, chain(s, "0"), 0)]
+
+因为可以把输入字符串当成个无限流，且程序只占用少量固定的空间，也不需要语言对很大的整型有支持。虽然对这个程序没啥意义。
+</code></pre>
+<p>关于良民证，python普通版描述在<a href="http://www.keakon.net/2009/03/07/%E7%94%A8Python%E8%AE%A1%E7%AE%97%E8%BA%AB%E4%BB%BD%E8%AF%81%E6%A0%A1%E9%AA%8C%E7%A0%81">这里</a>，前六位的来自官方 <a href="http://www.stats.gov.cn/tjbz/index.htm">县及县以上行政区划代码</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-09-17T21:38:00+00:00">2012-09-17</time></p>
 <p>archive</p>            </div>
@@ -76,7 +110,13 @@
             </a>
             <p class="card-text"><p>钻石其实是宇宙中——最常见的晶体之一。。。本来应该非常便宜，但是价格是人为捧高的。</p>
 <p>毛子在70年代发现了一个陨石坑。。。。。。。。。。大概有<a href="http://www.csmonitor.com/World/Global-News/2012/0917/Russia-reveals-shiny-state-secret-It-s-awash-in-diamonds">几万亿克拉的钻石</a>。。。</p>
-<p>世 …</p></p>
+<p>世界上：</p>
+<p>最稀有的宝石top 10: <br />
+Jeremejevite, Black Opal, Red Beryl Emerald, Musgravite, Grandidierite, Painite, Blue Garnet, Serendibite, Red Diamonds, Jadeite</p>
+<p>最贵重的金属top 10:<br />
+Indium, Silver, Rhenium, Palladium, Osmium, Iridium, Ruthenium, Gold, Platinum, Rhodium</p>
+<p>Rhodium就是铑，Two.And.A.Half.Men.S09E10里边Walden的那颗价值不菲的铂铑戒指。。。但是这货2007年价格崩了，从$10,000/oz垮到$1,000/oz</p>
+<p><a href="http://www.reddit.com/r/worldnews/comments/1015r4/russia_has_just_declassified_news_that_will_shake/c69jwu6?context=3">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-09-17T21:04:00+00:00">2012-09-17</time></p>
 <p>archive</p>            </div>
@@ -116,7 +156,52 @@
 cnetnews.com.cn       CNET 科技资讯网
 cheshi.com            网上车市
 ea3w.com              万维家电网
-fengniao.com          蜂鸟网 …</code></pre></p>
+fengniao.com          蜂鸟网
+gocar.cn              购车网
+zwbang.com            小学生作文
+haibao.cn             海报时尚网
+kdslife.com           KDS 宽带山
+kimiss.com            闺蜜网
+onlylady.com          OnlyLady 女人志
+pchome.net            电脑之家
+xcar.com.cn           爱卡汽车
+xiyuit.com            西域 IT 网
+meigong5.com          网站美工
+zol.com.cn            中关村在线
+3qit.com              三秦 IT 网
+55bbs.com             我爱购物网
+cbscares.com          CBS Cares
+cbsfilms.com          CBS Films
+cbs.com               CBS.com
+cbsnews.com           CBSNews.com 
+cbssports.com         CBSSports.com 
+chow.com              CHOW
+cnet.com              CNET
+cbscollegesports.com  CBS College Sports
+cwtv.com              The CW
+ecomediacbs.com       EcoMedia
+gamespot.com          GameSpot
+help.com              Help.com
+last.fm               Last.fm
+maxpreps.com          MaxPreps
+metacritic.com        Metacritic
+moneywatch.com        MoneyWatch
+mysimon.com           mySimon
+radio.com             Radio.com
+search.com            Search.com 
+shopper.com           Shopper.com
+sho.com               Showtime
+simonandschuster.com  Simon &amp;amp; Schuster
+smartplanet.com       SmartPlanet
+techrepublic.com      TechRepublic
+theinsider.com        The Insider
+tv.com                TV.com
+urbanbaby.com         UrbanBaby
+zdnet.com             ZDNet
+</code></pre>
+<p>比较关注的有kds, zol, xcar, fengniao, last.fm, TechRepublic</p>
+<p>然后solidot.org又属于ZDNet。</p>
+<p>我真是CBSi's bitch。外加reddit（Condé Nast's bitch）</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-09-13T01:09:55+00:00">2012-09-13</time></p>
 <p>archive</p>            </div>
@@ -195,7 +280,11 @@ fengniao.com          蜂鸟网 …</code></pre></p>
 <li>拿个解决方案来寻找问题。Finding a nail with a hammer?</li>
 <li>没有客观可度量指标来盲目“优化”。</li>
 </ol>
-<p>盲目造成的附加 …</p></p>
+<p>盲目造成的附加伤害和长期隐患比“优化”带来的短期或局部好处大得多。没有严格长期的AB组对比试验，就不要谈优化了。</p>
+<p>关于动机：</p>
+<p>最可悲的动机，不是你的目标和项目目标相反，而是你的目标和项目目标正交。。。。</p>
+<p>关于bug：</p>
+<p>出了问题怎么办？再多hire一个人，再多增加一个用于fix bug的项目！把一个bug变成两个，就可以把当前的bug推脱成别的bug了。当前的bug就解决了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-09-05T23:40:00+00:00">2012-09-05</time></p>
 <p>archive</p>            </div>
@@ -226,7 +315,24 @@ fengniao.com          蜂鸟网 …</code></pre></p>
             <p class="card-text"><p>今天研究了一下这个玩意。先说结论：</p>
 <ol>
 <li>Android手机的NFC芯片本质只是一个tag reader/writer，要把自身模拟成tag，需要在驱动里把自己改造成可以控制的Secure Element</li>
-<li>Galaxy Nexus的2.3 ROM可以用<code>com …</code></li></ol></p>
+<li>Galaxy Nexus的2.3 ROM可以用<code>com.pocketluxus.nfclassic</code> 这个 nfca.apk模拟。有人成功过</li>
+<li>Nexus S可以用一个定制过的firmware来<a href="http://forum.xda-developers.com/showthread.php?t=1281946">打开</a>驱动的 卡模拟 模式，模拟任意RFID Tag。步骤非常麻烦。需要编译android源码（我日）</li>
+<li>i9300用的NFC芯片是NXP PN65N，和<a href="http://www.nfcworld.com/2011/02/13/35913/uncovered-the-hidden-nfc-potential-of-the-google-nexus-s-and-the-nokia-c7/">Nexus S的</a>一样</li>
+</ol>
+<p><img alt="" src="http://cdn3.nfcworld.net/wp-content/uploads/2011/02/pn65n-nexus-s-250x187.jpg" /></p>
+<p>至于什么普通手机可以读取RFID Tag，而不能模拟呢？</p>
+<p>国内的一些说法是，rfid卡加密了，没法模拟。其实这是错误的。</p>
+<p>我在XDA翻了下一些理论，大概是这样的：</p>
+<p>RFID/ID卡分两种，一种是只读的，一种是可写的。</p>
+<p>比如门禁卡，就是只读的，然后门禁系统有个白名单，列表允许的uid就可以开门。只读的信息不可能变的。所以加密了也能模拟。</p>
+<p>比如公交卡，是可写的，余额信息是写入ID卡内的。有的数据有加密，有的没有。</p>
+<p>（第一种情况其实可以用xda大神写的ReTag来把数据强行写入）</p>
+<p>那为什么手机有NFC芯片却不能任意模拟门禁卡RFID tag呢？</p>
+<p>RFID都有一个唯一uid，门禁卡的这个uid是静态的。关键是NFC芯片厂商为了安全，每次NFC芯片刷卡，都会动态随机生成一个新的uid。要强制把这个uid改成静态，就需要修改驱动和firmware了。</p>
+<p>目前三桑的S Beam和GoogleWallet都是动态uid的。并不能直接支持自定义静态uid。</p>
+<p>所以，等待大神的hack吧。xda上已经有人研究出来了，但是app只是小范围分享。</p>
+<p>如果这玩意公开了估计很多学校、写字楼、酒店、公共交通刷卡设备报要报废。</p>
+<p><a href="http://stackoverflow.com/questions/5859682/getting-nexus-s-android-nfc-into-card-emulation-mode">参考</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-08-30T23:35:00+00:00">2012-08-30</time></p>
 <p>archive</p>            </div>
@@ -258,7 +364,7 @@ fengniao.com          蜂鸟网 …</code></pre></p>
 <p>wiki pages显示不支持用户格式，比如txt之类的。</p>
 </li>
 </ul>
-<p>恩。总之没有完美的东西。但 …</p></p>
+<p>恩。总之没有完美的东西。但是别人hosting的东西就是不如自己可以折腾的爽。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-08-30T05:44:48+00:00">2012-08-30</time></p>
 <p>archive</p>            </div>
@@ -284,7 +390,15 @@ JPMorgan Chase &amp; Co $520,299<br />
 Morgan Stanley  $513,647<br />
 Bank of America $510,728<br />
 Credit Suisse Group $427,560  </p>
-<p>Ron Paul …</p></p>
+<p>Ron Paul<br />
+US Dept of Defense  $125,454<br />
+US Army $114,507<br />
+US Navy $90,243<br />
+Google Inc  $42,478<br />
+Microsoft Corp  $30,259  </p>
+<p>Ron Paul 这个军火贩子啊 ಠ_ಠ Mitt Romney这个ws男！</p>
+<p>via <a href="http://www.opensecrets.org/pres12/contriball.php">opensecrets</a> from <a href="http://www.reddit.com/r/politics/comments/z14wb/obamas_top_5_contributors_are_the_university_of/">reddit</a></p>
+<p>btw 话说今天<a href="http://www.reddit.com/r/IAmA/comments/z1c9z/i_am_barack_obama_president_of_the_united_states/">POTUS在reddit的AMA</a>太火爆了，把reddit给日了有没有！reddit的SA太懒了直接把页面只读了有没有！</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-08-29T21:07:00+00:00">2012-08-29</time></p>
 <p>archive</p>            </div>
@@ -328,7 +442,7 @@ Credit Suisse Group $427,560  </p>
 </code></pre>
 <p>1/89 == 0.011235955056179775</p>
 <p><a href="http://en.wikipedia.org/wiki/Generating_function">母函数</a> 这种技巧都忘记好久啦。。</p>
-<p>还有类 …</p></p>
+<p>还有类似的 1001/997002999 == 1.004009016025036049....</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-08-20T02:54:00+00:00">2012-08-20</time></p>
 <p>archive</p>            </div>
@@ -364,7 +478,13 @@ Credit Suisse Group $427,560  </p>
 http://dl.google.com/chrome/install/1229.2/chrome_installer.exe</p>
 <p>New URL:<br />
 http://cache.pack.google.com/edgedl/chrome/win/22.0.1229.2_chrome_installer.exe</p>
-<p>Fuck Google's bootstrappers downloader which is slow like shit …</p></p>
+<p>Fuck Google's bootstrappers downloader which is slow like shit. And the official standalone installer failed to install on Windows XP. WTF.</p>
+<p>btw to check the newest Chrome version, use this page <a href="http://feeds.feedburner.com/GoogleChromeReleases">http://feeds.feedburner.com/GoogleChromeReleases</a></p>
+<p>2012-11-29 Update: New URL for dev version:</p>
+<p><a href="https://dl.google.com/tag/s/ap%3D2.0-dev/update2/installers/ChromeStandaloneSetup.exe">https://dl.google.com/tag/s/ap%3D2.0-dev/update2/installers/ChromeStandaloneSetup.exe</a></p>
+<p><a href="http://storage.googleapis.com/chrome-canary/25.0.1337.0_chrome_installer.exe">http://storage.googleapis.com/chrome-canary/25.0.1337.0_chrome_installer.exe</a></p>
+<p>2013-01-24 Update:</p>
+<p>https://dl.google.com/edgedl/chrome/install/GoogleChromeStandaloneEnterprise.msi</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-08-14T20:56:00+00:00">2012-08-14</time></p>
 <p>archive</p>            </div>
@@ -437,7 +557,15 @@ http://cache.pack.google.com/edgedl/chrome/win/22.0.1229.2_chrome_installer.exe<
               <h2 class="card-title">关闭163/126的“订阅邮件”</h2>
             </a>
             <p class="card-text"><p>关于email，我最早是263用户，然后sina，sina太渣了，就逃到yahoo，msn，最后定居在126，因为当时网易的CDN还是很快的。</p>
-<p>用了这么多年，发现很多邮件找不到了，结果是 …</p></p>
+<p>用了这么多年，发现很多邮件找不到了，结果是CTMD的“订阅邮件”特性：</p>
+<blockquote>
+<p>“订阅邮件”文件夹（邮件存放30天以上会被彻底删除）</p>
+</blockquote>
+<p>关于关闭这个分类，也很<a href="http://fm.163.com/bbs/viewthread.php?tid=3970">隐蔽</a>，方法是：</p>
+<p>设置 - 邮箱设置 - 高级 - 反垃圾 - 关闭邮件智能分类到 - “订阅邮件”文件夹</p>
+<p><img alt="" src="http://zhidao.mail.163.com/zhidao/upload/a73d63e7-ef0a-451f-882f-fe9b40bd55bd.jpg" /></p>
+<p>很多当初的注册信息就这样被126吞了的。郁闷啊。</p>
+<p><a href="http://zhidao.mail.163.com/zhidao/topic/view.do?qid=337169">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-08-09T09:06:32+00:00">2012-08-09</time></p>
 <p>archive</p>            </div>
@@ -468,7 +596,14 @@ http://cache.pack.google.com/edgedl/chrome/win/22.0.1229.2_chrome_installer.exe<
             </a>
             <p class="card-text"><p>什么是奥运精神？奥运精神不是金牌精神，而是把来自各地的人联系团结在一起的精神。</p>
 <p><img alt="" src="http://i.imgur.com/MVVYW.jpg" /></p>
-<p>左边是来自Great Britain的Andrew Turner，右边是来自<strike>Joma …</strike></p></p>
+<p>左边是来自Great Britain的Andrew Turner，右边是来自<strike>Joma</strike> Spain 的Jackson Quinonez <a href="http://www.reddit.com/r/pics/comments/xtojz/what_the_olympics_are_all_about/">1</a></p>
+<p><img alt="" src="http://p3.img.cctvpic.com/20120807/images/1344335193169_1344335193169_r.jpg" /></p>
+<p>刘翔深情地向最后一栏吻别。<a href="http://www.reddit.com/r/olympics/comments/xtf6d/liu_xiang_falls_on_the_first_hurdle_and_many/">via</a></p>
+<p><a href="http://weibo.com/2697156882/ywatDoKU7">另外</a>，</p>
+<blockquote>
+<p>@合写社会：2004年，雅典奥运会，男子110米栏。跨栏界的传奇名将、刘翔的偶像美国人阿兰约翰逊在比赛中打栏、摔倒……美国没有白眼狼对他进行责怪、斥骂，也没有阴谋论和“影帝”的帽子。正是那一场比赛中刘翔平世界纪录并获得了奥运金牌，成绩为12.91秒。</p>
+</blockquote>
+<p><img alt="" src="http://ww2.sinaimg.cn/large/a0c35912gw1dvoyutijupj.jpg" /></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-08-07T22:36:44+00:00">2012-08-07</time></p>
 <p>archive</p>            </div>
@@ -527,7 +662,20 @@ http://cache.pack.google.com/edgedl/chrome/win/22.0.1229.2_chrome_installer.exe<
               <h2 class="card-title">对blog的感触</h2>
             </a>
             <p class="card-text"><p>看到<a href="http://www.v2ex.com/t/42329">这个</a>帖子，觉得有些感触的。</p>
-<p>的确，我不是那么疯狂的blog了。以前无聊的时候，一天能spam 4-5篇blog。现在个把月能撸出几篇就不错了 …</p></p>
+<p>的确，我不是那么疯狂的blog了。以前无聊的时候，一天能spam 4-5篇blog。现在个把月能撸出几篇就不错了。</p>
+<p>换了好几个blog的地方，越来越折腾不动了。</p>
+<p>以前大学的时候blog，是因为师兄门都在dotText上分享技术和生活</p>
+<p>再后来，blog，那是一种寂寞～～～～<span style="color: white">其实后来生活中多了另一半，就不再那么寂寞了。</span></p>
+<p>翻了一下以前的blog，我的blog其实逐渐得变成了我n年前最鄙视的那种——二手信息贩子。</p>
+<p><img alt="" src="/images/tumblr/28808617294.png" /></p>
+<p>成天就是把4chan reddit上的陈词滥调转发过来，还乐得不行。其实jandan、@fall_ark 比我做得更早更多更好。</p>
+<p>最烂得烂的不行的东西，就是神马发布泄露啦，值得一喷的新闻啦，这种过几年就毫无用处的垃圾信息。blog其实很缺乏一种内在的值得沉淀的东西。</p>
+<p>但是，现实就是，吵不起架的东西，就没人气。越短视的东西越热门。同时也最让人困惑的是，新事物就诞生在这种骚华之中。</p>
+<p>另一个很大的因素是，手机统治了一切。我们都是一个漏斗状的接受体。输入洪流更加的碎片和分散。输出要么正在审查中不能发表，要么根本就是一滴露水投进了大海。</p>
+<p>以前每天打开电脑就是读Google Reader什么的，而且它的share功能很重要，现在share被阉割，也没有人愿意去G+这种垃圾平台上去分享有价值的东西。所以，只能在自己订阅的blog sphere里逐渐枯萎。现在的阅读就是不停得在爪机的NewsRob上不停得滑动屏幕。</p>
+<p>permalink, traceback, syndication, Technorati 这些都成了遥远的回忆。现在睾交互平台那是weibo和twitter这些，但是我非常讨厌这两个东西，因为信噪比太悲剧。不值得去投入时间去占领这样的coverage。</p>
+<p>或许是我知道的太狭窄，或许是我太假装清高，但是我觉得现在真的没有什么有价值有良好feedback的输出平台了。blogging我会坚持下去，但是或许就成为一种自娱自乐随感流的东西，而不是讨好看客的地方了吧。</p>
+<p>PS tumblr又把theme给我reset了。托管blog就是处处受制于人啊。各种被fucked up。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-08-05T22:36:00+00:00">2012-08-05</time></p>
 <p>archive</p>            </div>
@@ -542,7 +690,33 @@ http://cache.pack.google.com/edgedl/chrome/win/22.0.1229.2_chrome_installer.exe<
               <h2 class="card-title">[zz]三星i9300韩版Galaxy S III三个版本E210S E210K E210L的区别</h2>
             </a>
             <p class="card-text"><p>kevin85825 发表于 2012-7-21 13:12  机锋论坛 » 三星 i9300（Galaxy S III）论坛</p>
-<p>逛了逛这个板块，实在是看不下去了，虽然也有个别朋友知道是三大运营商 …</p></p>
+<p>逛了逛这个板块，实在是看不下去了，虽然也有个别朋友知道是三大运营商的区别，却并不清楚其中实力对比，所以，还是我来讲讲吧。</p>
+<p>谁都知道韩版的GS3分为三个版本，S,K和L。这也和其他的韩版手机一样，故此，这个帖子也通用在其他韩版手机说明上。</p>
+<p>1、所谓S,K,L，就是韩国三大移动运营商的代名：SK电讯，KT电讯以及LGT电讯，相当于我们的移动联通电信。韩国史上曾经有6大运营商，经过这几十年来的不断合并重组，成为今天就他们三家了。</p>
+<p>其中，SK为韩国第一大运营商，实力相当雄厚，占领着韩国51%的市场份额，主营业务范围为CDMA、GSM以及WCDMA。</p>
+<p>KT为韩国第二大运营商，占领着韩国31%的市场份额，主营范围同样是CDMA、GSM和WCDMA。</p>
+<p>LGT是韩国第三大运营商，前年刚刚获得WCDMA的经营牌照，主营范围还是CDMA和GSM。</p>
+<p>2、这三个版本的主要区别，就在于基带上。</p>
+<p>10多年前的韩国本土，全是CDMA网络。这点大家不要误以为人家手机支持CDMA就能三网通吃了，实际上人家韩国本土所使用的CDMA是1800MHz的，而我们中国电信的是800MHz的，所以，不通用。</p>
+<p>S和K一样，做出来的机子差不多吧，基带都会支持到中国移动的EDGE网络，只不过韩国人没有EDGE，只能显示到GPRS...这点大家可以亲自测试我是不是吹牛。</p>
+<p>不过S的手机肯定是略胜一筹的，人家实力就摆在那里。半壁江山不是吃素来的。</p>
+<p>但是L的就不行，这东西的基带不支持中国移动的EDGE网络，仅仅支持到每秒5-7k的GPRS，所以不建议移动用户购买L版机子。</p>
+<p>3、这三个版本的机子为什么流浪到中国大陆最多的是L版呢？</p>
+<p>大家也许发现了，不管韩版哪个手机，流入中国大陆的基本都是L版机器。</p>
+<p>这点就需要细说了。</p>
+<p>棒子没有你们看的韩剧那么光鲜，人家物价高得要命。曾经我想着X宝上这些JS的东西不靠谱，所以叫在韩国留学的朋友去打听打听LTE2多少钱，给我带一个原装的回来吧。</p>
+<p>结果我朋友槑槑的告诉我，这货单买人民币（下同）6000，免费签约（和水果在美国的模式一样）价绑定300-400的套餐两年，违约金5000.</p>
+<p>相比起X宝上2600+的价格，这差别也太大了吧。</p>
+<p>实在是想不通，所以再咨询个从美国带回来水果的朋友，他跟我说，简单，每个留学生都能用信用卡免签一部机子，只需要回国之前把信用卡停用，回国就换sim卡行了，反正也不用再回美国了，信用度为负也没关系了。</p>
+<p>我滴神哪.......</p>
+<p>于是再问韩国的朋友，这尼玛的韩国三大运营商的免签制度是怎样的？</p>
+<p>S和K控制非常严格，不允许外国人以外国身份证免签手机，而LGT可能是想要多点销路吧，他支持外国身份证办理的信用卡免签手机。</p>
+<p>真相就这样豁然了。</p>
+<p>因为支持外国人免签机子，所以大量的JS跑到韩国去，以免签然后停用信用卡的办法把这机子给走回来了....所以你们才能在X宝上以比棒子人家低一半的价格买到这个货.</p>
+<p>简单点说，X宝上的韩版手机，可以肯定都是毁约机或者是14天机，根本不存在原封手机过海这回事。</p>
+<p>最后，再说一下，其实这东西怎么来的都没关系，关键是我们能享受到就是了，从实力来讲，首选必然是S，然后是K，最次才会选择L版。不要以为L版出货量大人家官方天天给你OTA更新...人家每次更新个10M左右一直都是4.03或者4.04是来修复bug的，你还以为是人家积极呢...棒子理念基本就是一步到位，做好了就不用太多修改rom，所以S和K远比L版要稳定很多。</p>
+<p>以上。要买机子就选S或者K，最好别买L，不信者，请自己度娘或者谷歌。谢绝水军喷子。</p>
+<p>est备注：韩版的好处是内存2G，有个没多大用的DMB电视功能，坏处是不带FM，不支持EDGE，不支持3.5G HSDPA。目前只有K版的才可以视频通话。韩版LTE的个头都比其他版要重要厚。不幸买了L版的悲剧路过。。。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-08-01T02:56:00+00:00">2012-08-01</time></p>
 <p>archive</p>            </div>
@@ -559,7 +733,40 @@ http://cache.pack.google.com/edgedl/chrome/win/22.0.1229.2_chrome_installer.exe<
             <p class="card-text"><p>发信人: timepp (时间调色板), 信区: NewSoftware<br />
 标  题: [原创]控制台使用consolas加中文雅黑字体的方法<br />
 发信站: 水木社区 (Fri Jul 27 11:32:10 2012), 站内</p>
-<p>中间很多坑,能达到截图的效 …</p></p>
+<p>中间很多坑,能达到截图的效果真是太不容易了. 过程我就不说了, 直接说怎么改吧<br />
+(过程涉及注册表, 感兴趣的同学请小心修改)</p>
+<ol>
+<li>
+<p>设置控制台字体属性<br />
+    HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont<br />
+      (REG_SZ)00 = Consolas  注: 貌似WINDOWS缺省就是这样的啦<br />
+      (REG_SZ)0936 = aaa     注: 这步是必须的, 注意ValueName是0936, value随便弄个不存在的字体</p>
+</li>
+<li>
+<p>把consolas连接到雅黑<br />
+    HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontLink\SystemLink<br />
+        (REG_MULTI_SZ)Consolas = MSYH.TTC,微软雅黑,128,96<br />
+    (修改了字体链接需要注销重登录才能生效)</p>
+</li>
+<li>
+<p>修改控制台属性(也可以在控制台属性页中直接设,需要自己摸索下规律)<br />
+    HKEY_CURRENT_USER\Console\%SystemRoot%_system32_cmd.exe<br />
+      修改FaceName为Consolas<br />
+      修改FontSize为1179648</p>
+</li>
+<li>
+<p>这时在控制台依然显示很虚的宋体! 需要这第四步, 这步是我蒙对的(运气好啊)<br />
+  HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\RasterFonts<br />
+    (REG_SZ)微软雅黑=msyh.ttc<br />
+  (这步可能需要注销一下)</p>
+</li>
+</ol>
+<p>至此就结束了. 在控制台属性页中找不到consolas的同学, 先把代码页设成65001<br />
+  chcp 65001</p>
+<p>cygwin也从中受益了, 呵呵, 见附图</p>
+<p>不知道这个cmd不知道能不能用mactype渲染,如果可以的话显示效果应该会更好(见附件MADEDIT截图), 我是64位的WIN8, 试不了.</p>
+<p><img alt="" src="/images/tumblr/28448766013.png" /></p>
+<p>虽然我不用cmd，但是转载1下。。。就不吐槽了。。。。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-07-31T20:44:00+00:00">2012-07-31</time></p>
 <p>archive</p>            </div>
@@ -579,7 +786,12 @@ http://cache.pack.google.com/edgedl/chrome/win/22.0.1229.2_chrome_installer.exe<
 <p>关于3D打印机的一些<a href="http://www.reddit.com/r/gaming/comments/x5efo/this_is_what_access_to_a_3d_printer_and_an/c5jedqg?context=1">简介</a>：</p>
 <blockquote>
 <p>Home <a href="http://en.wikipedia.org/wiki/Fused_deposition_modeling">FDM</a> 3d printers are much more affordable than the professional grade ones that can easily reach over $20,000. The quality isn't -as- good as the professional grade ones, but it's getting there.<br />
-They typically use two …</p></blockquote></p>
+They typically use two types of plastic filament, ABS (think Lego plastic) and PLA (corn-based plastic), both of which are available in spools of multiple colors. There's multiple places to get spools of these plastics on the internet.<br />
+Also, <a href="http://www.thingiverse.com/">Thingiverse</a>. People make things and upload them here for you to make as well. Site is run by <a href="http://www.makerbot.com/">Makerbot</a> so the files will all work with their models of printers but they can typically be used with other models as well.<br />
+Check <a href="http://www.reddit.com/r/gaming/comments/x5efo/this_is_what_access_to_a_3d_printer_and_an/c5jceu0">this</a> out for a few models to look at. There's many more models of home 3d printers too. :) <br />
+If you're looking into getting into 3d printing, be prepared to drop anywhere from maybe $500-$2000 or so for your first printer, some of which will come pre-assembled and ready to go, for a price. There's a pretty big price range for these printers, it totally depends on which one you want.  </p>
+</blockquote>
+<p>via <a href="http://www.reddit.com/r/gaming/comments/x62qd/had_i_known_that_my_videogamethemed_3d_printing/">1</a>, <a href="http://www.reddit.com/r/gaming/comments/x5efo/this_is_what_access_to_a_3d_printer_and_an/">2</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-07-26T00:27:00+00:00">2012-07-26</time></p>
 <p>archive</p>            </div>
@@ -595,7 +807,9 @@ They typically use two …</p></blockquote></p>
             </a>
             <p class="card-text"><p><a href="http://news.ycombinator.com/item?id=4291966">hetman</a> wrote:</p>
 <blockquote>
-<p>The idea of the patent system in itself is actually quite elegant. Government grants a <strong>temporary monopoly</strong> in exchange for the <strong>public disclosure</strong> of an invention. Everyone wins! The person issued the patent can more easily profit from their invention because they can work in the open. Society …</p></blockquote></p>
+<p>The idea of the patent system in itself is actually quite elegant. Government grants a <strong>temporary monopoly</strong> in exchange for the <strong>public disclosure</strong> of an invention. Everyone wins! The person issued the patent can more easily profit from their invention because they can work in the open. Society likewise benefits, no more secret guilds locking up knowledge, now everyone can see how it's done (and apply it once the monopoly expires). <br />
+As a social contract this really makes sense. The problem is that a lot of the patents being thrown around today only really satisfy half of that contract. A temporary monopoly is indeed granted, but the <strong>disclosure received in exchange is worthless information</strong>. I say it is worthless because no one actually needs to read that disclosure to figure out how to do it themselves with basically no effort.</p>
+</blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-07-25T20:39:00+00:00">2012-07-25</time></p>
 <p>archive</p>            </div>
@@ -612,7 +826,22 @@ They typically use two …</p></blockquote></p>
             <p class="card-text"><p>The Gentleperson's Guide To Forum Spies</p>
 <p>http://cryptome.org/2012/07/gent-forum-spies.htm</p>
 <p>spies cointelpro disinformation</p>
-<p>This recently leaked document describes modern COINTELPRO techniques for manipulating Internet forums.  Observant readers may have noticed these techniques being used in familiar online forums.  Part of modern media literacy includes understanding these techniques …</p></p>
+<p>This recently leaked document describes modern COINTELPRO techniques for manipulating Internet forums.  Observant readers may have noticed these techniques being used in familiar online forums.  Part of modern media literacy includes understanding these techniques.  This document contains information about:<br />
+1. COINTELPRO Techniques for dilution, misdirection and control of a internet forum<br />
+2. Twenty-Five Rules of Disinformation<br />
+3. Eight Traits of the Disinformationalist<br />
+4. How to Spot a Spy (Cointelpro Agent)<br />
+5. Seventeen Techniques for Truth Suppression  </p>
+<p>简单的说，FBI的水军用下面几个手段控制草根舆论：</p>
+<ol>
+<li>顶脑残贴，目标贴被坟和脑残贴淹没了</li>
+<li>支持反面言论，但是留下弱点和漏洞，然后另一个强有力的回复立马提出非常有说服力的反驳。国内<a href="http://www.hi-pda.com/forum/viewthread.php?tid=1013881">例子</a></li>
+<li>吵架骂街分散注意力</li>
+<li>晒单败家比赛贴。很容易搜集一个在线社区的资源和水平分布。</li>
+<li>发帖拉仇恨。这样情绪容易激动的id就很容易被鉴定出，登记成“敏感人群”。</li>
+<li>获得版猪或者猴子权限。</li>
+</ol>
+<p>会不会马上 “咚咚咚，FBI快递来查水表” 呢？</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-07-22T23:09:26+00:00">2012-07-22</time></p>
 <p>archive</p>            </div>
@@ -676,7 +905,65 @@ They typically use two …</p></blockquote></p>
             <a href="/post/26823744858"  rel="bookmark" >
               <h2 class="card-title">DIY OAuth 2 library：从97KB到22行Python</h2>
             </a>
-            <p class="card-text"><p>最近的项目需要用代码去读取一些Google Spreadsheet的数据，看了下Google官方的Spreadsheet API，读取数据这些好说，就是xml格式我比较讨厌。于是想用<code>alt=json</code>这个<a href="https://developers.google.com/gdata/docs/json">json输出API</a>，试用发现，对于ClientLogin（浏 …</p></p>
+            <p class="card-text"><p>最近的项目需要用代码去读取一些Google Spreadsheet的数据，看了下Google官方的Spreadsheet API，读取数据这些好说，就是xml格式我比较讨厌。于是想用<code>alt=json</code>这个<a href="https://developers.google.com/gdata/docs/json">json输出API</a>，试用发现，对于ClientLogin（浏览器cookie）直接调用Spreadsheet API的Google Apps用户而言，这个json输出是400不可用的。于是只能撸一个OAuth读取数据试试了。</p>
+<p>看了下官方的<a href="http://code.google.com/p/gdata-python-client/">Google Data APIs Python Client Library</a>，我勒个擦啊，一大坨垃圾依赖，比如<code>OpenSSL.crypto</code>，<a href="http://code.google.com/p/httplib2/source/browse/python2/httplib2/__init__.py">httplib2</a>等。</p>
+<p>仔细看了下Google <a href="https://developers.google.com/accounts/docs/OAuth2ServiceAccount">OAuth 2.0</a>的文档，似乎也不复杂的样子，至少比<a href="http://initiative.yo2.cn/archives/633801">OAuth 1.0 那种3 legged login</a> 简单多了。于是就自己DIY了一个</p>
+<p>OAuth 2.0把流程分为了几个scenario，比如用于Web交互，客户端app，设备，等等。我需要的只是服务器读取某个Google Spreadsheet的一些数据，无须用户点击几个“确认”，所以属于Service Account</p>
+<p>当然，官方<a href="https://developers.google.com/accounts/docs/OAuth2ServiceAccount#overview">强烈不推荐</a>你自己去实现OAuth 2.0这一套流程</p>
+<p>&gt; The rest of this article describes the specifics of creating a JWT, signing the JWT, forming the access token request, and handling the response. Libraries should abstract these specifics from your application. Again, developers are strongly encouraged to attempt to use an existing library <strong>rather than building your own</strong> support for server-to-server interactions.</p>
+<p>所以我就直接去逆向他们的<a href="http://code.google.com/p/google-api-python-client/source/browse/samples/service_account/tasks.py">Tasks API with a Service account</a> sample</p>
+<p>安装了一大票依赖，痛苦编译好pyopenssl之后，直接运行，出错：</p>
+<pre><code>oauth2client.client.AccessTokenRefreshError: invalid_grant
+</code></pre>
+<p>加个Fiddler代理调试：</p>
+<pre><code>http = httplib2.Http(
+  proxy_info=httplib2.ProxyInfo(
+    httplib2.socks.PROXY_TYPE_HTTP, 
+    proxy_host='10.0.18.2', 
+    proxy_port=8888
+), ca_certs='FiddlerRoot.cer')
+</code></pre>
+<p>发现https不支持。于是</p>
+<pre><code>httplib2.debuglevel = 4
+</code></pre>
+<p>终于看到一坨东西了。</p>
+<p>对比上面那个 OAuth 2文档，可以轻松写出OAuth 2.0获得access_token的代码：</p>
+<p>需要用到API用户email，p12密钥两个东西，可以从Google API Console里获得。</p>
+<pre><code>import base64
+
+b64 = lambda x:base64.urlsafe_b64encode(x).rstrip('=')
+
+header = '{"alg":"RS256","typ":"JWT"}'
+ts_now = int(time.time())
+
+claim_set = {
+    "iss": email,
+    "scope": ' '.join(scope),
+    "aud": "https://accounts.google.com/o/oauth2/token",
+    "exp": ts_now+3600,
+    "iat": ts_now,
+}
+
+jwt = '%s.%s' % (url_b64(header), url_b64(json.dumps(claim_set)))
+# convert pkcs12 to private key
+p = Popen('openssl pkcs12 -in key.p12 -nocerts -passin stdin -nodes -out key.pem', shell=True, stdin=PIPE, stdout=PIPE)
+p.stdin.write('notasecret') # Google's key default password
+p.stdin.close()
+p.wait()
+# RSA sign with sha256 using private key
+p = Popen('openssl dgst -sha256 -sign 'key.pem' -keyform PEM', shell=True, stdin=PIPE, stdout=PIPE)
+p.stdin.write(jwt)
+p.stdin.close()
+sig = p.stdout.read()
+p.wait()
+
+print '%s.%s' % (jwt, url_b64(sig))
+</code></pre>
+<p>有了access_token之后，获取spreadsheet数据就很简单了，我也拿<a href="https://developers.google.com/gdata/samples/spreadsheet_sample">sample里</a>的spreadsheet作为例子：</p>
+<p>https://spreadsheets.google.com/feeds/list/o13394135408524254648.240766968415752635/od6/public/values?alt=json&amp;access_token=1/XXXXX</p>
+<p>其中<code>1/XXXXX</code> 就是OAuth 2.0得到的access_token。</p>
+<p>对比一下，上面提到的Google官方的OAuth 2 library是97KB大小，自己DIY的算上注释都才只有22行。。。</p>
+<p>Google客户端的代码是用了<code>import OpenSSL</code>来直接实现RSA SHA256签名，我直接先后启动两个openssl命令行实现的。好处是不用麻烦的编译pyopenssl这个库依赖了。服务器部署方便。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-07-09T05:23:00+00:00">2012-07-09</time></p>
 <p>archive</p>            </div>
@@ -690,7 +977,11 @@ They typically use two …</p></blockquote></p>
             <a href="/post/26542883778"  rel="bookmark" >
               <h2 class="card-title">[zz]最直白的解释Higgs Boson希格斯子</h2>
             </a>
-            <p class="card-text"><p>科学家很难向英国政府解释清楚希格斯场，所以在1993年，英国科学部长威廉•瓦多格列佛（William Waldegrave）向科学家发起了挑战，让他们用 …</p></p>
+            <p class="card-text"><p>科学家很难向英国政府解释清楚希格斯场，所以在1993年，英国科学部长威廉•瓦多格列佛（William Waldegrave）向科学家发起了挑战，让他们用一页纸的篇幅向他解释希格斯场。瓦多格列佛拿出了一瓶香槟奖给了获胜者，其中就包括英国伦敦大学学院的物理学家戴维•米勒（David Miller）。米勒把希格斯场比作一个房间，房间里均匀分散着一大群为政客聚会服务的工作人员。一个无关紧要的人可以不受阻碍地在人群中穿来穿去。然而，如果是时任英国首相撒切尔夫人（Margaret Thatcher）到场，一定会吸引大量的关注：聚会工作人员会围拢在她周围，减慢她穿行的速度，使她带上某种“质量”。</p>
+<p><a href="http://www.guokr.com/post/262983/">via</a></p>
+<p>The Higgs Mechanism</p>
+<p>Imagine a cocktail party of political party workers who are uniformly distributed across the floor, all talking to their nearest neighbours. The ex-Prime- Minister enters and crosses the room. All of the workers in her neighbourhood are strongly attracted to her and cluster round her. As she moves she attracts the people she comes close to, while the ones she has left return to their even spacing. Because of the knot of people always clustered around her she acquires a greater mass than normal, that is, she has more momentum for the same speed of movement across the room. Once moving she is harder to stop, and once stopped she is harder to get moving again because the clustering process has to be restarted. In three dimensions, and with the complications of relativity, this is the Higgs mechanism.</p>
+<p><a href="http://www.hep.ucl.ac.uk/~djm/higgsa.html">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-07-05T01:53:15+00:00">2012-07-05</time></p>
 <p>archive</p>            </div>
@@ -733,7 +1024,23 @@ They typically use two …</p></blockquote></p>
 <p>submit to developer server again</p>
 </li>
 <li>
-<p>developer server …</p></li></ol></p>
+<p>developer server will first <code>base64</code> the <code>&lt;receipt-something&gt;</code>, with a trailing space, the wrap it into a JSON object like <code>{'receipt-data': &lt;receipt-something&gt;&lt;space&gt;}</code>, then send it to <code>https://buy.itunes.apple.com/verifyReceipt</code></p>
+</li>
+<li>
+<p>apple server will return status = 0</p>
+</li>
+<li>
+<p>now you can buy IAP stuff using the same receipt over and over and over again.</p>
+</li>
+<li>
+<p>???</p>
+</li>
+<li>
+<p>Profit!!!11!111</p>
+</li>
+</ol>
+<p>see also this <a href="http://stackoverflow.com/questions/1298998/verify-receipt-for-in-app-purchase">thread</a>, especially comment by <code>Ben S</code> </p>
+<p>btw I am still trying to figure out how to do a rollback transaction. lol</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-07-04T05:10:00+00:00">2012-07-04</time></p>
 <p>archive</p>            </div>
@@ -756,7 +1063,7 @@ print(2 + 2 == 5) # False
 five.contents[five.contents[:].index(5)] = 4
 print(2 + 2 == 5) # True (must be sufficiently large values of 2 there...)
 </code></pre>
-<p><a href="http://news.ycombinator.com/item?id=4197576">via …</a></p></p>
+<p><a href="http://news.ycombinator.com/item?id=4197576">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-07-04T01:33:02+00:00">2012-07-04</time></p>
 <p>archive</p>            </div>
@@ -778,7 +1085,15 @@ print(2 + 2 == 5) # True (must be sufficiently large values of 2 there...)
 <p>其实这个片子是<a href="http://www.youtube.com/watch?v=2M-XPnldcEI">一群留学生拍的</a>，不是成都zf拍的。</p>
 <blockquote>
 <p>Published on Jun 5, 2012 by Moore Mandy<br />
-We are group of Chinese students study media in the UK,we love pandas and our hometown,so we made this …</p></blockquote></p>
+We are group of Chinese students study media in the UK,we love pandas and our hometown,so we made this video because we saw panda cabs running in London, We spent two days to make this non-commercial video. We love Kate respect Royal family.  </p>
+</blockquote>
+<p>参考评论和报道：<a href="http://beijingcream.com/2012/07/chengdu-commercial-panda-cabs-in-london-royal-family-impersonators/">1</a>, <a href="http://www.dailymail.co.uk/news/article-2167299/Kate-Middleton-mocked-gold-digger-Chinese-tourism-video.html">2</a>, <a href="http://ca.shine.yahoo.com/blogs/love-sex/kate-middleton-mocked-chinese-tourism-video-not-cool-185800796.html">3</a></p>
+<p>lol，这个把很多British给 troll 爽了吧。。</p>
+<p><a href="http://bbs.upcd.org/forum.php?mod=viewthread&amp;tid=215849">via</a></p>
+<p>btw 成都的官方youtube频道在这里 </p>
+<p><a href="http://www.youtube.com/channel/UCUKExUqEqPz7W5hF-1FjIMQ">http://www.youtube.com/channel/UCUKExUqEqPz7W5hF-1FjIMQ</a> </p>
+<p>这个才是『真·成都』。</p>
+<p>btw <a href="http://www.gochengdu.cn">www.gochengdu.cn</a> 这个网站还做得可以的。比国内 zf 网站做得好多啦。这个网站，视频和youtube官方频道似乎是为 Fortune 2013 Chengdu，成都在全世界范围内搞的一系列campaign。希望效果不错一点。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-07-03T20:42:00+00:00">2012-07-03</time></p>
 <p>archive</p>            </div>
@@ -795,7 +1110,8 @@ We are group of Chinese students study media in the UK,we love pandas and our ho
             <p class="card-text"><pre><code>['radio_option6393', 'radio_option6398', 'radio_option6403', 'radio_option6408', 'radio_option6413', 'radio_option6418', 'radio_option6423', 'radio_option6428', 'radio_option6433'].map(function(s){document.getElementById(s).checked='checked'});document.getElementById('radioq10').textContent='ok';form1.submit()
 </code></pre>
 <p>因为鼠标点击那个页面太蛋痛了。</p>
-<p>评价大于100元的订单可以获得2个积分，蚊子肉也是肉，所 …</p></p>
+<p>评价大于100元的订单可以获得2个积分，蚊子肉也是肉，所以还是坚决要。</p>
+<p>btw 360最大化薅羊毛办法：移动支付 -&gt; 各种券  -&gt; 返利 -&gt; 评价+晒单</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-07-02T22:01:00+00:00">2012-07-02</time></p>
 <p>archive</p>            </div>
@@ -811,7 +1127,28 @@ We are group of Chinese students study media in the UK,we love pandas and our ho
             </a>
             <p class="card-text"><p>新闻在<a href="http://news.163.com/12/0627/17/8517P2J000014JB6.html">这里</a></p>
 <p>LG和三星AMOLED核心技术外泄 或流入中国和台湾   </p>
-<p>韩国三星和LG下一代显示器面板“AM-OLED”和“WHITE-OLED”的核心技术被曝遭外泄。资料或流向中国大陆和台湾地区等韩国 …</p></p>
+<p>韩国三星和LG下一代显示器面板“AM-OLED”和“WHITE-OLED”的核心技术被曝遭外泄。资料或流向中国大陆和台湾地区等韩国企业的竞争对手。   </p>
+<p>韩国三星和LG下一代显示器面板“AM-OLED”和“WHITE-OLED”的核心技术被曝遭外泄。其中部分技术被指流入中国最大的面板生产公司。 <br />
+报导称，首尔中央地方法院尖端犯罪搜查1部27日以涉嫌盗窃三星移动显示器和LG显示器的“AM-OLED”技术，拘捕并起诉了以色列某公司（下称O公司）韩国分公司职员金某等三人。韩国检方还以同样的理由对上述三人的三名上司进行不??拘留起诉，并依法起诉了某公司的韩国分公司。 <br />
+韩国检方称，嫌疑人从去年11月至今年1月分多次窃取三星移动显示器和LG显示器的55英寸电视机用“AM-OLED”面板实物电路图等核心技术。嫌疑人将窃取的资料提供给以色列总部职员以及中国大陆和台湾地区等韩国企业的竞争对手。 <br />
+韩国检方表示，这次外泄的技术是两家公司的秘密资料，也是韩国核心技术。若国外竞争对手获取该技术，可能会在短期内缩小技术差距。检方计划对O公司总部和海外分公司职员进行进一步调查，杜绝该技术进一步外泄。   </p>
+<p>@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   </p>
+<p>Samsung, LG's key display technologies leaked by Israeli firm  <br />
+SEOUL, June 27 (Yonhap) -- Key technologies to manufacture advanced flat-panel displays at Samsung Mobile Display and LG Display have been leaked by an local unit of an Israeli company, local prosecutors said Wednesday, raising concerns the leakage could pose a major threat to the national interest.   </p>
+<p>The Seoul Central District Prosecutors' Office indicted under physical detention three employees at the local unit of an Israeli inspection equipment supplier, including a 36-year-old man surnamed Kim, on charges of leaking key local technologies used to produce active-matrix organic light-emitting diode (AMOLED) displays and white organic light-emitting diode (White OLED) displays.   </p>
+<p>They also indicted without physical detention three other employees and the local unit, the prosecutors said, without identifying the Israeli firm.   </p>
+<p>According to the prosecution, the indicted employees photographed circuit diagrams of yet-to-be-released 55-inch AMOLED television panels when they were let into Samsung and LG's manufacturing factories to check defects of inspection equipment from November of last year to January of this year.   </p>
+<p>They stored the images on portable memory cards and slipped them into their shoes, belts and wallets to avoid suspicion, prosecutors said.  <br />
+AMOLED displays have a faster response time then their passive-matrix OLED counterparts and are more power-efficient, and the advantages make them well suited for growingly popular portable electronics devices. Samsung and LG are by far the leading makers of AMOLED displays, for which the global market is estimated to be worth 90 trillion won (US$77.8 billion). South Korea rigorously prohibits leakage of the technologies as it tags them as the nation's core industrially strategic tech.   </p>
+<p>Prosecutors said the stolen information was likely relayed to the Israeli headquarters and Chinese and Taiwanese display-making rivals, including the biggest Chinese panel manufacturer BOE.   </p>
+<p>"It is very likely that the stolen technologies have been given by the Israeli firm to foreign rivals," a prosecution official said. "This may expectedly deal a massive economic blow to the entire nation and can cause a sea change in the landscape of the global display market."   </p>
+<p>According to industry watchers, Samsung spent nearly 1.4 trillion won in developing its AMOLED technologies with LG funneling nearly 1.3 trillion won into its research and development.   </p>
+<p>Prosecutors pledged to launch a probe into the Israeli headquarters to prevent further tech leakages.   </p>
+<p>btw另外一个<a href="http://tech.163.com/digi/12/0523/22/827NJ125001618VK.html">新闻</a>   </p>
+<blockquote>
+<p>另外，京东方也将于今年9月份或者10月份，推出中国首款自主研发的46英寸OLED面板，宣布中国自己也拥有生产大尺寸OLED面板的技术。   </p>
+</blockquote>
+<p>啊哈哈哈。。。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-06-27T22:34:00+00:00">2012-06-27</time></p>
 <p>archive</p>            </div>
@@ -828,7 +1165,25 @@ We are group of Chinese students study media in the UK,we love pandas and our ho
             <p class="card-text"><p>发信人: hcl (盐酸), 信区: DigiHome<br />
 标  题: 问一下现在小家电的变压器都是什么原理？<br />
 发信站: 水木社区 (Thu Jun 28 02:26:13 2012), 站内  </p>
-<p>我记得十几 …</p></p>
+<p>我记得十几年前的时候吧，那时候什么随身听的变压器里面就是个大铁疙瘩，输出电流也才不到500ma，而且还发热量巨猛。现在随便一个usb充电器就是2A的输出电流，平时不用基本上没有发热，体积还巨小，请问是什么新技术呢？开关电源？还是别的什么？  </p>
+<p>发信人: lvsoft (Lv(The Last Guardian)), 信区: DigiHome<br />
+标  题: Re: 问一下现在小家电的变压器都是什么原理？<br />
+发信站: 水木社区 (Thu Jun 28 02:44:17 2012), 站内  </p>
+<p>就是开关电源。<br />
+变压器那种叫线性电源。  </p>
+<p>基本原理是220V交流-&gt;整流-&gt;滤波变成300V左右的直流。<br />
+然后这个直流-&gt;开关-&gt;电容-&gt;输出-&gt;负载。  </p>
+<p>这个开关的控制频率很高，以至于即使是300V的电压，在很短的时间内也只能往电容<br />
+送少量的电荷，形成你所需要的电压（比如5V）。<br />
+当负载消耗掉一部分电荷，造成电容上的电压下降的话，开关就再次开启一个很小的瞬<br />
+间再放一些电荷过去。  </p>
+<p>说的再直白一点，开关电源之所以体积小效率高，就是因为他根本就没有变压的过<br />
+程。你可以认为负载是直接接在一个300V的电源上。只不过这个电源在开关的控制下<br />
+输出的是300V的脉冲，然后被电容滤平了，变成一个诸如5V这样的低电压。  </p>
+<p>所以开关电源结构紧凑成本低效率高，但对控制有很高的要求。以前不这么搞是那个年<br />
+代没有现在这么低成本高精度的控制技术。<br />
+变压器费铜费铁而且还效率不高（一般情况下，超大功率情况下又是另一回事情）  </p>
+<p>so，感谢IC技术的发展吧。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-06-27T22:13:00+00:00">2012-06-27</time></p>
 <p>archive</p>            </div>
@@ -859,7 +1214,20 @@ We are group of Chinese students study media in the UK,we love pandas and our ho
             <a href="/post/25348900812"  rel="bookmark" >
               <h2 class="card-title">吐槽一下日本“珍珠生活” “纯铁” 炒锅</h2>
             </a>
-            <p class="card-text"><p>今日忙着装修，想买一个炒锅，家里的建议都是说，现在的不锈、无油烟、不粘锅的炒锅，用了特富龙，可能会中毒。于是下定决心 …</p></p>
+            <p class="card-text"><p>今日忙着装修，想买一个炒锅，家里的建议都是说，现在的不锈、无油烟、不粘锅的炒锅，用了特富龙，可能会中毒。于是下定决心买铸铁炒锅。。</p>
+<p>又碰上618，发现有一种日本制造的，号称“纯铁”的炒锅，“珍珠生活”牌的。</p>
+<p>于是在网上挖了很久才发现它的官网：<a href="http://www.p-life.co.jp">http://www.p-life.co.jp</a></p>
+<p>又挖了很久才发现它的 炒锅 产品列表，这个kitchen-tool.com 是属于 パール金属 (Pearl Metal) 的。</p>
+<p><a href="http://www.kitchen-tool.com/category_2_2.html">http://www.kitchen-tool.com/category_2_2.html</a></p>
+<p>ホーム 調理器具 フライパン</p>
+<p>Home Cookware Frying pan</p>
+<p>不看不知道，一看吓一跳，尼玛基本所有型号（除了 <a href="http://www.kitchen-tool.com/category_19.html">H-8532 ~ H-8540</a> 以外），都是 <strong>アルミニウム合金</strong> 材料。Body: aluminum alloy。</p>
+<p>用中文说，就是铝合金做的。怪不得那么轻啊。尼玛。铝是有毒的啊！！！卧槽。</p>
+<p>他们甚至也做 Teflon テフロン 特富龙 的锅： <a href="http://www.kitchen-tool.com/category_17.html">http://www.kitchen-tool.com/category_17.html</a></p>
+<p>国内卖的”珍珠生活“进口型号就不太放心了。日本官网上根本查不到。</p>
+<p>btw 我跟shop35835092.taobao.com这个店的客服<a href="http://media.tumblr.com/tumblr_m5swojSxOV1qz5ax5.png">聊</a>了一下，z.cn和3.cn上”珍珠生活“都是他们在供货。他们 号称中国总代理。 尼玛2,200多日元和500多人民币差价，这真tmd是暴利啊！</p>
+<p>更新：Amazon.co.jp上也有<a href="http://www.amazon.co.jp/s/?rh=n%3A3828871%2Cn%3A!3839151%2Cn%3A13938481%2Cn%3A13938491%2Cn%3A13938591%2Cp_n_feature_nine_browse-bin%3A2129589051%2Cp_n_feature_ten_browse-bin%3A2225730051&amp;sort=reviewrank_authorityhttp://www.amazon.co.jp/s/?rh=n%3A3828871%2Cn%3A!3839151%2Cn%3A13938481%2Cn%3A13938491%2Cn%3A13938591%2Cp_n_feature_nine_browse-bin%3A2129589051%2Cp_n_feature_ten_browse-bin%3A2225730051&amp;sort=reviewrank_authority">卖的</a> 。铁锅29cm以上的。居然有个直接叫 パール金属 鉄製 北京鍋 。哈哈</p>
+<p>更新2：<a href="http://media.tumblr.com/tumblr_m5um4tDBiS1qz5ax5.png">笑而不语</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-06-18T02:08:00+00:00">2012-06-18</time></p>
 <p>archive</p>            </div>
@@ -930,7 +1298,15 @@ We are group of Chinese students study media in the UK,we love pandas and our ho
 <p><img alt="" src="/images/tumblr/24186096702_0.png" /></p>
 <p><a href="http://www.reddit.com/r/gaming/comments/udznp/improbably_good_morrigan_cosplay_ii/">Morrigan cosplay</a> <a href="http://kirawinter.deviantart.com/art/Morrigan-Dragon-Age-273748310">作者</a></p>
 <p><img alt="" src="/images/tumblr/24186096702_1.jpg" /></p>
-<p>我觉得dragon age最好玩的mod之一就是这个<a href="http://dragonage.nexusmods.com/mods/1464">Slap Morrigan</a>。很多quest你做完了大家都赞同，就Morrigan 来一个 disapprove -5 。一个耳光送上。赶 …</p></p>
+<p>我觉得dragon age最好玩的mod之一就是这个<a href="http://dragonage.nexusmods.com/mods/1464">Slap Morrigan</a>。很多quest你做完了大家都赞同，就Morrigan 来一个 disapprove -5 。一个耳光送上。赶紧的。</p>
+<p><a href="http://www.reddit.com/r/gaming/comments/udv4c/the_elder_scrolls_v_skyrim_dawnguard_official/">Skyrim Dawnguard trailer</a></p>
+<object style="height: 390px; width: 640px"><param name="movie" value="http://www.youtube.com/v/3PjBSicSVqI?version=3&feature=player_detailpage"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="http://www.youtube.com/v/3PjBSicSVqI?version=3&feature=player_detailpage" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="640" height="360"></object>
+
+<p><a href="http://www.reddit.com/r/gaming/comments/ud286/starforge_a_3d_game_with_infinite_procedural/">Starforge</a> 碉堡了的超级版Minecraft。</p>
+<object style="height: 390px; width: 640px"><param name="movie" value="http://www.youtube.com/v/YxBSYit49c8?version=3&feature=player_detailpage"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="http://www.youtube.com/v/YxBSYit49c8?version=3&feature=player_detailpage" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="640" height="360"></object>
+
+<p><a href="http://www.reddit.com/r/gaming/comments/u57vu/not_again_bomberman/">bomberman</a></p>
+<p><img alt="" src="http://i.imgur.com/cO8fU.gif" /></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-06-01T04:26:00+00:00">2012-06-01</time></p>
 <p>archive</p>            </div>
@@ -952,7 +1328,27 @@ FROM   Incident AS i
        LEFT JOIN Keyword AS k ON k.incident_id = i.id
 WHERE  i.year BETWEEN 1947 AND 1966
 AND    i.type = 'HOMICIDE'
-AND    v.sex = 'F' …</code></pre></p>
+AND    v.sex = 'F'
+AND    i.status = 'UNSOLVED'
+AND    ...
+       OR v.fname IN ('Mari', 'Magda')
+       OR SUBSTR ...
+AND    (k.keyword IN ('rape', 'decapitation', 'dismemberment', 'fire', 'altar', 'priest', 'prostitute')
+       ...
+       AND SUBSTR(v.fname, 1, 1) = 'R' AND SUBSTR(v.lname, 1, 1) = 'L');
+
++--------+---------+------+-----------+----------------------------------+
+| fname  | lname   | year | location  | report_file                      |
++--------+---------+------+-----------+----------------------------------+
+| Anna   | Wedin   | 1956 | Mark      | FULL POLICE REPORT NOT DIGITIZED |
+| Linda  | Janson  | 1955 | Mariestad | FULL POLICE REPORT NOT DIGITIZED |
+| Simone | Grau    | 1958 | Goteborg  | FULL POLICE REPORT NOT DIGITIZED |
+| Lea    | Persson | 1962 | Uddevalla | FULL POLICE REPORT NOT DIGITIZED |
+| Kajsa  | Severin | 1962 | Dals-Ed   | FULL POLICE REPORT NOT DIGITIZED |
++--------+---------+------+-----------+----------------------------------+
+</code></pre>
+<p>发这个贴的目的是测试一下markdown的code formatting哈哈。</p>
+<p><a href="http://news.ycombinator.com/item?id=4047807">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-05-31T23:10:41+00:00">2012-05-31</time></p>
 <p>archive</p>            </div>

@@ -114,7 +114,16 @@
 
 <p>Found this <a href="http://www.douban.com/group/topic/9225655/">amazing post on Douban</a>. Ever wondered how ancient Chinese sounds like? Just have a look at the dub version of Fengshen Bang. I love how alveolar trill sounds like with Chinese.</p>
 
-<p>There are also three videos shows how poets from <strong>Book of Odes …</strong></p></p>
+<p>There are also three videos shows how poets from <strong>Book of Odes</strong> actually sounds like 3000 years ago on 
+tudou
+
+http://www.tudou.com/programs/view/jxDU8vGTtrE/
+
+
+http://www.tudou.com/programs/view/2k38BDbiD_4/
+
+
+http://www.tudou.com/programs/view/rFLLJGlkcJE/</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2009-12-28T13:17:22+00:00">2009-12-28</time></p>
 <p>archive</p>            </div>
@@ -192,7 +201,9 @@
 
 <p><img src="http://blog.est.im/wp-content/uploads/2009/12/1.jpg" alt="Kabul 40 years ago vs. Kabul today"></p>
 
-<p>This makes me feel very sad. I sincerely hope this won …</p></p>
+<p>This makes me feel very sad. I sincerely hope this won’t happen in my homeland someday, though it’s very likely because we have an uncivilized ruling Party and brutal authority.</p>
+
+<p><a href="http://www.reddit.com/r/pics/comments/aismc/kabul_40_years_ago_vs_kabul_today/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2009-12-27T09:02:17+00:00">2009-12-27</time></p>
 <p>archive</p>            </div>
@@ -210,7 +221,15 @@
 
 <ol>
 <li>Open PuTTY and connect to your first (nearest to you) ssh node</li>
-<li>In the console, connect to your final ssh (which IP will be shown as an exit of chained tunnel) like this …</li></ol></p>
+<li>In the console, connect to your final ssh (which IP will be shown as an exit of chained tunnel) like this:<br><pre><code>ssh -CfNg -D 127.0.0.1:8787 <i>user</i>@<i>hostname</i></code></pre></li>
+<li>Right click putty title bar for context menu and click <code>Change settings</code>, like the following screenshot:<img src="http://blog.est.im/wp-content/uploads/2009/12/2.jpg" alt="putty config for chain ssh tunnel"><br>This settings means, PuTTY will listen on your local machine port 7777, and forward everything to 127.0.0.1:8787 on the first ssh server. Since in step #2 we have 127.0.0.1:8787 already there listening as a socks5 tunnel, the chain SSH tunnel is complete.</li>
+</ol>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2009/12/1.png" alt="chain ssh tunnel structure"></p>
+
+<p>Picture provided by <a href="http://ditaa.org/ditaa/render?grid=+++++%2B---------------%2B+++%2B----------------%2B++++%2B----------%2B++++%2B----------%2B%0D%0A+++++%7C+++++++++++++++%2B---%2B+127.0.0.1+8787+%7C++++%7C++++++++++%2B---%3E%7C+%7Bs%7D++++++%7C%0D%0A+++++%7C+0.0.0.0:7777++%7C+++%2B----------------%2B++++%7CSSH+Socks5%7C++++%7C+Internet+%7C%0D%0A+++++%7C+++++++++++++++%7C+++%7C+++++%7Bd%7D++++++++%7C++++%7C++++++++++%7C++++%7C++++++++++%7C%0D%0A+++++%7C+++++%7Bd%7D+++++++%7C+++%7C+127.0.0.1+8787+%2B---%3E%7C+++%7Bd%7D++++%7C++++%7C++++++++++%7C%0D%0A+++++%2B------%2B--------%2B+++%2B----------------%2B++++%2B----------%2B++++%2B----------%2B%0D%0A+++++++++:++++++++++++++++++++++++++++++++++++++++++++++++++++++++++%5E%0D%0A+++++++++%7C++++++++++++++++++++++++chained+ssh+tunnel++++++++++++++++%7C%0D%0A+++++++++----------------------------------------------------------/%0D%0A&amp;scale=1&amp;timeout=100">ditaa.org</a> using a nice ASCII2Graph tool called <a href="http://ditaa.sourceforge.net/">ditaa</a></p>
+
+<p>If you understand how to chain SSH tunnel using two ssh nodes, it’s easy to expanding it to three or more.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2009-12-27T08:09:13+00:00">2009-12-27</time></p>
 <p>archive</p>            </div>
@@ -233,7 +252,12 @@
 <p>but according to the OP</p>
 
 <blockquote>
-  <p>In the …</p></blockquote></p>
+  <p>In the current study, only three vowel sounds were tested.</p>
+</blockquote>
+
+<p>Looks like it’s phonogram language specific. The way to avoid this is to <em>think beyond the language</em>. Use constructed language like logic, music, art and math as possible.</p>
+
+<p><em>Matrix</em>, your IO prototype is scary!</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2009-12-27T05:53:04+00:00">2009-12-27</time></p>
 <p>archive</p>            </div>
@@ -276,7 +300,34 @@
     $robots_allow = 0;
 
     for ($j = 0; $j &lt; count($rss_bot_ip_list); $j++) {
-        if …</code></pre></p>
+        if (is_numeric(strpos($_SERVER[&quot;REMOTE_ADDR&quot;], $rss_bot_ip_list[$j]))) {
+            $robots_allow = 1;
+        }
+    }
+
+
+    header( &#39;Content-Type: text/plain; charset=utf-8&#39; );
+
+    do_action( &#39;do_robotstxt&#39; );
+
+    if ( &#39;0&#39; == $robots_allow ) {
+        echo &quot;User-agent: *\n&quot;;
+        echo &quot;Disallow: /\n&quot;;
+    } else {
+        echo &quot;User-agent: FeedBurner/1.0 (http://www.FeedBurner.com)\n&quot;;
+        echo &quot;Allow /feed\n&quot;;
+        echo &quot;Disallow: /\n&quot;;
+        echo &quot;\n&quot;;
+        echo &quot;User-agent: Mozilla 5.0 (compatible; Feedsky\n&quot;;
+        echo &quot;Allow /feed\n&quot;;
+        echo &quot;Disallow: /\n&quot;;
+        echo &quot;\n&quot;;
+        echo &quot;User-agent: *\n&quot;;
+    }
+}
+</code></pre>
+
+<p>This allows customized robots.txt for feed crawlers exclusively.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2009-12-27T04:15:47+00:00">2009-12-27</time></p>
 <p>archive</p>            </div>
@@ -320,7 +371,11 @@
 <li>I am not sure if I will renew my hosting next year. I would choose to return to yo2.cn if possible.</li>
 <li>Blogging here is in non-Chinese. Please try it in your comments, too. </li>
 <li>I do not intend to get this blocked by the Chinese Wall.</li>
-<li>I do not intend …</li></ul></p>
+<li>I do not intend to leak this domain or location to search engines.</li>
+<li>Please do not tell the public about this new place. I already updated <a href="http://feedproxy.google.com/initiative">the RSS feed</a> so if you are a regular subscriber of my blog, you’ll know where this is.</li>
+<li>If you want to link to this new blog, use this format <code>est's blog / 25</code>, the 25 means the article ID in the address bar. Don’t use hyperlinks.</li>
+<li>Big brother is watching u!</li>
+</ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2009-12-26T23:56:40+00:00">2009-12-26</time></p>
 <p>archive</p>            </div>
@@ -352,7 +407,15 @@
             </a>
             <p class="card-text"><p>There are number of reasons to use a feed burning service. It’s useful to have a unique feed URL despite you may have changed BSP multiple times.</p>
 
-<p>But Wordpress’s default RSS URL is http://<em>your_blog</em>/feed, which is implemented by a <a href="http://codex.wordpress.org/Template_Tags">template tag</a> called <code>bloginfo('rss2_url')</code>. So instead …</p></p>
+<p>But Wordpress’s default RSS URL is http://<em>your_blog</em>/feed, which is implemented by a <a href="http://codex.wordpress.org/Template_Tags">template tag</a> called <code>bloginfo('rss2_url')</code>. So instead of modify theme’s html directly in many places, we hack this function.</p>
+
+<p>Open <code>wp-includes/general-template.php</code>, simply edit line #321:</p>
+
+<pre><code>case 'rss2_url':
+    $output = 'http://feedproxy.google.com/initiative';
+</code></pre>
+
+<p>Since your feedburning service is likely provide RSS 2.0, just leave <code>rss_url, atom_url</code> and <code>rdf_url</code> alone.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2009-12-26T10:39:59+00:00">2009-12-26</time></p>
 <p>archive</p>            </div>
@@ -373,7 +436,7 @@
 <li>Profit!</li>
 </ol>
 
-<p>In this anti-pron storm in mainland China, MIIT and CNNIC are also victims. <a href="http://news.cctv.com/china/20091226/100911.shtml">China TeleCom, UniCom</a> and <a href="http://finance.people.com.cn/GB/10534436.html">3G</a> are all accused of in Party’s propaganda media CCAV. Zhang Chun Jiang, the guy who promoted <em>father of GFW …</em></p></p>
+<p>In this anti-pron storm in mainland China, MIIT and CNNIC are also victims. <a href="http://news.cctv.com/china/20091226/100911.shtml">China TeleCom, UniCom</a> and <a href="http://finance.people.com.cn/GB/10534436.html">3G</a> are all accused of in Party’s propaganda media CCAV. Zhang Chun Jiang, the guy who promoted <em>father of GFW</em>, a close colleague with Bo Xilai, Party secretary of <em>China mobile</em>, <a href="http://www.newsmth.net/bbstcon.php?board=ITExpress&amp;gid=742204">were</a> <em><a href="http://zh.wikipedia.org/zh-cn/%E5%8F%8C%E8%A7%84">dual regulated</a></em></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2009-12-26T06:16:09+00:00">2009-12-26</time></p>
 <p>archive</p>            </div>

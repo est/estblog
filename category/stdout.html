@@ -55,7 +55,61 @@
               <h2 class="card-title">JS播放 DTMF</h2>
             </a>
             <p class="card-text"><p>玩 WebRTC 的时候发现它居然内置<a href="https://hacks.mozilla.org/2015/11/webrtc-sending-dtmf-in-firefox/">支持了 DTMF 拨号音</a>。</p>
-<p>这里就简单科普一下，DTMF 就是手机电话拨号音，数字按键按下去嘟嘟嘟响那 …</p></p>
+<p>这里就简单科普一下，DTMF 就是手机电话拨号音，数字按键按下去嘟嘟嘟响那个。具体就2个频率调谐：</p>
+<table>
+<thead>
+<tr>
+<th>DTMF</th>
+<th>1209Hz</th>
+<th>1336Hz</th>
+<th>1477Hz</th>
+<th>1633Hz</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>697Hz</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>A</td>
+</tr>
+<tr>
+<td>770Hz</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>B</td>
+</tr>
+<tr>
+<td>852Hz</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>C</td>
+</tr>
+<tr>
+<td>941Hz</td>
+<td>*</td>
+<td>0</td>
+<td>#</td>
+<td>D</td>
+</tr>
+</tbody>
+</table>
+<p>于是兴趣来了想做一个 demo 玩玩，写了半天调试不通，报错</p>
+<blockquote>
+<p>VM987:1 Uncaught DOMException: Failed to execute 'insertDTMF' on 'RTCDTMFSender': The 'canInsertDTMF' attribute is false: this sender cannot send DTMF.</p>
+</blockquote>
+<p>仔细研究了下<a href="https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Using_DTMF">这玩意</a>，原来 WebRTC 不直接传音频，而是发一个控制信号，由接收方播放出音频，所以你需要本地创建一个真实的双工 RTC 并打开麦克风权限，才能播放DTMF音频。</p>
+<blockquote>
+<p>WebRTC doesn't send DTMF codes as audio data. Instead, they're sent out-of-band, as RTP payloads. Note, however, that although it's possible to send DTMF using WebRTC, there is currently no way to detect or receive incoming DTMF. WebRTC currently ignores these payloads;</p>
+</blockquote>
+<p>这样就走远了。于是又手痒用 <code>AudioContext()</code> 糊了一个。一共不到1000字节。</p>
+<p><a href="https://lab.est.im/dtmf">https://lab.est.im/dtmf</a> <a href="https://github.com/est/snippets/blob/master/dtmf/index.html">源码</a></p>
+<p>嗯。就挺简单的。特别是那个 oscillator有个 <code>.stop(0.2)</code> 参数可以避免 <code>setTimeout</code> 的麻烦。网上很多教程整复杂了。</p>
+<p>btw 把一些老脚本挂在 lab 域名下。<br />
+btw2 把 RSS 改成全文输出了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-10-30T19:20:49+00:00">2022-10-30</time></p>
 <p>stdout</p>            </div>
@@ -73,7 +127,33 @@
 <pre><code>export default {
   async fetch(request, env) {
     return await handleRequest(request).catch(
-      (err) =&gt; new …</code></pre></p>
+      (err) =&gt; new Response(err.stack, { status: 500 })
+    )
+  }
+}
+
+async function handleRequest(request) {
+  const { pathname } = new URL(request.url);
+
+  if (pathname === "/ip") {
+    const ip = request.headers.get('CF-Connecting-IP');
+    return new Response(ip + '\n');
+  }
+
+  if (pathname === "/ip:port") {
+    const ip = request.headers.get('CF-Connecting-IP');
+    const port = request.headers.get('est-Connecting-Port') || '?'
+    return new Response(ip + ':' + port + '\n');
+  }
+
+  return new Response('Tools:\n /ip\n/ip:port\n');
+}
+</code></pre>
+<p>遇到一个问题，Cloudflare 官方有提供浏览器客户端IP变量 <a href="https://developers.cloudflare.com/workers/runtime-apis/headers/#cloudflare-headers"><code>CF-Connecting-IP</code></a> 但是缺少端口，查了下可以自己通过 <a href="https://developers.cloudflare.com/rules/transform/request-header-modification/reference/fields-functions"><code>cf.edge.client_port</code></a> 这个变量获得， <a href="https://community.cloudflare.com/t/need-cf-connecting-port-for-french-law/319505/8">方法</a>是在进入 CF网站管理 面板 → Rules → Transform Rules → HTTP Request Header Modification 里添加一条请求头规则。如图：</p>
+<p><img alt="" src="https://global.discourse-cdn.com/cloudflare/original/3X/b/a/ba21c8b28a8915bc57c6c6d82581827578e232ac.png" /></p>
+<p>但是 header 不能以  <code>CF-</code> 开头，所以这里改成 <code>est-Connecting-Port</code>，就能获得客户端请求的 IP+端口 了</p>
+<p>测试地址： t.本网站根域名/ip:port</p>
+<p>目前还缺：IPv6 的正确表示。。。。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-10-09T23:12:02+00:00">2022-10-09</time></p>
 <p>stdout</p>            </div>
@@ -88,7 +168,17 @@
               <h2 class="card-title">macOS动态定时弹提醒</h2>
             </a>
             <p class="card-text"><p>上班地方有个付费计时，想在倒计时结束前在电脑弹个提醒，手动结束计费，趴下来API了。接下来就是如何弹窗了。</p>
-<p>本来想用macOS自带的 …</p></p>
+<p>本来想用macOS自带的 <code>UNUserNotificationCenter</code> 通过 PyObjC 撸个弹窗，遇到两个问题：</p>
+<ol>
+<li>系统自带的 PyObjC 太老了。还是Python2.7的。在<code>/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/PyObjC</code></li>
+<li>只能兼容旧款的 <code>NSUserNotification</code>，状态为 macOS 10.8–11.0 Deprecated<br />
+ 新的API调用需要进程签名。<br />
+<code>codesign -dv --verbose=4 /usr/bin/python2.7</code></li>
+</ol>
+<p>只有官方的python2.7签名了 anaconda/miniconda 的都没签名。算了。还是直接 AppleScript 走起</p>
+<pre><code>osascript  -e 'display notification "还有1分钟到达时辰" with title "准时付费" sound name "Frog"'
+</code></pre>
+<p>想在这个提示里加一个 snooze 1分钟功能，但是好像无法支持。罢了。2333</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-07-20T14:52:56+00:00">2022-07-20</time></p>
 <p>stdout</p>            </div>
@@ -103,7 +193,32 @@
               <h2 class="card-title">终于吧 blog 的自动构建 pipeline 配置好了</h2>
             </a>
             <p class="card-text"><p>目前博客是基于 pelican 的 static-site generator，一个 python 模块本地渲染成静态文件然后通过 github pages 发布。</p>
-<p>源码放在 bitbucket，之前比较懒都是本地跑，一直 …</p></p>
+<p>源码放在 bitbucket，之前比较懒都是本地跑，一直想改成 CI/CD pipeline，今天终于配置好了。记录一些坑吧</p>
+<ol>
+<li>bitbucket pipeline 不同 step 之间数据是不共享的。本来想用 parallel 功能在下载 pip 模块和 git clone 皮肤做个并行，后来发现 artifact 拷贝速度还不如串行去跑。就所有操作一个 step 做完</li>
+<li>
+<p>博客源码和生成结果可以直接同步提交信息：    </p>
+<p>msg=$(git log -1  --pretty=%B)<br />
+cd output<br />
+git config user.name est<br />
+git config user.email 邮箱<br />
+git add .<br />
+git commit -m "$msg"<br />
+git push<br />
+3. 由于 pip 模块装了不知道在哪里，所以调试 pip 安装路径方法：    </p>
+<p>python -c 'import site; print(*site.getsitepackages(), sep="\n")'<br />
+4. pelican 默认居然没支持 Markdown 也是醉了    </p>
+<p>python -m pip install pelican==4.8.0 Markdown<br />
+5. 自定义皮肤依赖，由于 submodule 我没玩转，所以这样安装：    </p>
+<p>git clone --depth=1 git@github.com:est/aether-pelican.git || (cd aether-pelican; git pull --rebase)</p>
+</li>
+</ol>
+<p>Bitbucket 每个月有50分钟的免费pipeline 时间，自己用下来差不多29秒 build &amp; publish 一次。感觉每个月也写不了60篇，所以目前是够了。</p>
+<p>接下来的优化：</p>
+<ol>
+<li>新图片通过 squoosh 压缩优化</li>
+<li>通过 cloudflare worker 替换掉 disqus 评论功能</li>
+</ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-07-19T19:06:49+00:00">2022-07-19</time></p>
 <p>stdout</p>            </div>
@@ -118,7 +233,20 @@
               <h2 class="card-title">袁亚湘院士数学不错，但是历史不行</h2>
             </a>
             <p class="card-text"><p>网上看到一个院士的段子 <a href="https://m.weibo.cn/detail/4764029988111490">1</a> <a href="https://m.weibo.cn/detail/4763768209540706">2</a></p>
-<p>搜了下，2020年3月14日，在中国工业与应用数学学会举办的网络科普活动中，中国科学院院士袁亚湘带 …</p></p>
+<p>搜了下，2020年3月14日，在中国工业与应用数学学会举办的网络科普活动中，中国科学院院士袁亚湘带来题为“数学漫谈”的主题报告</p>
+<p><a href="https://mp.weixin.qq.com/s/JllGeuveomjFDFg3C5r9FQ">https://mp.weixin.qq.com/s/JllGeuveomjFDFg3C5r9FQ</a></p>
+<blockquote>
+<p>关于π有很多神奇的故事。因为时间关系，我今天就讲其中的一个。不知道在座的观众有没有看过一个美剧叫做《疑犯追踪》。在第2季11集中，Harold Finch说过在π里面能够找到任意数列。当然这个东西数学家并没有证明，但是很多数学家认为可能是真的。<br />
+我试了试，我挑了我们建党的日子19210701，出现在π的第44,842,733位。如果输入去中华人民共和国成立之日，也就是19491001的话，就要往后很多，要到82,267,377位。开个玩笑，π都说明了要先有共产党才有新中国。<br />
+一个网友要求我要查一下1314，大家看到1314到3902位就找到了。所以各位观众，1314（一生一世）不是那么难啊。但是如果1314前面加个520（我爱你）的话，那就难多了。如果你要找5201314，那就要查到200多万位。所以同学们一定要记住啊，实际上爱情还是很艰难的。</p>
+</blockquote>
+<p>这段话数学上来说是没问题的，但是院士可能没注意历史，建党的真正时间是一大正式召开的时间，<a href="http://www.xinhuanet.com/politics/2020-06/23/c_1126148992.htm">1921年的7月23日</a></p>
+<p>那么我们把两个时间再去看一下在 Pi 里的位置：</p>
+<p><a href="https://www.angio.net/pi/">https://www.angio.net/pi/</a></p>
+<pre><code>The string 19491001 occurs at position 82267377
+The string 19210723 occurs at position 101114100
+</code></pre>
+<p>所以这说明了啥？</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-05-06T12:03:50+00:00">2022-05-06</time></p>
 <p>stdout</p>            </div>
@@ -145,7 +273,7 @@ class MyAdminView(ModelView):
         r.response = chain((b'\xef\xbb\xbf',), r.response)
         return r
 </code></pre>
-<p>I …</p></p>
+<p>I am still using Python2 and Flask-admin shit. It's a shame but anyway.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-04-14T15:47:17+00:00">2022-04-14</time></p>
 <p>stdout</p>            </div>
@@ -159,7 +287,23 @@ class MyAdminView(ModelView):
             <a href="/2022/stdout-04"  rel="bookmark" >
               <h2 class="card-title">牛津树/Good English/典范英语里的宗教私货</h2>
             </a>
-            <p class="card-text"><p>牛津树 Oxford Reading Tree 是被国内咪蒙妈妈们吹得油爆爆的来自英国的少儿学习体系，Good English/典范英语 是中青出版社的部分摘录英 …</p></p>
+            <p class="card-text"><p>牛津树 Oxford Reading Tree 是被国内咪蒙妈妈们吹得油爆爆的来自英国的少儿学习体系，Good English/典范英语 是中青出版社的部分摘录英语教材。</p>
+<p><img alt="" src="/images/2022/stdout-04-01.jpg" /></p>
+<p>偶然发现这个 <a href="https://m.sohu.com/a/417948407_120594135/">牛津树【4-29】Mosque School</a>，讲了一个叫 Adam 的学龄前儿童机缘巧合进了经文学校的短故事。甚至如果这是从古兰经某个传教段子改编出来的我一点都不惊讶。</p>
+<p>引起我注意的是小白帽的装束，以及牌子那几个字 Masjid-E-Noorul Islam </p>
+<p>费了点心思搜了下，也拼为 <a href="https://en.wikipedia.org/wiki/Nurul_Islam"><em>Nurul Islam</em></a> 或 <em>Nur ul-Islam</em>，意思是 <em>light of Islam 伊斯兰之光</em>。</p>
+<p>国内很多中专职高出来的英语老师可能没理解这里面的内涵。什么叫潜移默化植入意识形态啊？！当人们觉得这是文化「多样性」很正常？！以为清真学校就是普通的讲宗教的学校，其实经文学校传授的东西非常不简单。摘抄一些百科：</p>
+<blockquote>
+<p>经文学校分为“地尼买克塔普”、“买德里斯”、“卡里哈纳”三种。<br />
+经文小学是中国伊斯兰教经堂教育建制之一。俗称“经学”。专为年满6～7岁的穆斯林儿童所设，多在清真寺内，少数系私人开办，在教师或师娘的住宅内。设在清真寺内的经文小学，教师皆由该寺教职人员担任。课程由认识、诵读、书写阿拉伯字母开始。待学会拼音之后便相继以《索尔夫》、《穆阿济》、《扎佳尼》、《阿瓦米勒》与《米苏巴哈》为教科书(俗称“连五本”)。进而开讲《亥听》(即《古兰经》选读本)、《古兰经》。经文小学的学童至10岁左右，率多辍学从事家庭生产劳动或参加社会职业，只有少数人转入经文大学，继续接受高一级的伊斯兰教经堂教育，被称为“满拉”或“海里凡”。经文小学没有严格的学籍管理，招生不定期，也不经过考试，辍学或退学甚为自由，没有班级排列。学童的进度不齐，故普遍采取复式教学法。另有伊斯兰教常识课程，每日放学前集体朗诵(系中国阿訇自编启蒙教材，俗称“杂学”)。“杂学”的内容包括沐浴、礼拜、斋戒、丧葬及游坟等宗教活动应念的都阿、苏赖。1911年辛亥革命成功后，一些设于清真寺内的经文小学开始聘请懂汉文的穆斯林给学童加授汉文启蒙性教科书。女童上经文小学率多在师娘私宅。学费没有定制，学童家长可量力向师傅(师娘)不定期地馈送海迪耶。</p>
+</blockquote>
+<p>官方介绍可以参考 <a href="https://cati.nwupl.edu.cn/dtzx/hswx/10307.htm">https://cati.nwupl.edu.cn/dtzx/hswx/10307.htm</a> 中 「保守教派的兴起」 这一部分，维基百科 <a href="https://zh.wikipedia.org/zh-cn/%E6%89%8E%E5%90%89%E5%BE%B7">扎吉德 Jadid</a>，<a href="https://liyongfeng.blog.caixin.com/archives/81444">民间经文学校初步观察</a></p>
+<p>如果你觉得这样的东西堂而皇之放在英语教材里没啥问题。。。我也没啥好说的。。。</p>
+<p>其中这一段比较有趣：</p>
+<blockquote>
+<p>情况与当时还属于苏联的中亚五国是一致的。这个过程中，瓦哈比派（Wahhabism）因为主张“回到《古兰经》中去”，注重个人对经典的领悟而非学者的解释，门槛很低，容易接受</p>
+</blockquote>
+<p>这不王阳明心学么。。。。释经权的下放和离散化。。。这后果。。啧啧。。。。参考之前一篇《<a href="/2021/stdin-009#p20">中世纪中国的宗教改革</a>》</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-02-16T00:05:16+00:00">2022-02-16</time></p>
 <p>stdout</p>            </div>
@@ -176,7 +320,37 @@ class MyAdminView(ModelView):
             <p class="card-text"><p>先<a href="https://www.bilibili.com/read/cv10613832">抬一张地图</a>出来，</p>
 <p><img alt="" src="/images/2022/stdout-03-01.webp" /></p>
 <p>鲁苏豫皖四省，如果让你选一个最乱的地，你可能选哪里呢？</p>
-<p>说起来，徐州对我的印象，只是《三国演义》上一 …</p></p>
+<p>说起来，徐州对我的印象，只是《三国演义》上一个模糊的地理概念，第一次稍微立体的感受徐州，还是在《<a href="https://www.bilibili.com/video/BV1uE411C7gj">睡前消息29 · 没有“淮海省”，徐州还是有当“省会”的命？</a>》上看到，徐州是一个距离周边大城市都非常远的人口又比较密集的城市。</p>
+<p><img alt="" src="/images/2022/stdout-03-02.jpg" /></p>
+<p>后来，从<a href="https://www.dedao.cn/share/course/article?id=92GB1my8okM5VMnZylJWgNnEe4Z73r">罗辑思维·启发俱乐部·第26期：显性力量越大，隐性麻烦越多</a>》上扒到徐州周边刷过的历史人物，就更印象深刻了</p>
+<p><img alt="" src="/images/2022/stdout-03-03.jpg" /></p>
+<blockquote>
+<p>这里是砀山，刘邦拔剑斩蛇起义的地方，它属于安徽省，但它同时被另外三个省包围，北部是山东，东部是江苏，西部是河南。<br />
+从这个地方向东北，开车不到一个小时，就能到达江苏省的丰县。刘邦就是丰县人。辅佐刘邦建立汉朝的很多人，像萧何、卢绾、王陵也是丰县人。<br />
+丰县的东边是沛县，刘邦集团的樊哙、曹参、周勃都是沛县人。你可能会说，刘邦搞事业，拉着乡亲入伙很正常啊。<br />
+从丰县县城向东南出发，一个半小时车程就会到达徐州。在秦代，这里叫彭城，项羽建立西楚，都城就是彭城。奇怪了，为什么项羽的都城离刘邦家这么近呢？<br />
+继续向东南驱车一个半小时，会到达今天的宿迁市，在秦代，这里叫下相，项羽的故乡。你看，连项羽家距离刘邦家好像都不是很远。<br />
+然后，从项羽的家乡向西出发，开车一个多小时，就会到达安徽省灵璧县，“霸王别姬”、“乌江自刎”的故事就发生在这附近。<br />
+踩着油门朝西北走，不到一个小时，我们来到安徽省宿州市。在秦代，这里沼泽遍地，名叫大泽乡。没错，陈涉吴广起义，就发生在这里。<br />
+是不是觉得有一个问题已经呼之欲出了？秦朝灭国的可是六国啊。齐楚燕赵魏韩，那么大一片地方啊。但是怎么在秦朝末年找麻烦的就集中在这么一小块地方呢？那么大片的地方不出事，偏偏就这里出事？<br />
+对，佐竹靖彦给这一小块地方起了个名字：“泗水系月牙形水乡山泽地带”。<br />
+在那个时代，这个地方是一片月牙形地带，泗水河川行而过，地势低、潮湿，形成了大量的水乡山泽。在秦代，这里有个地方叫大野泽。听这个名字，你就能感受到三个特点：水多、荒凉、面积大。后来随着大野泽不断缩小并且位移，到五代的时候，大野泽变成了梁山泊。<br />
+一听到梁山泊，你就明白这个地方的意义了。官兵到不了嘛。</p>
+</blockquote>
+<p>另外，徐州还是汉帝国的掘墓者曹操起家之处，唐帝国覆灭者黄巢朱温老巢，巨盗宋江也就是在<a href="https://zhuanlan.zhihu.com/p/109906127">河北、河南、山东、江苏交接的地方来回变动</a></p>
+<p>然后结合时事，为什么这里拐卖人口多？</p>
+<p>很多摸鱼群的分析是孝文化，传宗接代的思想在作怪，什么养儿防老，养儿挣钱，但读到2020年这篇Yixi演讲的文章，我就不淡定了</p>
+<p><a href="https://www.163.com/dy/article/GRIQSK0P05439A3X.html">吴心越：养老院调查真相，让老人恐惧，问题严重性超出你的想象！</a></p>
+<blockquote>
+<p>小时候，父母对孩子通常都是很强势的。但是随着年龄增长，你会发现父母对你越来越弱势，其实就是这个原因。养老院里那些无儿无女的老人，其实和学校里面的“孤儿”没有本质的区别，都属于被欺负的对象。在学校，父母是孩子的依靠。在养老院，子女其实就是老人的依靠。<br />
+哪怕有些子女很混蛋，很不负责，但他是维权的直接受益人。也许子女没有孝顺的动力，但是却有替父母维权的动力。越是混蛋的子女，战斗力就越强，父母出了问题，他们能把养老院讹到破产！<br />
+就拿护工来说，知道你有哮喘，偏要把你安排在通风不好的地方；知道你和谁有矛盾，偏要把你俩安排在一个房间；知道你腿脚不利索，偏要把你安排在楼层较高的房间；故意把你安排给有传染病或者大小便失禁的老人一个房间.....这种情况，尤其是在养老行业，从来就不是个案，而是普遍性的现象。<br />
+如果找院方投诉，就相当于把护工得罪死了，只要护工不被开除，如果不换养老院，剩下的日子，老人的日子只会愈来愈难过。<br />
+如果老人在外面有子女，起码护工还会有所忌惮，知道他自己做的太过分，会有人来闹，就会有所收敛。<br />
+这个时候，老年人有子女的最大意义，就是出了问题，有人帮你喊冤，哪怕他仅仅是为了搞一笔钱。</p>
+</blockquote>
+<p>所以现在突然明白，为啥乡土中国，熟人社会，有拼命生娃的做法，讲究「孝」道了。这TM的是生存的最低保障，战略威慑能力啊。。。</p>
+<p>如果说大型中心省会城市代表秩序和文明，那么徐州周边的几百公里没有大城市的平原村落里，就是社会正义能延生到的末端，这个时候，基层秩序只能由血缘绑定。即便是贩卖人口交换来的亲人。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-02-14T21:31:41+00:00">2022-02-14</time></p>
 <p>stdout</p>            </div>
@@ -193,7 +367,42 @@ class MyAdminView(ModelView):
             <p class="card-text"><p>今天的第一个收获，Victor Sierra这个搜救图案</p>
 <p><img alt="" src="/images/2022/stdout-02-01.jpg" /></p>
 <p><img alt="" src="/images/2022/stdout-02-02.jpg" /></p>
-<p>来自 <a href="https://www.youtube.com/watch?v=aoXJfuPaFF8">Why This Zig-Zag Coast Guard Search Pattern is Actually Genius - Smarter Every Day 268</a>，是美国 coast guard 标准化的水面搜救路线<strong>之一</strong>。这种图案覆盖的 …</p></p>
+<p>来自 <a href="https://www.youtube.com/watch?v=aoXJfuPaFF8">Why This Zig-Zag Coast Guard Search Pattern is Actually Genius - Smarter Every Day 268</a>，是美国 coast guard 标准化的水面搜救路线<strong>之一</strong>。这种图案覆盖的面最大并且效率最高，而且最重要的一点，考虑到水是流动的，能够跟随一起漂流的相对速度去找到 PIW (person in water)</p>
+<p>于是我就想起大家都熟悉的成语——「刻舟求剑」。这是2000多年前一个河南贩子吕不韦编的一个讥讽九头鸟的段子，由于这个成语太熟悉了，我甚至开始怀疑课本上是不是掐头去尾没讲完，跟之前那个「<a href="/202004/stdin-001">守株待兔</a>」恶毒的政治隐喻一样，于是去翻了下原文。好家伙，不能说雷同，简直就是一模一样。它出自《<a href="https://ctext.org/lv-shi-chun-qiu/cha-jin/zhs">吕氏春秋·察今</a>》</p>
+<p>察今一共三段，第一段说，按着先人制度惯性因循守旧的人都是大沙雕；第二段说，荆州人拿了过期的水文资料强行过河结果沙币了。第三段说，好剑要的是锋利，不必是莫邪的名称；好马要的是能行千里，而不是骥骜的名称。成就功名的人，就是老板的好工具人。然后就抬出来了著名的讽刺湖北佬的段子：</p>
+<div style="
+    font-family: Baskerville, Georgia, &quot;Liberation Serif&quot;, &quot;Kaiti SC&quot;, STKaiti, &quot;AR PL UKai CN&quot;, &quot;AR PL UKai HK&quot;, &quot;AR PL UKai TW&quot;, &quot;AR PL UKai TW MBE&quot;, &quot;AR PL KaitiM GB&quot;, KaiTi, KaiTi_GB2312, DFKai-SB, &quot;TW\-Kai&quot;, serif;
+    writing-mode: vertical-rl;
+    width: 100%;
+    word-break: break-all;
+    white-space: pre;
+    text-spacing: ideograph-alpha;
+    border-right: 0.2em solid #e00711;
+    text-align: justify;
+    text-justify: inter-ideograph;
+">
+楚人有涉江者，其剑自舟中坠于水，遽契其舟，
+曰：「是吾剑之所从坠。」舟止，从其所契者入水求之。
+舟已行矣，而剑不行，求剑若此，不亦惑乎？
+
+以此故法为其国与此同。
+时已徙矣，而法不徙，以此为治，岂不难哉？
+
+有过于江上者，见人方引婴儿而欲投之江中，
+婴儿啼，人问其故，曰：「此其父善游。」
+其父虽善游，其子岂遽善游哉？
+此任物亦必悖矣。荆国之为政，有似于此。
+</div>
+
+<p>第二个收获就是，果不其然又是一个阴阳怪气讽刺朝政的段子。看来每一个成语背后都有一个键政的动机哎。</p>
+<p>第三个收获，没想到刻舟求剑之后，还有个「其父善游」的更离谱段子卧槽。。。</p>
+<p>然后突然就想到了近期第四个收获，<a href="https://www.zhihu.com/question/511590823">王中林院士拓展麦克斯韦方程组</a>，在渣乎上看的一路下来，无论是懂哥，还是路人，几乎全是在喷。但是恰好就<a href="https://news.ycombinator.com/item?id=29977041">在 HN</a> 有人投递了一则如何通过伽利略旋转和洛伦兹旋转认识特种相对论的线串</p>
+<p><a href="https://twitter.com/MarkusDeserno/status/1482811504424542211">https://twitter.com/MarkusDeserno/status/1482811504424542211</a></p>
+<p><img alt="" src="/images/stdout-02-03.jpg" /></p>
+<p>其中从 <code>arctan(m12) = arctan(m1) + arctan(m2)</code> 推到 <code>tan(x+y) = [tan(x) + tan(y)] / [1 – tan(x)·tan(y)]</code></p>
+<p>再到 <code>m12 = [m1 + m2] / [1 – m1·m2]</code></p>
+<p>好吧，我也假装我看懂了！</p>
+<p>最后一个感触，大家都顾着去看2500年前楚国人和当今院士的笑话了，却很少有人正面分析一下问题。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-01-19T23:15:24+00:00">2022-01-19</time></p>
 <p>stdout</p>            </div>
@@ -208,7 +417,13 @@ class MyAdminView(ModelView):
               <h2 class="card-title">python-phoenixdb 设置读取超时</h2>
             </a>
             <p class="card-text"><p>PhoenixDB 居然是基于 requests + pb2 做的传输层协议。连接的是 queryserver 的 http 接口</p>
-<p>看 <a href="https://git-wip-us.apache.org/repos/asf?p=phoenix-queryserver.git;a=blob;f=python-phoenixdb/phoenixdb/avatica/client.py">avatica/client.py 源码</a> 可以得知这玩意默认是不支持设置read timeout的。强行hack一个 …</p></p>
+<p>看 <a href="https://git-wip-us.apache.org/repos/asf?p=phoenix-queryserver.git;a=blob;f=python-phoenixdb/phoenixdb/avatica/client.py">avatica/client.py 源码</a> 可以得知这玩意默认是不支持设置read timeout的。强行hack一个：</p>
+<pre><code>import phoenixdb
+import functools
+c = phoenixdb.connect('http://localhost:8765/', autocommit=True, auth=&quot;SPNEGO&quot;)
+c._client.session.request = functools.partial(c._client.session.request, timeout=2)
+</code></pre>
+<p><code>partial</code> 这个神奇的魔法可以设置一个默认参数。其它地方传入了别的timeout也可以自行覆盖，无缝兼容。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-01-11T12:00:56+00:00">2022-01-11</time></p>
 <p>stdout</p>            </div>
@@ -232,7 +447,29 @@ class MyAdminView(ModelView):
 &gt; User-Agent: User-Agent: Mozilla/5
 &gt;
 &lt; HTTP/1.1 403 Forbidden
-&lt; Server: GHost …</code></pre></p>
+&lt; Server: GHost
+&lt; Content-Length: 306
+&lt; Content-Type: text/html
+&lt; Mime-Version: 1.0
+&lt; Expires: Wed, 29 Dec 2021 14:42:28 GMT
+&lt; Cache-Control: max-age=0, no-cache
+&lt; Pragma: no-cache
+&lt; Date: Wed, 29 Dec 2021 14:42:28 GMT
+&lt; Connection: keep-alive
+&lt;
+&lt;HTML&gt;&lt;HEAD&gt;
+&lt;TITLE&gt;Access Denied&lt;/TITLE&gt;
+&lt;/HEAD&gt;&lt;BODY&gt;
+&lt;H1&gt;Access Denied&lt;/H1&gt;
+
+You don't have permission to access &quot;http&amp;#58;&amp;#47;&amp;#47;mscom&amp;#46;errorpage&amp;#46;failover&amp;#46;com&amp;#47;403&amp;#47;403&amp;#46;htm&amp;#63;&quot; on this server.&lt;P&gt;
+Reference&amp;#32;&amp;#35;18&amp;#46;1c697b76&amp;#46;1640788948&amp;#46;3b971c1f
+&lt;/BODY&gt;
+&lt;/HTML&gt;
+* Connection #0 to host www.microsoft.com left intact
+* Closing connection 0
+</code></pre>
+<p>不知道为何会指向  <code>http://mscom.errorpage.failover.com</code> 这域名也不是微软的。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-12-29T22:42:14+00:00">2021-12-29</time></p>
 <p>stdout</p>            </div>
@@ -249,7 +486,25 @@ class MyAdminView(ModelView):
             <p class="card-text"><p>不折腾不舒服。继之前 <a href="/2021/stdout-020">Edge调教</a> 之后记录一下 Chrome V70怎么阉割。</p>
 <p>下载：</p>
 <p><a href="https://dl.google.com/edgedl/release2/chrome/ALiXMYM2w8-h_70.0.3538.77/70.0.3538.77_chrome_installer.exe">win 32</a> | <a href="https://dl.google.com/edgedl/release2/chrome/AJ7ozxk4OLvN_70.0.3538.77/70.0.3538.77_chrome_installer.exe">win 64</a> | <a href="https://redirector.gvt1.com/release2/chrome/AIJolai8dEil_70.0.3538.67/GoogleChrome-70.0.3538.67.dmg">Mac</a></p>
-<p>上面的链接已经年久失修了，对比了一下获取最新版本的脚 …</p></p>
+<p>上面的链接已经年久失修了，对比了一下获取最新版本的脚本发现 Google 已经不提供老链接了。</p>
+<pre><code>curl -vsk 'https://tools.google.com/service/update2' -HContent-Type:text/xml --data-binary &quot;&lt;?xml version='1.0' encoding='UTF-8'?&gt;
+&lt;request protocol='3.0' sessionid='{est-blog}' installsource='ondemandcheckforupdate' dedup='cr'&gt;
+&lt;os platform='mac' version='66.6.6666.66' arch='x64'/&gt;
+&lt;app appid='com.google.Chrome' ap='' version='' nextversion='' lang='' brand='GGLS' client=''&gt;&lt;updatecheck/&gt;&lt;/app&gt;
+&lt;/request&gt;&quot;
+</code></pre>
+<p>安装完毕之后</p>
+<pre><code>cd '/Applications/Google Chrome.app/Contents'
+touch Frameworks
+sudo chown root:wheel Frameworks
+sudo chmod 000 Frameworks
+
+cd ~/Library/Google
+rm -rf GoogleSoftwareUpdate
+touch GoogleSoftwareUpdate
+sudo chown root:wheel GoogleSoftwareUpdate
+sudo chmod 000 GoogleSoftwareUpdate
+</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-12-28T23:00:05+00:00">2021-12-28</time></p>
 <p>stdout</p>            </div>
@@ -265,7 +520,25 @@ class MyAdminView(ModelView):
             </a>
             <p class="card-text"><p>都说 xmas eve 是洋节，我们就来数一数到底有哪些洋节</p>
 <ol>
-<li>元旦1月1日。由北「洋」军阀袁世凯设立。依据是内务部总长朱启钤《定四季节假 …</li></ol></p>
+<li>元旦1月1日。由北「洋」军阀袁世凯设立。依据是内务部总长朱启钤《定四季节假呈》，把原来农历（夏历）的正月初一的「元旦」挪用到了格里历一月一日。格里历(Gregorian calendar)引入中国是1912，元旦正式生效是1914年。</li>
+<li>春节。严格的来说，传统春节是二十四节气中的“立春”，是太阳历。后来被袁世凯直接拍板成农历正月初一。而夏历正月初一一般被认为是最接近立春之朔日（月缺之日）。农历最后一次农历大改版为《授时历》，发生在崇祯二年（1629年）九月，由礼部左侍郎徐光启发起，编撰者：耶稣会的龙华民（西西里人）、罗雅谷（米兰人）、邓玉函（瑞士人）、汤若望（日耳曼人）。</li>
+<li>生肖其实不跟农历绑定，而是跟 二十四节气绑定。二十四节气最后一次改版，也是上面那个《时宪历》那帮洋传教士定下来的。有意思的是，春分那一天恰好开始白羊座，其实我最近才知道二十四节气就约等于12星座，也就是黄道十二宫。如果要说农历《时宪历》含洋量太高，那么他之前的《授时历》编撰者是河北人郭守敬，生于元太宗(窝阔台)三年（1231年）于邢州，由他祖父郭荣(金国人)抚养成人，说起来这老兄甚至顺着蒙古人统治下的锡伯利亚去过北极科考，同一位尼泊尔建筑师阿尼哥合作搞过天文台，十分了得。</li>
+<li>妇女节，全称为「“三八”国际劳动妇女节」。1857年3月8日，美国纽约的制衣和纺织女工走上街头，抗议恶劣的工作条件和低薪。尽管后来当局出动警察攻击并驱散了抗议人群，但这次抗议活动促成了两年后的3月第一个工会组织的建立。1917年3月8日，在俄罗斯帝国首都彼得格勒，纺织女工举行罢工及游行，遍及整个城市，也导致俄罗斯革命的开始。</li>
+<li>清明节，二十四节气之一。太阳到达黄经15°</li>
+<li>劳动节，1884年，劳动骑士团 Knights of Labor 倡导「8小时工作制」；10月，行会与工会联盟召开大会确定1886年5月1日为要求八小时工作制成为标准的日期，美国工会准备举行总罢工支援；1886年5月1日，数千名参加罢工和参加全美各地举行的集会的工人唱起了《八小时》（Eight Hour）一歌；接下来发生干草市场屠杀(Haymarket affair)。</li>
+<li>端午节，据传是为了纪念<a href="/202006/stderr-008">恨国诗人屈原</a>，来自「蛮夷」楚国</li>
+<li>儿童节。1949年11月国际民主妇女联合会在苏联莫斯科所召开的执行委员会议，会上为纪念悼念1942年捷克利迪策村对儿童的屠杀及伤害，以及全世界所有在法西斯侵略战争中死难的儿童，为保障世界各国儿童的生存权、保健权和受教育权及改善儿童的生活，决议以6月1日为国际儿童节。1949年12月23中央人民政府政务院第十二次政务会议于日通过了《全国年节及纪念日放假办法》，其中规定6月1日为儿童节。</li>
+<li>建军节，由 契丹苏维埃共和国 (Kitajskaja Sovetskaja Respublika, Кита́йская Сове́тская Респу́блика) 于1933年6月决定，将8月1日定为中国工农红军的建军节。<br />
+<img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/National_Flag_of_Chinese_Soviet_Republic.svg/400px-National_Flag_of_Chinese_Soviet_Republic.svg.png" /></li>
+<li>圣纪节，穆罕默德的诞辰与逝世恰巧都在伊斯兰教历三月十二日，回回三大节之一。<br />
+<img alt="" src="http://wx1.sinaimg.cn/large/4b18c48fly4glz8qsahmzj20kw0fmdia.jpg" /></li>
+</ol>
+<p>再说一下真正被 appropriation 的「洋节」</p>
+<ol>
+<li>圣诞节。异教徒的节日，四舍五入冬至日，古埃及太阳神 Ra 的节日，被(东)罗马帝国拿来宣传成中东人耶稣的生日。。。摊手。。。比如犹太人就不过圣诞节，但是他们在这一天<a href="https://www.youtube.com/watch?v=Ny3PQOWsUGs">吃中餐</a></li>
+<li>母亲节，由12岁女孩安娜·贾维斯(Anna Jarvis)发起，被商家利用，安娜用<a href="https://www.sohu.com/a/313400538_782639">下半辈子反对母亲节</a></li>
+<li>父亲节：抄袭母亲节。</li>
+</ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-12-24T23:59:59+00:00">2021-12-24</time></p>
 <p>stdout</p>            </div>
@@ -283,7 +556,7 @@ class MyAdminView(ModelView):
 <p>然后跑个分，需要 <code>CPython &gt;= 3.7</code>，输入</p>
 <p><code>PYTHONPROFILEIMPORTTIME=1 python3 myscript.py 2&gt;1.log</code></p>
 <p><img alt="tuna" src="https://camo.githubusercontent.com/d76ac242a42f9c394c1ae66da655173a51d9ed9c09107dd8d42b684c15aa2d05/68747470733a2f2f6e7363686c6f652e6769746875622e696f2f74756e612f666f6f2e706e67" /></p>
-<p>然后 <code>tuna 1.log</code> ，会自动打开浏览器围观 <code>import</code> 耗时分布 …</p></p>
+<p>然后 <code>tuna 1.log</code> ，会自动打开浏览器围观 <code>import</code> 耗时分布。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-12-22T14:00:28+00:00">2021-12-22</time></p>
 <p>stdout</p>            </div>
@@ -298,7 +571,28 @@ class MyAdminView(ModelView):
               <h2 class="card-title">FastAPI/Starlette支持静态文件支持SPA</h2>
             </a>
             <p class="card-text"><p>FastAPI 官方支持 <code>from fastapi.staticfiles import StaticFiles</code> 充当一个静态文件服务器</p>
-<p>其实实现是 starlette。这玩意可以在 <code>directory</code> 下放一个 <code>404.html</code>，恰好单页应用也需要用 …</p></p>
+<p>其实实现是 starlette。这玩意可以在 <code>directory</code> 下放一个 <code>404.html</code>，恰好单页应用也需要用 <code>index.html</code> 充当所有 javascript 框架注册的 router</p>
+<p>只是有一个毛病，这货返回的 HTTP status code 是 404。用起来没啥大毛病，但是就是浏览器不会记录网址，导致没法匹配浏览历史快速找到之前访问过的页面。</p>
+<p>拿来改改继续用</p>
+<pre><code>from starlette.staticfiles import StaticFiles, Scope, Headers, Response, FileResponse
+
+class StaticFilesWithout404(StaticFiles):
+    async def get_response(self, path: str, scope: Scope) -&gt; Response:
+        r = await super().get_response(path, scope)
+        h = Headers(scope=scope)
+        full_path, stat_result = await self.lookup_path('404.html')
+        if isinstance(r, FileResponse) and r.path == full_path:
+            if 'text/html' in (h.get('accept') or ''):
+                r.status_code = 200
+            else:
+                return Response('', status_code=404)
+        return r
+
+app.mount("/frontend", StaticFilesWithout404(directory="frontend", html=True), name="static")
+</code></pre>
+<p>这段代码大概是起到了类似 <a href="http://nginx.org/en/docs/http/ngx_http_core_module.html#try_files">nginx <code>try_files</code></a> 的作用。默认静态文件映射一个目录，但是如果找不到就按根目录的 index.html 输出。这里还判断了请求的 <code>accept</code> 头，如果是 xhr/Fetch 就会直接返回一个0字节长度无MIME的404。</p>
+<p>由此我想到了一个学究式的 leaky abstraction。众所周知，如果一个URL不存在，那么服务器应该返回404</p>
+<p>但是现在都是 SPA 单页应用，都是先 200 返回 <code>index.html</code> 的内容，再由 javascript 的 router 去决定是否正常显示还是404 。所以返回 200 但是显示 404 就破坏了这个语义。如果要精确匹配SPA里的router如果不存在由服务器返回404，第一是搞 SSR，把前端那一坨代码跑在服务器端，第二种办法是 npm build 的时候输出一个可路由URL列表，然后部署的时候导入静态文件服务器更新。这个具体实现就留作homework由读者自行解决了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-12-08T07:38:38+00:00">2021-12-08</time></p>
 <p>stdout</p>            </div>
@@ -313,7 +607,19 @@ class MyAdminView(ModelView):
               <h2 class="card-title">人工构造Flask session模拟cookie登陆</h2>
             </a>
             <p class="card-text"><p>有没有好奇为什么 Flask 配置必须要求一个 <a href="https://flask.palletsprojects.com/en/latest/config/#SECRET_KEY">SECRET_KEY</a>，然后就可以在浏览器保存一个 session 状态读写数据。</p>
-<p>这里记一下它的底层实现，其 …</p></p>
+<p>这里记一下它的底层实现，其实需要依赖的包是 <a href="https://itsdangerous.palletsprojects.com/">itsdangerous</a></p>
+<pre><code>import hashlib
+from itsdangerous import URLSafeTimedSerializer
+URLSafeTimedSerializer(
+        'YOUR_SECRET_KEY',  # flask SECRET_KEY
+        'cookie-session',  # from flask.sessions.SecureCookieSessionInterface.salt
+        # serializer=TaggedJSONSerializer(),
+        signer_kwargs={'key_derivation': 'hmac', 'digest_method': hashlib.sha1}
+).dumps({
+    "your_key": "your_value"
+})
+</code></pre>
+<p>别人如果拿到你的 <code>SECRET_KEY</code> 就可以伪造任意 session cookie 了</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-12-08T07:15:03+00:00">2021-12-08</time></p>
 <p>stdout</p>            </div>
@@ -332,7 +638,37 @@ class MyAdminView(ModelView):
     File &quot;&lt;string&gt;&quot;, line 1, in &lt;module&gt;
     File &quot;/usr/local/python3/lib/python3.9/site-packages/setuptools/__init__.py&quot;, line 18, in &lt;module&gt;
       from setuptools.dist import Distribution
-    File &quot;/usr/local/python3/lib/python3 …</code></pre></p>
+    File &quot;/usr/local/python3/lib/python3.9/site-packages/setuptools/dist.py&quot;, line 34, in &lt;module&gt;
+      from setuptools import windows_support
+    File &quot;/usr/local/python3/lib/python3.9/site-packages/setuptools/windows_support.py&quot;, line 2, in &lt;module&gt;
+      import ctypes
+    File &quot;/usr/local/python3/lib/python3.9/ctypes/__init__.py&quot;, line 8, in &lt;module&gt;
+      from _ctypes import Union, Structure, Array
+  ModuleNotFoundError: No module named '_ctypes'
+</code></pre>
+<p>解决办法是不要用 3.9。</p>
+<p>如果实在要用，则自己编译前需要加上 <code>yum install libffi-devel</code> 或者 <code>sudo apt-get install libffi-dev</code></p>
+<p>来自<a href="https://stackoverflow.com/a/48045929">SO</a></p>
+<h3><code>greenlet.greenlet size changed</code> 然后出错</h3>
+<pre><code>/usr/local/lib/python3.7/importlib/_bootstrap.py:219: RuntimeWarning: greenlet.greenlet size changed, may indicate binary incompatibility. Expected 144 from C header, got 152 from PyObject
+  return f(*args, **kwds)
+/usr/local/lib/python3.7/importlib/_bootstrap.py:219: RuntimeWarning: greenlet.greenlet size changed, may indicate binary incompatibility. Expected 144 from C header, got 152 from PyObject
+  return f(*args, **kwds)
+
+Segmentation fault (core dumped)
+</code></pre>
+<p>这个摘自<a href="https://github.com/gevent/gevent/issues/1260">官方 iseue</a></p>
+<blockquote>
+<p>On Python 3.7 and higher, gevent 20.9.0 is required to use (a standard build of) greenlet 0.4.17.</p>
+</blockquote>
+<p>解决办法：<code>pip install gevent==20.9.0 pip install greenlet==0.4.17</code></p>
+<h3>SQLAlchemy 1.4 大战 greenlet 0.4.17</h3>
+<p>见 <a href="https://docs.sqlalchemy.org/en/14/changelog/changelog_14.html#change-12b8eb8e600cc32590b51d0087552191">sqlalchemy changelog</a></p>
+<blockquote>
+<p>to accommodate for the handling of Python contextvars (introduced in Python 3.7) for greenlet versions greater than 0.4.17. Greenlet version 0.4.17 added automatic handling of contextvars in a backwards-incompatible way; we’ve coordinated with the greenlet authors to add a preferred API for this in versions subsequent to 0.4.17 which is now supported by SQLAlchemy’s greenlet integration. For greenlet versions prior to 0.4.17 no behavioral change is needed, version 0.4.17 itself is blocked from the dependencies.</p>
+</blockquote>
+<p>然后就直接在 <a href="https://github.com/sqlalchemy/sqlalchemy/blob/703ff387c13f083ed0982071963155d679c862ab/setup.cfg#L42">setup.cfg里</a> 给 <code>greenlet != 0.4.17</code>了。</p>
+<p>神仙打架，不听不听，和尚念经，果断 <code>sqlalchemy==1.3.24</code> 降级。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-12-01T17:41:32+00:00">2021-12-01</time></p>
 <p>stdout</p>            </div>
@@ -347,7 +683,19 @@ class MyAdminView(ModelView):
               <h2 class="card-title">Edge调教指南——如何设置本地PAC代理和首页天气</h2>
             </a>
             <p class="card-text"><p>之前一直用的chrome v70，为什么呢？</p>
-<p>第一是这个老版本允许 <code>--proxy-pac-url="file:///Users/me/1.pac</code> 这样设置，但是<a href="https://bugs.chromium.org/p/chromium/issues/detail?id=839566">Chromium项目的大爷们觉得</a>你本地的.pac不够安全，要网上的.pac才安全，所以一刀切 …</p></p>
+<p>第一是这个老版本允许 <code>--proxy-pac-url="file:///Users/me/1.pac</code> 这样设置，但是<a href="https://bugs.chromium.org/p/chromium/issues/detail?id=839566">Chromium项目的大爷们觉得</a>你本地的.pac不够安全，要网上的.pac才安全，所以一刀切给禁了。当然有热心人士觉得这没啥大不了的。不外乎装个插件就可以切PAC。但是chrome插件其实会有一个fingerprint。Extension一启用，隔壁老王都知道你开代理了。</p>
+<p>第二，也是最重要的原因，这是最后一个chrome版本支持 <code>about://net-internals</code> 在本地查看浏览器底层网络请求。现在无论是 Edge 还是 Chrome 都必须把 .json 文件从 https://netlog-viewer.appspot.com/ 加载才能看了。很尼玛保护了隐私有没有啊。</p>
+<p>但是坚持老版本，也付出了巨大的代价。很多新的 ES 语法不支持，比如说 Grafana 最新版 login 都进不去。这就尴尬了。只能被自愿升级了。</p>
+<p>既然升级是必选项，那么就换 Edge 试试。</p>
+<p>第一就是得解决这个本地 .pac 问题，其实从上面第二个工具里才能知道，PAC加载失败有个返回 <code>ERR_DISALLOWED_URL_SCHEME</code>。stackoverflow 上找到个奇技淫巧</p>
+<p><code>open "/Applications/Microsoft Edge.app" --args --proxy-pac-url='data:application/x-javascript-config;base64,'$(base64 -i /Users/me/2.pac)</code></p>
+<p>还能这样玩？双击666。</p>
+<p>第二个把该禁用的禁用了，首页只留一个搜索框一个天气。但是这天气就特么定位到坡县了。而且下拉框点不出来啊。F12打开 devtool 一看，我尼玛好家伙 <code>https://www.bing.com/api/v6/Places/AutoSuggest</code> 被 Bing China 的网管给一把梭302到 <code>https://cn.bing.com/api/v6/Places/AutoSuggest</code> 了。然后就特么 CORS 给拦截，js读取不到列表。。。</p>
+<p>最后怎么办？点那个天气图标，进入到 <code>https://www.msn.com/en-sg/weather/today/weather-today/we-city</code></p>
+<p>然后找那个地图，手动选择自己所在城市，设置为 Home 。等 cookie 写入生效了，打开edge新tab就ok了</p>
+<p>这年头上个网真鸡儿累。</p>
+<p>btw 设置M$账号同步的时候，发现账号所在国家可以选很多不是国家的地方，但是时区就不能随便选了。F12改了也没用。微软的后台开发做的过滤还挺细致的。</p>
+<p>btw2 发现一个很干净的启动页： <code>chrome-search://local-ntp/local-ntp.html</code> 或者直接在 <code>hosts</code> 里把 ntp.msn.com 干掉，有奇效。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-11-30T11:32:33+00:00">2021-11-30</time></p>
 <p>stdout</p>            </div>
@@ -369,7 +717,30 @@ class MyAdminView(ModelView):
 <blockquote>
 <p>A JSON column cannot have a non-NULL default value.</p>
 </blockquote>
-<p>但是 <a href="https://dev.mysql.com/doc/refman/8.0/en/data-type-defaults.html">MySQL …</a></p></p>
+<p>但是 <a href="https://dev.mysql.com/doc/refman/8.0/en/data-type-defaults.html">MySQL 8.0.13 就支持指定默认值</a>了</p>
+<blockquote>
+<p>Prior to MySQL 8.0.13, a JSON column cannot have a non-NULL default value.<br />
+The default value specified in a DEFAULT clause can be a literal constant or an expression. With one exception, enclose expression default values within parentheses to distinguish them from literal constant default values. Examples:</p>
+</blockquote>
+<p>虽然语法很丑但是很实用啊。</p>
+<p>所以这种语句</p>
+<pre><code>ALTER TABLE mytable MODIFY COLUMN my_json JSON DEFAULT (json_object());
+</code></pre>
+<p>在 TiDB 里就没法支持。这也带来一个问题，就是要 upsert 这个 字段的时候，写起来就很拧巴，以 <code>peewee</code> 这个ORM为例：</p>
+<pre><code>MyTable.update({
+    'my_json' = fn.json_set(
+        fn.COALESCE(MyTable.my_json, Cast('{}', 'JSON')),
+        '%.some_key', 'some_value',
+)})
+</code></pre>
+<p>必须用 COALESCE 预防默认值为 <code>NULL</code> 的情况。太麻烦了。</p>
+<p>btw 玩MySQL/TiDB的 JSON 有个坑的，那就是 json 的 <code>null</code> 是有值的，和 sql 的 <code>NULL</code> 是不同的。</p>
+<p>也就是说</p>
+<pre><code>select json_extract('{}', '$.hey') IS NULL;
+select json_extract('{"hey": null}', '$.hey') = Cast('null' as JSON);
+</code></pre>
+<p>要注意。</p>
+<p>btw2 MySQL的JSON数据抽取 <code>-&gt;&gt;</code> 是返回真正的值，等价于TiDB里的 json_unquote(json_extract(t.json_field, '$.key1.key2'))</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-11-19T09:14:28+00:00">2021-11-19</time></p>
 <p>stdout</p>            </div>
@@ -389,7 +760,30 @@ class MyAdminView(ModelView):
 <p>Like <code>--host-rules</code> but these rules only apply to the host resolver.<br />
 A comma-separated list of rules that control how hostnames are mapped.<br />
 For example:<br />
-- <code>MAP * 127.0 …</code></p></p>
+- <code>MAP * 127.0.0.1</code> Forces all hostnames to be mapped to <code>127.0.0.1</code><br />
+- <code>MAP *.google.com proxy</code> Forces all google.com subdomains to be resolved to <code>proxy</code>.<br />
+- <code>MAP test.com [::1]:77</code> Forces <code>test.com</code> to resolve to IPv6 loopback. Will also force the port of the resulting socket address to be 77.<br />
+- <code>MAP * baz, EXCLUDE www.google.com</code> Remaps everything to <code>baz</code>, except for <code>www.google.com</code>.</p>
+<p>These mappings apply to the endpoint host in a net request (the TCP connect and host resolver in a direct connection, and the CONNECT in an HTTP proxy connection, and the endpoint host in a SOCKS proxy connection).</p>
+<p>官方文档有语焉不详的提到过</p>
+<p>https://chromium.googlesource.com/chromium/src/+/refs/heads/main/net/dns/README.md</p>
+<blockquote>
+<p>Starting Chrome with --host-resolver-rules="MAP the.hostname.com [dead::beef]" where the.hostname.com is the hostname to allow resolving and dead::beef is the IPv6 address to resolve it to. net::MappedHostResolver acts at a level before IPv6 connectivity checks, and if a hostname is remapped to an IP literal, connectivity checks do not apply.</p>
+</blockquote>
+<p>还有很多 <a href="https://chromium.googlesource.com/chromium/src/+/HEAD/net/docs/proxy.md">proxy的参数</a></p>
+<h2>curl 的参数</h2>
+<p>也顺便贴一下。调试的时候用得上</p>
+<p>参数：</p>
+<ul>
+<li><code>-4</code>, <code>--ipv4</code></li>
+<li><code>-6</code>, <code>--ipv6</code></li>
+<li><code>--dns-interface &lt;interface&gt;</code></li>
+<li><code>--dns-ipv4-addr &lt;ip-address&gt;</code> Tell curl to bind to <code>&lt;ip-address&gt;</code> when making IPv4 DNS requests</li>
+<li><code>--dns-ipv6-addr &lt;ip-address&gt;</code> Tell curl to bind to <code>&lt;ip-address&gt;</code> when making IPv6 DNS requests</li>
+<li><code>--dns-servers &lt;ip-address,ip-address&gt;</code> Set the list of DNS servers to be used instead of the system default. The  list  of  IP  addresses should  be  separated  with commas. Port numbers may also optionally be given as <code>:&lt;port-number&gt;</code> after each IP address.</li>
+<li><code>--resolve &lt;host:port:address&gt;</code> Make the curl requests(s) use a specified address and prevent the otherwise normally resolved address to  be  used. Consider  it a sort of /etc/hosts alternative provided on the command line. The port number should be the number used for the specific protocol the host will be  used  for.  It  means  you  need  several entries if you want to provide address for the same host but different ports. This option can be used many times to add many host names to resolve. (Added in 7.21.3)</li>
+</ul>
+<p>最后一个很有用 😹</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-11-07T16:01:19+00:00">2021-11-07</time></p>
 <p>stdout</p>            </div>
@@ -416,7 +810,118 @@ For example:<br />
 <tbody>
 <tr>
 <td>AUTH_TYPE</td>
-<td>ignore this …</td></tr></tbody></table></p>
+<td>ignore this</td>
+</tr>
+<tr>
+<td>REMOTE_IDENT</td>
+<td>The user making the request.</td>
+</tr>
+<tr>
+<td>REMOTE_USER</td>
+<td>The authenticated name of the user making the query.</td>
+</tr>
+<tr>
+<td>CONTENT_LENGTH</td>
+<td>byte length of body</td>
+</tr>
+<tr>
+<td>CONTENT_TYPE</td>
+<td>MIME such as text/html, without the charset shit</td>
+</tr>
+<tr>
+<td>DOCUMENT_ROOT</td>
+<td>NEW. The directory from which web documents are served.</td>
+</tr>
+<tr>
+<td>REQUEST_URI</td>
+<td>NEW. confusing shit similar with PATH_INFO</td>
+</tr>
+<tr>
+<td>HTTP_*</td>
+<td>HTTP headers</td>
+</tr>
+<tr>
+<td>PATH_INFO</td>
+<td>like /a/b/c</td>
+</tr>
+<tr>
+<td>PATH_TRANSLATED</td>
+<td>not really used</td>
+</tr>
+<tr>
+<td>QUERY_STRING</td>
+<td>the part after ? in an URL</td>
+</tr>
+<tr>
+<td>REMOTE_ADDR</td>
+<td>client IP</td>
+</tr>
+<tr>
+<td>REMOTE_HOST</td>
+<td>client host name by lookup ip</td>
+</tr>
+<tr>
+<td>REQUEST_METHOD</td>
+<td>GET/POST</td>
+</tr>
+<tr>
+<td>SCRIPT_NAME</td>
+<td>The virtual path (e.g., /cgi-bin/program.pl) of the script being executed.</td>
+</tr>
+<tr>
+<td>SCRIPT_FILENAME</td>
+<td>confusing shit similar with SCRIPT_NAME</td>
+</tr>
+<tr>
+<td>SERVER_NAME</td>
+<td>The server's hostname or IP address.</td>
+</tr>
+<tr>
+<td>SERVER_PORT</td>
+<td>The port number of the host on which the server is running.</td>
+</tr>
+<tr>
+<td>SERVER_PROTOCOL</td>
+<td>The name and revision number of the server protocol.</td>
+</tr>
+</tbody>
+</table>
+<h2>reverse proxy FastCGI with uWSGI</h2>
+<p>slap this into <code>my_conf.ini</code></p>
+<pre><code>[uwsgi]
+my_port = 9000  # can be set otherwise
+route-run = addvar:SERVER_NAME=%h
+route-run = addvar:SERVER_PORT=%(my_port)
+route-if  = empty:${REQUEST_METHOD} addvar:REQUEST_METHOD=GET
+route-if  = empty:${HTTP_HOST} addvar:HTTP_HOST=%h:%(my_port)
+route-run = seturi:/fcgi-proxy${PATH_INFO}
+route-run = http:127.0.0.1:9527
+fastcgi-socket = 0.0.0.0:%(my_port)
+http-socket = 0.0.0.0:8000  # for testing purpose.
+</code></pre>
+<p>Install uWSGI, install the binary from pypi wheels instead of compiling uwsgi.c shit</p>
+<pre><code>pip install pyuwsgi
+</code></pre>
+<p>Run it</p>
+<pre><code>uwsgi --ini my_conf.ini
+</code></pre>
+<p>Now you can run your regular http service behind <code>127.0.0.1:9527</code>, while serving fcgi on <code>127.0.0.1:9000</code></p>
+<p>Requests like <code>fcgi://127.0.0.1:9000/hello</code> will be fowwarded to <code>http://127.0.0.1:9527/fcgi-proxy/hello</code></p>
+<p>You may ask why adding a <code>/fcgi-proxy</code> in path? Because there's a gotcha.</p>
+<h2>fuckedup FastCGI requests</h2>
+<p>Learned this from some php-fpm tutorial, first install the standard fcgi client tool because <code>curl</code> doesn't speak fcgi.</p>
+<pre><code>apt-get install libfcgi0ldbl
+yum --enablerepo=epel install fcgi
+SCRIPT_NAME=/ping SCRIPT_FILENAME=/ping REQUEST_METHOD=GET cgi-fcgi -bind -connect 127.0.0.1:9000
+</code></pre>
+<p>You can observe from uWSGI logs that <code>cgi-fcgi</code> command sends flawed requests, the <code>PATH_INFO</code> was unset.</p>
+<p>After hours wasted, I came up with a clever hack to force uWSGI's internal router to force <code>seturi</code> with a path prefix</p>
+<h2>ToDo</h2>
+<p>There are further problems that can be improved, for example, my http service is running <code>uvicorn</code>, it can not guess the client ip:port infor from its stupid <code>get_remote_addr</code></p>
+<p>what's worse, the uWSGI <code>addheader</code> directive are for <em>responses</em>, so I can't add <em>request</em> headers like <code>x-forwared-for</code>.</p>
+<p>Also the reverse proxy is HTTP/1.0 only. to make the <code>Connection: Keep-alive</code> happen needs some further investigation.</p>
+<h2>Q&amp;A</h2>
+<p>Thanks for reading my shitpost. Questions?</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-11-05T18:12:45+00:00">2021-11-05</time></p>
 <p>stdout</p>            </div>
@@ -433,7 +938,13 @@ For example:<br />
             <p class="card-text"><p>总结一些没用的知识</p>
 <ol>
 <li>
-<p>淘宝/阿里账号，可以一个手机最多绑定6个账号。淘宝注册的时候点击「企业注册」然后用邮箱注册，最后用同 …</p></li></ol></p>
+<p>淘宝/阿里账号，可以一个手机最多绑定6个账号。淘宝注册的时候点击「企业注册」然后用邮箱注册，最后用同一个手机验证即可</p>
+</li>
+<li>
+<p>「支付宝」在淘宝/阿里系里app里是和「账号」一一绑定的，这就产生了很多冲突。比如你一个第三方外卖app，支付的时候可以选择 微信/支付宝，一般不会限制下单手机号和支付手机号是否一样，你甚至可以帮别人支付订单，但是淘宝/阿里的app不一样，只能自己账号支付自己账号的订单。如果你有两个手机号和两个支付宝账号，那么没法交叉支付。</p>
+</li>
+</ol>
+<p>还有一个想不起了，想起了再补充。2333</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-10-28T16:21:23+00:00">2021-10-28</time></p>
 <p>stdout</p>            </div>
@@ -461,7 +972,27 @@ For example:<br />
 ">兵车行——杜甫
 
 车辚辚，马萧萧，行人弓箭各在腰。  
-耶娘妻子走相送，尘埃不 …</div></p>
+耶娘妻子走相送，尘埃不见咸阳桥。
+牵衣顿足拦道哭，哭声直上干云霄。
+道旁过者问行人，行人但云点行频。
+或从十五北防河，便至四十西营田。
+去时里正与裹头，归来头白还戍边。
+边庭流血成海水，武皇开边意未已。
+君不闻，汉家山东二百州，千村万落生荆杞。
+纵有健妇把锄犁，禾生陇亩无东西。
+况复秦兵耐苦战，被驱不异犬与鸡。
+长者虽有问，役夫敢申恨？
+且如今年冬，未休关西卒。
+县官急索租，租税从何出？
+<b>信知生男恶，反是生女好。
+生女犹得嫁比邻，生男埋没随百草。</b>
+君不见，青海头，古来白骨无人收。
+新鬼烦冤旧鬼哭，天阴雨湿声啾啾！
+
+</div>
+
+<p>测试下 css 的文字竖排。</p>
+<p>字体来自 <a href="http://zenozeng.github.io/fonts.css/">fonts.css</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-10-21T23:28:21+00:00">2021-10-21</time></p>
 <p>stdout</p>            </div>
@@ -476,7 +1007,17 @@ For example:<br />
               <h2 class="card-title">Re-index page on Google Search Console</h2>
             </a>
             <p class="card-text"><p>Request indexing webpage with Google used to be fun and simple, now it's a tedious task especially when you have tons of old pages ready to be crawled yet Google is reluctant to move.</p>
-<p>Here is a simple script to speed up the stacks of page you have click in …</p></p>
+<p>Here is a simple script to speed up the stacks of page you have click in order to submit multiple missing pages to Google. </p>
+<p>Open your <a href="https://search.google.com/search-console">Google Search Console</a>, click <strong>Coverage</strong> then open <strong>Discovered – currently not indexed</strong></p>
+<p>Now open your browser devtool, paste these into javascript console, hit them one by one.</p>
+<pre><code>document.querySelector('div[data-disabled] table td span[title] span[title="Inspect URL"]').click()
+
+document.querySelector('span[data-event-action=request-indexing] span[jsslot] div span span').click()
+
+document.querySelector('span[data-event-action=pivot-to-report-main-view-indexing-section] a').click()
+</code></pre>
+<p>Until you met with the daily quota. Rinse and try this shit everyday.</p>
+<p>Fuck Google.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-10-21T14:53:25+00:00">2021-10-21</time></p>
 <p>stdout</p>            </div>
@@ -491,7 +1032,49 @@ For example:<br />
               <h2 class="card-title">Letsencrypt 在老版本macOS Ubuntu 上修复TLS证书错误</h2>
             </a>
             <p class="card-text"><p>一觉醒来，打开浏览器，各种连不上，调试了一下发现说lets encrypt 的 acme https证书错误</p>
-<p>仿佛记得<a href="https://www.v2ex.com/t/805339">V站讨论</a>过这个事，以为和自己无关，结果也中招了。DST …</p></p>
+<p>仿佛记得<a href="https://www.v2ex.com/t/805339">V站讨论</a>过这个事，以为和自己无关，结果也中招了。DST Root CA X3 根证书在国庆前过期了。</p>
+<h2>老版本 Ubuntu 修复：</h2>
+<pre><code>sudo apt update
+sudo apt install ca-certificates
+</code></pre>
+<h2>老版本 macOS 修复：</h2>
+<p>需要手动导入并信任新的 ISRG Root X1 根证书。来自<a href="https://letsencrypt.org/certificates/">https://letsencrypt.org/certificates/</a>。</p>
+<p>保存下列为 <code>1.pem</code></p>
+<pre><code>-----BEGIN CERTIFICATE-----
+MIIFYDCCBEigAwIBAgIQQAF3ITfU6UK47naqPGQKtzANBgkqhkiG9w0BAQsFADA/
+MSQwIgYDVQQKExtEaWdpdGFsIFNpZ25hdHVyZSBUcnVzdCBDby4xFzAVBgNVBAMT
+DkRTVCBSb290IENBIFgzMB4XDTIxMDEyMDE5MTQwM1oXDTI0MDkzMDE4MTQwM1ow
+TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh
+cmNoIEdyb3VwMRUwEwYDVQQDEwxJU1JHIFJvb3QgWDEwggIiMA0GCSqGSIb3DQEB
+AQUAA4ICDwAwggIKAoICAQCt6CRz9BQ385ueK1coHIe+3LffOJCMbjzmV6B493XC
+ov71am72AE8o295ohmxEk7axY/0UEmu/H9LqMZshftEzPLpI9d1537O4/xLxIZpL
+wYqGcWlKZmZsj348cL+tKSIG8+TA5oCu4kuPt5l+lAOf00eXfJlII1PoOK5PCm+D
+LtFJV4yAdLbaL9A4jXsDcCEbdfIwPPqPrt3aY6vrFk/CjhFLfs8L6P+1dy70sntK
+4EwSJQxwjQMpoOFTJOwT2e4ZvxCzSow/iaNhUd6shweU9GNx7C7ib1uYgeGJXDR5
+bHbvO5BieebbpJovJsXQEOEO3tkQjhb7t/eo98flAgeYjzYIlefiN5YNNnWe+w5y
+sR2bvAP5SQXYgd0FtCrWQemsAXaVCg/Y39W9Eh81LygXbNKYwagJZHduRze6zqxZ
+Xmidf3LWicUGQSk+WT7dJvUkyRGnWqNMQB9GoZm1pzpRboY7nn1ypxIFeFntPlF4
+FQsDj43QLwWyPntKHEtzBRL8xurgUBN8Q5N0s8p0544fAQjQMNRbcTa0B7rBMDBc
+SLeCO5imfWCKoqMpgsy6vYMEG6KDA0Gh1gXxG8K28Kh8hjtGqEgqiNx2mna/H2ql
+PRmP6zjzZN7IKw0KKP/32+IVQtQi0Cdd4Xn+GOdwiK1O5tmLOsbdJ1Fu/7xk9TND
+TwIDAQABo4IBRjCCAUIwDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAQYw
+SwYIKwYBBQUHAQEEPzA9MDsGCCsGAQUFBzAChi9odHRwOi8vYXBwcy5pZGVudHJ1
+c3QuY29tL3Jvb3RzL2RzdHJvb3RjYXgzLnA3YzAfBgNVHSMEGDAWgBTEp7Gkeyxx
++tvhS5B1/8QVYIWJEDBUBgNVHSAETTBLMAgGBmeBDAECATA/BgsrBgEEAYLfEwEB
+ATAwMC4GCCsGAQUFBwIBFiJodHRwOi8vY3BzLnJvb3QteDEubGV0c2VuY3J5cHQu
+b3JnMDwGA1UdHwQ1MDMwMaAvoC2GK2h0dHA6Ly9jcmwuaWRlbnRydXN0LmNvbS9E
+U1RST09UQ0FYM0NSTC5jcmwwHQYDVR0OBBYEFHm0WeZ7tuXkAXOACIjIGlj26Ztu
+MA0GCSqGSIb3DQEBCwUAA4IBAQAKcwBslm7/DlLQrt2M51oGrS+o44+/yQoDFVDC
+5WxCu2+b9LRPwkSICHXM6webFGJueN7sJ7o5XPWioW5WlHAQU7G75K/QosMrAdSW
+9MUgNTP52GE24HGNtLi1qoJFlcDyqSMo59ahy2cI2qBDLKobkx/J3vWraV0T9VuG
+WCLKTVXkcGdtwlfFRjlBz4pYg1htmf5X6DYO8A4jqv2Il9DjXA6USbW1FzXSLr9O
+he8Y4IWS6wY7bCkjCWDcRQJMEhg76fsO3txE+FiYruq9RUWhiF1myv4Q6W+CyBFC
+Dfvp7OOGAN6dEOM4+qR9sdjoSYKEBpsr6GtPAQw4dy753ec5
+-----END CERTIFICATE-----
+</code></pre>
+<p>打开 keychain access，把这个 <code>1.pem</code> 拖入 system，双击打开，在 Trust 这个下拉，选择 信任。</p>
+<p><img alt="" src="/images/2021/stdout-013-1.png" /></p>
+<p>因为浏览器没法用，所以搜索资料也麻烦。真是差点锁死。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-10-01T10:56:13+00:00">2021-10-01</time></p>
 <p>stdout</p>            </div>
@@ -509,7 +1092,19 @@ For example:<br />
 <p><img alt="" src="/images/2021/stdout-012-1.jpg" /></p>
 <p>他们家的 filtered tap water 测出来 TDS 为 358ppm</p>
 <p>tap water 测出来 TDS 是 435 ppm，</p>
-<p>说加州的市政供水很硬，有大量的钙、镁离子。都不 …</p></p>
+<p>说加州的市政供水很硬，有大量的钙、镁离子。都不敢直接拿来洗车，怕喷枪给表漆洗得坑坑洼洼；他们家太阳能光伏板很脏想冲也不敢，万一刮坏了不值。加州又是天天大太阳不下雨，还好他们家有两个大水桶接雨水，测出来TDS 20，刚好拿来冲屋顶。</p>
+<p>这个说法令我很吃惊的。因为一直以来网上和一些老外都说中国自来水差什么的。美国水龙头打开直接喝。翻了一下，留学生论坛都说<a href="https://www.uscardforum.com/t/topic/30882/43">美国的自来水很硬</a>，会掉头发什么的，看来 TDS 真的很高啊。</p>
+<p>为啥网上会有「美国自来水水质很好水龙头打开直接喝」这个说法？翻了一些帖子，感觉应该是这样，老中过去留学、旅游的都是住旅店、公寓，其实一般楼栋那都统一装了净水装置。公园、学校、图书馆的直饮机其实也装了过滤装置的。所以看上去能「直接喝」而已。如果你自己装修楼，接市政供水，那么大家都是要装初滤，加 Pentair 大蓝瓶的。</p>
+<p>国内自来水，我家 TDS 测出来是130-150左右。按照 <a href="https://www.who.int/publications/i/item/9789241549950">WHO饮用水</a> 的标准，属于口感极佳。</p>
+<p><img alt="" src="/images/2021/stdout-012-2.png" /></p>
+<p>注：水的 1 mg/L 约等于 1 parts per million (ppm)</p>
+<p>我也装了一套 RO 过滤的，TDS 测出来 5。娃哈哈桶装水测出来是　0。厉害！</p>
+<p>网上还有个说法「美国直饮水标准为≤ 50mg/L，欧盟直饮水标准为≤ 70mg/L」，注意说的是「直饮水」，不是自来水。查了下，美国 EPA 对饮用水 TDS 其实没有强制要求，EPA有个<a href="https://www.epa.gov/sdwa/drinking-water-regulations-and-contaminants">二级饮用水非强制标准CFR143</a>，推荐 TDS 小于 500 mg/L。这个推荐标准是不是定得太高了？作为对比，国标《生活饮用水卫生标准GB5749-2006》是 1000。拉垮！</p>
+<p>最后说下，水质的评价有很多指标，我这里是不是唯 TDS 论了？是，也不是。如果都是过滤后的水，那么 TDS 这个指标是非常有代表性的。水里的杂质体积从大到小是 悬乎颗粒物 &gt; 微生物 &gt; 细菌病毒 &gt; 离子。TDS测导电率，是离子的数量。如果体积最小的离子在过滤后都下降了，那么别的杂质其实也没剩多少了。所以这个指标对于「过滤水」来说是很有意义的。</p>
+<p>pps 看到个<a href="https://zhuanlan.zhihu.com/p/60231350">轶事</a>：</p>
+<blockquote>
+<p>在上世纪初，人们还不知道水污染与流行病的关系，也没有可靠的自来水厂，加州曾经爆发过大规模的流行病，当时人们发现很多华人聚集区发病率显著低于其他人口，最初以为是华人有某些特殊的抗病能力（就如同印第安人缺少抗感冒病毒的能力，本文作者引申），后来才发现是因为劳工中普遍保持着烧开水喝的习惯，避免了流行病在华人间的传播。然后才开始了大规模建设净水厂，通过去除悬浮颗粒及胶体，再进行消毒，有效灭活细菌，从而控制了水介质病原菌的传播，带来了水处理行业的发展（本段内容依据自加州大学伯克利分校Nelson教授的课堂讲述，本文作者根据其大意进行概括）。</p>
+</blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-09-24T21:34:44+00:00">2021-09-24</time></p>
 <p>stdout</p>            </div>
@@ -568,7 +1163,12 @@ For example:<br />
 +---------+------+------------------------------+
 | Warning | 1292 | Incorrect datetime value: '' |
 +---------+------+------------------------------+
-1 …</code></pre></p>
+1 row in set
+</code></pre>
+<p>记录一下 <a href="https://github.com/pingcap/tidb/issues/21354">相关 issue</a></p>
+<p>btw 顺便吐槽一下，</p>
+<p><code>json_extract('{"a": null}', '$.a')</code> 返回的值是 <code>CAST('null' AS JSON)</code></p>
+<p>注意区分  <code>json_extract('{"a": null}', '$.b') IS NULL</code> </p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-09-07T17:52:51+00:00">2021-09-07</time></p>
 <p>stdout</p>            </div>
@@ -584,7 +1184,35 @@ For example:<br />
             </a>
             <p class="card-text"><p>I always thought restart <a href="https://gunicorn.org/">gnicorn</a> is as easy as <code>kill -HUP &lt;pid&gt;</code>, but there are two pitfalls:</p>
 <p>First of all the code might be loaded in master process then fork'ed into workers, so the <code>HUP</code> signal won't reload the source code, only gunicorn config is updated.</p>
-<p>Then there might be …</p></p>
+<p>Then there might be some bugs and your new code won't boot correctly, the worker will quit and drags down the master process along with it.</p>
+<p>I discovered a new trick from github issues that can spawn new worker first, check if new code loads correctly then restart the whole rack.</p>
+<p>According to <a href="https://docs.gunicorn.org/en/latest/signals.html#upgrading-to-a-new-binary-on-the-fly">the docs</a> you need to send several signals and blah blah, the author tried to explain in great detail of how it works rather than providing a simple option to do so.</p>
+<p>So I wrote a shell script to do that instead.</p>
+<pre><code>#!/bin/bash
+
+oldpid=$(&lt;./deploy/gunicorn.pid)
+# forget the old kill -HUP 
+kill -USR2 $oldpid
+sleep 1
+timeout=5
+while [[ $timeout -gt 0 ]]; do
+  newpid=$(&lt;./deploy/gunicorn.pid.2) &amp;&amp; kill -0 $newpid
+  if [[ $? -eq 0 ]]; then
+    break
+  else
+    sleep 0.5
+    (( timeout-- ))
+  fi
+done;
+
+# shutdown old
+echo "success. newpid=$newpid"
+kill -WINCH $oldpid
+sleep 1
+kill -TERM $oldpid
+</code></pre>
+<p>The script will check for new master pid to be alive then kill the old master in a maximium timeout of 5 seconds.</p>
+<p>It works perfectly to replace the simple <code>HUP</code> signal as intended.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-08-21T00:53:20+00:00">2021-08-21</time></p>
 <p>stdout</p>            </div>
@@ -600,7 +1228,26 @@ For example:<br />
             </a>
             <p class="card-text"><p>多年的疑惑今天居然被偶然解开了。</p>
 <p>由于墙内糟糕的网络环境，而且ISP甚至wifi内还有墙中墙，所以很多域名是打不开的。</p>
-<p>每次看浏览器在傻乎乎 …</p></p>
+<p>每次看浏览器在傻乎乎的转菊花，就觉得浪费时间。</p>
+<pre><code>sudo sysctl  net.inet.tcp.keepinit=3000
+</code></pre>
+<p>这一条指令可以直接设置 macOS 的 TCP Keepalive 心跳包初始化时间设置为3000毫秒。</p>
+<p><code>net.inet.tcp.keepinit</code>默认值是 75000 ，单位是毫秒。注意 Linux 下没这设置，而且单位是 秒</p>
+<p>这句话学究式的解释可以通过 <code>man 4 tcp</code> 得到，摘录几条：</p>
+<blockquote>
+<p>TCP_CONNECTIONTIMEOUT  The TCP_CONNECTIONTIMEOUT option allows to specify the timeout, in seconds, for new, non established TCP connections. This option can be useful for both active and passive TCP connections. The default value is specified by the MIB variable net.inet.tcp.keepinit.<br />
+tcp.keepinit Timeout, in milliseconds, for new, non-established TCP connections.</p>
+</blockquote>
+<p>换句话说，就是 TCP 第一个 syn 包最多给3秒等待。超过3秒就拉倒，直接报 <code>ERR_CONNECTION_TIMED_OUT</code> 完事。</p>
+<p>我觉得，如果一个域名和TCP端口3秒钟内无法完成握手，就别执着了。你再干等75秒也不可能连上。这个值只会影响初始连接的超时，一旦连上了怎么idle都不影响，所以不会影响游戏的tcp或者websocket的长连接。也不影响udp。</p>
+<p>2021-07-06 补充：</p>
+<p>重启保持有效：</p>
+<pre><code>echo net.inet.tcp.keepinit=3000 | sudo tee -a /etc/sysctl.conf
+</code></pre>
+<p>2021-09-21 补充：</p>
+<p>新版macOS 把 /etc/sysctl.conf 这文件给换位置了。应该是</p>
+<pre><code>"/Users/Shared/Relocated Items/Configuration/private/etc/sysctl.conf"
+</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-07-02T15:51:19+00:00">2021-07-02</time></p>
 <p>stdout</p>            </div>
@@ -621,7 +1268,25 @@ For example:<br />
     from sqlalchemy.sql.expression import func
 
     # this val1-val2 pair should have UNIQUE KEY constraint in MySQL table.
-    stmt = insert(MyModel.__table__ …</code></pre></p>
+    stmt = insert(MyModel.__table__).values(col1=val1, col2=val2)
+    if kwargs:
+        stmt = stmt.on_duplicate_key_update(kwargs)
+    else:
+        # get lastrowid https://stackoverflow.com/a/29722203/41948
+        stmt = stmt.on_duplicate_key_update(id=func.LAST_INSERT_ID(MyModel.id))
+    # inserted_primary_key (dbapi, return 0 when only insert) or lastrowid (mysql)
+    pk = db.session().execute(stmt).lastrowid
+    if not pk:
+        pk = MyModel.query.options(load_only('id')).filter_by(
+            col1=val1, col2=val2
+        ).first().id
+    return pk
+</code></pre>
+<p>Writing complex SQL is hard, sqlalchemy makes it harder. Prefer other ORMs in Python.</p>
+<p>I really hate fighting the infamous sqlalchemy API. Everything wrong about it can be shown in this one-liner:</p>
+<pre><code>from sqlalchemy.orm import Load, load_only, joinedload
+</code></pre>
+<p>You have the three styles of CamelCase, under_score, and concatfunctionnames fucked up together. Bad and leaky abstraction.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-06-29T11:55:13+00:00">2021-06-29</time></p>
 <p>stdout</p>            </div>
@@ -638,7 +1303,13 @@ For example:<br />
             <p class="card-text"><p>断断续续把<a href="https://steamcommunity.com/id/electronixtar/recommended/203160">买</a>的<a href="https://store.steampowered.com/app/203160/Tomb_Raider/">古墓丽影9</a>打完了。这款2013年的游戏放在今天看也很不错。</p>
 <p>唯一的巨大问题就是3D头晕。网上找了一些办法。</p>
 <h3>禁止镜头晃动</h3>
-<p>虽然故事和镜头都 …</p></p>
+<p>虽然故事和镜头都很好，但是这晃动太烦人了，很容易头晕。值得庆幸的是 PC 平台可以彻底根治这问题。下载 <a href="https://community.pcgamingwiki.com/files/file/1166-tomb-raider-2013-yamatai-patch/">Yamatai Patch</a>。按图修改</p>
+<p><img alt="" src="/images/2021/stdout-007-1.png" /></p>
+<h3>增大 FOV</h3>
+<p>这是多年的经验。头晕的主要问题就是视野太窄。</p>
+<p>去下载 <a href="https://cheatengine.org/">Cheat Engine</a> 安装并打开，然后下载<a href="https://community.pcgamingwiki.com/files/file/1148-tomb-raider-2013-fov-cheat-table/">内存修改表</a>，按图修改。</p>
+<p><img alt="" src="/images/2021/stdout-007-2.jpg" /></p>
+<p>以上修改都需要有管理员权限并且保证游戏正在进行中。顺便说下 Yamatai patch 还可以治好 Lara Croft 胸部发育不良的毛病。好顶赞！</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-06-26T14:32:36+00:00">2021-06-26</time></p>
 <p>stdout</p>            </div>
@@ -656,7 +1327,57 @@ For example:<br />
 <ul>
 <li>VOSONIC 勤宇V10，也叫群华 路不平，用的 联咏 Novatek NT96550BG 的芯片，1080p</li>
 <li>BLACKVIEW 凌度A12，采用 安霸(Ambarella) A12 方案，2k</li>
-<li>PAPAGO 趴趴狗，GoSafe 560WiFi …</li></ul></p>
+<li>PAPAGO 趴趴狗，GoSafe 560WiFi，采用 NT96670 芯片+IMX415的 sony CMOS，4k</li>
+</ul>
+<p>特点是每5分钟切割成一个单独的文件，为了防止每两个视频之间漏秒，所以会额外重复写入1秒的内容</p>
+<p>现在想把一段时间的视频合并成一个存档，并且要<a href="https://www.v2ex.com/t/248037">跳过那些额外的1秒</a>，上 ffmpeg。</p>
+<p>首先前摇，生成需要合并的视频文件路径列表</p>
+<p><code>ls -fd1 /Volumes/SD_CARD/DCIM/xxxxx/*</code> </p>
+<p>的结果写成如下格式：</p>
+<pre><code>file 'input1.mov'
+inpoint 10
+outpoint 300
+file 'input2.mov'
+# comment
+outpoint 300 
+file 'input3.mov'
+outpoint 300
+... 
+file 'inputN.mov'
+outpoint 300
+</code></pre>
+<p><code>inpoint 10</code> 就是从10秒开始算，<code>outpoint 300</code> 就是到300秒结束。保存上面的为 1.txt</p>
+<p>然后念 ffmpeg 咒语</p>
+<p><code>ffmpeg -hwaccel cuda -hwaccel_output_format cuda -safe 0 -r 48  -f concat -i 1.txt -an -vf "select=concatdec_select,scale_cuda=w=1280:h=720:interp_algo=lanczos,setpts=0.125*PTS" -c:v h264_nvenc -preset:v p7 -profile:v high -tune:v hq -cq:v 19 -qmax 22 -b:v 0 -maxrate 8M -rc vbr out.mp4</code></p>
+<p>逐个解释下：</p>
+<ul>
+<li><code>-hwaccel cuda</code> 用nVIDIA的 H.264 解码器硬件加速解码行车记录仪的原始 .MOV 文件。如果没显卡有 Intel 处理器可以 把 cuda 换成 qsv 也有加速效果。也可以换成 cuvid 但是速度更慢</li>
+<li><code>-hwaccel_output_format cuda</code> 生成  out.mp4 的时候也采用 nVIDIA 显卡H.264编码器加速。这里如果和上面都是 <code>cuda</code> 那么直接显存对拷，避免了内存和 PCI 拷贝速率瓶颈。</li>
+<li><code>-safe 0</code> 允许读写外部文件</li>
+<li><code>-r 48</code>  和后面的 <code>setpts=0.125*PTS</code>  一起，把帧率提高到 48fps ，把回放速度提高 8倍。方便存档。不需要的可以去掉</li>
+<li><code>-f concat</code>  和 <code>select=concatdec_select</code> 就是通过前摇的 <code>1.txt</code> 指定合并哪些文件（并且去掉时间起止点之外的）</li>
+<li><code>-an</code> 丢掉音轨。如果保留的话应该是 <code>-v:a copy</code></li>
+<li><code>-vf</code> 后面指定一系列巨复杂的ffmpeg滤镜操作。</li>
+<li><code>scale_cuda=w=1280:h=720:interp_algo=lanczos</code>，用显卡 CUDA 操作缩放操作。lanczos是一种 downsampling 算法让画面更加平滑。如果你自己编译的还可以把 scale_cuda 换成 scale_npp 进一步提速。</li>
+<li>如果没有独显换成软缩放 <code>-vf "select=concatdec_select,scale=1280x720,setsar=1,setpts=0.125*PTS" -sws_flags lanczos</code></li>
+<li><code>-c:v h264_nvenc</code> 视频压缩引擎：nVIDIA 的 H.264 编码器。如果没有独显可以改成 libx264</li>
+<li><code>-preset:v p7</code> 这里代替之前的 slow fast 等选项。参考 <a href="https://docs.nvidia.com/video-technologies/video-codec-sdk/nvenc-preset-migration-guide/">HEVC Preset Migration</a></li>
+<li><code>-profile:v high</code> 如果你要兼容初代 iPad 等古董设备就只能用 <code>main</code></li>
+<li><code>-tune:v hq</code> 面向画质优化（而不是码率或者延时）</li>
+<li><code>-cq:v 19</code> 画质非常接近无损的。但是体积也变大。一般22中等配置不能再大了。H.265 可以设置成 26。如果是 <code>libx264</code> 改成 <code>-crf 19</code> 指定</li>
+<li><code>-qmax 22</code> 上面的值最大为 22</li>
+<li><code>-b:v 0</code> 取消码率指定</li>
+<li><code>-maxrate 8M</code> 最高码率 8Mbps</li>
+<li><code>-rc vbr</code> 可变码率。注意 vbr_hq 之类的已经不在支持了。</li>
+</ul>
+<p>还有一些坑点：</p>
+<ul>
+<li>2k@60fps的分辨率需要指定 <code>-level 51</code>。因为默认的 <a href="https://en.wikipedia.org/wiki/Advanced_Video_Coding#Levels">H.264 级别</a>太低frame size支持不了。。。</li>
+<li>如果不缩放原始尺寸压制，很有可能会出错 No decoder surfaces left. Error while decoding stream #0:0: Invalid data found when processing input。这是 <a href="https://trac.ffmpeg.org/ticket/7562">ffmpeg 4.1 以后的 bug</a> 解决方案是 <code>-extra_hw_frames 2</code> 或者更大。但是 CUDA 最多支持32所以估计会报错，就只能 CPU 负责解码 GPU 负责编码。</li>
+<li>压制的时候发现 TF 卡或者是读卡器20M/s是瓶颈。拷到本地发现 GPU decoder 是100%，encoder只有30%左右。</li>
+<li>2k分辨率20Mbps码率30fps的原始视频占用体积太大，1080p 16Mbps码率效果比 720p 8Mbps好不了多少。最后选择的是8M码率。在超快移动的时候有色块，其他堵车的时候画质很高。识别车牌几乎不受影响</li>
+</ul>
+<p>总的来说，ffmpeg 真是操作糟糕而功能强大的工具的典型。以上参数为东拼西凑撞大运偶得，如有不对敬请指正。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-06-05T20:42:15+00:00">2021-06-05</time></p>
 <p>stdout</p>            </div>
@@ -670,7 +1391,50 @@ For example:<br />
             <a href="/202104/stdout-005"  rel="bookmark" >
               <h2 class="card-title">Win10 自动设置开机锁屏壁纸</h2>
             </a>
-            <p class="card-text"><p>Win10启动后，锁屏界面有一些每天更新的漂亮的墙纸，但是每个用户进去却只能看到默认的墙纸，不能自动切换。很是遗憾，于是搞了 …</p></p>
+            <p class="card-text"><p>Win10启动后，锁屏界面有一些每天更新的漂亮的墙纸，但是每个用户进去却只能看到默认的墙纸，不能自动切换。很是遗憾，于是搞了一段小脚本弥补。</p>
+<p>找个地方比如桌面，右键新建一个 <code>est_win10_auto_wallpaper.bat</code></p>
+<pre><code>@if (@X)==(@Y) @end /* JScript comment
+@echo off
+
+cscript //E:JScript %~n0.bat
+
+exit /b %errorlevel%
+*/
+
+var oShell = new ActiveXObject("WScript.Shell") ;
+var oFSO = new ActiveXObject("Scripting.FileSystemObject");
+
+var sWinDir = oFSO.GetSpecialFolder(0);
+var sPath = oShell.ExpandEnvironmentStrings('%LOCALAPPDATA%\\Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets\\')
+
+var oFolderEnum = new Enumerator(oFSO.GetFolder(sPath).Files);
+var aFiles = []
+for (;!oFolderEnum.atEnd();oFolderEnum.moveNext()) {
+    // var item = oFolderEnum.item()
+    aFiles.push(oFolderEnum.item())
+}
+var aFiles2 = aFiles.sort(function(x,y){return new Date(y.DateLastAccessed).getTime() - new Date(x.DateLastAccessed).getTime()}).slice(3)
+var sWallpaper;
+// for (var i=0;i&lt;aFiles2.length;i++){
+for (var i in aFiles2){
+    // WScript.Echo('check ' + aFiles2[i].name + ' size: ' + aFiles2[i].size);
+    if(aFiles2[i].size &gt; 500000){  // guess &gt; 500KB is good wallpaper
+        sWallpaper = aFiles2[i].path
+        break;
+    }    
+}
+if(sWallpaper){
+    // or fso.GetStandardStream(1) for stdout, 2 for stderr
+    // WScript.Echo('set to ' + sWallpaper);
+    oShell.RegWrite("HKCU\\Control Panel\\Desktop\\Wallpaper", sWallpaper);
+    oShell.Run("%windir%\\System32\\RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters 1, True");
+}
+</code></pre>
+<p>Win+R输入 <code>shell:startup</code> 回车，把刚才的 <code>est_win10_auto_wallpaper.bat</code> 在这里创建一个快捷方式</p>
+<p>解释下为啥要在 <code>shell:startup</code> 里创建快捷方式而不是直接放 .bat 。因为快捷方式可以设置当前运行目录，这样代码里的 <code>%~n0</code> 才能生效。懒得查询完整路径如何写了。。</p>
+<p>然后这段代码其实用了一个比较高级的 <a href="https://stackoverflow.com/a/28250760/41948">.js .bat 混合格式</a>。因为 Windows Smart Screen 会拦截 WScript 的直接执行，认为特别危险。但是如果你在 cmd 里执行系统就觉得很安全。。。。嗯。。</p>
+<p>吐槽1： 开始 → 启动 菜单都不见了。。。</p>
+<p>吐槽2：好久没写 WScript 了感觉都忘完了。vbs 是肯定不会的了。<a href="https://docs.microsoft.com/en-us/previous-versions//hbxc2t98(v=vs.85)?redirectedfrom=MSDN">JScript 居然是 ESMAScript3</a>。好多现代写法都不支持。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-04-11T22:35:12+00:00">2021-04-11</time></p>
 <p>stdout</p>            </div>
@@ -687,7 +1451,10 @@ For example:<br />
             <p class="card-text"><p>记录一下，Mac OS X 10.6.8 或更高版本：</p>
 <pre><code>mdls -name kMDItemDurationSeconds -name kMDItemFSName  1.mp4
 </code></pre>
-<p>这命令有一个很神经病的一点，同一个 .mp4 文件，获取只读的 TF 卡上的 …</p></p>
+<p>这命令有一个很神经病的一点，同一个 .mp4 文件，获取只读的 TF 卡上的就没法获得视频长度，复制到可以读写的本地硬盘上就可以读出来。</p>
+<p>或者在 Finder 里新建一个叫  <code>Movies</code> 的文件夹，把视频文件放进去，然后列表展示，表头右键，就可以选择显示长度。。</p>
+<p>同理，建立一个叫  <code>Pictures</code> 的文件夹，可以列表展示图片尺寸。。</p>
+<p>来自 <a href="https://superuser.com/questions/1024894/">superuser</a> 。真是神一般的设定。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-04-04T12:01:30+00:00">2021-04-04</time></p>
 <p>stdout</p>            </div>
@@ -705,7 +1472,39 @@ For example:<br />
 <p>一般格式如下：</p>
 <pre><code>@app.get('/other/{other_path:path}')
 @app.post('/other/{other_path:path}')
-async def other_api(other_path: str, req: Request …</code></pre></p>
+async def other_api(other_path: str, req: Request):
+    """透传 API"""
+    host = 'http://example.intranet'
+    url = '{}/other/{}'.format(host, other_path)
+    body = bytes(await req.body()) or None
+    r = requests.request(
+        req.method, url,
+        headers={
+            'Cookie': req.headers.get('cookie') or '',
+            'Content-Type': req.headers.get('Content-Type')},
+        params=req.query_params, data=body, stream=True,
+        allow_redirects=False)
+
+    h = dict(r.headers)
+    h.pop('Content-Length', None)
+    return StreamingResponse(r.raw, headers=h, status_code=r.status_code)
+</code></pre>
+<p>解释一下为啥要这么写：</p>
+<ol>
+<li>采用 <code>stream=True</code> + <code>StreamingResponse</code>，防止上游给你返回一个GB体量的文件把 FastAPI 进程内存撑爆</li>
+<li>只摘取浏览器的 <code>Cookie</code> + <code>Content-Type</code> 两个头。别的不给上游。</li>
+<li>要去掉返回的 Content-Length 头。因为 StreamingResponse 会自己定义返回长度。</li>
+</ol>
+<p>这样写基本能跑起来了，但是有2个问题：</p>
+<ol>
+<li>如果上游返回一个 302/303/307 的跳转，那么很有可能把内网的跳转网址直接返回给浏览器了。因为 <a href="https://tools.ietf.org/html/rfc2616#section-14.30">HTTP/1.1 的标准 RFC2616</a> 强制规定，<code>Location</code> 的值必须是一个绝对网址。所以这个时候就冒犯一下这个规定，强行截断：<pre><code>loc = h.pop('Location', '')
+if loc.startswith(host):
+    h['Location'] = loc[len(host):]
+</code></pre>
+</li>
+</ol>
+<p>注意这里不要用 <code>.lstrip()</code> 。这方法和你想象的完全不是一回事。它是基于单个字符的挨个替换而不是整个字符串。<br />
+2. 实测这种在业务代码实现的「软」反向代理性能堪忧。上游4s左右的整个页面加载时间，反向代理之后就变成了 120s 左右。盲猜是 <code>StreamingResponse</code> 是一个字节一个字节去遍历迭代器？实测并不是。主要的锅还是 <code>Requests</code> 的 <code>.raw</code> 是按照 <code>chunked</code> 一段一段返回的。最好还是准备个 4KB 的 buffer，提高性能。解决方案是把  <code>r.raw</code> 改成 <code>r.raw.stream(4096000)</code> 性能一下就高了。注意这里不要用官方文档提供的 <code>.iter_contents()</code> 或者 <code>.iter_lines()</code> 这两者又会自作聪明的去解析文本编码或者换行符，降低了性能。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-03-30T15:07:01+00:00">2021-03-30</time></p>
 <p>stdout</p>            </div>
@@ -721,7 +1520,30 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
             </a>
             <p class="card-text"><p>首先得有公网 IP （废话），然后你得 OpenWRT 路由器桥接直拨。</p>
 <p>这个方法的核心是通过 <code>ifstatus wan |  jsonfilter -e '@["ipv4-address"][0].address'</code> 命令得到本机 WAN 的公网 IP。</p>
-<p>根 …</p></p>
+<p>根据官方的<a href="https://support.cloudflare.com/hc/en-us/articles/360020524512-Manage-dynamic-IPs-in-Cloudflare-DNS-programmatically">说明</a>走</p>
+<ol>
+<li>创建 <a href="https://dash.cloudflare.com/profile/api-tokens">API Token</a> 。权限选 <code>All Zones</code>，得到 <code>TOKEN</code></li>
+<li>验证 API 是否 ok<br />
+        curl - X GET "https://api.cloudflare.com/client/v4/user/tokens/verify" \<br />
+          -H "Authorization: Bearer TOKEN" \<br />
+          -H "Content-Type:application/json"</li>
+<li>获取 <code>:zone_identifier</code>。找那个长得像 ID 的<br />
+        curl - X GET "https://api.cloudflare.com/client/v4/zones"\ <br />
+          -H "Authorization: Bearer TOKEN" \<br />
+          -H "Content-Type:application/json"</li>
+<li>因为脑残的 RESTful 风格 API 无法实现 upsert，先创建个DNS。得到 <code>:identifier</code><br />
+        curl -svk -X POST "https://api.cloudflare.com/client/v4/zones/:zone_identifier/dns_records"\<br />
+          -H "Authorization: Bearer TOKEN" \<br />
+          -H "Content-Type: application/json" \<br />
+          -d '{"type":"A","name":"my_ddns.est.im","content":"'$(ifstatus wan |  jsonfilter -e '@["ipv4-address"][0].address')'","ttl":600,"proxied":false}'</li>
+<li>日常更新 DNS<br />
+        curl -svk -X PUT "https://api.cloudflare.com/client/v4/zones/:zone_identifier/dns_records/:identifier" \<br />
+          -H "Authorization: Bearer TOKEN" \<br />
+          -H "Content-Type: application/json" \<br />
+          -d '{"type":"A","name":"my_ddns.est.im","content":"'$(ifstatus wan |  jsonfilter -e '@["ipv4-address"][0].address')'","ttl":600,"proxied":false}'</li>
+</ol>
+<p>感觉挺麻烦。而且没法 API 网关自动把调用者的 IP 设为 A 记录。但是聊胜于无吧。高版本的 OpenWRT <a href="https://openwrt.org/docs/guide-user/base-system/ddns">/usr/lib/ddns/services<br />
+</a> 直接支持 Cloudflare 了不用这么麻烦了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-01-05T23:36:09+00:00">2021-01-05</time></p>
 <p>stdout</p>            </div>
@@ -738,7 +1560,9 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
             <p class="card-text"><p>新年第一贴！</p>
 <p>Run the command before connect to PPPoE or as cronjob</p>
 <p>添加一个重启的定时任务，在重启之间执行一个命令：</p>
-<pre><code>uci set network.wan.mac_addr=$(hexdump -n3 -e'1/3 "8c:8d:8e" 3 …</code></pre></p>
+<pre><code>uci set network.wan.mac_addr=$(hexdump -n3 -e'1/3 "8c:8d:8e" 3/1 ":%02X" "\n"' /dev/random) &amp;&amp; uci commit network
+</code></pre>
+<p>为什么要在拨号前随机生成WAN口的 MAC 地址呢？嘿嘿。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-01-01T00:27:52+00:00">2021-01-01</time></p>
 <p>stdout</p>            </div>
@@ -757,7 +1581,25 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
 <ul>
 <li>pynsq: the official build, but requires <code>tornado</code></li>
 <li>gnsq: the gevent only consumer/publisher, might have race condition in state machine. Don't use.</li>
-<li>nsq-py: <code>select()</code> based, but compatible with gevent …</li></ul></p>
+<li>nsq-py: <code>select()</code> based, but compatible with gevent/tornado/threading+select.</li>
+</ul>
+<p>So far <code>nsq-py</code> looks reall promising because it's compatible with more options with concurrency, but when I used it with massive TCP connections to nsqd, <a href="https://github.com/gevent/gevent/issues/1348">gevent</a> threw "ValueError: filedescriptor out of range in select()" error.</p>
+<p>Upon further investigation, it was a select(2) limitation. The kernel will limit max tcp fileno 1024. </p>
+<p>See CPython <a href="https://github.com/python/cpython/blob/3317466061509c83dce257caab3661d52571cab1/Modules/selectmodule.c#L142">source of selectmodule.c</a>:</p>
+<pre><code>    if (!_PyIsSelectable_fd(v)) {
+        PyErr_SetString(PyExc_ValueError,
+                    "filedescriptor out of range in select()");
+        goto finally;
+    }
+</code></pre>
+<p>And <a href="https://github.com/python/cpython/blob/637a09b0d6e3ad4e34e0b5e0fc82f5afeae6f74b/Include/fileobject.h#L37"><code>_PyIsSelectable_fd</code> is defined</a> as </p>
+<pre><code>#define _PyIsSelectable_fd(FD) ((unsigned int)(FD) &lt; (unsigned int)FD_SETSIZE)
+</code></pre>
+<p>And the const <code>FD_SETSIZE</code> is described at <a href="https://man7.org/linux/man-pages/man2/select.2.html">man page</a>:</p>
+<blockquote>
+<p>The Linux kernel imposes no fixed limit, but the glibc implementation makes fd_set a fixed- size type, with FD_SETSIZE defined as 1024, and the FD_*() macros operating according to that limit.  To monitor file descriptors greater than 1023, use poll(2) or epoll(7) instead.</p>
+</blockquote>
+<p>Lessons I learned today: don't use libraries based on <code>select.select()</code> if you have too many connections. Even with Gevent's monkey patch, <code>select()</code> wont block on each eventlet, but still it will not allow fileno greater or equal to 1024. Sad.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-10-30T15:35:45+00:00">2020-10-30</time></p>
 <p>stdout</p>            </div>
@@ -771,7 +1613,15 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
             <a href="/202010/stdout-010"  rel="bookmark" >
               <h2 class="card-title">人和动物有什么区别</h2>
             </a>
-            <p class="card-text"><p>上下班通勤极度无聊，就趁着罗胖的10元优惠券买了 学而时嘻之 博主开设的 199元的 精英日课。之前一直讨厌这个名字，但是很喜欢 <a href="http://www.geekonomics10000.com">学而时嘻 …</a></p></p>
+            <p class="card-text"><p>上下班通勤极度无聊，就趁着罗胖的10元优惠券买了 学而时嘻之 博主开设的 199元的 精英日课。之前一直讨厌这个名字，但是很喜欢 <a href="http://www.geekonomics10000.com">学而时嘻之  geekonomics10000</a> 这个博客，就买了当付费 podcast 了。听第二课就讲了《未来简史2：我有意识，它有吗》，就提到了本篇的问题：</p>
+<p>人和动物的区别是什么？</p>
+<p>马克思认为是使用工具。很多人不认同，觉得这纯粹是为了引出劳动论，其二的确很多动物也会用工具。</p>
+<p>《Homo Deus 未来简史》的作者 尤瓦尔·赫拉利 说，人和动物的区别区别是意识。但<a href="https://en.wikipedia.org/wiki/Animal_consciousness">动物也是有意识</a>的，甚至自我意识。比如鹦鹉会照镜子，认出自己，并且梳妆脸上的异物。和人相处的宠物很明显有情绪表达。</p>
+<p>我认为，人类是地球上第一个进化出来能<strong>远程攻击</strong>的动物，而且是大规模群体协作那种，脱离了近身肉搏的低级趣味。如果你玩 RTS 就知道，远程兵种出现的意义是多么牛逼。</p>
+<p>远程攻击带来上肢的解放，还有一个巨大的副作用，那就是极大的锻炼了大脑预判能力。这里就牵扯到点燃智力的一个关键，那就是 <strong>因果关系</strong> [1]。因为抛射物有弹道飞行时间，水有折射，这个时候就需要智人对周围很系统的分辨能力和归因能力。比如有个<a href="https://www.youtube.com/watch?v=2lgWcGIoSVA">youtuber给一只鹦鹉设置了一个机关</a>，需要按顺序解开三个锁才能吃到食物。鹦鹉看上去是没能掌握这个因果关系。因果关系是智慧生物意识想象的最神奇产物，甚至中世纪的人们都觉得上帝必须有个「第一推动力」才能让这个世界运行。直到最后的炼金术士 牛爵爷 通过第一定律结束了这个误解并正确树立了自然哲学的基本法则。</p>
+<p>这个归因能力锻炼到极致，就形成了 <strong>人和动物最彻底的区别——能按自己的意志有意识使用 火 这种工具</strong>。有个笑话就是，即便人类发展到今天，用核电站供能也基本是烧开水。所以我觉得 人 和动物从一个微小的区别，就是远程投掷，发展出了和普通动物巨大不同的智慧生命的必备标志——掌控物质的第四种形态，等离子体。</p>
+<p>以上是我的一家之言。欢迎大家批判。去年我还写了对一些<a href="https://blog.est.im/201910/stdout-006">重要问题的回答</a>。</p>
+<p>[1]: 可以看下两篇论文，Causal Cognition, Force Dynamics and Early Hunting Technologies, Tracking the evolution of causal cognition in humans。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-10-21T23:39:55+00:00">2020-10-21</time></p>
 <p>stdout</p>            </div>
@@ -787,7 +1637,42 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
             </a>
             <p class="card-text"><p>同步发帖在 <a href="https://www.v2ex.com/t/705897">v2ex</a></p>
 <p>今天发现 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl">Intl</a> 这个 ECMAscript 内置对象，可以一句话算农历。</p>
-<pre><code>new Date().toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)\s*?年/, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子 …</code></pre></p>
+<pre><code>new Date().toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)\s*?年/, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子丑寅卯辰巳午未申酉戌亥".charAt((y-4)%12))
+</code></pre>
+<p>算农历最麻烦就是跨年。这个 API 处理得还挺好的。比如2020年1月的除夕夜+春节</p>
+<pre><code>new Date(2020, 0, 24).toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)年 /, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子丑寅卯辰巳午未申酉戌亥".charAt((y-4)%12))
+乙亥腊月30 上午12:00:00
+new Date(2020, 0, 25).toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)年 /, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子丑寅卯辰巳午未申酉戌亥".charAt((y-4)%12))
+庚子正月1 上午12:00:00
+</code></pre>
+<p>连 腊月 正月 都能显示。还是挺 6 的。浏览器支持的话 Edge, Chrome 都可以，Firefox 和 Safari 的 ICU 版本太老需要微调一下。</p>
+<p>23:39更新：网友 sarvatathagata 发现了个如下更简单的方法。不过这个方法无法地道的显示 腊月、正月。</p>
+<pre><code>new Date().toLocaleString('ja-JP-u-ca-chinese')
+</code></pre>
+<p>稍微解释下 <code>zh-Hans-CN-u-ca-chinese</code> 是什么意思。这个叫 locale 也叫 language tag。<br />
+zh-Hans 是一门语言，简体中文。<code>CN</code> 表示在大陆地区用的。 <code>-u-key1-value1-key2-value2...</code> 表示打开 <em>Unicode extension</em> 模式，<code>-ca</code> 表示 calendar 日历，<code>-chinese</code> 表示农历。</p>
+<p>如果把 <code>-chinese</code> 改成 <code>-roc</code> 还可以得到今年是民国109年。奇怪的姿势又增加了。</p>
+<p>还有一个额外的参数，如 <code>.toLocaleString(locale_id, options)</code> 里面 options 可以细化</p>
+<p>另外就是奇怪的数字变形方法：</p>
+<pre><code>new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-hanidec')
+"一,二三四,五六七,八九〇"
+new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-fullwide')
+"１,２３４,５６７,８９０"
+new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathbold')
+"𝟏,𝟐𝟑𝟒,𝟓𝟔𝟕,𝟖𝟗𝟎"
+new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathdbl')
+"𝟙,𝟚𝟛𝟜,𝟝𝟞𝟟,𝟠𝟡𝟘"
+new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathmono')
+"𝟷,𝟸𝟹𝟺,𝟻𝟼𝟽,𝟾𝟿𝟶"
+new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathsanb')
+"𝟭,𝟮𝟯𝟰,𝟱𝟲𝟳,𝟴𝟵𝟬"
+new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathsans')
+"𝟣,𝟤𝟥𝟦,𝟧𝟨𝟩,𝟪𝟫𝟢"
+</code></pre>
+<p>还有获取相对时间（XX分钟前）、科学记数法、货币、地区的别名等奇奇怪怪的东西。</p>
+<p>Intl 是 ECMAScript i18n API（<a href="https://www.ecma-international.org/ecma-402/1.0/">ECMA-402</a>）的一部分。在ES5.1+语言的运行时嵌入了一个阉割版的 ICU 库。为什么是阉割版呢？比如 ICU 库是 Unicode CLDR 规范的一种实现，比如 <a href="https://github.com/unicode-org/icu/blob/master/icu4c/source/data/locales/zh.txt">zh</a>里可以发现不仅可以直接查到年（枚举60遍！），还可以查到生肖（js 里 <code>{year: "zodiacs"}</code>就不行），甚至节气(solarTerms)都包含了！js 里的 <code>year</code> 阉割得只有两种：<code>numeric</code> 和 <code>2-digit</code>。可以看 <a href="https://github.com/v8/v8/blob/4b9b23521e6fd42373ebbcb20ebe03bf445494f9/src/objects/js-date-time-format.cc#L57">v8 源码里的BuildPatternItems</a> 怎么实现的。</p>
+<p>值得注意的是，ICU 居然收录了日本天皇从大化 (645–650) 开始到现在 令和 年号。不公平啊。我大中华应该从西周的共和元年，公元前841年开始把年号都给补上啊混蛋！</p>
+<p>还有就是货币大写 零壹贰叁肆伍陆柒捌玖拾 谁去给 ICU 提 issue 加上啊。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-09-10T22:39:01+00:00">2020-09-10</time></p>
 <p>stdout</p>            </div>
@@ -803,7 +1688,22 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
             </a>
             <p class="card-text"><p>There was a not-so-interesting article on reddit that says <a href="https://www.reddit.com/r/technology/comments/hlttg0/why_chinas_race_for_ai_dominance_depends_on_math/">China's Race For AI Dominance Depends On Math</a></p>
 <p>The arguments looks flawed in several ways.</p>
-<p>First of all, yes Chinese students <em>do</em> performs well in math, but only in one narrow specific branch of math: alrithmetics. Once they graduate into college …</p></p>
+<p>First of all, yes Chinese students <em>do</em> performs well in math, but only in one narrow specific branch of math: alrithmetics. Once they graduate into college, most Chinese suck at Advanced Math (高数), as described in this story</p>
+<blockquote>
+<p>很久很久以前，在拉格朗日（Lagrange）照耀下，有几座城：分别是常微分方城（程）和偏微分方城（程）这两座兄弟城，还有数理方城（程）、随机过城（程）。从这几座城里流出了几条溪，比较著名的有：柯溪（Cauchy）、数学分溪、泛函分溪、回归分溪、时序分溪等。其中某几条溪和支流汇聚在一起，形成了解析几河、微分几河、黎曼几河三条大河。<br />
+河岸边长了一种树，叫 高数，上面挂了很多人。</p>
+</blockquote>
+<p>Secondly, even the most advanced AI requires, astonishingly, rudimentary Math, the most Math-y part of AI are Statistics, Probability and Linear Algebra, e.g. matrics. You don't need a Math PhD to grind some ML or DL stuff.</p>
+<p>Next for AI in real life, a really big part is the domain insight plus the engineering skills, how something works in theory is one thing and how to scale a model to millions of users and create profits for business is totally different, and way more challenging for many AI scientists.</p>
+<p>Lastly, in my opinion, the secret of China's AI dominance relies on data.</p>
+<p>One of the Chinese auto-driving startups, <a href="https://m.weibo.cn/detail/4506638298630934">WeRide, published a 2019 research</a>, they compared the hundres of driving data between Sillicon Valley and Guangzhou, in which they found:</p>
+<ol>
+<li>For every mile, there was a similar number of vehicles in both places, but 4x to 5x times the pedestrians and bikes.</li>
+<li>Line cutting and lane switching is 5 times more often in Guangzhou</li>
+<li>There was 60x occurances of bikes riding in the wrong direction each mile.</li>
+</ol>
+<p><img alt="" src="/images/2020/stdout-007-1.jpg" /></p>
+<p>The massive, unregulated, aggregated, labled-by-hand and privacy invasive data is the coal to this AI revolution, mathematics is just the STEAM engine. (pun intended)</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-07-06T17:01:55+00:00">2020-07-06</time></p>
 <p>stdout</p>            </div>
@@ -824,7 +1724,57 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
 <li>症状。比如发烧，呼吸困难，血氧浓度低</li>
 <li>影像。比如胸部 CT</li>
 <li>抗体。IgG/IgM。耗时短。比如15分钟。但是正确率 75% </li>
-<li>核酸。用 PCR …</li></ul></p>
+<li>核酸。用 PCR 。耗时长，需要 BSL 高等级生物实验室。正确率 &gt;90%</li>
+</ul>
+<p>其中抗体检测主要是用来区分你得的是普通流感还是 Covid-19。并不能直接检测出 SARS-CoV-2。</p>
+<p>而且：</p>
+<ul>
+<li>检测出抗体，（小概率）不一定是 SARS-CoV-2 导致的。</li>
+<li>没检测出抗体，也可能代表你<ul>
+<li>免疫系统还没反应过来。病毒还在悄悄感染。</li>
+<li>免疫球蛋白 IgG/IgM 已经不顶用了。免疫系统被摧毁了，或者要开始细胞因子风暴了。</li>
+<li>也可能代表你的鼻腔 swab 没挖对。</li>
+<li>拭子挖对了但是未达到能显色的剂量。</li>
+<li>也可能代表病毒已经从上呼吸道转移到肺部、消化系统，甚至肛门了</li>
+</ul>
+</li>
+<li>检测出核酸：<ul>
+<li>90%肯能性 SARS-CoV-2 病毒 RNA 存在。但是 </li>
+<li>存在不代表病毒一定存活</li>
+<li>即使病毒少量存活，也不代表一定有传染性</li>
+</ul>
+</li>
+</ul>
+<p>根据这几点，就会明白为啥有的媒体说中国15分钟快速试剂盒「<a href="https://twitter.com/wangzhian8848/status/1243748120757862400">80%测不准</a>」。为啥出院标准必须是核酸检测，间隔24小时两次。</p>
+<ol start="2">
+<li>口罩</li>
+</ol>
+<ul>
+<li>口罩的熔喷层阻挡微粒不是通过孔径大小，而是通过静电吸附。</li>
+<li>n95 过滤效果也是有最差表现区间的：<br />
+<img alt="Collection Efficiency Curve" src="https://upload.wikimedia.org/wikipedia/commons/5/56/Filteration_Collection_Mechanisms.png" /></li>
+<li>n95 评级的标准是通过 300nm 大小的颗粒，的确无法直接挡住 60nm-140nm 的冠状病毒 (SARS-CoV-2)。但是病毒不是直接漂浮在空气中，而是通过小水珠、气溶胶之类的更大的颗粒依附传播的。</li>
+<li>即便 95% 的效率不能完全过滤掉病毒，但是病毒数量多少对于人体免疫系统也很关键。少量的病毒可能只会带来轻微症状。</li>
+<li>有人说口罩并不能挡住病毒，而且佩戴不正确没用。如果口罩不能档病毒那么医护人员戴这个干嘛？初次戴不正确你多学多练啊。</li>
+<li>感觉一个地区的医疗体系被病人 DDoS 跨，和一个身体免疫系统被大量病毒 DDoS 跨是同一个道理。</li>
+</ul>
+<ol start="3">
+<li>疾控</li>
+</ol>
+<ul>
+<li>肺炎分为医院传播(HAT)和社区传播(CAT)。</li>
+<li>很多报告证明这次 Covid-19 肺炎至少有有 40% 的确诊病例是医院传播的。</li>
+<li>根据这个数字，思考一下什么情况下在家隔离，什么情况下集中隔离，什么情况下去医院。</li>
+<li>隐形携带者(asymptomatic) 不一定会传染别人。可能携带的是死的，或者少量的，或者传染性很弱的病毒。</li>
+<li>既然没症状，非得计入确诊病例数目，就只是一种政治正确。别人没病，自我隔离观察下就好</li>
+</ul>
+<ol start="4">
+<li>我的一些认识</li>
+</ol>
+<ul>
+<li>我觉得病毒或者细菌是否人传人，一个重要标志就是是否感染呼吸系统。因为病毒和细菌本身不会跑路，它们一定是有载体才会传播。</li>
+</ul>
+<p>声明：上面的东西不是医学建议，数字和事实可能有出入。请自行鉴别。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-03-26T17:34:30+00:00">2020-03-26</time></p>
 <p>stdout</p>            </div>
@@ -839,7 +1789,17 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
               <h2 class="card-title">为什么会有数学家反对对无穷集合使用排中律？</h2>
             </a>
             <p class="card-text"><p>因为现在 zhihu 要绑手机才能回答，所以还是写自己 blog 上吧。</p>
-<p>对「<a href="https://www.zhihu.com/question/375363116">为什么会有数学家反对对无穷集合使用排中律</a> 」这个问题，我有 …</p></p>
+<p>对「<a href="https://www.zhihu.com/question/375363116">为什么会有数学家反对对无穷集合使用排中律</a> 」这个问题，我有一个胡思乱想的回答：</p>
+<p>房间里的小明如果不是男生，那么他一定是女生。</p>
+<p>其实也不一定。小明是个物品。</p>
+<p>我觉得人类智慧的最大秘密就是 否定。否定一定要当心使用。常见的否定是限定在「同类别」的事物中。</p>
+<p>但是由于自然语言的结构性缺陷，一些否定就成了谬论。</p>
+<p>比如，如果你批评国家政策，就是不爱国。</p>
+<p>喜爱的反面是憎恨？其实喜爱的反面是漠不关心。</p>
+<blockquote>
+<p>The opposite of love is not hate but apathy。</p>
+</blockquote>
+<p>所谓 those who are heartless, once cared too much</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-03-04T23:17:50+00:00">2020-03-04</time></p>
 <p>stdout</p>            </div>
@@ -854,7 +1814,28 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
               <h2 class="card-title">语音编程 设想</h2>
             </a>
             <p class="card-text"><p>在 <a href="https://news.ycombinator.com/item?id=22404264">HN头条</a> 上看到有人说用语音识别 写代码。</p>
-<p>现在是疫情在家上班期间，感觉还是可以试试。毕竟公共办公环境搞这个不太现实 …</p></p>
+<p>现在是疫情在家上班期间，感觉还是可以试试。毕竟公共办公环境搞这个不太现实，怕打扰别人用 TNT 了。也怕自己被打扰。23333</p>
+<p>想起了 13 年前就有大神尝试用 Vista 自带的语音识别在 notepad 写 perl。。。</p>
+<p><a href="https://www.youtube.com/watch?v=MzJ0CytAsec">https://www.youtube.com/watch?v=MzJ0CytAsec</a></p>
+<p>不过这篇帖子想说的不是这个 语音编程(voice assisted programming)，我想说的是 可编程语音 (programmable speech)</p>
+<p>现在市面上有很多「智障音响」比如 Alexa、小爱，手机上都可以直接说 ok boomer，但是我设想的 可编程音响 的使用场景是这样的：</p>
+<ol>
+<li>离线wakup word +　离线识别。数据隐私值得付费</li>
+<li>比如我开始计数，让音响听到3的倍数发音说 Fizz，听到5的倍数说 Buzz，听到同时为3和5的倍数说 <a href="https://wiki.c2.com/?FizzBuzzTest">Fizzbuzz</a></li>
+<li>比如让音响听对话，当我们谈论某些话题的时候发出提醒。这就是等同于计算机编程语言里的 <code>if</code> 关键字</li>
+<li>比如我可以录制一首古诗，让音响监听孩子背诵，把背错的漏的字词在下一轮复述中强调出来。</li>
+<li>可以在家庭聚会里充当 出谜语 的角色。dungeon master 的角色。可以人工录入一些游戏规则。</li>
+<li>实时召唤背景音乐。比如说「来段鼓点，我要闪亮登场了！」</li>
+<li>可以存储一些全局list/map变量。比如我家老二是谁？今晚谁最后一个睡觉？</li>
+<li>语音备忘簿和检索工具。安全的离线存储在我的 NAS 里</li>
+<li>教小孩外语。但是这个可以由家长录制、出题，并且可以分享</li>
+<li>如果说字节是文本编程的基本单位，语音编程的话应该是 phoneme ？现在苦于孩子学习外语没法暂停、复读。把困难的地方重音出来，放慢速度反复听。</li>
+<li>听电视节目的片头曲、片尾曲让看完之后休息眼睛。定时休息比较死板可能看一半要求休息，现在都是点播时代，按 集 掌控作息规律更有意义。</li>
+<li>语音 todolist 。比如提醒老人吃药。老人回答一句 吃啦 就不再反复提醒了。</li>
+<li>家里不准说脏话 计数器。谁说了多少次。需要辨别出说话人，外加一个可以持久化的计数器。脏话可以由家长(或admin)定义增删</li>
+</ol>
+<p>总之，现在「Smart speaker」 感觉还像机器码时代，一问一答很笨。需要一个更高层的「C语言」甚至对话「库」来更自然的搭配人们的生活。</p>
+<p>很期待市面上有这样的硬件 or 开源软件出现！</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-02-25T01:21:34+00:00">2020-02-25</time></p>
 <p>stdout</p>            </div>
@@ -869,7 +1850,31 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
               <h2 class="card-title">减速玻璃的原理</h2>
             </a>
             <p class="card-text"><p>原来<a href="https://www.zhihu.com/question/20084003/answer/490712357">发表在 zhihu</a>，可惜不绑手机不让发帖了。就自己写个 blog 备忘一下。</p>
-<p>减速玻璃这个都会传说，买车前听说过，买车后也百思不 …</p></p>
+<p>减速玻璃这个都会传说，买车前听说过，买车后也百思不得其解。今天突然想明白了。</p>
+<p>减速玻璃靠的不是玻璃，而是靠挡风玻璃倾斜角度、中控台长度、驾驶者座位、A 柱宽度决定的。</p>
+<p>简单的说，和 FOV 有关。</p>
+<p>人对速度的感知，其实不是视野中心决定的，而是视野左右边缘两侧物体移动速度决定的。</p>
+<p>25° FOV 视野：</p>
+<p><img alt="" src="/images/2020/stdout-001-1.jpg" /></p>
+<p>45°视野</p>
+<p><img alt="" src="/images/2020/stdout-001-2.jpg" /></p>
+<p>90°视野</p>
+<p><img alt="" src="/images/2020/stdout-001-3.jpg" /></p>
+<p>不同视野角度的对比：</p>
+<p><img alt="" src="/images/2020/stdout-001-4.jpg" /></p>
+<p>所以市面上为什么你们觉得捷达就没有减速玻璃？因为挡风玻璃比较垂直，驾驶者很容易看到车头，开车位置考前，在 A 柱范围内，更容易看到更开阔的路面。然后你的视觉感受就是车速很快</p>
+<p>为什么好一点的车子觉得安装了「减速玻璃」？因为中控台厚，玻璃比较倾斜，看不到车头，A 柱粗。你们的视野受限，就觉得视野两侧物体运动慢。</p>
+<p>这就是其原理。其实并不是玻璃的功劳。</p>
+<p>（当然，玻璃如果有一定弯曲，那么的确可能导致玻璃两边的物体看起来会扭曲变形。或许更加加深了错觉？）</p>
+<p>为什么高速上不觉得车速快？因为高速路宽啊！</p>
+<p>高速公路宽度的标准是如何设定的?</p>
+<p>高速公路车道都是按最宽的 3.75米来弄，然后还有应急车道。绿化和车道都至少有50公分的路肩宽度。你从视野上看起来，两侧的物体更远，移动得更慢。所以不觉得车速快。</p>
+<p>而到了城市道路，路就窄了。护栏离你驾驶侧可能非常近。呼呼呼的从你眼边刷过去，你会觉得车速非常快。</p>
+<p>这就是其原理吧。</p>
+<p>下面是一个日本教授拍摄的视频。很容易说明问题。</p>
+<video src="/images/2020/stdout-001-5.mp4" controls preload="metadata"></video>
+
+<p>TL:DR 你的车头宽窄决定了你的感官车速。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-02-07T23:51:59+00:00">2020-02-07</time></p>
 <p>stdout</p>            </div>
@@ -884,7 +1889,42 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
               <h2 class="card-title">一些重要问题的答案 Important Why's</h2>
             </a>
             <p class="card-text"><p>发现 blog 越来越喜欢记录一些哲学问题。。。</p>
-<p>记录一些重要问题的答案，有些是自己想出来的，有些是网上抄别人的，有些是被别 …</p></p>
+<p>记录一些重要问题的答案，有些是自己想出来的，有些是网上抄别人的，有些是被别人启发自己补充一些的。这里面有些是对的，有些可能是错的。欢迎读者反馈。</p>
+<p>Q: 什么是存在 What is Being (Dasein)?<br />
+A: 存在的最根本属性是稳定性。<br />
+    古希腊有个悖论说一艘船叫 忒修斯（ship of Theseus），船上的木头因为损坏和腐烂被一块一块随着时间逐渐替换，如果有一天所有的木头都不是出厂的原装的木头，那这艘船还是原来的那艘船吗？</p>
+<pre><code>所以这里的存在分两个层面的稳定。从船的用途来说，忒修斯号因为设计没变，用途一致，所以忒修斯号依然存在；从忒修斯原装价值来说，因为木头都被换过一轮了，所以追求「原汁原味」的价值已经不存在了。这艘船至少还在「设计用途」这个层面保持了稳定，所以这艘船还有一定的存在意义。如果这艘船的木头被拆下来烧掉了，空气中的 Co2 和 地上一堆灰没有人会认为这是一艘船。
+
+如果一个物体不停的变化，变化周期甚至小于普朗克时间长度，那么这样的东西压根无法观察，也无法影响我们的生活，所以就不存在。
+</code></pre>
+<p>Q: 什么是生命？ What is life?<br />
+A: 生命区分于其他事物不能简单等同于有机物区分与无机物，碳基甚至硅基也不一定。但是生命会普遍导致熵减少。</p>
+<p>Q: 人和动物有什么区别?<br />
+A: <a href="https://blog.est.im/202010/stdout-010">新写了个blog</a>专门说这个</p>
+<p>Q: 熵是什么<br />
+A: 熵是一个主观概念。</p>
+<p>Q: 生命的意义是什么？ What is the meaning of life?<br />
+A: 从生物学的角度来说，生命的唯一目是自我复制。繁衍是生命的本能。当然人类这种高等生物，还会追求影响他人，著书立言这种精神复制</p>
+<p>Q: 物理学里为啥那么多对称性？ Why symmetry?<br />
+A: 识别相似 是认知世界最基础的方法和手段。如果没法识别 对称 和 相似，那么模式只能被穷举。对称是对半折叠认知空间最有效的办法。</p>
+<p>Q: 计算机科学里为啥学那么多种排序算法？排序有啥好玩的？ Why learning sorting in CS?<br />
+A: 人工控制的熵减少是智慧的表现</p>
+<p>Q: 为什么算法里那么讲究迭代和递归？Why iteration and recursion?<br />
+A: 用对称的手段去认识世界。</p>
+<p>Q: 递归、对称这些有什么共同点<br />
+A: 宇宙的自我相似性。所谓 全息性 或者 分形。</p>
+<p>Q: 为什么遗忘那么痛苦？ Why forgetting is painful?<br />
+A: 因为麦克斯韦之妖需要在 遗忘 的时候做功。写入放大。23333 </p>
+<p>Q: 唯物主义有什么问题？ Why not Materialism?<br />
+A: 有一些东西，他们是非物质在的存在(<a href="https://plato.stanford.edu/entries/nothingness/">nothingness</a>)。<br />
+    比如 洞，影子，缝隙。可以把这些东西理解为 负存在。比如洞填满了就没有洞了，影子去掉遮挡就没影子了，缝隙合上就没有缝隙了。<br />
+    但是这种 「负存在」 具备几乎一切实体物质的属性，比如大小 尺寸 颜色 方向 颜色 等等，而且非常重要。原始人找不到 洞 作为栖息地可能也就没有人类了。</p>
+<p>Q: 什么是意识？What is consciousness?<br />
+A: 如果把人类这种生物看成一类肉体(class)，那么意识就是每个个体(instance)的 this 指针。学过 OOP 面向对象编程的容易理解这个。意识是否存物理在呢？当然。this 指针需要占据内存空间。意识可否迁移呢？意识或许可以被持久化(serialization)，但是做 migration 并不容易。意识也无法合并。只能相互传值(pass by value)</p>
+<p>Q: 为什么不讲哲学三大问？<br />
+A: 我又不是保安。。。。哲学三大问题是：终极存在是什么，终极解释是什么，终极价值是什么；简而言之就是 真 美 善 是什么，对应哲学的方向：本体论、认识论、价值论。</p>
+<p>后记：</p>
+<p>我从学校时代的一个唯物主义者，变得更加倾向 结构主义。 那些自然元素之间的种种神奇化学反应，没想到有机物甚至只要 C H O 就能玩出来那么多花样。材料里面有拓扑绝缘体和拓扑超导体这种因为结构不同性质就发生大变化的东西。当然我不是生化环材专业的，只是外行比较好奇(facinating!)</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2019-10-04T18:16:00+00:00">2019-10-04</time></p>
 <p>stdout</p>            </div>
@@ -904,7 +1944,25 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
 <li>Add any game to cart</li>
 <li>Modify region to US on the checkout page</li>
 <li>Type the following script into browser's DevTool<br />
-<code>jQuery …</code></li></ol></p>
+<code>jQuery.post('//store.steampowered.com/checkout/addfreelicense', {
+        action: 'add_to_cart',
+        sessionid: g_sessionID,
+        subid:94404})</code></li>
+<li>Go to <a href="https://store.steampowered.com/account/licenses/">https://store.steampowered.com/account/licenses/</a> and see if Paladins were added to your account</li>
+<li>To install the game, run <code>steam://install/444090</code> in Win+R</li>
+</ol>
+<p>However it appears to be stuck on "Completing Login" screen from time to time.</p>
+<p>To fix it, run <code>cmd</code> with Administrator provilege type these commands:</p>
+<pre><code>ipconfig /flushdns
+netsh winsock reset category
+netsh int ip reset reset.log
+</code></pre>
+<p>Then go to <code>Steam\steamapps\common\Paladins\Binaries\EasyAntiCheat</code>, run <code>EasyAntiCheat_Setup.exe</code> as Administrator and repair Paladins.</p>
+<p>And restart the PC. </p>
+<p>Now try play again. 80% of the case the issue will go away.</p>
+<p>If it still doesn't work, and you are still stuck at the "Completing Login", try hit the "Settings" button during login, then hit Esc to close the settings window, the login screen will display a message saying "Player is offline", and a "Reconnect" button magically appears. Now hit the button exactly once! I captured the in/out packets to TCP port 9000 and found that you after you click the "Reconnect" button, the Paladins client will retry negociating login process. Don't hit it too many times. </p>
+<p>Once you see "Loading Vendors" you are 99% through this, just be patient and you will load to main menus.</p>
+<p>Hope this helps.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2019-08-21T20:43:54+00:00">2019-08-21</time></p>
 <p>stdout</p>            </div>
@@ -918,7 +1976,82 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
             <a href="/201907/stdout-004"  rel="bookmark" >
               <h2 class="card-title">公司文化的三种类型</h2>
             </a>
-            <p class="card-text"><p>最近播音737两次空难闹得全球沸沸扬扬，中国民航局敢为天下先直接停飞，FAA 最后也只能跟进然后全球停飞，风暴的中心就是波音公司。看到一篇报道 …</p></p>
+            <p class="card-text"><p>最近播音737两次空难闹得全球沸沸扬扬，中国民航局敢为天下先直接停飞，FAA 最后也只能跟进然后全球停飞，风暴的中心就是波音公司。看到一篇报道，波音的一位工程师、资深工会Stan Sorscher，也是 SPEEA 的一位行业代表 (the Society for Professional Engineering Employees in Aerospace)，画了一张有意思的图：</p>
+<p><img alt="" src="/images/2019/77d64a0b1331588db82efa7812b7c028.jpg" /></p>
+<p>波音公司是由工程师创立的具有工匠气质的尖端科技公司。这里插一个题外话，波音之父其实是一个中国人 <a href="https://en.wikipedia.org/wiki/Wong_Tsu">王助(Wong Tsu)</a></p>
+<p><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Jianqiao-camco_Wangzhu.jpg/440px-Jianqiao-camco_Wangzhu.jpg" /></p>
+<p>波音在90年代初，收到日本制造的冲击，拥抱了「质量」为重的团队文化模式，强调基层参与，流程改进和效率提升。但是90年代末期，波音公司文化再次改变，拥抱砍成本和给股东创造利润。这里看到787真是吓得一身汗啊。要知道你坐的梦想飞机每一个零部件都是由最低价中标商供应的。</p>
+<p>为了方便你们抄袭这篇博客文章，我翻译成中文了。转载请按照传统做成jpeg截图，尽量造成读者复制不便。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>工程师为导向</th>
+<th>团队为导向</th>
+<th>砍成本为导向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>商业目标</td>
+<td>创新，性能</td>
+<td>产出，上手成本</td>
+<td>负责人向投资者负责</td>
+</tr>
+<tr>
+<td>主要优势</td>
+<td>顶层设计，大牛带队</td>
+<td>自下而上的质量体系，基层参与</td>
+<td>供应链</td>
+</tr>
+<tr>
+<td>演进手段</td>
+<td>大牛指挥项目</td>
+<td>团队紧密协作</td>
+<td>照本宣科即可，如果未定义的情况发生就懵逼</td>
+</tr>
+<tr>
+<td>获益者</td>
+<td>顾客</td>
+<td>顾客</td>
+<td>股东</td>
+</tr>
+<tr>
+<td>舞台中心</td>
+<td>工程师</td>
+<td>劳动者</td>
+<td>管理层执行层</td>
+</tr>
+<tr>
+<td>文化产物</td>
+<td>波音747系列</td>
+<td>波音777系列</td>
+<td>波音787系列</td>
+</tr>
+<tr>
+<td>信任和协作程度</td>
+<td>特别高</td>
+<td>比较高</td>
+<td>山头林立</td>
+</tr>
+<tr>
+<td>外包程度</td>
+<td>少</td>
+<td>多</td>
+<td>多</td>
+</tr>
+</tbody>
+</table>
+<p>看到这个，让我想起国内一个很流行的反智论断：那就是以技术为导向的公司是不存在的。我在工作生活中，还遇到一些产品经理把这个傻逼论断发挥到极致，那就是 技术债是成为大公司的必进之路。所以债多不愁。邓公的摸石头论光辉照耀着这批人。</p>
+<p>但是无论如何，最重要的一点，这三者没有绝对的好坏之分，上面三中文化，有些适合制造大路货(commodity-like)商品，但对于尖端科技性能为导向来说，来说却是糟糕的选择。</p>
+<p>那么问题来了：民航飞机究竟是大路货(commodity-like)，还是性能货(performance-driven)呢？</p>
+<p>对于航空公司来说，价格、交付日期、培训成本、配件支出、保养成本才是他们关心的。民航工业最后一次革命发生在上个世纪50年代，也就是喷气式引擎的应用。专家们论断，这代表着民航行业就此成熟了，变成commodity-like的大路货了。</p>
+<p>但是我们把这个问题换个问法：设计、研发、测试、生产制造飞机是大路货么？是不是觉得这个问题就迥异了？</p>
+<p>制造飞机的成败，就是产出。第一架下线的飞机肯定是亏本的，只能靠大量铺货才能摊平成本。所以后期产能上去得越快越好，卖得越多越好。如果商业模式是面向最终结果(performance)的，那么就得强调生产效率，员工参与，流程改进，节约成本。这就是90年代中期日式成功的秘诀</p>
+<p>波音777系列就是这一文化导向下最成功的产物，号称「上手成本最低」。这个时候专家就跳出来了，一方面行业已经相当成熟了，另一方面飞机已经是「大路货」了，所以拥抱砍成本模式吧。学习沃尔玛，学习 Amazon。</p>
+<p>这一模式具体如何运作呢？有市场决定权的责任人（stakeholder，利益相关人士）会最大限度向供应链压榨出利润，而且往往是为了短期利益（分红，升职）。供应链内部的 子责任人 也是一样的模式，一环压榨一环。然后同行倾扎，竞品之间相互打价格战，做出大家都活不下去的红海。反正就一个字：坚决不要怂(never say no)。员工不能说做不到，供应商不能说拿不出，对需求方不能说办不成，对合规方坚决要想办法满足！</p>
+<p>节省成本为导向，等于是放弃了产出、创新、安全和质量。high-performance 的工作文化倡导互信、配合、解决问题、公开信息流动和对最终产出的付出。在这样的文化里，负责人必须牺牲短期利益满足长远需要。</p>
+<p>From <a href="https://www.seattletimes.com/opinion/what-will-it-be-boeing-great-airplanes-that-generate-cash-flow-or-great-cash-flow-period/">Seattle Times</a> via <a href="https://news.ycombinator.com/item?id=20365770">HN</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2019-07-06T05:42:42+00:00">2019-07-06</time></p>
 <p>stdout</p>            </div>
@@ -933,7 +2066,35 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
               <h2 class="card-title">Open Source projects Chinese companies and individuals contributed to</h2>
             </a>
             <p class="card-text"><p>Chinese companies have very little presence online and many people may believe that Chinese are reluctant to engage in open source projects.</p>
-<p>Last year, <a href="https://twitter.com/mjasay/status/960563592683667456">@filmaj</a> used the GitHub REST API to pull public profile information from all 2,060,011 GitHub users who were active in 2017 (10+ commits to …</p></p>
+<p>Last year, <a href="https://twitter.com/mjasay/status/960563592683667456">@filmaj</a> used the GitHub REST API to pull public profile information from all 2,060,011 GitHub users who were active in 2017 (10+ commits to public projects) yields this ranking of the top-30 corporate open source contributors, the result is like </p>
+<p><img alt="" src="/images/2019/DVSbEP1U0AA6E83.jpeg" /></p>
+<p>So Alibaba ranked at #9 and Tencent ranked at #12. Not bad.</p>
+<p>I also did some research, Reposted from <a href="https://news.ycombinator.com/item?id=20271898">my comment on Hacker News</a>, the following is the list of open source projects which has Chinese companies as active supportors.</p>
+<ul>
+<li><a href="https://www.fsf.org/patrons">Free software Foundation patrons</a></li>
+<li><a href="https://www.linuxfoundation.org/membership/members/">Linux Foundation</a>. If you frequent Kernel lists you can find many Chinese contributors (from Redhat, Huawei, etc.)</li>
+<li><a href="https://www.eclipse.org/membership/exploreMembership.php#allmembers">Eclipse Foundation</a></li>
+<li><a href="https://www.apache.org/foundation/thanks">Apache Foundation</a>, and many Apache projects like <a href="https://blogs.apache.org/foundation/entry/the-apache-software-foundation-announces52">Apache Dubbo</a></li>
+<li>OpenSSL <a href="https://www.openssl.org/support/acks.html">exceptional support</a>. Smartisian is a mobile phone vendor which donates their release event tickets to OpenSSL back when the HEARTBLEED security bug was a great threat.</li>
+<li><a href="https://ceph.com/foundation/">Ceph Foundation</a></li>
+<li><a href="https://www.opencontainers.org/about/members">OpenContainers Initiative</a></li>
+<li><a href="https://www.cncf.io/about/members/">CNCF members</a></li>
+<li><a href="https://www.openstack.org/foundation/companies/">OpenStack foundation</a></li>
+<li><a href="https://xenproject.org/about-us/project-members/">Xen members</a></li>
+<li><a href="https://riscv.org/membership/">RISC-V Foundation</a></li>
+<li><a href="https://openpowerfoundation.org/membership/current-members/">OpenPOWER members</a></li>
+</ul>
+<p>Notable Open Source projects started by Chinese:</p>
+<ul>
+<li><a href="https://github.com/vuejs/vue">vuejs</a>, popular javascript framework comparable to ReactJS.</li>
+<li><a href="https://github.com/openresty/openresty">OpenResty</a>, full-fledged scriptable nginx with LuaJIT2</li>
+<li><a href="http://www.linuxvirtualserver.org/">LVS: The Linux Virtual Server Project</a></li>
+<li><a href="https://github.com/pingcap/tidb">TiDB, TiKV</a>: Distributed Transactional Database with MySQL-compatible protocol.</li>
+<li><a href="https://echarts.apache.org">ECharts: A powerful, interactive charting and visualization library for browser</a></li>
+<li><a href="https://d7y.io/">Dragonfly</a>: P2P Container Image Distribution</li>
+<li><a href="https://github.com/goharbor/harbor">Harbor: Container Image Storage</a></li>
+</ul>
+<p>This list is incomplete, I hope one day there will be a Chinese company out reach even more open source communities <a href="https://community.redhat.com/software/">like Redhat</a>. If I have some projects missing please leave a comment!</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2019-06-25T21:35:40+00:00">2019-06-25</time></p>
 <p>stdout</p>            </div>
@@ -950,7 +2111,37 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
             <p class="card-text"><p>从 <a href="https://www.thoughtworks.com/cn/radar">https://www.thoughtworks.com/cn/radar</a> 看到的一个新概念，Wardley mapping</p>
 <p>其实也不新了，2014年就出来了。见：</p>
 <p><a href="https://www.youtube.com/watch?v=NnFeIt-uaEc">Simon Wardley OSCON 2014 Keynote: "Introduction to Value Chain Mapping"</a></p>
-<p>如果你觉得各种软件工程 和 商业 diagram …</p></p>
+<p>如果你觉得各种软件工程 和 商业 diagram 很无聊，其实这视频前半部分也是讲为什么他们很无聊。</p>
+<p>但是后面就有趣了。作者 Wardley 发明了一个新的东西：</p>
+<ul>
+<li>横坐标分为：Genesis, Custom built, Product, Commodity, Utillity, Evolution</li>
+<li>纵坐标讲 Value-chain。从 visible 到 invisible</li>
+</ul>
+<p>其实很多 IT 或者互联网从业者，他们都处在横坐标的前三部分：</p>
+<ul>
+<li>创业者：Genesis。有的是 copy 有的是孕育了新的蓝海</li>
+<li>进入定制化开发阶段。这个时候也被称为「外包」</li>
+<li>做产品。</li>
+</ul>
+<p>很多人一辈子职业生涯就在这三个阶段晃荡（包括我，汗）</p>
+<p>横坐标后面几个比较有意思。 commodity？这词语翻译过来叫 商品。毫无特性的一个平凡词汇。</p>
+<p>但是之前我了解到，美国 SEC 把 bitcoin 定义为一个 commodity？什么是 commodity？就是 盐、辣椒等等那种批发市场随便能买到的，有高度互换、可替代性的东西。</p>
+<p>所以产品成为潮流之后，就变得行业化、组件化、标准化了。这个时候就是做「标准」</p>
+<p>做标准之后呢？有意思，就是做 utility。这个时候就别买 commodity 了。直接租。就像你用水用电一样。想起了就用。别担心。比如云计算就是这样的。</p>
+<p>视频又讲了，很多事务，发展到 utility 就算成熟了。这个时候市场又会出现搅局者，disruptive 把行业规则 和 paradigm 完全改变，又产生了 genesis 。循环往复螺旋上升</p>
+<p>好了说说纵坐标，比如我们看一套「选课系统」，可见的是什么？登录入口，可选课时分布，然后你自己安排你的档期，提交，保存</p>
+<p>不可见的是什么？最核心的算法，运筹学啊！</p>
+<blockquote>
+<p>排课问题的本质是将课程、教师和学生在合适的时间段内分配到合适的教室中，涉及到的因素较多，是一个多目标的调度问题，在运筹学中被称为时间表问题（Timetable Problem，简称TTP）。目前由于学校扩招，学生和课程数量比以往大大增加，教室资源明显不足，在这种情况下排课人员很难在同时兼顾多重条件限制的情况下用人工方式排出令教师和学生都满意的课表。</p>
+</blockquote>
+<p>还有什么不可见的？防止并发读写（类似秒杀系统），防止爬虫刷页面，实名制登录验证等等。这些都是需要具体开发时候遇到的问题。</p>
+<p>作者 Simon Wardley 后面讲了个  Wardley mapping 图的具体案例：Ubuntu Server</p>
+<p>其实到现在为止很多人是拒绝承认 Ubuntu Server 的成功的。一个老掉牙的说法是 redhat 更加稳定，企业级 RHEL 牛逼。我之前一个肤浅的体会是 Ubuntu 版本更新好快啊。CentOS 6 还在用 python 2.6你们敢信不！</p>
+<p>Simon Wardley 早在 2008 年给 Canonical 做了 Ubuntu Server 的商业规划：</p>
+<p><img alt="" src="/images/2019/stdout-001-1.png" /></p>
+<p>仅仅两年之后：</p>
+<p><img alt="" src="/images/2019/stdout-001-2.png" /></p>
+<p>通过透彻的分析方法形成一个超前 vision 的价值不言而喻。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2019-04-24T18:28:35+00:00">2019-04-24</time></p>
 <p>stdout</p>            </div>

@@ -55,7 +55,7 @@
               <h2 class="card-title">办事难</h2>
             </a>
             <p class="card-text"><p>所有办事难的问题所在都在于：</p>
-<p>供小于求。没有竞争。比如你去各地新区说我要来投资，那 zf 部门效率高得没话说。 部门只保 …</p></p>
+<p>供小于求。没有竞争。比如你去各地新区说我要来投资，那 zf 部门效率高得没话说。 部门只保证处理唯一一种假设条件下能正确输出。有任何牵扯其他部门，自己分内之外的，不符合预设条件或顺序的，一概属于边缘问题。群众自己凉快着吧。 本部门流程走完，去其他部门遇到问题的，对不起一律和本部门无关 单个部门无过错，但是多个部门合起来对不上、有过错的，对不起，和任意一个部门都无关。 遇到以上问题怎么办，我们有纪检渠道啊，申述渠道啊，效能渠道啊。但是这个「补救措施」渠道，也会遇到上面列出的 #1~#4 一模一样的问题。比如投诉错部门了，对不起，和我们无关，请向「其他相关部门投诉」 了解到这个原理之后，你就会明白为什么会「办事难」了。也可以合理给自己避开坑。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2018-07-17T13:40:00+00:00">2018-07-17</time></p>
 <p>archive</p>            </div>
@@ -72,7 +72,14 @@
             <p class="card-text"><p>有意思</p>
 <p><img alt="" src="/images/tumblr/130847688725_0.png" /></p>
 <p>小镇上的人际关系如图，一个圆表示一个人，圆的颜色表示他们更加喜欢哪种色彩。线表示人际交往关系。</p>
-<p>现在需要 …</p></p>
+<p>现在需要投票，选出小镇 最流行的颜色。是橙色呢，还是青色？</p>
+<p>从图来看，橙色是毫无疑问的多数色。</p>
+<p>但是你从每一个圆的角度去看，大多数人都会从自己的交往圈子里得出“青色最流行”的结论。<br />
+<img alt="" src="/images/tumblr/130847688725_1.png" /></p>
+<p>这也是为什么邪教比如 scientology 都积极向名人传教，影响力大嘛。</p>
+<p>仔细想了下，这也是为什么 “物以稀为贵” 。其实物以稀不贵，但是遇到poweruser（大V）传播，就贵了。</p>
+<p>做营销也是这个道理。要卖就卖给影响力大的。</p>
+<p>from <a href="http://www.washingtonpost.com/graphics/business/wonkblog/majority-illusion/">WashingtonPost</a> via <a href="https://news.ycombinator.com/item?id=10360733">HN</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2015-10-09T21:04:45+00:00">2015-10-09</time></p>
 <p>archive</p>            </div>
@@ -101,7 +108,19 @@
               <h2 class="card-title">vmware 桥接网络导致linux Redirect Network(New nexthop)</h2>
             </a>
             <p class="card-text"><p>本来是PC，连接千兆以太网上网，vmware装了个Linux，本来好好的，后来加了个usb无线网卡当软AP用，让其他设备通过wifi共享上网， 就老出现网络时断时续，甚至完全掉线。</p>
-<p>比 …</p></p>
+<p>比如ping baidu.com就会出现</p>
+<pre><code>From 220.181.57.217: icmp_seq=5 Redirect Network(New nexthop: 220.181.57.217)
+64 bytes from 220.181.57.217: icmp_seq=5 ttl=53 time=69.6 ms
+From 220.181.57.217: icmp_seq=6 Redirect Network(New nexthop: 220.181.57.217)
+64 bytes from 220.181.57.217: icmp_seq=6 ttl=53 time=70.6 ms
+From 220.181.57.217: icmp_seq=7 Redirect Network(New nexthop: 220.181.57.217)
+64 bytes from 220.181.57.217: icmp_seq=7 ttl=53 time=55.4 ms
+From 220.181.57.217: icmp_seq=8 Redirect Network(New nexthop: 220.181.57.217)
+64 bytes from 220.181.57.217: icmp_seq=8 ttl=53 time=59.7 ms
+</code></pre>
+<p>一开始以为是路由问题，route表看了半天，后来发现windows下 无线网络 - 属性 此连接使用以下项目 里 去掉 vmware bridge protocol就好了。保留本地网络的不变。</p>
+<p>买的设备是 Realtek RTL8192CU 的芯片，用官方驱动会出现 netsh wlan start hostednetwork 失败。用 netsh wlan show drivers 发现 支持的承载网络：否。</p>
+<p>因为Realtek官方驱动不支持 vmwifibus.sys，用微软自带的 802.11n USB 2.0 驱动就行了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2015-09-21T01:49:05+00:00">2015-09-21</time></p>
 <p>archive</p>            </div>
@@ -133,7 +152,10 @@
             </a>
             <p class="card-text"><p>不知道谁发明的 xhtml 。坑爹啊。微软的Bing搜索结果页面，是特么xhtml格式的，申明了 xmlns="http://www.w3.org/1999/xhtml"，用lxml解析就不能css selector了。解决办法：</p>
 <p>pyquery.PyQuery('http://global.bing.com/search?mkt=en-US&amp;q=test').xhtml_to_html()('li')</p>
-<p>参 …</p></p>
+<p>参考：</p>
+<p>https://bitbucket.org/olauzanne/pyquery/issues/10/pyquery-fails-without-errors-when</p>
+<p>https://bitbucket.org/olauzanne/pyquery/issues/17/pyquery-fails-when-trying-to-query-a</p>
+<p>https://bitbucket.org/olauzanne/pyquery/issues/45/pyquery-fails-to-work-for-the-following</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2015-09-07T23:06:48+00:00">2015-09-07</time></p>
 <p>archive</p>            </div>
@@ -150,7 +172,10 @@
             <p class="card-text"><p>现在回想起来，央视老版《三国演义》里室内布景，一副坟墓里拍戏的感觉。</p>
 <p>今天在newsmth的history版看到这个：</p>
 <p>bearn (秉烛堂主) 于  (Sun Sep  6 14:38:05 2015)  提到:</p>
-<p>好像 …</p></p>
+<p>好像出土汉简有一些就是古代粪坑里的擦屁股简</p>
+<p>molar (molar，嗯。molar，哦？molar，噢！) 于  (Sun Sep  6 14:45:52 2015)  提到:</p>
+<p>嗯，对，是有的，而且俺记得认为发现的那地方就是当时的茅坑。所以有可能用废弃的简牍做厕筹是习惯性的，而不是临时性的。看来那个时候还没有用有字的“纸”擦屁股会遭报应的忌讳。</p>
+<p>证实了我之前一个想法。为什么会有“出土文物”这一说法呢？莫非古人会成建制的往土里埋东西？估计大多数挖出来的“文物”应该是从古人的垃圾堆的搞出来的。。。。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2015-09-07T03:49:44+00:00">2015-09-07</time></p>
 <p>archive</p>            </div>
@@ -164,7 +189,18 @@
             <a href="/post/128169614555"  rel="bookmark" >
               <h2 class="card-title">创新的真谛</h2>
             </a>
-            <p class="card-text"><p>最近5年发现我自己患了一种认知上的“时差病”。就是看到过一段话，当时心有窃窃焉，然后就过去了。但是过了几天，几周后就开始发酵，越来越回味觉得有道 …</p></p>
+            <p class="card-text"><p>最近5年发现我自己患了一种认知上的“时差病”。就是看到过一段话，当时心有窃窃焉，然后就过去了。但是过了几天，几周后就开始发酵，越来越回味觉得有道理，然后刻骨铭心的想找到当时的出处。</p>
+<p>一个月前我在reddit某个板块看到一段语录，大意就是：人们在各种限制下才会发挥最大的创造性！</p>
+<p>当时觉得挺新奇的。说创新我们很自然想到自由，无限制，无拘束无羁绊，那才能创新，但是其实不是这样的。我以前一直以为创新的唯一来源就是学科交叉，领域边缘。</p>
+<p>后来又在proggit和HN看到视频 《How "oldschool" graphics worked》</p>
+<p>https://www.youtube.com/watch?v=Tfh0ytz8S0k</p>
+<p>讲 C64 6502，在320x240，16K内存的限制下，如何绘制彩图。</p>
+<p>简单计算：320x240每个RGB像素占用24bit，16KB内存就立刻泪流满面了。。。。当时还没有显存的概念，显存就是一块低位内存范围。前人是怎么做到的呢？上一半的色彩拉伸，或者每16x16的像素hack出只包含4种颜色！这他妈碉堡了。Super Mario甚至还在这基础上做出动画！</p>
+<p>今天又念念不忘的想起这个事情，搜了下：</p>
+<p>http://www.wired.com/2011/11/need-to-create-get-a-constraint/</p>
+<p>原来心理学上早就有证据表明，限制才能激发创新。</p>
+<p>当年twitter出来，大家都喷，这尼玛不就是一140字符限制的留言板么。谁会用这玩意。</p>
+<p>140字符限制，才是最有创造性的。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2015-09-02T02:27:53+00:00">2015-09-02</time></p>
 <p>archive</p>            </div>
@@ -178,7 +214,15 @@
             <a href="/post/126388086480"  rel="bookmark" >
               <h2 class="card-title">现有git项目同步到一个新svn</h2>
             </a>
-            <p class="card-text"><p>不要问我为什么这么脑残，反正这个世界就这样。自己好好的用git管理的项目，项目组又用的是svn，把git同步更新到svn，看git-scm的教程也他妈扯蛋，所以东拼西凑撸了个方法 …</p></p>
+            <p class="card-text"><p>不要问我为什么这么脑残，反正这个世界就这样。自己好好的用git管理的项目，项目组又用的是svn，把git同步更新到svn，看git-scm的教程也他妈扯蛋，所以东拼西凑撸了个方法：</p>
+<pre><code>svn mkdir svn://DEST/repo/projectname/{trunk,branches,tags}
+git svn init svn://DEST/repo/projectname/{trunk,branches,tags}
+git svn fetch --username blah
+git rebase --onto remotes/git-svn --root master
+git svn dcommit
+</code></pre>
+<p>搞定。</p>
+<p>btw 提交日期全部被fuck。。。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2015-08-10T22:06:56+00:00">2015-08-10</time></p>
 <p>archive</p>            </div>
@@ -194,7 +238,34 @@
             </a>
             <p class="card-text"><p>小白涨姿势之gis系统</p>
 <p>好久没写blog，最近去知乎问了这样一个问题 </p>
-<p><a href="http://www.zhihu.com/question/34387819">有现成的 GIS 系统能处理 河流、立交桥、单行道、限行 等限制条件 …</a></p></p>
+<p><a href="http://www.zhihu.com/question/34387819">有现成的 GIS 系统能处理 河流、立交桥、单行道、限行 等限制条件下求最近距离叫车的问题吗？</a></p>
+<p>终于把心中的疑惑解决了。也怪自己笨，导航问题跟游戏寻路算法不一回事嘛！</p>
+<p>参考ArcGIS的文档（<a href="http://help.arcgis.com/en/arcgisdesktop/10.0/help/index.html#//004700000053000000">英文</a>，<a href="http://help.arcgis.com/zh-cn/arcgisdesktop/10.0/help/index.html#//004700000053000000">中文</a>）：</p>
+<p>网络分析主要解决下列几个问题：</p>
+<ul>
+<li>导航 routing：</li>
+<li>单行道限制 one-way restrictions</li>
+<li>转弯限制 turn restrictions</li>
+<li>交汇点阻抗 junction impedance</li>
+<li>障碍 barriers</li>
+<li>街边约束 side-of-street constraints</li>
+<li>最近设施点 Closest facility 这个好像就是已知多家医院和多起事故，如何找最短路径把尽量多的伤者送到最近的医院？</li>
+<li>OD矩阵 (origin-destination matrix)：多个出发地和多个目的地，形成一个“价格阶梯表”</li>
+<li>服务区分析 service area 。这个是我想了很久的。一个外勤警察5分钟能到达的区域范围是那些？算法涉及到一个概念叫不规则三角网 (TIN - triangulated irregular network)</li>
+<li>流动推销员问题 (TSP - Traveling salesman problem)：第一步是在有待排序的所有停靠点之间生成OD成本矩阵，然后通过基于禁忌搜索的算法查找访问停靠点的最佳顺序。禁忌搜索(Tabu Search)是求解组合问题的元启发式算法。该算法属于局部搜索算法的范畴。</li>
+<li>有时间窗的多路车辆配送(VRP - vehicle routing problem)。VRP是TSP的超集。加上车辆性能参数，配送时间窗口，特殊配送要求等限制。算法也是先建立OD矩阵，然后通过在最合适路径中一次插入一个停靠点的方式构建初步解决方案。随后可通过以下方式改进初步解决方案：对各路径中的停靠点重新进行排序、将停靠点从一个路径移至另一个路径，或在路径之间交换停靠点。ArcGIS在这方面有私有算法。</li>
+<li>位置分配(Location-allocation)：多个相邻的连锁店如何保证覆盖面最大，重叠面积最小？即，给定具有权重的 N 候选设施点和 M 请求点，可选择设施点的子集 P，从而使每个 M 到最近的 P 之间的加权距离总和最短。这属于 N 选 P 的组合问题，解空间极大。无法通过检验所有组合获得最优解。</li>
+</ul>
+<p>前三者都采用的是  Dijkstra 算法。</p>
+<p>网络分析的限制条件：</p>
+<ul>
+<li>时间窗口(time window)</li>
+<li>U字调头限制</li>
+<li>障碍</li>
+<li>道路分级(hierarchy)，比如高速优先。分级网络创建完成后，将使用双向 Dijkstra 改进算法计算起始点和目的地之间的路径。</li>
+<li>驾驶方向和方向容宽度(Bearing &amp; BearingTol)</li>
+</ul>
+<p>还可以参考pg的<a href="http://workshop.pgrouting.org/">pgRouting Workshop</a> “FOSS4G routing with pgRouting, OpenStreetMap road data and OpenLayers 3”.：</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2015-08-10T21:57:19+00:00">2015-08-10</time></p>
 <p>archive</p>            </div>
@@ -210,7 +281,24 @@
             </a>
             <p class="card-text"><p>发信人: noGod2 (911.不流氓无产阶级.牛棚知识分子), 信区: History<br />
 标  题: Re: 埃及的历史真的比我们的长好多啊<br />
-发信站: 水木社区 (Tue Jul 21 00 …</p></p>
+发信站: 水木社区 (Tue Jul 21 00:48:21 2015), 站内</p>
+<p>看我的帖子啦，在其他几个话题下。</p>
+<p>埃及历史简单来说就是：</p>
+<p>一堆城邦，打了N千年，统一为上下埃及两个王国，然后两国合并（中国夏朝或炎黄部落）。</p>
+<p>埃及帝国崛起，大修金子塔，跟小亚国家争霸，国力逐渐耗尽（中国商朝吧）。</p>
+<p>埃及社会矛盾严重，开始搞宗教改革，一神教诞生（被犹太人偷学了，犹太人本来是跟小亚人一起侵略埃及的，后来被反攻倒算了）。</p>
+<p>埃及重现辉煌，回光返照，再次争霸小亚，跟赫梯帝国打（赫梯是第一个印欧人种的文明帝国，在今天的土耳其，土耳其政府官方把赫梯当成自己的第一个王朝，呵呵）。</p>
+<p>公元前一千年左右，跟武王伐纣时间差不了几十年，世界范围内的“野蛮人海陆大入侵”，人类五大古文明死伤殆尽。</p>
+<p>其中，地中海文明彻底灭亡，亡国灭种，其首都所在地迈锡尼沦为废墟，后来的希腊人道听途说这个故事（其实凶手就是他们自己的祖先，他们没文化不知道），就编造了“亚特兰蒂斯”的故事。</p>
+<p>赫梯帝国被灭国，基本彻底完蛋，不过好在“海上民族”不识字，没有捣毁赫梯的皇家图书馆（都是泥板，草纸什么的，不值钱啦，在野蛮人看来），让我们能很清楚当年的悲惨历史。</p>
+<p>埃及被彻底打残，国力从此一蹶不振。当时，海上民族，动辄几万几十万，成风而来，风卷残云，杀得埃及人死伤枕籍，千里狼烟，真的非常惨烈。</p>
+<p>同时，古印度文明也被屠灭。商帝国灭亡，但是，周人的力量有限，不能彻底毁灭整个华东文明。其实，说良心话，中国的历史应该从周朝算起（但不是武王伐纣那年，周朝在之前已经有好几百年历史了，只不过在陕西和甘肃一片，所以中国历史还是有将近四千年的，到现在）。</p>
+<p>埃及帝国彻底丧失了力量，不再是世界强国，南方的黑人蛮夷也入侵，侵占国土，西边沙漠里的蛮族也反叛，埃及海军本来就不咋地，海上民族的后裔更是随便来打家劫舍。然后，埃及多次沦入异族之手，特别是被希腊人，波斯人，罗马人先后占领过，反复地起义，染后很快就又亡国了。</p>
+<p>埃及的祭祀逐渐沦为希腊贵族，罗马贵族的附庸，其实，到公元前后，仍然有埃及人会写自己的文字，但随着外族语言文化的强势，绝大部分埃及人忘记了自己的母语，埃及文字也彻底失传了。今天，我们只能通过考古来研究埃及文字，但由于当时的文字不纪录元音（今天的希伯莱文，阿拉伯文也是这样的），其实现在不可能有人能说“读”古埃及的书籍了，只能猜出大概的意思。</p>
+<p>再后来，埃及人给罗马人当“农奴”，当了很多很多年，直到阿拉伯人打败东罗马，“解放”了埃及。然后，蒙古大举入侵，阿拉伯文明危在旦夕，是埃及的麻木鲁克王朝奋勇抵抗，血战蒙古，保留了伊斯兰的一丝火种，也就是从那个时代开始，埃及阿拉伯人自视为穆斯林之领导者，一直到纳赛尔总统都坚持不懈要振兴阿拉伯。</p>
+<p>不过，麻木鲁克其实是奴隶的意思，这帮人其实都是来自巴尔干，高加索等地区的“欧洲人”，他们是奴隶兵后来成了军阀，一开始，阿拉伯人只是当“皇帝”（名义上的，汉献帝那种），后来干脆大家混在一起，都成了麻木鲁克。这时候，绝大部分埃及本土人先后混了大量的希腊血统，罗马血统，阿拉伯血统，又有了麻木鲁克，别说跟古埃及人对不上号，甚至连自己的祖宗到底算是亚洲人，欧洲人还是非洲人都搞不清楚了。</p>
+<p>再后来，埃及和其他阿拉伯兄弟沦文土耳其帝国手下的“亡国奴”，再后来，英法俄打击“西亚病夫”土耳其，埃及独立，并且进行了革命，建立了新式军队，国民万众一心，兵锋直指土耳其的心脏，要报亡国之血海深仇，可惜，就像扶植清政府，英法也保护了土耳其的狗苏丹，埃及人民不敌英法，功亏一篑。后来，英国又入侵和控制埃及，后来，埃及趁英国二战之后的衰落再次独立，为了苏伊士运河跟英法开战，在苏联和美国的支持下，英法滚蛋了。再后来，苏联支持埃及，美国支持以色列，双方大打出手。再后来，埃及经济逐渐不行了，军阀上台。再后来，美国又搞乱了埃及。然后就是现在了，埃及又变比较弱的国家了，但仍然跟沙特一起打也门。</p>
+<p>今天埃及主流社会的“历史”，就是从欧洲人麻木鲁克大兵，在亚洲的阿拉伯群众的支持下，在亚洲来的阿拉伯哈利法的领导下，抗击蒙古鞑子入侵，开始的。埃及人打蒙古，打土耳其，打英法，打以色列，到现在打自己，这就是现在的埃及民族的历史，这是一个有亚非欧三洲血统，而且很能打的民族！</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2015-07-20T21:05:09+00:00">2015-07-20</time></p>
 <p>archive</p>            </div>
@@ -227,7 +315,14 @@
             <p class="card-text"><p>首先是一则微博：</p>
 <blockquote>
 <p>@上铁合肥客运段官微 2015-06-01 09:36 转发 26 评论 11<br />
-<code>#合客正能量#</code>【旅客补票现金不够[好囧]，微信红包解难题[不好意 …</p></blockquote></p>
+<code>#合客正能量#</code>【旅客补票现金不够[好囧]，微信红包解难题[不好意思]】5月31日，G7682次列车，一位旅客办理车票延长手续时发现现金不够，而车上补票无法刷卡。一筹莫展之际，聪明的列车长想了个妙招——旅客用微信“红包”给列车长发送个“红包”，列车长用现金给他补了这张车票。@上铁资讯 @人民铁道网</p>
+</blockquote>
+<p>http://weibo.com/3162032660/Ckv0vnsmh</p>
+<p>这个新闻有个关键，为什么旅客用的红包，而不是转账功能？</p>
+<p>其实原因很简单。红包必须加好友才能上床。哦不对，才能发红包。</p>
+<p>第二则来自reddit，Google Now推出了一个功能，可以直接识别谁是你手机里的“LD”</p>
+<p>http://www.reddit.com/r/Android/comments/37z3yy/_/crr8ka8?context=3</p>
+<p>广大人民群众讲了一个段子。你在车祸中，快挂掉的时候，拿起手机，长按home键，如同电影情节一般，用最后的力气说出几个字：“tell my wife I love her”。Siri收到指令，给LD发了条短信：“I love her”。。。。。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2015-06-01T01:00:45+00:00">2015-06-01</time></p>
 <p>archive</p>            </div>
@@ -242,7 +337,11 @@
               <h2 class="card-title">Whole Earth Catalog</h2>
             </a>
             <p class="card-text"><blockquote>
-<p>Steve Jobs's Stanford commencement address, a short talk that he gave in 2005 and which went viral after his death in 2011, is, in many ways, the <em>ne plus ultra</em> of Jobsian wisdom. It encapsulated his thoughts on life, love and death. It expressed his lifelong philosophy and motivation. And …</p></blockquote></p>
+<p>Steve Jobs's Stanford commencement address, a short talk that he gave in 2005 and which went viral after his death in 2011, is, in many ways, the <em>ne plus ultra</em> of Jobsian wisdom. It encapsulated his thoughts on life, love and death. It expressed his lifelong philosophy and motivation. And it ends with a moving tribute to Brand and what he calls "an amazing publication called the Whole Earth Catalog", which he describes as "one of the bibles of my generation". It's worth quoting the rest of it in full: "It was created by a fellow named Stewart Brand not far from here in Menlo Park, and he brought it to life with his poetic touch. This was in the late 1960s, before personal computers and desktop publishing, so it was all made with typewriters, scissors, and Polaroid cameras. It was sort of like Google in paperback form, 35 years before Google came along: it was idealistic, and overflowing with neat tools and great notions.</p>
+</blockquote>
+<p>恩。好久不写博客了。今天看到 wiki.smzdm.com 有感而发。</p>
+<p>在提倡微创新的同时，不要忘记创新的本质——边缘交叉融合，categorical innovation。</p>
+<p><a href="http://www.theguardian.com/books/2013/may/05/stewart-brand-whole-earth-catalog">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2015-05-08T03:41:16+00:00">2015-05-08</time></p>
 <p>archive</p>            </div>
@@ -274,7 +373,39 @@
             <p class="card-text"><p>发信人: xixixihahaha (xixihaha), 信区: JobHunting <br />
 标  题: 真羡慕CS科班出身的马公的记忆力 <br />
 发信站: BBS 未名空间站 (Thu Oct 16 13:08:31 2014, 美东)   </p>
-<p>我刷了6遍leetcode了，有的标点符号还是记错。该用大括 …</p></p>
+<p>我刷了6遍leetcode了，有的标点符号还是记错。该用大括号的地方还是忘记了。 <br />
+if后面两个语句如果不用大括号括起来，就是不一起运行。 <br />
+为什么要设计成这么麻烦的语言?   </p>
+<p>这才拿到了oracle的offer，什么时候可以进flag呢，更别说ms了。   </p>
+<p>发信人: xixixihahaha (xixihaha), 信区: JobHunting <br />
+标  题: Re: 真羡慕CS科班出身的马公的记忆力 <br />
+发信站: BBS 未名空间站 (Thu Oct 16 13:42:48 2014, 美东)   </p>
+<p>我觉得这个比托福还难背，虽然只有152题，但是每个题目答案太长了，好多还有几个 <br />
+答案。 <br />
+我背第一遍的时候经常把这个题的答案记成另外的题目的答案了。 <br />
+现在好多了，oracle攻城师说只有小bug了。   </p>
+<p>发信人: xixixihahaha (xixihaha), 信区: JobHunting <br />
+标  题: Re: 真羡慕CS科班出身的马公的记忆力 <br />
+发信站: BBS 未名空间站 (Thu Oct 16 14:00:34 2014, 美东)   </p>
+<p>还有好几十道题记不住   </p>
+<p>那个isnumber的state machine的列表太难背了，现在还有几个地方出错。但是oracle <br />
+攻城师没有看出来，现在想来都后怕。   </p>
+<p>发信人: xixixihahaha (xixihaha), 信区: JobHunting <br />
+标  题: Re: 真羡慕CS科班出身的马公的记忆力 <br />
+发信站: BBS 未名空间站 (Thu Oct 16 14:16:50 2014, 美东)   </p>
+<p>肯定有诀窍呀。   </p>
+<p>最开始记关键字，比如这个题目有3个if，两个while <br />
+然后慢慢往细了记 <br />
+临睡前记，早上上班途中反复回忆，记不得的上班第一件事就是赶紧看一看   </p>
+<p>【 在 Tianhuaban (Sweet home) 的大作中提到: 】 <br />
+: 膜拜大牛！能传授一下怎么记的不？我连题目都经常记混。。。更别说答案了。   </p>
+<p>发信人: xixixihahaha (xixihaha), 信区: JobHunting <br />
+标  题: Re: 真羡慕CS科班出身的马公的记忆力 <br />
+发信站: BBS 未名空间站 (Thu Oct 16 23:50:13 2014, 美东)   </p>
+<p>我今天一上午把那个sdx大哥的秒杀valid number给背下来了。 <br />
+所以state machine我可以暂时不背了，太难背了。   </p>
+<p>【 在 yzl232 (三十三) 的大作中提到: 】 <br />
+: 你这个细节让我觉得半信半疑，，</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2014-10-17T01:42:36+00:00">2014-10-17</time></p>
 <p>archive</p>            </div>
@@ -292,7 +423,11 @@
 标  题: Java 的本质 <br />
 发信站: 水木社区 (Thu Jul 24 00:02:37 2014), 站内   </p>
 <p>==请勿对号入座==   </p>
-<p>Java 在业界得到广泛 …</p></p>
+<p>Java 在业界得到广泛应用理所当然，因为再也找不到更好的异化奴役程序员的编程语言。   </p>
+<p>OO，Frameworks，IOC，你的代码不再是你的，甚至连 main 函数都不是你的。在框架底下你就是一颗螺丝钉，随时等待着被回收。   </p>
+<p>每天打开公司帮你配好的 IDE，调用指定的库，遵循一堆咒语般的 patterns。默默无闻的螺丝钉，即使是名校毕业，也不再用思考。为什么这里要这么写？这里框架到底做了什么？谁知道呢？就算读完 500 页的文档也找不到答案。管他呢。   </p>
+<p>久而久之，自己也变成了这个系统里的一员，张口闭口也是各种架构，就连读一个 CSV 文件都要写 10 层对象包起来，并肆意蹂躏着无法理解你为什么要这么做的小弟们。   </p>
+<p>直到有一天，新的技术来临了，框架不再需要你。拖着疲惫的身躯回到房贷还没还清的家中，打开还是大学时用的旧电脑，却发现，离开了框架和 IDE，你一行代码也跑不起来。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2014-07-28T08:30:00+00:00">2014-07-28</time></p>
 <p>archive</p>            </div>
@@ -308,7 +443,23 @@
             </a>
             <p class="card-text"><p>lockdownd的tcp端口62078，文档 libimobiledevice.org，厂家有Cellebrite，AccessData (Mobile Phone Examiner)，Elcomsoft</p>
 <p>com.apple.pcapd  抓包服务</p>
-<p>com.apple.mobile.file_relay 文件传输服务。就不说文件了，SQLite库，Voicemail（AMR格式）等啥都包括了。甚至最后 …</p></p>
+<p>com.apple.mobile.file_relay 文件传输服务。就不说文件了，SQLite库，Voicemail（AMR格式）等啥都包括了。甚至最后一次键盘拼写自动修正是什么单词！一开始是iTunes用来传输用的。</p>
+<p>其他自动启动服务：</p>
+<p>com.apple.iosdiagnostics.relay 统计app数据上网流量</p>
+<p>com.apple.mobile.installation_proxy 企业证书安装app的</p>
+<p>com.apple.syslog_relay 用来NSLog()的</p>
+<p>iOS 7做了一个重要的安全改进：不能连接到localhost或者本地IP了。比如localhost:62078</p>
+<p>如何在Info.plist指定后台运行的app</p>
+<pre><code>&lt;key&gt;SBAppTags&lt;/key&gt; 
+&lt;array&gt; 
+&lt;string&gt;hidden&lt;/string&gt; 
+&lt;/array&gt; 
+&lt;key&gt;UIBackgroundModes&lt;/key&gt; 
+&lt;array&gt; 
+&lt;string&gt;voip&lt;/string&gt; 
+&lt;/array&gt;
+</code></pre>
+<p><a href="http://www.zdziarski.com/blog/wp-content/uploads/2014/07/iOS_Backdoors_Attack_Points_Surveillance_Mechanisms.pdf">来源</a>，作者 @JZdziarski</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2014-07-22T11:14:54+00:00">2014-07-22</time></p>
 <p>archive</p>            </div>
@@ -326,7 +477,9 @@
 <p>http://code.google.com/p/pytoolkits/source/browse/trunk/utils/stardict/dictzip.py</p>
 <p>http://code.google.com/p/idzip/source/browse/idzip/decompressor.py</p>
 <p>另外有两个库提供了很吊的gzip和bz2 random access</p>
-<p>http …</p></p>
+<p>http://svn.ghostscript.com/ghostscript/tags/zlib-1.2.3/examples/zran.c</p>
+<p>https://bitbucket.org/james_taylor/seek-bzip2</p>
+<p><a href="http://stackoverflow.com/a/4467005/41948">出处</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2014-07-21T22:15:43+00:00">2014-07-21</time></p>
 <p>archive</p>            </div>
@@ -340,7 +493,9 @@
             <a href="/post/91924699155"  rel="bookmark" >
               <h2 class="card-title">if you don't read</h2>
             </a>
-            <p class="card-text"><p>"Well sonny boy, if you don't read, you start eating marijuana. When you eat marijuana, you get hepatitis X. Hepatitis X is like Hepatitis B except 10X stronger. When you get Hepatitis X, your private parts fall off and you start developing a taste for the band Limb Bizkit. Your …</p></p>
+            <p class="card-text"><p>"Well sonny boy, if you don't read, you start eating marijuana. When you eat marijuana, you get hepatitis X. Hepatitis X is like Hepatitis B except 10X stronger. When you get Hepatitis X, your private parts fall off and you start developing a taste for the band Limb Bizkit. Your hairs starts growing frosted tips, your hat turns itself backwards and your shirt will say "obey." If you don't read, you turn into a douchey dude bro. And nobody likes a douchy dude bro.</p>
+<p>有理有据令人信服。。。</p>
+<p><a href="http://www.reddit.com/r/videos/comments/2ar618/warren_buffett_and_i_discuss_our_favorite/ciy29on">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2014-07-16T01:46:03+00:00">2014-07-16</time></p>
 <p>archive</p>            </div>
@@ -357,7 +512,27 @@
             <p class="card-text"><p>摘录一些</p>
 <blockquote>
 <p>Jack Voth, Algenol’s information technology chief, stumbled on something odd: a telnet connection to its videoconference camera from an Internet Protocol address in China</p>
-<p>Hacking attacks come from many countries, he says, but most are efforts to steal credit-card information. Chinese hackers, by contrast, tend …</p></blockquote></p>
+<p>Hacking attacks come from many countries, he says, but most are efforts to steal credit-card information. Chinese hackers, by contrast, tend to target trade secrets and unique technology.</p>
+<p>Algenol executives did not know that Aliyun was the cloud computing part of Alibaba, and they never tried to make contact.</p>
+<p>Alibaba said that two former Algenol employees had signed up for an Alibaba marketing e-mail. Once they left Algenol and the marketing e-mails bounced back, Alibaba said that its own security system checked on the accounts and that Algenol mistook those inquiries as attacks.</p>
+<p>Voth, however, is not convinced. He disputed Alibaba’s explanation about the marketing e-mails to employees who left Algenol four years ago, and said that to mistake an Alibaba security response for an attack would mean that there was a flaw with the widely used firewall language called Snort, which is updated constantly.</p>
+<p>He said that since Jan. 1, each of 539 IP addresses has attacked Algenol computers 5,000 times or more.</p>
+<p>The largest numbers of hacking probes came from the United States, China, Taiwan and Russia, he added. The single IP address that has attacked Algenol the most is a German address; the top Chinese IP address attacking Algenol ranked 10th.</p>
+<p>Voth said the fight to protect Algenol’s computer system would be a long one. “A rule of thumb is that you have security by obscurity,” Voth said. “We’d rather have a low profile. But clearly the bad guys have our addresses.”</p>
+</blockquote>
+<p>尼玛这报道真心无敌了。几个想法：</p>
+<ol>
+<li>
+<p>地球上媒体都一个德行，真jb恶心。</p>
+</li>
+<li>
+<p>商标和责任的对外宣传，国内还有非常，特别，很长的路要走。Aliyun对外云服务老外压根就不明白，也懒得联系。</p>
+</li>
+<li>
+<p>外行做安全的特点就是：特别傻逼而且特别自信。</p>
+</li>
+</ol>
+<p><a href="http://www.washingtonpost.com/business/economy/why-were-this-companys-computers-attacked-millions-of-times-this-year-algae/2014/07/10/ac4df98c-f59a-11e3-a3a5-42be35962a52_story.html">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2014-07-14T22:01:22+00:00">2014-07-14</time></p>
 <p>archive</p>            </div>
@@ -391,7 +566,18 @@ emitter.on('got sentence', function(sentence) {
 emitter.on('split sentense', function(splitted) {
     emitter.emit('reversed', splitted.reverse());
 });
-emitter …</code></pre></p>
+emitter.on('reversed', function(reversed) {
+    emitter.emit('joined', reversed.join(' '));
+});
+emitter.on('joined', function(sentence) {
+    console.log(sentence);
+    emitter.emit('got sentence', sentence);
+});
+
+emitter.emit('got sentence', 'hello world');
+</code></pre>
+<p>Nodejs胜出。谁不服就是不客观。</p>
+<p><a href="http://www.reddit.com/r/programming/comments/24ni6v/this_is_ruby_who_the_fheck_is_tadayoshi_funaba/#ch8yhwo">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2014-05-04T00:05:00+00:00">2014-05-04</time></p>
 <p>archive</p>            </div>
@@ -470,7 +656,21 @@ emitter …</code></pre></p>
 外观设计：直插<br />
 产品尺寸：90.6×28.6×12.6 mm            重量： &lt; 50 g   <br />
 屏幕显示：无屏幕<br />
-电池 …</p></p>
+电池容量: 无电池<br />
+网络支持： CDMA2000 1x/EVDO Rev.A,800MHz<br />
+基带芯片： Qualcomm MDM6600      应用处理器：无<br />
+操作系统： Qualcomm REX<br />
+内存： RAM：  64 MByte，       Flash内存：  128 MByte<br />
+扩展内存：外置存储卡 MicroSD（最大可支持32G）<br />
+摄像头： 无摄像头<br />
+FM：不支持   蓝牙：不支持<br />
+耳机接口：不支持<br />
+WAPI/WIFI：802.11b/g/n       C+W统一认证功能: 不支持<br />
+USB： 2.0 Full Speed   JAVA: 不支持   GPS导航： 不支持<br />
+基本功能：USB即插即用，快速移动上网；PIN/PUK码管理；Wi-Fi AP<br />
+特色功能：免驱动快速上网；Wi-Fi AP<br />
+增值业务：无<br />
+软件版本： 11.102.53.00.00</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2014-04-01T01:32:35+00:00">2014-04-01</time></p>
 <p>archive</p>            </div>
@@ -485,7 +685,11 @@ emitter …</code></pre></p>
               <h2 class="card-title">Process 流程</h2>
             </a>
             <p class="card-text"><p>Bob：这涉及到职业分工的问题，每个人特长不同，不是吗？</p>
-<p>乔布斯：不，这不是擅长与否的问题，而是他们犯糊涂，公司在犯糊涂。公 …</p></p>
+<p>乔布斯：不，这不是擅长与否的问题，而是他们犯糊涂，公司在犯糊涂。公司规模扩大之后，就会变得因循守旧，他们觉得只要遵守流程，就能奇迹般地继续成功，于是开始推行严格的流程制度，很快员工就把遵守流程和纪律当作工作本身。</p>
+<p>IBM就是这样走下坡路的，IBM的员工是世界上最守纪律的，他们恰恰忽略了产品。苹果也有这个问题，我们有很多擅长管理流程的人才，但是他们忽略了产品本身。</p>
+<p>经验告诉我，优秀的人才是那些一心想着产品的人，虽然这些人很难管理，但是我宁愿和他们一起工作，光靠流程和制度做不出好产品。苹果也有这方面的问题，这些问题最终导致Lisa电脑失败。</p>
+<p>People get confused; companies get confused. When they start getting bigger, they want to replicate their initial success. And a lot of them think, ‘Well, somehow, there’s some magic in the process of how that success was created.’ So they start to institutionalize process across the company. And before very long, people start to get confused that the process is the content. And that’s ultimately the downfall of IBM. IBM has the best process people in the world. They just forgot about the content. And that happened a little bit at Apple, too. We had a lot of people who were great at management process. They just didn’t have a clue about the content. In my career, I found that the best people are the ones that really understand the content. And they’re a pain in the butt to manage! But you put up with it because they’re so great at the content. And that’s what makes great products. It’s not process, it’s content.</p>
+<p>貌似记录过这段话。再拿出来记一遍！</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2014-03-21T00:33:49+00:00">2014-03-21</time></p>
 <p>archive</p>            </div>
@@ -563,7 +767,38 @@ catch KeyError:
 标  题: 果然，现实更加奇葩<br />
 发信站: 水木社区 (Wed Mar  5 23:35:26 2014), 站内</p>
 <p>老老王的PS，看了忍不住想笑</p>
-<p>http://www …</p></p>
+<p>http://www.wcxiaoshuo.com/wcxs-23716-10509604/</p>
+<p>PS：唉，乌克兰如今的“公共知识分子”政府，当真是卖萌无极限，逗逼指数爆表了。</p>
+<pre><code>首先是上次说过的Facebook脸书征兵，虽然绝大部分壮丁都表示不在家，但居然还是有一万多人应征报到，据说主要是大学生和失业青年，也就是前些日子在广场上COSPLAY《中世纪全面战争》的那一帮人——这倒是情有可原，但如果他们把跟俄军打仗看成了之前的广场群殴……估计肯定会死得很惨。
+
+其次。乌克兰新政府在这短短的几天里，把一切匪夷所思的作死昏招都出了一遍，屁股明明坐在火山口上。依然不管不顾地反攻倒算：逼着“金雕”特种部队在广场当众下跪，给前些日子奉命镇压的暴徒们道歉，于是气得这支最精锐的部队拖着枪逃去投奔了俄军；大敌当前之际，宣布给内务部队和警察砍薪水，结果这些武装力量纷纷倒戈——普京宣称愿意给他们一份新工作；在一天里重新任命了十八个州长用于安置亲信，让那些被撸掉的地方官员怨念滔天，心生反意；取消俄语的官方地位。凡是有双重国籍的人一律判十年有期徒刑，于是东部俄语区的老百姓再不造反就要坐牢了……感觉很像陈胜吴广的大泽乡起义？
+
+更恐怖的是，乌克兰新政府还接受了国际货币基金组织的全部苛刻条件。“无奈”地贱价甩卖大批国有资产——逼反了军队逼警察，逼反了警察逼地方官，逼反了地方官再逼老百姓，逼反了老百姓再宣称“万般无奈。我要卖国”……当真是空前绝后的超一流作死能手啊！于是。乌克兰海军的前任司令刚接到任命，第二天就投降了俄国。下一任司令被俄军软禁在屋子里，据说上厕所都有亲俄武装人员盯着。
+
+面对如此危局，乌克兰临时政府内务部长在Facebook（脸书）上严肃表示，为了遏制住大批警察叛逃的势头，他已经拿出了切实有效的对策——那就是抢先一步解雇90%不可靠的警察！只要提前把警察解雇开除，就不怕再有警察叛逃了……就像在网上提前把别人取消关注，就不怕人家把你拉进黑名单了！
+
+看来这帮公知政客果然是“脸书治国”的精英。政府会议估计也是每人拿个平板电脑群聊吧！
+
+对此有一个观点是：上台的这帮人是买办，惯于挟洋自重。当然要歧视和鄙视本民族的武装力量了。
+
+乌克兰的新纳粹组织也是搞笑，前两天还在基辅叫嚣着要杀光阿拉伯人和犹太人，眼下也没有停止排犹行动和对“异教徒”的骚扰，同时却又转脸向车臣游击队求援，希望他们跟“一起为信仰和自由而战”——我不由得在脑海中想象出了这样一个画面：乌烟瘴气的基辅街头，某个正在被纳粹分子殴打和凌辱的黑长袍阿拉伯妇女，凄凄惨惨地抱住某个车臣游击队战士的腿，祈求他看在真主的份上救一把，然后被车臣游击队战士一脚踢开，“滚！我们现在正要为乌克兰的上帝而战！”……那样估计就是神作了！
+
+啧啧，如果我在小说里也这么写的话，估计马上就有读者气势汹汹地来大骂：这些反面角色难道个个都吃了脑残片吗？你的合理性到哪里去了？没想到现实世界发生的事，居然比我的荒诞小说还要更荒诞啊！
+
+嗯，看来以后写小说，还要把政治家角色塑造得更脑残一些才行。
+
+接下来，顿河沿岸的哥萨克团体宣布效忠莫斯科，各地哥萨克正在向克里米亚和哈尔科夫集结，组建志愿军，准备用祖传的恰西克弯刀好好教训一番利沃夫的那帮波兰庄稼汉……嗯，等到正宗波兰人再从华沙杀来，就又可以上演一出《火与剑》了。就是不波兰的鸟毛骑兵，如今还有没有剩下的？
+
+最后，作为对俄军大举入境，抢占各处乌克兰军事基地的反击，基辅的逗逼政客们组织了一群疑似有精神分裂症的逗逼大兵，让他们扛着镰刀锤子的苏联红旗，唱着不知歌谣，不带任何武器，就企图从俄军手里把基地抢——具体战术是，这帮合唱团在基地门口很欢乐地拥挤成一堆，一边架起数码相机和平板电脑，一边咋咋呼呼地高喊你们正在被摄像！视频文件马上就会传到网络！美国在支持我们！”
+
+唉，一边扛着苏联的镰刀锤子旗，一边喊着“阿美利加赐予我力量”，心里想着：苏维埃联盟的红旗，美利坚合众国的苹果电脑，世界两极都在赐福给我们这一伙人，接下来肯定是神功护体，刀枪不入……丢人都没这么丢的啊！你们难道是把街头革命当成万能模式了吗？能不能稍微严肃点，你们这是在打仗呢！
+
+——这一“特殊作战”的结果是，从基地里走出一群身穿平民服装、不带武器的壮汉，在门口站成一排，用凶悍的眼神往这些咋咋呼呼的逗逼们一瞪，诸多乌克兰逗逼大兵就立即屁滚尿流，狼狈逃窜了。
+
+——苏联和中国果然不愧是一辈子的良师益友，就连他死了之后，都不忘用各种千奇百怪的奇葩死法来教育中国：俄罗斯告诉了我们全国私有化和寡头横行之后的下场；白俄罗斯和哈萨克斯坦则展示了政治僵化，领导人终身掌权的后果；就连让那些公知、大V、嘴炮、自由斗士、业界良心、街头政治家上台执政之后，到底会有怎样乌烟瘴气的局面，乌克兰也捏着鼻子硬是尝试了一遍给中国人看……
+
+的乌克兰有一部励志神作《钢铁是怎样炼成的》，现在似乎可以写一部《逗逼是怎样炼成的》。(未完待续……)
+</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2014-03-06T01:09:19+00:00">2014-03-06</time></p>
 <p>archive</p>            </div>
@@ -594,7 +829,13 @@ catch KeyError:
             <a href="/post/77906072438"  rel="bookmark" >
               <h2 class="card-title">互联网思维 vs 小米思维</h2>
             </a>
-            <p class="card-text"><p>最近雷不死把“互联网思维”这个烂词炒爆了。作为弄死飞不起来远离台风口的一只纯黑铸铁猪，在前天也参与了抢购红米 …</p></p>
+            <p class="card-text"><p>最近雷不死把“互联网思维”这个烂词炒爆了。作为弄死飞不起来远离台风口的一只纯黑铸铁猪，在前天也参与了抢购红米1s电信版的大军。</p>
+<p>在0.99999秒被告知抢购失败之后，整个人都不好了。深深的感觉这个世界充满了恶意。终于明白为啥网上那么多人骂小米了。</p>
+<p>又看到36kr看到这篇《<a href="http://www.36kr.com/p/209852.html">MESSAGING: MOBILE’S KILLER APP</a>》</p>
+<p>里面这个图有意思。</p>
+<p><img alt="" src="/images/tumblr/77906072438_0.jpg" /></p>
+<p>这就是典型的互联网思维。用来解释小米经济再好不过了</p>
+<p><img alt="" src="/images/tumblr/77906072438_1.png" /></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2014-02-26T09:07:00+00:00">2014-02-26</time></p>
 <p>archive</p>            </div>
@@ -628,7 +869,24 @@ catch KeyError:
 <p>Explain:</p>
 <p>0x0001 means transaction ID. Invent one as you like  <br />
 0x0100 Flag. Always this for all requests  <br />
-0x0001 number of requests: always …</p></p>
+0x0001 number of requests: always 1. because DNS RFC sucks  <br />
+0x0000 Response: 0  <br />
+0x0000 Authority Response: 0  <br />
+0x0000 Additional Response: 0  <br />
+\6 reddit The string reddit has length of 6  <br />
+\3 com The string com has length of 3  <br />
+0x0001 Record Type: A  <br />
+0x0001: Class: IN. Always this.    </p>
+<p>then ping the last four bytes</p>
+<pre><code>$ ping 0x60.0x11.0xb4.0x89
+PING 0x60.0x11.0xb4.0x89 (96.17.180.137) 56(84) bytes of data.
+</code></pre>
+<p>Why DNS Resource Record Name is always C0 0C?</p>
+<p>It's compression.</p>
+<p>C00C = 11000000 00001100</p>
+<p>First two bits means it's a pointer, b1100 = 12 bytes offset.</p>
+<p>Reference:</p>
+<p>http://www.ccs.neu.edu/home/amislove/teaching/cs4700/fall09/handouts/project1-primer.pdf</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2014-01-16T03:31:00+00:00">2014-01-16</time></p>
 <p>archive</p>            </div>
@@ -642,7 +900,15 @@ catch KeyError:
             <a href="/post/73082214124"  rel="bookmark" >
               <h2 class="card-title">The Girl With The Dragon Tattoo</h2>
             </a>
-            <p class="card-text"><p>很早就知道这部神片，知道最近才在avfun上看了。记录一下影响最深的一句话，就是 Michel 准备逃下山却被喊住回去，然后被抓到地下室 …</p></p>
+            <p class="card-text"><p>很早就知道这部神片，知道最近才在avfun上看了。记录一下影响最深的一句话，就是 Michel 准备逃下山却被喊住回去，然后被抓到地下室的情节：</p>
+<p>Let me ask you something. Why don't people trust their instincts?</p>
+<p>They sense something is wrong, someone is walking too close behind them. You knew something was wrong. But you came back into the house.</p>
+<p>Did I force you? Did I drag you in? No. All I had to do was offer you a drink.</p>
+<p>It's hard to believe that the fear of offending can be stronger than the fear of pain, but you know what? it is.</p>
+<p>And they always come willingly. And then they sit there. They know it's all over, just like you do. <br />
+But somehow, they still think they have a chance. </p>
+<p>"Maybe if I say the right thing. Maybe if I'm polite. If I cry, if I beg." <br />
+And when I see the hope draining from their face like it is from yours right now I can feel myself getting hard.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2014-01-12T07:07:47+00:00">2014-01-12</time></p>
 <p>archive</p>            </div>
@@ -679,7 +945,9 @@ catch KeyError:
 <p><a href="http://www.slashroot.in/what-tcp-multipath-and-how-does-multipath-tcp-work">原理</a>也很简单，就是个inverse  multiplexer</p>
 <p><img alt="" src="http://www.slashroot.in/sites/default/files/Multipath%20TCP%20handshake.png" /></p>
 <p>我越来越觉得现在技术变化太快了。</p>
-<p>比如nginx现在就不支持MPTCP。假设一个客户端下 …</p></p>
+<p>比如nginx现在就不支持MPTCP。假设一个客户端下载一个MP3文件，经历了有线 -&gt; WIFI -&gt; 3G 三个步骤，那么access_log该怎么记录呢？记录几个IP呢？是否需要记录channel join和 断开时间呢？</p>
+<p>太多了问题了。</p>
+<p>感叹python再不拥抱realtime web就要被node和go淘汰了 :)</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-12-29T07:00:12+00:00">2013-12-29</time></p>
 <p>archive</p>            </div>
@@ -701,7 +969,8 @@ cols = range(n)
 for vec in permutations(cols):
     if n == len(set(vec[i]+i for i in cols)) \
          == len(set(vec[i]-i for i in cols)):
-        print ("\n".join('.' * i …</code></pre></p>
+        print ("\n".join('.' * i + 'Q' + '.' * (n-i-1) for i in vec) + "\n===\n")
+</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-12-09T01:34:00+00:00">2013-12-09</time></p>
 <p>archive</p>            </div>
@@ -719,7 +988,95 @@ for vec in permutations(cols):
 <p>发信人: daluobu (阿土仔), 信区: Python    <br />
 标  题: 终于把一个8万行的Python程序用Java重写了    <br />
 发信站: 水木社区 (Fri Dec  6 08:10:26 2013), 转信      </p>
-<p>在噩梦 …</p></p>
+<p>在噩梦般地维护了一年多一个8万多行的Python程序之后，终于争取到机会把这个破烂玩意用Java重写了一遍，大概是4万行Java左右。说说效果吧：    <br />
+1. 从过去平均每周down一次，到现在连续运转近半年只down过一次。    <br />
+2. 节省超过80%的cpu和内存    <br />
+3. 代码多了很多功能，过去无数因为系统太复杂无法实现的功能现在都能简单清爽地实现了。    <br />
+4. 单元测试真管用了，不是过去那种把代码反过来写一遍的滥用mock了。  <br />
+前后代码都是同一个team写的，写代码的人都不是菜鸟（顶级公司的核心团队）区别只有语言和几年的经验积累。      </p>
+<p>总结一句话就是：动态语言滥用起来真是可怕      </p>
+<p>珍惜生命，远离Python。      </p>
+<p>--      </p>
+<p>※ 来源:·水木社区 http://newsmth.net·[FROM: 216.239.45.*]      </p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Fri Dec  6 08:24:55 2013), 转信   </p>
+<p>刚开始写的时候以为就是随便hack一个小系统临时用用，结果慢慢发展到成为关键系统，负载巨大，而且还对宕机越来越敏感，导致不得不用Java重写。重写也不是那么简单的过程，半年多时间里面一个模块一个模块地替换，整个系统还不能停转一分钟，像是给一架飞行中的飞机换引擎。</p>
+<p>同样的故事在别的公司肯定也发生过好多次，写一个小东西玩玩结果变成了关键系统。我觉得我们团队的问题是几年前过分迷信Python，错过了在系统还不太复杂的时候重写的机会。   </p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Fri Dec  6 13:42:31 2013), 转信   </p>
+<p>原帖说的是一个10个人团队的故事，不是他自己。信与不信其实并不太重要，我发这个帖子也是纪念一下这个美梦成真的项目。如果有人有共鸣，那就已经很好了。   </p>
+<p>过去公司里面也是有不少迷信Python的人，重写系统的想法我在组里提了很多次，终于在一个Python大粉丝离开之后才得以实现。现在随着某Python之父的离开，公司里面粉Python的人也越来越少了。而且事实证明，那个Python之父带的项目（不是我们这个，比我们这个规模要大一些），用Java重写之后，不论功能还是性能还是新功能，也都明显好了很多，和我们组的经验相当吻合。   </p>
+<p>我觉得代码行数的节省也在于新系统更严谨的设计。Java鼓励精密的接口设计和简洁的代码关系，再加上Dependency Injection，代码的复用程度很高。Python完全没有接口的概念，一切类都是胡乱写，还可以动态增加新成员，导致代码复用的难度相当大，不修改地复用一个类还不引入bug简直是奇迹。   </p>
+<p>※ 来源:·水木社区 http://newsmth.net·[FROM: 216.239.45.*]   </p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Sat Dec  7 00:48:05 2013), 转信   </p>
+<p>这个项目里面，重构是一直在进行的，在过去的八年里面，用Python大规模地重构也发生过好几次。   </p>
+<p>决定用Java重写是很艰难的，不是某个人拍脑袋的决定。放弃Python主要是因为它的代码可维护性比较差，缺乏编译器检查，动态语言特性导致模块间过渡耦合，缺乏性能分析工具，内存管理机制低效，多线程性能很差。这些都是一个持续维护很多年的高负载应用所必须的。   </p>
+<p>Linter能做的事情很有限，公司代码管理系统早就是不过lint不能submit。code review也不能解决问题，因为团队里面每一个人对于系统设计和语言特性是否滥用理解程度都不同。   </p>
+<p>争论是否能够通过管理来解决语言本身缺陷其实是没意义的，因为我们碰见的是实实在在的语言缺陷问题，就应该用最直接的解决方案。   </p>
+<p>“Python很好，只是你们这些外行不会用”，这是我听到的最多的所谓Pythonic人的论调。事实是Python作者自己亲自带领的那个项目也是一塌糊涂。他们遇到的最主要问题就是可维护性低和性能差。世界上有没有人比Python作者本人更Pythonic?如果他自己的项目都不行，谁能做得更好？   </p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Sat Dec  7 01:30:35 2013), 转信   </p>
+<p>如果一个语言比另外一个差1000倍，那就是很大的问题了，随便写两行code都可能成为性能瓶颈。Python又恰好缺乏性能分析和优化工具，导致出了性能问题都不知道在哪儿。BTW，1000倍这个数据是有依据的。   </p>
+<p>接口上所谓的冗余其实是提高程序可维护性的关键。人脑容量有限，所以必须用电脑辅助人脑进行接口使用正确性的检查。强制要求程序员写强类型的接口也是一种强迫程序员对正确的设计进行思考的过程。结果导致的就是强类型语言可维护性更好。Openstack只有1.4M和3年历史，用c/c++/Java写的大型软件都是复杂几个数量级，而且维护几十年。Python程序的问题之一就是“腐烂”得很快，程序刚写好的时候看起来很简洁，一旦开始维护就快速地变成一堆乱七八糟的东西，动态语言代码腐烂速度远远超过强类型语言。 <br />
+如果Python作者本人带领的团队都写不出可维护的Python代码，谁能？   </p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Sat Dec  7 01:50:35 2013), 转信   </p>
+<p>Guido搞的那个code review系统就是我说的那个维护不了的系统，最后的结果就是用Java重写了。新系统比旧系统好用很多，而且还持续有新功能上线。那个项目组有一个在公司内部流传很广的文章，说为什么需要用Java重写，并且结论是Python只适合写100行以内的小脚本。我刚才试了找这个文章有没有外网可以访问的版本，但是没找到。   </p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Sat Dec  7 02:25:23 2013), 转信   </p>
+<p>如果用一个语言开发出可维护的代码需要的能力超过了Google能招聘到程序员的平均水平，我认为这个语言就不是一个可以用来开发可维护代码的语言。创造出一个不可维护的语言很容易，汇编，Basic以及大批的早期编程语言都是这种。创造出可以让普通程序员也可以维护的语言才是更困难的，只有少数语言做到了，C和Java是，C++都不能算是很成功。   </p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Sat Dec  7 02:48:32 2013), 转信   </p>
+<p>你几乎都说反了，Google非常重视代码的可维护性，扩展性几乎是在项目一开始就必须考虑的问题，Google对软件工程实践的重视和深度是我所知道的公司里面最高的。不知道你说的管理是什么意思，但是Google有强制性的代码规范，有强制性的designreview。Python的很多“高级”特性已经在编程规范里面禁用了，但是有些特性是没法禁用的，比方所有对象member都是public，比方函数参数没有类型。就是这些很基本的东西带来的可维护性问题。   </p>
+<p>越是水平高的程序员越是会遵守编程规范和软件工程实践。至少在我们这种产品team里面大家是相当重视代码质量和设计质量的。这也是为什么我们舍得投入那么多把一个不好的系统重写。    </p>
+<p>【 在 Alassius (饿了索食) 的大作中提到: 】   </p>
+<p>问题是这种不可维护性恐怕正是贵司能招聘到的这种平均水平造成的。智商高，技术至上，写代码怎么聪明怎么来，不重视维护，不重视扩展性（直到太迟的时候），不重视软件工程，不重视管理。普通程序员如果有好的资深码农引导，早早地被告知不要滥用语言的灵活性，倒未必会有这些问题。聪明的程序员你这样跟他说他还看不起你。   </p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Sat Dec  7 03:21:05 2013), 转信   </p>
+<p>意思就是：任何流程，任何规范，任何review，任何代码检查工具，都阻止不了程序员缓慢地一点一点地滥用语言特性，也阻止不了一个软件代码自身的腐败。Python本身鼓励滥用Mock因为没有不用mock就可以方便写unit test的测试工具。Python还鼓励不定义清晰的类接口和类关系，如果你写了一个接口继承，就会有Python大牛跳出来说你不Pythonic。系统复杂性在大型软件中是不可避免的，但是如果我们可以付出一些写code的时候的小小冗余，带来长期的代码可维护性改善，那就是值得的。Java不是完美的，用Java一样可以写出不可维护的代码，但是Java至少比Python在这方面强很多。我们的经验证实了这点，信与不信就是看官的事了。   </p>
+<p>发信人: YABC (Yet Another BBS Client), 信区: Python<br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了<br />
+发信站: 水木社区 (Sat Dec  7 10:26:33 2013), 转信</p>
+<p>难得这么热烈的讨论，可是争论语言优劣没结果。</p>
+<p>希望楼主再爆料点。这个大粉丝说的就是Guido了吧？这套系统说的就是Rietveld？Java的版本说的是Gerrit吗？可是Gerrit不是早就有了吗？难道你们内部用的不是开源的Gerrit？另外，GAE的Python版本你们内部有什么评价呢，比起Java和Go的呢？也觉得质量不行吗？Guido干得不爽才走了吗？谢谢。</p>
+<p>我用过Rietveld，是Python语言本身在用的review工具，感觉风格挺老旧的。还没见有别的项目用这个东西。</p>
+<p>发信人: YABC (Yet Another BBS Client), 信区: Python<br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了<br />
+发信站: 水木社区 (Sat Dec  7 10:41:11 2013), 转信</p>
+<p>Gerrit是这个项目的Java的fork，很多大项目在用。从这点说Guido开创的这个Python项目算成功的。当然后面的自然会吸取前面的教训，做得更好是应该的。</p>
+<p>发信人: iJava (简单美好), 信区: Python<br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了<br />
+发信站: 水木社区 (Sat Dec  7 14:28:56 2013), 转信</p>
+<p>这个帖子满精彩的,俺就8了一下:</p>
+<p>楼长说的那个系统应该就是Mondrain,从来没有开源的.这里有详细的介绍,包括对g公司的code review process.</p>
+<p>http://www.youtube.com/watch?v=sMql3Di4Kgc</p>
+<p>发信人: yueq (yueq), 信区: Python<br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了<br />
+发信站: 水木社区 (Sat Dec  7 16:09:34 2013), 转信</p>
+<p>根据楼主的描述，是Google的内部code review工具：）。</p>
+<p>发信人: yueq (yueq), 信区: Python<br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了<br />
+发信站: 水木社区 (Sat Dec  7 16:15:16 2013), 转信</p>
+<p>旧系统Mondrian<br />
+新系统Critique</p>
+<p>如大家上所述，我觉得楼主对于UT、OOP的理解还有待加强。</p>
+<p>（我也在G家某组用PYTHON）</p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Mon Dec  9 11:51:08 2013), 转信   </p>
+<p>我们采用的连续上线的开发模式，每周发布一次增量版本，所以大概从第一个月就已经开始有Java code在产品中稳定运行了。同时我们也在把Python的代码分割成很多小的模块，方便与Java代码集成。从第一行Java code开始写，直到删掉Python部分的核心逻辑，大概用了9个月时间，其中后几个月已经是Java代码负责大部分功能，剩下一些不重要的小功能仍然依靠旧的Python代码实现。我在前面的帖子也提到，在一点一点切换到新系统的过程中，整个系统完全不间断运行，感觉就像给飞行中的飞机换引擎。   </p>
+<p>因为是非常短周期的增量开发模式，所以并没有一般意义上的“调试”期。测试主要依靠单元测试和一些自动集成测试，所以也没有一般意义上的“测试“期。新代码上线的时候我们也会采用10%发布的方式，也就是把10%的负载导入新系统，剩下90%的负载在旧系统，然后在逐渐提高新代码负载直到完全替代旧系统 。新代码上线之后就会删掉相应的旧代码。需要说明的是因为新系统的设计和过去很不一样，所以整个过程并不是按照Python代码翻译成Java，而是全新的设计，但是又在任何时刻都兼容老的代码。实现这种高度的连续平滑发布其实是相当困难的。   </p>
+<p>【 在 wificamera (wificamera) 的大作中提到: 】  <br />
+重写编码+调试+测试 到最后稳定运行 一共花了多少时间</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-12-06T05:50:00+00:00">2013-12-06</time></p>
 <p>archive</p>            </div>
@@ -752,7 +1109,20 @@ for vec in permutations(cols):
 <p>sublime处理中文路径一直很bug。需要修改 /Data/Packages/Default/exec.py:45 行：</p>
 <pre><code>    for k, v in proc_env.iteritems():
         nv =  os.path.expandvars(v)
-        if isinstance(v, unicode …</code></pre></p>
+        if isinstance(v, unicode):
+            import locale
+            nv = nv.encode(locale.getdefaultlocale()[1])
+        proc_env[k] = nv
+</code></pre>
+<p>然后菜单 Tools -&gt; Build System -&gt; New...</p>
+<pre><code>{
+    "cmd": ["go", "run", "$file"],
+    "path": "D:/dev/go/bin",
+    "file_regex": "^(.+):([0-9]+):.*",
+    "env": {"GOROOT": "D:/dev/go"}
+}
+</code></pre>
+<p>这就是Go的配置咯。然后就Ctrl+B了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-12-02T01:25:18+00:00">2013-12-02</time></p>
 <p>archive</p>            </div>
@@ -782,7 +1152,31 @@ for vec in permutations(cols):
               <h2 class="card-title">bitcoin —— 末日的狂欢</h2>
             </a>
             <p class="card-text"><p>bitcoin —— 末日的狂欢</p>
-<p>bitcoin的出现，对于每一个geek和码农都是boner级别的兴奋的。码农对金融这块“白富美”垂涎已久，过去能接入银行API的，少之又少。而bitcoin直接把胚胎状的一个“白富美”免费送给了每 …</p></p>
+<p>bitcoin的出现，对于每一个geek和码农都是boner级别的兴奋的。码农对金融这块“白富美”垂涎已久，过去能接入银行API的，少之又少。而bitcoin直接把胚胎状的一个“白富美”免费送给了每一个愿意上的人。Programmable money。多么响亮的口号。</p>
+<p>bitcoin有更多响亮的口号，让一批先驱者坚信不移的认为这是未来。也让另一部分怀疑者直接给bitcoin打上“传销”的标签。</p>
+<p>比如说p2p。对于geek来说，这就是 安全，潮，不可阻止。对于hash构成的blockchain，对于pseudo geek来说，这就是牛逼算法和创新。但是我觉得，blockchain就是末日的狂欢。</p>
+<p>什么是bitcoin？bitcoin就是一个冻结blockchian的p2p网络。为什么bitcoin能火？我觉得这就得从货币、交易和支付的本质说起。钱是啥？钱的<a href="http://www.douban.com/note/317278205/">本质就是个“账簿”</a> 。A把10元钱给B，这个本质就是A的账簿-10，B的账簿+10 。交易本生，其实就是信息传递。</p>
+<p>过去信息传递的方式是什么？物物交换、黄金货币、纸币等等。但是这些手段都有一个致命的问题——物物交换可能以次充好，黄金——黄金富矿产地对你有绝对先天优势。纸币——只要央行愿意，想印多少印多少。你以为印出来的钱怎么才能流入市场？直接花掉。空手套白狼。就这么简单。</p>
+<p>这些原始落后的机制都不能保证滥发、伪造、假币和double spending问题。所以各国的货币都是被政府严格控制的。如果每个人都发行自己的货币，后果可想而知。总之，货币的作用，就是个大家公认的账簿。</p>
+<p>现在bitcoin出现了。bitcoin的ledger，也就是blockchain，有效性不是政府信用、或者银行抵押保证的。而是通过密码学算法保证的。扳着脚指头都知道bitcoin不可能有假币。当然，如果某一天能秒破sha256了，也就是P=NP，那么bitcoin就瞬间彻底完蛋。</p>
+<p>bitcoin如何发行？如何被全世界的人接受？这个就是bitcoin历史最传奇部分了。bitcoin只发行给early adopter。也就是说，bitcoin是白送的。只要你参与，持有，bitcoin就是你的。如果没有人愿意去挖矿，那么整个bitcoin网络可以被轻松黑掉。这就是bitcoin传销的一面。</p>
+<p>扯了这么多，说下我真正想说的。这个末日，是旧世界的结束，新时代的开始。我们正在目睹人类历史上最重要之一的历史演变：</p>
+<ul>
+<li>要么政府抵制它，那么政府迟早完蛋，被拥抱bitcoin，或者类bitcoin的政权替代。</li>
+<li>要么政府拥抱它，那么100年以后，bitcoin/类bitcoin变得再平常不过了，人们回顾21世纪初的货币界和金融业，觉得非常滑稽和奇怪的。</li>
+</ul>
+<p>我猜，除了政府发疯，bitcoin会被乐意接受的。理由很简单。bitcoin太容易征税了。bitcoin的blockchain，就是一套完美的征税机器。</p>
+<p>虽然有臭名昭彰的silk road，bitcoin也太容易洗白了。第一步就是挖矿必须排他，政府认证的节点才能参与。第二步就是自然人、企业法人分配一个法定wallet，私人拥有未知wallet，和未知wallet交易非法。搞定。</p>
+<p>对于我这种无政府主义和乌托邦主义者，这就是末日。也是很多pseudo geek未预料到的枷锁。</p>
+<p>我个人还是比较推崇纸币的作用的。匿名。不可控。用完就丢。bitcoin？哎哟喂我草随机分配的一个质数跟你一辈子了。除非你去 <a href="https://news.ycombinator.com/item?id=6787603">laundering</a> 否则不可能甩掉。</p>
+<p>bitcoin的bug？太大了。首先是小额交易极度浪费计算力，所以直接就在协议层给禁用了。虽然说bitcoin很细分到一亿倍，但是这也是需要很多节点同意改协议才行的。还有就是bitcoin交易延迟，不适合发达、实时、高速现代商业。</p>
+<p>然后。一些国家还是有sb举动去分裂bitcoin网络的。一套协议，多个实现，多个实例。双轨制，内外有别什么的。对外，国家会发疯似得给每一个transaction加上国家属性；对内，会孜孜不倦尝试给每一笔交易打上合法和非法的标签。这些都是可以被强权推动的隐患。</p>
+<p>但是<a href="http://www.36kr.com/p/207918.html">bitcoin还得涨</a>。 其最具隐蔽性，也是最具杀伤力的特性就是：可编程。</p>
+<p><a href="https://en.bitcoin.it/wiki/Script">https://en.bitcoin.it/wiki/Script</a></p>
+<p>可编程到什么程度：bitcoin的协议实现了一套字节码，每一笔交易都是一个图灵完备的VM虚拟机</p>
+<p>就那转账来说，支付宝能实现方便的三方转账吗？网银汇款可以实现吗？</p>
+<p>再比如我需要发起一项收款，比如100个人给我打10,000元才能交易成功。这个在现实世界怎么保证？签订合同，由《合同法》法律效力执行。bitcoin的世界呢？由密码学签名保证。kickstarter众筹，就可以在bitcoin网络里如此低成本、无风险、轻松实现。这玩意，我个人觉得是势不可挡，前途无量。</p>
+<p>最后，也有很多人问我，你挖矿没，买bitcoin没。很惭愧。我从2010年知道这事儿，2011年开始<a href="https://blockchain.info/address/19DKZpkThTAFcSnWyxJZn7HKzyo1ia6rxr">持有0.11个</a>。然后就因为一直很懒。就看潮起潮落了。至于建议，我的建议是：不要无脑入，也不要抵制。要参与至少一起bitcoin交易和挖矿，真实的去感受它是怎么回事</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-11-26T17:17:00+00:00">2013-11-26</time></p>
 <p>archive</p>            </div>
@@ -799,7 +1193,37 @@ for vec in permutations(cols):
             <p class="card-text"><p>est注：这文章很好。说明了现在一个audience问题。</p>
 <ol>
 <li>支持转基因的，基本都不是需要天天做饭买粮的</li>
-<li>真正转基因种子消费者——种地的，压根不 …</li></ol></p>
+<li>真正转基因种子消费者——种地的，压根不会理会那些科普辟谣</li>
+</ol>
+<p>发信人: zrliu (skywalker), 信区: GuoJiXue <br />
+标  题:  为啥转基因双方互相无法说服对方？zz <br />
+发信站: 水木社区 (Sat Nov  2 01:03:47 2013), 站内   </p>
+<p>【 以下文字转载自 EconForum 讨论区 】 <br />
+发信人: zrliu (skywalker), 信区: EconForum <br />
+标  题:  为啥转基因双方互相无法说服对方？zz <br />
+发信站: 水木社区 (Sat Nov  2 01:02:37 2013), 站内   </p>
+<p>http://blog.sina.com.cn/s/blog_5513b1cd0102eef9.html <br />
+文/端宏斌   </p>
+<p>在笔者的《一篇文章搞懂转基因的真相》发表之后，收到的评论是争锋相对互不相让。反对转基因的人看完更加反对，支持转基因的人看完更加支持。换言之，这篇文章让大家都更加坚信自己之前的看法，更加相信自己掌握了真理，更加确信对方就不是坏蛋就是傻X。   </p>
+<p>其实，我要的就是这个效果，因为那篇文章的目的就是要引出现在这篇文章。   </p>
+<p>以色列的诺贝尔经济学奖获得者罗伯特·奥曼曾经发表过一篇文章，名叫《不一致的达成》，他的结论是，对于两个完全理性而真诚的人而言，辩论的结果必然是双方达成一致。如果争了个脸红脖子粗也毫无结果，那么必定至少有一方不理性或是不真诚。   </p>
+<p>从转基因问题的辩论来看，完全符合上面这个结论。支持转基因的人，认为反对转基因的人毫无理性可言，他们根本就是一群科盲，一群文傻，这路人简直就无法进行交流。而反对转基因的人，认为支持转基因的人，根本就是转基因公司的枪手，干的是拿钱发帖的活，说不定还是孟山都拨的款，他们立场可疑，说的话无法令人相信，这路人也无法进行交流。   </p>
+<p>看见没？这群人认为另一群人不理性，另一群人认为这群人不真诚。这就是他们辩论完了之后的结果，这种辩论的效果为零，还不如不辩论。   </p>
+<p>老端作为一个物理系毕业的理工男，以前一直就支持转基因，因为我认为“不理性”的指责成立，而“不真诚”的指责不成立，换言之我不信那些阴谋论。但是，即使如此，现在我仍然放弃了原先的立场。这篇文章就是告诉你为什么，以及讨论双方达成一致的可能性。   </p>
+<p>我们先来做个“哲普”，哲学家大卫·休谟提出了一个“休谟法则”，简单的讲，任何一件事物都包括一个“事实判断”和一个“价值判断”，事实判断解决的是“这玩意儿是个啥？”的问题；而价值判断解决的是“这玩意儿好不好？”的问题。现在重要的结论来了，休谟认为事实判断不能导出价值判断，即事实不能决定价值。   </p>
+<p>我们来举个简单的例子，女人更容易对高富帅动心，这是一个事实，那么对于高富帅来说，这可能是一件好事，对于屌丝来说，这可能就不是一件好事。同样的，即使是女人，这件事也意味着不同的价值判断。   </p>
+<p>《韩非子》这本书很有趣，里面讲了很多小故事，全是关于你应该如何说服对方的故事。我记得有个故事是这么讲的：话说楚国的伍子胥出逃，跑到边境上被小吏抓住了。伍子胥就对小吏说：大王要抓我，是因为我手里有绝世美珠，但是现在已经弄丢了，我会告诉大王，是你抢走并且吞了下去！小吏想了想，决定放走了伍子胥。他认为抓住伍子胥可能是立功，但万一大王脑子糊涂真信了伍子胥的话，自己就惨了，所以还是别惹祸上身了吧。   </p>
+<p>上面这个故事告诉你一个简单道理，如果你想说服一个人，你必须用价值判断去打动他，如果你跟他费了半天的劲儿去做事实陈述，这完全是白费力气。如果伍子胥跟小吏说，大王是无道昏君，已经杀了我全家，现在还要杀我。这小吏一定不会放他跑，就算你全家被杀，跟我又有什么关系呢？   </p>
+<p>下面我们再来说转基因。转基因的支持者很喜欢举的一个例子是当初詹天佑修铁路，很多老百姓都跑出来反对，说这玩意儿让列祖列宗躺在坟地里都不得安宁，所以不应该修。他们拿铁路来类比转基因，意思是你们反对转基因脑子太糊涂。但事实上，詹天佑修铁路的时候，没有什么老百姓反对，只是他的铁路要穿过某大官的祖坟，这家人不同意，要求更多补偿而已。看来不仅反转基因的会编故事，支持转基因的同样会编故事。   </p>
+<p>历史上任何一项好的发明创造，只要让老百姓看到了好处，那么老百姓是从来不会拒绝的。就拿汽车为例，中国每年死于交通事故的人多达7-10万，受伤的人是这个数字的4-5倍，但老百姓根本不拒绝汽车。因为汽车有看得见的好处。那么请问，转基因食品有什么看得见的好处吗？跟我们平时吃非转基因食品相比，又强在哪里呢？如果我家孩子吃了转基因玉米，考试都考100分，那么立马所有妈妈都会选择转基因食品，这根本就不需要你去花力气推广。   </p>
+<p>看得见的好处几乎没有，而看不见的坏处却吓死人。吃完之后万一变异了怎么办？头上长犄角，身后长尾巴怎么办？变异可能太夸张了，那么万一患上糖尿病、心脏病、哮喘、癌症怎么办？即使概率非常非常小，但我不能让我的孩子冒这个险啊。   </p>
+<p>就算转基因的食物真的好，那么我也有选择不吃的权力！你可以发表各种研究证明猪肉其实是个好东西，但是穆斯林有选择拒绝的权力，这是价值判断。你的事实判断不能推导出我的价值判断，你没有权力来决定我应该吃什么。但是孟山都公司非常恶劣，他买通了政府，在美国并不要求你标注转基因，换言之你剥夺了我选择的权力。如果你认为转基因是好东西，那么请你大声喊出来，不要这么偷偷摸摸的。现在的情况是，“非转基因”食品标注了，“转基因”食品却不标注。   </p>
+<p>反转基因的人选择了走阴谋论的道路，这既好又不好。说这不好，是因为这原本是一个价值判断的问题，你非要搞成事实判断。编造了很多漏洞百出的事实，让对方抓到了无数把柄。说这好，是因为阴谋论特别适合大众传播。绝大多数老百姓是无法理解你的科学逻辑的，但是这些阴谋论他们一听就懂。如果要就转基因来个全民公投的话，反转基因群体将大获全胜，因为他们有群众基础。   </p>
+<p>转基因的支持者选择了走辟谣和科普的道路，但是这些人由内而外散发出来的智商优越感令人作呕，他们越是辟谣，这结果就是越把中立者推向对立面。已经有n个网友对我说，原本他是支持转基因的，但是看到方舟子们的丑陋的表演，他开始越来越反对转基因，我想这是不少人的真实心态。   </p>
+<p>我想给转基因的支持者们支个招，你必须要知道，决定家里吃什么的是中国大妈，而大妈对科普是免疫的，因此你们写那么多科普文，人家根本不看。但如果你能把转基因大米塞进“中央特供”食品里，那么大妈自然就会买转基因，大妈的逻辑是，给习总李总吃的，总不可能是坏东西吧，那我们肯定也能吃！所以你最好别拿湖南的小学生来做实验，而是拿政治局委员去做实验。   </p>
+<p>转基因食品的价格通常都比较便宜，但这不是优点反而是缺点，人的常识就是“一分价钱一分货”，既然你便宜，那么自然就有便宜的道理，人们本能就认为你的东西品质较差。所以我再支个招，那就是大幅提高转基因食品的价格。   </p>
+<p>讲个瑞士手表逆袭的故事。话说当年小日本发明了石英表，这让瑞士手表业受到了巨大的冲击，瑞士产的最好的机械表，论精确性都不如人家低档的石英表。如果比精度，那么瑞士人完败。好在瑞士人聪明，立马大幅提高价格减少产量，把手表的主要功能从计时转变成了装b，瑞士钟表业活过来了，而且活得非常滋润。那些买了瑞士表装b的人也不承认自己装b，反而开始吹嘘瑞士表的艺术性和收藏价值。   </p>
+<p>总结一下我的建议，如果你想推广转基因食品，那么最靠谱的办法就是忽悠老百姓说：这是一种权力（高官吃）和金钱（土豪吃）的高端生活，或者就拿出看得见的好处，让吃转基因的小孩门门功课100分。否则的话老百姓是不会听你的。可能你很懂科学，但是你不懂人性。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-11-02T22:05:18+00:00">2013-11-02</time></p>
 <p>archive</p>            </div>
@@ -856,7 +1280,21 @@ fUWlLfAlsHpGFDfI4XsFOUWkA7Q=
 </code></pre>
 <p>折腾了好久 reload(sys) sys.setdefaultencoding() locale.setdefaultlocale() </p>
 <p>后来发现是os.environ["LANG"]居然为空。这尼玛为毛啊。</p>
-<p>LANG为空也就算了 …</p></p>
+<p>LANG为空也就算了，发现另外一个神奇的bug：</p>
+<pre><code>$ export LC_ALL=en_US.UTF8
+$ python -c "print __import__('locale').getdefaultlocale()"
+('en_US', 'UTF8')
+
+$ export LC_ALL=en_US
+$ python -c "print __import__('locale').getdefaultlocale()"
+('en_US', 'ISO8859-1')
+
+$ export LANG=
+$ python -c "print __import__('locale').getdefaultlocale()"
+('en_US', 'ISO8859-1')
+</code></pre>
+<p>ISO8859-1 就是臭名昭著的latin-1编码也就是最脑残不过的 ascii 编码。反生产力啊。</p>
+<p>感谢 killkeeper :D</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-10-16T01:59:00+00:00">2013-10-16</time></p>
 <p>archive</p>            </div>
@@ -877,7 +1315,12 @@ Principal Scientist, Search)  <br />
 Sundar Pichai －Senior Vice President, Android, Chrome &amp; Apps  <br />
 Vic Gundotra － Senior Vice President, Social (Google plus,  <br />
 Hangouts, etc.)  <br />
-Krishna Bharat - Principal Scientist (User …</p></p>
+Krishna Bharat - Principal Scientist (User interface and  <br />
+algorithmic support, creator of Google News)  <br />
+Manik Gupta - Group Product Manager, Google Maps6:20 AM  <br />
+三哥威武！  <br />
+谷三哥帝国万岁！    </p>
+<p>出处是北美壕一只。我就不说破了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-10-08T21:04:02+00:00">2013-10-08</time></p>
 <p>archive</p>            </div>
@@ -909,7 +1352,54 @@ Krishna Bharat - Principal Scientist (User …</p></p>
             <p class="card-text"><p>发信人: x414 (安卓工程师), 信区: DigiHome <br />
 标  题: 小米电视研发工程师在线答疑 仅限今晚 <br />
 发信站: 水木社区 (Thu Sep  5 20:07:39 2013), 站内   </p>
-<p>Q: 哪家 …</p></p>
+<p>Q: 哪家的主控芯片？ <br />
+A: 高通8064    </p>
+<p>Q: 为啥没分量 <br />
+A: 印象中有 待确认  另外即使没有也没什么   </p>
+<p>Q: 遥控器2.4G么 <br />
+A: 遥控器有红外和蓝牙两款   </p>
+<p>Q: 内置了有线机顶盒吗？ <br />
+A:没有 不过可和平相处   </p>
+<p>Q: 以后硬件像CPU内存主板什么的如何升级呢？能整体拆下来更换吗？ <br />
+A: 整个使用寿命应该无需升级了  软件会保持升级   </p>
+<p>Q: : 这是操作系统的cpu？电视上有没有视频主控或者音频主控这么个概念？这玩意儿一个人兼任了？还是用了别家产品？ <br />
+A: 高通+mstar   </p>
+<p>Q: 如果要正常看电视的话，是不是要外接一个有线机顶盒？ <br />
+A: 是的  这个信号来源还是要的   </p>
+<p>Q: 看网站参数，音频解码只能DTS2.0？ <br />
+A: 是2.0   </p>
+<p>Q: 那个附送的有线机顶盒是怎么回事？ <br />
+A: 有了他就不需要现有超大的机顶盒了   </p>
+<p>Q: 其实是想问MEMC那颗 <br />
+A: mstar   </p>
+<p>Q: (迷你高清数字电视盒)就是小米盒子？买电视送价值300的盒子？ <br />
+A: 不是的  迷你高清数字电视盒不仅可以接收有线数字信号， <br />
+同时将频道搜索、频道管理等内容进行优化，让看电视更加简单方便，同时提供电子节目单， <br />
+不错过每一个精彩的电视节目，还可以依据您的观看习惯进行智能分类。   </p>
+<p>Q: 遥控器带不带加速度传感器？玩塞车游戏可以当方向盘不？ <br />
+A: 不带的  另有游戏手柄的  游戏体验不错   </p>
+<p>Q: 同时使用LG和三星的屏幕，但是由一家代工，目的是什么？ <br />
+A: 屏幕一般都会有second source的   </p>
+<p>Q: 电视墙获取实时频道截图，原理是什么？是各频点扫描还是从互联网获取？ <br />
+A: 频道序号貌似就是按照频率排序的   </p>
+<p>Q: 那支持航天有线么？ <br />
+A: 不确定  不过如果有机顶盒的话 接入就好   </p>
+<p>Q: 不知道前面问过没，HDMI支持ARC吗？ <br />
+A: 赞问题 这个需要去确认   </p>
+<p>Q: 蓝牙遥控器也没有重力感应和陀螺仪么？也没有语音功能了？ <br />
+A: 确定有语音功能  其他的不确认   </p>
+<p>Q: 不会 ，second source对应的会是second vendor，你们两个屏都用纬创，显然不是second source的问题。目前国内的模拟信号不带频道信息，所以我很想知道你们如何拿到这个的 <br />
+A: wistron是代工  屏是lg 三星   </p>
+<p>Q: 今天没看见秀语音功能啊，语音用的是谁家的方案啊 <br />
+A: 好几家备选  最终选了哪家我忘   </p>
+<p>Q: 我知道，我是说你们两个屏都用微创代工，所以这不是second source的问题，三星和LG的产能都没问题，所以应该是ODM的产能问题才可能影响产量 <br />
+A: 好吧 两种second source 供应商和odm   </p>
+<p>Q: 播放视频支持字幕吗 <br />
+A: 支持   </p>
+<p>Q: 投影视频，图片支持其他手机吗 <br />
+A: 支持 并对主流机型做过兼容性优化   </p>
+<p>Q: 有摄像头没 <br />
+A: 作为配件的</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-09-05T22:00:46+00:00">2013-09-05</time></p>
 <p>archive</p>            </div>
@@ -926,7 +1416,9 @@ Krishna Bharat - Principal Scientist (User …</p></p>
             <p class="card-text"><p>都无聊得去逛 r/china 了</p>
 <blockquote>
 <p>Tipping was a custom invented by employers as a way to justify paying lower wages. Basically employers can say I don't need to give you a living wage because you can depend on the customers for charity.<br />
-Also don't forget it …</p></blockquote></p>
+Also don't forget it places pressure on the rest of society who require taxis as part of the transportation network. Next time that single mother in the rain is late for her 900rmb a month job can't get the taxi because the group of rich foreigners is more likely to tip.</p>
+</blockquote>
+<p><a href="http://www.reddit.com/r/China/comments/1ko68m/ingenious_scam_i_spotted_in_a_brochure_from_a/cbr5msg">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-08-19T22:21:39+00:00">2013-08-19</time></p>
 <p>archive</p>            </div>

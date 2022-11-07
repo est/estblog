@@ -63,7 +63,46 @@
 
 <p>那么下面两个网址能否命中这个匹配呢？</p>
 
-<pre><code>http://james.lab6.com/%D9%A2%D9%A0 …</code></pre></p>
+<pre><code>http://james.lab6.com/%D9%A2%D9%A0%D9%A0%D9%A8/
+
+http://james.lab6.com/%F0%9D%9F%AE%F0%9D%9F%AC%F0%9D%9F%AC%F0%9D%9F%B4/
+
+</code></pre>
+
+<p>结果是可以命中的。</p>
+
+<p>第一个URL是/٢٠٠٨/，包含了4个unicode字符</p>
+
+<pre><code>٢ U+0662 ARABIC-INDIC DIGIT TWO
+٠ U+0660 ARABIC-INDIC DIGIT ZERO
+٠ U+0660 ARABIC-INDIC DIGIT ZERO
+٨ U+0668 ARABIC-INDIC DIGIT EIGHT
+</code></pre>
+
+<p>第二个URL是/&amp;#x1D7D0;&amp;#x1D7CE;&amp;#x1D7CE;&amp;#x1D7D6;/：</p>
+
+<pre><code>U+1D7D0 MATHEMATICAL BOLD DIGIT TWO
+U+1D7CE MATHEMATICAL BOLD DIGIT ZERO
+U+1D7CE MATHEMATICAL BOLD DIGIT ZERO
+U+1D7D6 MATHEMATICAL BOLD DIGIT EIGHT
+</code></pre>
+
+<p><code>\d</code>能匹配这些字符并不是python的bug，因为Python能正确转换Unicode到对应数字</p>
+
+<pre><code>Python 2.6.3 (r263rc1:75186, Oct  2 2009, 20:40:30) [MSC v.1500 32 bit (Intel)] on win32
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; int(u&#39;\u0661&#39;)
+1
+&gt;&gt;&gt; int(u&#39;１&#39;)
+1
+</code></pre>
+
+<p>结论：以后多用<code>[0-9]</code>少用<code>\d</code></p>
+
+<p><ins>更新1：</ins><br>
+MATHEMATICAL BOLD DIGIT这个Unicode太威武了，MySQL没法存，我的blog第一次保存直接被截断了。。。我说怎么blog后面一大段内容不见了。。。用这个特性来防止被复制粘贴，被小偷程序采集入库应该很爽。</p>
+
+<p>换成HTML标记保存下来了，可是markdown语法的空四格代码段又不支持HTML标记。。。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-11-14T10:17:42+00:00">2010-11-14</time></p>
 <p>archive</p>            </div>
@@ -79,7 +118,22 @@
             </a>
             <p class="card-text"><p>自己用VMWare Thinapp做了个绿色便携版的Evernote 4，导入积累了3年的Onenote 2007/2010一大堆杂七杂八的东西。以后准备抛弃Onenote 2007/2010，投靠Evernote 4和其云存储、云同步平台了。</p>
 
-<p>Evernote 4 for Windows是Evernote的第四个版本，也是用原生C++重构的第一个版 …</p></p>
+<p>Evernote 4 for Windows是Evernote的第四个版本，也是用原生C++重构的第一个版本，有以下特性和使用感受：</p>
+
+<ul>
+<li>中文乱码问题得到了解决</li>
+<li>启动速度，搜索速度比Onenote 2007/2010快多了。</li>
+<li>memory footprint：托盘图标最小化只占用2MB左右内存。相当满意。</li>
+<li>Evernote没有像Onenote那样给笔记本加密码功能。实际上，我导入老Onenote资料的时候，有个笔记本的密码忘记了。纠结。。。</li>
+</ul>
+
+<p>目前暂时没有发现任何致命的bug，以后有update再写博客。目前对Evernote 4的评价是：推荐。</p>
+
+<p>参考：<br>
+Evernote 4 for Windows下载<br>
+<a href="http://evernote.s3.amazonaws.com/win4/public/Evernote_4.0.1.2927.exe">http://evernote.s3.amazonaws.com/win4/public/Evernote_4.0.1.2927.exe</a><br>
+Evernote v4:速度明显提升 界面更加紧凑<br>
+<a href="http://xbeta.info/evernote-win-v4.htm">http://xbeta.info/evernote-win-v4.htm</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-11-13T16:02:54+00:00">2010-11-13</time></p>
 <p>archive</p>            </div>
@@ -101,7 +155,7 @@
 
 <p>可能需要最新的Chrome Dev才有这个功能。</p>
 
-<p>如果你不是很喜 …</p></p>
+<p>如果你不是很喜欢用WebInspector的Resources功能可以考虑用这个试试。HTTP的request header和response header都能看到。用来诊断某奴隶制集权国家人为网络障碍很有用。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-11-12T08:38:03+00:00">2010-11-12</time></p>
 <p>archive</p>            </div>
@@ -133,7 +187,11 @@
 shader/unc<br>
 code/ized</p>
 
-<p>这个demo的shader的作者unc有个vimeo页面。<a href="http://www.vimeo.com/user1470568/videos">http …</a></p></p>
+<p>这个demo的shader的作者unc有个vimeo页面。<a href="http://www.vimeo.com/user1470568/videos">http://www.vimeo.com/user1470568/videos</a></p>
+
+<p>下载： <a href="http://pouet.net/prod.php?which=55758">http://pouet.net/prod.php?which=55758</a></p>
+
+<p>运行环境：Windows。我的GT 330m 1G显存显卡表示很有压力。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-11-12T07:38:43+00:00">2010-11-12</time></p>
 <p>archive</p>            </div>
@@ -156,7 +214,7 @@ code/ized</p>
 
 <p>才能翻到最后一页。。。</p>
 
-<p>新浪微博的 …</p></p>
+<p>新浪微博的确给力 <a href="http://t.sina.com.cn/1739928273">http://t.sina.com.cn/1739928273</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-11-11T05:48:52+00:00">2010-11-11</time></p>
 <p>archive</p>            </div>
@@ -197,7 +255,24 @@ code/ized</p>
 未　　知        r=2&amp;
 未　　知        f=2&amp;
 尺　　寸        s=300:585&amp;
-搜索 …</code></pre></p>
+搜索词语        query=site:blog.est.im&amp;
+语　　言        hl=en&amp;
+ GeoLoc        gl=us&amp;
+　缩略图        d=http://blog.est.im/&amp;
+未　　知        b=1&amp;
+jsonp回调      jsonp=google.vs.r&amp;
+注释[1]        a=AIYkKU_hhVJ7rY4KlAORKYPDGvRjuWMaXg&amp;
+留　　空        rs=
+</code></pre>
+
+<p>注释[1]：这个是Google防止采集的签名值，在搜索结果页面的源码中<code>div class=vsc sig=</code>后面那一串东西</p>
+
+<p>话说Google的搜索页面(Jazz UI)越来越复杂了。根本没有以前的清新和简洁了啊。</p>
+
+<p>2、Youtube有个API可以分析视频的metadata，例如<br>
+<a href="http://gdata.youtube.com/feeds/api/videos/lsV500W4BHU?alt=json">http://gdata.youtube.com/feeds/api/videos/lsV500W4BHU?alt=json</a><br>
+不过呢这个API其实有个比较悲剧的反馈循环：用户上传MTV -&gt; 被Youtube扫描得出版权信息  -&gt; 视频被版权方撤下 -&gt; 用户继续上传模糊、扭曲、形变处理过或者关键判断点加入噪音噪点 -&gt; 直到youtube无法识别为止。<br>
+所以呢，长时间下去，这个API等于没用。因为能存活在youtube的，值得一看的视频都是这个API没法探测出来的。LOL</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-11-10T06:25:59+00:00">2010-11-10</time></p>
 <p>archive</p>            </div>
@@ -233,7 +308,19 @@ code/ized</p>
 
 <p><img src="http://blog.est.im/wp-content/uploads/2010/11/2010-11-08_110339.png" alt=""></p>
 
-<p>搞毛啊搞毛啊，怎么youtube也有这么操蛋SB的特性？老子辛辛苦苦缓冲完的视 …</p></p>
+<p>搞毛啊搞毛啊，怎么youtube也有这么操蛋SB的特性？老子辛辛苦苦缓冲完的视频一全屏就没法看了。</p>
+
+<p><a href="http://www.google.com/support/forum/p/youtube/thread?tid=308caadf9852cab3"><img src="http://blog.est.im/wp-content/uploads/2010/11/2010-11-08_110110.png" alt=""></a></p>
+
+<p>youtube的烂也不是第一次听说了。前些日子Youtube开发人员在reddit上做了一个互动问答，他们<a href="http://www.reddit.com/r/IAmA/comments/bcb14/_/c0m1yz3?context=3">承认</a>youtube的部分设置是保存在<strong>浏览器cookie</strong>里的。对的，你没听错，youtube的服务器连设置都没法保存。账户一登出设置就还原成默认了，一换浏览器/双系统设置就没了。这么坑爹的东西也能被设计出来。（但是，这里必须承认并且赞赏youtube的透明和坦诚）</p>
+
+<p>既然这篇rant都喷了这么多了，那么就继续说下去了。youtube播放器还有另外一个非常操蛋的特性，假如你在站外播放一个embedded的youtube视频，你不小心点了一下播放器画面，那么，恭喜你，你的所有视频缓冲都没有了，浏览器将在新窗口打开你点的这个视频的youtube原始地址。开发人员真是脑袋被驴踢了。</p>
+
+<p>btw Google在一些局部表现真的太搓了。Google Groups<a href="http://groups-announcements.blogspot.com/2010/09/notice-about-pages-and-files.html?hl=en">开始</a>取消Welcome messages和wiki, files功能</p>
+
+<p>一个静态文件托管都做得有性能问题，还把责任往Google Sites上面推，一个Jotspot都被Google做成那个烂样子。真是收购不止毁站不倦。</p>
+
+<p>GTalk的Windows桌面版都放弃开发几百年了居然这几天有人推荐GTalk作为QQ替代。反正我的一个感觉就是Google的非核心业务烂得不能再烂了。早死早超生吧。不过咱们墙内人民根本不是Google的目标客户群，所以也只能忍了。想必Google根本不会care这些烂事。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-11-08T03:14:16+00:00">2010-11-08</time></p>
 <p>archive</p>            </div>
@@ -265,7 +352,29 @@ code/ized</p>
 
 <p>老外当时就SB了。。。</p>
 
-<p><a href="http://www.reddit.com/r/funny/comments/d8q2x/your_move_captcha/">Your move …</a></p></p>
+<p><a href="http://www.reddit.com/r/funny/comments/d8q2x/your_move_captcha/">Your move, captcha...</a></p>
+
+<p><img src="http://i.imgur.com/qfdZn.png" alt=""></p>
+
+<p>Unicode可以把文字倒过来，无语。。。</p>
+
+<p><a href="http://www.reddit.com/r/4chan/comments/czgyy/captchas_when_you_see_it_youll/">Captchas, when you see it, you'll... </a></p>
+
+<p><img src="http://i.imgur.com/kgx92.jpg" alt=""></p>
+
+<p><a href="http://www.reddit.com/r/pics/comments/dd2ug/wtf_this_recaptcha_is_impossible/">WTF this recaptcha is impossible!</a></p>
+
+<p><img src="http://i.imgur.com/5ED0j.png" alt=""></p>
+
+<p><img src="http://i.imgur.com/bbawH.jpg" alt=""></p>
+
+<p>reCAPTCHA君，你又出来欺负文盲了。</p>
+
+<p><a href="http://www.reddit.com/r/reddit.com/comments/cyhiy">Uh... I don't think I know how to spell that second one.</a></p>
+
+<p><img src="http://i.imgur.com/N3Mct.jpg" alt=""></p>
+
+<p>以后慢慢更新。哈哈。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-11-07T03:46:05+00:00">2010-11-07</time></p>
 <p>archive</p>            </div>
@@ -309,7 +418,19 @@ code/ized</p>
 
 <p>新闻报道参见<a href="http://www2.macleans.ca/2010/11/02/a-piece-of-their-mind/print/">A piece of their mind</a></p>
 
-<p>这个新闻给我 …</p></p>
+<p>这个新闻给我的启示，意识是什么？我想如果这对双胞胎长大有语言交流能力之后，这个案例将会给哲学和neuroscience带来一些有趣的发现。</p>
+
+<p>然后这个新闻给了我一个非常珍贵的meta启示。<em>假设</em>这个事情发生在天朝，我想我大部分的思考会集中在：我们的环境有害，食物有毒，体制问题，tg独裁，人间悲剧，妖孽出世，孟山都在中国进行秘密基因实验，日本阴谋企图消灭中国人种。等等。</p>
+
+<p>而一位老外则非常风趣的提出一个问题：</p>
+
+<blockquote>
+  <p>Have them play rock, paper, scissor against one another?</p>
+</blockquote>
+
+<p>我什么时候才能学会这种平静的态度，不怨天尤人，从另外一个角度思考问题的方式呢？</p>
+
+<p><a href="http://www.reddit.com/r/cogsci/comments/e1w87/twins_who_share_brains_thoughts_and_senses/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-11-06T13:18:09+00:00">2010-11-06</time></p>
 <p>archive</p>            </div>
@@ -353,7 +474,45 @@ code/ized</p>
 <p>新华网转载（<a href="http://news.xinhuanet.com/overseas/2010-10/28/c_12710434.htm">地址</a>）<br>
 <img src="http://blog.est.im/wp-content/uploads/2010/11/2.jpg" alt=""></p>
 
-<p>重庆 …</p></p>
+<p>重庆晚报隔日转载<br>
+<img src="http://blog.est.im/wp-content/uploads/2010/11/3.jpg" alt=""></p>
+
+<p>开始标题党了<br>
+<img src="http://blog.est.im/wp-content/uploads/2010/11/4.jpg" alt=""></p>
+
+<p>标题党2<br>
+<img src="http://blog.est.im/wp-content/uploads/2010/11/5.jpg" alt=""></p>
+
+<p>发信人: Mesopotamia (敌人的敌人不一定是盟友，也有可能是猪), 信区: MilitaryJoke<br>
+标  题: Re: 一夜殖民八百万<br>
+发信站: 水木社区 (Wed Nov  3 17:25:40 2010), 站内</p>
+
+<p>这个例子太帅了，新华网立功了</p>
+
+<p>“在韩非法滞留人数174万，其中中国804万”</p>
+
+<p>重庆晚报的编辑还挺负责<br>
+一看这数不对给改成1740万了</p>
+
+<p>sina网易原样照抄，各自依据网络习惯进行标题党<br>
+其中没有一个人想到去看看参考消息到底怎么说的</p>
+
+<p>这个例子实在典型的不能再典型了</p>
+
+<p>发信人: TATRA (托托), 信区: MilitaryJoke<br>
+标  题: Re: 一夜殖民八百万<br>
+发信站: 水木社区 (Wed Nov  3 18:01:25 2010), 站内</p>
+
+<p>首先丢了8.04万的小数点，然后后面转载的发现总人数居然比中国人还少，于是就又加个0.....<br>
+这些脑残的记者也太V5了...</p>
+
+<p>发信人: ranger20 (未老莫还乡), 信区: MilitaryJoke<br>
+标  题: Re: 一夜殖民八百万<br>
+发信站: 水木社区 (Wed Nov  3 17:32:25 2010), 站内</p>
+
+<p>主要是对数字没概念的人太多了<br>
+前几天北京晨报还说献血人群中仅有1.2%是医生，医生不积极献血，说明献血有害，blabla<br>
+丫不会想想医务人员占总人口比例才0.3%</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-11-04T14:43:11+00:00">2010-11-04</time></p>
 <p>archive</p>            </div>
@@ -367,7 +526,26 @@ code/ized</p>
             <a href="/archives/3142"  rel="bookmark" >
               <h2 class="card-title">2010年的10月，NASA宣布人类进入太阳系探索的黄金年</h2>
             </a>
-            <p class="card-text"><p>今夜看到这新闻让我想起不久前我才记录过的一个东西：<a href="http://blog.est.im/archives/2805">100年前的这个时候</a>，英国人、法国人、美国人，甚至日本人都在思考如何让人类飞起 …</p></p>
+            <p class="card-text"><p>今夜看到这新闻让我想起不久前我才记录过的一个东西：<a href="http://blog.est.im/archives/2805">100年前的这个时候</a>，英国人、法国人、美国人，甚至日本人都在思考如何让人类飞起来，中国人又在思考什么呢？</p>
+
+<p>2010-10-07，NASA在其<a href="http://science.nasa.gov/science-news/science-at-nasa/2010/07oct_yss/">官方网站头条新闻</a>宣布：2010年10月到2012年8月一系列的活动将开启人类对太阳系探索的黄金时代(The Year of the Solar System, aka YSS)。</p>
+
+<p>有下列事件：</p>
+
+<ul>
+<li>near the end of October 2010 with a visit to Comet Hartley 2. On Oct. 20th, Hartley 2 will have a close encounter with Earth; only 11 million miles away</li>
+<li>in November, NASA astrobiologists will launch O/OREOS, a shoebox-sized satellite designed to test the durability of life in space</li>
+<li>On December 7, 2010, Japan's Akatsuki (Venus Climate Orbiter) spacecraft grabs the spotlight when it enters orbit around Venus</li>
+<li>in 2011 as Stardust NExT encounters comet Tempel 1 (February 14), MESSENGER enters orbit around Mercury (March 18), and Dawn begins its approach to asteroid Vesta (May).</li>
+<li>2012 opens with Mars rover Opportunity running the first-ever Martian marathon.</li>
+<li>Sometime in mid-2012, Opportunity will reach Endeavour's lip and look over the edge deeper into the heart of Mars than any previous robotic explorer</li>
+<li>Meanwhile, halfway across the solar system, Dawn will fire up its ion engines and prepare to leave Vesta. For the first time in space history,</li>
+<li>The Year of the Solar System concludes in August 2012 when Curiosity lands on Mars. The roving nuclear-powered science lab will take off across the red sands sniffing the air for methane (a possible sign of life) and sampling rocks and soil for organic molecules.</li>
+</ul>
+
+<p>非常期待YSS给人类历史开启的新资料片。</p>
+
+<p>via <a href="http://www.reddit.com/r/space/comments/e0mc1/history_will_remember_the_period_oct_2010_through/">r/space</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-11-03T16:17:31+00:00">2010-11-03</time></p>
 <p>archive</p>            </div>
@@ -401,7 +579,23 @@ code/ized</p>
             </a>
             <p class="card-text"><p>今晚打开@rtmeme的时候囧到了，平时tg rant刷屏居然不见了，360和QQ这陀shitstorm开始刷屏了。两个破软件爱用不用直接都卸载了GTFO了事嘛。闹JB闹。</p>
 
-<p>不过发现360搞了个<a href="http://webapps.360.cn/webqq/index.htm">WebQQ桌面客户端</a>啊。虽然我下载的时候已经有声明书不 …</p></p>
+<p>不过发现360搞了个<a href="http://webapps.360.cn/webqq/index.htm">WebQQ桌面客户端</a>啊。虽然我下载的时候已经有声明书不能用了，但我发现一个安全问题：</p>
+
+<p>这是360搞的那个桌面客户端：</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/11/1.png" alt=""></p>
+
+<p>这是普通IE打开那个网页的截图：</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/11/2.png" alt=""></p>
+
+<p><a href="http://www.microsoft.com/china/msdn/library/webservices/WebApp/ProtectedMode.mspx">Internet Explorer 保护模式</a>是IE7引入的一个非常重要的安全功能</p>
+
+<p><img src="http://www.microsoft.com/china/msdn/library/webservices/WebApp/art/protmode_fig1.gif" alt=""></p>
+
+<p>直接用调用IE控件写桌面程序应该非常注意这一点才对。360专业搞安全的连这个都没搞对，看来肯定是克扣码农加班费了。码农的复仇!!!111!1</p>
+
+<p>btw 推上的idea很NB：<a href="http://twitter.com/rtmeme/status/29561786817">卸360送Q币活动</a>，<a href="http://twitter.com/rtmeme/status/29561482866">成为qq会员，可以同时使用360软件。</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-11-03T15:37:21+00:00">2010-11-03</time></p>
 <p>archive</p>            </div>
@@ -417,7 +611,28 @@ code/ized</p>
             </a>
             <p class="card-text"><p>这几周blog没怎么更新，倒是被一个botnet留了几百页的spam。发现user-agent都是统一的。<a href="http://wordpress.org/extend/plugins/wp-ban/">WP-Ban</a>这个插件可以屏蔽user-agent，但是设置了之后发现没有效果。一看源码这作者太n00b了。</p>
 
-<p>修改wp-ban.php文件91行左右： <code>vim …</code></p></p>
+<p>修改wp-ban.php文件91行左右： <code>vim ./wordpress/wp-content/plugins/wp-ban/wp-ban.php</code></p>
+
+<pre><code>foreach($banarray as $cban) {
+    #就是在这里注释掉2行，新增两行
+    #$regexp = str_replace ('.', '\\.', $cban);
+    #$regexp = str_replace ('*', '.+', $regexp);
+
+    $regexp = quotemeta ($cban) ;
+    $regexp = str_replace ('\\*', '.+', $regexp);
+
+    if(ereg("^$regexp$", $against)) {
+        print_banned_message();
+    }
+}
+</code></pre>
+
+<p>我的wordpress 2.9.1硬monkey patch改动太多没法升级了。囧rz。</p>
+
+<p><ins>更新1：</ins></p>
+
+<p>好吧，有漏网之鱼，User-agent是<br>
+<code>Mozilla/4.0 (compatible; MSIE 5.0; Windows 95) Opera 6.01  [en]</code></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-11-03T10:55:36+00:00">2010-11-03</time></p>
 <p>archive</p>            </div>

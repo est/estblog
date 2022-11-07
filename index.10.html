@@ -59,7 +59,24 @@
 <p>Explain:</p>
 <p>0x0001 means transaction ID. Invent one as you like  <br />
 0x0100 Flag. Always this for all requests  <br />
-0x0001 number of requests: always …</p></p>
+0x0001 number of requests: always 1. because DNS RFC sucks  <br />
+0x0000 Response: 0  <br />
+0x0000 Authority Response: 0  <br />
+0x0000 Additional Response: 0  <br />
+\6 reddit The string reddit has length of 6  <br />
+\3 com The string com has length of 3  <br />
+0x0001 Record Type: A  <br />
+0x0001: Class: IN. Always this.    </p>
+<p>then ping the last four bytes</p>
+<pre><code>$ ping 0x60.0x11.0xb4.0x89
+PING 0x60.0x11.0xb4.0x89 (96.17.180.137) 56(84) bytes of data.
+</code></pre>
+<p>Why DNS Resource Record Name is always C0 0C?</p>
+<p>It's compression.</p>
+<p>C00C = 11000000 00001100</p>
+<p>First two bits means it's a pointer, b1100 = 12 bytes offset.</p>
+<p>Reference:</p>
+<p>http://www.ccs.neu.edu/home/amislove/teaching/cs4700/fall09/handouts/project1-primer.pdf</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2014-01-16T03:31:00+00:00">2014-01-16</time></p>
 <p>archive</p>            </div>
@@ -73,7 +90,15 @@
             <a href="/post/73082214124"  rel="bookmark" >
               <h2 class="card-title">The Girl With The Dragon Tattoo</h2>
             </a>
-            <p class="card-text"><p>很早就知道这部神片，知道最近才在avfun上看了。记录一下影响最深的一句话，就是 Michel 准备逃下山却被喊住回去，然后被抓到地下室 …</p></p>
+            <p class="card-text"><p>很早就知道这部神片，知道最近才在avfun上看了。记录一下影响最深的一句话，就是 Michel 准备逃下山却被喊住回去，然后被抓到地下室的情节：</p>
+<p>Let me ask you something. Why don't people trust their instincts?</p>
+<p>They sense something is wrong, someone is walking too close behind them. You knew something was wrong. But you came back into the house.</p>
+<p>Did I force you? Did I drag you in? No. All I had to do was offer you a drink.</p>
+<p>It's hard to believe that the fear of offending can be stronger than the fear of pain, but you know what? it is.</p>
+<p>And they always come willingly. And then they sit there. They know it's all over, just like you do. <br />
+But somehow, they still think they have a chance. </p>
+<p>"Maybe if I say the right thing. Maybe if I'm polite. If I cry, if I beg." <br />
+And when I see the hope draining from their face like it is from yours right now I can feel myself getting hard.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2014-01-12T07:07:47+00:00">2014-01-12</time></p>
 <p>archive</p>            </div>
@@ -110,7 +135,9 @@
 <p><a href="http://www.slashroot.in/what-tcp-multipath-and-how-does-multipath-tcp-work">原理</a>也很简单，就是个inverse  multiplexer</p>
 <p><img alt="" src="http://www.slashroot.in/sites/default/files/Multipath%20TCP%20handshake.png" /></p>
 <p>我越来越觉得现在技术变化太快了。</p>
-<p>比如nginx现在就不支持MPTCP。假设一个客户端下 …</p></p>
+<p>比如nginx现在就不支持MPTCP。假设一个客户端下载一个MP3文件，经历了有线 -&gt; WIFI -&gt; 3G 三个步骤，那么access_log该怎么记录呢？记录几个IP呢？是否需要记录channel join和 断开时间呢？</p>
+<p>太多了问题了。</p>
+<p>感叹python再不拥抱realtime web就要被node和go淘汰了 :)</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-12-29T07:00:12+00:00">2013-12-29</time></p>
 <p>archive</p>            </div>
@@ -132,7 +159,8 @@ cols = range(n)
 for vec in permutations(cols):
     if n == len(set(vec[i]+i for i in cols)) \
          == len(set(vec[i]-i for i in cols)):
-        print ("\n".join('.' * i …</code></pre></p>
+        print ("\n".join('.' * i + 'Q' + '.' * (n-i-1) for i in vec) + "\n===\n")
+</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-12-09T01:34:00+00:00">2013-12-09</time></p>
 <p>archive</p>            </div>
@@ -150,7 +178,95 @@ for vec in permutations(cols):
 <p>发信人: daluobu (阿土仔), 信区: Python    <br />
 标  题: 终于把一个8万行的Python程序用Java重写了    <br />
 发信站: 水木社区 (Fri Dec  6 08:10:26 2013), 转信      </p>
-<p>在噩梦 …</p></p>
+<p>在噩梦般地维护了一年多一个8万多行的Python程序之后，终于争取到机会把这个破烂玩意用Java重写了一遍，大概是4万行Java左右。说说效果吧：    <br />
+1. 从过去平均每周down一次，到现在连续运转近半年只down过一次。    <br />
+2. 节省超过80%的cpu和内存    <br />
+3. 代码多了很多功能，过去无数因为系统太复杂无法实现的功能现在都能简单清爽地实现了。    <br />
+4. 单元测试真管用了，不是过去那种把代码反过来写一遍的滥用mock了。  <br />
+前后代码都是同一个team写的，写代码的人都不是菜鸟（顶级公司的核心团队）区别只有语言和几年的经验积累。      </p>
+<p>总结一句话就是：动态语言滥用起来真是可怕      </p>
+<p>珍惜生命，远离Python。      </p>
+<p>--      </p>
+<p>※ 来源:·水木社区 http://newsmth.net·[FROM: 216.239.45.*]      </p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Fri Dec  6 08:24:55 2013), 转信   </p>
+<p>刚开始写的时候以为就是随便hack一个小系统临时用用，结果慢慢发展到成为关键系统，负载巨大，而且还对宕机越来越敏感，导致不得不用Java重写。重写也不是那么简单的过程，半年多时间里面一个模块一个模块地替换，整个系统还不能停转一分钟，像是给一架飞行中的飞机换引擎。</p>
+<p>同样的故事在别的公司肯定也发生过好多次，写一个小东西玩玩结果变成了关键系统。我觉得我们团队的问题是几年前过分迷信Python，错过了在系统还不太复杂的时候重写的机会。   </p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Fri Dec  6 13:42:31 2013), 转信   </p>
+<p>原帖说的是一个10个人团队的故事，不是他自己。信与不信其实并不太重要，我发这个帖子也是纪念一下这个美梦成真的项目。如果有人有共鸣，那就已经很好了。   </p>
+<p>过去公司里面也是有不少迷信Python的人，重写系统的想法我在组里提了很多次，终于在一个Python大粉丝离开之后才得以实现。现在随着某Python之父的离开，公司里面粉Python的人也越来越少了。而且事实证明，那个Python之父带的项目（不是我们这个，比我们这个规模要大一些），用Java重写之后，不论功能还是性能还是新功能，也都明显好了很多，和我们组的经验相当吻合。   </p>
+<p>我觉得代码行数的节省也在于新系统更严谨的设计。Java鼓励精密的接口设计和简洁的代码关系，再加上Dependency Injection，代码的复用程度很高。Python完全没有接口的概念，一切类都是胡乱写，还可以动态增加新成员，导致代码复用的难度相当大，不修改地复用一个类还不引入bug简直是奇迹。   </p>
+<p>※ 来源:·水木社区 http://newsmth.net·[FROM: 216.239.45.*]   </p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Sat Dec  7 00:48:05 2013), 转信   </p>
+<p>这个项目里面，重构是一直在进行的，在过去的八年里面，用Python大规模地重构也发生过好几次。   </p>
+<p>决定用Java重写是很艰难的，不是某个人拍脑袋的决定。放弃Python主要是因为它的代码可维护性比较差，缺乏编译器检查，动态语言特性导致模块间过渡耦合，缺乏性能分析工具，内存管理机制低效，多线程性能很差。这些都是一个持续维护很多年的高负载应用所必须的。   </p>
+<p>Linter能做的事情很有限，公司代码管理系统早就是不过lint不能submit。code review也不能解决问题，因为团队里面每一个人对于系统设计和语言特性是否滥用理解程度都不同。   </p>
+<p>争论是否能够通过管理来解决语言本身缺陷其实是没意义的，因为我们碰见的是实实在在的语言缺陷问题，就应该用最直接的解决方案。   </p>
+<p>“Python很好，只是你们这些外行不会用”，这是我听到的最多的所谓Pythonic人的论调。事实是Python作者自己亲自带领的那个项目也是一塌糊涂。他们遇到的最主要问题就是可维护性低和性能差。世界上有没有人比Python作者本人更Pythonic?如果他自己的项目都不行，谁能做得更好？   </p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Sat Dec  7 01:30:35 2013), 转信   </p>
+<p>如果一个语言比另外一个差1000倍，那就是很大的问题了，随便写两行code都可能成为性能瓶颈。Python又恰好缺乏性能分析和优化工具，导致出了性能问题都不知道在哪儿。BTW，1000倍这个数据是有依据的。   </p>
+<p>接口上所谓的冗余其实是提高程序可维护性的关键。人脑容量有限，所以必须用电脑辅助人脑进行接口使用正确性的检查。强制要求程序员写强类型的接口也是一种强迫程序员对正确的设计进行思考的过程。结果导致的就是强类型语言可维护性更好。Openstack只有1.4M和3年历史，用c/c++/Java写的大型软件都是复杂几个数量级，而且维护几十年。Python程序的问题之一就是“腐烂”得很快，程序刚写好的时候看起来很简洁，一旦开始维护就快速地变成一堆乱七八糟的东西，动态语言代码腐烂速度远远超过强类型语言。 <br />
+如果Python作者本人带领的团队都写不出可维护的Python代码，谁能？   </p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Sat Dec  7 01:50:35 2013), 转信   </p>
+<p>Guido搞的那个code review系统就是我说的那个维护不了的系统，最后的结果就是用Java重写了。新系统比旧系统好用很多，而且还持续有新功能上线。那个项目组有一个在公司内部流传很广的文章，说为什么需要用Java重写，并且结论是Python只适合写100行以内的小脚本。我刚才试了找这个文章有没有外网可以访问的版本，但是没找到。   </p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Sat Dec  7 02:25:23 2013), 转信   </p>
+<p>如果用一个语言开发出可维护的代码需要的能力超过了Google能招聘到程序员的平均水平，我认为这个语言就不是一个可以用来开发可维护代码的语言。创造出一个不可维护的语言很容易，汇编，Basic以及大批的早期编程语言都是这种。创造出可以让普通程序员也可以维护的语言才是更困难的，只有少数语言做到了，C和Java是，C++都不能算是很成功。   </p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Sat Dec  7 02:48:32 2013), 转信   </p>
+<p>你几乎都说反了，Google非常重视代码的可维护性，扩展性几乎是在项目一开始就必须考虑的问题，Google对软件工程实践的重视和深度是我所知道的公司里面最高的。不知道你说的管理是什么意思，但是Google有强制性的代码规范，有强制性的designreview。Python的很多“高级”特性已经在编程规范里面禁用了，但是有些特性是没法禁用的，比方所有对象member都是public，比方函数参数没有类型。就是这些很基本的东西带来的可维护性问题。   </p>
+<p>越是水平高的程序员越是会遵守编程规范和软件工程实践。至少在我们这种产品team里面大家是相当重视代码质量和设计质量的。这也是为什么我们舍得投入那么多把一个不好的系统重写。    </p>
+<p>【 在 Alassius (饿了索食) 的大作中提到: 】   </p>
+<p>问题是这种不可维护性恐怕正是贵司能招聘到的这种平均水平造成的。智商高，技术至上，写代码怎么聪明怎么来，不重视维护，不重视扩展性（直到太迟的时候），不重视软件工程，不重视管理。普通程序员如果有好的资深码农引导，早早地被告知不要滥用语言的灵活性，倒未必会有这些问题。聪明的程序员你这样跟他说他还看不起你。   </p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Sat Dec  7 03:21:05 2013), 转信   </p>
+<p>意思就是：任何流程，任何规范，任何review，任何代码检查工具，都阻止不了程序员缓慢地一点一点地滥用语言特性，也阻止不了一个软件代码自身的腐败。Python本身鼓励滥用Mock因为没有不用mock就可以方便写unit test的测试工具。Python还鼓励不定义清晰的类接口和类关系，如果你写了一个接口继承，就会有Python大牛跳出来说你不Pythonic。系统复杂性在大型软件中是不可避免的，但是如果我们可以付出一些写code的时候的小小冗余，带来长期的代码可维护性改善，那就是值得的。Java不是完美的，用Java一样可以写出不可维护的代码，但是Java至少比Python在这方面强很多。我们的经验证实了这点，信与不信就是看官的事了。   </p>
+<p>发信人: YABC (Yet Another BBS Client), 信区: Python<br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了<br />
+发信站: 水木社区 (Sat Dec  7 10:26:33 2013), 转信</p>
+<p>难得这么热烈的讨论，可是争论语言优劣没结果。</p>
+<p>希望楼主再爆料点。这个大粉丝说的就是Guido了吧？这套系统说的就是Rietveld？Java的版本说的是Gerrit吗？可是Gerrit不是早就有了吗？难道你们内部用的不是开源的Gerrit？另外，GAE的Python版本你们内部有什么评价呢，比起Java和Go的呢？也觉得质量不行吗？Guido干得不爽才走了吗？谢谢。</p>
+<p>我用过Rietveld，是Python语言本身在用的review工具，感觉风格挺老旧的。还没见有别的项目用这个东西。</p>
+<p>发信人: YABC (Yet Another BBS Client), 信区: Python<br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了<br />
+发信站: 水木社区 (Sat Dec  7 10:41:11 2013), 转信</p>
+<p>Gerrit是这个项目的Java的fork，很多大项目在用。从这点说Guido开创的这个Python项目算成功的。当然后面的自然会吸取前面的教训，做得更好是应该的。</p>
+<p>发信人: iJava (简单美好), 信区: Python<br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了<br />
+发信站: 水木社区 (Sat Dec  7 14:28:56 2013), 转信</p>
+<p>这个帖子满精彩的,俺就8了一下:</p>
+<p>楼长说的那个系统应该就是Mondrain,从来没有开源的.这里有详细的介绍,包括对g公司的code review process.</p>
+<p>http://www.youtube.com/watch?v=sMql3Di4Kgc</p>
+<p>发信人: yueq (yueq), 信区: Python<br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了<br />
+发信站: 水木社区 (Sat Dec  7 16:09:34 2013), 转信</p>
+<p>根据楼主的描述，是Google的内部code review工具：）。</p>
+<p>发信人: yueq (yueq), 信区: Python<br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了<br />
+发信站: 水木社区 (Sat Dec  7 16:15:16 2013), 转信</p>
+<p>旧系统Mondrian<br />
+新系统Critique</p>
+<p>如大家上所述，我觉得楼主对于UT、OOP的理解还有待加强。</p>
+<p>（我也在G家某组用PYTHON）</p>
+<p>发信人: daluobu (阿土仔), 信区: Python <br />
+标  题: Re: 终于把一个8万行的Python程序用Java重写了 <br />
+发信站: 水木社区 (Mon Dec  9 11:51:08 2013), 转信   </p>
+<p>我们采用的连续上线的开发模式，每周发布一次增量版本，所以大概从第一个月就已经开始有Java code在产品中稳定运行了。同时我们也在把Python的代码分割成很多小的模块，方便与Java代码集成。从第一行Java code开始写，直到删掉Python部分的核心逻辑，大概用了9个月时间，其中后几个月已经是Java代码负责大部分功能，剩下一些不重要的小功能仍然依靠旧的Python代码实现。我在前面的帖子也提到，在一点一点切换到新系统的过程中，整个系统完全不间断运行，感觉就像给飞行中的飞机换引擎。   </p>
+<p>因为是非常短周期的增量开发模式，所以并没有一般意义上的“调试”期。测试主要依靠单元测试和一些自动集成测试，所以也没有一般意义上的“测试“期。新代码上线的时候我们也会采用10%发布的方式，也就是把10%的负载导入新系统，剩下90%的负载在旧系统，然后在逐渐提高新代码负载直到完全替代旧系统 。新代码上线之后就会删掉相应的旧代码。需要说明的是因为新系统的设计和过去很不一样，所以整个过程并不是按照Python代码翻译成Java，而是全新的设计，但是又在任何时刻都兼容老的代码。实现这种高度的连续平滑发布其实是相当困难的。   </p>
+<p>【 在 wificamera (wificamera) 的大作中提到: 】  <br />
+重写编码+调试+测试 到最后稳定运行 一共花了多少时间</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-12-06T05:50:00+00:00">2013-12-06</time></p>
 <p>archive</p>            </div>
@@ -183,7 +299,20 @@ for vec in permutations(cols):
 <p>sublime处理中文路径一直很bug。需要修改 /Data/Packages/Default/exec.py:45 行：</p>
 <pre><code>    for k, v in proc_env.iteritems():
         nv =  os.path.expandvars(v)
-        if isinstance(v, unicode …</code></pre></p>
+        if isinstance(v, unicode):
+            import locale
+            nv = nv.encode(locale.getdefaultlocale()[1])
+        proc_env[k] = nv
+</code></pre>
+<p>然后菜单 Tools -&gt; Build System -&gt; New...</p>
+<pre><code>{
+    "cmd": ["go", "run", "$file"],
+    "path": "D:/dev/go/bin",
+    "file_regex": "^(.+):([0-9]+):.*",
+    "env": {"GOROOT": "D:/dev/go"}
+}
+</code></pre>
+<p>这就是Go的配置咯。然后就Ctrl+B了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-12-02T01:25:18+00:00">2013-12-02</time></p>
 <p>archive</p>            </div>
@@ -213,7 +342,31 @@ for vec in permutations(cols):
               <h2 class="card-title">bitcoin —— 末日的狂欢</h2>
             </a>
             <p class="card-text"><p>bitcoin —— 末日的狂欢</p>
-<p>bitcoin的出现，对于每一个geek和码农都是boner级别的兴奋的。码农对金融这块“白富美”垂涎已久，过去能接入银行API的，少之又少。而bitcoin直接把胚胎状的一个“白富美”免费送给了每 …</p></p>
+<p>bitcoin的出现，对于每一个geek和码农都是boner级别的兴奋的。码农对金融这块“白富美”垂涎已久，过去能接入银行API的，少之又少。而bitcoin直接把胚胎状的一个“白富美”免费送给了每一个愿意上的人。Programmable money。多么响亮的口号。</p>
+<p>bitcoin有更多响亮的口号，让一批先驱者坚信不移的认为这是未来。也让另一部分怀疑者直接给bitcoin打上“传销”的标签。</p>
+<p>比如说p2p。对于geek来说，这就是 安全，潮，不可阻止。对于hash构成的blockchain，对于pseudo geek来说，这就是牛逼算法和创新。但是我觉得，blockchain就是末日的狂欢。</p>
+<p>什么是bitcoin？bitcoin就是一个冻结blockchian的p2p网络。为什么bitcoin能火？我觉得这就得从货币、交易和支付的本质说起。钱是啥？钱的<a href="http://www.douban.com/note/317278205/">本质就是个“账簿”</a> 。A把10元钱给B，这个本质就是A的账簿-10，B的账簿+10 。交易本生，其实就是信息传递。</p>
+<p>过去信息传递的方式是什么？物物交换、黄金货币、纸币等等。但是这些手段都有一个致命的问题——物物交换可能以次充好，黄金——黄金富矿产地对你有绝对先天优势。纸币——只要央行愿意，想印多少印多少。你以为印出来的钱怎么才能流入市场？直接花掉。空手套白狼。就这么简单。</p>
+<p>这些原始落后的机制都不能保证滥发、伪造、假币和double spending问题。所以各国的货币都是被政府严格控制的。如果每个人都发行自己的货币，后果可想而知。总之，货币的作用，就是个大家公认的账簿。</p>
+<p>现在bitcoin出现了。bitcoin的ledger，也就是blockchain，有效性不是政府信用、或者银行抵押保证的。而是通过密码学算法保证的。扳着脚指头都知道bitcoin不可能有假币。当然，如果某一天能秒破sha256了，也就是P=NP，那么bitcoin就瞬间彻底完蛋。</p>
+<p>bitcoin如何发行？如何被全世界的人接受？这个就是bitcoin历史最传奇部分了。bitcoin只发行给early adopter。也就是说，bitcoin是白送的。只要你参与，持有，bitcoin就是你的。如果没有人愿意去挖矿，那么整个bitcoin网络可以被轻松黑掉。这就是bitcoin传销的一面。</p>
+<p>扯了这么多，说下我真正想说的。这个末日，是旧世界的结束，新时代的开始。我们正在目睹人类历史上最重要之一的历史演变：</p>
+<ul>
+<li>要么政府抵制它，那么政府迟早完蛋，被拥抱bitcoin，或者类bitcoin的政权替代。</li>
+<li>要么政府拥抱它，那么100年以后，bitcoin/类bitcoin变得再平常不过了，人们回顾21世纪初的货币界和金融业，觉得非常滑稽和奇怪的。</li>
+</ul>
+<p>我猜，除了政府发疯，bitcoin会被乐意接受的。理由很简单。bitcoin太容易征税了。bitcoin的blockchain，就是一套完美的征税机器。</p>
+<p>虽然有臭名昭彰的silk road，bitcoin也太容易洗白了。第一步就是挖矿必须排他，政府认证的节点才能参与。第二步就是自然人、企业法人分配一个法定wallet，私人拥有未知wallet，和未知wallet交易非法。搞定。</p>
+<p>对于我这种无政府主义和乌托邦主义者，这就是末日。也是很多pseudo geek未预料到的枷锁。</p>
+<p>我个人还是比较推崇纸币的作用的。匿名。不可控。用完就丢。bitcoin？哎哟喂我草随机分配的一个质数跟你一辈子了。除非你去 <a href="https://news.ycombinator.com/item?id=6787603">laundering</a> 否则不可能甩掉。</p>
+<p>bitcoin的bug？太大了。首先是小额交易极度浪费计算力，所以直接就在协议层给禁用了。虽然说bitcoin很细分到一亿倍，但是这也是需要很多节点同意改协议才行的。还有就是bitcoin交易延迟，不适合发达、实时、高速现代商业。</p>
+<p>然后。一些国家还是有sb举动去分裂bitcoin网络的。一套协议，多个实现，多个实例。双轨制，内外有别什么的。对外，国家会发疯似得给每一个transaction加上国家属性；对内，会孜孜不倦尝试给每一笔交易打上合法和非法的标签。这些都是可以被强权推动的隐患。</p>
+<p>但是<a href="http://www.36kr.com/p/207918.html">bitcoin还得涨</a>。 其最具隐蔽性，也是最具杀伤力的特性就是：可编程。</p>
+<p><a href="https://en.bitcoin.it/wiki/Script">https://en.bitcoin.it/wiki/Script</a></p>
+<p>可编程到什么程度：bitcoin的协议实现了一套字节码，每一笔交易都是一个图灵完备的VM虚拟机</p>
+<p>就那转账来说，支付宝能实现方便的三方转账吗？网银汇款可以实现吗？</p>
+<p>再比如我需要发起一项收款，比如100个人给我打10,000元才能交易成功。这个在现实世界怎么保证？签订合同，由《合同法》法律效力执行。bitcoin的世界呢？由密码学签名保证。kickstarter众筹，就可以在bitcoin网络里如此低成本、无风险、轻松实现。这玩意，我个人觉得是势不可挡，前途无量。</p>
+<p>最后，也有很多人问我，你挖矿没，买bitcoin没。很惭愧。我从2010年知道这事儿，2011年开始<a href="https://blockchain.info/address/19DKZpkThTAFcSnWyxJZn7HKzyo1ia6rxr">持有0.11个</a>。然后就因为一直很懒。就看潮起潮落了。至于建议，我的建议是：不要无脑入，也不要抵制。要参与至少一起bitcoin交易和挖矿，真实的去感受它是怎么回事</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-11-26T17:17:00+00:00">2013-11-26</time></p>
 <p>archive</p>            </div>
@@ -230,7 +383,37 @@ for vec in permutations(cols):
             <p class="card-text"><p>est注：这文章很好。说明了现在一个audience问题。</p>
 <ol>
 <li>支持转基因的，基本都不是需要天天做饭买粮的</li>
-<li>真正转基因种子消费者——种地的，压根不 …</li></ol></p>
+<li>真正转基因种子消费者——种地的，压根不会理会那些科普辟谣</li>
+</ol>
+<p>发信人: zrliu (skywalker), 信区: GuoJiXue <br />
+标  题:  为啥转基因双方互相无法说服对方？zz <br />
+发信站: 水木社区 (Sat Nov  2 01:03:47 2013), 站内   </p>
+<p>【 以下文字转载自 EconForum 讨论区 】 <br />
+发信人: zrliu (skywalker), 信区: EconForum <br />
+标  题:  为啥转基因双方互相无法说服对方？zz <br />
+发信站: 水木社区 (Sat Nov  2 01:02:37 2013), 站内   </p>
+<p>http://blog.sina.com.cn/s/blog_5513b1cd0102eef9.html <br />
+文/端宏斌   </p>
+<p>在笔者的《一篇文章搞懂转基因的真相》发表之后，收到的评论是争锋相对互不相让。反对转基因的人看完更加反对，支持转基因的人看完更加支持。换言之，这篇文章让大家都更加坚信自己之前的看法，更加相信自己掌握了真理，更加确信对方就不是坏蛋就是傻X。   </p>
+<p>其实，我要的就是这个效果，因为那篇文章的目的就是要引出现在这篇文章。   </p>
+<p>以色列的诺贝尔经济学奖获得者罗伯特·奥曼曾经发表过一篇文章，名叫《不一致的达成》，他的结论是，对于两个完全理性而真诚的人而言，辩论的结果必然是双方达成一致。如果争了个脸红脖子粗也毫无结果，那么必定至少有一方不理性或是不真诚。   </p>
+<p>从转基因问题的辩论来看，完全符合上面这个结论。支持转基因的人，认为反对转基因的人毫无理性可言，他们根本就是一群科盲，一群文傻，这路人简直就无法进行交流。而反对转基因的人，认为支持转基因的人，根本就是转基因公司的枪手，干的是拿钱发帖的活，说不定还是孟山都拨的款，他们立场可疑，说的话无法令人相信，这路人也无法进行交流。   </p>
+<p>看见没？这群人认为另一群人不理性，另一群人认为这群人不真诚。这就是他们辩论完了之后的结果，这种辩论的效果为零，还不如不辩论。   </p>
+<p>老端作为一个物理系毕业的理工男，以前一直就支持转基因，因为我认为“不理性”的指责成立，而“不真诚”的指责不成立，换言之我不信那些阴谋论。但是，即使如此，现在我仍然放弃了原先的立场。这篇文章就是告诉你为什么，以及讨论双方达成一致的可能性。   </p>
+<p>我们先来做个“哲普”，哲学家大卫·休谟提出了一个“休谟法则”，简单的讲，任何一件事物都包括一个“事实判断”和一个“价值判断”，事实判断解决的是“这玩意儿是个啥？”的问题；而价值判断解决的是“这玩意儿好不好？”的问题。现在重要的结论来了，休谟认为事实判断不能导出价值判断，即事实不能决定价值。   </p>
+<p>我们来举个简单的例子，女人更容易对高富帅动心，这是一个事实，那么对于高富帅来说，这可能是一件好事，对于屌丝来说，这可能就不是一件好事。同样的，即使是女人，这件事也意味着不同的价值判断。   </p>
+<p>《韩非子》这本书很有趣，里面讲了很多小故事，全是关于你应该如何说服对方的故事。我记得有个故事是这么讲的：话说楚国的伍子胥出逃，跑到边境上被小吏抓住了。伍子胥就对小吏说：大王要抓我，是因为我手里有绝世美珠，但是现在已经弄丢了，我会告诉大王，是你抢走并且吞了下去！小吏想了想，决定放走了伍子胥。他认为抓住伍子胥可能是立功，但万一大王脑子糊涂真信了伍子胥的话，自己就惨了，所以还是别惹祸上身了吧。   </p>
+<p>上面这个故事告诉你一个简单道理，如果你想说服一个人，你必须用价值判断去打动他，如果你跟他费了半天的劲儿去做事实陈述，这完全是白费力气。如果伍子胥跟小吏说，大王是无道昏君，已经杀了我全家，现在还要杀我。这小吏一定不会放他跑，就算你全家被杀，跟我又有什么关系呢？   </p>
+<p>下面我们再来说转基因。转基因的支持者很喜欢举的一个例子是当初詹天佑修铁路，很多老百姓都跑出来反对，说这玩意儿让列祖列宗躺在坟地里都不得安宁，所以不应该修。他们拿铁路来类比转基因，意思是你们反对转基因脑子太糊涂。但事实上，詹天佑修铁路的时候，没有什么老百姓反对，只是他的铁路要穿过某大官的祖坟，这家人不同意，要求更多补偿而已。看来不仅反转基因的会编故事，支持转基因的同样会编故事。   </p>
+<p>历史上任何一项好的发明创造，只要让老百姓看到了好处，那么老百姓是从来不会拒绝的。就拿汽车为例，中国每年死于交通事故的人多达7-10万，受伤的人是这个数字的4-5倍，但老百姓根本不拒绝汽车。因为汽车有看得见的好处。那么请问，转基因食品有什么看得见的好处吗？跟我们平时吃非转基因食品相比，又强在哪里呢？如果我家孩子吃了转基因玉米，考试都考100分，那么立马所有妈妈都会选择转基因食品，这根本就不需要你去花力气推广。   </p>
+<p>看得见的好处几乎没有，而看不见的坏处却吓死人。吃完之后万一变异了怎么办？头上长犄角，身后长尾巴怎么办？变异可能太夸张了，那么万一患上糖尿病、心脏病、哮喘、癌症怎么办？即使概率非常非常小，但我不能让我的孩子冒这个险啊。   </p>
+<p>就算转基因的食物真的好，那么我也有选择不吃的权力！你可以发表各种研究证明猪肉其实是个好东西，但是穆斯林有选择拒绝的权力，这是价值判断。你的事实判断不能推导出我的价值判断，你没有权力来决定我应该吃什么。但是孟山都公司非常恶劣，他买通了政府，在美国并不要求你标注转基因，换言之你剥夺了我选择的权力。如果你认为转基因是好东西，那么请你大声喊出来，不要这么偷偷摸摸的。现在的情况是，“非转基因”食品标注了，“转基因”食品却不标注。   </p>
+<p>反转基因的人选择了走阴谋论的道路，这既好又不好。说这不好，是因为这原本是一个价值判断的问题，你非要搞成事实判断。编造了很多漏洞百出的事实，让对方抓到了无数把柄。说这好，是因为阴谋论特别适合大众传播。绝大多数老百姓是无法理解你的科学逻辑的，但是这些阴谋论他们一听就懂。如果要就转基因来个全民公投的话，反转基因群体将大获全胜，因为他们有群众基础。   </p>
+<p>转基因的支持者选择了走辟谣和科普的道路，但是这些人由内而外散发出来的智商优越感令人作呕，他们越是辟谣，这结果就是越把中立者推向对立面。已经有n个网友对我说，原本他是支持转基因的，但是看到方舟子们的丑陋的表演，他开始越来越反对转基因，我想这是不少人的真实心态。   </p>
+<p>我想给转基因的支持者们支个招，你必须要知道，决定家里吃什么的是中国大妈，而大妈对科普是免疫的，因此你们写那么多科普文，人家根本不看。但如果你能把转基因大米塞进“中央特供”食品里，那么大妈自然就会买转基因，大妈的逻辑是，给习总李总吃的，总不可能是坏东西吧，那我们肯定也能吃！所以你最好别拿湖南的小学生来做实验，而是拿政治局委员去做实验。   </p>
+<p>转基因食品的价格通常都比较便宜，但这不是优点反而是缺点，人的常识就是“一分价钱一分货”，既然你便宜，那么自然就有便宜的道理，人们本能就认为你的东西品质较差。所以我再支个招，那就是大幅提高转基因食品的价格。   </p>
+<p>讲个瑞士手表逆袭的故事。话说当年小日本发明了石英表，这让瑞士手表业受到了巨大的冲击，瑞士产的最好的机械表，论精确性都不如人家低档的石英表。如果比精度，那么瑞士人完败。好在瑞士人聪明，立马大幅提高价格减少产量，把手表的主要功能从计时转变成了装b，瑞士钟表业活过来了，而且活得非常滋润。那些买了瑞士表装b的人也不承认自己装b，反而开始吹嘘瑞士表的艺术性和收藏价值。   </p>
+<p>总结一下我的建议，如果你想推广转基因食品，那么最靠谱的办法就是忽悠老百姓说：这是一种权力（高官吃）和金钱（土豪吃）的高端生活，或者就拿出看得见的好处，让吃转基因的小孩门门功课100分。否则的话老百姓是不会听你的。可能你很懂科学，但是你不懂人性。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-11-02T22:05:18+00:00">2013-11-02</time></p>
 <p>archive</p>            </div>
@@ -287,7 +470,21 @@ fUWlLfAlsHpGFDfI4XsFOUWkA7Q=
 </code></pre>
 <p>折腾了好久 reload(sys) sys.setdefaultencoding() locale.setdefaultlocale() </p>
 <p>后来发现是os.environ["LANG"]居然为空。这尼玛为毛啊。</p>
-<p>LANG为空也就算了 …</p></p>
+<p>LANG为空也就算了，发现另外一个神奇的bug：</p>
+<pre><code>$ export LC_ALL=en_US.UTF8
+$ python -c "print __import__('locale').getdefaultlocale()"
+('en_US', 'UTF8')
+
+$ export LC_ALL=en_US
+$ python -c "print __import__('locale').getdefaultlocale()"
+('en_US', 'ISO8859-1')
+
+$ export LANG=
+$ python -c "print __import__('locale').getdefaultlocale()"
+('en_US', 'ISO8859-1')
+</code></pre>
+<p>ISO8859-1 就是臭名昭著的latin-1编码也就是最脑残不过的 ascii 编码。反生产力啊。</p>
+<p>感谢 killkeeper :D</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-10-16T01:59:00+00:00">2013-10-16</time></p>
 <p>archive</p>            </div>
@@ -308,7 +505,12 @@ Principal Scientist, Search)  <br />
 Sundar Pichai －Senior Vice President, Android, Chrome &amp; Apps  <br />
 Vic Gundotra － Senior Vice President, Social (Google plus,  <br />
 Hangouts, etc.)  <br />
-Krishna Bharat - Principal Scientist (User …</p></p>
+Krishna Bharat - Principal Scientist (User interface and  <br />
+algorithmic support, creator of Google News)  <br />
+Manik Gupta - Group Product Manager, Google Maps6:20 AM  <br />
+三哥威武！  <br />
+谷三哥帝国万岁！    </p>
+<p>出处是北美壕一只。我就不说破了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-10-08T21:04:02+00:00">2013-10-08</time></p>
 <p>archive</p>            </div>
@@ -340,7 +542,54 @@ Krishna Bharat - Principal Scientist (User …</p></p>
             <p class="card-text"><p>发信人: x414 (安卓工程师), 信区: DigiHome <br />
 标  题: 小米电视研发工程师在线答疑 仅限今晚 <br />
 发信站: 水木社区 (Thu Sep  5 20:07:39 2013), 站内   </p>
-<p>Q: 哪家 …</p></p>
+<p>Q: 哪家的主控芯片？ <br />
+A: 高通8064    </p>
+<p>Q: 为啥没分量 <br />
+A: 印象中有 待确认  另外即使没有也没什么   </p>
+<p>Q: 遥控器2.4G么 <br />
+A: 遥控器有红外和蓝牙两款   </p>
+<p>Q: 内置了有线机顶盒吗？ <br />
+A:没有 不过可和平相处   </p>
+<p>Q: 以后硬件像CPU内存主板什么的如何升级呢？能整体拆下来更换吗？ <br />
+A: 整个使用寿命应该无需升级了  软件会保持升级   </p>
+<p>Q: : 这是操作系统的cpu？电视上有没有视频主控或者音频主控这么个概念？这玩意儿一个人兼任了？还是用了别家产品？ <br />
+A: 高通+mstar   </p>
+<p>Q: 如果要正常看电视的话，是不是要外接一个有线机顶盒？ <br />
+A: 是的  这个信号来源还是要的   </p>
+<p>Q: 看网站参数，音频解码只能DTS2.0？ <br />
+A: 是2.0   </p>
+<p>Q: 那个附送的有线机顶盒是怎么回事？ <br />
+A: 有了他就不需要现有超大的机顶盒了   </p>
+<p>Q: 其实是想问MEMC那颗 <br />
+A: mstar   </p>
+<p>Q: (迷你高清数字电视盒)就是小米盒子？买电视送价值300的盒子？ <br />
+A: 不是的  迷你高清数字电视盒不仅可以接收有线数字信号， <br />
+同时将频道搜索、频道管理等内容进行优化，让看电视更加简单方便，同时提供电子节目单， <br />
+不错过每一个精彩的电视节目，还可以依据您的观看习惯进行智能分类。   </p>
+<p>Q: 遥控器带不带加速度传感器？玩塞车游戏可以当方向盘不？ <br />
+A: 不带的  另有游戏手柄的  游戏体验不错   </p>
+<p>Q: 同时使用LG和三星的屏幕，但是由一家代工，目的是什么？ <br />
+A: 屏幕一般都会有second source的   </p>
+<p>Q: 电视墙获取实时频道截图，原理是什么？是各频点扫描还是从互联网获取？ <br />
+A: 频道序号貌似就是按照频率排序的   </p>
+<p>Q: 那支持航天有线么？ <br />
+A: 不确定  不过如果有机顶盒的话 接入就好   </p>
+<p>Q: 不知道前面问过没，HDMI支持ARC吗？ <br />
+A: 赞问题 这个需要去确认   </p>
+<p>Q: 蓝牙遥控器也没有重力感应和陀螺仪么？也没有语音功能了？ <br />
+A: 确定有语音功能  其他的不确认   </p>
+<p>Q: 不会 ，second source对应的会是second vendor，你们两个屏都用纬创，显然不是second source的问题。目前国内的模拟信号不带频道信息，所以我很想知道你们如何拿到这个的 <br />
+A: wistron是代工  屏是lg 三星   </p>
+<p>Q: 今天没看见秀语音功能啊，语音用的是谁家的方案啊 <br />
+A: 好几家备选  最终选了哪家我忘   </p>
+<p>Q: 我知道，我是说你们两个屏都用微创代工，所以这不是second source的问题，三星和LG的产能都没问题，所以应该是ODM的产能问题才可能影响产量 <br />
+A: 好吧 两种second source 供应商和odm   </p>
+<p>Q: 播放视频支持字幕吗 <br />
+A: 支持   </p>
+<p>Q: 投影视频，图片支持其他手机吗 <br />
+A: 支持 并对主流机型做过兼容性优化   </p>
+<p>Q: 有摄像头没 <br />
+A: 作为配件的</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-09-05T22:00:46+00:00">2013-09-05</time></p>
 <p>archive</p>            </div>
@@ -357,7 +606,9 @@ Krishna Bharat - Principal Scientist (User …</p></p>
             <p class="card-text"><p>都无聊得去逛 r/china 了</p>
 <blockquote>
 <p>Tipping was a custom invented by employers as a way to justify paying lower wages. Basically employers can say I don't need to give you a living wage because you can depend on the customers for charity.<br />
-Also don't forget it …</p></blockquote></p>
+Also don't forget it places pressure on the rest of society who require taxis as part of the transportation network. Next time that single mother in the rain is late for her 900rmb a month job can't get the taxi because the group of rich foreigners is more likely to tip.</p>
+</blockquote>
+<p><a href="http://www.reddit.com/r/China/comments/1ko68m/ingenious_scam_i_spotted_in_a_brochure_from_a/cbr5msg">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-08-19T22:21:39+00:00">2013-08-19</time></p>
 <p>archive</p>            </div>
@@ -372,7 +623,9 @@ Also don't forget it …</p></blockquote></p>
               <h2 class="card-title">PyPy performance post is very misleading</h2>
             </a>
             <p class="card-text"><blockquote>
-<p>PyPy performance post is very misleading. PyPy only has better printf performance than C in the particular case where you print the same expression twice. Specifically, their JIT figures out that it can decode the value only once instead of twice, which C cannot do because libc's printf is all …</p></blockquote></p>
+<p>PyPy performance post is very misleading. PyPy only has better printf performance than C in the particular case where you print the same expression twice. Specifically, their JIT figures out that it can decode the value only once instead of twice, which C cannot do because libc's printf is all run-time, so PyPy is about twice as fast since decoding is almost all of the work. If you change the test to anything where you're printing different expressions, PyPy is no faster than C. It seems to me that this post was either intentionally misleading or they didn't understand why their compiler was doing so suspiciously well on this benchmark (any time you're handily beating C is cause for suspicion). Moreover, as soon as PyPy has to print to an output stream instead of just creating a string in memory, the performance tanks becoming 7x slower than C.</p>
+</blockquote>
+<p><a href="https://groups.google.com/d/topic/julia-users/B3ZOUEaGOJY/discussion">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-08-15T02:06:22+00:00">2013-08-15</time></p>
 <p>archive</p>            </div>
@@ -388,7 +641,25 @@ Also don't forget it …</p></blockquote></p>
             </a>
             <p class="card-text"><p>前几天的<a href="http://blog.gtvhacker.com/2013/chromecast-exploiting-the-newest-device-by-google/">chromecast签名绕过破解</a>)</p>
 <p>Is it really ChromeOS?</p>
-<p>No, it’s not. We had a lot of internal discussion on this, and have concluded that it’s more Android than ChromeOS. To be specific, it’s actually a modified Google TV release, but with all of the Bionic / Dalvik …</p></p>
+<p>No, it’s not. We had a lot of internal discussion on this, and have concluded that it’s more Android than ChromeOS. To be specific, it’s actually a modified Google TV release, but with all of the Bionic / Dalvik stripped out and replaced with a single binary for Chromecast. Since the Marvell DE3005 SOC running this is a single core variant of the 88DE3100, most of the Google TV code was reused. So, although it’s not going to let you install an APK or anything, its origins: the bootloader, kernel, init scripts, binaries, are all from the Google TV.</p>
+<p>简单的说，有Android的内核，没有Bionic / Dalvik。没法装apk。Chromecast的功能是作为一大坨二进制包直接当膏药粘到一个精简版android上的。</p>
+<p><a href="http://www.ifixit.com/Teardown/Chromecast+Teardown/16069/1">拆解Chromecast</a>的硬件是：</p>
+<ul>
+<li>
+<p>AzureWave AW-NH387 802.11 b/g/n WLAN, Bluetooth 3.0, and FM combo module </p>
+</li>
+<li>
+<p>Marvell DE3005-A1 System-on-a-Chip。</p>
+</li>
+<li>
+<p>Micron MT29F16G08MAA 16Gb NAND Flash memory </p>
+</li>
+<li>
+<p>512MB of low-voltage Micron D9PXV DDR3L SDRAM</p>
+</li>
+</ul>
+<p>SoC的资料很少，业界猜测是1.2GHz ARMv7双核，从512MB RAM 2G ROM 来看，这35刀的货就是个废品啊。还是我大MTK和Allwinner是业界良心。</p>
+<p>另外Chromecast的镜像功能，也是用websocket发明。NIH综合征很严重。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-08-07T21:56:00+00:00">2013-08-07</time></p>
 <p>archive</p>            </div>

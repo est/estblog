@@ -58,7 +58,39 @@
 <p>一般格式如下：</p>
 <pre><code>@app.get('/other/{other_path:path}')
 @app.post('/other/{other_path:path}')
-async def other_api(other_path: str, req: Request …</code></pre></p>
+async def other_api(other_path: str, req: Request):
+    """透传 API"""
+    host = 'http://example.intranet'
+    url = '{}/other/{}'.format(host, other_path)
+    body = bytes(await req.body()) or None
+    r = requests.request(
+        req.method, url,
+        headers={
+            'Cookie': req.headers.get('cookie') or '',
+            'Content-Type': req.headers.get('Content-Type')},
+        params=req.query_params, data=body, stream=True,
+        allow_redirects=False)
+
+    h = dict(r.headers)
+    h.pop('Content-Length', None)
+    return StreamingResponse(r.raw, headers=h, status_code=r.status_code)
+</code></pre>
+<p>解释一下为啥要这么写：</p>
+<ol>
+<li>采用 <code>stream=True</code> + <code>StreamingResponse</code>，防止上游给你返回一个GB体量的文件把 FastAPI 进程内存撑爆</li>
+<li>只摘取浏览器的 <code>Cookie</code> + <code>Content-Type</code> 两个头。别的不给上游。</li>
+<li>要去掉返回的 Content-Length 头。因为 StreamingResponse 会自己定义返回长度。</li>
+</ol>
+<p>这样写基本能跑起来了，但是有2个问题：</p>
+<ol>
+<li>如果上游返回一个 302/303/307 的跳转，那么很有可能把内网的跳转网址直接返回给浏览器了。因为 <a href="https://tools.ietf.org/html/rfc2616#section-14.30">HTTP/1.1 的标准 RFC2616</a> 强制规定，<code>Location</code> 的值必须是一个绝对网址。所以这个时候就冒犯一下这个规定，强行截断：<pre><code>loc = h.pop('Location', '')
+if loc.startswith(host):
+    h['Location'] = loc[len(host):]
+</code></pre>
+</li>
+</ol>
+<p>注意这里不要用 <code>.lstrip()</code> 。这方法和你想象的完全不是一回事。它是基于单个字符的挨个替换而不是整个字符串。<br />
+2. 实测这种在业务代码实现的「软」反向代理性能堪忧。上游4s左右的整个页面加载时间，反向代理之后就变成了 120s 左右。盲猜是 <code>StreamingResponse</code> 是一个字节一个字节去遍历迭代器？实测并不是。主要的锅还是 <code>Requests</code> 的 <code>.raw</code> 是按照 <code>chunked</code> 一段一段返回的。最好还是准备个 4KB 的 buffer，提高性能。解决方案是把  <code>r.raw</code> 改成 <code>r.raw.stream(4096000)</code> 性能一下就高了。注意这里不要用官方文档提供的 <code>.iter_contents()</code> 或者 <code>.iter_lines()</code> 这两者又会自作聪明的去解析文本编码或者换行符，降低了性能。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-03-30T15:07:01+00:00">2021-03-30</time></p>
 <p>stdout</p>            </div>
@@ -73,7 +105,13 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
               <h2 class="card-title">纪念 Sewall Wright</h2>
             </a>
             <p class="card-text"><p>在这个3月即将结束的特殊日子里，纪念 Sewall Wright。尤其是那石破天惊的从相关性反推因果性的豚鼠花色实验。</p>
-<p>豚鼠的花色，按照我们一般的理解是遗传 …</p></p>
+<p>豚鼠的花色，按照我们一般的理解是遗传的。但是两只豚鼠很多代近亲繁殖也不可能生产出纯色的豚鼠。那花色和遗传的因果性能通过相关性推出吗？</p>
+<p>这位大神还真推断出来了</p>
+<p><img alt="Sewall Wright first path diagram guinea pigs" src="/images/2021/stderr-003-1.jpg" /></p>
+<p>插图来自最近听的一本书 <em>The Book of Why: The New Science of Cause and Effect</em> 第二章 From Buccaneers to Guinea Pigs: The Genesis of Causal Inference 。网上有 pdf 直接看：</p>
+<p><a href="http://bayes.cs.ucla.edu/WHY/why-ch2.pdf">http://bayes.cs.ucla.edu/WHY/why-ch2.pdf</a></p>
+<p>要知道他做出这个研究的时候，遗传学也就孟德尔水平，DNA 尚未发现！他假设豚鼠双亲各自有遗传因素 <code>H''</code> 和 <code>H'''</code> ，然后精子卵子 混合，一共有四种可能，<code>G</code>, <code>G'</code>, <code>G''</code>, <code>G'''</code>，如果他们生下2胎，那么他们各自的遗传因素为 <code>H</code> 和 <code>H'</code> 。他假设花色还收到相同的怀孕因素 <code>D</code> 影响，以及出生后生长的共同的环境因素 <code>E</code> 影响。那么要根据因果性预测花色，就像解方程一样计算每根路径的权重。</p>
+<p>这位 Sewall Wright，人称 现代演化三杰（R.A.Fisher, J.B.S Haldane），逝世于 1988-03-03，真是君生我未生，我生君已去。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-03-25T23:56:41+00:00">2021-03-25</time></p>
 <p>stderr</p>            </div>
@@ -87,7 +125,27 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
             <a href="/202102/stderr-002"  rel="bookmark" >
               <h2 class="card-title">Clubhouse 一些感受</h2>
             </a>
-            <p class="card-text"><p>clubhouse 总体感觉，自从被那啥之后，群体就基本一岸两地的人，和大陆留学生为主了。而且真的以学生为主。如果有家业压力人，要 …</p></p>
+            <p class="card-text"><p>clubhouse 总体感觉，自从被那啥之后，群体就基本一岸两地的人，和大陆留学生为主了。而且真的以学生为主。如果有家业压力人，要么就是创投圈要么就是币圈大佬。</p>
+<p>第一次发言是在一个 English Lounge 里面有几个英语老师在聊 dyslexia 。这单词我都不认识但是还是强行尬聊了。</p>
+<p>我当时就胡扯说中文这种文字为载体的语言，符号和读音分离，可能压根就不存在拼音字母类语言的发音乱序导致的理解能力的问题。</p>
+<p>房主后来因为要去讨论女权，就早早的关闭了房间。不知道是被我的暴论或无知吓到了。我也因为时间太晚就睡了。第二天醒来，觉得不过瘾，就去搜了一下  dyslexia 这个概念。发现果然汉语里也是存在的。而且 HK 有个调查发现有这个问题的学生比例(10%)比 UK (5%-7%) 还高。</p>
+<p>我又自己回味了一下，可能真的有这么回事。于是去 V 站发了个贴《<a href="https://www.v2ex.com/t/752905">有哪些你一直认错、读反的词语你过了很久才发现？</a>》。第一个回帖就给我当头一棒，天赋异禀这个词，我是的确很长时间读成  天赋bing yi 的。</p>
+<p>但是这个问题也有有趣，这个词在口语中很少用到，也不至于成为我对这个词语的理解障碍，所以假设人群中发生 dyslexia 比例是差不多的，但是不同的语言结构造成的后果和代价还是有不同的？</p>
+<p>接下来的日子使用 Clubhouse 的感受是，大多数房间都是拉家常。挺无聊的。偶然能遇到一些非常有意思的非人文的，然后我又能听得懂的话题。</p>
+<p>但是用起来这个 clubhouse 的严重短板就出现了：房间秩序很难维护。某人说了一个炸鱼的观点，大家争相反驳，但是并没有一个谁先举手谁先说的机制，然后加上网络延迟，你停了等别人，别人也出于礼貌停了等你，这样race condition死锁了。并且往往第一个反驳的人，还夹杂了自己的另外一个有问题的观点，然后大家就跑题到更远的地方去了。</p>
+<p>总的感受，一个好的发言秩序是很难自发形成的。比如得靠信号好不掉线而且强有力的主持人。app 本身非常缺乏 civil conversation 的机制。这个和现实中的泡吧聊天还是有区别的。因为大家可能会看别人的嘴和动作判断自己是否需要去插嘴。也没办法从别人的表情和情绪判断环境和气氛是否融洽。</p>
+<p>比如今天有个房间讨论生命的意义，大家吵得很厉害，就有人提议说怎么有个 Moderator 不说话，看简介是  UCLA 心理学从业人士。让他说说。结果好家伙，他一上来就说人死后其实意识还是存在的，有转世，有 afterlife。呃。无言以对。继续听下去的意义真的不大了。</p>
+<p>而且真的有那么一两个志同道合，你也没法像现实中那样，拉他们单独对线。</p>
+<p>但是这些其实都是可以通过 app 的交互解决的问题。比如</p>
+<ul>
+<li>允许大家做 emoji response 。表情回复。</li>
+<li>比如给主持人一个 mute 按钮</li>
+<li>搞个发言倒计时</li>
+<li>跑题投票？</li>
+<li>发言队列。排队说话。</li>
+<li>搜索房间标题！</li>
+<li>cue 别的房间。合并房间。</li>
+</ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-02-12T23:18:45+00:00">2021-02-12</time></p>
 <p>stderr</p>            </div>
@@ -102,7 +160,26 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
               <h2 class="card-title">双亲+子女组成核心家庭(Nuclear Family)</h2>
             </a>
             <p class="card-text"><p>最近几个月最大的认知冲击是，我们这一代人可能是人类作为灵长类动物历史上非常罕见的核心家庭时期。</p>
-<p>所谓「核心家 …</p></p>
+<p>所谓「核心家庭」是 <a href="https://en.wikipedia.org/wiki/Nuclear_family">nuclear family</a> 这一概念的直译，表示一个最小、最基本的家庭单元。与该概念相对的是单亲家庭(single-parent family)，或者家族(extended family，四代同堂、三代同堂那种大家庭)</p>
+<p><img alt="guan video" src="/images/2021/stderr-001-1.png" /></p>
+<p><a href="https://youtu.be/ashExaHC9cg?t=909">马前卒说</a>，「三五个人组成的小家庭，彻底成为独立的基层单位，在中国是80年代以后的事情」，所以差不多就是我们这代才人发生的。而且更为奇葩的是我们这一带是前无古人后无来者的独生子女一代。</p>
+<p>无独有偶，在<a href="https://news.ycombinator.com/item?id=25723851">Hacker News上</a>也看到一篇趣文 「<a href="https://boyle.substack.com/p/can-zoom-save-the-american-family">视频聊天软件 ZOOM 能拯救美式家庭吗 Can Zoom Save the American Family?</a>」</p>
+<blockquote>
+<p>Corporate families, as defined by Steven Ruggles, a professor of history at the University of Minnesota, were the dominant family structure throughout the 1800s, named “corporate” because the family revolved around the family business. In the case of most American families in the pre-Industrial era, the family business was farming and many children were needed to sustain the land. Until 1850, three quarters of older Americans lived with their children and grandchildren in large family units. Industrialization changed this model. According to Brooks, the nuclear family had replaced the corporate family by 1920. By the 1960s, more than three quarters of all children were living with two parents, away from their extended families.</p>
+</blockquote>
+<p>简单的说，在19世纪(18xx年)，美国的「产业式家族」是绝对主流，一个大家族围绕着某个生意。在工业化之前普遍的情况是北美农业，需要很多子女和孙子辈才能维持土地经营。1960年，也就是核子时代到来之后，全美有多达3/4比例的子女跟父母组成的「核心家庭」，才变成主流。</p>
+<p>但是核心家庭是否稳定呢？美国的情况是1920年以后离婚率飙升，生育率下降。只有有钱人才有能力撑起一个 extended family。这段时期是个体的解放，家庭的衰败。「The Michelle Obama podcast」更是说，70年代那种街坊邻居帮照看小孩是旧时代残留的一种投射，但是也造就了她的成功。她说</p>
+<blockquote>
+<p>“It felt easier in those times to have a family unit because … success wasn’t defined by your ability to leave your nuclear unit and make it on your own…Every elder lived with someone. They shared expenses. They shared households. They shared duties in raising kids. There wasn’t this feeling that you were supposed to… raise a family on your own. That seems to be a new thing. The neighborhood I grew up in operated on this notion. It wasn’t just up to a parent to provide stability and love.”</p>
+</blockquote>
+<p>这让我突然有个启发，工业化不是生育率下降的根本原因，工业化造就的核心家庭才是。因为双亲既要双份收入，又要独立承担繁杂的扶养责任，这样的压力太大了。更严重的问题是孩子从小缺乏能走心的玩伴，以及亲身接触大人的生产劳动场面。成人的生产技能是很难直接传授给子女的，所以子女的成长压力又转嫁到学业。人类学家发现，在<a href="https://news.ycombinator.com/item?id=25386501">捕猎采集社会里一个幼儿是被30+个熟人带大的</a>。突然我对我自己童年的孤独感到释然了，也对我的娃产生了一种担忧。他们的玩伴呢？在大城市的小区里，他们也很少能接触到能教授他们技能和经验长辈熟人。</p>
+<p>诺姆·乔姆斯基（就是 MIT 搞生成语法的那位<a href="https://zh.wikipedia.org/zh-cn/%E4%B9%94%E5%A7%86%E6%96%AF%E5%9F%BA%E8%B0%B1%E7%B3%BB">大佬</a>，Type-1图灵机，Type-2上下文相关，Type-3 Context-free，Type-4有限状态自动机的那个Chomsky）<a href="https://news.ycombinator.com/item?id=15847273">说</a>：</p>
+<blockquote>
+<p>“Neoliberal democracy. Instead of citizens, it produces consumers. Instead of communities, it produces shopping malls. The net result is an atomized society of disengaged individuals who feel demoralized and socially powerless.<br />
+In sum, neoliberalism is the immediate and foremost enemy of genuine participatory democracy, not just in the United States but across the planet, and will be for the foreseeable future.”</p>
+</blockquote>
+<p>核心家庭也在瓦解民主社会。不过我倒是觉得也在反面催生另一种政治生态，比如美国黑人对 gang 的认同就超过了对单亲家庭的认同。</p>
+<p>最后推荐一篇关于这个话题的长篇著作：《<a href="https://www.theatlantic.com/magazine/archive/2020/03/the-nuclear-family-was-a-mistake/605536/">The Nuclear Family Was a Mistake</a>》。<a href="https://www.thepaper.cn/newsDetail_forward_7260341">thepaper 有中文翻译</a>。作者是 NYT 的专栏 David Brooks。HN 的评论区<a href="https://news.ycombinator.com/item?id=22292660">1</a>, <a href="https://news.ycombinator.com/item?id=22288351">2</a> 也非常精彩。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-01-26T05:49:36+00:00">2021-01-26</time></p>
 <p>stderr</p>            </div>
@@ -121,7 +198,23 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
 
 <p>12:10 开始那个哥说的话，很有感触</p>
 <blockquote>
-<p>I think a lot of the anger stems from people who grew up believing their life was going to be a certain way and then it's not. right? And they don't …</p></blockquote></p>
+<p>I think a lot of the anger stems from people who grew up believing their life was going to be a certain way and then it's not. right? And they don't have the opportunities their parents did.<br />
+I think my generation is the first one that is going to do <em>less</em> well than their parents, that's kind of at root of a lot of this anger. A lot of the frustration people feel, is is expecting life to be a certain way, and then being like NOPE you can't afford a house, you have to pay back all this college debt, you can't afford health care, because that's gone up crazily.<br />
+You know all this stuff makes people feel just frustrated and angry, they want a place to to to lash out and maybe it comes in the in in the ruse of of far-right politics or or whatever else, but um i think that problem has to be addressed.</p>
+</blockquote>
+<p>简单翻译一下：</p>
+<blockquote>
+<p>我们这代人，是第一波干得不如父母好的一代。可能接下来几代也是。或许这就是很多困惑和怒火的根源。人们总是期望生活会某种程度变好，但现实却是：不行。你买不起房，你给不起大学学费，你养老没依靠了。所以我们这代人希望有个发泄的渠道。比如通过极有翼政治体现，但无论如何这些问题都需要得到正视</p>
+</blockquote>
+<p>类似的论调，在 Occupy Wallstreet 的时候就看到过。说二战后美国经济极大发展，很多老一辈的人年轻的时候找工作，高中文凭随便去街上一转，就能找到类似 IBM 这种大公司的优良职位。所以老一辈压根没法理解为啥<a href="https://www.urban.org/sites/default/files/publication/99707/young_adults_living_in_parents_basements_0.pdf">有20%的美国年轻人都住在父母甚至祖父母的地下室</a>。</p>
+<p>国内也有这种问题，其实也有很多啃老的住父母家的。但国内的说法不是阶级滑落，而是阶级「分化」。</p>
+<p>然后恰好今天又看到这篇报道<a href="https://mp.weixin.qq.com/s/9N_F6k2a2Tu-o76F3-Q0IQ">《一群穷孩子的人生实验》</a></p>
+<blockquote>
+<p>实际上，他们早已在漫长过程里修正了对自我的认识。他们确实度过过一个「被选中」的阶段，觉得可以通过努力，成为伟大的、和别人都不一样的人。但后来慢慢发现，大家本来都是不一样的，伟大和成功也没有确切标准，而且——外部环境对一个人的影响太大了。<br />
+在澳洲，孩子们还是「一如既往地穷，还是舍不得花钱」，几乎所有人都是一边上学一边打工，或者送外卖，或者在餐厅。他们不再志存高远、想着成为科学大牛，但都是踏实努力的人。<br />
+在与徐博的越洋电话里，我们聊到青云计划远大的目标，和后来逐渐残酷的现实，以及目前生活里的一些困境，谈话渐渐黯淡下来。准备挂电话的时候，他突然叫住我，「其实我还有一句话想说，」他有些哽咽：「从外界看，这可能是一个非常失败的投资，是一个不太成功的教育案例。但我觉得它是成功的，它教会了我们，如何做一个向上的人、一个正直的人。」Image</p>
+</blockquote>
+<p>我感觉国内机会多，还有空间让普通人成为一个向上的人，正直的人，但是假想未来10年、20年后，年轻人恐怕连大城市的一个房租都给不起，各行业都残暴竞争，这样的未来恐怕跟视频里那个老美描述的现状也差不多吧。阶级滑落是一个无可奈何的事。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-01-19T20:53:44+00:00">2021-01-19</time></p>
 <p>stdin</p>            </div>
@@ -136,7 +229,11 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
               <h2 class="card-title">古之学者为己</h2>
             </a>
             <p class="card-text"><blockquote>
-<p>科文的所有道理，都是以“我”为主，这可是个特别难得的品格。很多人接触文化艺术，是为了别人。英文中有个专门的名词 —— “art snob …</p></blockquote></p>
+<p>科文的所有道理，都是以“我”为主，这可是个特别难得的品格。很多人接触文化艺术，是为了别人。英文中有个专门的名词 —— “art snob”，也就是“艺术势利小人”。</p>
+<p>他们并不真的欣赏文化，他们喜欢的是谈论文化。他们看电影是为了批评导演，他们读书是为了获得谈资，他们参加音乐会是为了自拍。他们特别关注别人给文化艺术划分的高中低档，以高档为荣，以低档为耻 —— 他们自己从来不知道怎么分档。他们能滔滔不绝地背诵艺术家的生平八卦，但是从未被艺术打动过。</p>
+<p>他们关心的不是自己，而是“别人眼中的自己”。买幅油画挂在家里，是因为自己喜欢这幅画呢，还是为了向客人彰显自己的品位呢？有句话叫“古之学者为己，今之学者为人” —— 何止学习是为了别人，欣赏艺术也是为了别人。</p>
+</blockquote>
+<p>来自 万维钢·精英日课第一季 《谁想成为（文化）亿万富翁（下） 》</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-01-07T20:50:42+00:00">2021-01-07</time></p>
 <p>stdin</p>            </div>
@@ -152,7 +249,30 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
             </a>
             <p class="card-text"><p>首先得有公网 IP （废话），然后你得 OpenWRT 路由器桥接直拨。</p>
 <p>这个方法的核心是通过 <code>ifstatus wan |  jsonfilter -e '@["ipv4-address"][0].address'</code> 命令得到本机 WAN 的公网 IP。</p>
-<p>根 …</p></p>
+<p>根据官方的<a href="https://support.cloudflare.com/hc/en-us/articles/360020524512-Manage-dynamic-IPs-in-Cloudflare-DNS-programmatically">说明</a>走</p>
+<ol>
+<li>创建 <a href="https://dash.cloudflare.com/profile/api-tokens">API Token</a> 。权限选 <code>All Zones</code>，得到 <code>TOKEN</code></li>
+<li>验证 API 是否 ok<br />
+        curl - X GET "https://api.cloudflare.com/client/v4/user/tokens/verify" \<br />
+          -H "Authorization: Bearer TOKEN" \<br />
+          -H "Content-Type:application/json"</li>
+<li>获取 <code>:zone_identifier</code>。找那个长得像 ID 的<br />
+        curl - X GET "https://api.cloudflare.com/client/v4/zones"\ <br />
+          -H "Authorization: Bearer TOKEN" \<br />
+          -H "Content-Type:application/json"</li>
+<li>因为脑残的 RESTful 风格 API 无法实现 upsert，先创建个DNS。得到 <code>:identifier</code><br />
+        curl -svk -X POST "https://api.cloudflare.com/client/v4/zones/:zone_identifier/dns_records"\<br />
+          -H "Authorization: Bearer TOKEN" \<br />
+          -H "Content-Type: application/json" \<br />
+          -d '{"type":"A","name":"my_ddns.est.im","content":"'$(ifstatus wan |  jsonfilter -e '@["ipv4-address"][0].address')'","ttl":600,"proxied":false}'</li>
+<li>日常更新 DNS<br />
+        curl -svk -X PUT "https://api.cloudflare.com/client/v4/zones/:zone_identifier/dns_records/:identifier" \<br />
+          -H "Authorization: Bearer TOKEN" \<br />
+          -H "Content-Type: application/json" \<br />
+          -d '{"type":"A","name":"my_ddns.est.im","content":"'$(ifstatus wan |  jsonfilter -e '@["ipv4-address"][0].address')'","ttl":600,"proxied":false}'</li>
+</ol>
+<p>感觉挺麻烦。而且没法 API 网关自动把调用者的 IP 设为 A 记录。但是聊胜于无吧。高版本的 OpenWRT <a href="https://openwrt.org/docs/guide-user/base-system/ddns">/usr/lib/ddns/services<br />
+</a> 直接支持 Cloudflare 了不用这么麻烦了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-01-05T23:36:09+00:00">2021-01-05</time></p>
 <p>stdout</p>            </div>
@@ -169,7 +289,9 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
             <p class="card-text"><p>新年第一贴！</p>
 <p>Run the command before connect to PPPoE or as cronjob</p>
 <p>添加一个重启的定时任务，在重启之间执行一个命令：</p>
-<pre><code>uci set network.wan.mac_addr=$(hexdump -n3 -e'1/3 "8c:8d:8e" 3 …</code></pre></p>
+<pre><code>uci set network.wan.mac_addr=$(hexdump -n3 -e'1/3 "8c:8d:8e" 3/1 ":%02X" "\n"' /dev/random) &amp;&amp; uci commit network
+</code></pre>
+<p>为什么要在拨号前随机生成WAN口的 MAC 地址呢？嘿嘿。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-01-01T00:27:52+00:00">2021-01-01</time></p>
 <p>stdout</p>            </div>
@@ -184,7 +306,1223 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
               <h2 class="card-title">北美 VPS 推荐：Racknerd</h2>
             </a>
             <p class="card-text"><p>以前买的 hostmem 总感觉高峰期速度不行。Racknerd 这家看上去英语比较地道，感觉还行？于是跑了个脚本把它家的套餐遍历了一下：</p>
-<pre><code>mkdir …</code></pre></p>
+<pre><code>mkdir -p ~/Downloads/racknerd; cd $_
+
+for i in $(seq 1 423); do wget -t 0 -T 5  -U 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1'  -O ~/Downloads/racknerd/$i.html; done
+
+for f in $(ls -rt .); do python -c 'm=__import__("re").search(r"product-title\"&gt;(.+)&lt;/p&gt;.*(\d).+?CPU.+?([\d\.]+).+SSD.*\n([\d\.]+\s?.B)\sRAM.*\n(\d+.B).+Band.+?(\$[\d+\.]+)(/(\w+)|.+?\s(\w+ly))", open("'$f'").read(), 16);print("'$f' {},{}C,{}G,{},{},{} {}".format(*m.groups()[:7])) if m else "'$f'" '; sleep 0.1; done
+</code></pre>
+<p>得到下面的表格：</p>
+<style type="text/css" id="pre-table">
+    style#pre-table + table{
+        font-size: 80%;
+        line-height: 1;
+    }
+    style#pre-table + table td,th {
+        padding: 0.1em 0.3em;
+    }
+    style#pre-table + table thead tr th:last-child{
+        width: 40%;
+    }
+</style>
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>CPU</th>
+<th>SSD</th>
+<th>RAM</th>
+<th>Traffic</th>
+<th>Price</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1C</td>
+<td>30G</td>
+<td>512MB</td>
+<td>500GB</td>
+<td>$22.99 Annually</td>
+<td><a   href="https://my.racknerd.com/aff.php?aff=1865&pid=1">KVM-512MB</a></td>
+</tr>
+<tr>
+<td>20</td>
+<td>2C</td>
+<td>50G</td>
+<td>1024MB</td>
+<td>1000GB</td>
+<td>$17.99 Monthly</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=20">KVM-1GB</a></td>
+</tr>
+<tr>
+<td>21</td>
+<td>3C</td>
+<td>75G</td>
+<td>2048MB</td>
+<td>2000GB</td>
+<td>$20.59 Monthly</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=21">KVM-2GB</a></td>
+</tr>
+<tr>
+<td>22</td>
+<td>4C</td>
+<td>130G</td>
+<td>4096MB</td>
+<td>3000GB</td>
+<td>$24.59 Monthly</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=22">KVM-4GB</a></td>
+</tr>
+<tr>
+<td>23</td>
+<td>5C</td>
+<td>170G</td>
+<td>6144MB</td>
+<td>4000GB</td>
+<td>$27.59 Monthly</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=23">KVM-6GB</a></td>
+</tr>
+<tr>
+<td>24</td>
+<td>6C</td>
+<td>220G</td>
+<td>8192MB</td>
+<td>5000GB</td>
+<td>$36.59 Monthly</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=24">KVM-8GB</a></td>
+</tr>
+<tr>
+<td>25</td>
+<td>7C</td>
+<td>300G</td>
+<td>12288MB</td>
+<td>6000GB</td>
+<td>$55.99 Monthly</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=25">KVM-12GB</a></td>
+</tr>
+<tr>
+<td>26</td>
+<td>3C</td>
+<td>55G</td>
+<td>2048MB</td>
+<td>2000GB</td>
+<td>$88.00 Annually</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=26">BLACK FRIDAY - 2GB KVM</a></td>
+</tr>
+<tr>
+<td>27</td>
+<td>1C</td>
+<td>40G</td>
+<td>512MB</td>
+<td>1000GB</td>
+<td>$22.99 Annually</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=27">OVZ-768MB</a></td>
+</tr>
+<tr>
+<td>28</td>
+<td>1C</td>
+<td>40G</td>
+<td>512MB</td>
+<td>1000GB</td>
+<td>$5.59 Monthly</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=28">OVZ-1536MB</a></td>
+</tr>
+<tr>
+<td>33</td>
+<td>8C</td>
+<td>300G</td>
+<td>12288MB</td>
+<td>10000GB</td>
+<td>$55.99 Monthly</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=33">OVZ-12GB</a></td>
+</tr>
+<tr>
+<td>40</td>
+<td>3C</td>
+<td>33G</td>
+<td>3GB</td>
+<td>3000GB</td>
+<td>$83.33 Annually</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=40">RackNerd - BLOOMING 3 SPECIAL - 3GB KVM</a></td>
+</tr>
+<tr>
+<td>46</td>
+<td>6C</td>
+<td>80G</td>
+<td>8192MB</td>
+<td>5000GB</td>
+<td>$99.00 Annually</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=46">Custom Package - 8GB KVM</a></td>
+</tr>
+<tr>
+<td>51</td>
+<td>1C</td>
+<td>11G</td>
+<td>512MB</td>
+<td>2500GB</td>
+<td>$12.71 Annually</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=51">XMas Sale - 512MB KVM</a></td>
+</tr>
+<tr>
+<td>52</td>
+<td>1C</td>
+<td>20G</td>
+<td>1.5GB</td>
+<td>4500GB</td>
+<td>$15.71 Annually</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=52">XMas Sale - 1.5GB KVM</a></td>
+</tr>
+<tr>
+<td>53</td>
+<td>2C</td>
+<td>38G</td>
+<td>2.5GB</td>
+<td>6500GB</td>
+<td>$28.71 Annually</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=53">XMas Sale - 2.5GB KVM</a></td>
+</tr>
+<tr>
+<td>56</td>
+<td>3C</td>
+<td>25G</td>
+<td>2GB</td>
+<td>4000GB</td>
+<td>$21.80 Annually</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=56">2020 New Year - 2GB KVM Flash Sale</a></td>
+</tr>
+<tr>
+<td>57</td>
+<td>3C</td>
+<td>40G</td>
+<td>2.5GB</td>
+<td>6000GB</td>
+<td>$27.80 Annually</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=57">2020 New Year - 2.5GB KVM Flash Sale</a></td>
+</tr>
+<tr>
+<td>58</td>
+<td>3C</td>
+<td>25G</td>
+<td>2GB</td>
+<td>3000GB</td>
+<td>$21.80 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=58">LEB NEW YEAR - 2GB KVM Flash Sale</a></td>
+</tr>
+<tr>
+<td>59</td>
+<td>3C</td>
+<td>40G</td>
+<td>2.5GB</td>
+<td>5000GB</td>
+<td>$27.80 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=59">LEB NEW YEAR - 2.5GB KVM Flash Sale</a></td>
+</tr>
+<tr>
+<td>60</td>
+<td>1C</td>
+<td>60G</td>
+<td>2048MB</td>
+<td>2500GB</td>
+<td>$17.65 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=60">LEB NEW YEAR - 2GB OpenVZ 7 VPS</a></td>
+</tr>
+<tr>
+<td>61</td>
+<td>2C</td>
+<td>50G</td>
+<td>2GB</td>
+<td>4000GB</td>
+<td>$36 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=61">LARGE STORAGE - 2GB KVM</a></td>
+</tr>
+<tr>
+<td>62</td>
+<td>3C</td>
+<td>80G</td>
+<td>4GB</td>
+<td>5000GB</td>
+<td>$59 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=62">LARGE STORAGE - 4GB KVM</a></td>
+</tr>
+<tr>
+<td>63</td>
+<td>4C</td>
+<td>140G</td>
+<td>6GB</td>
+<td>6000GB</td>
+<td>$95 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=63">LARGE STORAGE - 6GB KVM</a></td>
+</tr>
+<tr>
+<td>64</td>
+<td>4C</td>
+<td>200G</td>
+<td>8GB</td>
+<td>8000GB</td>
+<td>$135 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=64">LARGE STORAGE - 8GB KVM</a></td>
+</tr>
+<tr>
+<td>66</td>
+<td>2C</td>
+<td>35G</td>
+<td>2GB</td>
+<td>4000GB</td>
+<td>$22.80 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=66">Latest 2020 New Year - 2GB KVM Flash Sale</a></td>
+</tr>
+<tr>
+<td>73</td>
+<td>1C</td>
+<td>18G</td>
+<td>1GB</td>
+<td>2500GB</td>
+<td>$16.68 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=73">RackNerd Lunar RED ENVELOPE Promo - 1GB KVM</a></td>
+</tr>
+<tr>
+<td>75</td>
+<td>2C</td>
+<td>32G</td>
+<td>3GB</td>
+<td>4000GB</td>
+<td>$24.68 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=75">RackNerd Lunar RED ENVELOPE Promo - 3GB KVM</a></td>
+</tr>
+<tr>
+<td>76</td>
+<td>3C</td>
+<td>45G</td>
+<td>4GB</td>
+<td>6000GB</td>
+<td>$35.68 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=76">RackNerd Lunar RED ENVELOPE Promo - 4GB KVM</a></td>
+</tr>
+<tr>
+<td>87</td>
+<td>3C</td>
+<td>32G</td>
+<td>2GB</td>
+<td>5500GB</td>
+<td>$22.55 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=87">Flash Sale Promo - 2GB RAM</a></td>
+</tr>
+<tr>
+<td>88</td>
+<td>2C</td>
+<td>15G</td>
+<td>1GB</td>
+<td>4500GB</td>
+<td>$15.38 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=88">Flash Sale Promo - 1GB RAM</a></td>
+</tr>
+<tr>
+<td>98</td>
+<td>3C</td>
+<td>35G</td>
+<td>2.5GB</td>
+<td>6000GB</td>
+<td>$23.50 /YEAR</td>
+<td><a  href="https://my.racknerd.com/aff.php?aff=1865&pid=98">February Flash Sale 2.5GB KVM</a></td>
+</tr>
+<tr>
+<td>103</td>
+<td>3C</td>
+<td>40G</td>
+<td>2.5GB</td>
+<td>6500GB</td>
+<td>$25.50 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=103">LEB KVM VPS Flash Sale 2.5GB KVM</a></td>
+</tr>
+<tr>
+<td>113</td>
+<td>1C</td>
+<td>12G</td>
+<td>768 MB</td>
+<td>2000GB</td>
+<td>$13.93 Annually</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=113">Valentine's Day Special - 768MB KVM</td>
+</tr>
+<tr>
+<td>114</td>
+<td>2C</td>
+<td>23G</td>
+<td>1.5GB</td>
+<td>4000GB</td>
+<td>$19.95 Annually</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=114">Valentine's Day Special - 1.5GB KVM</td>
+</tr>
+<tr>
+<td>120</td>
+<td>1C</td>
+<td>15G</td>
+<td>1GB</td>
+<td>2500GB</td>
+<td>$14.89 Annually</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=120">2K20 - 1GB KVM Flash Sale</a></td>
+</tr>
+<tr>
+<td>121</td>
+<td>2C</td>
+<td>25G</td>
+<td>2GB</td>
+<td>4500GB</td>
+<td>$21.89 Annually</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=121">2K20 - 2GB KVM Flash Sale</a></td>
+</tr>
+<tr>
+<td>122</td>
+<td>3C</td>
+<td>33G</td>
+<td>3GB</td>
+<td>6000GB</td>
+<td>$29.89 Annually</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=122">2K20 - 3GB KVM Flash Sale</a></td>
+</tr>
+<tr>
+<td>124</td>
+<td>2C</td>
+<td>28G</td>
+<td>2.5GB</td>
+<td>4000GB</td>
+<td>$22.19 Annually</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=124">RackNerd KVM VPS Sale - 2.5GB</a></td>
+</tr>
+<tr>
+<td>128</td>
+<td>2C</td>
+<td>20G</td>
+<td>1.5GB</td>
+<td>4000GB</td>
+<td>$16.55 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=128">NEW WEBSITE SPECIAL! 1.5GB KVM</a></td>
+</tr>
+<tr>
+<td>129</td>
+<td>3C</td>
+<td>40G</td>
+<td>2.5GB</td>
+<td>6500GB</td>
+<td>$23.49 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=129">NEW WEBSITE SPECIAL! 2.5GB KVM</a></td>
+</tr>
+<tr>
+<td>130</td>
+<td>3C</td>
+<td>45G</td>
+<td>3.5GB</td>
+<td>7000GB</td>
+<td>$28.99 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=130">NEW WEBSITE SPECIAL! 3.5GB KVM</a></td>
+</tr>
+<tr>
+<td>135</td>
+<td>2C</td>
+<td>20G</td>
+<td>1.5GB</td>
+<td>4000GB</td>
+<td>$16.55 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=135">LEB New Website Special - 1.5GB KVM</a></td>
+</tr>
+<tr>
+<td>136</td>
+<td>3C</td>
+<td>45G</td>
+<td>3.5GB</td>
+<td>7000GB</td>
+<td>$28.99 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=136">LEB New Website Special - 3.5GB KVM</a></td>
+</tr>
+<tr>
+<td>137</td>
+<td>3C</td>
+<td>40G</td>
+<td>2.5GB</td>
+<td>6500GB</td>
+<td>$23.49 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=137">LEB New Website Special - 2.5GB KVM</a></td>
+</tr>
+<tr>
+<td>141</td>
+<td>2C</td>
+<td>20G</td>
+<td>2GB</td>
+<td>4000GB</td>
+<td>$18.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=141">White Day Flash Sale - 2GB KVM</a></td>
+</tr>
+<tr>
+<td>147</td>
+<td>3C</td>
+<td>40G</td>
+<td>3GB</td>
+<td>4000GB</td>
+<td>$27.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=147">EOM - March 3GB KVM</a></td>
+</tr>
+<tr>
+<td>151</td>
+<td>1C</td>
+<td>18G</td>
+<td>1GB</td>
+<td>2500GB</td>
+<td>$16.68 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=151">LEB SPECIAL- KVM VPS 1GB</a></td>
+</tr>
+<tr>
+<td>153</td>
+<td>3C</td>
+<td>45G</td>
+<td>4GB</td>
+<td>6000GB</td>
+<td>$35.68 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=153">LEB SPECIAL- KVM VPS 4GB</a></td>
+</tr>
+<tr>
+<td>154</td>
+<td>3C</td>
+<td>55G</td>
+<td>4GB</td>
+<td>8000GB</td>
+<td>$33.25 Annually</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=154">(Custom) 4GB KVM Special</a></td>
+</tr>
+<tr>
+<td>155</td>
+<td>1C</td>
+<td>20G</td>
+<td>768 MB</td>
+<td>3000GB</td>
+<td>$15.68 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=155">3 Day FLASH SALE - 768MB KVM</a></td>
+</tr>
+<tr>
+<td>156</td>
+<td>2C</td>
+<td>35G</td>
+<td>2GB</td>
+<td>5000GB</td>
+<td>$22.68 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=156">3 Day FLASH SALE - 2GB KVM</a></td>
+</tr>
+<tr>
+<td>157</td>
+<td>3C</td>
+<td>50G</td>
+<td>2.5GB</td>
+<td>6500GB</td>
+<td>$26.25 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=157">(Custom) 2.5GB KVM VPS - Ticket #855790</a></td>
+</tr>
+<tr>
+<td>162</td>
+<td>2C</td>
+<td>22G</td>
+<td>1.5GB</td>
+<td>4500GB</td>
+<td>$20 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=162">LIMITED STOCK for CN 1.5GB KVM</a></td>
+</tr>
+<tr>
+<td>164</td>
+<td>1C</td>
+<td>15G</td>
+<td>1GB</td>
+<td>3000GB</td>
+<td>$15 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=164">Easter Sale - KVM 1GB Special</a></td>
+</tr>
+<tr>
+<td>165</td>
+<td>2C</td>
+<td>27G</td>
+<td>2GB</td>
+<td>5000GB</td>
+<td>$24 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=165">Easter Sale - KVM 2GB Special</a></td>
+</tr>
+<tr>
+<td>167</td>
+<td>1C</td>
+<td>22G</td>
+<td>1GB</td>
+<td>3000GB</td>
+<td>$17.80 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=167">1G RAM KVM VPS Special</a></td>
+</tr>
+<tr>
+<td>168</td>
+<td>2C</td>
+<td>27G</td>
+<td>2GB</td>
+<td>5000GB</td>
+<td>$24 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=168">2G RAM KVM VPS Special</a></td>
+</tr>
+<tr>
+<td>169</td>
+<td>3C</td>
+<td>40G</td>
+<td>3.5GB</td>
+<td>6500GB</td>
+<td>$34 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=169">3.5G RAM KVM VPS Special</a></td>
+</tr>
+<tr>
+<td>171</td>
+<td>3C</td>
+<td>25G</td>
+<td>2.5GB</td>
+<td>5000GB</td>
+<td>$22 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=171">2.5GB KVM VPS - FLASH SALE 2020</a></td>
+</tr>
+<tr>
+<td>178</td>
+<td>1C</td>
+<td>15G</td>
+<td>1GB</td>
+<td>3000GB</td>
+<td>$13.50 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=178">1GB KVM Flash Sale</a></td>
+</tr>
+<tr>
+<td>179</td>
+<td>1C</td>
+<td>20G</td>
+<td>1.5GB</td>
+<td>2500GB</td>
+<td>$15.99 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=179">1.5GB KVM Flash Sale</a></td>
+</tr>
+<tr>
+<td>180</td>
+<td>2C</td>
+<td>30G</td>
+<td>2.5GB</td>
+<td>4000GB</td>
+<td>$22.19 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=180">2.5GB KVM Flash Sale</a></td>
+</tr>
+<tr>
+<td>181</td>
+<td>1C</td>
+<td>20G</td>
+<td>1.5GB</td>
+<td>3000GB</td>
+<td>$15.88 Annually</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=181">Birthday KVM VPS Sale - 1.5GB KVM</a></td>
+</tr>
+<tr>
+<td>182</td>
+<td>2C</td>
+<td>45G</td>
+<td>2.5GB</td>
+<td>5000GB</td>
+<td>$22.88 Annually</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=182">Birthday KVM VPS Sale - 2.5GB KVM</a></td>
+</tr>
+<tr>
+<td>183</td>
+<td>4C</td>
+<td>45G</td>
+<td>4.5GB</td>
+<td>2000GB</td>
+<td>$69.90 /month</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=183">(Custom) 10x 4.5 GB KVM VPSs</a></td>
+</tr>
+<tr>
+<td>184</td>
+<td>4C</td>
+<td>45G</td>
+<td>4.5GB</td>
+<td>2000GB</td>
+<td>$699 /month</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=184">(Custom) 100x 4.5 GB KVM VPSs</a></td>
+</tr>
+<tr>
+<td>185</td>
+<td>4C</td>
+<td>45G</td>
+<td>4.5GB</td>
+<td>3000GB</td>
+<td>$4790.00 Monthly</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=185">(Custom) 1000x 4.5 GB KVM VPSs</a></td>
+</tr>
+<tr>
+<td>187</td>
+<td>2C</td>
+<td>30G</td>
+<td>2.5GB</td>
+<td>4000GB</td>
+<td>$39.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=187">2.5GB KVM VPS (DDoS Protected Network)</a></td>
+</tr>
+<tr>
+<td>188</td>
+<td>3C</td>
+<td>40G</td>
+<td>3.5GB</td>
+<td>6000GB</td>
+<td>$49.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=188">3.5GB KVM VPS (DDoS Protected Network)</a></td>
+</tr>
+<tr>
+<td>189</td>
+<td>1C</td>
+<td>30G</td>
+<td>512 MB</td>
+<td>500GB</td>
+<td>$32.99 Annually</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=189">512MB KVM VPS (DDoS Protected Network)</a></td>
+</tr>
+<tr>
+<td>190</td>
+<td>2C</td>
+<td>50G</td>
+<td>1GB</td>
+<td>1000GB</td>
+<td>$19.19 Monthly</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=190">1GB KVM VPS (DDoS Protected Network)</a></td>
+</tr>
+<tr>
+<td>191</td>
+<td>4C</td>
+<td>45G</td>
+<td>4.5GB</td>
+<td>2000GB</td>
+<td>$10.00 Monthly</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=191">(Custom) -- 4.5GB RAM KVM VPS</a></td>
+</tr>
+<tr>
+<td>194</td>
+<td>3C</td>
+<td>45G</td>
+<td>3GB</td>
+<td>6000GB</td>
+<td>$31.50 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=194">3GB RAM KVM VPS</a></td>
+</tr>
+<tr>
+<td>198</td>
+<td>1C</td>
+<td>25G</td>
+<td>1.5GB</td>
+<td>5000GB</td>
+<td>$18.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=198">Labor Day Promo - 1.5GB KVM</a></td>
+</tr>
+<tr>
+<td>199</td>
+<td>3C</td>
+<td>45G</td>
+<td>3GB</td>
+<td>6500GB</td>
+<td>$24.28 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=199">Labor Day Promo - 3GB KVM</a></td>
+</tr>
+<tr>
+<td>200</td>
+<td>3C</td>
+<td>75G</td>
+<td>2GB</td>
+<td>2000GB</td>
+<td>$22.79 Monthly</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=200">2GB KVM VPS (DDoS Protected Network)</a></td>
+</tr>
+<tr>
+<td>201</td>
+<td>4C</td>
+<td>130G</td>
+<td>4GB</td>
+<td>3000GB</td>
+<td>$26.59 Monthly</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=201">4GB KVM VPS (DDoS Protected Network)</a></td>
+</tr>
+<tr>
+<td>202</td>
+<td>5C</td>
+<td>170G</td>
+<td>6GB</td>
+<td>4000GB</td>
+<td>$39.49 Monthly</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=202">6GB KVM VPS (DDoS Protected Network)</a></td>
+</tr>
+<tr>
+<td>203</td>
+<td>6C</td>
+<td>220G</td>
+<td>8GB</td>
+<td>5000GB</td>
+<td>$52.29 Monthly</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=203">8GB KVM VPS (DDoS Protected Network)</a></td>
+</tr>
+<tr>
+<td>207</td>
+<td>1C</td>
+<td>18G</td>
+<td>1GB</td>
+<td>1000GB</td>
+<td>$23 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=207">1GB KVM VPS Special (LA-DC05)</a></td>
+</tr>
+<tr>
+<td>209</td>
+<td>3C</td>
+<td>35G</td>
+<td>3GB</td>
+<td>5000GB</td>
+<td>$43 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=209">3GB KVM VPS Special (LA-DC05)</a></td>
+</tr>
+<tr>
+<td>210</td>
+<td>1C</td>
+<td>25G</td>
+<td>1.5GB</td>
+<td>3000GB</td>
+<td>$24.39 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=210">1.5GB KVM VPS</a></td>
+</tr>
+<tr>
+<td>211</td>
+<td>2C</td>
+<td>40G</td>
+<td>2.5GB</td>
+<td>5000GB</td>
+<td>$29.50 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=211">2.5GB KVM VPS</a></td>
+</tr>
+<tr>
+<td>212</td>
+<td>4C</td>
+<td>60G</td>
+<td>4.5GB</td>
+<td>8000GB</td>
+<td>$55.89 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=212">4.5GB KVM VPS</a></td>
+</tr>
+<tr>
+<td>213</td>
+<td>1C</td>
+<td>18G</td>
+<td>1.8GB</td>
+<td>2500GB</td>
+<td>$20.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=213">Mother's Day Special - 1.8GB KVM</a></td>
+</tr>
+<tr>
+<td>214</td>
+<td>2C</td>
+<td>38G</td>
+<td>2.8GB</td>
+<td>4000GB</td>
+<td>$26.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=214">Mother's Day Special - 2.8GB KVM</a></td>
+</tr>
+<tr>
+<td>215</td>
+<td>3C</td>
+<td>48G</td>
+<td>3.8GB</td>
+<td>5000GB</td>
+<td>$33.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=215">Mother's Day Special - 3.8GB KVM</a></td>
+</tr>
+<tr>
+<td>231</td>
+<td>1C</td>
+<td>20G</td>
+<td>1GB</td>
+<td>500GB</td>
+<td>$24.00 Annually</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=231">Custom KVM 1GB (Faizan)</a></td>
+</tr>
+<tr>
+<td>232</td>
+<td>1C</td>
+<td>16G</td>
+<td>1GB</td>
+<td>3000GB</td>
+<td>$14.25 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=232">1GB KVM VPS Sale</a></td>
+</tr>
+<tr>
+<td>234</td>
+<td>3C</td>
+<td>42G</td>
+<td>3GB</td>
+<td>5000GB</td>
+<td>$28.20 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=234">3GB KVM VPS Sale</a></td>
+</tr>
+<tr>
+<td>236</td>
+<td>1C</td>
+<td>15G</td>
+<td>1GB</td>
+<td>2000GB</td>
+<td>$15.30 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=236">June Flash Sale - 1GB</a></td>
+</tr>
+<tr>
+<td>237</td>
+<td>2C</td>
+<td>25G</td>
+<td>2GB</td>
+<td>4000GB</td>
+<td>$24.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=237">June Flash Sale - 2GB</a></td>
+</tr>
+<tr>
+<td>240</td>
+<td>2C</td>
+<td>33G</td>
+<td>2.5GB</td>
+<td>4000GB</td>
+<td>$25.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=240">DC-02 Flash Sale - 2.5GB</a></td>
+</tr>
+<tr>
+<td>241</td>
+<td>3C</td>
+<td>50G</td>
+<td>4GB</td>
+<td>5000GB</td>
+<td>$42.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=241">DC-02 Flash Sale - 4GB</a></td>
+</tr>
+<tr>
+<td>246</td>
+<td>1C</td>
+<td>25G</td>
+<td>1.5GB</td>
+<td>6000GB</td>
+<td>$17.68 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=246">6.18 Sale - 1.5GB KVM</a></td>
+</tr>
+<tr>
+<td>247</td>
+<td>2C</td>
+<td>45G</td>
+<td>2.5GB</td>
+<td>8000GB</td>
+<td>$29.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=247">6.18 Sale - 2.5GB KVM</a></td>
+</tr>
+<tr>
+<td>252</td>
+<td>1C</td>
+<td>20G</td>
+<td>1GB</td>
+<td>5000GB</td>
+<td>$15.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=252">June EOM - 1GB KVM</a></td>
+</tr>
+<tr>
+<td>253</td>
+<td>3C</td>
+<td>48G</td>
+<td>3GB</td>
+<td>7000GB</td>
+<td>$31.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=253">June EOM - 3GB KVM</a></td>
+</tr>
+<tr>
+<td>259</td>
+<td>1C</td>
+<td>20G</td>
+<td>1.5GB</td>
+<td>2000GB</td>
+<td>$25.40 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=259">1.5GB KVM VPS (DDoS Protected Network)</a></td>
+</tr>
+<tr>
+<td>260</td>
+<td>2C</td>
+<td>30G</td>
+<td>2.5GB</td>
+<td>4000GB</td>
+<td>$32.50 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=260">2.5GB KVM VPS (DDoS Protected Network)</a></td>
+</tr>
+<tr>
+<td>261</td>
+<td>3C</td>
+<td>40G</td>
+<td>3.5GB</td>
+<td>6000GB</td>
+<td>$39.20 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=261">3.5GB KVM VPS (DDoS Protected Network)</a></td>
+</tr>
+<tr>
+<td>262</td>
+<td>1C</td>
+<td>27G</td>
+<td>1.74GB</td>
+<td>4000GB</td>
+<td>$17.38 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=262">4th of July Sale - 1.74GB KVM</a></td>
+</tr>
+<tr>
+<td>263</td>
+<td>2C</td>
+<td>43G</td>
+<td>2.74GB</td>
+<td>6000GB</td>
+<td>$27.40 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=263">4th of July Sale - 2.74GB KVM</a></td>
+</tr>
+<tr>
+<td>264</td>
+<td>3C</td>
+<td>57G</td>
+<td>3.74GB</td>
+<td>8000GB</td>
+<td>$37.40 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=264">4th of July Sale - 3.74GB KVM</a></td>
+</tr>
+<tr>
+<td>279</td>
+<td>1C</td>
+<td>25G</td>
+<td>1GB</td>
+<td>3000GB</td>
+<td>$6.89 /quarterly</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=279">July 2020 Sale - 1GB KVM</a></td>
+</tr>
+<tr>
+<td>280</td>
+<td>2C</td>
+<td>35G</td>
+<td>2GB</td>
+<td>4000GB</td>
+<td>$9.89 /quarterly</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=280">July 2020 Sale - 2GB KVM</a></td>
+</tr>
+<tr>
+<td>281</td>
+<td>2C</td>
+<td>50G</td>
+<td>3GB</td>
+<td>6000GB</td>
+<td>$12.39 /quarterly</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=281">July 2020 Sale - 3GB KVM</a></td>
+</tr>
+<tr>
+<td>285</td>
+<td>2C</td>
+<td>50G</td>
+<td>3.5GB</td>
+<td>6500GB</td>
+<td>$34.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=285">July EOM - 3.5GB KVM</a></td>
+</tr>
+<tr>
+<td>286</td>
+<td>1C</td>
+<td>18G</td>
+<td>1GB</td>
+<td>1000GB</td>
+<td>$19 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=286">1GB KVM VPS Special (LA-DC05)</a></td>
+</tr>
+<tr>
+<td>288</td>
+<td>3C</td>
+<td>35G</td>
+<td>3GB</td>
+<td>5000GB</td>
+<td>$35 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=288">3GB KVM VPS Special (LA-DC05)</a></td>
+</tr>
+<tr>
+<td>290</td>
+<td>1C</td>
+<td>25G</td>
+<td>2.5GB</td>
+<td>3000GB</td>
+<td>$23.59 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=290">August 2020 Sale - 2.5GB KVM</a></td>
+</tr>
+<tr>
+<td>291</td>
+<td>2C</td>
+<td>40G</td>
+<td>3GB</td>
+<td>5000GB</td>
+<td>$28.99 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=291">August 2020 Sale - 3GB KVM</a></td>
+</tr>
+<tr>
+<td>300</td>
+<td>4C</td>
+<td>45G</td>
+<td>4.5GB</td>
+<td>4000GB</td>
+<td>$1800.00 Monthly</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=300">300x 4.5 GB KVM VPS</a></td>
+</tr>
+<tr>
+<td>311</td>
+<td>2C</td>
+<td>40G</td>
+<td>2GB</td>
+<td>5000GB</td>
+<td>$20.88 /Year</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=311">FLASH SALE - 2GB KVM Intel Xeon VPS</a></td>
+</tr>
+<tr>
+<td>312</td>
+<td>4C</td>
+<td>100G</td>
+<td>8GB</td>
+<td>1000GB</td>
+<td>$65.00 Annually</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=312">Custom 8GB VPS Plan -- TT#806952</a></td>
+</tr>
+<tr>
+<td>316</td>
+<td>1C</td>
+<td>20G</td>
+<td>1GB</td>
+<td>2000GB</td>
+<td>$11.95 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=316">Mooncake Festival Sale - 1GB KVM VPS</a></td>
+</tr>
+<tr>
+<td>317</td>
+<td>2C</td>
+<td>50G</td>
+<td>2GB</td>
+<td>4000GB</td>
+<td>$19.95 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=317">Mooncake Festival Sale - 2GB KVM VPS</a></td>
+</tr>
+<tr>
+<td>318</td>
+<td>3C</td>
+<td>55G</td>
+<td>2GB</td>
+<td>2000GB</td>
+<td>$88.00 Annually</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=318">Geekzone Deal - 2GB KVM VPS</a></td>
+</tr>
+<tr>
+<td>319</td>
+<td>1C</td>
+<td>30G</td>
+<td>1.5GB</td>
+<td>3000GB</td>
+<td>$25.95 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=319">New Locations Launch Sale - 1.5GB KVM VPS</a></td>
+</tr>
+<tr>
+<td>320</td>
+<td>2C</td>
+<td>50G</td>
+<td>2.5GB</td>
+<td>5000GB</td>
+<td>$39.95 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=320">New Locations Launch Sale - 2.5GB KVM VPS</a></td>
+</tr>
+<tr>
+<td>326</td>
+<td>1C</td>
+<td>25G</td>
+<td>1.5GB</td>
+<td>3000GB</td>
+<td>$16.99 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=326">National Day Sale - 1.5GB KVM VPS</a></td>
+</tr>
+<tr>
+<td>327</td>
+<td>2C</td>
+<td>40G</td>
+<td>2.5GB</td>
+<td>5000GB</td>
+<td>$25.88 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=327">National Day Sale - 2.5GB KVM VPS</a></td>
+</tr>
+<tr>
+<td>335</td>
+<td>4C</td>
+<td>45G</td>
+<td>4.5GB</td>
+<td>3000GB</td>
+<td>$2395.00 Monthly</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=335">500x 4.5 GB KVM VPS</a></td>
+</tr>
+<tr>
+<td>358</td>
+<td>1C</td>
+<td>17G</td>
+<td>1GB</td>
+<td>3000GB</td>
+<td>$10.98 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=358">1GB KVM VPS Special (LEB Exclusive)</a></td>
+</tr>
+<tr>
+<td>409</td>
+<td>1C</td>
+<td>20G</td>
+<td>1GB</td>
+<td>3000GB</td>
+<td>$16.38 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=409">1 GB KVM VPS Special (Amsterdam)</a></td>
+</tr>
+<tr>
+<td>410</td>
+<td>2C</td>
+<td>35G</td>
+<td>2GB</td>
+<td>5000GB</td>
+<td>$22.38 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=410">2 GB KVM VPS Special (Amsterdam)</a></td>
+</tr>
+<tr>
+<td>416</td>
+<td>1C</td>
+<td>27G</td>
+<td>1.2GB</td>
+<td>3500GB</td>
+<td>$11.89 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=416">FLASH SALE - 1.2 GB KVM VPS Amsterdam</a></td>
+</tr>
+<tr>
+<td>421</td>
+<td>2C</td>
+<td>30G</td>
+<td>2GB</td>
+<td>3500GB</td>
+<td>$19.89 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=421">2 GB KVM Christmas VPS Special</a></td>
+</tr>
+<tr>
+<td>422</td>
+<td>3C</td>
+<td>50G</td>
+<td>3GB</td>
+<td>8000GB</td>
+<td>$29.49 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=422">3 GB KVM Christmas VPS Special</a></td>
+</tr>
+<tr>
+<td>423</td>
+<td>1C</td>
+<td>20G</td>
+<td>1.5GB</td>
+<td>2500GB</td>
+<td>$16.81 /YEAR</td>
+<td><a href="https://my.racknerd.com/aff.php?aff=1865&pid=423">1.5 GB KVM Christmas VPS Special</a></td>
+</tr>
+</tbody>
+</table>
+<p>都是 KVM 的机器，SolusVM的壳子。挑个便宜的买不错。</p>
+<p>btw 本来想 awk 搞定，发现自己太弱了。于是换 <code>perl -ne</code> 发现更弱。最后只有拉起 python。。囧。</p>
+<p>然后又遇到了表格字体太大导致行内换行。于是又折腾了 Markdown 改 <code>font-size</code> 的 hack 。。囧。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-12-26T01:03:36+00:00">2020-12-26</time></p>
 <p>stderr</p>            </div>
@@ -200,7 +1538,15 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
             </a>
             <p class="card-text"><p>美国心理学博士 普林斯汀(Mitch Prinstein)写了本书叫 《欢迎度 Popular》，里面讲到按欢迎度可以给人分为5种类型：</p>
 <p><img alt="" src="/images/2020/stdin-017-1.jpg" /></p>
-<p>里面讲到最重要的结论就是，受 …</p></p>
+<p>里面讲到最重要的结论就是，受欢迎是人本身的一个特性，不会随着群体和环境的变化而变化。作为比较劣势的，被拒绝者，其实还是有一些优点的</p>
+<blockquote>
+<p>而普林斯汀这本书说，这个实验你还可以从另一个角度解释。经常被接受的人，自信心太强，做事比较主观。而经常被拒绝的人，因为善于察觉社交中的蛛丝马迹，所以更能够体察别人的情绪，能用别人的视角来保护自己<br />
+这在很多时候是一个优势。比如你们公司要说服另一个公司跟你们合作。领导作报告说得眉飞色舞，对方公司听得也是频频点头 —— 那么如果在场的你们公司的人都是被接受的类型，可能就会过分乐观，认为合作肯定能谈成。但是如果这时候你们有个高中时代有过被拒绝枷锁的人，他就能察觉到，领导讲到某某处的时候，对方反应不太好。这个关键信息就给你们带来一个改进的提示。<br />
+所以这个世界虽然不怎么公平，但毕竟还是各有所长。从小被接受，你固然获得了自信和乐观，但是你可能是个傲慢的人，缺少真正的智慧；从小被拒绝，虽然你的生活可能不太愉快，但是黑夜给了你黑色的眼睛。<br />
+如果一个国家一个民族曾经有过长期被人欺负的历史，她看问题的眼光恐怕也会有所不同。中国的近代史上历经了屈辱，几十年前的中国并不是“被接受”的角色。那我们想想今天的国人，对国际事务特别敏感，动不动就是谁谁“辱华”、谁谁“伤害了中国人民的感情” —— 这难道不也是精神枷锁的效应吗？</p>
+</blockquote>
+<p>这个很好的解释了，为什么简体中文网上这么多能对国内外局势进行「客观」分析的键盘政治家。。。。。。American Exceptionalism 就是那种一直被上帝眷顾的优待的受欢迎的人，一下子变得不受欢迎，会有很大的心里落差。就想这本书里描写的那些高中生 cool kids 没落一样。</p>
+<p>本篇主要内容摘录自《万维刚·精英日课第一季 欢迎度 4讲》</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-11-30T22:49:51+00:00">2020-11-30</time></p>
 <p>stdin</p>            </div>
@@ -219,7 +1565,15 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
 
 <p>然后这个赔偿，很久网上有另外一个帖子说：</p>
 <blockquote>
-<p>去年1月，西安的旅友驾车去九寨沟路上撞伤一只牦牛。当时天 …</p></blockquote></p>
+<p>去年1月，西安的旅友驾车去九寨沟路上撞伤一只牦牛。当时天已经黑了视线不是很好，加上路也不怎么好，车速不高。拐过一个弯，看到迎面一辆车，就变了个近光，就在即将汇车的一瞬间，车前两三米处有两头牦牛横穿马路，一个猛刹车也来不及了，就这样，牦牛被撞伤了，车的右前侧也撞坏了，右大灯也撞坏了。 <br />
+他停车报警，约好第二天找牛主人商量赔偿的事。对方说撞伤的是母牛，以后会生小崽子，小崽子还会生小崽子.....开口3.5万。旅友瞬间蒙逼，说牛只是受伤并没有死亡，不应该赔那么多。前后谈了两天，经过一番实力悬殊的讨价还价，最后事情以旅友赔偿牛主人一万八千元达成赔偿协议而告终。原本出行的满满的愉快心情，已被破坏殆尽。</p>
+</blockquote>
+<p>很多人会对大牛生小牛这个说法不屑一顾，觉得这是偏离了牦牛的市场价格漫天要价的野蛮行为，但是最近看了《<a href="https://m.igetget.com/share/course/article?id=g258WANERjwQJDzzDrKbOMG1rZqkPl">罗辑思维811期 | 为什么这场厮杀延续千年？</a>》却提供了一个不一样的视角：</p>
+<blockquote>
+<p>很多人可能误以为游牧者经常吃肉。可能现代社会是如此，古代的游牧者可不是这样。他们吃肉的机会其实很少。为啥？因为对游牧民族来说，牲畜就是把草转换成乳制品、皮、毛、牛羊粪的转换器。吃牲畜，就相当于农耕民族吃种子，或工人变卖机器。所以，只有牲畜死了或太老无法转场时，或者打猎有收获的时候，游牧者才有机会吃肉。这种机会并不多。 <br />
+这也从一个侧面解释了，为什么农耕民族为什么拿土地当命根子；而游牧民族是拿牲畜当命根子。命根子不同，生活方式当然不同。所以，农耕民族一定是安土重迁，游牧民族一定是牲畜到哪儿人跟到哪儿。</p>
+</blockquote>
+<p>从这个角度说说，把游牧人的牲口吃了，就好比你去把农民种子损毁然后要求按普通商品粮食计价。。。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-11-18T21:08:24+00:00">2020-11-18</time></p>
 <p>stdin</p>            </div>
@@ -264,7 +1618,22 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
               <h2 class="card-title">一部上个世纪50年代拍的陪审团12个白人讨论凶杀案的电影 观后感</h2>
             </a>
             <p class="card-text"><p>在 ddrk 上看完了，想到什么说什么吧。</p>
-<p>《<a href="https://movie.douban.com/subject/1293182/">12 Angry Men</a> 十二怒汉》，这是我第二次打开这个电影了。50年代的，黑白的，第一次真没兴致看下去，这种 …</p></p>
+<p>《<a href="https://movie.douban.com/subject/1293182/">12 Angry Men</a> 十二怒汉》，这是我第二次打开这个电影了。50年代的，黑白的，第一次真没兴致看下去，这种靠演员演技和铺垫的老电影，很难静下心来专注的看。今天机缘巧合就看完了。</p>
+<p>有部分剧透。没看过的就不要看了。</p>
+<p>首先第一个感觉是，那个年代的白人之间感觉很平等啊。虽然嘴上要 BB，但是投票表决什么都还是好严肃。不会因为动怒了当面唱反调，骂娘这些。</p>
+<p>第二个感觉是，人们都好闲啊。不用担心当 jury 的时候耽误 996 了？</p>
+<p>说老头走得慢，还真的去掐着秒表试了试。这个居然不尬？也太有实证主义精神了。</p>
+<p>最囧的是，为了案子还居然去当地五金店买了一把违禁折叠刀！WTF？</p>
+<p>然后里面各个人的个性都很强，没有谁含蓄 迁就大家 跟风什么的。</p>
+<p>大部分人都善于表达和思考，为了别人的生死也敢于犯众怒。真是需要勇气和正值啊。</p>
+<p>但是，抽烟真是的。。满屋子都是。</p>
+<p>我感觉吧，「民主」真得是这样有大把空闲时间的人，把事情的细节，那些 little details 都理清楚，然后大家虽然可以争执，但是首先要是一个心智成熟的人，尊重不同的意见，就事论事才行。</p>
+<p>现在社会上的媒体都太浮躁了。还有更大的问题，就是这个社会变化太快了，各种 moving parts, moving too fast，假设你让一个50后来讨论今天2020年的案子，可以几乎 assume 他们就根本不可能搞清楚各种数字证据。比如微信 上某个操作有几种可能的触发条件和路径依赖？50年代之前的社会，年龄越长的人见识越多。现在的社会，年龄越大，认识社会的阻力越大。囧！</p>
+<p>然后当太多的信息加载在一起，很多事情就压根很难还原真像。50年代那个社会我相信还是高度趋同一致的。成年人的标志还是大部分以体力而不是脑力作为标志的。但现在的社会，20-30岁的人似乎就是壮年，之后的人就离「mainstream」越来越远了。比如你有了娃之后可能压根不会去关心高中生喜欢的小鲜肉是谁？而且年轻人的思考模式和上下文可能对你来说是完全陌生的。35以后的人很难去以18岁犯事的人去猜度社会的多样性和街头文化的野蛮生长了了。</p>
+<p>现代社会可能坑就坑在，严重的犯罪不再以对身体的伤害为主，而是精神伤害。比如可能受伤被关进监狱的时间，可能还不如一个造谣的多。这就导致断案需要更加细致和麻烦的还原。可能会在未来进一步加剧。然而现在社会的分工、阶级、出身背景、技能的差异性太大了。陪审团随机选出来的公民，真的能够像这部片子一样设身处地的去反推案子里的细节吗？</p>
+<p>还有就是12个白人，恐怕也都是以传统价值观，也就是事业和家庭作为社会基本单元的。但少数族裔的文化完全不一样，可能是围绕 gang 或者不同的文化背景、宗教信仰下成长的。也不能按常理一概而论。虽然说国家、社会就是陌生人的大规模协作，但是现在的社会 diversity 大。你觉得不可理喻的事可能对别人来说就是常识！那么这个时候「民主」是应该以「宽」去理解别人，还是警惕未知呢？会不会一切案子都只能 assume not guilty 呢？</p>
+<p>我觉得这个片子表现了「民主」运作良好的一面，但是也能给我们带来一些差异化的反思和启示。</p>
+<p>以上内容就当电影真实描绘了那个年代的人和事，由此发出一些无病呻吟。如果有偏差，一笑了之。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-11-01T23:44:37+00:00">2020-11-01</time></p>
 <p>stderr</p>            </div>
@@ -283,7 +1652,25 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
 <ul>
 <li>pynsq: the official build, but requires <code>tornado</code></li>
 <li>gnsq: the gevent only consumer/publisher, might have race condition in state machine. Don't use.</li>
-<li>nsq-py: <code>select()</code> based, but compatible with gevent …</li></ul></p>
+<li>nsq-py: <code>select()</code> based, but compatible with gevent/tornado/threading+select.</li>
+</ul>
+<p>So far <code>nsq-py</code> looks reall promising because it's compatible with more options with concurrency, but when I used it with massive TCP connections to nsqd, <a href="https://github.com/gevent/gevent/issues/1348">gevent</a> threw "ValueError: filedescriptor out of range in select()" error.</p>
+<p>Upon further investigation, it was a select(2) limitation. The kernel will limit max tcp fileno 1024. </p>
+<p>See CPython <a href="https://github.com/python/cpython/blob/3317466061509c83dce257caab3661d52571cab1/Modules/selectmodule.c#L142">source of selectmodule.c</a>:</p>
+<pre><code>    if (!_PyIsSelectable_fd(v)) {
+        PyErr_SetString(PyExc_ValueError,
+                    "filedescriptor out of range in select()");
+        goto finally;
+    }
+</code></pre>
+<p>And <a href="https://github.com/python/cpython/blob/637a09b0d6e3ad4e34e0b5e0fc82f5afeae6f74b/Include/fileobject.h#L37"><code>_PyIsSelectable_fd</code> is defined</a> as </p>
+<pre><code>#define _PyIsSelectable_fd(FD) ((unsigned int)(FD) &lt; (unsigned int)FD_SETSIZE)
+</code></pre>
+<p>And the const <code>FD_SETSIZE</code> is described at <a href="https://man7.org/linux/man-pages/man2/select.2.html">man page</a>:</p>
+<blockquote>
+<p>The Linux kernel imposes no fixed limit, but the glibc implementation makes fd_set a fixed- size type, with FD_SETSIZE defined as 1024, and the FD_*() macros operating according to that limit.  To monitor file descriptors greater than 1023, use poll(2) or epoll(7) instead.</p>
+</blockquote>
+<p>Lessons I learned today: don't use libraries based on <code>select.select()</code> if you have too many connections. Even with Gevent's monkey patch, <code>select()</code> wont block on each eventlet, but still it will not allow fileno greater or equal to 1024. Sad.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-10-30T15:35:45+00:00">2020-10-30</time></p>
 <p>stdout</p>            </div>
@@ -297,7 +1684,15 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
             <a href="/202010/stdout-010"  rel="bookmark" >
               <h2 class="card-title">人和动物有什么区别</h2>
             </a>
-            <p class="card-text"><p>上下班通勤极度无聊，就趁着罗胖的10元优惠券买了 学而时嘻之 博主开设的 199元的 精英日课。之前一直讨厌这个名字，但是很喜欢 <a href="http://www.geekonomics10000.com">学而时嘻 …</a></p></p>
+            <p class="card-text"><p>上下班通勤极度无聊，就趁着罗胖的10元优惠券买了 学而时嘻之 博主开设的 199元的 精英日课。之前一直讨厌这个名字，但是很喜欢 <a href="http://www.geekonomics10000.com">学而时嘻之  geekonomics10000</a> 这个博客，就买了当付费 podcast 了。听第二课就讲了《未来简史2：我有意识，它有吗》，就提到了本篇的问题：</p>
+<p>人和动物的区别是什么？</p>
+<p>马克思认为是使用工具。很多人不认同，觉得这纯粹是为了引出劳动论，其二的确很多动物也会用工具。</p>
+<p>《Homo Deus 未来简史》的作者 尤瓦尔·赫拉利 说，人和动物的区别区别是意识。但<a href="https://en.wikipedia.org/wiki/Animal_consciousness">动物也是有意识</a>的，甚至自我意识。比如鹦鹉会照镜子，认出自己，并且梳妆脸上的异物。和人相处的宠物很明显有情绪表达。</p>
+<p>我认为，人类是地球上第一个进化出来能<strong>远程攻击</strong>的动物，而且是大规模群体协作那种，脱离了近身肉搏的低级趣味。如果你玩 RTS 就知道，远程兵种出现的意义是多么牛逼。</p>
+<p>远程攻击带来上肢的解放，还有一个巨大的副作用，那就是极大的锻炼了大脑预判能力。这里就牵扯到点燃智力的一个关键，那就是 <strong>因果关系</strong> [1]。因为抛射物有弹道飞行时间，水有折射，这个时候就需要智人对周围很系统的分辨能力和归因能力。比如有个<a href="https://www.youtube.com/watch?v=2lgWcGIoSVA">youtuber给一只鹦鹉设置了一个机关</a>，需要按顺序解开三个锁才能吃到食物。鹦鹉看上去是没能掌握这个因果关系。因果关系是智慧生物意识想象的最神奇产物，甚至中世纪的人们都觉得上帝必须有个「第一推动力」才能让这个世界运行。直到最后的炼金术士 牛爵爷 通过第一定律结束了这个误解并正确树立了自然哲学的基本法则。</p>
+<p>这个归因能力锻炼到极致，就形成了 <strong>人和动物最彻底的区别——能按自己的意志有意识使用 火 这种工具</strong>。有个笑话就是，即便人类发展到今天，用核电站供能也基本是烧开水。所以我觉得 人 和动物从一个微小的区别，就是远程投掷，发展出了和普通动物巨大不同的智慧生命的必备标志——掌控物质的第四种形态，等离子体。</p>
+<p>以上是我的一家之言。欢迎大家批判。去年我还写了对一些<a href="https://blog.est.im/201910/stdout-006">重要问题的回答</a>。</p>
+<p>[1]: 可以看下两篇论文，Causal Cognition, Force Dynamics and Early Hunting Technologies, Tracking the evolution of causal cognition in humans。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-10-21T23:39:55+00:00">2020-10-21</time></p>
 <p>stdout</p>            </div>
@@ -312,7 +1707,22 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
               <h2 class="card-title">996的内在机制是什么（提示：并不是劳动剥削）</h2>
             </a>
             <p class="card-text"><blockquote>
-<p>1955年，有位英国的政治学家，叫帕金森，提出了一个“帕金森定律”。简单说就是：一个组织，总是会趋向于层级越来越多，规模越来越 …</p></blockquote></p>
+<p>1955年，有位英国的政治学家，叫帕金森，提出了一个“帕金森定律”。简单说就是：一个组织，总是会趋向于层级越来越多，规模越来越膨胀，人越来越忙，但组织效率越来越低下。<br />
+组织变大不是因为要干的事越来越多，而是因为只要有资源，组织就会大到把资源用满而且还渴求新的资源的程度。反过来，把资源砍掉，未必影响干事的效果。<br />
+回到时间资源，也就是拖延症这个话题。上面讲的这个规律也适用于时间资源：并不是需要多少用多少，而是有多少你就会用光多少。<br />
+为什么会有拖延症？不仅是因为自我管理不严格，而是因为只要时间资源在那里，你就会倾向于把它用光用尽。<br />
+你可能会说，不对啊，做一件事需要的时间资源应该是有限的啊。从拧一颗螺丝到造一台汽车，不仅需要的时间是有数的，而且还是可以持续优化的。怎么会需要无限的时间资源呢？<br />
+这就牵涉到人类社会的一个新变化了。用管理学家包政老师的话说，这是因为人类工作要处理的对象，从“物品”变成了“事情”。<br />
+以前，无论是农业时代还是工业时代，我们的工作对象主要是物品，无论种一亩地的庄稼，还是在流水线上加工一个零件，物品的边界是清晰的，所需要的工作时间就是有限的。我们努力的方向，就是通过各种工具和创新，节省时间资源，获得更高的效率。<br />
+但是现在我们的工作对象呢？越来越是“事情”。比如写一篇稿子，比如炒股，比如准备一场演出，比如做一次营销活动。只要是“事情”，背后包含的复杂度就太高了。而且，只要是一件“事情”，就可以膨胀成任何规模的工作。<br />
+就拿我准备《时间的朋友》跨年演讲来说，它就是一件典型的“事情”。如果你非要说不许准备，今晚就上台，你说能不能讲呢？其实也能。拿张纸，划拉一个提纲，上去也能讲。但是，现在是给我一年时间准备，那最后成稿肯定是12月底。此前这一年的时间，时间没浪费，我在策划、调研、访谈、写初稿、征求意见稿、修改、演练，只要上台的铃声没有响起，我就可以一直准备下去。有多少时间就能花掉多少时间。<br />
+再拿投资股票这件事来说，你要决定买一只股票，请问这件事需要多少准备工作？没头儿啊。你可以去看这家公司的财报、可以去了解它的企业文化、了解创始人和高管的背景、了解它的产品和服务、了解股民对他的评价、了解分析师对它的看法。只要有时间，你可以无穷无尽地围绕着这个决定做准备，没有一件事是毫无必要的，也没有一件事是确定有必要的。从投资结果上看，这么做准备，其实也不见得就一定比随意做决定要好。<br />
+从这个角度，其实也可以解释996工作制这件事。不是因为互联网公司老板的心肠黑，也不是因为互联网公司的工作量就大，而是因为互联网公司面对的工作对象，不是清晰的“物品”，而是一件件说不清、道不清的“事情”，它的工作对时间资源的索取就是无止境的。所以996，本质上，不是说需要这么多时间。而是说，现在一个互联网从业人员能榨取的工作时间的极限，就这么多了。那些搞996工作制的公司，把它用尽了而已。</p>
+</blockquote>
+<p>其实非常有同感。很多996的朋友吐槽最多的并不是996，而是上午迟到，下午开会，晚上开始干活这种畸形循环。</p>
+<p>也就是说，每周72小时工作时间，大部分时间都去摸鱼和低效率沟通去了。恐怕这种设定下的 KPI 做的事情并不能给公司带来任何 impact 。</p>
+<p>这篇《<a href="https://m.igetget.com/share/course/article?id=R2Mo65zY4QZ3VnmmYjKqEdNAa98jGB">罗辑思维 第819期 | 为什么会有拖延症？</a>》</p>
+<p>这篇虽然主要讲拖延症，却把 996 这个事情也说明白了。Marx 所说的压榨无产阶级的劳动力是严格意义上指「剩余价值 Mehrwert」，这个词字面意思是  value added，增值，是 增值税 VAT 里的 增值 部分。也就是说销售价格减去物料成本里的价值。996 可不是程序员对公司的增值，而是欠（技术）债。。23333 </p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-10-09T21:26:07+00:00">2020-10-09</time></p>
 <p>stdin</p>            </div>
@@ -332,7 +1742,21 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
 <blockquote>
 <p>Do unto others as you would have them do unto you</p>
 </blockquote>
-<p>这句话是按作者的说法，是《圣经》《Torah》《圣训》里 Golden rule of morality 。但是 恕 还有 …</p></p>
+<p>这句话是按作者的说法，是《圣经》《Torah》《圣训》里 Golden rule of morality 。但是 恕 还有一层意思是我之前完全没预料到的，那就是</p>
+<blockquote>
+<p>Do not do to others what you wouldn't want them to do to you</p>
+</blockquote>
+<p>这两句话区别很大。作者举了个例子，第一句话表达的其实更加 demanding，比如，别人需要帮助，如果换成我，那么我也希望别人来帮我，所以道德召唤我有义务去帮助别人。</p>
+<p>按照第二句话的意思，如果别人需要帮助，只要我不去理会，也过得去。只要满足「己所不欲，勿施于人」就任凭发展把。</p>
+<p>所以我们平时讲的「推己及人」「换位思考」「同理心」其实有这样两个分明的层次。</p>
+<p>可以划分出三个维度：</p>
+<ol>
+<li>换成自己想要 是/否</li>
+<li>站在自己角度猜测别人是否想要 是/否</li>
+<li>别人是否真的想要 是/否</li>
+</ol>
+<p>可以画个道德层次象限图？由于 Mac 下没有方便的 mspaint 所以就懒得画了。</p>
+<p>via <a href="https://www.reddit.com/r/PhilosophyTube/comments/j40dk1/">reddit</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-10-06T08:07:56+00:00">2020-10-06</time></p>
 <p>stdin</p>            </div>
@@ -348,7 +1772,12 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
             </a>
             <p class="card-text"><blockquote>
 <p>儿童这个阶层的成型是很近的事情，这是美国传播学者尼尔·波兹曼的一个洞见。<br />
-在传统社会，儿童和成年之间的界限是非 …</p></blockquote></p>
+在传统社会，儿童和成年之间的界限是非常模糊的。因为大家用的都是一套学习和传播工具，那就是口语。只要都会说话，听得懂别人的话，那小孩和大人，就只有体能和见识上的区别。那小孩做大人的工作，就也没有什么了不起。<br />
+但是印刷机出现之后，人类文化的传承，主要靠文字了。而熟练使用文字，那是需要漫长的学习和训练的。你才能熟练用文字表达，或者说阅读文本。是因为传播媒介的这个变化，才塑造了“童年”这个概念。<br />
+所以越是文明社会，儿童就越是面临两个问题。第一，儿童和成人的知识差距迅速拉开。成人的工作，儿童是干不了的，因为儿童阅读不了那么复杂的文字；第二，儿童如果不抓紧这个时间接受教育，将来长大了，还会严重影响成人之后的社会竞争力。</p>
+</blockquote>
+<p>来自《<a href="https://m.igetget.com/share/course/article?id=bqzNakylrn9WVaZZZNJ7DOop10vZwL">罗辑思维 第785期 | 为什么你的观点是正确的？</a>》</p>
+<p>以上观点来自《童年的消逝 The disappearance of childhood》，算这是我近几年认识事物比较升华的一个收获。之前一次升华是，人要区分性，爱情，婚姻和家庭。然后婚姻本质上是一种财产分配制度，然后就看了恩格斯的《家庭、私有制和国家的起源》，也是脑洞大开。原来母系氏族社会并不是母系，而是舅系。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-09-29T23:34:07+00:00">2020-09-29</time></p>
 <p>stdin</p>            </div>
@@ -363,7 +1792,16 @@ async def other_api(other_path: str, req: Request …</code></pre></p>
               <h2 class="card-title">创意类工作应该怎么算绩效奖励</h2>
             </a>
             <p class="card-text"><blockquote>
-<p>Mayo Clinic 梅奥诊所是全美规模最大、设备最先进的综合性医院。有多大呢？梅奥总部所在的罗切斯特市一共有十一万人，梅奥就 …</p></blockquote></p>
+<p>Mayo Clinic 梅奥诊所是全美规模最大、设备最先进的综合性医院。有多大呢？梅奥总部所在的罗切斯特市一共有十一万人，梅奥就占了三万多。现在医学体系上的很多创新，比如第一台救护车，第一个重症监护室，第一个病历系统，都是梅奥诊所率先创造出来的。<br />
+聚集了那么多高级知识分子，那么多世界顶级医生的梅奥诊所，用的居然是固定工资制度。就是没有任何绩效激励，对，没有奖金、没有销售提成、也没有分红，所有我们熟悉的，一系列工资激励制度，什么都没有。当然，梅奥每年也会对一些医生涨薪，但如果你在梅奥待够5年之后，工资基本就固定了，再也不会涨了。<br />
+不同的工资水平评定，靠的是什么？当然是人。是同行评议</p>
+</blockquote>
+<p>很是神奇。来自《<a href="https://m.igetget.com/share/course/article?id=5Yejy8dqoQD9JoQmy5KR1r0xpgmWk3">罗辑思维 第706期 | 创造性的工作怎么激励？</a>》</p>
+<p>另外又看到一篇《<a href="https://www.sohu.com/a/25179920_105067">精致的利己主义者和常青藤的绵羊 by 万维钢</a>》</p>
+<blockquote>
+<p>Joe为什么要参加那么多课外活动？因为这些活动是美国学生评价体系的重要组成部分，像考试分数一样重要。跟小明刷GPA（平均学分绩点）一样，Joe刷课外活动的经验值也只不过是完成各种考核指标而已。每天忙得焦头烂额的Joe，对这些事情并没有真正的热情。比一心只想着考试的小明更苦的是，Joe还必须顾及自己在师生中的日常形象，他需要知道别人经常谈论的书都说了什么——所以他用只读开头、结尾和书评的方式，假装读过很多本书。至于能从一本书中真正学到什么，Joe根本没时间在乎。</p>
+</blockquote>
+<p>为了绩点去冲 KPI 的日子真是苦逼</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-09-24T22:42:45+00:00">2020-09-24</time></p>
 <p>stdin</p>            </div>

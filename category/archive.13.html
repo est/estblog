@@ -65,7 +65,14 @@
 <p>转载HN上<a href="http://news.ycombinator.com/item?id=1611838">一个评论</a>，简单的说Chris Anderson就是个sb喷子。</p>
 
 <blockquote>
-  <p>Chris …</p></blockquote></p>
+  <p>Chris Anderson and Wired manipulate facts to forward their theories with whatever new theory and bandwagon they are jumping on.<br>
+  The data cited in 'The Long Tail' was <a href="http://en.wikipedia.org/wiki/The_Long_Tail#Criticism">not accurate</a>, and actually supported the counter-argument. 'Free' was similarly <a href="http://compassioninpolitics.wordpress.com/2008/03/01/criticism-of-chris-andersons-free/#comment-3630">vague</a> and <a href="http://www.newyorker.com/arts/critics/books/2009/07/06/090706crbo_books_gladwell">inaccurate</a>.<br>
+  The entire m.o of Anderson seems to be to take a concept or theory that sounds interesting and package it in laymans terms for a gullible public. It is presented as 'research' or a 'breakthrough' and most average readers suck it up, but these theories are usually far from.<br>
+  To see them doing it again with this latest theory is no surprise. Anderson really doesn't let the truth get in the way of a good story, especially when there are magazines and books to sell, and high-priced speaking gigs to book.<br>
+  (see also the excellent: <a href="http://dashes.com/anil/2009/07/free-criticism-and-science-without-data.html">http://dashes.com/anil/2009/07/free-criticism-and-science-without-data.html</a>)</p>
+</blockquote>
+
+<p>www没死，journalism真应该早死早超生了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-08-19T02:42:14+00:00">2010-08-19</time></p>
 <p>archive</p>            </div>
@@ -107,7 +114,51 @@
     float f;
     f =  0.50000000f*noise2f( 1.0f*x,    1.0f*z);
     f += 0.25000000f*noise2f( 2.0f*x,    2.0f*z);
-    f += 0.12500000f*noise2f …</code></pre></p>
+    f += 0.12500000f*noise2f( 4.0f*x,    4.0f*z);
+    f += 0.06250000f*noise2f( 8.0f*x,    8.0f*z);
+    f += 0.03125000f*noise2f( 16.0f*x,    16.0f*z);
+    f += 0.01562500f*noise2f( 32.0f*x,    32.0f*z);
+    f += 0.00781250f*noise2f( 64.0f*x, 64.0f*z);
+    f += 0.00390625f*noise2f(128.0f*x, 128.0f*z);
+    f = 0.5f+0.5f*f;
+    f = f*f*(3.0f-2.0f*f);
+    f = f*f*(3.0f-2.0f*f);
+    f = -2.5f + 1.5f*f;
+
+    // chinese wall
+    float cx = x-1.5f*noise2f( 2.0f*x, 2.0f*z);
+    float cz = z+1.5f*noise2f( 2.0f*x, 2.0f*z);
+    float di = fabsf(cx+cz);
+    if( di&lt;0.1f )
+        f += 0.1f-di;
+
+    // pyramid
+    float g;
+    z -= 2.0f;
+    float rx = x*0.9f-z*0.2f;
+    float rz = x*0.2f+z*0.9f;
+    g = 0.25f - fabsf(rx*1.65f) - fabsf(rz*1.65f);
+    g = ((int)(g*10.0f))/10.0f;     // stairs
+    if( fabsf(rx+rz)&lt;0.1f || fabsf(rx-rz)&lt;0.1f ) // path
+        g += 0.1f;
+
+    // select terrain or pyramid 
+    if( g&gt;f ) f=g;
+    return f;
+}
+
+void fog(float *rgb, float t, const float *rayDir)
+{
+    float fog = (1.0f-m2xf(-2.5f*rayDir[1]*t) ) / rayDir[1];
+    collerp(rgb, fog*0.01f, rgb, fogColor);
+}
+</code></pre>
+
+<p>同样的场景用自然语言精确描述又需要多少字呢？</p>
+
+<p>来源：<a href="http://iquilezles.org/www/articles/proceduralgfx/inspire2008.pdf">4k intro常见技巧讲述pdf</a>。作者是rgba的iq。做demoscene的大神。。。</p>
+
+<p><a href="http://www.reddit.com/r/programming/comments/d1wfi/making_graphics_in_4_kilobytes_pdf/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-08-17T09:14:21+00:00">2010-08-17</time></p>
 <p>archive</p>            </div>
@@ -139,7 +190,11 @@
             </a>
             <p class="card-text"><blockquote>
   <p>The problem with this argument has always been that (tragically) real science just isn't as much fun. Sure, you can try to Bill Nye and Carl Sagan it. You can try to simplify it and present it in false-but-fanciful ways. But this is all just smoke and mirrors.<br>
-  Real science …</p></blockquote></p>
+  Real science happens in painfully incremental, boring, specialized steps. Gone are the days of DaVinci or Edison or Tesla or any notion of the Renaissance inventor/scientist. We are all specialists now, and there are a lot more of us. We can barely understand the research in close fields to our own. Publications now spew forth with fire-hydrant force. We can no longer sip from the garden hose of knowledge without getting our faces blasted off.<br>
+  However important it may be to fundamental human advancement, there is never going to be a primetime TV spot for something like "Regulation of interleukin-1β by interferon-γ is species specific, limited by suppressor of cytokine signalling 1 and influences interleukin-17 production". Ergo, we have American Idol. It's not entirely the scientists' fault. it's not entirely the public's fault. It's just the nature of the beast.</p>
+</blockquote>
+
+<p><a href="http://www.reddit.com/r/bestof/comments/d0vx2/willis77_on_why_scientists_will_never_be_heroes/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-08-14T04:51:36+00:00">2010-08-14</time></p>
 <p>archive</p>            </div>
@@ -241,7 +296,9 @@ assert( ( o-------------o
 
 <p>我怎么就没遇到过这么好玩的云啊～～～～这种云叫 <a href="http://en.wikipedia.org/wiki/Arcus_cloud">arcus cloud</a></p>
 
-<p>地球是一个在宇宙中高速运转的球体，与宇宙摩擦就产生 …</p></p>
+<p>地球是一个在宇宙中高速运转的球体，与宇宙摩擦就产生极光啊闪电啊什么的。</p>
+
+<p><a href="http://www.reddit.com/r/WTF/comments/cz1zh/holy_fucking_omfg_its_approaching/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-08-09T15:59:18+00:00">2010-08-09</time></p>
 <p>archive</p>            </div>
@@ -264,7 +321,13 @@ assert( ( o-------------o
 <ul>
 <li>中亚就是个杯具的存在啊。</li>
 <li>英国法国的核武器基本都是在殖民地上实验的</li>
-<li>没想到美国在日本实验了那么多次 …</li></ul></p>
+<li>没想到美国在日本实验了那么多次核武器啊</li>
+<li>没想到印度在70年代就有核武器了。</li>
+<li>貌似缺少以色列和南非</li>
+<li>越来越明白太平洋对于美帝的重要性了。</li>
+</ul>
+
+<p><a href="http://news.ycombinator.com/item?id=1586544">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-08-09T05:33:27+00:00">2010-08-09</time></p>
 <p>archive</p>            </div>
@@ -281,7 +344,9 @@ assert( ( o-------------o
             <p class="card-text"><pre><code>id=&quot;oHg5SJYRHA0&quot;; curl -L &quot;http://www.youtube.com/get_video?asv=&amp;fmt=18&amp;video_id=$id&amp;t=$(curl -s http://www.youtube.com/watch?v=$id | sed -n &#39;s/.*, &quot;t&quot;: &quot;\([^&quot;]*\)&quot;, .*/\1/p&#39;)&quot; &gt; 1.mp4
 </code></pre>
 
-<p>其中 <code>fmt=18</code> 表示360p清晰度。主要遇到2个问题，一个是URL里必须有 <code>asv=</code> 才 …</p></p>
+<p>其中 <code>fmt=18</code> 表示360p清晰度。主要遇到2个问题，一个是URL里必须有 <code>asv=</code> 才能成功，二是sed的p模式还第一次遇到，而且group匹配括号前后必须有东西才能只输出括号内容，而不是整行内容。sed不适合我啊。。。</p>
+
+<p>参考<a href="http://www.commandlinefu.com/commands/view/3006/stream-youtube-url-directly-to-mplayer#comment">1</a>, <a href="http://bitbucket.org/rg3/youtube-dl/src/tip/youtube-dl">2</a>。感谢#ubuntu-cn和#linuxfire频道。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-08-08T12:42:40+00:00">2010-08-08</time></p>
 <p>archive</p>            </div>
@@ -303,7 +368,31 @@ assert( ( o-------------o
 
 <p><img src="http://blog.est.im/wp-content/uploads/2010/08/21.png" alt=""></p>
 
-<p>居然是<code>type="application/x-mplayer2"</code>里嵌入一个sina video的swf视频播放器 …</p></p>
+<p>居然是<code>type="application/x-mplayer2"</code>里嵌入一个sina video的swf视频播放器。。。</p>
+
+<p>从dll加载的角度证实了我这个猜想</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/08/31.png" alt=""></p>
+
+<p>系统里的Flash插件分两种</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/08/41.png" alt=""></p>
+
+<p>一个是<code>Flash10h.ocx</code>，这个是所有Windows本地播放器的核心，也是IE的Flash插件的核心，基于ActiveX技术。</p>
+
+<p>另一个是<code>NPSWF32.dll</code>，这个是支持所有NPAPI的浏览器插件。支持NPAPI的有：Netscape, Firefox, Opera, Safari, Chrome等等。</p>
+
+<p>我还猜想通过Windows Media Player加载的swf可能会绕过Chrome自身的HTTP协议栈，而直接通过WinINET发出请求，也就是说，IE的cookie可以被Chrome读取到～～～～IE的exp也有可能在Chrome下被加载和诱发～～～～</p>
+
+<p>第二个猜想：Firefox里即使用了Noflash, NoScript插件，通过WMP容器加载的Flash依然能够显示。手里暂时没Firefox所以就没试了。</p>
+
+<p>我又邪恶了～～～muh ha ha ha～～～～垃圾站里这种囧技术真能启发思维啊。。。。</p>
+
+<p><ins>更新</ins>：Firefox的NoScript的确对这种Flash无效</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/08/5.png" alt=""></p>
+
+<p>除非你勾选了Forbid other plugins.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-08-07T03:28:24+00:00">2010-08-07</time></p>
 <p>archive</p>            </div>
@@ -341,7 +430,15 @@ assert( ( o-------------o
   <p>SSL is a fine protocol, but it's been badly misconfigured on the Internet. Among other things:<br>
   * The overwhelming majority of SSL-speaking sites don't have valid certificates.<br>
   * An untenably large number of organizations have been allowed to act as CAs.<br>
-  * Some of …</p></blockquote></p>
+  * Some of those CA's have in turn been allowed to set up sub-CA's.<br>
+  * Several CA's use cryptographically weak keys<br>
+  * Some CA's were spotted sharing keys<br>
+  * CA's have signed certs for RFC1918 private IP space, sometimes more than once.<br>
+  * CA's have signed certs for "localhost"<br>
+  The bad news is that all these things are devastating to the global security of SSL/TLS. The good news is that fixing them doesn't involve a change to SSL/TLS, or even any of the software that implements it. The bad news is that's unlikely to happen in our lifetimes.</p>
+</blockquote>
+
+<p>没想到CA的问题这么多。。。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-08-06T01:35:50+00:00">2010-08-06</time></p>
 <p>archive</p>            </div>
@@ -379,7 +476,9 @@ assert( ( o-------------o
 
 <p>所以船就轻轻的浮起来了。</p>
 
-<p>网上那个著名的Adam Savage的“变声气体”也是用的这个SF<sub>6 …</sub></p></p>
+<p>网上那个著名的Adam Savage的“变声气体”也是用的这个SF<sub>6</sub>。</p>
+
+<p><a href="http://www.reddit.com/r/science/comments/cx5l9/it_has_come_to_my_attention_that_a_lot_of_people/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-08-04T14:26:43+00:00">2010-08-04</time></p>
 <p>archive</p>            </div>
@@ -395,7 +494,11 @@ assert( ( o-------------o
             </a>
             <p class="card-text"><p><a href="http://ha.ckers.org/weird/safari_autofill.html">http://ha.ckers.org/weird/safari_autofill.html</a></p>
 
-<p>发送一个字母按键，然后把文本框的 自动填表 第一项移动到鼠标位置，然后文本框就被激活了，在文本框 …</p></p>
+<p>发送一个字母按键，然后把文本框的 自动填表 第一项移动到鼠标位置，然后文本框就被激活了，在文本框里抓信息，抓一个继续向下移动一格。。。。好聪明！</p>
+
+<p>虽然我这里一个都没抓出来，但是从这个原理来看抓email是没问题的～～～～</p>
+
+<p><a href="http://www.reddit.com/r/netsec/comments/cwy5x/stealing_entire_autocomplete_data_in_google_chrome/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-08-04T07:41:01+00:00">2010-08-04</time></p>
 <p>archive</p>            </div>
@@ -427,7 +530,21 @@ assert( ( o-------------o
 
 <p>Bing.com</p>
 
-<p><a href="http://www.bing.com/search?scope=web&amp;mkt=en-US&amp;FORM=W0LH&amp;q=ti%D0%B0n%D0%B0nm%D0%B5n+square">http://www.bing.com/search?scope=web&amp;mkt=en-US&amp;FORM=W0LH&amp;q=tiаnаnmеn …</a></p></p>
+<p><a href="http://www.bing.com/search?scope=web&amp;mkt=en-US&amp;FORM=W0LH&amp;q=ti%D0%B0n%D0%B0nm%D0%B5n+square">http://www.bing.com/search?scope=web&amp;mkt=en-US&amp;FORM=W0LH&amp;q=tiаnаnmеn+square</a></p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/08/3.png" alt=""></p>
+
+<p>Youtube.com</p>
+
+<p><a href="http://www.youtube.com/results?search_query=tian%D0%B0nmen&amp;aq=f">http://www.youtube.com/results?search_query=tianаnmen&amp;aq=f</a></p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/08/4.png" alt=""></p>
+
+<p>帝国主义是纸老虎啊！！！！</p>
+
+<p>【造谣完毕】</p>
+
+<p>via HN: <a href="http://news.ycombinator.com/item?id=1571984">Homoglyph attacks: How to create an internet hoax</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-08-04T04:38:23+00:00">2010-08-04</time></p>
 <p>archive</p>            </div>
@@ -483,7 +600,44 @@ assert( ( o-------------o
 
 <p>先扯远一点，说说下载软件的故事：</p>
 
-<p>国外为什么 …</p></p>
+<p>国外为什么一般都没人专门用多线程下载软件？因为别人网速好，如果网速不好QoS做得好，不会出现天朝垃圾ISP这种下载无故中断的情况。所以断点续传没有必要。IE，Firefox和Chrome那种默认自带的下载框就足够普通使用了。</p>
+
+<p>什么是多线程下载？多线程下载，用一种早期的说法，叫 leech。比Netants还早的一个下载软件就叫“网络吸血鬼”。</p>
+
+<p>而国内最牛逼的迅雷又做了其他几件事情，之一就是“抢占式下载”。什么叫抢占式？一个机器的带宽和网速是有限的，TCP包本来大家都按照秩序一个一个排队，排不动了就阻塞。直到轮到你收发包为止。</p>
+
+<p>而迅雷不会理你这么多，直接插队。强制用完带宽</p>
+
+<p>所以早期迅雷一般一启动整个LAN的网络就挂了。</p>
+
+<p>回到前面，为什么我看了那则新闻会笑呢？搜狗的这个“网速保护”，是不是又重新发明了一套TCP包排队的秩序呢？</p>
+
+<p><img src="http://failblog.files.wordpress.com/2009/07/fail-owned-hat-fail.jpg?w=300" alt=""></p>
+
+<p>废了这么一大堆劲儿，为什么不从一开始每一个程序都按照TCP默认队列收发包，不去故意抢占网速呢？</p>
+
+<p>就好比一个体育馆的出口，大家都按秩序挨个儿出去，比起了火灾大家都慌忙挤门逃生的速度快得多。最后大家都在挤，以至于还得在门口弄一个交通疏导员的位置出来指挥人流。。。囧。。。。</p>
+
+<p>搜狗的这个所谓的“网速保护”解决方案，彻底放弃了系统原生网络栈的民主分配了，而是搜狗的专制（ 国内最大的垄断独裁是什么东西我就不用说了吧？），搜狗有权利控制各个流量先后顺序的垄断权。短时间内可能解决了局部问题，但是既然有限制，必然有反制，说不定哪一天有更流氓更无耻的软件宣称可以突破“网速保护”进行高速下载呢？这个时候又该从LSP到ring3到ring0的驱动大战了吧？</p>
+
+<p>要问独裁怎么来的？首先就是规则博弈。规则博弈之后必定会有问题投机，问题投机之后肯定有“good guy”解决问题，然后good guy趁用解决问题的机会滥用权利。和后面引爆更多更大的多米诺牌问题相比，这个good guy的作恶甚至微不足道。</p>
+
+<p>又想起来了很久以前看到的一个wikipedia词条：<a href="http://en.wikipedia.org/wiki/Societal_collapse">Societal collapse</a>，里面一句话太有趣了</p>
+
+<blockquote>
+  <p>societies that develop great expertise in problem solving become incapable of solving new problems by overdeveloping their structures for solving old ones.</p>
+</blockquote>
+
+<p>大汉，罗马帝国，玛雅帝国和苏联是怎么崩溃的？一个文明为了解决一个自身问题，会超规模发展一个解决问题的机制，然后这个“解决问题”本身也成为一个问题，最后无法解决，最后自我坍塌。</p>
+
+<p>又想起来了编程里个一句非常经典的话：</p>
+
+<blockquote>
+  <p>Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.<br>
+  　　　　　　　　　　　　<em>Brian W. Kernighan</em></p>
+</blockquote>
+
+<p>PS: 什么是支那精神？支那精神的核心就一个字——贱</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-08-02T15:51:52+00:00">2010-08-02</time></p>
 <p>archive</p>            </div>
@@ -503,7 +657,11 @@ assert( ( o-------------o
 
 <p>0:29那个从上面飞过去的。。。太夸张了。。。1:24那个真的算飞檐走壁了。。。。不知道最后是怎么下来的。。。要我的话肯定摔骨折。。。</p>
 
-<p>墙内镜 …</p></p>
+<p>墙内镜像</p>
+
+<p><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://player.youku.com/player.php/sid/XMTk0Njg4NDY0/v.swf&amp;width=480&amp;height=400" width="480" height="400"></iframe></p>
+
+<p><a href="http://www.reddit.com/r/videos/comments/cw447/amazing_parkour/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-08-02T08:23:11+00:00">2010-08-02</time></p>
 <p>archive</p>            </div>
@@ -521,7 +679,7 @@ assert( ( o-------------o
 
 <p><img src="http://blog.est.im/wp-content/uploads/2010/08/1.png" alt=""></p>
 
-<p>如果耳机刚好在一个圈里，这个时候从圈里拿起来就有可能形成一个线结～～～～～以 …</p></p>
+<p>如果耳机刚好在一个圈里，这个时候从圈里拿起来就有可能形成一个线结～～～～～以后尽量不要把耳机线形成一个圈就OK了。。。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-08-01T11:39:27+00:00">2010-08-01</time></p>
 <p>archive</p>            </div>
@@ -617,7 +775,10 @@ assert( ( o-------------o
 
 <blockquote>
   <p>A CMOS BCD-Decimal encoder locked in unholy union with a TTL Octal flip-flop. They're not even the same species! There should be a law against this sort of thing!!   <br>
-  Is …</p></blockquote></p>
+  Is this how they made the 74HC family?</p>
+</blockquote>
+
+<p>听这些笑话让我感到自己是个文盲。。。。。伤自尊啊。。。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-07-31T06:00:01+00:00">2010-07-31</time></p>
 <p>archive</p>            </div>
@@ -654,7 +815,19 @@ assert( ( o-------------o
 
 <pre><code>发信人: beagle (b0210eb60aff5851b7607227b8530521), 信区: ITExpress
 标  题: 发个 这一期 The Economist杂志的封面
-发信站: 水木社区 (Fri Jul 30 19:03:57 2010), 站内 …</code></pre></p>
+发信站: 水木社区 (Fri Jul 30 19:03:57 2010), 站内
+
+富士康很有影响力。。。
+rt
+</code></pre>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/07/ROFL.png" alt=""></p>
+
+<p>文章在这里</p>
+
+<p><a href="http://www.economist.com/node/16693333?story_id=16693333">http://www.economist.com/node/16693333?story_id=16693333</a></p>
+
+<p>pdf附件见newsmth原帖～～～btw 手机上看水木用这个网站最爽了 <a href="http://hime.appspot.com">http://hime.appspot.com</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-07-30T11:42:50+00:00">2010-07-30</time></p>
 <p>archive</p>            </div>
@@ -676,7 +849,7 @@ assert( ( o-------------o
 
 <p>FlashFXP里在 站点管理器 - 高级 - 字符编码 里设置</p>
 
-<p>Dreamhost的FTP就很扯蛋。。。中文文件名的文件的上 …</p></p>
+<p>Dreamhost的FTP就很扯蛋。。。中文文件名的文件的上传上去没问题。。。下载的时候提示 <code>550 中文名.mp3: No such file or directory</code>。。。。WTF？</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-07-30T10:56:19+00:00">2010-07-30</time></p>
 <p>archive</p>            </div>
@@ -712,7 +885,9 @@ assert( ( o-------------o
 
 <p>谢耳朵的 蜥蜴-Spock-石头剪子布 同理～～～</p>
 
-<p>此图绝非扯蛋，背后有深刻的心理学原理～～～我记得高中的时候我和同学超无聊玩石头剪子布，赢了前 …</p></p>
+<p>此图绝非扯蛋，背后有深刻的心理学原理～～～我记得高中的时候我和同学超无聊玩石头剪子布，赢了前进一步，输了后退一步，我把同学从教学楼走廊左边逼到右边了～～～而且基本一赢就会连续好几次赢～～～～有意思～～～</p>
+
+<p><a href="http://flowingdata.com/2010/07/30/how-to-win-rock-paper-scissors-every-time/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-07-30T09:03:53+00:00">2010-07-30</time></p>
 <p>archive</p>            </div>
@@ -754,7 +929,11 @@ assert( ( o-------------o
 
 <p>如果西朝鲜用<a href="http://code.google.com/p/chtml/">CHTML</a>做网站的话应该是</p>
 
-<pre><code>&lt;伟大&gt;&lt;光荣&gt;&lt;正确&gt;&lt;伟大&gt;&lt;光荣&gt;&lt;正确&gt;&lt;伟大&gt;&lt;光荣&gt;&lt;正确&gt;&lt;伟大 …</code></pre></p>
+<pre><code>&lt;伟大&gt;&lt;光荣&gt;&lt;正确&gt;&lt;伟大&gt;&lt;光荣&gt;&lt;正确&gt;&lt;伟大&gt;&lt;光荣&gt;&lt;正确&gt;&lt;伟大&gt;&lt;光荣&gt;&lt;正确&gt;&lt;伟大&gt;&lt;光荣&gt;&lt;正确&gt;&lt;伟大&gt;&lt;光荣&gt;&lt;正确&gt;&lt;伟大&gt;&lt;光荣&gt;&lt;正确&gt;&lt;伟大&gt;&lt;光荣&gt;&lt;正确&gt;&lt;伟大&gt;&lt;光荣&gt;&lt;正确&gt;&lt;伟大&gt;&lt;光荣&gt;&lt;正确&gt;
+党&lt;/正确&gt;&lt;/光荣&gt;&lt;/伟大&gt;&lt;/正确&gt;&lt;/光荣&gt;&lt;/伟大&gt;&lt;/正确&gt;&lt;/光荣&gt;&lt;/伟大&gt;&lt;/正确&gt;&lt;/光荣&gt;&lt;/伟大&gt;&lt;/正确&gt;&lt;/光荣&gt;&lt;/伟大&gt;&lt;/正确&gt;&lt;/光荣&gt;&lt;/伟大&gt;&lt;/正确&gt;&lt;/光荣&gt;&lt;/伟大&gt;&lt;/正确&gt;&lt;/光荣&gt;&lt;/伟大&gt;&lt;/正确&gt;&lt;/光荣&gt;&lt;/伟大&gt;&lt;/正确&gt;&lt;/光荣&gt;&lt;/伟大&gt;
+</code></pre>
+
+<p><a href="http://www.reddit.com/r/WTF/comments/cun0u/north_koreas_strong_strong_strong_web_design/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-07-29T05:49:06+00:00">2010-07-29</time></p>
 <p>archive</p>            </div>
@@ -818,7 +997,9 @@ assert( ( o-------------o
 
 <p><img src="http://blog.est.im/wp-content/uploads/2010/07/1.png" alt=""></p>
 
-<p><del>20天内有效。</del> 已发 …</p></p>
+<p><del>20天内有效。</del> 已发送。</p>
+
+<p>本广告已过期，谢谢关注。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-07-27T04:43:51+00:00">2010-07-27</time></p>
 <p>archive</p>            </div>
@@ -898,7 +1079,15 @@ assert( ( o-------------o
 
 <p><img src="http://i.huffpost.com/gen/181129/LINDSAY-LOHAN.jpg" alt=""></p>
 
-<p>另外一个老外的<a href="http://zompist.com/phrases3.html">汉语教程</a>，里面亮点 …</p></p>
+<p>另外一个老外的<a href="http://zompist.com/phrases3.html">汉语教程</a>，里面亮点多啊：</p>
+
+<blockquote>
+  <p>我不要跟高丽棒子坐在一起！<br>
+  自从鲁迅以来，你们国家出过真的知识分子吗？<br>
+  We kicked your ass in World War II.</p>
+</blockquote>
+
+<p><a href="http://www.reddit.com/r/pics/comments/csz7e/this_is_said_of_ugly_women/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-07-24T06:27:11+00:00">2010-07-24</time></p>
 <p>archive</p>            </div>
@@ -932,7 +1121,9 @@ assert( ( o-------------o
 
 <p><iframe src="http://reader.googleusercontent.com/reader/embediframe?src=http://www.youtube.com/v/pOj7WR-jDcE%26hl%3Den_US%26fs%3D1&amp;width=640&amp;height=385" width="640" height="385"></iframe></p>
 
-<p>对兲朝人 …</p></p>
+<p>对兲朝人最有情绪刺激的的短片。speech的力量！来自1976电影<em>Network</em>。演讲者<a href="http://en.wikipedia.org/wiki/Peter_Finch">Peter Finch</a></p>
+
+<p>via <a href="http://www.reddit.com/r/gaming/comments/cqzwe/excuses/">1</a>, <a href="http://www.reddit.com/r/pics/comments/cqznl/jurassic_park_style_gif/">2</a>, <a href="http://www.reddit.com/r/funny/comments/cqxeg/photo_says_it_all_nsfw/">3</a>, <a href="http://www.reddit.com/r/pics/comments/cqzn1/hai_guyz/">4</a> <a href="http://www.reddit.com/r/soccer/comments/cqvdj/now_thats_a_wall/">5</a>, <a href="http://www.reddit.com/r/reddit.com/comments/cqzc1/im_madas_hell/">6</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-07-19T03:40:04+00:00">2010-07-19</time></p>
 <p>archive</p>            </div>
@@ -950,7 +1141,13 @@ assert( ( o-------------o
 
 <p>第一次折腾gentoo的portage，对layman非常不熟悉导致php-fpm没装成功，偷懒装了spawn-fcgi+nginx。。。。。</p>
 
-<p>wordpress 3.0很囧。。。装个插件都要FTP支持。所以还是继续2.x版本好了。况且我也修改 …</p></p>
+<p>wordpress 3.0很囧。。。装个插件都要FTP支持。所以还是继续2.x版本好了。况且我也修改了那么多wordpress内核文件，也懒得重新修改一次了。</p>
+
+<p>然后就是让我异常头大的MySQL乱码问题。我才发现，Dreamhost空间的MySQL配置是有点异样的。主要是<code>character_set_server</code>设置成了<code>latin1</code>，然后就是一大陀杯具。比如说汉字的 <code>看</code> 的UTF8编码本来应该是<code>\xe7\x9c\x8b</code>，但是从<code>SELECT HEX(columnname) FROM table</code>的结果来看，居然是 C3A7C593E280B9。两重编码。然后鼓捣鼓捣了2个晚上才把dump文件搞定，然后才没有乱码导入</p>
+
+<p>觉得最爽的工具组合是ssh TCP端口转发到本地，然后用Navicat 8来直接操作MySQL。省去了再去调节PuTTY终端编码这又一层复杂度。</p>
+
+<p>就是这样。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-07-18T05:32:32+00:00">2010-07-18</time></p>
 <p>archive</p>            </div>
@@ -1015,7 +1212,12 @@ assert( ( o-------------o
               <h2 class="card-title">tg又开始YY了</h2>
             </a>
             <p class="card-text"><blockquote>
-  <p><a href="http://www.scio.gov.cn/zxbd/wz/201006/t660625.htm">白皮书</a>指出，网上交流活跃是中国互联网发展的一大特点，论坛帖文、博客文章数量之<strong>巨大</strong>，在世界各国都是<strong>难以想象</strong>的。中 …</p></blockquote></p>
+  <p><a href="http://www.scio.gov.cn/zxbd/wz/201006/t660625.htm">白皮书</a>指出，网上交流活跃是中国互联网发展的一大特点，论坛帖文、博客文章数量之<strong>巨大</strong>，在世界各国都是<strong>难以想象</strong>的。中国的网站十分注重为网民提供发表言论的服务，约80%的网站提供电子公告服务。中国现有上百万个论坛，2.2亿个博客用户，据抽样统计 ，每天人们通过论坛、新闻评论、博客等渠道发表的言论<strong>达300多万条</strong>，超过66%的中国网民经常在网上发表言论，就各种话题进行讨论，充分表达思想观点和利益诉求。</p>
+</blockquote>
+
+<p>300万很多么？twitter一天就有<a href="http://blog.twitter.com/2010/02/measuring-tweets.html">5000万条</a>消息。要是不删贴的话光唾沫就把tg给淹死了。</p>
+
+<p><ins>更新</ins>：感谢读者的留言，现在最新数据是<a href="http://techcrunch.com/2010/06/08/twitter-190-million-users/">6500万条每天</a>了</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-06-08T05:35:36+00:00">2010-06-08</time></p>
 <p>archive</p>            </div>
@@ -1035,7 +1237,13 @@ assert( ( o-------------o
 
 <p><img src="http://blog.est.im/wp-content/uploads/2010/06/1.jpg" alt=""></p>
 
-<p>车厢里已经 …</p></p>
+<p>车厢里已经浓烟滚滚但是没有一个人逃跑之类的。</p>
+
+<p>照片里的人，包括拍这张照片人都在这场事故里挂了。为什么人们在有机会逃跑的时候不离开车厢呢？心理学家们的看法，也是被很多次实验证明了的：当一个人，如果处在一个群体中的时候会产生一种伪安全感(a false sense of safety)，<strong>即使</strong>当这个人<strong>独自一个人</strong>在的时候会采取<strong>截然不同</strong>的措施。</p>
+
+<p>est觉得用中文来表述就是：随大流+顾面子=伪安全感。这个理论在生活中体现太多了。。。。。</p>
+
+<p><a href="http://www.reddit.com/r/videos/comments/cccgq/everything_went_wrong_and_more/c0rmjjo">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-06-08T02:49:15+00:00">2010-06-08</time></p>
 <p>archive</p>            </div>
@@ -1077,7 +1285,13 @@ assert( ( o-------------o
 
 <p><a href="http://blog.inspirit.ru/wp-content/uploads/fluids3d/FluidSolver3D.swf">http://blog.inspirit.ru/wp-content/uploads/fluids3d/FluidSolver3D.swf</a></p>
 
-<p>你可能会说HTML5也能做到这一点，我很遗憾的告诉你，HTML5其实可以非常卡的。打开这个 …</p></p>
+<p>你可能会说HTML5也能做到这一点，我很遗憾的告诉你，HTML5其实可以非常卡的。打开这个<a href="http://www.ponticstar.com/projects/burning-words/">burning words</a>，把文字大小(font size)设置成100px，再滚动下试试～～～～假设HTML5普及了，一些垃圾站用HTML5做一个火焰文字效果的banner广告。。。。你的浏览体验就。。。。。</p>
+
+<p>看哪些Flash的demo有一个感觉，俄罗斯的开发人员都好彪悍。。。这里还有个俄罗斯公司开发的<a href="http://blog.alternativaplatform.com">基于Flash的引擎</a>，比如这个<a href="http://blog.alternativaplatform.com/ru/files/2009/02/hero.swf">3D模型</a>，和<a href="http://blog.alternativaplatform.com/ru/files/2008/04/bunker.swf">这个demo</a>。后者是在WebGL和O3D里才能实现的东东。</p>
+
+<p>我也不是希望贬低HTML5什么，只是说现在水果公司遍地的HTML5营销，天天叫嚣Flash杀手什么的，是时候认清楚HTML5和Flash的真实水平差距了。即使HTML5达到了Flash的水平，达到Flash的普及率也是遥遥无期。而Flash的升级明显比HTML5的升级有效率得多。Adobe的确这些年在沉睡，但是Flash要追赶起来，恐怕不是w3c这个“委员会”效率所能比的。</p>
+
+<p><a href="http://news.ycombinator.com/item?id=1410070">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-06-07T13:58:27+00:00">2010-06-07</time></p>
 <p>archive</p>            </div>

@@ -60,7 +60,12 @@
 &gt;&gt;&gt; dwCodePoint = ctypes.wintypes.DWORD( ord(&#39;&amp;&#39;) )
 &gt;&gt;&gt; lpBuffer = ctypes.create_unicode_buffer(255)
 &gt;&gt;&gt; ctypes.windll.getuname.GetUName(dwCodePoint , ctypes.byref(lpBuffer))
-2 #length of returned …</code></pre></p>
+2 #length of returned lpBuffer
+&gt;&gt;&gt; print lpBuffer.value
+与号 #Localized name of the Unicode character &#39;&amp;&#39;
+</code></pre>
+
+<p>The <code>GetUName()</code> function is an <em>undocumented</em> Win32 API, learned from <a href="http://blogs.msdn.com/michkap/archive/2006/01/12/511920.aspx">1</a>, <a href="http://www.eggheadcafe.com/software/aspnet/32809387/invoke-dll-on-x86x64.aspx">2</a>, <a href="http://kmleak.spaces.live.com/blog/cns!1A64EF1CFC75CCA2!273.entry">3</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-01-09T15:57:16+00:00">2010-01-09</time></p>
 <p>archive</p>            </div>
@@ -94,7 +99,15 @@
             </a>
             <p class="card-text"><p>A site like <a href="http://www.bugmenot.com/">BugMeNot.com</a> is something providing list of username/password for popular websites, so lazy fags can access and share logins for websites that require you to register in order to view content, it’s also anonymous since all people are sharing the public account.</p>
 
-<p>But there’s …</p></p>
+<p>But there’s a <a href="http://www.9417k.com/Public.aspx">commercialized version for sharing VIP accounts of porn sites</a>.</p>
+
+<p>So if you wonder the source where your roommate download those AV, that’s a fare good list :)</p>
+
+<p>But their business model is insecure, malicious user could change the VIP account’s password thus the investment is lost, so instead they provide a specialized browser, I didn’t try it out but we can assume one could always sniff the cookie. Unless the website use a dedicated proxy to filter any cookie leak or password change actions on their server.</p>
+
+<p>Counter measures is simple for public ones like  BugMeNot: collect the public account data regularly and kill them, or lawsuit. Against private or paid ones like the site mentions above is a little difficult, but you can kick off ID which is simultaneously online from multiple addresses.</p>
+
+<p>via <a href="http://www.newsmth.net/bbstcon.php?board=ITExpress&amp;gid=749141">NewSMTH</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-01-09T05:21:41+00:00">2010-01-09</time></p>
 <p>archive</p>            </div>
@@ -387,7 +400,34 @@
             <p class="card-text"><p>The following famous quote:</p>
 
 <blockquote>
-  <p>Aoccdrnig to rscheearch at Cmabrigde uinervtisy, it deosn’t mttaer waht oredr the ltteers in a wrod are, the olny iprmoetnt tihng is taht the frist and lsat ltteres are at the rghit pclae. The rset can be a tatol mses and you can sitll raed …</p></blockquote></p>
+  <p>Aoccdrnig to rscheearch at Cmabrigde uinervtisy, it deosn’t mttaer waht oredr the ltteers in a wrod are, the olny iprmoetnt tihng is taht the frist and lsat ltteres are at the rghit pclae. The rset can be a tatol mses and you can sitll raed it wouthit a porbelm. Tihs is bcuseae we do not raed ervey lteter by it slef but the wrod as a wlohe.</p>
+</blockquote>
+
+<p>says</p>
+
+<blockquote>
+  <p>it doesn’t matter in what order the letters in a word are, the only important thing is that the <em>first</em> and <em>last</em> letter be at the right place.</p>
+</blockquote>
+
+<p>is <a href="http://www.snopes.com/language/apocryph/cambridge.asp">a hoax</a></p>
+
+<p>Example:</p>
+
+<blockquote>
+  <p>Anidroccg to rcraeseh at Cgdirbmae utisreviny</p>
+</blockquote>
+
+<p>is difficult to read.</p>
+
+<p>The <a href="http://blogs.msdn.com/fontblog/archive/2005/11/16/493452.aspx">real secret</a> is the word’s <em>shape</em> looks familiar</p>
+
+<p><img src="http://www.cleartype.members.winisp.net/images/cmabrigde.bmp" alt="English word shape"></p>
+
+<p>Microsoft has a technology on that called <a href="http://www.microsoft.com/typography/ctfonts/WordRecognition.aspx">parallel letter recognition</a></p>
+
+<p>And this is one of the reasons why written Chinese system is <em>unique</em> in all human languages. Fuck all uncivilized monkey languages like alphabetic or phonemic, <strong>logographic language FTW!</strong></p>
+
+<p><a href="http://www.reddit.com/r/todayilearned/comments/alm25/til_that_the_aoccdrnig_to_rscheearch_at_cmabrigde/">via </a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-01-05T17:20:23+00:00">2010-01-05</time></p>
 <p>archive</p>            </div>

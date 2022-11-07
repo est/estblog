@@ -86,7 +86,65 @@
             <a href="/post/26823744858"  rel="bookmark" >
               <h2 class="card-title">DIY OAuth 2 library：从97KB到22行Python</h2>
             </a>
-            <p class="card-text"><p>最近的项目需要用代码去读取一些Google Spreadsheet的数据，看了下Google官方的Spreadsheet API，读取数据这些好说，就是xml格式我比较讨厌。于是想用<code>alt=json</code>这个<a href="https://developers.google.com/gdata/docs/json">json输出API</a>，试用发现，对于ClientLogin（浏 …</p></p>
+            <p class="card-text"><p>最近的项目需要用代码去读取一些Google Spreadsheet的数据，看了下Google官方的Spreadsheet API，读取数据这些好说，就是xml格式我比较讨厌。于是想用<code>alt=json</code>这个<a href="https://developers.google.com/gdata/docs/json">json输出API</a>，试用发现，对于ClientLogin（浏览器cookie）直接调用Spreadsheet API的Google Apps用户而言，这个json输出是400不可用的。于是只能撸一个OAuth读取数据试试了。</p>
+<p>看了下官方的<a href="http://code.google.com/p/gdata-python-client/">Google Data APIs Python Client Library</a>，我勒个擦啊，一大坨垃圾依赖，比如<code>OpenSSL.crypto</code>，<a href="http://code.google.com/p/httplib2/source/browse/python2/httplib2/__init__.py">httplib2</a>等。</p>
+<p>仔细看了下Google <a href="https://developers.google.com/accounts/docs/OAuth2ServiceAccount">OAuth 2.0</a>的文档，似乎也不复杂的样子，至少比<a href="http://initiative.yo2.cn/archives/633801">OAuth 1.0 那种3 legged login</a> 简单多了。于是就自己DIY了一个</p>
+<p>OAuth 2.0把流程分为了几个scenario，比如用于Web交互，客户端app，设备，等等。我需要的只是服务器读取某个Google Spreadsheet的一些数据，无须用户点击几个“确认”，所以属于Service Account</p>
+<p>当然，官方<a href="https://developers.google.com/accounts/docs/OAuth2ServiceAccount#overview">强烈不推荐</a>你自己去实现OAuth 2.0这一套流程</p>
+<p>&gt; The rest of this article describes the specifics of creating a JWT, signing the JWT, forming the access token request, and handling the response. Libraries should abstract these specifics from your application. Again, developers are strongly encouraged to attempt to use an existing library <strong>rather than building your own</strong> support for server-to-server interactions.</p>
+<p>所以我就直接去逆向他们的<a href="http://code.google.com/p/google-api-python-client/source/browse/samples/service_account/tasks.py">Tasks API with a Service account</a> sample</p>
+<p>安装了一大票依赖，痛苦编译好pyopenssl之后，直接运行，出错：</p>
+<pre><code>oauth2client.client.AccessTokenRefreshError: invalid_grant
+</code></pre>
+<p>加个Fiddler代理调试：</p>
+<pre><code>http = httplib2.Http(
+  proxy_info=httplib2.ProxyInfo(
+    httplib2.socks.PROXY_TYPE_HTTP, 
+    proxy_host='10.0.18.2', 
+    proxy_port=8888
+), ca_certs='FiddlerRoot.cer')
+</code></pre>
+<p>发现https不支持。于是</p>
+<pre><code>httplib2.debuglevel = 4
+</code></pre>
+<p>终于看到一坨东西了。</p>
+<p>对比上面那个 OAuth 2文档，可以轻松写出OAuth 2.0获得access_token的代码：</p>
+<p>需要用到API用户email，p12密钥两个东西，可以从Google API Console里获得。</p>
+<pre><code>import base64
+
+b64 = lambda x:base64.urlsafe_b64encode(x).rstrip('=')
+
+header = '{"alg":"RS256","typ":"JWT"}'
+ts_now = int(time.time())
+
+claim_set = {
+    "iss": email,
+    "scope": ' '.join(scope),
+    "aud": "https://accounts.google.com/o/oauth2/token",
+    "exp": ts_now+3600,
+    "iat": ts_now,
+}
+
+jwt = '%s.%s' % (url_b64(header), url_b64(json.dumps(claim_set)))
+# convert pkcs12 to private key
+p = Popen('openssl pkcs12 -in key.p12 -nocerts -passin stdin -nodes -out key.pem', shell=True, stdin=PIPE, stdout=PIPE)
+p.stdin.write('notasecret') # Google's key default password
+p.stdin.close()
+p.wait()
+# RSA sign with sha256 using private key
+p = Popen('openssl dgst -sha256 -sign 'key.pem' -keyform PEM', shell=True, stdin=PIPE, stdout=PIPE)
+p.stdin.write(jwt)
+p.stdin.close()
+sig = p.stdout.read()
+p.wait()
+
+print '%s.%s' % (jwt, url_b64(sig))
+</code></pre>
+<p>有了access_token之后，获取spreadsheet数据就很简单了，我也拿<a href="https://developers.google.com/gdata/samples/spreadsheet_sample">sample里</a>的spreadsheet作为例子：</p>
+<p>https://spreadsheets.google.com/feeds/list/o13394135408524254648.240766968415752635/od6/public/values?alt=json&amp;access_token=1/XXXXX</p>
+<p>其中<code>1/XXXXX</code> 就是OAuth 2.0得到的access_token。</p>
+<p>对比一下，上面提到的Google官方的OAuth 2 library是97KB大小，自己DIY的算上注释都才只有22行。。。</p>
+<p>Google客户端的代码是用了<code>import OpenSSL</code>来直接实现RSA SHA256签名，我直接先后启动两个openssl命令行实现的。好处是不用麻烦的编译pyopenssl这个库依赖了。服务器部署方便。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-07-09T05:23:00+00:00">2012-07-09</time></p>
 <p>archive</p>            </div>
@@ -100,7 +158,11 @@
             <a href="/post/26542883778"  rel="bookmark" >
               <h2 class="card-title">[zz]最直白的解释Higgs Boson希格斯子</h2>
             </a>
-            <p class="card-text"><p>科学家很难向英国政府解释清楚希格斯场，所以在1993年，英国科学部长威廉•瓦多格列佛（William Waldegrave）向科学家发起了挑战，让他们用 …</p></p>
+            <p class="card-text"><p>科学家很难向英国政府解释清楚希格斯场，所以在1993年，英国科学部长威廉•瓦多格列佛（William Waldegrave）向科学家发起了挑战，让他们用一页纸的篇幅向他解释希格斯场。瓦多格列佛拿出了一瓶香槟奖给了获胜者，其中就包括英国伦敦大学学院的物理学家戴维•米勒（David Miller）。米勒把希格斯场比作一个房间，房间里均匀分散着一大群为政客聚会服务的工作人员。一个无关紧要的人可以不受阻碍地在人群中穿来穿去。然而，如果是时任英国首相撒切尔夫人（Margaret Thatcher）到场，一定会吸引大量的关注：聚会工作人员会围拢在她周围，减慢她穿行的速度，使她带上某种“质量”。</p>
+<p><a href="http://www.guokr.com/post/262983/">via</a></p>
+<p>The Higgs Mechanism</p>
+<p>Imagine a cocktail party of political party workers who are uniformly distributed across the floor, all talking to their nearest neighbours. The ex-Prime- Minister enters and crosses the room. All of the workers in her neighbourhood are strongly attracted to her and cluster round her. As she moves she attracts the people she comes close to, while the ones she has left return to their even spacing. Because of the knot of people always clustered around her she acquires a greater mass than normal, that is, she has more momentum for the same speed of movement across the room. Once moving she is harder to stop, and once stopped she is harder to get moving again because the clustering process has to be restarted. In three dimensions, and with the complications of relativity, this is the Higgs mechanism.</p>
+<p><a href="http://www.hep.ucl.ac.uk/~djm/higgsa.html">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-07-05T01:53:15+00:00">2012-07-05</time></p>
 <p>archive</p>            </div>
@@ -143,7 +205,23 @@
 <p>submit to developer server again</p>
 </li>
 <li>
-<p>developer server …</p></li></ol></p>
+<p>developer server will first <code>base64</code> the <code>&lt;receipt-something&gt;</code>, with a trailing space, the wrap it into a JSON object like <code>{'receipt-data': &lt;receipt-something&gt;&lt;space&gt;}</code>, then send it to <code>https://buy.itunes.apple.com/verifyReceipt</code></p>
+</li>
+<li>
+<p>apple server will return status = 0</p>
+</li>
+<li>
+<p>now you can buy IAP stuff using the same receipt over and over and over again.</p>
+</li>
+<li>
+<p>???</p>
+</li>
+<li>
+<p>Profit!!!11!111</p>
+</li>
+</ol>
+<p>see also this <a href="http://stackoverflow.com/questions/1298998/verify-receipt-for-in-app-purchase">thread</a>, especially comment by <code>Ben S</code> </p>
+<p>btw I am still trying to figure out how to do a rollback transaction. lol</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-07-04T05:10:00+00:00">2012-07-04</time></p>
 <p>archive</p>            </div>
@@ -166,7 +244,7 @@ print(2 + 2 == 5) # False
 five.contents[five.contents[:].index(5)] = 4
 print(2 + 2 == 5) # True (must be sufficiently large values of 2 there...)
 </code></pre>
-<p><a href="http://news.ycombinator.com/item?id=4197576">via …</a></p></p>
+<p><a href="http://news.ycombinator.com/item?id=4197576">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-07-04T01:33:02+00:00">2012-07-04</time></p>
 <p>archive</p>            </div>
@@ -188,7 +266,15 @@ print(2 + 2 == 5) # True (must be sufficiently large values of 2 there...)
 <p>其实这个片子是<a href="http://www.youtube.com/watch?v=2M-XPnldcEI">一群留学生拍的</a>，不是成都zf拍的。</p>
 <blockquote>
 <p>Published on Jun 5, 2012 by Moore Mandy<br />
-We are group of Chinese students study media in the UK,we love pandas and our hometown,so we made this …</p></blockquote></p>
+We are group of Chinese students study media in the UK,we love pandas and our hometown,so we made this video because we saw panda cabs running in London, We spent two days to make this non-commercial video. We love Kate respect Royal family.  </p>
+</blockquote>
+<p>参考评论和报道：<a href="http://beijingcream.com/2012/07/chengdu-commercial-panda-cabs-in-london-royal-family-impersonators/">1</a>, <a href="http://www.dailymail.co.uk/news/article-2167299/Kate-Middleton-mocked-gold-digger-Chinese-tourism-video.html">2</a>, <a href="http://ca.shine.yahoo.com/blogs/love-sex/kate-middleton-mocked-chinese-tourism-video-not-cool-185800796.html">3</a></p>
+<p>lol，这个把很多British给 troll 爽了吧。。</p>
+<p><a href="http://bbs.upcd.org/forum.php?mod=viewthread&amp;tid=215849">via</a></p>
+<p>btw 成都的官方youtube频道在这里 </p>
+<p><a href="http://www.youtube.com/channel/UCUKExUqEqPz7W5hF-1FjIMQ">http://www.youtube.com/channel/UCUKExUqEqPz7W5hF-1FjIMQ</a> </p>
+<p>这个才是『真·成都』。</p>
+<p>btw <a href="http://www.gochengdu.cn">www.gochengdu.cn</a> 这个网站还做得可以的。比国内 zf 网站做得好多啦。这个网站，视频和youtube官方频道似乎是为 Fortune 2013 Chengdu，成都在全世界范围内搞的一系列campaign。希望效果不错一点。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-07-03T20:42:00+00:00">2012-07-03</time></p>
 <p>archive</p>            </div>
@@ -205,7 +291,8 @@ We are group of Chinese students study media in the UK,we love pandas and our ho
             <p class="card-text"><pre><code>['radio_option6393', 'radio_option6398', 'radio_option6403', 'radio_option6408', 'radio_option6413', 'radio_option6418', 'radio_option6423', 'radio_option6428', 'radio_option6433'].map(function(s){document.getElementById(s).checked='checked'});document.getElementById('radioq10').textContent='ok';form1.submit()
 </code></pre>
 <p>因为鼠标点击那个页面太蛋痛了。</p>
-<p>评价大于100元的订单可以获得2个积分，蚊子肉也是肉，所 …</p></p>
+<p>评价大于100元的订单可以获得2个积分，蚊子肉也是肉，所以还是坚决要。</p>
+<p>btw 360最大化薅羊毛办法：移动支付 -&gt; 各种券  -&gt; 返利 -&gt; 评价+晒单</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-07-02T22:01:00+00:00">2012-07-02</time></p>
 <p>archive</p>            </div>
@@ -221,7 +308,28 @@ We are group of Chinese students study media in the UK,we love pandas and our ho
             </a>
             <p class="card-text"><p>新闻在<a href="http://news.163.com/12/0627/17/8517P2J000014JB6.html">这里</a></p>
 <p>LG和三星AMOLED核心技术外泄 或流入中国和台湾   </p>
-<p>韩国三星和LG下一代显示器面板“AM-OLED”和“WHITE-OLED”的核心技术被曝遭外泄。资料或流向中国大陆和台湾地区等韩国 …</p></p>
+<p>韩国三星和LG下一代显示器面板“AM-OLED”和“WHITE-OLED”的核心技术被曝遭外泄。资料或流向中国大陆和台湾地区等韩国企业的竞争对手。   </p>
+<p>韩国三星和LG下一代显示器面板“AM-OLED”和“WHITE-OLED”的核心技术被曝遭外泄。其中部分技术被指流入中国最大的面板生产公司。 <br />
+报导称，首尔中央地方法院尖端犯罪搜查1部27日以涉嫌盗窃三星移动显示器和LG显示器的“AM-OLED”技术，拘捕并起诉了以色列某公司（下称O公司）韩国分公司职员金某等三人。韩国检方还以同样的理由对上述三人的三名上司进行不??拘留起诉，并依法起诉了某公司的韩国分公司。 <br />
+韩国检方称，嫌疑人从去年11月至今年1月分多次窃取三星移动显示器和LG显示器的55英寸电视机用“AM-OLED”面板实物电路图等核心技术。嫌疑人将窃取的资料提供给以色列总部职员以及中国大陆和台湾地区等韩国企业的竞争对手。 <br />
+韩国检方表示，这次外泄的技术是两家公司的秘密资料，也是韩国核心技术。若国外竞争对手获取该技术，可能会在短期内缩小技术差距。检方计划对O公司总部和海外分公司职员进行进一步调查，杜绝该技术进一步外泄。   </p>
+<p>@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   </p>
+<p>Samsung, LG's key display technologies leaked by Israeli firm  <br />
+SEOUL, June 27 (Yonhap) -- Key technologies to manufacture advanced flat-panel displays at Samsung Mobile Display and LG Display have been leaked by an local unit of an Israeli company, local prosecutors said Wednesday, raising concerns the leakage could pose a major threat to the national interest.   </p>
+<p>The Seoul Central District Prosecutors' Office indicted under physical detention three employees at the local unit of an Israeli inspection equipment supplier, including a 36-year-old man surnamed Kim, on charges of leaking key local technologies used to produce active-matrix organic light-emitting diode (AMOLED) displays and white organic light-emitting diode (White OLED) displays.   </p>
+<p>They also indicted without physical detention three other employees and the local unit, the prosecutors said, without identifying the Israeli firm.   </p>
+<p>According to the prosecution, the indicted employees photographed circuit diagrams of yet-to-be-released 55-inch AMOLED television panels when they were let into Samsung and LG's manufacturing factories to check defects of inspection equipment from November of last year to January of this year.   </p>
+<p>They stored the images on portable memory cards and slipped them into their shoes, belts and wallets to avoid suspicion, prosecutors said.  <br />
+AMOLED displays have a faster response time then their passive-matrix OLED counterparts and are more power-efficient, and the advantages make them well suited for growingly popular portable electronics devices. Samsung and LG are by far the leading makers of AMOLED displays, for which the global market is estimated to be worth 90 trillion won (US$77.8 billion). South Korea rigorously prohibits leakage of the technologies as it tags them as the nation's core industrially strategic tech.   </p>
+<p>Prosecutors said the stolen information was likely relayed to the Israeli headquarters and Chinese and Taiwanese display-making rivals, including the biggest Chinese panel manufacturer BOE.   </p>
+<p>"It is very likely that the stolen technologies have been given by the Israeli firm to foreign rivals," a prosecution official said. "This may expectedly deal a massive economic blow to the entire nation and can cause a sea change in the landscape of the global display market."   </p>
+<p>According to industry watchers, Samsung spent nearly 1.4 trillion won in developing its AMOLED technologies with LG funneling nearly 1.3 trillion won into its research and development.   </p>
+<p>Prosecutors pledged to launch a probe into the Israeli headquarters to prevent further tech leakages.   </p>
+<p>btw另外一个<a href="http://tech.163.com/digi/12/0523/22/827NJ125001618VK.html">新闻</a>   </p>
+<blockquote>
+<p>另外，京东方也将于今年9月份或者10月份，推出中国首款自主研发的46英寸OLED面板，宣布中国自己也拥有生产大尺寸OLED面板的技术。   </p>
+</blockquote>
+<p>啊哈哈哈。。。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-06-27T22:34:00+00:00">2012-06-27</time></p>
 <p>archive</p>            </div>
@@ -238,7 +346,25 @@ We are group of Chinese students study media in the UK,we love pandas and our ho
             <p class="card-text"><p>发信人: hcl (盐酸), 信区: DigiHome<br />
 标  题: 问一下现在小家电的变压器都是什么原理？<br />
 发信站: 水木社区 (Thu Jun 28 02:26:13 2012), 站内  </p>
-<p>我记得十几 …</p></p>
+<p>我记得十几年前的时候吧，那时候什么随身听的变压器里面就是个大铁疙瘩，输出电流也才不到500ma，而且还发热量巨猛。现在随便一个usb充电器就是2A的输出电流，平时不用基本上没有发热，体积还巨小，请问是什么新技术呢？开关电源？还是别的什么？  </p>
+<p>发信人: lvsoft (Lv(The Last Guardian)), 信区: DigiHome<br />
+标  题: Re: 问一下现在小家电的变压器都是什么原理？<br />
+发信站: 水木社区 (Thu Jun 28 02:44:17 2012), 站内  </p>
+<p>就是开关电源。<br />
+变压器那种叫线性电源。  </p>
+<p>基本原理是220V交流-&gt;整流-&gt;滤波变成300V左右的直流。<br />
+然后这个直流-&gt;开关-&gt;电容-&gt;输出-&gt;负载。  </p>
+<p>这个开关的控制频率很高，以至于即使是300V的电压，在很短的时间内也只能往电容<br />
+送少量的电荷，形成你所需要的电压（比如5V）。<br />
+当负载消耗掉一部分电荷，造成电容上的电压下降的话，开关就再次开启一个很小的瞬<br />
+间再放一些电荷过去。  </p>
+<p>说的再直白一点，开关电源之所以体积小效率高，就是因为他根本就没有变压的过<br />
+程。你可以认为负载是直接接在一个300V的电源上。只不过这个电源在开关的控制下<br />
+输出的是300V的脉冲，然后被电容滤平了，变成一个诸如5V这样的低电压。  </p>
+<p>所以开关电源结构紧凑成本低效率高，但对控制有很高的要求。以前不这么搞是那个年<br />
+代没有现在这么低成本高精度的控制技术。<br />
+变压器费铜费铁而且还效率不高（一般情况下，超大功率情况下又是另一回事情）  </p>
+<p>so，感谢IC技术的发展吧。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-06-27T22:13:00+00:00">2012-06-27</time></p>
 <p>archive</p>            </div>
@@ -269,7 +395,20 @@ We are group of Chinese students study media in the UK,we love pandas and our ho
             <a href="/post/25348900812"  rel="bookmark" >
               <h2 class="card-title">吐槽一下日本“珍珠生活” “纯铁” 炒锅</h2>
             </a>
-            <p class="card-text"><p>今日忙着装修，想买一个炒锅，家里的建议都是说，现在的不锈、无油烟、不粘锅的炒锅，用了特富龙，可能会中毒。于是下定决心 …</p></p>
+            <p class="card-text"><p>今日忙着装修，想买一个炒锅，家里的建议都是说，现在的不锈、无油烟、不粘锅的炒锅，用了特富龙，可能会中毒。于是下定决心买铸铁炒锅。。</p>
+<p>又碰上618，发现有一种日本制造的，号称“纯铁”的炒锅，“珍珠生活”牌的。</p>
+<p>于是在网上挖了很久才发现它的官网：<a href="http://www.p-life.co.jp">http://www.p-life.co.jp</a></p>
+<p>又挖了很久才发现它的 炒锅 产品列表，这个kitchen-tool.com 是属于 パール金属 (Pearl Metal) 的。</p>
+<p><a href="http://www.kitchen-tool.com/category_2_2.html">http://www.kitchen-tool.com/category_2_2.html</a></p>
+<p>ホーム 調理器具 フライパン</p>
+<p>Home Cookware Frying pan</p>
+<p>不看不知道，一看吓一跳，尼玛基本所有型号（除了 <a href="http://www.kitchen-tool.com/category_19.html">H-8532 ~ H-8540</a> 以外），都是 <strong>アルミニウム合金</strong> 材料。Body: aluminum alloy。</p>
+<p>用中文说，就是铝合金做的。怪不得那么轻啊。尼玛。铝是有毒的啊！！！卧槽。</p>
+<p>他们甚至也做 Teflon テフロン 特富龙 的锅： <a href="http://www.kitchen-tool.com/category_17.html">http://www.kitchen-tool.com/category_17.html</a></p>
+<p>国内卖的”珍珠生活“进口型号就不太放心了。日本官网上根本查不到。</p>
+<p>btw 我跟shop35835092.taobao.com这个店的客服<a href="http://media.tumblr.com/tumblr_m5swojSxOV1qz5ax5.png">聊</a>了一下，z.cn和3.cn上”珍珠生活“都是他们在供货。他们 号称中国总代理。 尼玛2,200多日元和500多人民币差价，这真tmd是暴利啊！</p>
+<p>更新：Amazon.co.jp上也有<a href="http://www.amazon.co.jp/s/?rh=n%3A3828871%2Cn%3A!3839151%2Cn%3A13938481%2Cn%3A13938491%2Cn%3A13938591%2Cp_n_feature_nine_browse-bin%3A2129589051%2Cp_n_feature_ten_browse-bin%3A2225730051&amp;sort=reviewrank_authorityhttp://www.amazon.co.jp/s/?rh=n%3A3828871%2Cn%3A!3839151%2Cn%3A13938481%2Cn%3A13938491%2Cn%3A13938591%2Cp_n_feature_nine_browse-bin%3A2129589051%2Cp_n_feature_ten_browse-bin%3A2225730051&amp;sort=reviewrank_authority">卖的</a> 。铁锅29cm以上的。居然有个直接叫 パール金属 鉄製 北京鍋 。哈哈</p>
+<p>更新2：<a href="http://media.tumblr.com/tumblr_m5um4tDBiS1qz5ax5.png">笑而不语</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-06-18T02:08:00+00:00">2012-06-18</time></p>
 <p>archive</p>            </div>
@@ -340,7 +479,15 @@ We are group of Chinese students study media in the UK,we love pandas and our ho
 <p><img alt="" src="/images/tumblr/24186096702_0.png" /></p>
 <p><a href="http://www.reddit.com/r/gaming/comments/udznp/improbably_good_morrigan_cosplay_ii/">Morrigan cosplay</a> <a href="http://kirawinter.deviantart.com/art/Morrigan-Dragon-Age-273748310">作者</a></p>
 <p><img alt="" src="/images/tumblr/24186096702_1.jpg" /></p>
-<p>我觉得dragon age最好玩的mod之一就是这个<a href="http://dragonage.nexusmods.com/mods/1464">Slap Morrigan</a>。很多quest你做完了大家都赞同，就Morrigan 来一个 disapprove -5 。一个耳光送上。赶 …</p></p>
+<p>我觉得dragon age最好玩的mod之一就是这个<a href="http://dragonage.nexusmods.com/mods/1464">Slap Morrigan</a>。很多quest你做完了大家都赞同，就Morrigan 来一个 disapprove -5 。一个耳光送上。赶紧的。</p>
+<p><a href="http://www.reddit.com/r/gaming/comments/udv4c/the_elder_scrolls_v_skyrim_dawnguard_official/">Skyrim Dawnguard trailer</a></p>
+<object style="height: 390px; width: 640px"><param name="movie" value="http://www.youtube.com/v/3PjBSicSVqI?version=3&feature=player_detailpage"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="http://www.youtube.com/v/3PjBSicSVqI?version=3&feature=player_detailpage" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="640" height="360"></object>
+
+<p><a href="http://www.reddit.com/r/gaming/comments/ud286/starforge_a_3d_game_with_infinite_procedural/">Starforge</a> 碉堡了的超级版Minecraft。</p>
+<object style="height: 390px; width: 640px"><param name="movie" value="http://www.youtube.com/v/YxBSYit49c8?version=3&feature=player_detailpage"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="http://www.youtube.com/v/YxBSYit49c8?version=3&feature=player_detailpage" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="640" height="360"></object>
+
+<p><a href="http://www.reddit.com/r/gaming/comments/u57vu/not_again_bomberman/">bomberman</a></p>
+<p><img alt="" src="http://i.imgur.com/cO8fU.gif" /></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-06-01T04:26:00+00:00">2012-06-01</time></p>
 <p>archive</p>            </div>
@@ -362,7 +509,27 @@ FROM   Incident AS i
        LEFT JOIN Keyword AS k ON k.incident_id = i.id
 WHERE  i.year BETWEEN 1947 AND 1966
 AND    i.type = 'HOMICIDE'
-AND    v.sex = 'F' …</code></pre></p>
+AND    v.sex = 'F'
+AND    i.status = 'UNSOLVED'
+AND    ...
+       OR v.fname IN ('Mari', 'Magda')
+       OR SUBSTR ...
+AND    (k.keyword IN ('rape', 'decapitation', 'dismemberment', 'fire', 'altar', 'priest', 'prostitute')
+       ...
+       AND SUBSTR(v.fname, 1, 1) = 'R' AND SUBSTR(v.lname, 1, 1) = 'L');
+
++--------+---------+------+-----------+----------------------------------+
+| fname  | lname   | year | location  | report_file                      |
++--------+---------+------+-----------+----------------------------------+
+| Anna   | Wedin   | 1956 | Mark      | FULL POLICE REPORT NOT DIGITIZED |
+| Linda  | Janson  | 1955 | Mariestad | FULL POLICE REPORT NOT DIGITIZED |
+| Simone | Grau    | 1958 | Goteborg  | FULL POLICE REPORT NOT DIGITIZED |
+| Lea    | Persson | 1962 | Uddevalla | FULL POLICE REPORT NOT DIGITIZED |
+| Kajsa  | Severin | 1962 | Dals-Ed   | FULL POLICE REPORT NOT DIGITIZED |
++--------+---------+------+-----------+----------------------------------+
+</code></pre>
+<p>发这个贴的目的是测试一下markdown的code formatting哈哈。</p>
+<p><a href="http://news.ycombinator.com/item?id=4047807">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-05-31T23:10:41+00:00">2012-05-31</time></p>
 <p>archive</p>            </div>
@@ -379,7 +546,8 @@ AND    v.sex = 'F' …</code></pre></p>
             <p class="card-text"><p>挂了好久的blog又出来招摇撞骗了。</p>
 <p>在<a href="http://zuroc.42qu.com/">zuroc</a>大神的Gentoo VPS上编译php不成功，所以懒得折腾Wordpress了。于是就用Tumblr将就了。</p>
 <p>做了个简单的reverse proxy，大家也可以通过 <a href="http://estblog.tumblr.com/">http://estblog.tumblr.com/</a> 访问。</p>
-<p>欢迎老朋 …</p></p>
+<p>欢迎老朋友们，新朋友们，小朋友们，基佬们来访。</p>
+<p>儿童节快乐。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-05-31T21:04:49+00:00">2012-05-31</time></p>
 <p>archive</p>            </div>

@@ -82,7 +82,16 @@
     return ""
 </code></pre>
 <p>The problem is you can't enumerate every callA and callB.</p>
-<p>But for class based view it's trivial to write more elegant code …</p></p>
+<p>But for class based view it's trivial to write more elegant code like:</p>
+<pre><code>class myview(ViewRouter):
+    def callA(req):
+        return ''
+    def callB(req):
+        return ''
+    def default(req):
+        return ''
+</code></pre>
+<p>Just want to put up an example of what class-based views are useful in Web development. The powerful object introspection allows you to map URL behaviors to a well defined class.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-06T03:23:00+00:00">2013-03-06</time></p>
 <p>archive</p>            </div>
@@ -98,7 +107,7 @@
             </a>
             <p class="card-text"><p>今天刷了下第三方ROM，我擦，搜狗的两个渣app删不掉，用RE浏览器删掉了。。。</p>
 <p>结果。。。尼玛android的默认浏览器选项给屏蔽了。启动默认首页，弄死都是作者lishuo0427的JB烂博客</p>
-<p>找到了个办法刷回官方包了 …</p></p>
+<p>找到了个办法刷回官方包了。坑爹啊。我草！</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-05T08:33:43+00:00">2013-03-05</time></p>
 <p>archive</p>            </div>
@@ -116,7 +125,53 @@
 <p>首先是瞻仰了libuv python binding - pyuv 作者 @saghul 的博客</p>
 <p>特别是<a href="http://code.saghul.net/index.php/2013/02/04/how-do-event-loops-work-in-python/">这个slides</a>很是学习了点东西</p>
 <p><img alt="" src="/images/tumblr/44511368373.png" /></p>
-<p>里边还提到，Twisted …</p></p>
+<p>里边还提到，Twisted, Tornade和Gevent都有其对应libuv实现了。猛啊。</p>
+<p>其中一个重要的东西，就是 Python 3.3里边的<a href="http://www.python.org/dev/peps/pep-3156/">PEP-3156</a>，和其参考实现<a href="https://code.google.com/p/tulip/">Tulip</a>，基于Pyuv的也有个实现叫<a href="https://github.com/saghul/rose">Rose</a>。</p>
+<p>可以大胆估计，PEP 3156是以后最重要的Python标准接口之一了。其重要性超过PEP 333 WSGI</p>
+<p>libuv和 Boost.ASIO的比较<a href="http://stackoverflow.com/questions/11423426/">看这里</a>：</p>
+<pre><code>                         libuv          Boost
+Event Loop:              yes            Asio
+Threadpool:              yes            Asio + Threads
+Threading:              
+  Threads:               yes            Threads
+  Synchronization:       yes            Threads
+File System Operations:
+  Synchronous:           yes            FileSystem
+  Asynchronous:          yes            Asio + Filesystem
+Timers:                  yes            Asio
+Scatter/Gather I/O[1]:    no             Asio
+Networking:
+  ICMP:                  no             Asio
+  DNS Resolution:        async-only     Asio
+  SSL:                   no             Asio
+  TCP:                   async-only     Asio
+  UDP:                   async-only     Asio
+Signal:
+  Handling:              yes            Asio
+  Sending:               yes            no
+IPC:
+  UNIX Domain Sockets:   yes            Asio
+  Windows Named Pipe:    yes            Asio
+Process Management:
+  Detaching:             yes            Process[2]
+  I/O Pipe:              yes            Process[2]
+  Spawning:              yes            Process[2]
+System Queries:
+  CPU:                   yes            no
+  Network Interface:     yes            no
+TTY:                     yes            no
+Shared Library Loading:  yes            Extension[3]
+</code></pre>
+<p>Python 3.3还支持socket.sendmsg() 和 socket.recvmsg() ，这是两个碉堡了的Vector IO (Scatter/Gather I/O) 函数。POSIX里边writev() 和 readv() 这两个 都是基于他们实现。sendmsg() 还有个<a href="http://docs.python.org/dev/library/socket.html#socket.socket.recvmsg">非常诡异的功能</a></p>
+<blockquote>
+<p>On some systems, sendmsg() and recvmsg() can be used to pass file descriptors between processes over an AF_UNIX socket</p>
+</blockquote>
+<p>这个其实可以用来轻松实现跨进程 IPC 机制。系统原生支持。</p>
+<p>是不是 mpi4py 可以去死了呢？</p>
+<p>python 3.3还支持 <a href="http://docs.python.org/dev/library/concurrent.futures.html">concurrent.futures</a> ，自带virtualenv，yield.from，dict共享内存，支持lzma/xz等等好玩的特性。</p>
+<p>其中Unicode改进：</p>
+<p>ASCII字符占用1个字节，BMP范围（也就包括了CJK文字）占用2字节，其他Unicode占用4字节。。碉堡了！</p>
+<p>作为一个Python 2.7忠实用户，有点动心了！</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-03T21:46:00+00:00">2013-03-03</time></p>
 <p>archive</p>            </div>
@@ -134,7 +189,17 @@
 <li><code>com.yinyuetai.ui</code> 这个JB设计居然只能竖屏。我擦。<code>com.tencent.qqmusic</code> 居然也是强制竖屏。在1080p电视上感谢这两款软件治好了我多年的颈椎病。</li>
 <li><code>com.tencent.qqmusicpad</code> 还是很赞的。</li>
 <li>最讨厌android软件锁区</li>
-<li>在<a href="http://www.v2ex.com/t/60885">v2ex上</a> 看到HiHex这个只能电视团队，现在觉得如果要搞大屏交互 …</li></ol></p>
+<li>在<a href="http://www.v2ex.com/t/60885">v2ex上</a> 看到HiHex这个只能电视团队，现在觉得如果要搞大屏交互还是很有搞头的。</li>
+</ol>
+<p>对于交互我的一些粗浅看法：</p>
+<ol>
+<li>传统键盘只是高速输入设备</li>
+<li>鼠标是放大型的<em>绝对</em>精确定位设备，屏幕上的光标是实现了一种代入感，单个hot spot</li>
+<li>touchscreen是一种拟物的创新。多指就是多个hot spot</li>
+<li>客厅大屏交互，这个交互必须是<em>相对</em>的。而且没有hot spot，只有dynamic area。</li>
+</ol>
+<p>也就是说，桌面或者home screen放一排图标绝对是sb设计。这种老太太穿针的设计真的不适合大屏。最好的设计应该是类似iTunes cover flow那样的，简单一维的。传统遥控板就是两个一维：音量 和 频道。</p>
+<p>其次大屏互动必须限制变化的部分，传统桌面到处都可以单击 双击 长按/右击，电视是不能有“焦点”这个sb设计的。电视的UI应该是更加人性化的“可以线性运动的控制部分”</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-03T08:02:18+00:00">2013-03-03</time></p>
 <p>archive</p>            </div>
@@ -178,7 +243,19 @@ foo
 <p>I think this particular behavior is well abused in <a href="http://code.google.com/p/modwsgi/wiki/RegisteringCleanupCode">WSGI</a></p>
 <p>two cents:</p>
 <ul>
-<li><code>return …</code></li></ul></p>
+<li><code>return</code> does not actually leave the function immediately</li>
+<li>a function without <code>return</code> statement returns None, but explicitly return None is not the same. <code>None</code> is the most abused thing in all programming languages.</li>
+</ul>
+<p>to quote <a href="http://docs.python.org/2/reference/simple_stmts.html#return">the official doc</a>:</p>
+<blockquote>
+<p>When return passes control out of a try statement with a finally clause, that finally clause is executed before really leaving the function. <br />
+In a generator function, the return statement is not allowed to include an expression_list. In that context, a bare return indicates that the generator is done and will cause StopIteration to be raised.</p>
+</blockquote>
+<p>As to <code>yield</code>:</p>
+<blockquote>
+<p>As of Python version 2.5, the yield statement is now allowed in the try clause of a try ... finally construct. If the generator is not resumed before it is finalized (by reaching a zero reference count or by being garbage collected), the generator-iterator’s close() method will be called, allowing any pending finally clauses to execute.</p>
+</blockquote>
+<p>Black magic!</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-28T22:59:00+00:00">2013-02-28</time></p>
 <p>archive</p>            </div>
@@ -199,7 +276,10 @@ foo
 <li>至少4次用LLVM。全部失败。</li>
 <li>2次尝试写了个Rpython版的ctypes，叫rctypes，均失败。</li>
 <li>JIT引擎写过3个版本，第四个个版本才成功</li>
-<li>第一个成功C编译版本的pypy直接segfault了——本来应该unsigned int写成了signed int …</li></ul></p>
+<li>第一个成功C编译版本的pypy直接segfault了——本来应该unsigned int写成了signed int</li>
+<li>在当年的欧盟砖家评审会上，Pypy画了一个惊天地泣鬼神的大饼——几乎包含了所有编程语言最新最酷的特性。后来这些累赘在一次sprint中被砍掉70%精简了30%代码量</li>
+</ul>
+<p>from <a href="http://morepypy.blogspot.com/2013/02/10-years-of-pypy.html">pypy blog</a> via <a href="http://www.reddit.com/r/Python/comments/19f413/10_years_of_pypy/">reddit</a>, <a href="http://news.ycombinator.com/item?id=5301141">HN</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-28T20:24:00+00:00">2013-02-28</time></p>
 <p>archive</p>            </div>
@@ -239,7 +319,8 @@ foo
 <blockquote>
 <p>One reason they don't already have cameras built in is a combination of power requirements</p>
 </blockquote>
-<p>突然想到，一个由思轴组成的飞行swarm网络，如果每个节 …</p></p>
+<p>突然想到，一个由思轴组成的飞行swarm网络，如果每个节点都自带摄像头输入的话，网络可以p2p通信，那么这个swarm的战术能力比士兵组成的战术分队强大多少倍啊。。。。。</p>
+<p>看来得加紧研制大功率激光近防武器了。这种小虫子势不可挡啊。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-22T02:52:00+00:00">2013-02-22</time></p>
 <p>archive</p>            </div>
@@ -272,7 +353,7 @@ foo
             <p class="card-text"><p>Reading <a href="http://gigaom.com/2013/02/16/devops-complexity-and-anti-fragility-in-it-context-and-composition/">this</a> from <a href="http://news.ycombinator.com/item?id=5233329">Hacker News</a></p>
 <p>The first thought is that the author had a brilliant idea, but after fighting with shellscript for a way and I found out that it’s totally not the case at all.</p>
 <p>One word: UNIX Pipe is the golden hammer</p>
-<p>Basically it’s the UNIX …</p></p>
+<p>Basically it’s the UNIX Pipe that allows you to connect inputs and outputs, it’s like the primitive Message Queue or Signal Framework used in many PaaS. It’s not bad, but it’s blatantly abused. If you think UNIX Pipes are easy then think harder. For example, a message duplexing with U</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-20T14:05:00+00:00">2013-02-20</time></p>
 <p>archive</p>            </div>
@@ -292,7 +373,9 @@ sudo  python distribute_setup.py
 curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
 sudo python get-pip.py
 sudo emerge libev
-CFLAGS …</code></pre></p>
+CFLAGS=-I/usr/include/libev sudo pip install bjoern
+</code></pre>
+<p>灌了个水的哟。。。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-19T22:26:50+00:00">2013-02-19</time></p>
 <p>archive</p>            </div>
@@ -315,7 +398,38 @@ CFLAGS …</code></pre></p>
 <p>These should be separate Bottle apps.</p>
 <p>There's <a href="http://permalink.gmane.org/gmane.comp.python.bottle.general/730">an ugly hack</a> from the official maillist, I think I can make it better.</p>
 <p>The secret is to create a customized WSGI app:</p>
-<pre><code>from …</code></pre></p>
+<pre><code>from fnmatch import fnmatch
+from bottle import Bottle, default_app, run
+
+foo = Bottle()
+foo.hostnames = ['foo.est.im']
+@foo.route('/')
+def hello():
+    return 'hello!'
+
+bar = Bottle()
+bar.hostnames = ['bar.est.im']
+@bar.route('/')
+def hi():
+    return 'hi~'
+
+@route('/')
+def index():
+    print 'hello world'
+
+def application(environ, start_response):
+    for app in [foo, bar]:
+        hostnames = getattr(app, 'hostnames', [])
+        if filter(lambda x:fnmatch(hostname, x), hostnames):
+            return app(environ, start_response)
+    return default_app()(environ, start_response)
+</code></pre>
+<p>Then run this motherfucker:</p>
+<pre><code>from django.utils import autoreload
+def dev_server():
+    run(application, host='0.0.0.0', port=8002, debug=True)
+autoreload.main(dev_server)
+</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-19T01:59:57+00:00">2013-02-19</time></p>
 <p>archive</p>            </div>
@@ -331,7 +445,20 @@ CFLAGS …</code></pre></p>
             </a>
             <p class="card-text"><p>Google Docs自己搞了一套类似Google App Engine的体系，只不过服务器端语言是Javascript，运行环境是 云JS——Google Apps Script</p>
 <p><a href="https://developers.google.com/apps-script/html_service">https://developers.google.com/apps-script/html_service</a></p>
-<p>看了下文档，类似php的语法，在html里嵌入js，然后服务器渲染得到 …</p></p>
+<p>看了下文档，类似php的语法，在html里嵌入js，然后服务器渲染得到一个网页。</p>
+<pre><code>&lt;table&gt;
+  &lt;? var data = getData();
+     for (var i = 0; i &lt; data.length; ++i) { ?&gt;
+    &lt;tr&gt;
+      &lt;? for  (var j = 0; j &lt; data[i].length; ++j) { ?&gt;
+        &lt;td&gt;&lt;?= data[i][j]?&gt;&lt;/td&gt;
+      &lt;? } ?&gt;
+    &lt;/tr&gt;
+  &lt;? } ?&gt;
+&lt;/table&gt;
+</code></pre>
+<p>这是得有多蛋痛啊。那个结尾的<code>&lt;? } ?&gt;</code>更是让人菊花一紧！</p>
+<p>感脚Excel里边的VBA被秒杀了！</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-15T18:59:56+00:00">2013-02-15</time></p>
 <p>archive</p>            </div>
@@ -387,7 +514,16 @@ of what it really is</p></p>
 </ul>
 <p>something I think yet to improve</p>
 <ul>
-<li>Does the system …</li></ul></p>
+<li>Does the system converge?</li>
+<li>The "branching" topic feature seems very creative, but how about cross-site, federated branching? e.g. X-post to another site, but aggregates contents</li>
+<li>a viable channel for viral marketing. It would be nicer if provided with controllable spreading and feedback statistics</li>
+<li>digest and archiving</li>
+<li>interop with maillist, NNTP, etc.</li>
+</ul>
+<p>Few rants about Stackoverflow. It's obvious that Jeff Atwood started this project by inspirations from Stackexchange sites, and I had some pretty bad experience recently, interesting topics are closed by hi-rep members for either it's off-topic or asked the question in the wrong way. This makes an active community dead. Hi-rep members should have some karma-recycle or reputation-TTL system to make sure they don't abuse their powers. Or they will corrupt as their momentum accumulates, they will transferring the state of the community to an irreversible way.</p>
+<p>Also it's a pity that they chose Ruby on Rails over Python, I guess it's trending that Python going too enterprizy and RoR is more kind of "quick 'n dirty" in its nature. </p>
+<p>Overall I am exited with Discourse, but still yet to see how it goes on</p>
+<p>via <a href="http://news.ycombinator.com/item?id=5180196">1</a>. <a href="http://news.ycombinator.com/item?id=5172905">2</a>, <a href="about:blank">3</a>, <a href="http://www.reddit.com/r/programming/comments/17zxfy/stackexchanges_jeff_atwood_switches_to_ruby_on/">4</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-07T03:58:30+00:00">2013-02-07</time></p>
 <p>archive</p>            </div>
@@ -402,7 +538,8 @@ of what it really is</p></p>
               <h2 class="card-title">火控雷达意味着什么</h2>
             </a>
             <p class="card-text"><p>形象生动</p>
-<p>&gt; Military ships and planes do not "lock onto other vessels all the time". Not with targeting radar, and not in international waters - doing so is proscribed under international law as an act of aggression. It is the high-tech equivalent of sticking a gun in someone's face …</p></p>
+<p>&gt; Military ships and planes do not "lock onto other vessels all the time". Not with targeting radar, and not in international waters - doing so is proscribed under international law as an act of aggression. It is the high-tech equivalent of sticking a gun in someone's face and cocking the hammer</p>
+<p><a href="http://www.reddit.com/r/China/comments/17xh9q/china_locked_on_a_japanese_vessel/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-07T02:52:00+00:00">2013-02-07</time></p>
 <p>archive</p>            </div>
@@ -430,7 +567,41 @@ Content-Type: application/json
 <p>返回：</p>
 <pre><code>HTTP/1.1 200 OK
 Content-Type: application/json; charset=UTF-8
-Cache-Control: no-cache …</code></pre></p>
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: Fri, 01 Jan 1990 00:00:00 GMT
+Date: Fri, 01 Feb 2013 07:01:26 GMT
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
+Content-Length: 209
+Server: GSE
+
+{
+ "result": {
+  "spellingCheckResponse": {
+   "misspellings": [
+    {
+     "charStart": 0,
+     "charLength": 7,
+     "suggestions": [
+      {
+       "suggestion": "chrome"
+      }
+     ]
+    }
+   ]
+  }
+ }
+}
+</code></pre>
+<p>看来是没法利用了。shit。</p>
+<p><a href="http://googlesystem.blogspot.com/2011/09/chromes-spell-checker-gets-smarter.html">参考</a></p>
+<p>更新：</p>
+<p>似乎可以利用。那个API Key似乎又是可以用的</p>
+<p>https://www.google.be/complete/search?sugexp=chrome,mod=17&amp;client=chrome&amp;hl=nl&amp;q=about&amp;sugkey=AIzaSyCLlKc60a3z7lo8deV-hAyDU7rHYgL4HZg</p>
+<p>["about",["http:\/\/www.imdb.com\/title\/tt0276751\/","about cherry","about a boy"],["About a Boy (2002) - IMDb","",""],[],{"google:suggesttype":["NAVIGATION","QUERY","QUERY"],"google:suggestrelevance":[1200,600,551],"google:verbatimrelevance":1300}]</p>
+<p>Google的各种黑科技真是多啊</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-01T02:02:00+00:00">2013-02-01</time></p>
 <p>archive</p>            </div>
@@ -447,7 +618,23 @@ Cache-Control: no-cache …</code></pre></p>
             <p class="card-text"><p>看到<a href="http://weibo.com/1455643221/zgI6wA2AP">一则微博</a></p>
 <blockquote>
 <p>@刘兴亮<br />
-HTML5的突出优点是多设备、跨平台。“HTML5 for TV”是由美国Cable Labs牵头组成的国际性开源协作项目，为推动HTML5技术在电视终端上的应用。预计2013年会有更多的开发者投入到基于智能电视的应用开发。针对大屏的应用开发是个“富矿”。2013年，智能电视终端应 …</p></blockquote></p>
+HTML5的突出优点是多设备、跨平台。“HTML5 for TV”是由美国Cable Labs牵头组成的国际性开源协作项目，为推动HTML5技术在电视终端上的应用。预计2013年会有更多的开发者投入到基于智能电视的应用开发。针对大屏的应用开发是个“富矿”。2013年，智能电视终端应用的重要特点是——跨屏，跨终端互操作。</p>
+</blockquote>
+<p>然后就跑去看了下他们的文档：</p>
+<p><a href="http://www.cablelabs.com/specifications/CL-SP-HTML5-MAP-I02-120510.pdf">http://www.cablelabs.com/specifications/CL-SP-HTML5-MAP-I02-120510.pdf</a></p>
+<p>觉得这个只是定制了一个节目厂商嵌入HTML的规范，然后他们的Tru2way®设备可以推送网页节目到电视。</p>
+<p>这个只解决了一部分问题。首先限定了是线性内容，其次格式居然限定死是MPEG-2 TS。这个H.265的时代来看真的有点匪夷所思。</p>
+<p>个人觉得最大的问题，是解决了HTML5 to TV，但是没有解决TV内嵌HTML5渲染引擎的问题。比如一个现实的问题：</p>
+<p>vod.xunlei.com 我已经大部分视频在这里看了。但是</p>
+<ul>
+<li>多媒体键盘的media key没法响应。这个是browser vendor的问题</li>
+<li>音视频内容无法DLNA到其他设备的屏幕</li>
+</ul>
+<p>如果真正要推动标准发展和技术进步，HTML5应该支持 </p>
+<pre><code>&lt;video onControlPlay="function(){}" /&gt;
+</code></pre>
+<p>这样的DOM节点。</p>
+<p>只是一些粗浅看法，可能并不完善。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-01-29T03:34:05+00:00">2013-01-29</time></p>
 <p>archive</p>            </div>

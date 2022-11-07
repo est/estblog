@@ -55,7 +55,61 @@
               <h2 class="card-title">JS播放 DTMF</h2>
             </a>
             <p class="card-text"><p>玩 WebRTC 的时候发现它居然内置<a href="https://hacks.mozilla.org/2015/11/webrtc-sending-dtmf-in-firefox/">支持了 DTMF 拨号音</a>。</p>
-<p>这里就简单科普一下，DTMF 就是手机电话拨号音，数字按键按下去嘟嘟嘟响那 …</p></p>
+<p>这里就简单科普一下，DTMF 就是手机电话拨号音，数字按键按下去嘟嘟嘟响那个。具体就2个频率调谐：</p>
+<table>
+<thead>
+<tr>
+<th>DTMF</th>
+<th>1209Hz</th>
+<th>1336Hz</th>
+<th>1477Hz</th>
+<th>1633Hz</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>697Hz</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>A</td>
+</tr>
+<tr>
+<td>770Hz</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>B</td>
+</tr>
+<tr>
+<td>852Hz</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>C</td>
+</tr>
+<tr>
+<td>941Hz</td>
+<td>*</td>
+<td>0</td>
+<td>#</td>
+<td>D</td>
+</tr>
+</tbody>
+</table>
+<p>于是兴趣来了想做一个 demo 玩玩，写了半天调试不通，报错</p>
+<blockquote>
+<p>VM987:1 Uncaught DOMException: Failed to execute 'insertDTMF' on 'RTCDTMFSender': The 'canInsertDTMF' attribute is false: this sender cannot send DTMF.</p>
+</blockquote>
+<p>仔细研究了下<a href="https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Using_DTMF">这玩意</a>，原来 WebRTC 不直接传音频，而是发一个控制信号，由接收方播放出音频，所以你需要本地创建一个真实的双工 RTC 并打开麦克风权限，才能播放DTMF音频。</p>
+<blockquote>
+<p>WebRTC doesn't send DTMF codes as audio data. Instead, they're sent out-of-band, as RTP payloads. Note, however, that although it's possible to send DTMF using WebRTC, there is currently no way to detect or receive incoming DTMF. WebRTC currently ignores these payloads;</p>
+</blockquote>
+<p>这样就走远了。于是又手痒用 <code>AudioContext()</code> 糊了一个。一共不到1000字节。</p>
+<p><a href="https://lab.est.im/dtmf">https://lab.est.im/dtmf</a> <a href="https://github.com/est/snippets/blob/master/dtmf/index.html">源码</a></p>
+<p>嗯。就挺简单的。特别是那个 oscillator有个 <code>.stop(0.2)</code> 参数可以避免 <code>setTimeout</code> 的麻烦。网上很多教程整复杂了。</p>
+<p>btw 把一些老脚本挂在 lab 域名下。<br />
+btw2 把 RSS 改成全文输出了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-10-30T19:20:49+00:00">2022-10-30</time></p>
 <p>stdout</p>            </div>
@@ -71,7 +125,25 @@
             </a>
             <p class="card-text"><p>凌晨4点居然失眠了，妈蛋，于是就捡起来<a href="https://news.ycombinator.com/item?id=33262637">昨天看到</a>的 quanta 杂志文章继续读，发现一个有意思的问题，我们知道</p>
 <ol>
-<li>光子是以光速飞行的，它没有 …</li></ol></p>
+<li>光子是以光速飞行的，它没有静止质量</li>
+<li>正、反电子是有正质量的，只能以亚光速飞行</li>
+<li>有的时候正反电子会合体成一个光子</li>
+</ol>
+<p>那么假设伽利略拿一个正电子(e+)，用绳子绑住一个电子(e-)，注意他们俩都是有正质量的，从比萨斜塔上扔下去，会发生：</p>
+<ul>
+<li>(A) 超光速掉落</li>
+<li>(B) 光速掉落</li>
+<li>(C) 亚光速掉落</li>
+<li>(D) 虚数光速掉落</li>
+<li>(E) 哐当一声</li>
+</ul>
+<p>答案： <a href="https://profmattstrassler.com/2022/09/09/protons-and-charm-quarks-a-lesson-from-virtual-particles/">https://profmattstrassler.com/2022/09/09/protons-and-charm-quarks-a-lesson-from-virtual-particles/</a></p>
+<p>我也看得个半懂，但是文章写得太tm 好了。强烈推荐阅读。因为最近 Nature 有人搞了个大新闻，说他们跑了个机器学习模型分析最近50年的粒子对撞机数据，发现质子里「有的时候」包含一个比质子重的 charm quark。</p>
+<p>还学到一个奇妙的比喻，教科书的说法是，质子由 2x <code>up quark</code> 和 1x <code>down quark</code> 构成。这是个巨大的骗术。真实的情况是，质子就是个垃圾堆，里面有成千上万亿的稀奇破玩意。大概可以分成3类，一大堆 antiquark，一大堆 quark 和 一大堆 胶水。只是恰好  <code>up quark</code> 比 <code>up antiquark</code> 多 <code>2</code> 个，<code>down quark</code> 比 <code>down antiquark</code>  多 <code>1</code> 个，外加一大堆胶水(<code>gluon</code>) 和  <code>quark-antiquark pair</code> ，挤在一个 非常小的区域内，以接近光速的速度飞来飞去。</p>
+<p>虚假的质子模型：</p>
+<p><img alt="" src="/images/2022/stdin-14-01.webp" /></p>
+<p>真实的质子模型：</p>
+<video src="/images/2022/stdin-14-02.mp4" loop autoplay preload="metadata"></video></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-10-20T05:41:29+00:00">2022-10-20</time></p>
 <p>stdin</p>            </div>
@@ -86,7 +158,22 @@
               <h2 class="card-title">第三世界</h2>
             </a>
             <p class="card-text"><p>半夜看到个东西，翻来覆去睡不着，就记录一下。</p>
-<p>很多人知道老毛的「第三世界」理论，这也是为数不多的由中国人完全贡献通 …</p></p>
+<p>很多人知道老毛的「第三世界」理论，这也是为数不多的由中国人完全贡献通行欧美的顶流政治概念。但是很少有人知道20世纪顶级哲学家 波普 Karl Popper 有另外一套「三个世界」理论。这三个世界分别是：</p>
+<ol>
+<li>真实的物质世界</li>
+<li>人的个性 (character)</li>
+<li>人的思想 (idea) </li>
+</ol>
+<p>卧槽，深邃。作为不惑好多年的人，仍然能在生命的这个阶段学习到新的姿势，感觉非常过瘾，让人回味初一自己琢磨哲学的愉快时光。</p>
+<p>人的思想又称理性，是通过推理和因果构成的神性世界；人的个性是由情绪、脾气和兽性驱动的喜怒哀乐感性世界。很多人会把这两者混淆成一回事，但是从根本上来说是错误的。人的个性我理解大多是先天遗传(nature)决定的，人的理性是人作为 homo sapien 的独门绝技，是把镜像神经元发挥到极致的后天(nurture)集大成机制。</p>
+<p>说起这个我又想起来，以前觉得儒家的王阳明「知行合一」很厉害，直到我看到「自觉、觉他、觉行」这个说法：</p>
+<ol>
+<li>首先要了解自己，独善其身</li>
+<li>其次要以己度人(pun intended)，考虑对方感受和社会整体，毕竟人类是群居动物，由社会定义的存在</li>
+<li>最后要把思考成果应用到行动上，否则都是瞎jb空谈，其实这玩意也讲究方法论</li>
+</ol>
+<p>儒家作为一个上古玩交际起家的教派，没把「他觉」单独拎出来强调，从这个层面上来说落了下风啊。</p>
+<p>其实我想说的是，波普恐怕还漏了第四个世界，这个世界是基于 idea 上的虚拟机，这个虚拟机可以去模拟和推演他人的行为、个性和思维的世界，这也是中国人最擅长的，算计他人。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-10-19T00:30:29+00:00">2022-10-19</time></p>
 <p>stdin</p>            </div>
@@ -101,7 +188,28 @@
               <h2 class="card-title">刑事犯罪中起诉人数排名top3</h2>
             </a>
             <p class="card-text"><p>帮朋友看一家公司，专门做爬虫的。找到一些有意思的信息，各位可以先猜猜这个题：</p>
-<p>2020年以来，大陆各类刑事犯罪中起诉人数排名 …</p></p>
+<p>2020年以来，大陆各类刑事犯罪中起诉人数排名前3的罪名是？</p>
+<ul>
+<li>(A) 网上乱发言</li>
+<li>(B) 偷东西</li>
+<li>(C) 诈骗</li>
+<li>(D) 开车出事</li>
+<li>(E) 打架、杀人、伤人</li>
+<li>(F) 帮别人修理电脑或者网络</li>
+<li>
+<p>(G) 贿赂</p>
+<p><details><br />
+    <summary>正确答案：</summary><br />
+    (D) (B) (G) 帮助信息网络犯罪活动罪（以下简称帮信罪）是2015年11月起施行的刑法修正案（九）新增罪名，主要指行为人明知他人利用信息网络实施犯罪，为其犯罪提供互联网接入、服务器托管、网络存储、通信传输等技术支持，或者提供广告推广、支付结算等帮助的犯罪行为，是电信网络犯罪的重要“帮凶”。2019年11月，最高检联合最高法制定出台《关于办理非法利用信息网络、帮助信息网络犯罪活动等刑事案件适用法律若干问题的解释》，明确了帮信罪定罪量刑标准和有关司法认定问题。近年来，特别是2020年10月“断卡”行动以来，检察机关起诉涉嫌帮信犯罪案件上涨较快，目前已成为各类刑事犯罪中起诉人数排名第3的罪名（前两位分别是危险驾驶罪、盗窃罪）。<br />
+</details></p>
+</li>
+</ul>
+<p>然后说回爬虫，最近看到<a href="https://www.spp.gov.cn/spp/llyj/202202/t20220215_544538.shtml">《明确越界网络爬虫行为的刑事处罚边界》</a>，虽然不是法规文件，但是可以参考。总体来说：</p>
+<ol>
+<li>如果你是 IT  从业人员，那么明知故犯罪加一等</li>
+<li>小爬没事，把别人服务器爬出500错误了就麻烦了。需要登录或者有反爬最好不要去碰</li>
+<li>公开数据理论上没事。不遵守 <code>robots.txt</code> 也无所谓</li>
+</ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-10-18T22:28:20+00:00">2022-10-18</time></p>
 <p>stdin</p>            </div>
@@ -118,7 +226,15 @@
             <p class="card-text"><p>事情起因：Elon Musk 闲的蛋痛发起了一个关于俄乌战争如何和平的投票</p>
 <p>https://twitter.com/MelnykAndrij/status/1576977000178208768</p>
 <p>乌克兰前外交官回了一句 Fuck off</p>
-<p>Elon Musk 就 …</p></p>
+<p>Elon Musk 就说给乌克兰的 starlink 已经烧了 $80 million，不再免费了。拜拜。</p>
+<p>有人说，Starlink 其实是美帝联邦政府（USAID，U.S. Agency for International Development）出的钱。</p>
+<p><img alt="" src="/images/2022/stdin-11-01.webp" /></p>
+<p>其实两个人都说得对，但都片面。准确的说法是：</p>
+<ul>
+<li>3,670 donated by SpaceX</li>
+<li>1,330 purchased (by USAID)</li>
+</ul>
+<p>让我感到意外的是 Twitter Birdwatch。很准确的给出了上下文和关键结论，还第一次见。想加入 birdwatch 的话，需要绑美国手机号码。算了。但是这个形式还是很不错的。想知道它的摘要算法是NLP自动的还是人肉 outline 的</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-10-14T17:16:51+00:00">2022-10-14</time></p>
 <p>stdin</p>            </div>
@@ -133,7 +249,75 @@
               <h2 class="card-title">关于 刘备 的4个问题。看看你能猜对多少？</h2>
             </a>
             <p class="card-text"><p>尝试blog写一个新的系列，就是把平时读到的遇到的材料做成阅读理解题。因为很多的时候会让我们感觉WTF？</p>
-<p>昨天刚看了 <a href="https://www.bilibili.com/video/BV1PR4y1R7DF/">硬核|| 被《三国演义》粉 …</a></p></p>
+<p>昨天刚看了 <a href="https://www.bilibili.com/video/BV1PR4y1R7DF/">硬核|| 被《三国演义》粉饰了的老刘入川</a> ，受评论区启发，写几道题，各位可以盲猜下。问题都出自：<a href="https://ctext.org/text.pl?node=603400&amp;if=gb&amp;remap=gb#n603426">三国志·蜀书·先主传</a></p>
+<ol>
+<li>在中国东汉末年三国时期的 刘备（创立蜀汉帝国的汉昭烈帝) 的兄长是：</li>
+</ol>
+<ul>
+<li>(A): 公孙瓒</li>
+<li>(B): 关羽</li>
+<li>(C): 张飞</li>
+<li>(D): 卢植</li>
+<li>(E): 袁绍</li>
+<li>
+<p>(F): 何进</p>
+<p><details><br />
+    <summary>正确答案：</summary><br />
+    (A)。年十五，母使行学，与同宗刘德然、辽西公孙瓒俱事故九江太守同郡卢植。…… 而瓒深与先主相友。瓒年长，先主以兄事之。<br />
+</details></p>
+</li>
+</ul>
+<ol start="2">
+<li>刘备在15岁左右最大的爱好是？（多选），最不喜欢做的是？</li>
+</ol>
+<ul>
+<li>(A): 同性交♂友</li>
+<li>(B): 美食</li>
+<li>(C): KTV</li>
+<li>(D): 开车(ju)</li>
+<li>(E): 穿潮牌衣服</li>
+<li>(F): 读书</li>
+<li>
+<p>(G): 军事和键政</p>
+<p><details><br />
+    <summary>正确答案：</summary><br />
+    喜欢：(D) (C) (E) (A)；不喜欢：(F) 先主不甚乐读书，喜狗马、音乐、美衣服……好交结豪侠<br />
+</details></p>
+</li>
+</ul>
+<ol start="3">
+<li>汉灵帝末年，黄巾军起义，刘备参军，通过什么方式获得了第一次军功？</li>
+</ol>
+<ul>
+<li>(A): 高超的战术和计谋</li>
+<li>(B): 躺平装死</li>
+<li>(C): 自己和兄弟的勇猛冲锋</li>
+<li>(D): 收买敌人</li>
+<li>(E): 军力，装备和军事武器器械</li>
+<li>
+<p>(F): 物资多，耗死对方</p>
+<p><details><br />
+    <summary>正确答案：</summary><br />
+    (B) 典略曰：平原刘子平……遣（刘备）从事将兵讨纯……遇贼于野，备中创阳死，贼去后，故人以车载之，得免。后以军功，为中山安喜尉。<br />
+</details></p>
+</li>
+</ul>
+<ol start="4">
+<li>刘备临死之前托孤给丞相诸葛亮，诏书中跟他儿子（刘禅）总结了他这辈子的缺点是：</li>
+</ol>
+<ul>
+<li>(A): 军事指挥能力不足</li>
+<li>(B): 人才梯队建设欠缺</li>
+<li>(C): 时机和背景机遇弱</li>
+<li>(D): 人品道德问题</li>
+<li>
+<p>(E): 战略或执行错误</p>
+<p><details><br />
+    <summary>正确答案：</summary><br />
+    (D)。先主病笃，托孤于丞相亮，尚书令李严为副。夏四月癸巳，先主殂于永安宫，时年六十三。诸葛亮集载先主遗诏勑后主曰：“……勿以恶小而为之，勿以善小而不为。惟贤惟德，能服于人。汝父德薄，勿效之。……”<br />
+</details></p>
+</li>
+</ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-10-13T09:21:55+00:00">2022-10-13</time></p>
 <p>stdin</p>            </div>
@@ -151,7 +335,33 @@
 <pre><code>export default {
   async fetch(request, env) {
     return await handleRequest(request).catch(
-      (err) =&gt; new …</code></pre></p>
+      (err) =&gt; new Response(err.stack, { status: 500 })
+    )
+  }
+}
+
+async function handleRequest(request) {
+  const { pathname } = new URL(request.url);
+
+  if (pathname === "/ip") {
+    const ip = request.headers.get('CF-Connecting-IP');
+    return new Response(ip + '\n');
+  }
+
+  if (pathname === "/ip:port") {
+    const ip = request.headers.get('CF-Connecting-IP');
+    const port = request.headers.get('est-Connecting-Port') || '?'
+    return new Response(ip + ':' + port + '\n');
+  }
+
+  return new Response('Tools:\n /ip\n/ip:port\n');
+}
+</code></pre>
+<p>遇到一个问题，Cloudflare 官方有提供浏览器客户端IP变量 <a href="https://developers.cloudflare.com/workers/runtime-apis/headers/#cloudflare-headers"><code>CF-Connecting-IP</code></a> 但是缺少端口，查了下可以自己通过 <a href="https://developers.cloudflare.com/rules/transform/request-header-modification/reference/fields-functions"><code>cf.edge.client_port</code></a> 这个变量获得， <a href="https://community.cloudflare.com/t/need-cf-connecting-port-for-french-law/319505/8">方法</a>是在进入 CF网站管理 面板 → Rules → Transform Rules → HTTP Request Header Modification 里添加一条请求头规则。如图：</p>
+<p><img alt="" src="https://global.discourse-cdn.com/cloudflare/original/3X/b/a/ba21c8b28a8915bc57c6c6d82581827578e232ac.png" /></p>
+<p>但是 header 不能以  <code>CF-</code> 开头，所以这里改成 <code>est-Connecting-Port</code>，就能获得客户端请求的 IP+端口 了</p>
+<p>测试地址： t.本网站根域名/ip:port</p>
+<p>目前还缺：IPv6 的正确表示。。。。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-10-09T23:12:02+00:00">2022-10-09</time></p>
 <p>stdout</p>            </div>
@@ -166,7 +376,15 @@
               <h2 class="card-title">论电子阳痿</h2>
             </a>
             <p class="card-text"><p>看到个贴 <a href="https://www.v2ex.com/t/884992">https://www.v2ex.com/t/884992</a> ，也算有一些感触吧，在博客记录一下现在的想法。</p>
-<p>以前英国贵族喝茶是要加糖的，因为普通人压根 …</p></p>
+<p>以前英国贵族喝茶是要加糖的，因为普通人压根接触不到制成品糖块，加糖是有成本的装逼表现；后来北美甘蔗种植园和远洋贸易导致平民和工人也开始喝茶加糖了，于是贵珠又流行喝清茶了。。。。</p>
+<p>以前川菜也是不辣的，只是麻。后来辣椒从南美流传到云贵川，地主带头吃辣，而且吃出了军备竞赛看谁更辣说明更装逼。。。后来辣椒烂大街普及了，川菜又开始反向装逼了，比如开水白菜的发明的初衷就是为了证明川菜不辣也有上等菜品。。。</p>
+<p>电子阳痿怎么说呢，从某些程度来说，选择电子娱乐在当年是一种世外桃源的感觉。以前的娱乐无非是 ktv ，武侠小说，吃喝嫖赌这些。能玩电子游戏，首先家里得有个 386/486/586，那个年代能花几万搞一个电脑还是得很有魄力的。最不济也得是个书香门第。敢玩游戏的，比如你内存不足了得会改中断和加扩展内存啊。</p>
+<p>游戏往往跟别的娱乐简直不是一个级别的比较。比如当年比较简单的游戏形式为 Multi-User Dungeons (MUD) ，想起最近我在看互动教娃之类的感触，我了解到美国有一个做了十多年的  inquiry-based learning  叫 <a href="https://artofproblemsolving.com/company/about">AoPS</a> ，我被这种教学方式震撼了。因为我自己有娃才知道这样做有多难，这种方式是首先老师得在某个学科、领域有「完备」的知识储备，然后娃从一个 problem 开始提问，你跟他讲解需要理解的解决方法，需要储备的基础知识，解决这一个问题之后，需要把得到的经验总结然后形式化，然后提出更多的问题，进而学习到所有数学知识。要通过软件做到这一点，就需要对知识树进行建模然后做一个有向无环的遍历。然后找着找着发现一些写小说的工具就有这样的功能，你先整理一个时间观和人物关系大纲，然后每个章节就是这些联系的具体实现和阐述。突然我意识到，这 TM 不就是几十年前互动文本 RPG 游戏的核心原理么。你需要创建很多 NPC 对话的上下文并且穷举所有的选项组合，这不就等效于整理某个学科知识来做一个教学系统么。再比如，游戏里创建3D场景，如今被ILM从《The Mandalorian》开始引入好莱坞，无绿幕拍摄已经快称为行业基操。所以当时玩的不是游戏，而是玩的是计算机图形学和美学的最前沿成就。</p>
+<p>记得我小时候，玩电子游戏还约等于玩小霸王。这玩意在当年被美名其曰「学习机」，但实际上买回来都被拿来玩FC红白机了。这事其实在国外也发生过，无数高手都是通过折腾 Commodore 64 无师自通了 6502 汇编。这又让我想起了文曲星，很多人走向码农就是因为初高中被一个能写 BASIC 代码的电子辞典给迷上了。能在这些设备玩上游戏，那只是无数对技术钻研的汗水、执着和努力的一项亮眼的成果而已。</p>
+<p>而如今呢，天下游戏，不归吃鸡便归MOBA。纵然这两种类型也有其乐趣之处，但是其玩法为了迎合市场和几十亿人口，把门槛已经降到了最低并且能恰到好处的维持一定量的兴奋值，这一切都归功于数值策划的在反胃和上瘾之间作出的微妙平衡。</p>
+<p>所以归根结底为啥电子阳痿呢，游戏已经被太多的人玩滥了。它没有与众不同的属性，它不 cool，它除了赢得一局带来的短暂成就感，并不能带来「与众不同」的持续归属感。商业的力量让电子游戏称为一个能挣钱的行业，但商业也让电子游戏从上古时期的 玩游戏-拆游戏-再发明游戏 的双向过程，变成了充值消费就能变强的单向过程，让人在赢得了对手或者 AI 之后变得无比的寂寞，这一种空虚的贤者时间让人觉得我 TM 为啥电子阳痿了；</p>
+<p>以前玩游戏在没网的情况下，人会尽可能发挥主观能动性钻研出自己的绝招和攻略，形成一个硬核的玩家群体，现在的游戏则是尽可能的缩小可能性，让大多数玩家在有限的设定里去尽可能充值。玩家还会丧失主动感。</p>
+<p>所以什么样的游戏才不会阳痿呢？我细数了一下我自己还经常玩的，类似 Civ，Rimworld，Mount n' Blade 这种，简单机制但是有无穷组合可能性的；GTA、少女卷轴这种开放世界的；Valheim，Minecraft 这种能造独一无二的东西装逼的。它们的共同特点就是缓解或者解决了我上面提到的种种问题。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-10-07T21:11:35+00:00">2022-10-07</time></p>
 <p>stderr</p>            </div>
@@ -180,7 +398,44 @@
             <a href="/2022/stderr-09"  rel="bookmark" >
               <h2 class="card-title">开源 和 Meritocracy</h2>
             </a>
-            <p class="card-text"><p>前几天跟人闲聊到国际纠纷和就业形势，聊到各行各业疲惫，然后转进到为啥互联网和软件行业比较和国际接轨。大家基 …</p></p>
+            <p class="card-text"><p>前几天跟人闲聊到国际纠纷和就业形势，聊到各行各业疲惫，然后转进到为啥互联网和软件行业比较和国际接轨。大家基本意见都是开源运动和 Open-source Software 在这里面功不可没。毕竟Linux没来之前 WPS 就被 MS Office 干了下去，民族软件面对几亿美刀研发费用的商业软件研发集团究竟是独木难支。</p>
+<p>突然想到一个架空场景，如果某一天，老美突然发功，使得大陆大陆无法可靠获得某一版本号之后的所有开源软件，会发生什么？</p>
+<p>当然，有人马上会说，国内大神会跟上进度的。比如国家可以安排一系列课题让一堆博士维护开源项目。的确，中国人和中国公司参与了很多<a href="/201906/stdout-003">open source project</a>，国内也有 <a href="https://blog.gitee.com/2020/08/17/gitee-gxb/">工信部支持</a>的gitee 和 <a href="https://gitlab.cn/">极狐Gitlab</a>，资金方面也有 <a href="http://license.coscl.org.cn/">木兰协议</a> 、<a href="https://www.openatom.org/">开放原子基金会</a>(民政部注册)，有人说如果都到了撕破脸禁用开源软件了，那么就真脱钩了，也不用管那么多直接拿来用就是了。</p>
+<p>甚至有人说，其实开源都留了后手，比如Facebook 的 React，协议里也埋坑说，有权禁止竞争对手使用，最终解释权归他们。其实说起 Facebook(现称meta)，<a href="https://www.zhihu.com/question/65491011/answer/2700413148">最新的消息</a>是：</p>
+<blockquote>
+<p>他知道带有专利条款的许可迟早会在开源社区引爆负面讨论，他跟法务部门负责开源项目许可的律师沟通，但对方就是坚持为了保护公司利益必须要这样做。等到开源社区开始重视这件事情的时候，他找基础架构部门的副总裁也就是他顶上的大老板寻求帮助，结果副总裁跟双方开了个会之后选择站在律师那边，「你看人家律师的专业建议是这样子，你就照着做吧」。过了几个月，这个律师离职了，法务部门指派了另一个律师负责这件事情。前端平台部门的总监又跑去跟新的律师说要换 MIT 协议，结果新的律师完全没有尝试拒绝，「你们爱换就换吧，我觉得没问题」。然后就变成 MIT 协议了……</p>
+</blockquote>
+<p>回到开源本身这个话题，假设一个场景，如果在某个时刻，比如Chromium V20的时候，国内不能继续跟进最新版本，假设需要独立改进，需要花多少力气才能把H.264、CSS3、H5、WebRTC 等等一大堆新玩意补齐？如果你只能拿到 2.6 的 Kernel 代码，那么你如何才能魔改出来一个  5.10 的内核？</p>
+<p>就算天降猛人，把这个事儿做到了，但是如果天降了3个猛人，小米搞了一套，华为搞了另一套，Oppo 搞了第三套，相互不兼容，又怎么办？比如苏联也有自己的一套完整的基于电子管的软硬件系统一样。</p>
+<p>国内独立搞出来的项目，其实也有，比如 统一推送联盟</p>
+<p><img alt="" src="/images/2022/stderr-09-01.webp" /></p>
+<p>从 <a href="https://www.huxiu.com/article/640522.html">huxiu</a>、<a href="https://www.zhihu.com/question/439729608">zhihu</a> 的键盘分析师的观点来看，凉凉。。。甚至<a href="https://36kr.com/p/1880989350055297">连官网都没了</a></p>
+<p>再比如，腾讯自己搞一套小程序，阿里也搞一套，各个银行都有自己小程序，各个安卓ROM厂家也搞了个「快应用 quickapp.cn」，再比如广电花了<a href="https://www.birtv.com/aspcms/news/2015-8-3/2112.html">48+20亿</a>搞了地面波 DTMB+CMMB，其中就有一项对口 MPEG-4 的<a href="http://www.avs.org.cn/aboutus.asp">AVS1</a> 视频编码格式，如果每个手机厂家相机app拍摄出来的格式互不兼容，快手抖音的视频上传和CDN转码会不会搞得巨复杂？</p>
+<p>其实开源项目世界里，各个 contributor 各怀鬼胎把项目往不同的方向上拉扯，国外的例子也很多，比如最近 CMGS 写的《<a href="https://mp.weixin.qq.com/s/W_9XYkF5Y_-M-aLdB-b_Ng">How k8s Fucked</a>》</p>
+<p>写到这里，我突然想明白，开源软件的利害之处，除了技术可以不断被人推动进步，还有一个重要的就是「社区」和「方向」</p>
+<p>这个是个很主观的东西，Firefox 也开源，比 Google 更标准，但是就是玩不过 Chromium。Linux为啥就能比BSD更流行？pg各方面都更先进，但是MySQL占有率就是更高。这里面的确有各种机缘巧合，以及金钱的因素，但是社区氛围和恰当的目标才是最重要的。个人觉得，如果国内独立做开源，问题可能不在于技术，而是朝一个方向齐心协力推动的氛围。</p>
+<p>这个推演结论，突然让我想起了之前看到 princeton.edu 的一篇雄文：<a href="https://press.princeton.edu/ideas/a-belief-in-meritocracy-is-not-only-false-its-bad-for-you">A belief in meritocracy is not only false: it’s bad for you</a></p>
+<p>英语单词 meritocracy 字面上看它好像是「美德主义」，经常被翻译成「精英领导」，，其实这没把内涵翻译出来，这词的本意是「谁有本事谁厉害」</p>
+<blockquote>
+<p>government or the holding of power by people selected on the basis of their ability</p>
+</blockquote>
+<p>从直觉上来说，能者上有啥问题？在开源软件来说，很多都是项目发起人，或者技术最厉害的人主导一个项目。我觉得这就是很典型的 meritocracy。这篇文章其实点明了几个 meritocracy 的问题：</p>
+<ol>
+<li>一个人的成就或者成功，往往是运气。所谓风口来了，吹起来了一堆猪</li>
+<li>天份，和努力程度，往往是运气选中了那颗喜欢努力的精子，所以由遗传和抚养环境决定。</li>
+<li>meritocracy 最终会导致一个人自私，或者说自负。</li>
+</ol>
+<p>当然这文章也藏了私货。meritocracy不好？gratitude 才好。要感恩！嗯最后估计说人人都有 sin 了。。。2333。其实 meritocracy 这矛盾在中国哲学看来很容易破解，侠之大者，为国为民。最高的能力，就是帮助他人的能力。</p>
+<p>开源运动也是这样，最高的能力，就是他利用欧美成熟而刚性的版权制度，传染性的去传播自由。这是他超越软件工程能力最伟大的地方。</p>
+<p>（完）</p>
+<hr />
+<p>后记：最近才了解的知识，GPL是<a href="https://www.gnu.org/licenses/gpl-faq.zh-cn.html#GPLRequireSourcePostedPublic">允许</a>修改、使用源码并且不公开源码的。前提是你不公开。</p>
+<blockquote>
+<p>GPL不要求你发布你的修改版或者任何一部分修改版。你有自由修改并自用，而不必发布。这个规则也适用于机构（包括公司）；机构可以做出修改版并在内部使用而不向其他外部组织发布。<br />
+但是如果你以某种方式把修改版向公众发布，GPL就要求你向用户提供修改版的源代码。<br />
+在公司内部使用只是公司为自己制作拷贝。因此，公司或组织可以开发自己的修改版并在内部部署，其员工也无权对外发布。<br />
+然而，当公司把拷贝发送给其他组织或个人时，就是发布。具体来说，为合同商提供拷贝来离岸使用就是发布。</p>
+</blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-09-29T10:27:16+00:00">2022-09-29</time></p>
 <p>stderr</p>            </div>
@@ -197,7 +452,19 @@
             <p class="card-text"><p>今天 <a href="https://news.ycombinator.com/item?id=32823472">HN 上</a>有个讨论 tailwind /open-props<br />
 的帖子，发现这个20后所谓「woke」 科技公司的美术风格有个名字</p>
 <blockquote>
-<p>Completely off topic, but what is the art style that all woke companies like Google/Facebook etc use …</p></blockquote></p>
+<p>Completely off topic, but what is the art style that all woke companies like Google/Facebook etc use called?<br />
+Corporate Memphis</p>
+</blockquote>
+<p><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Corporate_Memphis_%282019%29.jpg/580px-Corporate_Memphis_%282019%29.jpg" /></p>
+<p>翻了下 <a href="https://en.wikipedia.org/wiki/Corporate_Memphis">wikipedia</a> 最早可以追溯到2017年 Facebook 找 Buck Studios 外包设计的一个风格套件 facebook-alegria。孟菲斯名字和风格来自于意大利设计师 Ettore Sottsass 在80年代的设计厂 Memphis Group 。</p>
+<p>Corporate memphis 的别称：</p>
+<ul>
+<li>Alegria style 快乐风 （alegria是西、葡、意语里joy的意思）</li>
+<li>Globohomo 全球搞基</li>
+<li>Big Tech art style 大厂风范</li>
+</ul>
+<p>国内有对这种风格的报道比如 <a href="http://fashion.sina.com.cn/luxury/de/2018-09-09/0827/doc-ihiixyeu4453522.shtml">sina</a></p>
+<p>个人感觉这是17年左右苹果搞拍扁风带来的风气？我对这种艺术风格比较无感。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-09-13T22:05:19+00:00">2022-09-13</time></p>
 <p>stdin</p>            </div>
@@ -212,7 +479,19 @@
               <h2 class="card-title">Taiwan Question</h2>
             </a>
             <p class="card-text"><p>今天看娃的英语资料的时候，发现材料说什么什么  Taiwan question。当时就觉得奇怪，台湾什么时候变成一个题目了？</p>
-<p>突然想起来，这好 …</p></p>
+<p>突然想起来，这好像是「台湾问题」的蹩脚翻译。</p>
+<p>网上搜了一圈，发现大部分这个词汇都出自简中和官方媒体。哎。</p>
+<p><img alt="" src="/images/2022/stderr-08-01.webp" /></p>
+<p>其中居然有一个 Hoover Institution 也用了这个词汇？好奇点了进去，作者是 Edward N. Luttwak 是个老外，然后第一段：</p>
+<blockquote>
+<p>Dividing the Taiwan question––does or should, and, if so, does America currently possess the wherewithal to help Taiwan successfully repel a Chinese attack</p>
+</blockquote>
+<p>好吧，别人真的是在说 how to help taiwan 这个 question。</p>
+<p>还有发现一个问题是，「一个中国原则」在中文的表述是 one-China principle，但是美方的描述是</p>
+<blockquote>
+<p>the United States acknowledges that Chinese on either side of the Taiwan Strait maintain there is but one China and that Taiwan is a part of China</p>
+</blockquote>
+<p>这句话其实玩笑开的很大，美方只是 acknowledge 「知晓」有这回事，但是它并没有说支持或者反对这件事，甚至保留了去挑战甚至推翻这个事的权力。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-08-30T19:37:15+00:00">2022-08-30</time></p>
 <p>stderr</p>            </div>
@@ -228,7 +507,19 @@
             </a>
             <p class="card-text"><p>看到微博上一段话，出处已经找不到了</p>
 <blockquote>
-<p>以我观察，微博上不少博主正渐入一种沉默状态，即发博频率越来越低，之前一天发 …</p></blockquote></p>
+<p>以我观察，微博上不少博主正渐入一种沉默状态，即发博频率越来越低，之前一天发好几条，现在几天才发一条，更有人干脆弃号而去，我想，这种大范围螺旋向下的沉默是因为越来越多的人发现，自己其实生活在一个“魔法”世界。<br />
+在这个魔法世界，很多事物在物理本体之上，还附着一层无形之力，只要念出相应的咒语，就能把这股力量召唤出来为己所用。<br />
+比如，知乎上有一个问题是“你越来越沉默的原因是什么？” 其下的一位网友Seasee Youl的答案得到了24.8万的赞同，在文章中他写了几个自己的见闻，其一是在某商场的儿童乐园里，一个大爷怒斥年轻服务员，称其卖国，不配做中国人，还要打电话查封乐园，理由是乐园海洋球池的四周贴了英国国旗壁纸（大爷还认错了），答主见周围人在起哄附和，服务员委屈得直哭，就上前劝阻，但同样被训了一顿，说答主也是没有是非观念的人，在战争年代肯定要通敌，事后，答主才从服务员那得知，这大爷本是想让自己的孩子免费玩，被服务员拒绝后还价也没成，才有了之前上纲上线的一幕。<br />
+这就是我说的魔法，只要念出一些特定的“咒语”，就能召唤出区区几张壁纸之上的那股无形力量，打压伤害别人，迫使别人屈服。<br />
+类似的事，我也听身边人说过，小时候我家住大院筒子楼，有两户邻居关系紧张，见面都不说话，我问为啥，楼下大妈就说，很久以前，80年代的时候，两户人家因为楼道里的杂物堆放问题发生口角，吵着吵着就开始上纲上线，其中一位大爷指着对面青年的大腿说：“你看你穿的这个叫什么东西？！牛仔裤是西方资产阶级国家的东西！你就是思想被西方个人主义腐化了才这么自私！” 那青年也不甘示弱，马上回嘴道：“牛仔裤是当年西部淘金工人穿的裤子，是工人阶级的服装！你对工人阶级的服装不满，就是对工人阶级不满！就是对工人阶级领导的国家不满！” 双方就这样越吵越激动，脸红脖子粗地声讨彼此的“罪行”，最后还动起手，被邻居们劝阻后，两户人家再也不相往来，至于问题本身，自然也没解决。<br />
+大妈当年复述这段往事，本是将其视作一个荒唐的笑话，但我如今回想时，眼前分明出现了两个对峙的巫师，他们同时嘴里叽里呱啦地念念有词，就是为了从一条牛仔裤里召唤出天雷地火灭了对方。<br />
+我想，这就是人们渐渐不语的原因，现在说一句话，要考虑的不仅仅是那句话本身，还要考虑那句话所有可能被解读的角度，以及作者本人都未曾想到的“言外之意”，自己不经意间的某句话一旦被施了咒，召唤出了字面之上的那股无形之力，那就少不了一番应对招架。<br />
+表达的风险和成本越高，人们就越是沉默。<br />
+事实上，如果任由这种无限解读的咒语在生活中漫流，那所有人都将生活在惶恐之中，不要幻想自己是这股力量的主宰，毕竟咒语千千万，也总有几句适用于你。<br />
+老话说的好，“玩剑者必死于剑下”，其实，玩魔法的人也是一样。</p>
+</blockquote>
+<p>恰好最近看到一个国外的例子 红牛F1 的青训车手 Vips 因为在直播打游戏的时候骂了嘴 N-word ，就<a href="https://twitter.com/redbullracing/status/1541813680840609792">被 cancel 了</a>，国内的例子就是 冈本六君子</p>
+<p>唉。这些事很多年过去之后，还有谁记得呢？</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-08-19T17:10:39+00:00">2022-08-19</time></p>
 <p>stdin</p>            </div>
@@ -243,7 +534,17 @@
               <h2 class="card-title">macOS动态定时弹提醒</h2>
             </a>
             <p class="card-text"><p>上班地方有个付费计时，想在倒计时结束前在电脑弹个提醒，手动结束计费，趴下来API了。接下来就是如何弹窗了。</p>
-<p>本来想用macOS自带的 …</p></p>
+<p>本来想用macOS自带的 <code>UNUserNotificationCenter</code> 通过 PyObjC 撸个弹窗，遇到两个问题：</p>
+<ol>
+<li>系统自带的 PyObjC 太老了。还是Python2.7的。在<code>/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/PyObjC</code></li>
+<li>只能兼容旧款的 <code>NSUserNotification</code>，状态为 macOS 10.8–11.0 Deprecated<br />
+ 新的API调用需要进程签名。<br />
+<code>codesign -dv --verbose=4 /usr/bin/python2.7</code></li>
+</ol>
+<p>只有官方的python2.7签名了 anaconda/miniconda 的都没签名。算了。还是直接 AppleScript 走起</p>
+<pre><code>osascript  -e 'display notification "还有1分钟到达时辰" with title "准时付费" sound name "Frog"'
+</code></pre>
+<p>想在这个提示里加一个 snooze 1分钟功能，但是好像无法支持。罢了。2333</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-07-20T14:52:56+00:00">2022-07-20</time></p>
 <p>stdout</p>            </div>
@@ -258,7 +559,32 @@
               <h2 class="card-title">终于吧 blog 的自动构建 pipeline 配置好了</h2>
             </a>
             <p class="card-text"><p>目前博客是基于 pelican 的 static-site generator，一个 python 模块本地渲染成静态文件然后通过 github pages 发布。</p>
-<p>源码放在 bitbucket，之前比较懒都是本地跑，一直 …</p></p>
+<p>源码放在 bitbucket，之前比较懒都是本地跑，一直想改成 CI/CD pipeline，今天终于配置好了。记录一些坑吧</p>
+<ol>
+<li>bitbucket pipeline 不同 step 之间数据是不共享的。本来想用 parallel 功能在下载 pip 模块和 git clone 皮肤做个并行，后来发现 artifact 拷贝速度还不如串行去跑。就所有操作一个 step 做完</li>
+<li>
+<p>博客源码和生成结果可以直接同步提交信息：    </p>
+<p>msg=$(git log -1  --pretty=%B)<br />
+cd output<br />
+git config user.name est<br />
+git config user.email 邮箱<br />
+git add .<br />
+git commit -m "$msg"<br />
+git push<br />
+3. 由于 pip 模块装了不知道在哪里，所以调试 pip 安装路径方法：    </p>
+<p>python -c 'import site; print(*site.getsitepackages(), sep="\n")'<br />
+4. pelican 默认居然没支持 Markdown 也是醉了    </p>
+<p>python -m pip install pelican==4.8.0 Markdown<br />
+5. 自定义皮肤依赖，由于 submodule 我没玩转，所以这样安装：    </p>
+<p>git clone --depth=1 git@github.com:est/aether-pelican.git || (cd aether-pelican; git pull --rebase)</p>
+</li>
+</ol>
+<p>Bitbucket 每个月有50分钟的免费pipeline 时间，自己用下来差不多29秒 build &amp; publish 一次。感觉每个月也写不了60篇，所以目前是够了。</p>
+<p>接下来的优化：</p>
+<ol>
+<li>新图片通过 squoosh 压缩优化</li>
+<li>通过 cloudflare worker 替换掉 disqus 评论功能</li>
+</ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-07-19T19:06:49+00:00">2022-07-19</time></p>
 <p>stdout</p>            </div>
@@ -272,7 +598,24 @@
             <a href="/2022/stderr-07"  rel="bookmark" >
               <h2 class="card-title">直播带货、视频导购是未来</h2>
             </a>
-            <p class="card-text"><p>今天菜鸟给我推了好几条消息说有快递24h未取，但是近期并没有网购下单，仔细问了一圈，原来是岳母在老家自己买了条裤子 …</p></p>
+            <p class="card-text"><p>今天菜鸟给我推了好几条消息说有快递24h未取，但是近期并没有网购下单，仔细问了一圈，原来是岳母在老家自己买了条裤子。这是让我很震惊的。因为岳母并不识得很多字，在过去经验看来独立完成网上购物是一个高门槛的事。</p>
+<p>2010年以前网购的人，至少得有信用卡，在遍地只有存折的年代把大多数人挡在门外。</p>
+<p>再后面就是开通银行卡，其实银行卡普及也就最近几年的事。以前要开卡还是很麻烦的。办U盾这种就拦住了大多数没有PC的家庭，甚至还发展出了在便利店代充值支付宝这种神奇的业务。</p>
+<p>但无论如何，要网购，你至少应该会输入法和搜索；即便在手机上用语音输入，在眼花缭乱的商品列表页面，或者SERP里挑选和对比自己想要的东西，也是相当麻烦的，需要一定经验的，甚至需要交学费。</p>
+<p>但是现在回到原点思考一下，带着目的去购物，其实是一种很直男的做法。</p>
+<p><img alt="" src="/images/2022/stderr-07-01" /></p>
+<p>像我这种old-school的看参数，比价格，蹲活动，薅羊毛，拆单，7天无理由的人，恐怕会成为少数群体。</p>
+<p>只要你确定了支付方式，收货地点，那么这就是一个长期的过程。你甚至不需要识字和写字，就能完成一次愉快的消费。网购只有零次和无数次。</p>
+<p>最近家里人也在看《东方甄选》，怎么说呢，举个例子，让你选一套儿童绘本，你可能需要翻很多自媒体、公众号才能得知一套叫《神奇校车大家族》的。但是如果你关注对了一个直播间，可能就是一次神奇的偶遇了。突然想到马督工在 睡前消息88《<a href="https://www.bilibili.com/video/BV1ZE411G7zT/">快手网红给武汉捐款1亿，这是“中国小贩”的究极形态了</a>》 讲过当年的快手一哥辛有志（李佳琪第八，最近因春夏之交五队轮蛋糕被封那个），他的分析是，辛有志就好比以前北方农村有这种赶集里吆喝的商品贩子，利用运输成本(比如串货)和信息差来赚快钱，只能骗「没有信息搜索能力的网民」。当时看的时候没觉得这有啥问题，现在我觉得这里面玄机可大了。</p>
+<ol>
+<li>可能的确有一部分人因教育程度(2021七普全国文盲37,750,200人)，技能培训缺失，是永远无法具备搜索能力的；或者app的搜索结果就很垃圾（比如天猫直通车这种操纵行为）；或者主观上觉得搜索不好用、懒得用；</li>
+<li>随便逛逛是大多数人的生活心态。特别是现代社会，商品整体是供大于求的。在欠缺年代，人们对购买是有很强的目的性和功利性的。现在可能散心的意义更大。</li>
+<li>人们购物普遍是无法区分 want 和 need 的。看直播、划短视频会极大占据空闲时间。</li>
+<li>找准购买目标一次性解决的直男式是不可持续的，现在的购物已经不再是狩猎时代了。</li>
+</ol>
+<p>以「搜索」为核心的购物，有一个根本性的缺陷，有些东西不知道搜什么关键词好，比如我家厨房垃圾处理器和洗碗机连接头，没专用名字的东西，你是没法搜的。搜索购物必须是已知的。也就是说他面向的是一个存量的商品，货架上现成的。但是这个世界创新又往往发生在边界。甚至有些东西不是你想搜就能搜的，比如究竟什么款式和颜色的衣服更适合特定形体的观众？这个东西是无法用「关键词」描述的。关键词是离散的，而人的需求是平滑连续的。</p>
+<p>如果你是个带货主播，那么长期来看，个人品味可能会决定生存和人气。或许渠道的价值要大于品牌本身的价值了？比如穿搭这一块，很可能会是视频导购的基本盘，细分市场被几个头部主播把持。然而这一点很矛盾的是，穿着是一件很个性的事，撞衫这种事见光死。有一点可以确定的是，有一些 niche market 应该会积累一大批忠实观众。比如车评人、手机圈、PC圈、相机圈、美妆圈等。</p>
+<p>直播带货虽然谈不上什么大创造发明，但这种方式恐怕会在将来统治这个时代。或者说将来很长一段时间，在解决了如何上手和如何配送的问题后，很多人购物的习惯可能会以直播/小视频为主了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-06-14T15:15:20+00:00">2022-06-14</time></p>
 <p>stderr</p>            </div>
@@ -286,7 +629,40 @@
             <a href="/2022/stderr-06"  rel="bookmark" >
               <h2 class="card-title">格局打开：要社会主义，要民主，请买房</h2>
             </a>
-            <p class="card-text"><p>最近房地产因为政策原因又火爆起来了，很多人说起房子就头痛，说这房子这泡沫，误国殃民，那么我今天键政一个扯谈的 …</p></p>
+            <p class="card-text"><p>最近房地产因为政策原因又火爆起来了，很多人说起房子就头痛，说这房子这泡沫，误国殃民，那么我今天键政一个扯谈的道理，格局打开，要实现民主，要实现社会主义，要达到人间天堂，请大力买房。</p>
+<h3>论买房</h3>
+<p>首先用 etymology 讲一个概念，有房者 == 布尔乔亚。<a href="https://weibo.com/ttarticle/p/show?id=2309404293876352424418">论述过程</a>：</p>
+<blockquote>
+<p>bourgeoisie来自于法语bourgeois；作为与法语有颇多亲戚关系的意大利语，对应的则是borghese；作为距离拉丁语衍化距离比较近的意大利语，自然也能够能希腊语中找到其对应的词，而意大利语的borghese则是源自希腊语πύργος，πύργος演化自πόλη即村庄 borgo，而布尔乔亚本身放之希腊语中即意味着在村庄中心拥有房子的自由人<br />
+布尔乔亚出现在中古时期的意大利，那时住在村庄中的居民开始变得比住在附近乡间的人还要富有。因此他们可以获得相对上较多的权力和影响力，越来越接近统治阶级和神职人员，同时逐渐远离平民阶级。这种中古时期的布尔乔亚原型就是磨坊拥有者，他们能够快速地对当地经济产生重大影响力，以至于可以对统治者表达否决权。<br />
+在接下来的世纪里，布尔乔亚这个名词则较适合用来指称最初的银行家，以及那些从事新兴活动如贸易和金融的人。11世纪，法语中的burgeis指那些摆脱了封建管辖权而获得法律权利的中世纪城镇（bourgs）居民。19世纪之前，这个词大部分情况下指的就是低于贵族、高于农奴和无产阶级的广大人群。</p>
+</blockquote>
+<p>所以什么是布尔乔亚呢？在农村，就是在乡镇最繁华的集市旁有房的人；在城市，就是在CBD商圈附近有房的人。</p>
+<p>在后来被中国人熟悉的马先知的预言体系里，布尔乔亚除了不动产这个空间上的意义之外，还有一层时间上的意思：</p>
+<p>布尔乔亚，就是躺平靠资产收入也能过比较好的日子的人</p>
+<p>当然这个「资产」在彼时的欧洲，也可以指工厂和种植园等资产，但是放在今时，还是房地产更保值。但最重要的是，他们受封建领主和神职人员的约束较小，有一定的经济自持能力。</p>
+<h3>拥房躺平意味着什么</h3>
+<p>首先，布尔乔亚意味着脱产，有源源不断的被动收入，布尔乔亚就开始包养科学、技术和文艺的发展，如果你仔细观察文艺复兴和启蒙运动甚至工业革命，可以发现这些东西的发明跟贫苦大众一毛线关系都木有，都是为了实现资产增值。达芬奇 米开朗基罗的艺术成就是给布尔乔亚画大头照，哥白尼、弟谷、开普勒是给布尔乔亚论证信仰的纯正性，瓦特改进蒸汽机，是为了资方 Soho Manufactory用来制作金属艺术品，像金属钮扣、白铁矿钻石模仿物等等供应英国布尔乔亚消费。更古老的希腊人已知正多面体共有5种，这种知识更多是纯粹是脱产的布尔乔亚之间拿来炫技展示智商优越感的一种娱乐方式。</p>
+<h3>拥房者才能推翻封建统治</h3>
+<p>房产属于私产，这里私是次要的，重要的是产，它是个物理存在，不是虚拟的大饼，不能用爱发电。虽然神职人员天天洗脑没有上帝就没有旧世界，但是房可是自己辛辛苦苦打拼才能维护的，所以布尔乔亚没有负罪感。所以布尔乔亚对现实物质利益的认知和判断远远大于对信仰的坚持或者领主的忠诚。所以后来打破封建统治的标志性事件——法国大革命，在马先知看来，就是布尔乔亚革命，也被叫做 bourgeois-democratic revolution。布尔乔亚谁都不服谁，干脆各自退一步妥协凑合过日子。有妥协才有民主。</p>
+<p>而为什么布尔乔亚要打破旧制度，革命呢？课本上有很多解释，比如路易十六打了败仗要加税，布尔乔亚需要政治地位等等。这些解释都没有一个理由有力：<em>布尔乔亚为了防止自己的资产贬值</em>。所以法国很快3年就变天了。</p>
+<h3>有产才会背水一战</h3>
+<p>最近看到<a href="https://www.zhihu.com/question/531138749/answer/2470308571">一个理论</a>很有感叹，那就是 「所有争论不休都是因为双方没有利益方，都是隔空对线」</p>
+<blockquote>
+<p>事实证明，超前的，基于进步主义意识形态，而非基于真实利益的改革，最后的归宿就是政治化——因为这件事情无论按照谁的观点做成了，也互相都没什么钱收卖不爽的一方，那就只能梗着脖子争道理了，这就会成为政党之间斗争的焦点。罗诉韦德案是这样的，奥巴马在位时期大力推广的对弱势族裔的平权政策也是一样。但是，要找到一个既能解放生产力产生巨大的利益，又符合意识形态的改革点，是很难很难的。</p>
+</blockquote>
+<p>从这个意义上来说，我觉得那个骑自行车「it's my duty」只是一句口号罢了。你全身家当只有一个破自行车，有太多的变通退路了。</p>
+<p>当你真的为了保护家产无路可退，才会产生如同土地革命一样的革命被动积极性。</p>
+<h3>产劫</h3>
+<p>马先知预言一个流淌着牛奶与蜂蜜的远方，但其实有另一个<a href="https://en.wikipedia.org/wiki/Two-stage_theory">两段诅咒</a>，也就是说，无产信众欲到达天堂，首先信众得有产；有产经过「产劫」，才能变共产。</p>
+<p>翻译成人话，就是得买房。现在想起来很有道理。比如上海为什么封控闹得这么欢？我感觉一大部分因素还是上海有体面住房的人太多了，屁事多。对于北京或者其他城市地下室吭窝窝头的租房人，被主子从天上额外赏赐几个馅饼，不是更高兴么。上海人的幻灭，可能是发现了教权国家的本来面目，教权是大于人权的</p>
+<blockquote>
+<p>中国自古以来就是一个高度宗教化的社会，教权不仅远大于王权，而且王权在某些时候甚至还有附庸于教权的性质，实际上世界上极少有如中国这样在历史上相当长的时期内完全围绕宗教展开社会组织的文明体系</p>
+</blockquote>
+<p>觉得上面的论述离经叛道？请务必点开链接围观 <a href="https://www.zhihu.com/question/28864242/answer/2435378426">https://www.zhihu.com/question/28864242/answer/2435378426</a></p>
+<h3>结论</h3>
+<p>如果马先知的预言正确，那么无论你支持民主，还是支持社会主义，都请你买房，鼓励身边的人买房，特别是公务员和干部朋友买房，要早买，大买，投入全身家当买；有了房才有城市，有了城市才有居民自治，有了居民自治才有物管权和产权的认知启蒙，才会有最基础的去教权的公民政治底蕴。</p>
+<p>哦对了，还有不要租房、分房，租房和分房只会把你变成封建附庸。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-05-18T10:43:27+00:00">2022-05-18</time></p>
 <p>stderr</p>            </div>
@@ -303,7 +679,31 @@
             <p class="card-text"><iframe width="100%" height="600px" src="https://www.youtube.com/embed/EcoPl62l8K8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <p>有些感触，最近很多人在骂 Zelenskyy，正如他们2016年骂 Trump 这个《The Apprentice》男主角一样，戏子误国。</p>
-<p>但是反过来一想，主席台前三排的人，谁 tm 又不 …</p></p>
+<p>但是反过来一想，主席台前三排的人，谁 tm 又不是戏子呢。。。</p>
+<p>商纣王给周文王当场做人肉饼，幽王烽火戏诸侯，再到赵高指鹿为马，这不比小说精彩？</p>
+<p>高祖刘邦，本是穷B混混一个，硬是给自己搞一个人设背景板「太公往视，则见蛟龙於其上。已而有身，遂产高祖」，在沛县就是个开 KTV 酒楼的货，有一次还在没收到沛县邀请，混进「吕公」的酒会，甜言蜜语骗走了比自己小20岁的吕雉。。。这演技它妈的神了。。。</p>
+<p>后面的例子太多了，就不一一列举，记得英国国王还是谁说过，大概意思是，报纸和照相机发明以前，要在马背上打天下，现在得在镜头前打天下。所以王室在报纸报道的纸面形象要超过战功。</p>
+<p>在之前看到的《<a href="https://blog.est.im/2021/stdin-009">小册子，报纸，无线电和电视</a>》系列短篇里，帽子姐也分析了媒介的不同，会导致不同的政权组织形态。相当有趣，推荐阅读。</p>
+<p>以前在打 rimworld 的时候，有一个 trait 让我觉得很奇怪，storry-teller，讲故事，磨嘴皮子这算哪门子能力？现在越来越觉得，<a href="https://www.dedao.cn/share/course/article?id=W32axR8enbzBJ9RzoXkDEgM6ApPl9Y">讲故事是一个及其重要的能力</a>。</p>
+<p>《今日简史》的作者 Yuval Noah Harari 的思想当中，有一个很根本的认知</p>
+<blockquote>
+<p>人类文明的基础是啥？他的回答是：我们这个物种的虚构能力，说白了就是讲故事的能力。宗教是故事、民族是故事、商业是故事、公司是故事，有关人类文明的一切，底层都是故事。</p>
+</blockquote>
+<p>有的时候你反过来一想，人体所有能耗1/3都浪费在「大脑」这个器官上，这个器官没干别的，就整天编故事。这个器官不仅有意识，还产生了自我意识，最它妈神奇的是，还能模拟别人的意识，预判别人的预判。这就是<a href="https://blog.est.im/202010/stdout-010">人和动物最大的不同</a></p>
+<p>而把故事演绎出来的人类职业，最开始就是占卜家和巫师，往往是一个部落最崇高的阶级，也是他们出于职业传承需要，发明了能固化故事的文字。一个部落的兴衰，及其关键的就是这个 story-teller 的远见，也就是编故事那个人的想象力。一个好的商业 BP，说白了就是讲一个简单的「兄弟们咱们干了这一票就吃香的喝辣的会所嫩模」的故事。</p>
+<p>当然，扯了这么多，话也说回来，这玩意有啥害处没？当然有。帽子姐有论述《<a href="https://www.zhihu.com/question/28864242/answer/2435378426">为什么中国古代很少出现宗教势力大于王权的现象？</a>》</p>
+<blockquote>
+<p>西方政治宗教电影的天花板《天国王朝》里对教权和皇权的争斗有极其辛辣的描写，比如塞浦路斯骑士和圣殿骑士在庙堂上争吵时，每当塞浦路斯骑士一方基于敌强我弱的事实判断而拒绝对穆斯林开战时，圣殿骑士一方就基于价值判断予以驳斥，比如声称被天主教思想武装起来的基督军队是战无不胜的，比如声称塞浦路斯骑士拒绝开战是亵渎神灵。  <br />
+同样的事情也发生在穆斯林一方，穆斯林一方的神职人员反复声称以往穆斯林打不过十字军是因为罪孽深重，信主不诚，战争的胜负取决于神的庇护，这是典型的基于道德形成的价值判断，而作为世俗皇权代表的萨拉丁则基于事实判断予以驳斥，你们打不过十字军是因为你们没有备战，战争的胜负同样取决于粮食，军械，饮水和兵力。    </p>
+</blockquote>
+<p>这就是编了一个玄学故事，把自己绕进去了。这里的玄学，就是意识形态。比如你相信民主自由应许之地，那么就等同于美利坚战无不胜。当然你也可以编一个说法，叫坚持摸中特的石头。2333</p>
+<p>处理现实世界的问题，<em>一定不能</em>用一个故事来「实施」。其实关于俄乌问题，2015年有个<a href="https://www.youtube.com/watch?app=desktop&amp;v=JrMiSQAGOS4">John Mearsheimer的神预测</a>可以看看，抛开所有意识形态，从「现实政治」去认识，他的手法同<a href="https://www.ft.com/content/cd88912d-506a-41d4-b38f-0c37cb7f0e2f">最近FT采访基辛格</a>有异曲同工之妙：</p>
+<blockquote>
+<p>We have to be conscious of the differences of ideology and of interpretation that exists. We should use this consciousness to apply it in our own analysis of the importance of issues as they arise, rather than make it the principal issue of confrontation, unless we are prepared to make regime change the principal goal of our policy. I think given the evolution of technology, and the enormous destructiveness of weapons that now exist, (seeking regime change) may be imposed on us by the hostility of others, but we should avoid generating it with our own attitudes. <br />
+我们必须认识到意识形态的存在，和解释上的差异。我们应该利用这种意识，作为在重大问题出现时，应用于我们自己对问题的分析里，而不是将其作为对抗的主题。除非我们准备将颠覆政权作为我们政策的主要目标。我认为，鉴于技术的发展，以及现存武器的巨大破坏力，(政权颠覆)可能是别人恶意强加给我们的，但我们应该避免用我们自己的态度来生造它。。</p>
+</blockquote>
+<p>宏大叙事，是用来迷惑敌人，领导队伍的工具，千万不把叙事迷惑当基础和原则，也不要从叙事中去寻找原因。</p>
+<p>在互联网传播高度发达的今天，每个人都是戏子。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-05-12T00:04:06+00:00">2022-05-12</time></p>
 <p>stderr</p>            </div>
@@ -318,7 +718,20 @@
               <h2 class="card-title">袁亚湘院士数学不错，但是历史不行</h2>
             </a>
             <p class="card-text"><p>网上看到一个院士的段子 <a href="https://m.weibo.cn/detail/4764029988111490">1</a> <a href="https://m.weibo.cn/detail/4763768209540706">2</a></p>
-<p>搜了下，2020年3月14日，在中国工业与应用数学学会举办的网络科普活动中，中国科学院院士袁亚湘带 …</p></p>
+<p>搜了下，2020年3月14日，在中国工业与应用数学学会举办的网络科普活动中，中国科学院院士袁亚湘带来题为“数学漫谈”的主题报告</p>
+<p><a href="https://mp.weixin.qq.com/s/JllGeuveomjFDFg3C5r9FQ">https://mp.weixin.qq.com/s/JllGeuveomjFDFg3C5r9FQ</a></p>
+<blockquote>
+<p>关于π有很多神奇的故事。因为时间关系，我今天就讲其中的一个。不知道在座的观众有没有看过一个美剧叫做《疑犯追踪》。在第2季11集中，Harold Finch说过在π里面能够找到任意数列。当然这个东西数学家并没有证明，但是很多数学家认为可能是真的。<br />
+我试了试，我挑了我们建党的日子19210701，出现在π的第44,842,733位。如果输入去中华人民共和国成立之日，也就是19491001的话，就要往后很多，要到82,267,377位。开个玩笑，π都说明了要先有共产党才有新中国。<br />
+一个网友要求我要查一下1314，大家看到1314到3902位就找到了。所以各位观众，1314（一生一世）不是那么难啊。但是如果1314前面加个520（我爱你）的话，那就难多了。如果你要找5201314，那就要查到200多万位。所以同学们一定要记住啊，实际上爱情还是很艰难的。</p>
+</blockquote>
+<p>这段话数学上来说是没问题的，但是院士可能没注意历史，建党的真正时间是一大正式召开的时间，<a href="http://www.xinhuanet.com/politics/2020-06/23/c_1126148992.htm">1921年的7月23日</a></p>
+<p>那么我们把两个时间再去看一下在 Pi 里的位置：</p>
+<p><a href="https://www.angio.net/pi/">https://www.angio.net/pi/</a></p>
+<pre><code>The string 19491001 occurs at position 82267377
+The string 19210723 occurs at position 101114100
+</code></pre>
+<p>所以这说明了啥？</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-05-06T12:03:50+00:00">2022-05-06</time></p>
 <p>stdout</p>            </div>
@@ -333,7 +746,14 @@
               <h2 class="card-title">SpaceX的员工如何与公司目标「对齐」</h2>
             </a>
             <p class="card-text"><blockquote>
-<p>As a Phase 1 CEO, you are the lead rower on the boat. But in a Phase 2 startup, your job is no longer to row. Instead, it’s to define the purpose of the voyage, set the direction of the boat, and measure the pace and performance of a …</p></blockquote></p>
+<p>As a Phase 1 CEO, you are the lead rower on the boat. But in a Phase 2 startup, your job is no longer to row. Instead, it’s to define the purpose of the voyage, set the direction of the boat, and measure the pace and performance of a much larger number of rowers. In business speak, the CEO’s job is to define the Mission (purpose), Strategy (direction), and Metrics (pace and performance). These three elements provide the essential context that a growing company needs to be able to perform.<br />
+One of the best examples of “Mission-to-Metrics” alignment comes from a friend who visited the manufacturing floor at SpaceX. Seeing a SpaceX employee assembling a large part, he stopped to ask him, “What is your job at SpaceX?” He answered, “The mission of SpaceX is to colonize Mars. In order to colonize Mars, we need to build reusable rockets because it will otherwise be unaffordable for humans to travel to Mars and back. My job is to help design the steering system that enables our rockets to land back on earth. You’ll know if I’ve succeeded if our rockets land on our platform in the Atlantic after launch.” The employee could have simply said he was building a steering system for landing rockets. Instead, he recited the company’s entire “Mission-to-Metrics” framework. That is alignment.</p>
+</blockquote>
+<p>DeepL+人肉修正翻译：</p>
+<blockquote>
+<p>「使命到指标」式对齐，一个最好的例子来自一位去参观过SpaceX生产车间的朋友。当时正看见SpaceX的员工正在组装一个大部件，他停下来问他："你在SpaceX的工作是什么？" 他回答说："SpaceX的任务是殖民火星。为了殖民火星，我们需要建造可重复使用的火箭，因为不这样的话，人类将负担不起往返火星的费用。我的工作是帮助设计转向系统，使我们的火箭能够降落在地球上。如果我们的火箭在发射后，能降落在在大西洋的平台上，你就知道我成功了。" 这名员工本来可以简单地说，他正在建造一个用于火箭着陆的转向系统。相反，他背诵了公司的整个 「使命到指标」框架。这就是对齐。</p>
+</blockquote>
+<p>来自：<a href="https://news.ycombinator.com/item?id=13063842">HN</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-04-26T17:47:36+00:00">2022-04-26</time></p>
 <p>stdin</p>            </div>
@@ -352,7 +772,19 @@
 <p>论文发表在 SIGGRAPH Asia 2021 <a href="https://scrtwpns.com/mixbox/">https://scrtwpns.com/mixbox/</a></p>
 <p>传统的 RGB 平均值混色 vs mixbox 混色</p>
 <p><img alt="" src="/images/2022/stdin-06-01.jpg" /></p>
-<p>原因是光学混色取平均值没问题，很多色彩混出来就是中间 …</p></p>
+<p>原因是光学混色取平均值没问题，很多色彩混出来就是中间的灰色，但是颜料不一样，它是个非线性的。</p>
+<p><img alt="" src="/images/2022/stdin-06-05.webp" /></p>
+<p>这个非线性的混色，有个精妙的数学公式</p>
+<p><img alt="" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8c647992703f69158db62e71cd553ae8db049c35" /></p>
+<p>Mixbox 有源码：<a href="https://github.com/scrtwpns/pigment-mixing">https://github.com/scrtwpns/pigment-mixing</a>，本来以为是实现了这个公式，结果它妈的是一个 10MB 的 .cpp 文件。。。直接传入3个参数 <code>(RGB1, RGB2, ratio)</code> 它给你返回一个 <code>RGB</code> 。。。。</p>
+<p>好奇这10MB 的向量矩阵怎么来的，就看了下作者讲原理。</p>
+<p>这玩意理论 Kubelka-Munk 已经一个世纪前被研究透了，软件里不大规模铺开使用是因为绝大部分图像编辑软件都是R G B 三通道。这个颜料混色需要考虑折射和散射，按照 Haase &amp; Meyer 的模拟理论需要每一个像素都用 72 个通道去模拟 K-S 两个特征值</p>
+<p><img alt="" src="/images/2022/stdin-06-02.webp" /></p>
+<p>麻烦。这 mixbox 作者就用了4通道去模拟。</p>
+<p><img alt="" src="/images/2022/stdin-06-03.webp" /></p>
+<p>而且通过巧妙的选择4基色解决了 Kubelka-Munk 色彩空间和 RGB 空间相互转换有溢出的问题。</p>
+<p><img alt="" src="/images/2022/stdin-06-04.webp" /></p>
+<p>这源码可以研究用，商用需要授权。在 Rebelle 5 Pro 软件里集成了</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-04-21T23:08:57+00:00">2022-04-21</time></p>
 <p>stdin</p>            </div>

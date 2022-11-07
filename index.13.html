@@ -77,7 +77,15 @@
 <p>The more "news factoids" you digest, the less of the big picture you will understand. If more information leads to higher economic success, we'd expect journalists to be at the top of the pyramid. That's not the case.</p>
 </blockquote>
 </li>
-<li>News is …</li></ul></p>
+<li>News is toxic to your body</li>
+<li>News increases cognitive errors</li>
+<li>News inhibits thinking</li>
+<li>News works like a drug</li>
+<li>News wastes time</li>
+<li>News makes us passive</li>
+<li>News kills creativity</li>
+</ul>
+<p><a href="https://news.ycombinator.com/item?id=5549054">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-04-15T01:55:00+00:00">2013-04-15</time></p>
 <p>archive</p>            </div>
@@ -94,7 +102,27 @@
             <p class="card-text"><p>发信人: Nineteen (..), 信区: Database<br />
 标  题: Re: cassandra集群的去中心拓扑真是帅啊<br />
 发信站: 水木社区 (Sat Mar  9 10:03:09 2013), 站内</p>
-<p>就像@immars提到的，开源项目们在一两年后开发出来的东西比论文 …</p></p>
+<p>就像@immars提到的，开源项目们在一两年后开发出来的东西比论文原型在性能上差了一个层次，其实不仅仅是性能，其他方面差得会更多。</p>
+<p>然后其他公司一看，不错，有东西能应付应付需求，接着就开始大用特用，坚持个一两年，东西尽管被改个面目全非，但仅限于补丁摞补丁，在外围小刀，想深入大改？门都没有，老板们会说了，先满足业务需求。最常听到的说法是：tmd我们都要死了，你丫还想花那么长时间大改？</p>
+<p>团队规模在“快死了”的状态中不断成长，成长的另一个原因是层出不穷的运维事件和用户“永远都没办法满足的需求”，话语权也变得越来越重。</p>
+<p>集群规模越来越大，最后发现确实搞不定了，一边开始上各种歪招，比如云梯居然在优化jvm；另一方面开始组织力量研发自己的系统，后者三大互联网公司貌似都尝试过，百度的yangzhengkun，腾讯的zhuhuican和阿里的wangjian。</p>
+<p>但是遇到阻力很大，阻力的一部分就来自于前面提到的“团队”，抢饭碗吗？另一部分则是互联网公司缺乏大型平台的研发经验，各种没耐心，各种弯路，各种交学费。腾讯和百度是属于交了学费退学那种。</p>
+<p>阿里还在向前走，远没走到头，这也是为什么阿里云梯系统还在的原因，它不仅得在，还得加强，因为淘宝业务增长太快。</p>
+<p>可以看看论文出来到现在多长时间了，如果有渠道，可以去了解了解google技术进步的速度，它跑得越来越快，差距越来越大，这不是成功打击了对手是什么</p>
+<p>从另一个方面也容易理解，开源出来自己的系统加强竞争对手的技术基础设施吗？还没到共产主义社会。至于傍了大腿的项目们，人开源出来的从来不是它生产环境使用的现网系统，或者过时或者阉割。</p>
+<p>至于有人说“这么说开源项目都是坏的了？”，不是这样，开源的螺丝钉、离合器、甚至发动机都不差，但是指望开源的空间站、宇宙飞船没有问题...还是算了吧，凑合用用就好，真有心，还是自己造。</p>
+<p>发信人: penny1983 (一只熊猫，两种表述||熊猫永不受伤), 信区: Database<br />
+标  题: Re: cassandra集群的去中心拓扑真是帅啊<br />
+发信站: 水木社区 (Wed Apr 10 10:31:16 2013), 站内</p>
+<p>开源实现没有靠谱的啊。</p>
+<p>Paxos 算法和满足实际需求的系统之间还存在大量的鸿沟, fault-tolerant sytem 即<br />
+使写伪代码都不容易写对，Google开发chubby时候专门写了一个state machine <br />
+语言和相应的编译器，把用state machine 表示的算法转为c++，而且在chubby一致性检<br />
+验和容错方面投入了巨大的精力。</p>
+<p>Google的chubby一开始也是基于第三方商业数据库，但是由于商业库的replication问<br />
+题（bug，无法证明replica算法正确），google不得不自己实现kv db 用于实现multi-<br />
+paxos。这一过程也是一把辛酸啊，参加google的论文<br />
+Paxos made live-An Engineering View。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-04-10T23:45:00+00:00">2013-04-10</time></p>
 <p>archive</p>            </div>
@@ -132,7 +160,7 @@
 <li>Chrome的pagespeed插件和audit工具很有用</li>
 <li>在线pagespeed <a href="https://developers.google.com/speed/pagespeed/insights">分析 critical path</a></li>
 </ol>
-<p>其实 @igrigorik 大神的<a href="http://www.igvita.com/">博客</a>和 …</p></p>
+<p>其实 @igrigorik 大神的<a href="http://www.igvita.com/">博客</a>和<a href="https://github.com/igrigorik?tab=repositories">github</a>有不少好东西！</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-04-10T21:17:00+00:00">2013-04-10</time></p>
 <p>archive</p>            </div>
@@ -182,7 +210,11 @@
             <p class="card-text"><p>除非P=NP</p>
 <blockquote>
 <p>Economics is interesting because it is fundamentally the attempt to solve not just lots of problems, but a single GIGANTIC problem: the "resource scarcity" problem. <br />
-Basically, we are trying to split up all the resources in such a way as to maximize the overall utility of …</p></blockquote></p>
+Basically, we are trying to split up all the resources in such a way as to maximize the overall utility of those resources to each agent.<br />
+How does this relate to the question at hand? Well, As a computer scientist, its fairly obvious to me that this problem is NP-complete, meaning that it is highly unlikely that any central-planning agency (even one that had perfect information) could ever solve it to any degree of correctness in any reasonable amount of time.</p>
+</blockquote>
+<p>tl;dr 中央集权解决不了任何问题。计划经济其本身就是个问题。</p>
+<p><a href="http://www.reddit.com/r/DepthHub/comments/1bx7i0/steve132_applies_computational_complexity_theory/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-04-08T23:30:00+00:00">2013-04-08</time></p>
 <p>archive</p>            </div>
@@ -213,7 +245,10 @@ Basically, we are trying to split up all the resources in such a way as to maxim
               <h2 class="card-title">施华洛世奇元素 vs 施华洛世奇</h2>
             </a>
             <p class="card-text"><blockquote>
-<p>施华洛世奇（Swarovski）实际上有两种含义，很多情况下这两种含义容易被混同。首先他是世界首屈一指的水晶制造商和水晶奢侈 …</p></blockquote></p>
+<p>施华洛世奇（Swarovski）实际上有两种含义，很多情况下这两种含义容易被混同。首先他是世界首屈一指的水晶制造商和水晶奢侈品生产商，两百年来，施华洛世奇一直独享和水晶切割有关的所有技术，并以此作为最高色商业秘密。由于其垄断地位和巨大名声，施华洛世奇在很多情况下已经成为水晶的代名词。而第二种含义，则是所谓的施华洛世奇元素(Swarovski Elements)，实际上，这代表的是这种产品制造中使用到人造水晶，而这很可能和真正的施华洛世奇毫无关系。</p>
+</blockquote>
+<p>又想起了 美素丽儿 美素佳儿，康师傅，康帅傅 了。</p>
+<p>我日真坑爹。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-04-08T22:29:23+00:00">2013-04-08</time></p>
 <p>archive</p>            </div>
@@ -247,7 +282,24 @@ Basically, we are trying to split up all the resources in such a way as to maxim
 <p>Don't use OAuth 2 for "Google Apps for Business", coz admin may set share option to "limit to xxx domain only", thus your poor nigga API account like "30000000000@developer.gserviceaccount.com" won't work.</p>
 </li>
 <li>
-<p>Google Spreadsheets' CSV output format is terrible shit. Never bother touch it. It does not handle …</p></li></ol></p>
+<p>Google Spreadsheets' CSV output format is terrible shit. Never bother touch it. It does not handle line breaks nor escapes like sane people do</p>
+</li>
+<li>
+<p>XML-like namespace or XLST transformations is ruining JSON. Namespace everywhere, dict-inside-array is the norm which is a huge pain in the ass to parse.</p>
+</li>
+<li>
+<p>In Spreadsheet API, use /lists/ instead of /cells/</p>
+</li>
+<li>
+<p>The difference between /basic and /full projections is confusing. You should really use /values for read-only access</p>
+</li>
+<li>
+<p>Never ever use OAuth2 Web service, it will ask for "whitelist" the callback URLs, if you are dev in intranet like 10.x.x.x and your IP address is DHCP dynamic, you are fucked to re-permit the callback URL. </p>
+</li>
+<li>
+<p>The list feed contains all rows after the first row up to the first blank row. I mean, srsly WTF?</p>
+</li>
+</ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-04-03T02:41:00+00:00">2013-04-03</time></p>
 <p>archive</p>            </div>
@@ -273,7 +325,10 @@ Basically, we are trying to split up all the resources in such a way as to maxim
 <pre><code> ssh-alt 12345/tcp # ssh-alt
 </code></pre>
 <p>然后重启sshd服务：</p>
-<pre><code>sudo launchctl …</code></pre></p>
+<pre><code>sudo launchctl uload /System/Library/LaunchDaemons/ssh.plist 
+sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist
+</code></pre>
+<p>蛋碎！</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-04-02T09:52:47+00:00">2013-04-02</time></p>
 <p>archive</p>            </div>
@@ -293,7 +348,11 @@ Basically, we are trying to split up all the resources in such a way as to maxim
 upstream.write(localstream.read(1024))
 </code></pre>
 <p>其中1024为业界良心艹榴网的chunk或者一个buffer size。这样的操作在各种router, proxy, firewall 里太常见了。</p>
-<p>那 …</p></p>
+<p>那么HAProxy有什么<a href="http://stackoverflow.com/a/2120295/41948">特别的地方</a>呢？秘密就是，上游socket的接受buffer和本地socket的发送buffer为同一块内存。也就是说，上游socket数据来了，本地socket自动发送这一块buffer的数据。效率真是高爆了。这块buffer数据还可以用内核调用<code>splice()</code> 和 <code>tee()</code> 来达到分流和分离信号的目的。</p>
+<p>btw sendfile() 是不行的，源必须是可以mmap的buffer，目标必须是个socket。</p>
+<p>那么弱爆了的python可否跪舔这种高级特性呢？2.7和3.X里是可以的，因为现在PEP 3118统一了各种streaming object 的buffer protocol。只需要用一个<a href="http://docs.python.org/2/library/stdtypes.html#memoryview">叫memoryview的引用</a><br />
+就可以实现共享buffer而达到zero-copy的目的了。</p>
+<p>C API见<a href="http://eli.thegreenplace.net/2011/11/28/less-copies-in-python-with-the-buffer-protocol-and-memoryviews/">这里</a>，python代码例子在<a href="https://profiles.google.com/116139041198229909169/buzz/SmLJKHwpLPC">这里</a>，具体核心调用就是 <code>file.readinto()</code> 和 <code>socket.recv_into()</code> 方法。具体代码留作读者课后练习。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-26T22:39:00+00:00">2013-03-26</time></p>
 <p>archive</p>            </div>
@@ -313,7 +372,10 @@ upstream.write(localstream.read(1024))
 <p>G+团队的官方博客：<a href="http://gplusproject.appspot.com/new-apps-iphone-android">http://gplusproject.appspot.com/new-apps-iphone-android</a> 这是个什么jb飞机玩意？为啥不<a href="http://googleplusplatform.blogspot.com/">用blogger</a>?</p>
 </li>
 <li>
-<p>看这个关于代码测试的google官方博客 <a href="http://googletesting.blogspot.sg/2013/03/testing-on-toilet-testing-state-vs.html">http://googletesting.blogspot.sg/2013/03 …</a></p></li></ol></p>
+<p>看这个关于代码测试的google官方博客 <a href="http://googletesting.blogspot.sg/2013/03/testing-on-toilet-testing-state-vs.html">http://googletesting.blogspot.sg/2013/03/testing-on-toilet-testing-state-vs.html</a> 用它妈这么多javascript特效干嘛？关键是——禁用了js之后，页面就一片空白了。</p>
+</li>
+</ol>
+<p>欢迎来到后web 2.0时代——没有首页，没有订阅，没有js就神马都不显示的web app时代。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-26T00:48:33+00:00">2013-03-26</time></p>
 <p>archive</p>            </div>
@@ -360,7 +422,14 @@ day 0 productivity.</p></p>
             <a href="/post/45245208546"  rel="bookmark" >
               <h2 class="card-title">Unix Socket 点滴[转载]</h2>
             </a>
-            <p class="card-text"><p>【Unix Socket 点滴 1】使用unix socket时，把路径名的第一个字节设为null byte（\x00），这样就不会产生实际的文件，使用起了比较方便，也不用纠结选 …</p></p>
+            <p class="card-text"><p>【Unix Socket 点滴 1】使用unix socket时，把路径名的第一个字节设为null byte（\x00），这样就不会产生实际的文件，使用起了比较方便，也不用纠结选哪个路径，随便一个字符串就行了。netstat的时候会发现，第一个字节变成了蜗牛符号</p>
+<p><img alt="" src="http://ww4.sinaimg.cn/large/622a9970gw1e2g8r9fny2j.jpg" /></p>
+<p>【Unix Socket 点滴 2】unix socket的DGRAM模式可以传输大数据块，而UDP单个包最大65507字节。</p>
+<p>【Unix Socket 点滴 3】unix socket可以发送文件句柄。特别是大数据量交互的时候可以放在tmpfs共享内存，只把文件句柄发送过去，这样可以做到0-copy。</p>
+<p>【Unix Socket 点滴 4】unix socket可以校验对端的uid和pid，这在某些场合下是一种可依赖的鉴权手段。</p>
+<p>【Unix Socket 点滴 5】uninx DGRAM句柄在对端关闭时，会自动解除连接关系，端口变成unconnect状态，后续使用可以重新connect。</p>
+<p>来自 <a href="http://weibo.com/codebox">CodeBox-腾讯</a> 腾讯云平台资深还是浅就那么回事儿工程师。 </p>
+<p>第一点和第三点很重要~</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-12T23:49:00+00:00">2013-03-12</time></p>
 <p>archive</p>            </div>
@@ -378,7 +447,19 @@ day 0 productivity.</p></p>
 <p>简单的说，目前Web服务器基本模型都是一个总瓢把子Nginx，后边一大堆苦力worker进程。比如Python世界的Gunicorn是这个样子的粗暴简单：</p>
 <p><img alt="" src="http://circus.readthedocs.org/en/0.5/_images/classical-stack.png" /></p>
 <p>worker基本都是日出而耕，日落而息。（顺便一喷，Supervisord这些都弱爆了。djb大牛的<a href="https://news.ycombinator.com/item?id=5346871">runit</a>才是王道）</p>
-<p>要 …</p></p>
+<p>要做到聪明的运维，和可小可大硬又黑的HA scaling，就需要一个高级一点的worker进程管理器于是——哐当当，Mozilla的Circus闪亮登场！</p>
+<p><img alt="" src="http://circus.readthedocs.org/en/0.5/_images/circus-stack.png" /></p>
+<p>中文介绍在这里<a href="https://github.com/PyCodersCN/PyCodersCN/blob/master/issue16/mongrel2-amp-circus-full-control-of-your-web-stack.rst">Mongrel2&amp;Circul = web栈的完全控制</a></p>
+<p>我觉得这项目很不错，至少有了Web Console码农不用再去砸400多元的机械键盘去 <code>kill -HUP</code>和 <code>cat pidfile</code> 啪啪啪了</p>
+<p>但是Circus只这样就太大材小用了。都进程了，那么<a href="http://blog.ziade.org/2012/06/12/shared-sockets-in-circus/">socket、fd也一并托管了</a>吧。以后业务逻辑就只管去轮fd就是了。这就是<a href="https://stripe.com/blog/meet-einhorn">einhorn</a>项目的思路。</p>
+<p>同时我突然觉得Mongrel2这个项目有点2，居然是用json把http完整序列化一遍再pubsub分发到处理点。。。。这效率。。</p>
+<p>Circus的让我想起uWSGI。大部分<a href="http://projects.unbit.it/uwsgi/wiki/TitleIndex">核心特性</a>都是重合的。uWSGI 1.3其实也<a href="http://lists.unbit.it/pipermail/uwsgi/2012-June/004405.html">支持Circus直接绑定fd了</a>。uWSGI甚至支持<a href="http://uwsgi-docs.readthedocs.org/en/latest/Cheaper.html">adaptive process spawning</a>，连Heroku那种手动设定worker数量的机制都弱爆了么。。</p>
+<p>uWSGI是个好坑，我以前<a href="](http://blog.est.im/post/36341183105)">准备</a>详细写写的。uWSGI还有一种绝世内功——统一、灵巧的signal机制达到集群能力。</p>
+<p>所以这个uWSGI、circus的轮子核心还得看这个控制信道和数据信道的设计是否良好分离。uWSGI还提供了一些奇技淫巧，比如类似Redis/Memcache的in-process key-value store，跨语言的RPC机制，一个timer和cron。（随便喷：只能master进程启动的时候初始化timer和cron。。。wtf？）</p>
+<p>再进一步思考：客户端海量请求的合理分离，这只是水平切割，那么垂直切割呢？比如，在两个地方的服务器集群，同时渲染部分模板，然后通过circus输出为最终版本……当然这个太YY了。</p>
+<p>这些都是Circus有希望解决的。</p>
+<p>看到这里，我突然想起了一个老物——<a href="http://en.wikipedia.org/wiki/Inetd">inetd</a></p>
+<p>历史真的是个轮回</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-12T02:55:00+00:00">2013-03-12</time></p>
 <p>archive</p>            </div>
@@ -397,7 +478,7 @@ day 0 productivity.</p></p>
 <p>While it is indeed now possible to utilize greenlets to convert multiple function calls into yields in a generator, it's still something you would not do.</p>
 <p>In general JSON via HTTP or zeromq is so much cooler and more flexible than WSGI could ever be.</p>
 </blockquote>
-<p><a href="http://uwsgi-docs.readthedocs.org/en/latest/Gevent.html">Gevent</a> is …</p></p>
+<p><a href="http://uwsgi-docs.readthedocs.org/en/latest/Gevent.html">Gevent</a> is much better</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-03-07T20:13:52+00:00">2013-03-07</time></p>
 <p>archive</p>            </div>

@@ -75,7 +75,14 @@
 <p><img alt="" src="/images/tumblr/37387606338.png" /></p>
 <p>信息<a href="http://dgj.miit.gov.cn/n11293472/n11295276/n11297699/13699771.html">二</a>：</p>
 <blockquote>
-<p>现查明，你公司擅自扩大国内因特网虚拟专用网业务覆盖范围，违反《电信业务经营许可管理办法》（工信部令 …</p></blockquote></p>
+<p>现查明，你公司擅自扩大国内因特网虚拟专用网业务覆盖范围，违反《电信业务经营许可管理办法》（工信部令第5号）第十六条规定，未取得国际通信业务经营许可、擅自与香港一公司合作跨境经营因特网虚拟专用网业务，违反《电信条例》（国务院令第291号）第五十九条和《国际通信出入口局管理办法》（原信息产业部令第22号）第十九条、第二十五条规定，依据《电信条例》第七十条规定，决定责令你公司改正违规行为，并处<strong>一百万元</strong>罚款。</p>
+</blockquote>
+<p>信息<a href="http://www.gov.cn/gongbao/content/2003/content_62630.htm">三</a>，注意这个2003年就出来了。</p>
+<blockquote>
+<p>第二十二条　以经营电信业务为目的，通过互联网国际出入口设置虚拟网络的，应当报信息产业部批准。以内部使用为目的，通过互联网国际出入口设置虚拟专用网的，应当报信息产业部备案。</p>
+</blockquote>
+<p>是不是觉得tg碉堡了？</p>
+<p>btw 大家<a href="http://news.xinhuanet.com/newmedia/2012-11/30/c_124026243.htm">一定注意</a>一个公司 烽火网络Fiberhome.com.cn  <a href="http://news.cnet.com/8301-13578_3-57557347-38/u.n-summit-votes-to-support-internet-eavesdropping/">via</a> ITU大会上的 Y.2770 就是他们搞的。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-12-07T00:27:00+00:00">2012-12-07</time></p>
 <p>archive</p>            </div>
@@ -95,7 +102,13 @@ echo -e "GET / HTTP/1.1\n\n"&gt;&amp;3
 cat &lt;&amp;3
 </code></pre>
 <p>简单的端口扫描：</p>
-<pre><code>$ for p in {1..1023}; do(echo &gt;/dev/tcp/localhost/$p) &gt;/dev/null 2&gt;&amp;1 &amp;&amp; echo "$p open"; done …</code></pre></p>
+<pre><code>$ for p in {1..1023}; do(echo &gt;/dev/tcp/localhost/$p) &gt;/dev/null 2&gt;&amp;1 &amp;&amp; echo "$p open"; done
+</code></pre>
+<p>btw 最近看到好多openvpn被k掉了。看了下sshd的[源码](xasprintf(&amp;server_version_string, "SSH-%d.%d-%.100s%s%s%s",)</p>
+<p>这一行： </p>
+<pre><code>  xasprintf(&amp;server_version_string, "SSH-%d.%d-%.100s%s%s%s",
+</code></pre>
+<p>真尼玛坑爹，真心不安全啊。还是brl的patch好用。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-12-06T21:38:00+00:00">2012-12-06</time></p>
 <p>archive</p>            </div>
@@ -110,7 +123,29 @@ cat &lt;&amp;3
               <h2 class="card-title">github多账户马甲之间ssh key切换</h2>
             </a>
             <p class="card-text"><p>场景：有多个github账号，比如公司一个，私人一个。现在想在同一台主机上同时维护公司的和私人的repo</p>
-<p>大家可能会尝试把一个公钥 …</p></p>
+<p>大家可能会尝试把一个公钥贴到两个github账户，实践告诉我们</p>
+<blockquote>
+<p>Key is already in use</p>
+</blockquote>
+<p>解决办法：</p>
+<ol>
+<li>生成第二个key <code>ssh-keygen -t rsa  -f ~/.ssh/id_rsa.est</code></li>
+<li>
+<p>编辑ssh_config <code>vim ~/.ssh/config</code> 粘贴下边的东东： </p>
+<pre><code>Host estgit
+HostName github.com
+User git
+IdentityFile "~/.ssh/id_rsa.est"
+IdentitiesOnly yes
+</code></pre>
+</li>
+<li>
+<p>用这个方式来操作git：<code>git clone estgit:/username/repo</code> ，或者编辑 <code>.git/config</code> 里边的 remote - url</p>
+</li>
+</ol>
+<p>原理就是，指定一个ssh的Host的单独IdentityFile，然后因为git是基于ssh的，所以用Host名称连接github.com就会用那个单独的公钥了。</p>
+<p>github真是好东西，免费的网盘啊有木有！</p>
+<p><a href="http://sealedabstract.com/code/github-ssh-with-multiple-identities-the-slightly-more-definitive-guide/">参考</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-12-04T03:17:00+00:00">2012-12-04</time></p>
 <p>archive</p>            </div>
@@ -127,7 +162,20 @@ cat &lt;&amp;3
             <p class="card-text"><p>看到这个报道 <a href="http://chinadigitaltimes.net/chinese/2012/11/gfw%E5%B0%81%E9%94%81openvpn-%E4%B8%8E-%E5%8A%A0%E5%AF%86%E6%B5%81%E5%88%86%E7%B1%BB%E7%9A%84%E5%AD%A6%E6%9C%AF%E8%AE%BA%E6%96%87/">封锁OpenVPN与加密流分类的学术论文</a></p>
 <p>突然觉得几年前的事情现在应该又走到了一个拐点。</p>
 <p>6年前我们会用squid都很容易绕过限制了，然后是socks，加密socks，dns还原，然后是ssh，openvpn。</p>
-<p>现在都开始 …</p></p>
+<p>现在都开始搞机器学习来封锁了。</p>
+<p>那么这就是一个策略问题了：</p>
+<ol>
+<li>封锁的研究是针对公开协议的，而且是黑盒。</li>
+<li>任何破解技术都会被封锁黑盒反馈。敌人在暗处，大众在明处，这显然不是一个有利位置。</li>
+</ol>
+<p>所以，任何公开的破解策略，都会最终被封锁技术打败。</p>
+<p>我觉得任何分享<a href="http://initiative.yo2.cn/archives/641313"></a>hosts什么技术的都是傻逼行为。</p>
+<p>以后的破解，一定是地下组织，单向联系，各自之间无交集，经常变换自定义二进制协议隧道。</p>
+<p>这样才有的搞。</p>
+<p>btw 另外我觉得大家应该学习下<a href="http://www.i-programmer.info/news/105-artificial-intelligence/4526-poison-attacks-against-machine-learning.html">SVM投毒</a>。这个是未来的必要生存手段。</p>
+<p>bbtw 另外<a href="http://tech.slashdot.org/story/12/07/22/1331245/poison-attacks-against-machine-learning">slashdot上</a>这帮人开始思考人脑投毒了。认知科学和心理学的逆袭？</p>
+<p>bbbtw 关键字：adversarial machine learning</p>
+<p>最后，让我们端起手中的热翔，为这片奇葩的土地翻开新的一页，干了它！</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-12-03T01:14:00+00:00">2012-12-03</time></p>
 <p>archive</p>            </div>
@@ -146,7 +194,14 @@ cat &lt;&amp;3
 <p>觉得这种骑车的够危险了吧。</p>
 <p>再看这个视频</p>
 <p><a href="http://www.56.com/u21/v_Nzc0NDQyMzQ.html">http://www.56.com/u21/v_Nzc0NDQyMzQ.html</a></p>
-<p>觉得这人是不是很傻比 …</p></p>
+<p>觉得这人是不是很傻比，为死飞辩护？</p>
+<p>而为什么死飞玩家会这么愤怒呢？</p>
+<blockquote>
+<p>某ccav记者，到成都，接触死飞玩家，说要帮助他们发扬死飞文化，请玩家们帮助拍摄一个短篇。  <br />
+按照记者的要求，死飞玩家们进行了表演，并且按照记者要求拍摄了一段在公路上车流里穿梭的视频。  <br />
+结果，节目播出后，是抨击死飞玩家不守交通规则的内容。    </p>
+</blockquote>
+<p>来自d版1091974贴。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-12-02T20:30:00+00:00">2012-12-02</time></p>
 <p>archive</p>            </div>
@@ -179,7 +234,34 @@ cat &lt;&amp;3
             <p class="card-text"><p>用了好几个chrome的time tracking扩展，用来跟踪我上网都把时间浪费在哪些网站上了。</p>
 <p>这几天的发现：</p>
 <ol>
-<li>1/5的时间没有被跟踪到，也就是说浪费在调整浏览器窗口，切 …</li></ol></p>
+<li>1/5的时间没有被跟踪到，也就是说浪费在调整浏览器窗口，切换tab上了，或者等待loading上了。</li>
+<li>1/6的时间浪费在一个中心主题上，比如今天最有趣的某帖子</li>
+<li>1/4的时间浪费在“长尾”网站。零碎的时间</li>
+<li>参与回复一个帖子需要消耗至少2x的时间。嘴炮真是浪费时间啊。</li>
+</ol>
+<p>这是跟进程线程有点类似啊，context switching贵啊。。80%的核心任务其实只花20%左右时间。</p>
+<p>过几天有其他心得继续补充。目前发现比较准确的扩展是这个：</p>
+<p><a href="https://chrome.google.com/webstore/detail/web-timer/ggnjbdfgigejghknieofeahaknkjafim">https://chrome.google.com/webstore/detail/web-timer/ggnjbdfgigejghknieofeahaknkjafim</a></p>
+<p>其他扩展，要么跟踪不准确，比如一天下来只算了40多分钟的上网时间</p>
+<p>要么2年没更新了。</p>
+<p>其实这些扩展都不是很好，主要的问题是</p>
+<ol>
+<li>不知道是否是处于成功跟踪状态</li>
+<li>idle一段时间应该自动暂停跟踪，可能afk了。</li>
+<li>没有统计 untracked 时间有多长。</li>
+</ol>
+<p>我有点想挖个坑自己去轮这个了。最好的time tracker应该是7x24无侧漏全覆盖的。展现形式应该有</p>
+<ul>
+<li>pie chart</li>
+<li>top board</li>
+<li>timeline</li>
+</ul>
+<p>其实timeline是我最想要的~~~tab切换之类的可以直接通过一段一段方块展现出来~~~</p>
+<p>其他的几个功能：</p>
+<ul>
+<li>跨浏览器统计aggregation。由于工作需要是需要躲开几个profile同时浏览的。还有个用来翻墙。</li>
+<li>share &amp; compare。大家来战谁的拖沓病最渣吧。</li>
+</ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-28T23:13:00+00:00">2012-11-28</time></p>
 <p>archive</p>            </div>
@@ -197,7 +279,31 @@ cat &lt;&amp;3
 <blockquote>
 <p>@互联网的一些事  ： 马化腾说过：“在腾讯不允许说什么事情在技术上做不到。”</p>
 </blockquote>
-<p>让我想起来了这个经典的<a href="http://www.perlmonks.org/index.pl?node_id=542341">XY problem</a>，今 …</p></p>
+<p>让我想起来了这个经典的<a href="http://www.perlmonks.org/index.pl?node_id=542341">XY problem</a>，今天恰好又在<a href="http://www.reddit.com/r/programming/comments/13w3st/til_the_name_of_an_antipattern_that_often_happens/">reddit上</a>看到了</p>
+<p>什么是XY 问题呢？用一个例子说明</p>
+<blockquote>
+<p>提问者：什么函数能返回两个分隔符之间的字符呢？  <br />
+路人甲：没有直接搞这个的函数吧？  <br />
+路人乙：split 然后 slice  <br />
+路人丙：partition也可以  <br />
+提问者：我试过 partition  <br />
+提问者：原始字串字符是这样的 "attribute1: 50.223, attribute2: 442.1"，现在我想得到50.223  <br />
+路人丁：为啥不直接写个函数来专门解析这样的字串  <br />
+提问者：有没有自带函数能直接搞定这个呀  <br />
+路人丁：pairs = [x.strip() for x in s.split(",")]; attribs = {k: v for x in pairs for k, v in x.split(": ")}  <br />
+路人丁：还有一些库可以解析各种格式的字符串的。  <br />
+路人丁：比如 json或yaml  <br />
+提问者：字串是来自html里边的  <br />
+提问者：但是我想找一个能解析Javascript的HTMLParser之类的  <br />
+路人丁：是需要解析一段html里的javascript，还是解析各种变形的html？  <br />
+提问者：是解析嵌入html的javascript  <br />
+路人丁：你去查一下json是不是差不多？  <br />
+提问者：呃，好像这的就是json。学习了。  <br />
+路人丁：解析json的库多了去了随便用一个  <br />
+提问者：果然如此。谢谢    </p>
+</blockquote>
+<p>回到本帖的主题，如果马化腾真说过这句话，那么看来腾讯这个PM说了算的帝国果然名不虚传。</p>
+<p>大多数PM定制的需求就是把用户的X问题，用自己的2b能力包装成了Y需求，然后苦逼码农在功能上做出了打折扣的Z实现。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-27T21:12:00+00:00">2012-11-27</time></p>
 <p>archive</p>            </div>
@@ -237,7 +343,13 @@ cat &lt;&amp;3
             </a>
             <p class="card-text"><p>dump一个db的时候发现有个 INT 类型居然保存的数据是 20121126</p>
 <p>问了下，对方说，就是这个样子设计的，方便用来比较日期</p>
-<p>我这种老实人都是老老实实datetime类型，看 …</p></p>
+<p>我这种老实人都是老老实实datetime类型，看好时区然后UTC的timestamp转换，最后才比较的。。。</p>
+<p>对方丢了一句：</p>
+<p>还不是一回事。。。效率还高一点</p>
+<p>想了一下，我擦，果然。</p>
+<p>20121125 &lt; 20121126 直接这样啊有木有！单位数月份也可以比较。</p>
+<p>对方又丢了一句，连用string直接比较都可以。</p>
+<p>算是领教了神代码，彻底打败了。被这种糙快猛开发爆出翔了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-26T01:17:25+00:00">2012-11-26</time></p>
 <p>archive</p>            </div>
@@ -254,7 +366,17 @@ cat &lt;&amp;3
             <p class="card-text"><p>从<a href="http://news.ycombinator.com/item?id=4828431">HN上</a>看到这篇帖子 <a href="http://www.avc.com/a_vc/2012/11/what-has-changed.html">What Has Changed</a>，觉得对未来很糟糕的样子。</p>
 <p>特别是这一段：</p>
 <blockquote>
-<p>the consumer web has matured. we are almost 20 years into the consumer web and we have large platforms that are starting …</p></blockquote></p>
+<p>the consumer web has matured. we are almost 20 years into the consumer web and we have large platforms that are starting to suck up a lot of the oxygen. google, facebook/instagram, amazon, microsoft, apple, twitter, ebay, yahoo, AOL, craigslist, wordpress, linkedin together make up a huge amount of the time spent online, particularly in the english speaking world. there are still occasional new entrants into this list and departures too. tumblr and pinterest have risen a lot in the past couple years while myspace has declined. but consumer behaviors are starting to ossify on the web and it is harder than ever to build a large audience from a standing start.</p>
+</blockquote>
+<p>我觉得有必要限制上边提到的网站的使用时间和频率了。这真的是 suck up oxygen 浪费时间。</p>
+<p>另外就是发现了这个 VoiceBunny ，这对国内一帮开podcast的喷子比较有启发吧。我还是比较欣赏这样的媒介形式的。我比较想上下班路上听听神侃。。。</p>
+<p>附带HN对VoiceBunny的讨论 <a href="http://news.ycombinator.com/item?id=4495786">1</a>, <a href="http://news.ycombinator.com/item?id=3619387">2</a></p>
+<p>但是感觉VoiceBunny这种在国内也火不起来，国内搞有深度的，拼【质】的东西，容易被靠spam堆【量】的东西秒。。。。所以也很少有人花代价去买这种专业语音服务。</p>
+<p>上一个周末花了 $6 买了个invitation设计，感觉很亏了。国外这种stockphoto, design交易市场真的很发达，国内没有这种 职业服务 交易市场，都还是物品/虚拟物品交易为主。不过 @avc 文章对 @voicebunny 的巨大推广作用也是一个成功营销的典范。值得学习~~</p>
+<p>PS: 后续<a href="http://news.ycombinator.com/item?id=4830044">讨论</a>：</p>
+<blockquote>
+<p>There are two kinds of apps: entertainment and utility. Retention is not a problem on the latter, almost by definition impossible with the former. How many movies would you watch every day of your life?</p>
+</blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-25T23:40:00+00:00">2012-11-25</time></p>
 <p>archive</p>            </div>
@@ -287,7 +409,15 @@ cat &lt;&amp;3
 <p>现代网站架构一般不能缺这几个东西：</p>
 <ul>
 <li>serialization tool like Protobuf, Apache Thrift, JSON, etc. 跨进程、服务器共享数据</li>
-<li>Pub-sub system, or RPC system 远程 …</li></ul></p>
+<li>Pub-sub system, or RPC system 远程跨语言调用功能</li>
+<li>async background workers 用于处理繁重数据</li>
+<li>task queue/message queue 用于离线消息缓存和TTL支持，以及一些routing和过滤功能</li>
+<li>signal system 跨进程异步操作</li>
+<li>Key-value based cache or memory db 公用共享数据</li>
+<li>task scheduler or cronjob 周期性任务</li>
+</ul>
+<p>而这一切都可以在一个强大小巧稳定的Web服务器主进程中实现。这就是适合我这种偏执狂滥用的东西——uWSGI。</p>
+<p>以后慢慢写了</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-23T01:59:00+00:00">2012-11-23</time></p>
 <p>archive</p>            </div>
@@ -310,7 +440,18 @@ cat &lt;&amp;3
 <li>receive only</li>
 </ul>
 <p>关键是很便宜，大概$10左右。</p>
-<p>今天无 …</p></p>
+<p>今天无意中又翻到另外一个<a href="http://tech.slashdot.org/story/12/10/22/0518231/darpa-funds-a-300-software-defined-radio-for-hackers">HackRF</a>更加碉堡了。大概是$300左右价位，DARPA资助，具体<a href="http://ossmann.blogspot.com.au/2012/06/introducing-hackrf.html">参数</a>为：</p>
+<ul>
+<li>transmit and receive</li>
+<li>operating frequency: 100 MHz to 6 GHz</li>
+<li>maximum sample rate: 20 Msps</li>
+<li>resolution: 8 bits</li>
+<li>interface: High Speed USB</li>
+<li>power supply: USB bus power</li>
+<li>open source hardware and software</li>
+</ul>
+<p>更喜欢HackRF的原因是其带宽。<a href="http://en.wikipedia.org/wiki/Digital_Terrestrial_Multimedia_Broadcast">DMB-TH</a>的<a href="http://dvb.lmtw.com/Print.asp?ArticleID=65513">带宽</a>是4.813 Mbit/s - 32.486 Mbit/s，所以rtlsdr没法搞这个。</p>
+<p>HackRF在github搞软件开源，同时也有<a href="https://github.com/mossmann/hackrf/tree/master/hardware">硬件开源</a>，很有意思。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-20T23:30:46+00:00">2012-11-20</time></p>
 <p>archive</p>            </div>
@@ -329,7 +470,10 @@ cat &lt;&amp;3
 </code></pre>
 <p>It desn't work, because <code>extra()</code> can not be used on a <code>django.db.models.Q</code> object</p>
 <p>Instead, you can <a href="http://simeonfranklin.com/blog/2011/feb/20/hidden-django-queryset-features-II/">write like this</a>:</p>
-<pre><code>qs = models.MyModel.objects …</code></pre></p>
+<pre><code>qs = models.MyModel.objects.filter(a=1)
+qs |= models.MyModel.objects.filte(b=2).extra(where=[""])
+</code></pre>
+<p>I guess it's cool.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-18T23:01:00+00:00">2012-11-18</time></p>
 <p>archive</p>            </div>
@@ -347,7 +491,13 @@ cat &lt;&amp;3
 <p>Uwsgi 1.4 includes some awesome new features using zeromq, but it's impossible to install directly using <code>pip</code>. So here's the patch</p>
 <ol>
 <li>Download <a href="https://launchpad.net/~mojocode/+archive/ppa/+build/3440831/+files/libpgm-5.1-0_5.1.116~dfsg-2~lucid1_i386.deb">libpgm 5.1.116</a>. This library is multicast protocol blah used by zmq.</li>
-<li><code>dpkg -i …</code></li></ol></p>
+<li><code>dpkg -i</code> that shit</li>
+<li>sudo apt-get install libzmq1</li>
+<li>sudo apt-get install libzmq-dev</li>
+<li>sudo pip install uwsgi</li>
+</ol>
+<p>Aaaaaaand you are done.</p>
+<p>Ubuntu Lucid 10.04.2 LTS is such old system, even the libc6 is lack behind, A LOT.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-15T21:40:50+00:00">2012-11-15</time></p>
 <p>archive</p>            </div>
@@ -363,7 +513,19 @@ cat &lt;&amp;3
             </a>
             <p class="card-text"><p>几天前看到<a href="http://opensource.solidot.org/article.pl?sid=12/11/11/063250">这个新闻</a>：</p>
 <blockquote>
-<p>知名FreeBSD开发者、 Varnish web-server缓存作者Poul-Henning Kamp认为，开源软件的市集开发模式（见ESR的《大教堂和市集》）创造了一代只知道拷贝粘贴的无能IT专业人士 …</p></blockquote></p>
+<p>知名FreeBSD开发者、 Varnish web-server缓存作者Poul-Henning Kamp认为，开源软件的市集开发模式（见ESR的《大教堂和市集》）创造了一代只知道拷贝粘贴的无能IT专业人士，混乱的软件毁灭了优雅的Unix教堂及其著名的简约设计理念，他认为一代人迷失在了市集中。Theregister的评论称，无数采用GPL许可的开源软件分裂，Linux没有分裂是因为它有一个强有力的、富有魅力的领袖Linus Torvalds，但Linus只有一个，很少有开源项目拥有类似Torvalds那样的领袖。</p>
+</blockquote>
+<p>今天又在reddit看到一则讨论，<a href="http://www.reddit.com/r/programming/comments/137kd9/18_months_ago_termkit_a_nextgeneration_terminal/">github上一个top 5加星的项目，为什么会死掉？</a></p>
+<p>原作者看得出来是充满了怨念愤怒恨的。引用：</p>
+<blockquote>
+<p>A terminal run off a websocket with complete decoupling of front and back-end ignores network transparency? Yeah see, stupid comments like these are why I stopped working on it. People never understood how much of a research prototype this was. Enjoy your VT100 terminal which still pretends to be a fucking teletype printer in the 21st century.</p>
+</blockquote>
+<p>（顺便说一下这个reddit链接指向的blog的3D页面滚动效果真他妈炫。帅得掉渣。卡逼的时候，老子还以为我的鼠标坏求了。）</p>
+<p>让我又想起以前看到的<a href="http://news.ycombinator.com/item?id=4340047">git的问题</a>是什么：</p>
+<blockquote>
+<p>Power for the maintainer, at the expense of the contributor</p>
+</blockquote>
+<p>有的时候觉得 git 就是<a href="http://news.ycombinator.com/item?id=4782133">Linus发明出来一个鞭子</a>，</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-14T22:03:00+00:00">2012-11-14</time></p>
 <p>archive</p>            </div>
@@ -379,7 +541,46 @@ cat &lt;&amp;3
             </a>
             <p class="card-text"><p>微博上看到这个<a href="http://weibo.com/1729408273/z5a9txQza">段子</a>，赶快收集下来了。</p>
 <ul>
-<li>During his own Google interview, Jeff Dean was asked the  implications if P=NP were true.  He said, "P = 0 or N = 1." Then, before  the interviewer had even finished laughing, Jeff examined Google …</li></ul></p>
+<li>During his own Google interview, Jeff Dean was asked the  implications if P=NP were true.  He said, "P = 0 or N = 1." Then, before  the interviewer had even finished laughing, Jeff examined Google’s  public certificate and wrote the private key on the whiteboard.   </li>
+<li>Compilers don’t warn Jeff Dean.   Jeff Dean warns compilers.   </li>
+<li>The rate at which Jeff Dean produces code jumped by a factor of 40  in late 2000 when he upgraded his keyboard to USB 2.0.   </li>
+<li>Jeff Dean builds his code before committing it, but only to check for compiler and linker bugs.   </li>
+<li>When Jeff Dean has an ergonomic evaluation, it is for the protection of his keyboard.   </li>
+<li>All pointers point to Jeff Dean.   </li>
+<li>gcc -O4 emails your code to Jeff Dean for a rewrite.   </li>
+<li>Jeff Dean once failed a Turing test when he correctly identified the 203rd Fibonacci number in less than a second."   </li>
+<li>The speed of light in a vacuum used to be about 35 mph. Then Jeff Dean spent a weekend optimizing physics."   </li>
+<li>Jeff Dean was born on December 31, 1969 at 11:48 PM. It took him twelve minutes to implement his first time counter."   </li>
+<li>Jeff Dean escews both Emacs and VI. He types his code into zcat, because it's faster that way.   </li>
+<li>When Jeff Dean sends an ethernet frame there are no collisions because the competing frames retreat back up into the buffer memory on their source nic.   </li>
+<li>Unsatisfied with constant time, Jeff Dean created the world's first O(1/n) algorithm.   </li>
+<li>When Jeff Dean goes on vacation, production services across Google mysteriously stop working within a few days. This is actually true.   </li>
+<li>Jeff Dean was forced to invent asynchronous APIs one day when he optimized a function so that it returned before it was invoked.   </li>
+<li>When Jeff Dean designs software, he first codes the binary and then writes the source as documentation.   </li>
+<li>Jeff Dean wrote an O(n^2) algorithm once. It was for the Traveling Salesman Problem.   </li>
+<li>Jeff Dean once implemented a web server in a single printf() call. Other engineers added thousands of lines of explanatory comments but still don't understand exactly how it works. Today that program is the front-end to Google Search.   </li>
+<li>True: Jeff once simultaneously reduced all binary sizes by 3% AND raised the severity of a previously known low-priority python bug to critical-priority in a single change that contained no python code.   </li>
+<li>Jeff Dean can beat you at connect four. In three moves.   </li>
+<li>When your code has undefined behavior, you get a seg fault and corrupted data. When Jeff Dean's code has undefined behavior, a unicorn rides in on a rainbow and gives everybody free ice cream.   </li>
+<li>When Jeff Dean fires up the profiler, loops unroll themselves in fear.   </li>
+<li>Jeff Dean is still waiting for mathematicians to discover the joke he hid in the digits of PI.   </li>
+<li><img alt="" src="http://qph.cf.quoracdn.net/main-qimg-1c2050524f0139397f3e7d68bed3a95f" /></li>
+<li>When Jeff has trouble sleeping, he Mapreduces sheep.   </li>
+<li>When Jeff Dean listens to mp3s, he just cats them to /dev/dsp and does the decoding in his head.   </li>
+<li>When Graham Bell invented the telephone, he saw a missed call from Jeff Dean.   </li>
+<li>Jeff Dean's watch displays seconds since January 1st, 1970. He is never late.   </li>
+<li>Jeff starts his programming sessions with 'cat &gt; /dev/mem'.   </li>
+<li>One day Jeff Dean grabbed his Etch-a-Sketch instead of his laptop on his way out the door. On his way back home to get his real laptop, he programmed the Etch-a-Sketch to play Tetris.   </li>
+<li>Jeff Dean writes directly in binary. He then writes the source code as a documentation for other developers.   </li>
+<li>Jeff Dean once shifted a bit so hard, it ended up on another computer.   </li>
+<li>The x86-64 spec includes several undocumented instructions marked 'private use'. They are actually for Jeff Dean's use.   </li>
+<li>When he heard that Jeff Dean's autobiography would be exclusive to the platform, Richard Stallman bought a Kindle.   </li>
+<li>Jeff Dean can write infinite recursion functions…and have them return.   </li>
+<li>Jeff Dean can unit test entire applications with a single assertJeff Dean can determine the exact position and velocity of an electron.   </li>
+<li>Jeff Dean doesn't kill processes, he slays them.   </li>
+<li>Why did Vint Cerf invent the Internet? Because Jeff Dean didn't have time.   </li>
+<li>All Jeff Dean's code is pure. For fun, he once wrote a function with a side effect, that side effect is known as Gmail.</li>
+</ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-14T04:10:27+00:00">2012-11-14</time></p>
 <p>archive</p>            </div>
@@ -398,7 +599,73 @@ cat &lt;&amp;3
 <p>今天看到一个讨论：</p>
 <blockquote>
 <p>发信人: i3721pp (noosa), 信区: Aero <br />
-标  题: 王华明的报告“航空高性能大型复杂整体构件激光 …</p></blockquote></p>
+标  题: 王华明的报告“航空高性能大型复杂整体构件激光直接制造技术研 <br />
+发信站: 水木社区 (Mon Nov 12 23:16:08 2012), 站内   </p>
+<p>【 以下文字转载自 MilitaryTech 讨论区 】 <br />
+发信人: navigate (逆水行舟), 信区: MilitaryTech <br />
+标  题: 王华明的报告“航空高性能大型复杂整体构件激光直接制造技术研 <br />
+发信站: 水木社区 (Mon Nov 12 22:16:10 2012), 站内   </p>
+<p>这个有这么神么 ？   </p>
+<p>王华明的报告“航空高性能大型复杂整体构件激光直接制造技术研究进展”   </p>
+<p>http://www.casad.cas.cn/document.action?docid=12916   </p>
+<p>内容提要。   </p>
+<p>1。2012年奥巴马在卡内基梅隆大学，宣布创立美国“制造创新国家网络”计划，成立1 <br />
+5个制造创新中心组成网络，投资10亿美元。经过5个多月的论证最后还是选了“增材制 <br />
+造”作为第一个中心的研究方向。   </p>
+<p>2。一个发动机叶盘，传统工艺制造属于“雕刻”，最后剩下来的只有7%。   </p>
+<p>3。f22钛框，面积5.53平方米。3万吨水压机模锻件能达到0.8平方米，8万吨能达到4.5 <br />
+平方米。   </p>
+<p>4。传统方法，铸锭，制胚，模具，模锻。举例一个很小飞机框，宝钢等温锻造，模具7 <br />
+千万，分摊到每一个零件，模具费就有几十万。又举例美国的一个飞机零件，压成一个 <br />
+饼3吨，到最后加工完成只有144公斤，材料利用率不到5%。   </p>
+<p>5。用他的增材制造，材料利用率80%左右。   </p>
+<p>6。我们打印出的最大的整体结构件5平方米，美国做不了。   </p>
+<p>7。激光打印出的零件，超过或者等同于锻件的性能，抗疲劳强度，比锻件高32-53%，疲 <br />
+劳裂纹扩散速率降低一个数量级。常规性能和锻件差不多，但高温、持久、抗疲劳性能 <br />
+比锻件好很多。   </p>
+<p>8。飞机起落架的超高强度钢，用此方法抗疲劳强度可以比锻件高20%。涡轮叶片用此方 <br />
+法900度疲劳强度可以比第二代单晶高40%。   </p>
+<p>9。应用方面，2005年开始，919是可以说的，其他的都不能说（涉及保密）。919，双曲 <br />
+面窗框，只有欧洲有有家公司能做，周期2年，先付200万美元模具费，而且零件非常贵 <br />
+。而我们55天就做好了，4大件，2件已经装上了飞机。   </p>
+<p>10。翅膀根的受力件，我们做出来136公斤，锻件1706公斤，节省材料90%+，节省了大量 <br />
+材料。10年，已经做完了性能测试，比锻件还要好。   </p>
+<p>11。05年做出图示零件（猜测是军用飞机上所使用），需要5天，现在只要几小时。   </p>
+<p>12。06年某飞机起落架的关键零部件，目前已经批生产，已经受2000多个起落。如果没 <br />
+有这个技术，这个飞机就出不来，可能要推两年。   </p>
+<p>13。某飞机上非常复杂的一个零件，钛合金，一架飞机好几个，现阶段传统技术无法做 <br />
+出来，国内三种方案去研究，两三年不成功，后又去找国外。国外先说能做，看到图纸 <br />
+以后，说做不了。我们临危受命，去年5月19号开始，现在已经装了很多架飞机。   </p>
+<p>14。某飞机零件原来锻胚580公斤，我们做出来36公斤。580公斤锻胚，我们没有这么大 <br />
+的锻造装备，锻不透，性能都不合格。就算加工出来，内应力很大，变形、开裂，成品 <br />
+率非常低。   </p>
+<p>15。（吐槽f22），f22的机翼和机身连接件，超大超复杂的钛合金构件，因为太复杂20 <br />
+、30万吨的水压机也做不出来。美国人就分成三个铸件，然后热等静压再焊接，铸件的 <br />
+性能很差，但美国人没办法，f22就是这样用的。（换了一个图片）我们激光成型就可以 <br />
+直接加工出如图示的这么大的零件，这是一个整体（意思是不用分段铸造然后焊接）， <br />
+上面站了一个人，大家可以看出它的尺度。他的性能比锻件还好（意思是当然就甩铸件 <br />
+几条街了），可以毫不谦虚地说，这是迄今世界上性能最好的、结构最复杂的构件，美 <br />
+国人也只能是铸造，锻是不可能的，焊也不可能，因为焊出来的性能不行。这个已经通 <br />
+过了8000小时的疲劳试验，一年多时间。就这个构件，铝合金、钢大家看看能不能做出 <br />
+来，更何况钛合金。   </p>
+<p>16。我们发动机不行，心脏病，未来发动机就是一肚子的整体叶盘，叶片和盘子分开的 <br />
+重量太重。而我们现在可以叶片和盘子同时出来，而且叶片我们可以随心所欲控制组织 <br />
+，让它长成柱状晶，他的高温性能就很好，这里我们让它长成等柱晶，**疲劳度就很好 <br />
+，如果温度再高，我们就可以换材料，它可以做到随心所欲，一种零件可以用很多种材 <br />
+料来做（不知是在同一个零件上的不同部位，还是同一种零件用不同材料）。   </p>
+<p>17。我这里面都没说具体的零件名称，牵涉到保密的大家都不要说，也不要拍照。我尽 <br />
+量做到没有放（图片）零件，只放毛胚，因为零件还是比较敏感。   </p>
+<p>18。这种加工方法，不能包打天下，适合难加工的、高性能的、贵的、别的方法做不出 <br />
+来的零件，优势是成本、周期、性能，这个方面我们走到了美国人前面。   </p>
+<p>19。设备用的激光器都是进口，担心被美国人卡脖子，希望国家在大功率激光器上重视 <br />
+。   </p>
+<p>20。5年前曾经和飞机总设计师聊天，说我们快速设计飞机，都是整体、大型、超长的结 <br />
+构，在2、3个月内就把飞机造出来，不开一套模具，不打一个锻件，不做一个焊缝。也 <br />
+许有人认为这是个梦想，但实际上这已经不是梦想了，我们已经有这样的潜力，只是目 <br />
+前能力有限。（这一段其实是欲言又止，应该是涉及保密，只好把能力藏着掖着了。这 <br />
+件事肯定在做，最近航空大爆发，绝对和他们这个技术有关。）</p>
+</blockquote>
+<p>3D打印果然是第四次工业革命的开启者啊。我擦。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-13T07:50:44+00:00">2012-11-13</time></p>
 <p>archive</p>            </div>
@@ -413,7 +680,8 @@ cat &lt;&amp;3
               <h2 class="card-title">禅宗 vs 武士</h2>
             </a>
             <p class="card-text"><p>突然觉得这个joke好经典</p>
-<p>@法门寺释者慧：#禅宗公案#武士手握一条鱼到一休禅师房间说道：“咱打赌，我手中这鱼是死是活？”一休知道若 …</p></p>
+<p>@法门寺释者慧：#禅宗公案#武士手握一条鱼到一休禅师房间说道：“咱打赌，我手中这鱼是死是活？”一休知道若说是死的，武士定会松手；而说是活的，武士定会暗中使劲把鱼捏死。于是一休说：“死的。”武士把手松开，笑道：“哈！你输了，鱼是活的。”一休淡淡一笑道：“是的，我输了。”但是他却救了一条实实在在的鱼。</p>
+<p>@冥王哈：#禅宗微小说#一天，一个武士抓着一条活鱼来找禅师，说：“你猜这是活鱼还是死鱼，如果是活鱼我就杀了它。”禅师不想打诓语，又不能害了这只鱼，便十分苦恼，深深思考，半小时后，禅师说：“是死的。”武士看看手中的鱼，说：“你妹啊！半个小时前活着呢！”</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-13T07:11:07+00:00">2012-11-13</time></p>
 <p>archive</p>            </div>
@@ -442,7 +710,10 @@ cat &lt;&amp;3
 <h1>x11 （见<a href="http://initiative.yo2.cn/archives/628146">这个</a>）</h1>
 </li>
 </ul>
-<p>官方文档在这里 <a href="http://www.w3.org/TR/xml/#charsets">http://www.w3.org/TR/xml/#charsets …</a></p></p>
+<p>官方文档在这里 <a href="http://www.w3.org/TR/xml/#charsets">http://www.w3.org/TR/xml/#charsets</a></p>
+<pre><code>Char       ::=      #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
+</code></pre>
+<p><a href="http://www.reddit.com/r/programming/comments/1322te/what_every_programmer_absolutely_positively_needs/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-13T00:27:15+00:00">2012-11-13</time></p>
 <p>archive</p>            </div>
@@ -493,7 +764,13 @@ cat &lt;&amp;3
 <blockquote>
 <p>发信人: temporary (昙花一现), 信区: NetNovel<br />
 标  题: 网文自动化到这种程度了咩<br />
-发信站: 水木社区 (Thu Nov  8 15:32:29 2012), 站 …</p></blockquote></p>
+发信站: 水木社区 (Thu Nov  8 15:32:29 2012), 站内</p>
+<p>码字辅助工具<br />
+http://xuanpai.sinaapp.com/work/</p>
+<p>随便试了下境界的自动生成，给跪了，一个字：比我强</p>
+</blockquote>
+<p>估计这样发展下去，结合tvtropes.org的思路，电视剧编剧可以下岗了。</p>
+<p>做游戏什么的直接一按，物品道具法术什么的就直接出来了</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-08T20:13:00+00:00">2012-11-08</time></p>
 <p>archive</p>            </div>
@@ -511,7 +788,12 @@ cat &lt;&amp;3
 <ul>
 <li>Can't sort by subtask on web UI</li>
 <li>app freeze and then popup a bullshit dialog saying hi. </li>
-<li>synced 180+ crap from Google Tasks from previously uninstalled …</li></ul></p>
+<li>synced 180+ crap from Google Tasks from previously uninstalled MIUI NOTES</li>
+<li>deleting task one by one is a huge pain in the ass, can't batch or group delete</li>
+<li>sync Google Tasks will sync ALL NOTES. Should have synced selected labels.</li>
+<li>partial fragmented sync. I have to delete over and over after each sync.</li>
+</ul>
+<p>That was quite a disappointment.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-06T22:32:00+00:00">2012-11-06</time></p>
 <p>archive</p>            </div>
@@ -531,7 +813,11 @@ cat &lt;&amp;3
 </blockquote>
 <p>然后被tech2ipo转，然后被cnbeta转：<a href="http://www.cnbeta.com/articles/211806.htm">Surface必将惨败三理由：用户不待见，核心竞争力低下，硬伤明显</a></p>
 <p>我艹什么破玩意。</p>
-<p>然 …</p></p>
+<p>然后又看到 <a href="http://www.v2ex.com/t/51825">http://www.v2ex.com/t/51825</a> 这里，装马甲发帖。</p>
+<blockquote>
+<p>来自匿名人士hackerTom的这篇文章能让我们从一个更加直观的角度向大家讲述一个与以往大家认知截然不同的创新工场和李开复形象，Ta告诉我们为什么创业者不要选择创新工场。</p>
+</blockquote>
+<p>tech2ipo这算什么破鸡巴网站。整天发些什么破鸡巴帖子。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-06T20:43:56+00:00">2012-11-06</time></p>
 <p>archive</p>            </div>
@@ -550,7 +836,23 @@ cat &lt;&amp;3
 <p>据说是小米TV。</p>
 <p>不管内容实质如何了，但是我希望有几个功能：</p>
 <ol>
-<li>联合地方广电，实现插卡收看有线 …</li></ol></p>
+<li>联合地方广电，实现插卡收看有线频道。</li>
+<li>支持同轴输入，最好是能直接处理卫星锅高频头下来的信号。软解加密。</li>
+<li>SDR实现地面数字高清和DAB之类的功能，一定要SDR，以便以后升级。</li>
+<li>支持电话线输入，实现ADSL猫的拨号和多拨</li>
+<li>电话线输入，就顺便把家庭语音网关和PBX实现了吧。任意2.4G/蓝牙话筒/耳麦/远程app接听座机通话。</li>
+<li>支持无线话筒和简单卡拉OK混音</li>
+<li>因为有电话线输入，所以实现类似WinFAX的传真网关，然后MIUI上支持远程控制家里收发传真</li>
+<li>HDMI多路输入和分发。这个成本有点高，但是普通家庭TV都有HDMI不够用的现象。</li>
+<li>蓝牙/802.11ac/千兆网卡</li>
+<li>USB3.0/ESATA支持的NAS。</li>
+<li>支持DTS 5.1的audio输出。</li>
+<li>一个支持多点触控的遥控板。效果要接近apple的Magic Trackpad</li>
+<li>遥控板能学习其他红外遥控板信号。</li>
+<li>如果是ARM的板子，一定要支持NEON，内存大于2G。</li>
+</ol>
+<p>其他软件能实现的功能就不多说了。如果都做到了成本控制在500元以下，直接秒杀一切客厅设备了。</p>
+<p>然后，然后我的梦就醒了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-05T03:07:00+00:00">2012-11-05</time></p>
 <p>archive</p>            </div>
@@ -581,7 +883,18 @@ cat &lt;&amp;3
             </a>
             <p class="card-text"><p>家里有个老机器 海美迪HD 300B，用的是Realtek 1073DD+方案，发现一个很猛的固件：</p>
 <p><a href="http://www.hdpfans.com/thread-120536-1-1.html">http://www.hdpfans.com/thread-120536-1-1.html</a></p>
-<p>吐槽一下，DLNA被国内翻译成 多屏互动 。搞了半天我一个 …</p></p>
+<p>吐槽一下，DLNA被国内翻译成 多屏互动 。搞了半天我一个关键字搜索不到是这个原因。。。囧。</p>
+<p>刷机之后真的能支持了，Win7上网络设备刷出来一个</p>
+<p><img alt="" src="/images/tumblr/34892432623.png" /></p>
+<p>连WMP和BubbleUPnP都支持很好。赞美一个。</p>
+<p>继续玩Intel UPnP Device Spy想到一个比较好玩的功能：</p>
+<p><code>SetAVTransportURI()</code> 是支持任意HTTP地址的，而很多shoutcast/icecast等Internet Radio，本质上就是HTTP流媒体的mp3/aac</p>
+<p>于是我试了下，还真成功了。比如3fm alternative</p>
+<p><a href="http://ics2oss.omroep.nl/3fm-alternative-mp3?q=/npo/mp3/3fm_alternative.pls&amp;stream=ok&amp;esthack=1073.mp3">http://ics2oss.omroep.nl/3fm-alternative-mp3?q=/npo/mp3/3fm_alternative.pls&amp;stream=ok&amp;esthack=1073.mp3</a></p>
+<p>最后边个参数是欺骗蹩脚DMR播放器MIME为mp3才能播放。</p>
+<p>于是在罗技z906上成功实现听Internet Radio。想起来Android上支持DLNA的播放器还真不多。QQ视频支持。还不错。</p>
+<p>如果手机有app支持直接push网络电台到DMR就爽了。看来得自己DIY一个哈哈。以后应该自己逐步实现audio book/podcast用上DLNA。</p>
+<p>btw 发现这个upnp/dlna可以刷进路由器的  http://xupnpd.org/t/ 威武</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-03T06:43:00+00:00">2012-11-03</time></p>
 <p>archive</p>            </div>
@@ -604,7 +917,8 @@ cat &lt;&amp;3
 </ol>
 <p><img alt="" src="/images/tumblr/34761834868.png" /></p>
 <p>就OK了。</p>
-<p>家里 …</p></p>
+<p>家里的网络有问题，找不到设备，找到设备也无法播放。Win7/Android 2.3/4.0之间的DLNA互通还是有问题。折腾ing。。。用的DMR设备是 com.waxrain.airplayer 。</p>
+<p>btw DLNA国内翻译的貌似是 多屏互动 。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-11-01T11:06:00+00:00">2012-11-01</time></p>
 <p>archive</p>            </div>
@@ -625,7 +939,19 @@ cat &lt;&amp;3
 <li>Digital Media Server (DMS) 存储内容，供pull</li>
 <li>Digital Media Player (DMP) 播放pull下来的内容</li>
 <li>Digital Media Renderer (DMR) 接受push的内容并播放</li>
-<li>Digital Media …</li></ul></p>
+<li>Digital Media Controller (DMC) 远程遥控，播放/暂停/音量 等</li>
+</ul>
+<p>DLNA没有去实现屏幕镜像。主要用于内容传输和播放。</p>
+<p>Miracast是Android 4.2搞的，基于Wifi Direct技术</p>
+<p>简单的说，就是同一个wifi AP下完成协议握手，然后两个设备之间wifi信号直连。这样效率高实时传输无延迟。Miracast也包含了DLNA的设备发现功能，和视频播放能力，但同时：</p>
+<ul>
+<li>不支持纯音频（比如无线音箱）设备（见<a href="https://www.wi-fi.org/sites/default/files/uploads/Miracast_FAQ_20120919.pdf">Miracast FAQ</a>）  </li>
+<li>可以实现屏幕镜像。</li>
+</ul>
+<p>所谓屏幕镜像就是手机上打游戏在电视上同步围观这种。类似Windows的3389 RDP远程桌面和VNC。</p>
+<p>Apple的AirPlay可以实现DLNA和Miracast的所有功能。</p>
+<p>我觉得Apple的小圈子营销真的做的很好。Miracast的branding看来真的是一坨屎。光同一概念的子名词就有一大堆。Galaxy S III上把这个叫WLAN DIrect，Miracast的3层协议叫Wifi Direct/Wifi Display/TDLS。。。。。还有各种WFD, WIMO, WIDI, WHDI, WirelessHD。。。太多阿猫阿狗名字了。。orz真够混乱的。</p>
+<p>参考：<a href="http://blog.sina.com.cn/s/blog_10bc1d030101aw97.html">http://blog.sina.com.cn/s/blog_10bc1d030101aw97.html</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-31T23:21:00+00:00">2012-10-31</time></p>
 <p>archive</p>            </div>
@@ -659,7 +985,23 @@ cat &lt;&amp;3
             <p class="card-text"><p>《<a href="http://mkronline.com/2012/10/30/you-arent-imagining-it-the-web-is-a-mess/">You aren’t imagining it: The web is a mess</a>》这篇文章提出了一些比较犀利的观点：</p>
 <p>Web已经乱死了。</p>
 <ul>
-<li>人们在本世纪初，网上写的东西还是给人看的。都是浓缩 …</li></ul></p>
+<li>人们在本世纪初，网上写的东西还是给人看的。都是浓缩精华</li>
+<li>Google出现之后，人们写东西就不是给人看的了，而是给Google看的。为了各种关键字超高命中率，而不惜篇幅急剧膨胀灌水</li>
+<li>普通的个体再也不可能每天认真读完例如TechCrunch, LifeHacker这样网站的 每 一 篇 报道。</li>
+</ul>
+<p>我觉得，同理，现在blog圈子基本已经死了。不是外力杀死的，而死blog太讨好搜索引擎自杀的。Blog还没有 长微博 这种怪胎混得好。这是一种莫大的讽刺。</p>
+<p>我突然想到一个指标用来判断网站好坏，阅读量。单位：人天。</p>
+<p>一个标准人一天的阅读量是固定的。假设阅读效率为s。一个人每天花t时间上网，那么整天阅读量 R 就是：</p>
+<p>R = s x t</p>
+<p>如果一个网站每天更新的内容超过了 1人天，那么这个网站就是垃圾站。</p>
+<p>一个网站的好坏，就在于是否用最小的篇幅，做到了最大可能的报道覆盖和最大量的信息传递。</p>
+<p><img alt="" src="/images/tumblr/34673796115.png" /></p>
+<p>覆盖面这个不太好判断，最大量的信息传递这个倒是有办法，就是语义比较相似网站的雷同报道。</p>
+<p>搜索引擎一诞生，就是扮演者图书馆管理员的角色，在最短时间内找到最大量的最大匹配结果。这个做法是信息匮乏，和分布极端不均时代必要的生存手段；</p>
+<p>但是现在不同了，现在是信息过载时代，单体的信息是非常容易获取，廉价和负价值的，集中的信息才有正价值。如果能够为普通人做到一个信息输入输出平衡的搜索引擎，才是最具含金量的搜索引擎。</p>
+<p>过去的搜索引擎是空间上的军备竞赛，谁黑谁大谁粗，谁就牛逼；现在则到了一个转折点，谁能够更好的为用户安排更加有意义的时间，谁就是救世主。</p>
+<p>目前这个领域唯一的玩家，只有Google。Google太掌握这个行星上每一个人每天的行为和习惯了。（在北美用过Google Now都会为这个玩意的AI震惊）。Google有能力，有足够原始数据积累，唯一缺乏的就是这样一个具有vision的目标和执行。</p>
+<p><a href="http://news.ycombinator.com/item?id=4719730">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-30T21:22:00+00:00">2012-10-30</time></p>
 <p>archive</p>            </div>
@@ -676,7 +1018,23 @@ cat &lt;&amp;3
             <p class="card-text"><p>The most depression thing today, is I found a solution to a problem from <a href="http://initiative.yo2.cn/archives/625499">my OWN BLOG FOUR years ago</a>!</p>
 <p>Bottle.py's dev server <a href="http://bottlepy.org/docs/stable/tutorial.html#auto-reloading">auto-reloading</a> sucks hell. </p>
 <blockquote>
-<p>The child process will have os.environ['BOTTLE_CHILD'] set to True and start as a normal non-reloading app server. As soon as any …</p></blockquote></p>
+<p>The child process will have os.environ['BOTTLE_CHILD'] set to True and start as a normal non-reloading app server. As soon as any of the loaded modules changes, the child process is terminated and re-spawned by the main process. Changes in template files will not trigger a reload. Please use debug mode to deactivate template caching.</p>
+</blockquote>
+<p>The fact is it will neither reload, nor the child process will terminate when you Ctrl+C the main process.</p>
+<p>Let's use Django's reloader for bottlepy development!</p>
+<pre><code>from bottle import run, Bottle
+
+app = Bottle()
+
+def dev_server():
+    run(app, host='0.0.0.0', port=8080, debug=True)
+
+if '__main__' == __name__:
+    from django.utils import autoreload
+    autoreload.main(dev_server)
+</code></pre>
+<p>Everything went better than expected.</p>
+<p>btw my Tumblr Markdown editor can not accept capital E and R, using PinYin IME is OK. strange!</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-25T23:42:00+00:00">2012-10-25</time></p>
 <p>archive</p>            </div>
@@ -690,7 +1048,18 @@ cat &lt;&amp;3
             <a href="/post/34288214582"  rel="bookmark" >
               <h2 class="card-title">fix bottle.py / wsgiref.simple_server slow</h2>
             </a>
-            <p class="card-text"><p>Running bottlepy with default server (<code>wsgiref.simple_server</code>) is always dog slow for me, after some digging I found that the fucking server is trying to resolve the IP address of 10.x.x.x, both the server and client, into hostnames so the fucking logger can 'properly' display them. FUCK …</p></p>
+            <p class="card-text"><p>Running bottlepy with default server (<code>wsgiref.simple_server</code>) is always dog slow for me, after some digging I found that the fucking server is trying to resolve the IP address of 10.x.x.x, both the server and client, into hostnames so the fucking logger can 'properly' display them. FUCK THIS BULLSHIT.</p>
+<p>Find <code>BaseHTTPServer.py</code></p>
+<p>Go to line 478;</p>
+<pre><code>def address_string(self):
+    return self.client_address[0]
+</code></pre>
+<p>It works best if you have virtualenv set you can just modify a copy in the <code>lib</code> only for development use.</p>
+<p>Fuck who ever wrote BaseHTTPRequestHandler.address_string() FUCK YOU ASSHOLE. Who ever thought reverse DNS lookup is acceptable is pure piece of shit. It only spams your log with fake &amp; gay spammer domains.</p>
+<p>Bottle.py is great Web framework, it supports <a href="http://bottlepy.org/docs/stable/async.html">Async WSGI</a> calls, which Flask <a href="http://flask.pocoo.org/docs/design/">can not do</a>. . It works even without using <code>gevent</code> as server. I am thinking of adding some sessions support to it. db backend maybe?</p>
+<p>Update: for python 2.6, just write this line for monkey patch before bottle.run() or wsgiref.simple_server </p>
+<pre><code>__import__('BaseHTTPServer').BaseHTTPRequestHandler.address_string = lambda x:x.client_address[0]
+</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-25T04:53:00+00:00">2012-10-25</time></p>
 <p>archive</p>            </div>
@@ -705,7 +1074,13 @@ cat &lt;&amp;3
               <h2 class="card-title">FEC在网络传输中的应用</h2>
             </a>
             <p class="card-text"><blockquote>
-<p>It is a bit different than your standard FEC. Traditionally, FEC works on a block (of bits/bytes) by block basis. You need to the entire block to decode the message. So the transmitter needs a good guess on the channel capacity to choose the correct coding strength for the …</p></blockquote></p>
+<p>It is a bit different than your standard FEC. Traditionally, FEC works on a block (of bits/bytes) by block basis. You need to the entire block to decode the message. So the transmitter needs a good guess on the channel capacity to choose the correct coding strength for the block. If the sender guesses wrong, the channel is either under utilized (sending too slow) or over utilized (lost packet). In practice it is hard to guess the channel state.<br />
+The novelty is their work is the use of network coding, a form of rateless coding. A rateless code does not operate on a block by block basis. Instead once enough bits are received, the message can be decoded. The rate automatically adapts to the channel's capacity because of the encoding/decoding of the code.<br />
+Rateless codes are also known by different names, e.g. fountain (LT) codes, raptor codes, tornado codes, hybrid-ARQ, strider codes, spinal codes, and in a sense network coding (though this may have more applications).  </p>
+</blockquote>
+<p>最近一篇paper在网上吵得很火，这段话基本总结了这个技术的思想。</p>
+<p>纸：http://www.mit.edu/~medard/papers2011/Modeling%20Network%20Coded%20TCP.pdf</p>
+<p>from extremetech via <a href="http://www.extremetech.com/computing/138424-increasing-wireless-network-speed-by-1000-by-replacing-packets-with-algebra">1</a>, <a href="http://www.reddit.com/r/technology/comments/120198/mit_researchers_use_algebraic_equation_that/">2</a>, <a href="http://news.ycombinator.com/item?id=4690197">3</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-24T23:19:00+00:00">2012-10-24</time></p>
 <p>archive</p>            </div>
@@ -729,7 +1104,25 @@ cat &lt;&amp;3
         self.func = func
 
     def __get__(self, instance, type):
-        res = instance.__dict__[self.func.__name__] = self.func(instance …</code></pre></p>
+        res = instance.__dict__[self.func.__name__] = self.func(instance)
+        return res
+</code></pre>
+<p>这玩意好用啊，比如</p>
+<pre><code>&gt;&gt;&gt; class A(object):
+...   @cached_property
+...   def val(self):
+...     print 'calc'
+...     return 1
+... 
+&gt;&gt;&gt; 
+&gt;&gt;&gt; a=A()
+&gt;&gt;&gt; a.val
+calc
+1
+&gt;&gt;&gt; a.val
+1
+</code></pre>
+<p>以前自己山寨个 <code>def val(): self._val =</code> 什么的太烂了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-24T00:00:00+00:00">2012-10-24</time></p>
 <p>archive</p>            </div>
@@ -752,7 +1145,11 @@ cat &lt;&amp;3
 <code>$ yes | pv | ssh est@my_host "cat &gt; /dev/null"</code>   <br />
 <code>2.06MB 0:00:05 [1.96MB/s] [  &lt;=&gt;                                              ]</code></p>
 <p>测试本机IO能力：  <br />
-<code>$ pv /dev/zero …</code></p></p>
+<code>$ pv /dev/zero &gt; /dev/null</code> <br />
+<code>75.3GB 0:00:09 [8.56GB/s] [        &lt;=&gt;                                        ]</code></p>
+<p>其他技巧： <br />
+<a href="http://blog.urfix.com/9-tricks-pv-pipe-viewer/">http://blog.urfix.com/9-tricks-pv-pipe-viewer/</a></p>
+<p>恩。真好玩。我发现办公室的商用ADSL对称上下行就是屌啊。2MB上传速度我擦不用来挂PT可惜了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-23T22:30:00+00:00">2012-10-23</time></p>
 <p>archive</p>            </div>
@@ -768,7 +1165,19 @@ cat &lt;&amp;3
             </a>
             <p class="card-text"><p>最近在android上玩RMaps Ext和Mobile Atlas Creator (MOBAC)</p>
 <p>一直觉得tg的<a href="www.tianditu.cn">天地图</a>其实道路信息和POI做的比其他厂商都好，所以网上找到了这个<a href="http://www.doyouhike.net/forum/comm_nav/585383,0,0,1.html">天地图版MOBAC</a></p>
-<p>但是我发现一个很好玩的信 …</p></p>
+<p>但是我发现一个很好玩的信息，跟我当时对天地图的感觉一样：天地图最大的问题不是<a href="http://discover.news.163.com/special/tianditu/">163这种喷子媒体</a>说的各种问题，而是：地图是扭曲的。</p>
+<p>网上找到这篇文章《<a href="http://blog.3snews.net/html/88/47188-28181.html">天地图-地图投影技术剖析与思考</a>》</p>
+<p>虽然图片jb全无，但是却得到了一个很有用的结论：</p>
+<blockquote>
+<p>目前国内做数字城市方面的GIS项目、产品和公众应用，常涉及的投影方式主要有：面向局部区域的二维平面高斯投影（横轴墨卡托，横轴圆柱投影）、面向大范围（如全省、全国）的兰伯特投影（圆锥投影）、面向大范围的经纬度等间隔直投，而互联网上的大部分全国公众地图网站（百度、google、搜狗）则是另外一种-----“Web墨卡托”。  <br />
+在市一级的小范围区域的GIS系统，比如规划局、国土局、建设局的系统，大都使用<strong>高斯投影</strong>，以便与地方地形图测绘、工程报建一直采用的坐标系相一致。高斯投影的特点也很明显，分带，适合小范围局部，不适合应用于大省、全国等大范围应用，若是强制按某带投影，则远离中央经线的区域的角度、距离、面积全部变形严重。<br />
+在大范围，目前好像很多项目都采用“经纬度直投”，------天地图也采用了。</p>
+</blockquote>
+<p>Web墨卡托的问题是什么呢？</p>
+<blockquote>
+<p>也许您还有疑问，“Web墨卡托”虽然形状没变，但是高纬度地区的面积比真实同样放大了很多倍，面积也是变化很严重啊！同一张全中国范围图上，三亚和哈尔滨，选取同样真实面积的区域，在投出来的图上面积相差好多倍，但是他们各自区域中的图形都没变型。</p>
+</blockquote>
+<p>哇靠。怪不得天地图那个坐标比例看起来别扭死了。我擦。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-15T21:48:19+00:00">2012-10-15</time></p>
 <p>archive</p>            </div>
@@ -785,7 +1194,8 @@ cat &lt;&amp;3
             <p class="card-text"><p>今天才知道的。windows下，干净hosts，可以nslookup 和 ping 的 ip 不一样。</p>
 <p>主要是 Primary DNS suffix of this computer 这个功能。</p>
 <p>解决方法也很简单，<code>nslookup my.domain.tld. dns.server.ip</code></p>
-<p>注意 …</p></p>
+<p>注意 tld 后边一个点。这样强制从根域来解析。</p>
+<p>用这个方法可以来欺骗一些人，前提是获得主机域权限。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-15T21:05:25+00:00">2012-10-15</time></p>
 <p>archive</p>            </div>
@@ -818,7 +1228,11 @@ cat &lt;&amp;3
             <p class="card-text"><p><img alt="" src="http://i.imgur.com/KETrf.jpg" /></p>
 <p><img alt="" src="http://i.imgur.com/agPCz.jpg" /></p>
 <blockquote>
-<p>When Alex Honnold and I discussed the Nikon D4 project several months prior, we locked in on Joshua Tree National Park. Given the area's dry weather in late November, J-Tree seemed to be the obvious climbing location. During our first phone call, we simultaneously suggested Equinox as the climb. At …</p></blockquote></p>
+<p>When Alex Honnold and I discussed the Nikon D4 project several months prior, we locked in on Joshua Tree National Park. Given the area's dry weather in late November, J-Tree seemed to be the obvious climbing location. During our first phone call, we simultaneously suggested Equinox as the climb. At 5.12c, this is a test piece in Southern California climbing. On a rope, Alex is a top climber. Without a rope (free soloing), he is in a class unto himself. If Equinox felt good with a rope, there was a high likelihood he would be up to free solo the climb. Again, much like Dane, if Alex did decide to free solo the route, we might only have one opportunity to capture the ascent. Obviously, the stakes are very high, when a fall could mean death. To our amazement, after Alex's first lap he announced "it felt good, actually pretty easy". He then proceeded to do it two more times in the last 20 minutes before the sun set. On the second day of shooting with Alex, the tables had turned. He climbed to the crux (the hardest section of the climb), fiddled with getting good finger jams, was not feeling it and backed down. After a 20 or 30 minute rest, he was back on the wall, did one lap and called it. I really value and respect Alex's ability to listen to his mind and body and not allow any external forces to influence whether he climbed again or not.</p>
+</blockquote>
+<p>video: <a href="https://vimeo.com/34666308">https://vimeo.com/34666308</a></p>
+<p>拍摄摄影君的摄影君才是<a href="http://www.reddit.com/r/AskReddit/comments/cmwov/hey_reddit_what_tattoos_do_you_have/c0tpyls">神一般的存在</a>啊。</p>
+<p><a href="http://www.reddit.com/r/pics/comments/119tzm/ever_wondered_how_photographers_take_pictures_of/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-11T01:07:00+00:00">2012-10-11</time></p>
 <p>archive</p>            </div>
@@ -836,7 +1250,29 @@ cat &lt;&amp;3
 <p>其中双向同步的关键核心组件是 csync，看了下，是<a href="http://news.opensuse.org/2009/01/08/opensuse-project-announces-csync/">OpenSUSE一帮人搞的</a>类unison工具。</p>
 <p>unison/csync 区别在于：</p>
 <blockquote>
-<p>csync is a bidirectional file synchronizer like unison. csync is written in C and …</p></blockquote></p>
+<p>csync is a bidirectional file synchronizer like unison. csync is written in C and not in ocaml. So it can be used by PAM (pam_csync) or you can write a GUI for it (this is a future plan). csync is a client only file synchronizer and doesn’t need a daemon running on the other system. Unison needs to be installed and running on both systems.</p>
+</blockquote>
+<p>希望csync能用上rsync的差分复制算法。这样就完美了。</p>
+<p>关于ownCloud，赞美+吐槽几点：</p>
+<ul>
+<li>一下子就喜欢官方网站和demo的UI了</li>
+<li>Photo浏览界面非常不错。很现代。类似 Google Image那种定高不定宽。</li>
+<li>还是老系统思路，功能全面，系统臃肿庞大</li>
+<li>URL不苗条</li>
+<li>客户端不性感。QT做的一个巨大玩意。Android的貌似还收费</li>
+<li>服务器端是php的。有些地方不够细致。</li>
+<li>文件历史通过git实现。git真是个银弹啊，任何问题都是个钉子，壮哉我git钉锤万能党！</li>
+</ul>
+<p>希望能加几点：</p>
+<ul>
+<li>作为开源消息分发中心。比如scrobble，timeline</li>
+<li>web hooks</li>
+<li>ifttt的开源版</li>
+<li>yahoo pipes, page transencoding, readability tool</li>
+<li>zfec integration</li>
+<li>不仅仅一个有版本历史的持久化工具，个人数据重要的是结构化存储知识和记忆，而不是二进制持久化工具。加上一些处理功能是重大利好。</li>
+</ul>
+<p>有点心痒痒想跳进这个坑啦。非常有趣的项目。总的来说，ownCloud前途无量。他们也有商业版本 ownCloud.com。这个模式很好，可以说潜能是是把云计算真正做到了消费者零售这个级别。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-10T05:41:14+00:00">2012-10-10</time></p>
 <p>archive</p>            </div>
@@ -854,7 +1290,8 @@ cat &lt;&amp;3
 <code>&gt;&gt;&gt; p=lambda:json.loads(urllib2.urlopen('http://radioplayer.omroep.nl/helper/now-on-air.json?ac=%s&amp;channel_id=3' % datetime.datetime.now().strftime('%Y%m%d%H%M')).read())</code> <br />
 <code>&gt;&gt;&gt; pprint.pprint(p()['current_song'])</code></p>
 <p>or parsing this HTML</p>
-<p>http://radioplayer.omroep.nl/helper/playlist.html?ac=201210101540&amp;channel_id …</p></p>
+<p>http://radioplayer.omroep.nl/helper/playlist.html?ac=201210101540&amp;channel_id=3</p>
+<p><code>ac</code> is the timestamp. channel_id=3 is 3FM Serious Radio.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-10T03:49:00+00:00">2012-10-10</time></p>
 <p>archive</p>            </div>
@@ -882,7 +1319,31 @@ def ping_uwsgi(sock_file):
     '''
     Ping UWSGI process trought socket. Return [True,...] if OK,
     return [False,error] if UWSGO not pinging, or
-    [None,error] if …</code></pre></p>
+    [None,error] if common error (ex. socket file not found)
+    '''
+    rv = [None,'']
+    fmt_h = str('&lt;BHB')
+    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    try:
+        sock.connect(sock_file)
+    except socket.error,e:
+        rv = [None,e]
+    sock = None
+    if (sock):
+        ping = struct.pack(fmt_h,100,0,0)
+        sock.send(ping)
+        pong = sock.recv(struct.calcsize(fmt_h))
+        sock.close()
+        p = struct.unpack(fmt_h,pong)
+    if (p == (100,0,1)):
+        rv = [True, 'OK']
+    else:
+        rv = [False, 'ERR']
+    return rv
+#---------------------------------------------------------------
+#---------------------------------------------------------------
+</code></pre>
+<p>via <a href="http://pypi.python.org/pypi/nust">http://pypi.python.org/pypi/nust</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-09T05:33:00+00:00">2012-10-09</time></p>
 <p>archive</p>            </div>
@@ -919,7 +1380,35 @@ def ping_uwsgi(sock_file):
             <p class="card-text"><p>难得夜深人静反思一下。我个人每天12个小时在网上闲逛，自个觉得我现在有几个值得警惕的危险趋势：</p>
 <ol>
 <li>
-<p>输入越来越多，输出越来越少。创作能 …</p></li></ol></p>
+<p>输入越来越多，输出越来越少。创作能力退化。 <br />
+个人觉得消费信息文化这个风气是由教主Steve Jobs带来的，以iPad为代表的纯内容消费平台给大家带来的各种使用的便利和享受的同时，也剥夺了一项至关重要的权利——创作和生产。 <br />
+和PC相比，你既可以在上边消磨时光，但同时也可以用来当作生产力工具。我个人觉得PC平台是一种输入输出的平衡 <br />
+而iPad这类平台不一样，这货带来的风气，就是一种consumer culture。在iPad上外接键盘打字都十分痛苦和不友好。你在上边能做的就是消费弱智游戏，消费视频，消费小清新照片。Android似乎友好一点，甚至android上直接编写android程序。办公什么的也有可行性，但是这也最多是先驱者的尝试和号称而已。 <br />
+这个问题的各种衍生也深深影响了互联网。我觉得可以叫做consumerism。君不见各大博客、BBS、微博上，除了喷子就是小白。很少有人积极去invent有意义和价值东西了。</p>
+</li>
+<li>
+<p>过多信息时效化。（我承认我现在患“<strong>语体教</strong>”病了，我很难找到一个词语来形容这个东西）具体的描述就是，人们更加关心失效性很快的东西，更加耸人听闻的东西，和心理落差更大的东西，而偏向忽略那些永恒的东西。比如关心某软件、ROM、OS的新特性，而不去关心整个业界的完备推进程度。就举一个简单例子。Steve Jobs很喜欢声讨Flash怎么烂怎么搓，但是他从来不告诉你作为一个移动设备的 矢量+音视频多媒体引擎 应该做成什么样子。我们过多的去关心如何打倒Flash，如何打倒IE6，新技术如何做到Flash 10年前也能做的东西，比如apple.com上的wwdc现在都还在用Quicktime<sup>®</sup>（而不是html5 video）来播放流媒体；在HTML5喧嚣的今天，人们甚至<a href="http://typicons.com/">通过WOFF这种奇技淫巧来绘制矢量图标</a>。这是一种悲哀，和对SVG莫大的讽刺。</p>
+</li>
+<li>
+<p>碎片化。这个就不说了。但同时我觉得我还有另外一个很显然的毛病——老了。各种怀旧各种经典，很少去接触新事物了。手上天天操作和玩的东西，和几年前的并没有实质上的差别。</p>
+</li>
+<li>
+<p>流行的东西就是王道。即使小众的领域里，相对流行的也能秒杀其他的。人们宁愿附和各种lame的meme，也比自己写一段nobody cares的东西更加有归属感。其实我觉得这个是生态圈的问题。每个个人的能力是有限的，你在一个注定forever alone的小圈子里，是很少能得到反馈的。你甚至渴望信噪比很低的反馈。</p>
+</li>
+<li>
+<p>信噪比。我觉得现在一个最最最浮躁，但是又欲罢不能的问题就是各种重复信息。各种repost简直是强奸你的接受器官。但是你miss了一系列之后又觉得自己真2b。花那么多时间在网上连这个最泛滥的东西都不知道。各种第三方的aggregate工具，由于依靠全自动化算法，所以coverage由成问题。现在对话题的关注精力投入远远大于收获。</p>
+</li>
+<li>
+<p>各种挖坑不填。其实最消耗精力的就是没有结局的故事。了结的事情总是让人舒坦。但是现在千头万绪的信息，有始有终的太少啦。新事物，新自造轮子的产生速度大于问题的产生速度。这种让人无所适从。坑多就不说了，我还讨厌选择。所以进一步导致更多的放弃。我越来越发现 问题 - 解决方案 这种线性思路越来越不适应需要了。我现在需要的是一种全新的面向变化的结构。</p>
+</li>
+<li>
+<p>人物为中心的世界。我十分吃力的<a href="http://initiative.yo2.cn/archives/623562">去人物化</a>。</p>
+</li>
+<li>
+<p>我渴望一个SNS，隔绝与hivemind的各种hype，又能自洽。这是一种neo utopia么？我觉得这是我这种introvert的人的病。明明知道任何群体都有4个阶段：适应 - 指数增 - 平衡 - 衰亡。这是注定的命运。</p>
+</li>
+</ol>
+<p>上诉问题都是我个人自己点滴感受。当然，这和我个人所处的环境有关，或许其他人的感受不是这样的。或许只是我自己所处的环境太糟糕了。个性化的互联网就是这样，你很难看到客观一致的东西，你看到的都是你自身的影子。你自己是个挫人，那么你关注的人群也基本都很挫，你得到的东西也是很挫的。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-06T14:31:00+00:00">2012-10-06</time></p>
 <p>archive</p>            </div>
@@ -954,7 +1443,11 @@ def ping_uwsgi(sock_file):
 <p>感觉碉堡了。</p>
 <p>Pregel是一个graph db。这是逆NoSQL运动行之的潮流——NoSQL倡导没有<code>join</code>，而graph db则是——所有数据都可以默认join起来。</p>
 <p>Dremel 是一个query interface。</p>
-<p>Caffeine的背后是Google True Time API，这是 …</p></p>
+<p>Caffeine的背后是Google True Time API，这是基于Google Spanner的一个碉堡技术。。</p>
+<p>什么是Google Spanner？Spanner是一个行星级别的db系统——通过GPS、原子钟实现全球数据中心timestamp同步的MVCC。</p>
+<p>和BigTable相比，BigTable的cell是mutable，Spanner是Datomic，类似函数式变成里的常量；Spanner还提供了BigTable不具备的——分布式transaction支持。比如lock-free read transaction</p>
+<p>隐隐的感觉Google的天顶星科技碉堡了。paper都非常值得一读。。。虽然不明，但觉历。</p>
+<p><a href="http://news.ycombinator.com/item?id=4526710">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-09-18T00:38:14+00:00">2012-09-18</time></p>
 <p>archive</p>            </div>

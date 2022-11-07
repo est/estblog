@@ -72,7 +72,15 @@
 
 <p><a href="http://news.ycombinator.com/item?id=2357835">via</a></p>
 
-<p><strong>update1:</strong> <a href="http://slides.html5rocks.com/#web-workers">这张slide</a>卡爆了。说HTML5不卡的人可以去死了。以后投放广 …</p></p>
+<p><strong>update1:</strong> <a href="http://slides.html5rocks.com/#web-workers">这张slide</a>卡爆了。说HTML5不卡的人可以去死了。以后投放广告一次性同时开10k个worker看你卡不卡。</p>
+
+<p><strong>Update2:</strong> <a href="http://slides.html5rocks.com/#new-form-types">shit</a>'s fucked up in Chrome</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2011/03/2011-03-23_195418.png" alt=""></p>
+
+<p><strong>Update3:</strong> Arrow keys don't fucking work in <a href="http://slides.html5rocks.com/#canvas-3d">this</a> slide.</p>
+
+<p>And after CSS3 transform and shit, it all feels like 1999 dHTML again.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-03-23T11:43:20+00:00">2011-03-23</time></p>
 <p>archive</p>            </div>
@@ -90,7 +98,35 @@
 标  题: 也谈链表及其他Re: python标准库貌似没有实现链表？<br>
 发信站: 水木社区 (Mon Mar 21 18:49:46 2011), 转信</p>
 
-<p>实际上刚开始学习一些高级语言的 …</p></p>
+<p>实际上刚开始学习一些高级语言的时候我也有同样的疑问，而且即使有链表对应物的语言，链表常常也很少被实际使用。<br>
+如果是在国外听数据结构的课，老师一般会警告你这只是一个理论概念，实际应用应该实际考察，在通常情况下链表不是一个很好的结构。<br>
+通常链表会作为一个很好的反例，告诉大家脱离实际硬件环境来谈论所谓算法复杂度是没有任何意义的。<br>
+这是因为，链表已经不适合当今的计算机硬件发展。当今的计算机硬件对内存是否连续更为敏感，而链表恰恰会破坏这种顺序读取。<br>
+由于locality很差所以常常造成page fault和cache miss<br>
+这也是为什么大多数教师不再推荐使用链表的原因。而且现今的硬件内存拷贝实际相当迅速。<br>
+并且python的list算法不是通常的单项表，也不是通常的数组。<br>
+具体可以看这里：<a href="http://wiki.python.org/moin/TimeComplexity">http://wiki.python.org/moin/TimeComplexity</a><br>
+在List末尾append/pop都是O(1)的，<br>
+如果要在头部或者中部插入是O(n),任何破坏连续性的操作都会被要求realloc,所以任何此类操作都是O(n)<br>
+但是当今的常用硬件，使用C写的链表和python的list，在insert的时候只有n&gt;50000才让链表比list快那么一点点。<br>
+这还没有考虑其他实际操作的复杂度。加上前面说的破坏locality,导致链表完全没有吸引力。在对象特别多的时候通常我们直接抽象它为数据库，也不要去想什么链表了。</p>
+
+<p>在需要用到linked list特性的地方，比如常常需要从头部append或者pop<br>
+这时候有python的deque. (这里我记错了，特此更正，deque如果做insert还是会导致内存拷贝/移动，这里面的关键思想就是目前硬件的内存拷贝相当快，不是相当长的东西都可以接受)<br>
+deque也不是通常的简单数据结构，它是经过认真权衡过后得到的一种混合式数据结构。<br>
+他是一个链式块结构，每个块包含62个对象，以此来平衡对locality的优化和对push, pop的优化。有人问为啥是62个而不是其他数：那是因为deque是个双向链表，一个节点64个指针，一个指向前一个指向后，剩下就是62个指针用来指向对象</p>
+
+<p>要做到对insert到中间的优化是用btree和array结合的办法，有个第三方包blist<br>
+但是我估计很少有应用会真正用到这个。insert是O(log n)<br>
+<a href="http://pypi.python.org/pypi/blist/">http://pypi.python.org/pypi/blist/</a></p>
+
+<p>其实python是大师设计的语言，他们来决定底层具体的数据结构，作为一般人，你没有必要去质疑大师们精心设计的东西。<br>
+如果你真的对性能有很大要求，python也许并不适合你，python不是作为纯粹针对高性能计算诞生的东西，<br>
+他是一种胶水语言，它只对常见的List长度，常用的算法结构进行优化。他希望达到的目的是把现实的应用抽象出来，让使用者不用关心具体的数据结构和算法。<br>
+pythonic是一种面向大众的编程态度</p>
+
+<p>如果你要用它来做其他事情，可以看看有没有你需要的第三方模块,或者可以用C来实现自己的一个模块，python本来就是C写的，所以这实际上也一点不困难。<br>
+比如python里面没有一个数据结构是能用来很好表示数值运算中使用的大型矩阵或者数组的，这时候就诞生了第三方包：numpy</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-03-23T00:58:52+00:00">2011-03-23</time></p>
 <p>archive</p>            </div>
@@ -124,7 +160,13 @@
 
 <p><img src="http://blog.est.im/wp-content/uploads/2011/03/1.jpg" alt=""></p>
 
-<p>尼玛连我这里这种产盐地都是到处都是一堆一堆的人有人屯NaCl …</p></p>
+<p>尼玛连我这里这种产盐地都是到处都是一堆一堆的人有人屯NaCl。生怕大家还不够PANIC!!!111!!11</p>
+
+<p>卧槽都疯了卧槽都疯了卧槽都疯了卧槽都疯了卧槽都疯了卧槽都疯了卧槽都疯了卧槽都疯了</p>
+
+<p>所有屯NaCl的人肯定是上辈子折翼到新疆NaCl湖的天使!!!111!!!!!</p>
+
+<p>This is a fucked up world. 我还是去搜集可乐盖子好了。这才是辐射生存的正经事儿。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-03-16T14:25:48+00:00">2011-03-16</time></p>
 <p>archive</p>            </div>
@@ -176,7 +218,20 @@
 
 <ul>
 <li>格栅的空隙/阻碍最佳比是1:1，如果不是1:1则可以用静态图案做parallax motion</li>
-<li>Parallax …</li></ul></p>
+<li>Parallax Barrier的缺陷是：观看3D最佳位置是固定的，我推了个公式：<br>
+　显示器厚度　　　　显示器眼睛距离<br>
+——————— == ——————————<br>
+　格栅遮光长度　　　　　双眼距离<br>
+也就是说垂直距离必须保持，而可以水平横移。</li>
+<li>小孩和大人的双眼距离不一样，所以需要离显示器更近才能得到最佳3D观赏位置。</li>
+<li>如果格栅不动，Parallax Barrier需要更加精密的显示点阵和双倍的显示亮度才能达到普通显示器同等分辨率和亮度。或许采用6边形蜂窝状的显示阵列有更加好的亮度。</li>
+</ul>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2011/03/2011-03-12_231419.png" alt=""></p>
+
+<p>不保证结论正确性，仅供参考 :)</p>
+
+<p>ps 继续研究宽幅打印机+丙烯的可玩性 :)</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-03-12T15:21:26+00:00">2011-03-12</time></p>
 <p>archive</p>            </div>
@@ -217,7 +272,11 @@
 <p>http://downloada.erdas.com/software/2011/apollo-erviewer-v11.0-win-x86/apollo-erviewer-v11.0-win-x86.zip</p>
 
 <blockquote>
-  <p>ERDAS ER Viewer …</p></blockquote></p>
+  <p>ERDAS ER Viewer is a free, easy-to-use image viewer featuring interactive roaming and zooming with very large JPEG 2000 and ECW files.  It can also read most other common file types.  Installing ERDAS ER Viewer also lets you embed large geospatial images in your Microsoft Word documents.<br>
+  File formats supported: JPEG 2000, ECW, Universal Data Format (UDF) images, ER Mapper images, TIFF and GeoTIFF images, SPOT View images, ESRI BIL (ARC/INFO and ArcView) images, Smart Data ER Mapper algorithms, National Imagery , ransmission Format (NITF), ERDAS Imagine (IMG), ArcInfo ASCII Grid (ASC), Portable Network Graphics (PNG), USGS SDTS (DEM)</p>
+</blockquote>
+
+<p>BTW my wallpaper project is completely insane. Each GeoTIFF tile is about 500 to 1,000 megabytes, and there are 32 tiles. I am looking for a tool that can merge these huge files. And God bless industrial large format printers can handle these files :)</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-03-10T01:33:01+00:00">2011-03-10</time></p>
 <p>archive</p>            </div>
@@ -259,7 +318,15 @@
 
 <p><img src="http://ie6countdown.com/images/upgrade.jpg" alt=""></p>
 
-<p>从数据统计上来看，本朝 …</p></p>
+<p>从数据统计上来看，本朝和南棒真是两支独秀啊。。。</p>
+
+<p><img src="http://ie6countdown.com/images/030311-map.png" alt=""></p>
+
+<p><img src="http://ie6countdown.com/images/030311-mapList.png" alt=""></p>
+
+<p>我觉得本朝IE6流行的主要问题：大量GHOST和还原卡的存在。</p>
+
+<p><a href="http://news.ycombinator.com/item?id=2288550">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-03-05T03:19:26+00:00">2011-03-05</time></p>
 <p>archive</p>            </div>
@@ -276,7 +343,11 @@
             <p class="card-text"><p>新闻<a href="http://news.163.com/11/0302/08/6U4JB02P00014JB5.html">《北京将通过手机数据掌握市民出行动态》</a></p>
 
 <blockquote>
-  <p>北京将以中国移动的北京1700万手机用户数据为基础，建立“北京市市民出行动态信息平台”，掌握选定 …</p></blockquote></p>
+  <p>北京将以中国移动的北京1700万手机用户数据为基础，建立“北京市市民出行动态信息平台”，掌握选定区域的人口数量分布以及人口在不同时间段的流动分布情况，为政府部门规划交通布局、人口管理等服务，并有望发展个人定制业务。<br>
+  目前的方案提出以中国移动1700万手机用户的数据为基础，通过蜂窝位置技术获取手机用户活动的实时信息，建立出行动态信息平台。项目实施将可获得居民的居住工作情况，选定区域的人口数量分布以及人口在不同时间段的流动分布情况，精准掌握市民出行行为，通过发布动态出行信息，提高市民出行效率，有效缓解交通拥堵。</p>
+</blockquote>
+
+<p>以后tg开发出<a href="http://half-life.wikia.com/wiki/Manhack">manhack</a>，就可以定点消灭目标人士了。LOL</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-03-02T04:32:36+00:00">2011-03-02</time></p>
 <p>archive</p>            </div>
@@ -316,7 +387,32 @@
 
 <p>昨天电脑有点问题把C:系统盘用笔记本自带的恢复功能恢复到第一次启动状态了</p>
 
-<p>Evernote装在 <code>D …</code></p></p>
+<p>Evernote装在 <code>D:\text\evernote</code>，database是保存在<code>D:\text\evernote\profile</code>。</p>
+
+<p>今天打开Evernote，登录，打开选项，把 database 设置指向了 <code>D:\text\evernote\profile</code></p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2011/02/2011-02-16_163843.png" alt=""></p>
+
+<p>然后，弹了个尼玛的对话框说已存在一个名字叫Evernote的文件夹，是否跳过？我点了个 是</p>
+
+<p>然后。。。然后，悲剧就发生了，劳资的几百篇笔记就灰飞烟灭了。狗日的Evernote！！！！！！！那个<code>.exb</code>文件以瞬间就缩水到只有2MB大了。</p>
+
+<p>就说Onenote吧，新系统里安装好Onenote，然后可以打开其他路径的<code>.one</code>笔记文件。Evernote这个垃圾的软件没有打开功能，而且笔记保存在<code>%LOCALAPPDATA%</code>这种刮千刀的地方，所以只能在选项里设置路径。选项里把database路径设置成旧database路径就直接把旧database删求了么？这要多么日他妈的开发人员才能做出这么神经病的特性啊。</p>
+
+<p>尼玛啊啊啊啊啊啊！！！！！！！</p>
+
+<p>本来不同步的目的就是有些东西不想让洋鬼子给索引了，这下倒好，本地的database全丢了，同步的几个笔记本，结果最后同步的还是去年12月份的。30分钟同步一次的设置都吃屎去了啊！！！！！！一个鸟托盘占用内存不用来同步是为了好看么？</p>
+
+<p>看来Evernote这种表面功夫做得足的垃圾软件，要是靠得住，母猪都上树。</p>
+
+<h2>教训：</h2>
+
+<ol>
+<li>备份 备份 备份 备份 备份 备份 备份 备份。</li>
+<li>不要用垃圾商业软件，特别是这种database二进制文件格式又是私有非开放结构的。</li>
+<li>处理重要的东西的工具，稳定性和靠谱性最重要，功能神马的都是浮云。劳资为了存几个图片和富文本，把自己很多笔记都毁在Evernote手上了，太不值了。</li>
+<li>喜欢把数据往%localappdata%塞的，这种软件公司里的人都是一群蛋痛菊紧的王八蛋！(I am looking at you, Google!)</li>
+</ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-02-16T04:04:51+00:00">2011-02-16</time></p>
 <p>archive</p>            </div>
@@ -353,7 +449,28 @@
             <p class="card-text"><p>今天从<a href="http://justsven.net/2011/02/rosetta_stone/">这里</a>到<a href="http://www.douban.com/group/topic/6767868/">这里</a>发现了一个叫<a href="http://en.wikipedia.org/wiki/Kalama_Sutta">Kalama Sutta</a> / 羯腊摩经 / 卡拉玛经 的东西：</p>
 
 <p>不因为他人的口传、传说，就信以为真。<br>
-不因为奉行传统，就 …</p></p>
+不因为奉行传统，就信以为真。<br>
+不因为是正在流传的消息，就信以为真。<br>
+不因为是宗教经典书本，就信以为真。<br>
+不因为根据逻辑，就信以为真。<br>
+不因为根据哲理，就信以为真。<br>
+不因为符合常识外在推理，就信以为真。<br>
+不因为符合自己的预测、见解、观念，就信以为真。<br>
+不因为演说者的威信，就信以为真。<br>
+不因为他是导师、大师，就信以为真。</p>
+
+<p>Do not go upon what has been acquired by repeated hearing,<br>
+nor upon tradition,<br>
+nor upon rumor,<br>
+nor upon what is in a scripture,<br>
+nor upon surmise,<br>
+nor upon an axiom,<br>
+nor upon specious reasoning,<br>
+nor upon a bias towards a notion that has been pondered over,<br>
+nor upon another's seeming ability,<br>
+nor upon the consideration, "The monk is our teacher."</p>
+
+<p>佛陀是个神棍，因为他老人家自己说这些话是自我矛盾的。所以啊道不可说，一说就破。哦不对，又破了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-02-13T09:05:50+00:00">2011-02-13</time></p>
 <p>archive</p>            </div>
@@ -391,7 +508,61 @@
 
 <pre><code>protected void setResponseContentHeaders(HttpResponseBuilder response, HttpResponse results) {
   // We're skipping the content disposition header for flash due to an issue with Flash player 10
-  // This does make some sites a higher value phishing target, but this can be mitigated …</code></pre></p>
+  // This does make some sites a higher value phishing target, but this can be mitigated by
+  // additional referer checks.
+  if (!isFlash(response.getHeader("Content-Type"), results.getHeader("Content-Type"))) {
+    response.setHeader("Content-Disposition", "attachment;filename=p.txt");
+  }
+  if (results.getHeader("Content-Type") == null) {
+    response.setHeader("Content-Type", "application/octet-stream");
+  }
+}
+
+private static final String FLASH_CONTENT_TYPE = "application/x-shockwave-flash";
+
+/**
+ * Test for presence of flash
+ *
+ * @param responseContentType the Content-Type header from the HttpResponseBuilder
+ * @param resultsContentType the Content-Type header from the HttpResponse
+ * @return true if either content type matches that of Flash
+ */
+private boolean isFlash(String responseContentType, String resultsContentType) {
+  return StringUtils.startsWithIgnoreCase(responseContentType, FLASH_CONTENT_TYPE)
+      || StringUtils.startsWithIgnoreCase(resultsContentType, FLASH_CONTENT_TYPE);
+}
+</code></pre>
+
+<p>Or <a href="http://svn.apache.org/repos/asf/shindig/trunk/php/src/gadgets/ProxyHandler.php">PHP version</a>:</p>
+
+<pre><code>$isShockwaveFlash = false;
+
+foreach ($cleanedResponseHeaders as $key =&gt; $val) {
+  header(&quot;$key: $val&quot;, true);
+  if (strtoupper($key) == &#39;CONTENT-TYPE&#39; &amp;&amp; strtolower($val) == &#39;application/x-shockwave-flash&#39;) {
+    // We&#39;re skipping the content disposition header for flash due to an issue with Flash player 10
+    // This does make some sites a higher value phishing target, but this can be mitigated by
+    // additional referer checks.
+    $isShockwaveFlash = true;
+  }
+}
+if (! $isShockwaveFlash &amp;&amp; !Config::get(&#39;debug&#39;)) {
+  header(&#39;Content-Disposition: attachment;filename=p.txt&#39;);
+}
+</code></pre>
+
+<p>Here is what a proxy request looks like:</p>
+
+<pre><code>GET / HTTP/1.1
+User-Agent: Mozilla/5.0 (compatible) Feedfetcher-Google; (+http://www.google.com/feedfetcher.html)
+X-shindig-dos: on
+Cache-Control: no-cache, no-store
+Host: xxx.xxx.xxx
+X-Forwarded-For: xxx.xxx.xxx.xxx
+Accept-Encoding: gzip
+</code></pre>
+
+<p>One more note, you can use <code>&amp;rewriteMime=image/*&amp;</code> in your request to modify MIME.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-02-09T08:02:53+00:00">2011-02-09</time></p>
 <p>archive</p>            </div>
@@ -407,7 +578,42 @@
             </a>
             <p class="card-text"><p><img src="http://i.imgur.com/GIahp.jpg" alt=""></p>
 
-<p>这是我目前发现最好看的一部新剧了。据说人气超过《Community》了。故事主要讲美国一个卖搞怪小玩意儿公司Mid America Novelties把call center业务外包到印度之后发生在孟买，因为文化 …</p></p>
+<p>这是我目前发现最好看的一部新剧了。据说人气超过《Community》了。故事主要讲美国一个卖搞怪小玩意儿公司Mid America Novelties把call center业务外包到印度之后发生在孟买，因为文化冲突，一个白人主管和n个印度员工之间各种非常搞笑事。和TBBT那些僵硬的笑话相比，《Outsourced》更加幽默和轻松愉快。</p>
+
+<p>而且演员长得都非常正，特别喜欢Rebecca Hazlewood</p>
+
+<p><img src="http://blog.est.im/wp-content/uploads/2011/02/Hazlewood.jpg" alt=""></p>
+
+<p>还有澳洲妞Pippa Black</p>
+
+<p><img src="http://i.imgur.com/WeEIW.png" alt=""></p>
+
+<p>综合了下<a href="http://www.reddit.com/r/pics/comments/e8v6a/who_else_hates_this_show/?sort=hot">reddit上</a>对此剧的评价，</p>
+
+<p>不推荐的原因：</p>
+
+<ul>
+<li>对印度人的老掉牙的stereotype和racist笑话</li>
+<li>一些老美觉得一部关于自己饭碗被印度人抢了的喜剧，实在有点笑不出来。</li>
+<li>印度人觉得剧中的Indian accent很假</li>
+</ul>
+
+<p>推荐的原因：</p>
+
+<ul>
+<li>笑点和美女足够多</li>
+<li>没有恶心的laugh track</li>
+<li>如果看了第一集就放弃的人，情有可原；很多人是一口气看完前十集才喜欢上这剧的。</li>
+</ul>
+
+<p>不多说了</p>
+
+<p>在线观看地址：<a href="http://www.hulu.com/outsourced">Hulu</a> | <a href="http://ikan.pptv.com/p/10697277">PPTV</a> | 韩度 <a href="http://tieba.baidu.com/%E4%B8%AD%E5%9B%BD%E6%B2%A1%E6%9C%89%E8%8D%B7%E9%87%8C%E6%B4%BB/shipin/list/%CD%E2%B0%FC%B7%FE%CE%F1/">EP1-EP12</a> <a href="http://tieba.baidu.com/outsourced/shipin/play/e6f2c7f6ad08806797115748/">EP13</a> （渣画质）</p>
+
+<p>讨论社区：<a href="http://tieba.baidu.com/f?kw=%CD%E2%B0%FC%B7%FE%CE%F1">贴吧</a> | <a href="http://movie.mtime.com/126293/">MTime</a></p>
+
+<p>ps 豆瓣真是越来越烂了，每次去那里找东西都是两个字——失望<br>
+pps 国内能像hulu这种提供360p+cc软字幕的网站真是少啊，不是私有p2p协议就是QVOD了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-02-08T12:21:52+00:00">2011-02-08</time></p>
 <p>archive</p>            </div>
@@ -428,7 +634,7 @@
 
 <p><img src="http://www.google.com/gwt/x/im/i?u=http://blog.est.im" alt=""></p>
 
-<p>在<a href="http://news.ycombinator.com/item?id=2186456">HN上</a>发现了个<a href="http://www.lightbluetouchpaper.org/2011/02/04/jpeg-copy-evidence/">JPEG二次压缩加水印</a>的技术。/b …</p></p>
+<p>在<a href="http://news.ycombinator.com/item?id=2186456">HN上</a>发现了个<a href="http://www.lightbluetouchpaper.org/2011/02/04/jpeg-copy-evidence/">JPEG二次压缩加水印</a>的技术。/b/很牛啊。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2011-02-07T02:59:29+00:00">2011-02-07</time></p>
 <p>archive</p>            </div>
