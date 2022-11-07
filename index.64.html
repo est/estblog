@@ -51,6 +51,34 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/205"  rel="bookmark" >
+              <h2 class="card-title">bio-alarm clock on iPhone: sleepcycle</h2>
+            </a>
+            <p class="card-text"><p>I read about bio-alarm clock few years back in high school, it’s made by bunch of MIT students using expensive electroencephalogram detectors. I never expected this sleep phase could be also detected using iPhone accelerometer.</p>
+
+<blockquote>
+  <p>the <a href="http://www.lexwarelabs.com/sleepcycle/">Sleep Cycle alarm clock</a> is able to use the accelerometer in your iPhone to monitor your movement and determine which sleep phase you are in.</p>
+</blockquote>
+
+<p><img src="http://www.lexwarelabs.com/sleepcycle/gfx/screens/1.jpg" alt="sleepcycle 1"></p>
+
+<p><img src="http://www.lexwarelabs.com/sleepcycle/gfx/screens/2.jpg" alt="sleepcycle 1"></p>
+
+<p><img src="http://www.lexwarelabs.com/sleepcycle/gfx/screens/additionalscreen.jpg" alt="sleepcycle 1"></p>
+
+<p>Pity I don’t have an iPhone nor any phone with accelerometer, or I will definitely buy this software and try it out :(</p>
+
+<p><a href="http://www.reddit.com/r/technology/comments/akzeu/wakemate_analyzes_your_sleep_and_sets_your_phone/c0i4ueq">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-01-03T12:56:28+00:00">2010-01-03</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/203"  rel="bookmark" >
               <h2 class="card-title">nVidia augmented reality demo</h2>
             </a>
@@ -499,32 +527,6 @@ Abort(A)   Retry(R)   Ignore(I)
 <p>btw, I kinda like CCTV Music channel, especially those traditional music. CNTV serves a good archiver if you want to check out past programmes on various channels.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2009-12-29T07:46:23+00:00">2009-12-29</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/122"  rel="bookmark" >
-              <h2 class="card-title">Download files in console from mediafire/rapidshare, without sudo or root privilege</h2>
-            </a>
-            <p class="card-text"><p>This is a short tutorial</p>
-
-<ol>
-<li>Get this shit <a href="http://plowshare.googlecode.com/files/plowshare-0.8.1.tgz">http://plowshare.googlecode.com/files/plowshare-0.8.1.tgz</a>, unpack it to somewhere</li>
-<li>Mess with the plowshare <a href="http://code.google.com/p/plowshare/wiki/Readme">dependencies</a>, includes: <a href="http://ftp.us.debian.org/debian/pool/main/x/xulrunner/spidermonkey-bin_1.8.0.15~pre080614i-0etch1_i386.deb">spidermonkey</a>, <a href="http://ftp.us.debian.org/debian/pool/main/x/xulrunner/libmozjs0d_1.8.0.15~pre080614i-0etch1_i386.deb">libmozjs</a>, <a href="http://ftp.us.debian.org/debian/pool/main/r/readline5/libreadline5_5.2-2_i386.deb">libreadline5</a>, <a href="http://security.debian.org/debian-security/pool/updates/main/n/nspr/libnspr4-0d_4.7.1-5_i386.deb">libnspr4</a>. They can be found on <a href="http://packages.debian.org/">http://packages.debian.org/</a>. Btw, most of <code>lenny</code> binary works on <code>etch</code> too.</li>
-<li>Since I am on a shared host, so there’s no <code>sudo</code> or root, so no <code>dpkg</code> nor <code>/usr/*</code> access. The only thing you can to is <em>hack</em></li>
-<li>Unpack those <code>.deb</code>, grab the <code>data.tar\usr\*</code> stuff, including <code>smjs, lib.sh, libmozjs.so.0d, libnspr4.so.0d, libreadline.so.5</code>. </li>
-<li>patch the plowshare module, take mediafire for example, edit <code>plowshare-0.8.1/src/modules/mediafire.sh</code> to something like this: <code>FILE_URL=$(echo "$VARS; print($HREF);" | ./smjs)</code></li>
-<li><code>ldd smjs</code> to see if everything is OK, then, this step is <strong>crucial</strong>: <code>export LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH</code></li>
-<li>OK, now you can try something like this<br><code>./download.sh http://www.mediafire.com/?dhbxnndmznw</code></li>
-</ol>
-
-<p>Everything went better than expected.</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2009-12-29T05:01:33+00:00">2009-12-29</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
