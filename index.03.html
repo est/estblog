@@ -51,6 +51,24 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2021/stdout-025"  rel="bookmark" >
+              <h2 class="card-title">如何可视化跟踪分析 Python import 耗时</h2>
+            </a>
+            <p class="card-text"><p>首先在本地安装 <code>pip install tuna</code></p>
+<p>然后跑个分，需要 <code>CPython &gt;= 3.7</code>，输入</p>
+<p><code>PYTHONPROFILEIMPORTTIME=1 python3 myscript.py 2&gt;1.log</code></p>
+<p><img alt="tuna" src="https://camo.githubusercontent.com/d76ac242a42f9c394c1ae66da655173a51d9ed9c09107dd8d42b684c15aa2d05/68747470733a2f2f6e7363686c6f652e6769746875622e696f2f74756e612f666f6f2e706e67" /></p>
+<p>然后 <code>tuna 1.log</code> ，会自动打开浏览器围观 <code>import</code> 耗时分布。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-12-22T14:00:28+00:00">2021-12-22</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2021/stdout-024"  rel="bookmark" >
               <h2 class="card-title">4句话自动换win10壁纸</h2>
             </a>
@@ -797,63 +815,6 @@ A: 蚂蚁队长第一次下命令是想让蚂蚁们离开，自己吃了这点�
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-10-08T22:09:20+00:00">2021-10-08</time></p>
 <p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2021/stdout-013"  rel="bookmark" >
-              <h2 class="card-title">Letsencrypt 在老版本macOS Ubuntu 上修复TLS证书错误</h2>
-            </a>
-            <p class="card-text"><p>一觉醒来，打开浏览器，各种连不上，调试了一下发现说lets encrypt 的 acme https证书错误</p>
-<p>仿佛记得<a href="https://www.v2ex.com/t/805339">V站讨论</a>过这个事，以为和自己无关，结果也中招了。DST Root CA X3 根证书在国庆前过期了。</p>
-<h2>老版本 Ubuntu 修复：</h2>
-<pre><code>sudo apt update
-sudo apt install ca-certificates
-</code></pre>
-<h2>老版本 macOS 修复：</h2>
-<p>需要手动导入并信任新的 ISRG Root X1 根证书。来自<a href="https://letsencrypt.org/certificates/">https://letsencrypt.org/certificates/</a>。</p>
-<p>保存下列为 <code>1.pem</code></p>
-<pre><code>-----BEGIN CERTIFICATE-----
-MIIFYDCCBEigAwIBAgIQQAF3ITfU6UK47naqPGQKtzANBgkqhkiG9w0BAQsFADA/
-MSQwIgYDVQQKExtEaWdpdGFsIFNpZ25hdHVyZSBUcnVzdCBDby4xFzAVBgNVBAMT
-DkRTVCBSb290IENBIFgzMB4XDTIxMDEyMDE5MTQwM1oXDTI0MDkzMDE4MTQwM1ow
-TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh
-cmNoIEdyb3VwMRUwEwYDVQQDEwxJU1JHIFJvb3QgWDEwggIiMA0GCSqGSIb3DQEB
-AQUAA4ICDwAwggIKAoICAQCt6CRz9BQ385ueK1coHIe+3LffOJCMbjzmV6B493XC
-ov71am72AE8o295ohmxEk7axY/0UEmu/H9LqMZshftEzPLpI9d1537O4/xLxIZpL
-wYqGcWlKZmZsj348cL+tKSIG8+TA5oCu4kuPt5l+lAOf00eXfJlII1PoOK5PCm+D
-LtFJV4yAdLbaL9A4jXsDcCEbdfIwPPqPrt3aY6vrFk/CjhFLfs8L6P+1dy70sntK
-4EwSJQxwjQMpoOFTJOwT2e4ZvxCzSow/iaNhUd6shweU9GNx7C7ib1uYgeGJXDR5
-bHbvO5BieebbpJovJsXQEOEO3tkQjhb7t/eo98flAgeYjzYIlefiN5YNNnWe+w5y
-sR2bvAP5SQXYgd0FtCrWQemsAXaVCg/Y39W9Eh81LygXbNKYwagJZHduRze6zqxZ
-Xmidf3LWicUGQSk+WT7dJvUkyRGnWqNMQB9GoZm1pzpRboY7nn1ypxIFeFntPlF4
-FQsDj43QLwWyPntKHEtzBRL8xurgUBN8Q5N0s8p0544fAQjQMNRbcTa0B7rBMDBc
-SLeCO5imfWCKoqMpgsy6vYMEG6KDA0Gh1gXxG8K28Kh8hjtGqEgqiNx2mna/H2ql
-PRmP6zjzZN7IKw0KKP/32+IVQtQi0Cdd4Xn+GOdwiK1O5tmLOsbdJ1Fu/7xk9TND
-TwIDAQABo4IBRjCCAUIwDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAQYw
-SwYIKwYBBQUHAQEEPzA9MDsGCCsGAQUFBzAChi9odHRwOi8vYXBwcy5pZGVudHJ1
-c3QuY29tL3Jvb3RzL2RzdHJvb3RjYXgzLnA3YzAfBgNVHSMEGDAWgBTEp7Gkeyxx
-+tvhS5B1/8QVYIWJEDBUBgNVHSAETTBLMAgGBmeBDAECATA/BgsrBgEEAYLfEwEB
-ATAwMC4GCCsGAQUFBwIBFiJodHRwOi8vY3BzLnJvb3QteDEubGV0c2VuY3J5cHQu
-b3JnMDwGA1UdHwQ1MDMwMaAvoC2GK2h0dHA6Ly9jcmwuaWRlbnRydXN0LmNvbS9E
-U1RST09UQ0FYM0NSTC5jcmwwHQYDVR0OBBYEFHm0WeZ7tuXkAXOACIjIGlj26Ztu
-MA0GCSqGSIb3DQEBCwUAA4IBAQAKcwBslm7/DlLQrt2M51oGrS+o44+/yQoDFVDC
-5WxCu2+b9LRPwkSICHXM6webFGJueN7sJ7o5XPWioW5WlHAQU7G75K/QosMrAdSW
-9MUgNTP52GE24HGNtLi1qoJFlcDyqSMo59ahy2cI2qBDLKobkx/J3vWraV0T9VuG
-WCLKTVXkcGdtwlfFRjlBz4pYg1htmf5X6DYO8A4jqv2Il9DjXA6USbW1FzXSLr9O
-he8Y4IWS6wY7bCkjCWDcRQJMEhg76fsO3txE+FiYruq9RUWhiF1myv4Q6W+CyBFC
-Dfvp7OOGAN6dEOM4+qR9sdjoSYKEBpsr6GtPAQw4dy753ec5
------END CERTIFICATE-----
-</code></pre>
-<p>打开 keychain access，把这个 <code>1.pem</code> 拖入 system，双击打开，在 Trust 这个下拉，选择 信任。</p>
-<p><img alt="" src="/images/2021/stdout-013-1.png" /></p>
-<p>因为浏览器没法用，所以搜索资料也麻烦。真是差点锁死。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-10-01T10:56:13+00:00">2021-10-01</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 

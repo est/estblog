@@ -51,6 +51,23 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/58311721863"  rel="bookmark" >
+              <h2 class="card-title">PyPy performance post is very misleading</h2>
+            </a>
+            <p class="card-text"><blockquote>
+<p>PyPy performance post is very misleading. PyPy only has better printf performance than C in the particular case where you print the same expression twice. Specifically, their JIT figures out that it can decode the value only once instead of twice, which C cannot do because libc's printf is all run-time, so PyPy is about twice as fast since decoding is almost all of the work. If you change the test to anything where you're printing different expressions, PyPy is no faster than C. It seems to me that this post was either intentionally misleading or they didn't understand why their compiler was doing so suspiciously well on this benchmark (any time you're handily beating C is cause for suspicion). Moreover, as soon as PyPy has to print to an output stream instead of just creating a string in memory, the performance tanks becoming 7x slower than C.</p>
+</blockquote>
+<p><a href="https://groups.google.com/d/topic/julia-users/B3ZOUEaGOJY/discussion">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-08-15T02:06:22+00:00">2013-08-15</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/57663601114"  rel="bookmark" >
               <h2 class="card-title">Chromecast的操作系统和硬件是什么</h2>
             </a>
@@ -508,21 +525,6 @@ $ brew install rtlsdr gr-osmosdr gr-baz --HEAD
 <p><a href="http://www.reddit.com/r/China/comments/1fvhod/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-06-07T21:30:00+00:00">2013-06-07</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/52422267446"  rel="bookmark" >
-              <h2 class="card-title">le reddit</h2>
-            </a>
-            <p class="card-text"><p><img alt="" src="http://i.minus.com/itTDtHa1I0lKN.gif" /></p>
-<p><a href="http://www.reddit.com/r/gifs/comments/1fuxl3/the_truth_about_reddit_oc/">via</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2013-06-07T21:09:17+00:00">2013-06-07</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

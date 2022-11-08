@@ -51,6 +51,25 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/2690"  rel="bookmark" >
+              <h2 class="card-title">shell script一句话下载youtube flv/mp4</h2>
+            </a>
+            <p class="card-text"><pre><code>id=&quot;oHg5SJYRHA0&quot;; curl -L &quot;http://www.youtube.com/get_video?asv=&amp;fmt=18&amp;video_id=$id&amp;t=$(curl -s http://www.youtube.com/watch?v=$id | sed -n &#39;s/.*, &quot;t&quot;: &quot;\([^&quot;]*\)&quot;, .*/\1/p&#39;)&quot; &gt; 1.mp4
+</code></pre>
+
+<p>其中 <code>fmt=18</code> 表示360p清晰度。主要遇到2个问题，一个是URL里必须有 <code>asv=</code> 才能成功，二是sed的p模式还第一次遇到，而且group匹配括号前后必须有东西才能只输出括号内容，而不是整行内容。sed不适合我啊。。。</p>
+
+<p>参考<a href="http://www.commandlinefu.com/commands/view/3006/stream-youtube-url-directly-to-mplayer#comment">1</a>, <a href="http://bitbucket.org/rg3/youtube-dl/src/tip/youtube-dl">2</a>。感谢#ubuntu-cn和#linuxfire频道。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-08-08T12:42:40+00:00">2010-08-08</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/2678"  rel="bookmark" >
               <h2 class="card-title">从垃圾站看技术：Chrome也能调用ActiveX版的Flash</h2>
             </a>
@@ -524,28 +543,6 @@ rt
 <p>pdf附件见newsmth原帖～～～btw 手机上看水木用这个网站最爽了 <a href="http://hime.appspot.com">http://hime.appspot.com</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-07-30T11:42:50+00:00">2010-07-30</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/2597"  rel="bookmark" >
-              <h2 class="card-title">FTPRush传输中文文件失败乱码解决办法</h2>
-            </a>
-            <p class="card-text"><p><img src="http://blog.est.im/wp-content/uploads/2010/07/12.png" alt=""></p>
-
-<p>站点管理器 - 属性-连接 - 使用UTF-8模式来列表</p>
-
-<p>手工可以试试<code>STAT -I</code>和<code>MLSD</code>命令。</p>
-
-<p>FlashFXP里在 站点管理器 - 高级 - 字符编码 里设置</p>
-
-<p>Dreamhost的FTP就很扯蛋。。。中文文件名的文件的上传上去没问题。。。下载的时候提示 <code>550 中文名.mp3: No such file or directory</code>。。。。WTF？</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2010-07-30T10:56:19+00:00">2010-07-30</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

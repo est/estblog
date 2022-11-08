@@ -51,6 +51,68 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/42009058748"  rel="bookmark" >
+              <h2 class="card-title">Google Suggest spell checker</h2>
+            </a>
+            <p class="card-text"><p>请求：</p>
+<pre><code>POST https://www.googleapis.com/rpc HTTP/1.1
+Host: www.googleapis.com
+Connection: keep-alive
+Content-Length: 159
+Content-Type: application/json
+
+{"method":"spelling.check","apiVersion":"v1","params": 
+{"text":"cchrome","language":"en","originCountry":"USA", 
+"key":"AIzaSyCLlKc60a3z7lo8deV-hAyDU7rHYgL4HZg"}}
+</code></pre>
+<p>返回：</p>
+<pre><code>HTTP/1.1 200 OK
+Content-Type: application/json; charset=UTF-8
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: Fri, 01 Jan 1990 00:00:00 GMT
+Date: Fri, 01 Feb 2013 07:01:26 GMT
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
+Content-Length: 209
+Server: GSE
+
+{
+ "result": {
+  "spellingCheckResponse": {
+   "misspellings": [
+    {
+     "charStart": 0,
+     "charLength": 7,
+     "suggestions": [
+      {
+       "suggestion": "chrome"
+      }
+     ]
+    }
+   ]
+  }
+ }
+}
+</code></pre>
+<p>看来是没法利用了。shit。</p>
+<p><a href="http://googlesystem.blogspot.com/2011/09/chromes-spell-checker-gets-smarter.html">参考</a></p>
+<p>更新：</p>
+<p>似乎可以利用。那个API Key似乎又是可以用的</p>
+<p>https://www.google.be/complete/search?sugexp=chrome,mod=17&amp;client=chrome&amp;hl=nl&amp;q=about&amp;sugkey=AIzaSyCLlKc60a3z7lo8deV-hAyDU7rHYgL4HZg</p>
+<p>["about",["http:\/\/www.imdb.com\/title\/tt0276751\/","about cherry","about a boy"],["About a Boy (2002) - IMDb","",""],[],{"google:suggesttype":["NAVIGATION","QUERY","QUERY"],"google:suggestrelevance":[1200,600,551],"google:verbatimrelevance":1300}]</p>
+<p>Google的各种黑科技真是多啊</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2013-02-01T02:02:00+00:00">2013-02-01</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/41774190853"  rel="bookmark" >
               <h2 class="card-title">HTML5 for TV (Big screen)</h2>
             </a>
@@ -536,23 +598,6 @@ $
 <p><a href="http://www.reddit.com/r/GetMotivated/comments/14lpgc/truer_words_have_never_been_spoken/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-12-11T02:14:01+00:00">2012-12-11</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/37455352971"  rel="bookmark" >
-              <h2 class="card-title">各位C照没考过的真的可以去死了</h2>
-            </a>
-            <p class="card-text"><iframe width="640" height="360" src="http://www.youtube.com/embed/bO5bL77e0Rs?feature=player_embedded" frameborder="0" allowfullscreen></iframe>
-
-<p>新西兰的狗狗都会开车了。还手动档的哦亲！！！</p>
-<p><a href="http://news.ycombinator.com/item?id=4889864">via</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2012-12-07T23:58:03+00:00">2012-12-07</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

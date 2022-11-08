@@ -51,6 +51,22 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/2770"  rel="bookmark" >
+              <h2 class="card-title">Protected: DWORD acronym</h2>
+            </a>
+            <p class="card-text"><pre><code>&lt;p&gt;This post is password protected. To view it please enter your password below:&lt;/p&gt;
+&lt;p&gt;Password:  &lt;/p&gt;
+</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2010-08-27T05:12:04+00:00">2010-08-27</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/2768"  rel="bookmark" >
               <h2 class="card-title">老外农民是这样开拖拉机的</h2>
             </a>
@@ -520,25 +536,6 @@ assert( ( o-------------o
 <p><a href="http://news.ycombinator.com/item?id=1586544">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2010-08-09T05:33:27+00:00">2010-08-09</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/2690"  rel="bookmark" >
-              <h2 class="card-title">shell script一句话下载youtube flv/mp4</h2>
-            </a>
-            <p class="card-text"><pre><code>id=&quot;oHg5SJYRHA0&quot;; curl -L &quot;http://www.youtube.com/get_video?asv=&amp;fmt=18&amp;video_id=$id&amp;t=$(curl -s http://www.youtube.com/watch?v=$id | sed -n &#39;s/.*, &quot;t&quot;: &quot;\([^&quot;]*\)&quot;, .*/\1/p&#39;)&quot; &gt; 1.mp4
-</code></pre>
-
-<p>其中 <code>fmt=18</code> 表示360p清晰度。主要遇到2个问题，一个是URL里必须有 <code>asv=</code> 才能成功，二是sed的p模式还第一次遇到，而且group匹配括号前后必须有东西才能只输出括号内容，而不是整行内容。sed不适合我啊。。。</p>
-
-<p>参考<a href="http://www.commandlinefu.com/commands/view/3006/stream-youtube-url-directly-to-mplayer#comment">1</a>, <a href="http://bitbucket.org/rg3/youtube-dl/src/tip/youtube-dl">2</a>。感谢#ubuntu-cn和#linuxfire频道。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2010-08-08T12:42:40+00:00">2010-08-08</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
