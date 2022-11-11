@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Vista最挨求的漏洞：声音文件执行系统命令 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Vista最挨求的漏洞：声音文件执行系统命令" />
+
+      <link rel="canonical" href="https://blog.est.im/nu/13654" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Vista最挨求的漏洞：声音文件执行系统命令</h2>
+    <p class="post-date">Posted <time datetime="2007-02-01T08:58:00+08:00">2007-02-01</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p><a href="http://www.securityfocus.com/brief/422?ref=rss">http://www.securityfocus.com/brief/422?ref=rss</a><br/>
+<a href="http://lists.immunitysec.com/pipermail/dailydave/2007-January/003995.html">http://lists.immunitysec.com/pipermail/dailydave/2007-January/003995.html</a><br/>
+<a href="http://blogs.zdnet.com/Ou/?p=416">http://blogs.zdnet.com/Ou/?p=416</a></p>
+<p>一个安全Maillist上有人提到，Windows Vista支持语音命令，而不论语音来自用户说话还是一个声音文件，于是有人想到了在网页上嵌入一段声音说一句&ldquo;shutdown&rdquo;&hellip;&hellip;<!-- by George Ou --></p>
+<dd>
+<div id="col1">
+<h4><a title="Permanent Link to Vista Speech Command exposes remote exploit" href="http://blogs.zdnet.com/Ou/?p=416" rel="bookmark">Vista Speech Command exposes remote exploit</a><span class="voteCount"></span></h4>
+<!-- //articleFeedback -->
+<div class="post" id="post-416">
+<div class="entry">
+<p>One gentleman on the Dailydave security mailing list started a discussion about the potential for exploiting Vista's speech recognition feature by hosting malicious sound files on a website that would playback a series of audio commands to try to subvert the Operating System.&nbsp; The man didn't actually test any of these theories, but raised an interesting concern about the safety of Vista's speech command system.</p>
+<p>I responded to the list explaining that an Operating System should filter out the sounds it picks up on the Microphone to avoid a nasty feedback problem, but it's still possible for the Mic to pick up enough of the voice to run.&nbsp; Someone else responded that Apple tried similar functionality 15 years ago and quickly realized that they had to guard the feature with a keyword that needed to be spoken because people were playing gags with the &quot;shutdown&quot; command.&nbsp; But I have used speech command and realized that Vista only requires a static command so I proceeded to investigate with an actual test to test these theories.</p>
+<p>I recorded a sound file that would engage speech command on Vista, then engaged the start button, and then I asked for the command prompt.&nbsp; When I played back the sound file with the speakers turned up loud, it actually engaged the speech command system and fired up the start menu.&nbsp; I had to try a few more times to get the audio recording quality high enough to get the exact commands I wanted but the shocking thing is that it worked!&nbsp; Anyone that's ever visited MySpace knows how many annoying webpages out there that will start blasting loud MP3 music as soon as they enter the page.&nbsp; [<strong>Update 4:17PM -&nbsp;Someone asked me how loud I had the speakers.&nbsp; To my surprise, not very loud at all and I was shocked at how well it worked.&nbsp; I didn't even believe it would work at the loudest setting let alone at a moderate sound level.</strong>]</p>
+<p>There are some mitigating factors but there is no doubt this is still a serious exploit.&nbsp; Most people won't have Vista speech commands configured and enabled but if they do, the speech command control console will automatically load with the operating system and park itself on the top of the desktop waiting for audio commands.&nbsp; The other mitigating factor is that if you visit a webpage and it starts barking out slow and loud Vista speech commands, it will be rather obvious to most people that something is very wrong.&nbsp; But it's still possible that a webpage might delay the sound playback and hope that the user is not around to stop the exploit.&nbsp; Another mitigating factor is that the Vista command prompt doesn't seem to take any speech commands at all, but that doesn't prevent a remote hacker from interacting with your OS in an unauthorized manner.</p>
+<p>My recommendation is that Vista users disable the speech command feature from automatically starting up in Vista and only use it in a supervised manner until there is a patch for this.&nbsp; Vista speech commands should completely filter out any sound coming out of the computer system to prevent unauthorized speech commands coming from malicious sound files for a long term fix.&nbsp; Microsoft should at least implement a short term fix by letting the user set a unique pass phrase or series of numbers to activate speech commands rather than allowing a fixed phrase activate the system.</p>
+<p><strong>[Update 4:55 PM</strong> - Someone (who shall remain unnamed until they give me permission to name them) emailed me and criticized me that this isn't a remote exploit and that&nbsp;I&nbsp;was being &quot;ludicrous&quot; and that this can't bypass UAC.&nbsp; Well I never claimed this would bypass UAC and secure desktop nor do I think it needs to to be able to do some serious damage.&nbsp; The fact that a website can play a moderate level sound file to interact in a way with the desktop by activating an idle speech command&nbsp;system&nbsp;and be able to delete user documents with zero user interaction is serious by any stretch of the imagination.<strong>]</strong></p>
+</div>
+</div>
+</div>
+</dd>
+<p><img src ="http://dormforce.net/Blog/electronixtar/aggbug/13654.aspx" width = "1" height = "1" /></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'nu/13654';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

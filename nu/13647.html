@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>VBS调用 .NET 的示例——超快的数列排序 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="VBS调用 .NET 的示例——超快的数列排序" />
+
+      <link rel="canonical" href="https://blog.est.im/nu/13647" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">VBS调用 .NET 的示例——超快的数列排序</h2>
+    <p class="post-date">Posted <time datetime="2007-01-31T20:35:00+08:00">2007-01-31</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>Function fSortArray(aSortThisArray)<br/>
+Dim oArrayList, iElement, oArrayDic<br/>
+Set oArrayDic = CreateObject(&quot;Scripting.Dictionary&quot;)<br/>
+Set oArrayList = CreateObject( &quot;System.Collections.ArrayList&quot; )<br/>
+&nbsp;For iElement = 0 To UBound(aSortThisArray)<br/>
+&nbsp; oArrayList.Add aSortThisArray(iElement)<br/>
+&nbsp;Next<br/>
+oArrayList.Sort<br/>
+set fSortArray = oArrayList<br/>
+End Function <br/>
+</p>
+<p>以上代码的核心思想为：</p>
+<p>System.Collections.ArrayList.Sort()</p>
+<p>可见，VBS虽然不能原生支持 .NET，但是可以通过 COM 调用某些 .NET 的。但是这就有一个问题了， .NET 通过 COM 调用，经过 JIT 吗？会生成 IL 吗？</p>
+<p><img src ="http://dormforce.net/Blog/electronixtar/aggbug/13647.aspx" width = "1" height = "1" /></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'nu/13647';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

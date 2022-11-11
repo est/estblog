@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WinNT Namespace 与 ext3 结构 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="WinNT Namespace 与 ext3 结构" />
+
+      <link rel="canonical" href="https://blog.est.im/cnblogs/600410" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">WinNT Namespace 与 ext3 结构</h2>
+    <p class="post-date">Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>Linux的 ext3 文件系统结构是 一个 / 根，然后衍生出整个PC的文件、设备、一切。 其实呢，WinNT 也是这样设计的，只是没有暴露给用户罢了。说白了， C:\ D:\ 等只是一个符号连接。如图：用了反汇编高手WQXNETQIQI推荐的工具，Sysinternals 的大作：WinObj</p>
+<p><img alt="" src="http://dormforce.net/Blog/Attachment/610"/></p>
+<p>&nbsp;在 cmd 命令行里，我们可以通过<br/>
+tree \\?\CdRom0<br/>
+来查看机器上第一个光驱的 目录结构，也可以通过<br/>
+type \\?\GLOBALROOT\Device\CdRom0\autorun.inf<br/>
+来读取 第一个光驱根目录下 autorun.ini 的内容。</p>
+<p>是不是和 Linux 的 cat /media/cdrom 有点相似呢？</p>
+<p>再看看一个WinNT NTFS的的命令：<br/>
+C:\&gt;mountvol<br/>
+创建、删除或列出卷装载点。<br/>
+MOUNTVOL [drive:]path VolumeName<br/>
+MOUNTVOL [drive:]path /D<br/>
+MOUNTVOL [drive:]path /L</p>
+<p>&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a0-85e1-11db-9bf6-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a1-85e1-11db-9bf6-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; D:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a2-85e1-11db-9bf6-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; E:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{aa4a8921-f599-11da-9600-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; F:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{b2938600-f565-11da-a449-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; G:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{aa4a8920-f599-11da-9600-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A:\</p>
+<p>输入 <br/>
+C:\&gt;dir \\?\Volume{d1dd98a0-85e1-11db-9bf6-806d6172696f}\Windows<br/>
+就相当于<br/>
+dir %WinDir% 了。</p>
+<p>输入<br/>
+type \\?\GLOBALROOT\Device\HardDiskVolume1\boot.ini<br/>
+就相当于<br/>
+type C:\Boot.ini</p>
+<p>看来Windows 也有一个类似于 ext3 的文件系统啊。加上 Windows Shell Namespace，应该比 ext3 丰富了吧。</p>
+<p>粗略的估计，用命令行可以查看一些Win32的 NamedPipe 和 内存、TCP 连接的情况。由于本人才疏学浅，不知道从哪里入手，不过总体感觉是：Windows&nbsp; 到底还是MS几亿美金打造的OS，还是有其深刻内涵的。从这点看来，Linux又显得原始了点。</p>
+<p>[内有附件]</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'cnblogs/600410';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>C#调用Jabber-net登陆Google Talk - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="C#调用Jabber-net登陆Google Talk" />
+
+      <link rel="canonical" href="https://blog.est.im/nu/13799" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">C#调用Jabber-net登陆Google Talk</h2>
+    <p class="post-date">Posted <time datetime="2007-03-11T11:25:00+08:00">2007-03-11</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>最近手痒想整合各种IM实现服务，花时间研究了下<a href="http://www.google.com/talk/">Google Talk</a>，在 <a href="http://jabberstudio.org/">jabberstudio.org</a> 上发现了 jabber-net 的类库，写了个简单的登陆程序。</p>
+<p>在Visual Studio里新建一个WindowsApplication，添加 jabber-net 的引用</p>
+<p>&nbsp;<img src="http://202.115.22.199/Blog/Attachment/738" alt=""/></p>
+<p>输入以下代码。有注释就不解释了。</p>
+<p>&nbsp;</p>
+<pre><span style="COLOR: #0000ff">namespace</span> WindowsApplication1
+{
+<span style="COLOR: #0000ff">public</span> partial <span style="COLOR: #0000ff">class</span> Form1 : Form
+{
+<span style="COLOR: #008000">//全局Jabber客户端对象：jc</span>
+jabber.client.JabberClient jc = <span style="COLOR: #0000ff">new</span> jabber.client.JabberClient();
+<span style="COLOR: #0000ff">private</span> <span style="COLOR: #0000ff">void</span> Form1_Load(<span style="COLOR: #0000ff">object</span> sender, EventArgs e)
+{
+jc.OnMessage += <span style="COLOR: #0000ff">new</span> jabber.client.MessageHandler(MyJabber_OnMessage);
+<span style="COLOR: #008000">//用户 someone@gmail.com 登陆</span>
+jc.User = &quot;<span style="COLOR: #8b0000">someone</span>&quot;;
+jc.Server = &quot;<span style="COLOR: #8b0000">gmail.com</span>&quot;;
+jc.Password = &quot;<span style="COLOR: #8b0000">password</span>&quot;;
+jc.NetworkHost = &quot;<span style="COLOR: #8b0000">talk.google.com</span>&quot;;
+jc.Port = 5223;
+jc.SSL = <span style="COLOR: #0000ff">true</span>;
+jc.PlaintextAuth = <span style="COLOR: #0000ff">true</span>;
+jc.AutoLogin = <span style="COLOR: #0000ff">true</span>;
+jc.AutoPresence = <span style="COLOR: #0000ff">true</span>;
+jc.AutoReconnect = 1;
+jc.AutoRoster = <span style="COLOR: #0000ff">true</span>;
+jc.Connect();
+}
+<span style="COLOR: #008000">//收到消息啦</span>
+<span style="COLOR: #0000ff">void</span> MyJabber_OnMessage(<span style="COLOR: #0000ff">object</span> sender, jabber.protocol.client.Message msg)
+{
+MessageBox.Show(msg.Body,msg.From.User);
+}
+<span style="COLOR: #008000">//给一个JabberID发消息</span>
+<span style="COLOR: #0000ff">private</span> <span style="COLOR: #0000ff">void</span> button1_Click(<span style="COLOR: #0000ff">object</span> sender, EventArgs e)
+{
+<span style="COLOR: #008000">//这里的用法： Message(目标用户名, 消息内容)</span>
+jc.Message(textBox1.Text,textBox2.Text);
+}
+}
+}
+</pre>
+<pre>&nbsp;</pre>
+<p>[内有附件]</p>
+<p><img src ="http://dormforce.net/Blog/electronixtar/aggbug/13799.aspx" width = "1" height = "1" /></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'nu/13799';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

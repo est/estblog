@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[原]C#和IE、Maxthon共享session cookie - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[原]C#和IE、Maxthon共享session cookie" />
+
+      <link rel="canonical" href="https://blog.est.im/nu/13939" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[原]C#和IE、Maxthon共享session cookie</h2>
+    <p class="post-date">Posted <time datetime="2007-03-31T14:17:00+08:00">2007-03-31</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>最近写电子科大教务处的自动选科系统，遇到一个问题，如果先在 www.tad.uestc.edu.cn 登陆了，再用机器登陆并自动选课，那么IE/Maxthon就会提示：你的帐号已在别处登陆。也就是说一个帐号只能有一个 session 与服务器相连，那么可否实现我们的《自动选课机》与IE共享 session ，也就是说以同一个cookie和服务器对话呢？想了好久，有几个思路，一是用Win32API发送窗体消息，但是IE实在太复杂；二是拦截WinSock的包，这样实现起来也比较困难，第三就是用IE的接口来获取cookie信息了，那么这个接口是什么呢？显然 .NET 没有直接提供，那么就只有到 COM 里寻找了，对了，WSH/VBS里有一个着名的对象：InternetExplorer.Application，可以创建一个新的IE窗口，例如下面的vbs： </p>
+<p>Set objIE =CreateObject(&quot;InternetExplorer.Application&quot;)<br/>
+objIE.Navigate(&quot;<a href="http://www.tad.uestc.edu.cn/%22)"><font color="#669966">http://www.tad.uestc.edu.cn/&quot;)</font></a><br/>
+objIE.Visible=True<br/>
+WScript.Sleep 1000 '等待页面载入<br/>
+MsgBox objIE.Document.cookie</p>
+<p>研究了下用C#完成同样的操作，真是麻烦啊，居然用到了反射。sign，大家可以对比下代码数量： </p>
+<p>&nbsp;</p>
+<p>using System;<br/>
+using System.Collections.Generic;<br/>
+using System.ComponentModel;<br/>
+using System.Data;<br/>
+using System.Drawing;<br/>
+using System.Text;<br/>
+using System.Windows.Forms;<br/>
+using System.Net;<br/>
+using System.Reflection;<br/>
+using System.Threading;</p>
+<p>namespace WindowsApplication3<br/>
+{<br/>
+&nbsp;&nbsp;&nbsp; public partial class Form1 : Form<br/>
+&nbsp;&nbsp;&nbsp; {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WebClient wc;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Type tp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Type tpDocument;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; object ie;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; object IEDocument;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public Form1()<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; InitializeComponent();<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; private void Form1_Load(object sender, EventArgs e)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tp = Type.GetTypeFromProgID(&quot;InternetExplorer.Application&quot;);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ie = Activator.CreateInstance(tp); //其实上面这么多代码就做了一件事情：CreateObject()，或者说JScript里面的new ActiveXObject()</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tp.InvokeMember(&quot;Navigate&quot;, BindingFlags.InvokeMethod, null, ie, new object[] { &quot;<a href="http://www.tad.uestc.edu.cn">http://www.tad.uestc.edu.cn</a>&quot; }); //相当于 ie.Navigate(&quot;<a href="http://www.tad.uestc.edu.cn">http://www.tad.uestc.edu.cn</a>&quot;)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tp.InvokeMember(&quot;Visible&quot;, BindingFlags.SetProperty, null, ie, new object[] { true }); //相当于 ie.Visible=ture<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Thread.Sleep(1000); //等待页面载入，否则会出现 HRESULT 错误<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IEDocument = tp.InvokeMember(&quot;Document&quot;, BindingFlags.GetProperty, null, ie, null); //获得 ie.Document 对象，是一个 mshtml.HtmlDocument COM对象，也就是JScript里的DOM，例如 window.document<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tpDocument = IEDocument.GetType();<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; private void button1_Click(object sender, EventArgs e)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; textBox1.Text=tpDocument.InvokeMember(&quot;cookie&quot;, BindingFlags.GetProperty, null, IEDocument, null).ToString(); //相当于 ie.Document.cookie。<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //从上面的代码可以看出，用C#操作COM是相当麻烦的。VBS几句话，C#就会写大段的代码，很多是重复的，都是为了万恶的strong type。还是脚本好啊，免去了很多后台转换代码，呵呵。<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //写COM Interop最麻烦的就是异常处理了，很多 HRESULT 不知道怎么办，郁闷。微软的兼容性真糟糕！<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; private void Form1_Leave(object sender, EventArgs e)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br/>
+&nbsp;&nbsp;&nbsp; }<br/>
+}</p>
+<p><img alt="" src="http://dormforce.net/Blog/Attachment/749"/></p>
+<p>[内有附件]</p>
+<p><img src ="http://dormforce.net/Blog/electronixtar/aggbug/13939.aspx" width = "1" height = "1" /></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'nu/13939';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>
