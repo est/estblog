@@ -99,7 +99,7 @@ if(sWallpaper){
 <p>吐槽1： 开始 → 启动 菜单都不见了。。。</p>
 <p>吐槽2：好久没写 WScript 了感觉都忘完了。vbs 是肯定不会的了。<a href="https://docs.microsoft.com/en-us/previous-versions//hbxc2t98(v=vs.85)?redirectedfrom=MSDN">JScript 居然是 ESMAScript3</a>。好多现代写法都不支持。</p></p>
             <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-04-11T22:35:12+00:00">2021-04-11</time></p>
+              <p>Posted <time datetime="2021-04-11T22:35:12+08:00">2021-04-11</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
@@ -119,7 +119,7 @@ if(sWallpaper){
 <p>同理，建立一个叫  <code>Pictures</code> 的文件夹，可以列表展示图片尺寸。。</p>
 <p>来自 <a href="https://superuser.com/questions/1024894/">superuser</a> 。真是神一般的设定。</p></p>
             <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-04-04T12:01:30+00:00">2021-04-04</time></p>
+              <p>Posted <time datetime="2021-04-04T12:01:30+08:00">2021-04-04</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
@@ -169,7 +169,7 @@ if loc.startswith(host):
 <p>注意这里不要用 <code>.lstrip()</code> 。这方法和你想象的完全不是一回事。它是基于单个字符的挨个替换而不是整个字符串。<br />
 2. 实测这种在业务代码实现的「软」反向代理性能堪忧。上游4s左右的整个页面加载时间，反向代理之后就变成了 120s 左右。盲猜是 <code>StreamingResponse</code> 是一个字节一个字节去遍历迭代器？实测并不是。主要的锅还是 <code>Requests</code> 的 <code>.raw</code> 是按照 <code>chunked</code> 一段一段返回的。最好还是准备个 4KB 的 buffer，提高性能。解决方案是把  <code>r.raw</code> 改成 <code>r.raw.stream(4096000)</code> 性能一下就高了。注意这里不要用官方文档提供的 <code>.iter_contents()</code> 或者 <code>.iter_lines()</code> 这两者又会自作聪明的去解析文本编码或者换行符，降低了性能。</p></p>
             <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-03-30T15:07:01+00:00">2021-03-30</time></p>
+              <p>Posted <time datetime="2021-03-30T15:07:01+08:00">2021-03-30</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
@@ -190,7 +190,7 @@ if loc.startswith(host):
 <p>要知道他做出这个研究的时候，遗传学也就孟德尔水平，DNA 尚未发现！他假设豚鼠双亲各自有遗传因素 <code>H''</code> 和 <code>H'''</code> ，然后精子卵子 混合，一共有四种可能，<code>G</code>, <code>G'</code>, <code>G''</code>, <code>G'''</code>，如果他们生下2胎，那么他们各自的遗传因素为 <code>H</code> 和 <code>H'</code> 。他假设花色还收到相同的怀孕因素 <code>D</code> 影响，以及出生后生长的共同的环境因素 <code>E</code> 影响。那么要根据因果性预测花色，就像解方程一样计算每根路径的权重。</p>
 <p>这位 Sewall Wright，人称 现代演化三杰（R.A.Fisher, J.B.S Haldane），逝世于 1988-03-03，真是君生我未生，我生君已去。</p></p>
             <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-03-25T23:56:41+00:00">2021-03-25</time></p>
+              <p>Posted <time datetime="2021-03-25T23:56:41+08:00">2021-03-25</time></p>
 <p>stderr</p>            </div>
           </article>
         </div>
@@ -224,7 +224,7 @@ if loc.startswith(host):
 <li>cue 别的房间。合并房间。</li>
 </ul></p>
             <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-02-12T23:18:45+00:00">2021-02-12</time></p>
+              <p>Posted <time datetime="2021-02-12T23:18:45+08:00">2021-02-12</time></p>
 <p>stderr</p>            </div>
           </article>
         </div>
@@ -258,7 +258,7 @@ In sum, neoliberalism is the immediate and foremost enemy of genuine participato
 <p>核心家庭也在瓦解民主社会。不过我倒是觉得也在反面催生另一种政治生态，比如美国黑人对 gang 的认同就超过了对单亲家庭的认同。</p>
 <p>最后推荐一篇关于这个话题的长篇著作：《<a href="https://www.theatlantic.com/magazine/archive/2020/03/the-nuclear-family-was-a-mistake/605536/">The Nuclear Family Was a Mistake</a>》。<a href="https://www.thepaper.cn/newsDetail_forward_7260341">thepaper 有中文翻译</a>。作者是 NYT 的专栏 David Brooks。HN 的评论区<a href="https://news.ycombinator.com/item?id=22292660">1</a>, <a href="https://news.ycombinator.com/item?id=22288351">2</a> 也非常精彩。</p></p>
             <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-01-26T05:49:36+00:00">2021-01-26</time></p>
+              <p>Posted <time datetime="2021-01-26T05:49:36+08:00">2021-01-26</time></p>
 <p>stderr</p>            </div>
           </article>
         </div>
@@ -293,7 +293,7 @@ You know all this stuff makes people feel just frustrated and angry, they want a
 </blockquote>
 <p>我感觉国内机会多，还有空间让普通人成为一个向上的人，正直的人，但是假想未来10年、20年后，年轻人恐怕连大城市的一个房租都给不起，各行业都残暴竞争，这样的未来恐怕跟视频里那个老美描述的现状也差不多吧。阶级滑落是一个无可奈何的事。</p></p>
             <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-01-19T20:53:44+00:00">2021-01-19</time></p>
+              <p>Posted <time datetime="2021-01-19T20:53:44+08:00">2021-01-19</time></p>
 <p>stdin</p>            </div>
           </article>
         </div>
@@ -312,7 +312,7 @@ You know all this stuff makes people feel just frustrated and angry, they want a
 </blockquote>
 <p>来自 万维钢·精英日课第一季 《谁想成为（文化）亿万富翁（下） 》</p></p>
             <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-01-07T20:50:42+00:00">2021-01-07</time></p>
+              <p>Posted <time datetime="2021-01-07T20:50:42+08:00">2021-01-07</time></p>
 <p>stdin</p>            </div>
           </article>
         </div>
@@ -351,7 +351,7 @@ You know all this stuff makes people feel just frustrated and angry, they want a
 <p>感觉挺麻烦。而且没法 API 网关自动把调用者的 IP 设为 A 记录。但是聊胜于无吧。高版本的 OpenWRT <a href="https://openwrt.org/docs/guide-user/base-system/ddns">/usr/lib/ddns/services<br />
 </a> 直接支持 Cloudflare 了不用这么麻烦了。</p></p>
             <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-01-05T23:36:09+00:00">2021-01-05</time></p>
+              <p>Posted <time datetime="2021-01-05T23:36:09+08:00">2021-01-05</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
@@ -370,7 +370,7 @@ You know all this stuff makes people feel just frustrated and angry, they want a
 </code></pre>
 <p>为什么要在拨号前随机生成WAN口的 MAC 地址呢？嘿嘿。</p></p>
             <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-01-01T00:27:52+00:00">2021-01-01</time></p>
+              <p>Posted <time datetime="2021-01-01T00:27:52+08:00">2021-01-01</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
@@ -1601,7 +1601,7 @@ for f in $(ls -rt .); do python -c 'm=__import__("re").search(r"product-title\"&
 <p>btw 本来想 awk 搞定，发现自己太弱了。于是换 <code>perl -ne</code> 发现更弱。最后只有拉起 python。。囧。</p>
 <p>然后又遇到了表格字体太大导致行内换行。于是又折腾了 Markdown 改 <code>font-size</code> 的 hack 。。囧。</p></p>
             <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2020-12-26T01:03:36+00:00">2020-12-26</time></p>
+              <p>Posted <time datetime="2020-12-26T01:03:36+08:00">2020-12-26</time></p>
 <p>stderr</p>            </div>
           </article>
         </div>
@@ -1625,7 +1625,7 @@ for f in $(ls -rt .); do python -c 'm=__import__("re").search(r"product-title\"&
 <p>这个很好的解释了，为什么简体中文网上这么多能对国内外局势进行「客观」分析的键盘政治家。。。。。。American Exceptionalism 就是那种一直被上帝眷顾的优待的受欢迎的人，一下子变得不受欢迎，会有很大的心里落差。就想这本书里描写的那些高中生 cool kids 没落一样。</p>
 <p>本篇主要内容摘录自《万维刚·精英日课第一季 欢迎度 4讲》</p></p>
             <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2020-11-30T22:49:51+00:00">2020-11-30</time></p>
+              <p>Posted <time datetime="2020-11-30T22:49:51+08:00">2020-11-30</time></p>
 <p>stdin</p>            </div>
           </article>
         </div>
@@ -1652,7 +1652,7 @@ for f in $(ls -rt .); do python -c 'm=__import__("re").search(r"product-title\"&
 </blockquote>
 <p>从这个角度说说，把游牧人的牲口吃了，就好比你去把农民种子损毁然后要求按普通商品粮食计价。。。</p></p>
             <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2020-11-18T21:08:24+00:00">2020-11-18</time></p>
+              <p>Posted <time datetime="2020-11-18T21:08:24+08:00">2020-11-18</time></p>
 <p>stdin</p>            </div>
           </article>
         </div>
@@ -1667,7 +1667,7 @@ for f in $(ls -rt .); do python -c 'm=__import__("re").search(r"product-title\"&
             <p class="card-text"><p><img alt="" src="/images/2020/stderr-011-1.png" /></p>
 <p>这么多默认隐藏、禁止评论、禁止转发。真是时来天地皆同力，运去英雄不自由。</p></p>
             <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2020-11-07T10:45:59+00:00">2020-11-07</time></p>
+              <p>Posted <time datetime="2020-11-07T10:45:59+08:00">2020-11-07</time></p>
 <p>stderr</p>            </div>
           </article>
         </div>
@@ -1682,7 +1682,7 @@ for f in $(ls -rt .); do python -c 'm=__import__("re").search(r"product-title\"&
             <p class="card-text"><p><img alt="election" src="/images/2020/stdin-015-1.jpg" /></p>
 <p><a href="https://m.weibo.cn/detail/4567585448008247">via</a></p></p>
             <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2020-11-04T23:10:08+00:00">2020-11-04</time></p>
+              <p>Posted <time datetime="2020-11-04T23:10:08+08:00">2020-11-04</time></p>
 <p>stdin</p>            </div>
           </article>
         </div>
@@ -1712,7 +1712,7 @@ for f in $(ls -rt .); do python -c 'm=__import__("re").search(r"product-title\"&
 <p>我觉得这个片子表现了「民主」运作良好的一面，但是也能给我们带来一些差异化的反思和启示。</p>
 <p>以上内容就当电影真实描绘了那个年代的人和事，由此发出一些无病呻吟。如果有偏差，一笑了之。</p></p>
             <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2020-11-01T23:44:37+00:00">2020-11-01</time></p>
+              <p>Posted <time datetime="2020-11-01T23:44:37+08:00">2020-11-01</time></p>
 <p>stderr</p>            </div>
           </article>
         </div>
@@ -1749,7 +1749,7 @@ for f in $(ls -rt .); do python -c 'm=__import__("re").search(r"product-title\"&
 </blockquote>
 <p>Lessons I learned today: don't use libraries based on <code>select.select()</code> if you have too many connections. Even with Gevent's monkey patch, <code>select()</code> wont block on each eventlet, but still it will not allow fileno greater or equal to 1024. Sad.</p></p>
             <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2020-10-30T15:35:45+00:00">2020-10-30</time></p>
+              <p>Posted <time datetime="2020-10-30T15:35:45+08:00">2020-10-30</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
@@ -1771,7 +1771,7 @@ for f in $(ls -rt .); do python -c 'm=__import__("re").search(r"product-title\"&
 <p>以上是我的一家之言。欢迎大家批判。去年我还写了对一些<a href="https://blog.est.im/201910/stdout-006">重要问题的回答</a>。</p>
 <p>[1]: 可以看下两篇论文，Causal Cognition, Force Dynamics and Early Hunting Technologies, Tracking the evolution of causal cognition in humans。</p></p>
             <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2020-10-21T23:39:55+00:00">2020-10-21</time></p>
+              <p>Posted <time datetime="2020-10-21T23:39:55+08:00">2020-10-21</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
@@ -1801,7 +1801,7 @@ for f in $(ls -rt .); do python -c 'm=__import__("re").search(r"product-title\"&
 <p>这篇《<a href="https://m.igetget.com/share/course/article?id=R2Mo65zY4QZ3VnmmYjKqEdNAa98jGB">罗辑思维 第819期 | 为什么会有拖延症？</a>》</p>
 <p>这篇虽然主要讲拖延症，却把 996 这个事情也说明白了。Marx 所说的压榨无产阶级的劳动力是严格意义上指「剩余价值 Mehrwert」，这个词字面意思是  value added，增值，是 增值税 VAT 里的 增值 部分。也就是说销售价格减去物料成本里的价值。996 可不是程序员对公司的增值，而是欠（技术）债。。23333 </p></p>
             <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2020-10-09T21:26:07+00:00">2020-10-09</time></p>
+              <p>Posted <time datetime="2020-10-09T21:26:07+08:00">2020-10-09</time></p>
 <p>stdin</p>            </div>
           </article>
         </div>
@@ -1835,7 +1835,7 @@ for f in $(ls -rt .); do python -c 'm=__import__("re").search(r"product-title\"&
 <p>可以画个道德层次象限图？由于 Mac 下没有方便的 mspaint 所以就懒得画了。</p>
 <p>via <a href="https://www.reddit.com/r/PhilosophyTube/comments/j40dk1/">reddit</a></p></p>
             <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2020-10-06T08:07:56+00:00">2020-10-06</time></p>
+              <p>Posted <time datetime="2020-10-06T08:07:56+08:00">2020-10-06</time></p>
 <p>stdin</p>            </div>
           </article>
         </div>
