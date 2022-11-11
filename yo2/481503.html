@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[Python]我也来玩玩tinyurl的API - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[Python]我也来玩玩tinyurl的API" />
+
+      <link rel="canonical" href="https://blog.est.im/yo2/481503" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[Python]我也来玩玩tinyurl的API</h2>
+    <p class="post-date">Posted <time datetime="2007-10-24T16:09:56+08:00">2007-10-24</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p><a href="http://tinyurl.com/">TinyUrl</a>可以把任意长度的URL转换成 http://tinyurl.com/xxxxxx ，后面6位字符是hash。TinyUrl本身不提供API，但是我们可以方便的通过<a href="remysharp.com/tinyurlapi">第三方API</a>实现tinyurl的转换</p>
+<p>&gt;&gt;&gt; urllib2.urlopen('http://remysharp.com/tinyurlapi?callback=tinyurlCallback&amp;ur<br>
+l=http://initiative.yo2.cn/').read()<br>
+'tinyurlCallback("http://tinyurl.com/25485h");'<br>
+&gt;&gt;&gt; urllib2.urlopen('http://remysharp.com/tinyurlapi?callback=tinyurlCallback&amp;ur<br>
+l=http://initiative.yo2.cn').read()<br>
+'tinyurlCallback("http://tinyurl.com/22u9vv");'</p>
+<p>说几点。<br>
+1. TinyUrl最多能表示36^6 = 2176782336 个网址<br>
+2. TinyUrl有大量的重复网址，比如 http://initiative.yo2.cn/ 和 http://initiative.yo2.cn 完全是同一个网址，不同之处只是后面的 / 符号。<br>
+3. 第三方API的存在造就了Web 2.0</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'yo2/481503';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>URLProtocolView 看看你的windows有多少协议被注册了 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="URLProtocolView 看看你的windows有多少协议被注册了" />
+
+      <link rel="canonical" href="https://blog.est.im/yo2/543929" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">URLProtocolView 看看你的windows有多少协议被注册了</h2>
+    <p class="post-date">Posted <time datetime="2007-11-21T02:11:10+08:00">2007-11-21</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>nirsoft出品，必属精品。<a href="http://www.nirsoft.net/utils/url_protocol_view.html">URLProtocolView</a>是nirsoft在2007年推出的一款软件，可以查看Windows内已经注册的<a href="http://msdn2.microsoft.com/en-us/library/Aa767743.aspx">Asynchronous Pluggable Protocols</a>。</p>
+<p><a href="http://www.nirsoft.net/utils/urlprotocolview_u.zip"><img src="http://www.nirsoft.net/utils/urlprotocolview.gif" alt="UrlProtocolView" width="718" height="384"></a></p>
+<blockquote>
+<p>什么是<strong>A</strong>synchronous <strong>P</strong>luggable <strong>P</strong>rotocols（APP）呢？举个例子，网页里点击一个eMule的超链接，<br>
+<a href="ed2k://|file|BBC.Planet.Earth.03of11.Fresh.Water.720p.Divx6.Ac3.avi|2302461952|bd651d4325e14182f101697e18f08391|/">ed2k://|file|BBC.Planet.Earth.03of11.Fresh.Water.720p.Divx6.Ac3.avi|2302461952|bd651d4325e14182f101697e18f08391|/</a><br>
+系统是怎么启动eMule的呢？我们通过注册表可以看到<code>HKEY_LOCAL_MACHINE\SOFTWARE\Classes\ed2k\shell\open\command</code>指向<code>"D:\下载工具\eMule\EMULE.EXE" "%1"</code>那么相当于我们在命令行里运行了<code>&gt;"D:\下载工具\eMule\EMULE.EXE" "|file|BBC.Planet.Earth.03of11.Fresh.Water.720p.Divx6.Ac3.avi|2302461952|bd651d4325e14182f101697e18f08391|/"</code>。这就是<strong>APP</strong>。</p>
+</blockquote>
+<p>APP可能导致很多安全隐患，例如几个月前沸沸扬扬的<a href="http://xforce.iss.net/xforce/xfdb/38327">Mozilla URI漏洞</a></p>
+<p>扫描了一下，我的Vista下注册的APP是相当的多啊。</p>
+<pre>
+==================================================
+URL Name          : callto
+Status            : Enabled
+Description       : URL:Callto Protocol
+Command-Line      : "D:\Chat\Skype\Skype.exe" "/callto:"%l""
+Product Name      : Skype
+Company Name      : Skype Technologies S.A.
+================================================== <br>
+==================================================
+URL Name          : coll
+Status            : Enabled
+Description       : URL:Directory Opus File Collection
+Command-Line      : D:\Downloads\DOpusInstall\Disk1\data1\dopusrt.exe /
+dde
+Product Name      : Skype
+Company Name      : Skype Technologies S.A.
+================================================== <br>
+==================================================
+URL Name          : ed2k
+Status            : Enabled
+Description       : URL: ed2k Protocol
+Command-Line      : "D:\下载工具\eMule\EMULE.EXE" "%1"
+Product Name      : eMule
+Company Name      : http://www.emule-project.net
+================================================== <br>
+==================================================
+URL Name          : Explorer.AssocProtocol.search-ms
+Status            : Enabled
+Description       : Windows Search Protocol
+Command-Line      : %SystemRoot%\Explorer.exe /separate,/idlist,%I,%L
+Product Name      : Microsoft? Windows? Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : file
+Status            : Enabled
+Description       : URL:File Protocol
+Command-Line      : %SystemRoot%\Explorer.exe /separate,/idlist,%I,%L
+Product Name      : Microsoft? Windows? Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : FirefoxURL
+Status            : Enabled
+Description       : Firefox URL
+Command-Line      : D:\浏览器~1\FIREFOX\FIREFOX.EXE -requestPending -
+osint -url "%1"
+Product Name      : Firefox
+Company Name      : Mozilla Corporation
+================================================== <br>
+==================================================
+URL Name          : ftp
+Status            : Enabled
+Description       : URL:File Transfer Protocol
+Command-Line      : "C:\Program Files\Internet Explorer\iexplore.exe"
+%1
+Product Name      : Windows? Internet Explorer
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : gopher
+Status            : Enabled
+Description       : URL:Gopher Protocol
+Command-Line      : D:\浏览器~1\FIREFOX\FIREFOX.EXE -requestPending -
+osint -url "%1"
+Product Name      : Firefox
+Company Name      : Mozilla Corporation
+================================================== <br>
+==================================================
+URL Name          : gtalk
+Status            : Enabled
+Description       : URL:Gopher Protocol
+Command-Line      : "D:\Chat\Google Talk\googletalk.exe" "/%1"
+Product Name      : Google Talk
+Company Name      : Google
+================================================== <br>
+==================================================
+URL Name          : http
+Status            : Enabled
+Description       : URL:HyperText Transfer Protocol
+Command-Line      : "C:\Program Files\Internet Explorer\iexplore.exe" -
+nohome
+Product Name      : Windows? Internet Explorer
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : https
+Status            : Enabled
+Description       : URL:HyperText Transfer Protocol with Privacy
+Command-Line      : "C:\Program Files\Internet Explorer\iexplore.exe" -
+nohome
+Product Name      : Windows? Internet Explorer
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : IE.FTP
+Status            : Enabled
+Description       : URL:File Transfer Protocol
+Command-Line      : "C:\Program Files\Internet Explorer\iexplore.exe"
+%1
+Product Name      : Windows? Internet Explorer
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : IE.HTTP
+Status            : Enabled
+Description       : URL:HyperText Transfer Protocol
+Command-Line      : "C:\Program Files\Internet Explorer\iexplore.exe" -
+nohome
+Product Name      : Windows? Internet Explorer
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : IE.HTTPS
+Status            : Enabled
+Description       : URL:HyperText Transfer Protocol with Privacy
+Command-Line      : "C:\Program Files\Internet Explorer\iexplore.exe" -
+nohome
+Product Name      : Windows? Internet Explorer
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : IMTo
+Status            : Enabled
+Description       : IMToProtocol
+Command-Line      : "D:\Chat\Tencent\QQ2007\Timwp.exe" "%1"
+Product Name      : QQOneClickApp 应用程序
+Company Name      :
+================================================== <br>
+==================================================
+URL Name          : irc
+Status            : Enabled
+Description       : URL:IRC Protocol
+Command-Line      : "D:\Chat\SysReset\mirc.exe" -noconnect
+Product Name      : mIRC
+Company Name      : mIRC Co. Ltd.
+================================================== <br>
+==================================================
+URL Name          : joost
+Status            : Enabled
+Description       : URL:IRC Protocol
+Command-Line      : "C:\Program Files\Joost\xulrunner\tvprunner.exe"
+"C:\Program Files\Joost\application.ini" "%1"
+Product Name      : Joost
+Company Name      : Joost Technologies B.V.
+================================================== <br>
+==================================================
+URL Name          : lastfm
+Status            : Enabled
+Description       : URL:lastfm
+Command-Line      : "D:\Media\Players\last.fm\LastFM.exe" "%1"
+Product Name      : Last.fm
+Company Name      : Last.fm
+================================================== <br>
+==================================================
+URL Name          : LDAP
+Status            : Enabled
+Description       : URL:LDAP Protocol
+Command-Line      : "%ProgramFiles%\Windows Mail\wab.exe" "/ldap:%1"
+Product Name      : Microsoft? Windows? Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : mailto
+Status            : Enabled
+Description       : URL:Mail Protocol
+Command-Line      : "d:\chat\google talk\googletalk.exe" /mailto %1
+Product Name      : Google Talk
+Company Name      : Google
+================================================== <br>
+==================================================
+URL Name          : mapi
+Status            : Enabled
+Description       : URL:Mail Protocol
+Command-Line      : "d:\chat\google talk\googletalk.exe" /mailto %1
+Product Name      : Google Talk
+Company Name      : Google
+================================================== <br>
+==================================================
+URL Name          : maze
+Status            : Enabled
+Description       : URL: maze Protocol
+Command-Line      : "D:\下载工具\Maze\Maze,1.exe" "%1"
+Product Name      : Google Talk
+Company Name      : Google
+================================================== <br>
+==================================================
+URL Name          : msdigitallocker
+Status            : Enabled
+Description       : URL:Digital Locker Protocol
+Command-Line      : "%SystemRoot%\DigitalLocker\digitalx.exe" %1
+Product Name      : digital locker assistant
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : news
+Status            : Enabled
+Description       : URL:News Protocol
+Command-Line      : "%ProgramFiles%\Windows Mail\WinMail.exe" /
+newsurl:"%1"
+Product Name      : Microsoft(R) Windows(R) Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : nntp
+Status            : Enabled
+Description       : URL:NNTP Protocol
+Command-Line      : "%ProgramFiles%\Windows Mail\WinMail.exe" /
+newsurl:"%1"
+Product Name      : Microsoft(R) Windows(R) Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : OneIndex
+Status            : Enabled
+Description       : Microsoft Office OneNote Protocol Handler for
+Windows Desktop Search
+Command-Line      : "%ProgramFiles%\Windows Mail\WinMail.exe" /
+newsurl:"%1"
+Product Name      : Microsoft(R) Windows(R) Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : OneNote
+Status            : Enabled
+Description       : URL:OneNote Protocol
+Command-Line      : D:\PROGRA~2\MICROS~2\Office12\ONENOTE.EXE /
+hyperlink "%1"
+Product Name      : Microsoft Office OneNote
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : picasa
+Status            : Enabled
+Description       : Picasa Command protocol
+Command-Line      : "D:\Program Files\Picasa2\Picasa2.exe" "%1"
+Product Name      : Picasa
+Company Name      : Google Inc.
+================================================== <br>
+==================================================
+URL Name          : pnm
+Status            : Enabled
+Description       : RealNetworks 流协议
+Command-Line      : D:\Media\Players\RealPlayer\RealPlay.exe "%1"
+Product Name      : RealPlayer (32-bit)
+Company Name      : RealNetworks, Inc.
+================================================== <br>
+==================================================
+URL Name          : ppstream
+Status            : Enabled
+Description       : URL:ppstream Protocol
+Command-Line      : "D:\Networks\PPStream\PPStream.exe" -ppstream %1
+Product Name      :
+Company Name      : PPStream.com
+================================================== <br>
+==================================================
+URL Name          : QSK
+Status            : Enabled
+Description       : QSKProtocol
+Command-Line      : "D:\Chat\Tencent\QQ2007\Timwp.exe" "%1"
+Product Name      : QQOneClickApp 应用程序
+Company Name      :
+================================================== <br>
+==================================================
+URL Name          : RealPlayer.AutoPlay.6
+Status            : Enabled
+Description       : RealPlayer MP3/VCD 自动播放
+Command-Line      : D:\Media\Players\RealPlayer\RealPlay.exe /autoplay
+"%1"
+Product Name      : RealPlayer (32-bit)
+Company Name      : RealNetworks, Inc.
+================================================== <br>
+==================================================
+URL Name          : RealPlayer.CDBurn.6
+Status            : Enabled
+Description       : RealPlayer 空白 CD 自动播放
+Command-Line      : D:\Media\Players\RealPlayer\RealPlay.exe /burn
+"%1"
+Product Name      : RealPlayer (32-bit)
+Company Name      : RealNetworks, Inc.
+================================================== <br>
+==================================================
+URL Name          : rlogin
+Status            : Enabled
+Description       : URL:RLogin Protocol
+Command-Line      : url.dll,TelnetProtocolHandler %l
+Product Name      : RealPlayer (32-bit)
+Company Name      : RealNetworks, Inc.
+================================================== <br>
+==================================================
+URL Name          : rtsp
+Status            : Enabled
+Description       : 实时流协议
+Command-Line      : D:\Media\Players\RealPlayer\RealPlay.exe "%1"
+Product Name      : RealPlayer (32-bit)
+Company Name      : RealNetworks, Inc.
+================================================== <br>
+==================================================
+URL Name          : search-ms
+Status            : Enabled
+Description       : Windows Search Protocol
+Command-Line      : %SystemRoot%\Explorer.exe /separate,/idlist,%I,%L
+Product Name      : Microsoft? Windows? Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : skype
+Status            : Enabled
+Description       : URL:Skype Protocol
+Command-Line      : "D:\Chat\Skype\Skype.exe" "/uri:%l"
+Product Name      : Skype
+Company Name      : Skype Technologies S.A.
+================================================== <br>
+==================================================
+URL Name          : snews
+Status            : Enabled
+Description       : URL:Snews Protocol
+Command-Line      : "%ProgramFiles%\Windows Mail\WinMail.exe" /
+newsurl:"%1"
+Product Name      : Microsoft(R) Windows(R) Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : synacast
+Status            : Enabled
+Description       : URL:synacast Protocol
+Command-Line      : "D:\Networks\SynaLive\PE.exe" -peer -url "%1"
+Product Name      :
+Company Name      :
+================================================== <br>
+==================================================
+URL Name          : telnet
+Status            : Enabled
+Description       : URL:Telnet Protocol
+Command-Line      : url.dll,TelnetProtocolHandler %l
+Product Name      :
+Company Name      :
+================================================== <br>
+==================================================
+URL Name          : Tencent
+Status            : Enabled
+Description       : Tim Protocol
+Command-Line      : "D:\Chat\Tencent\TM2008\Bin\Timwp.exe" "%1"
+Product Name      : QQ
+Company Name      : TENCENT
+================================================== <br>
+==================================================
+URL Name          : Thunderbird.Url.mailto
+Status            : Enabled
+Description       : Thunderbird URL
+Command-Line      : "D:\Networks\ThunderbirdPortable\App\thunderbird
+\thunderbird.exe" -osint -compose "%1"
+Product Name      : Thunderbird
+Company Name      : Mozilla Corporation
+================================================== <br>
+==================================================
+URL Name          : Thunderbird.Url.news
+Status            : Enabled
+Description       : Thunderbird (News) URL
+Command-Line      : "D:\Networks\ThunderbirdPortable\App\thunderbird
+\thunderbird.exe" -osint -mail "%1"
+Product Name      : Thunderbird
+Company Name      : Mozilla Corporation
+================================================== <br>
+==================================================
+URL Name          : tn3270
+Status            : Enabled
+Description       : URL:TN3270 Protocol
+Command-Line      : url.dll,TelnetProtocolHandler %l
+Product Name      : Thunderbird
+Company Name      : Mozilla Corporation
+================================================== <br>
+==================================================
+URL Name          : TSBuddy
+Status            : Enabled
+Description       : URL:TN3270 Protocol
+Command-Line      : D:\Chat\Tencent\QQ2006\SBuddyCall.exe %1
+Product Name      : Thunderbird
+Company Name      : Mozilla Corporation
+================================================== <br>
+==================================================
+URL Name          : webcal
+Status            : Enabled
+Description       : URL:Webcal Protocol
+Command-Line      : "%ProgramFiles%\Windows Calendar\wincal.exe" /
+webcal "%1"
+Product Name      : Microsoft? Windows? Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : WindowsCalendar.UrlWebcal.1
+Status            : Enabled
+Description       : URL:Webcal Protocol
+Command-Line      : "%ProgramFiles%\Windows Calendar\wincal.exe" /
+webcal "%1"
+Product Name      : Microsoft? Windows? Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : WindowsMail.Url.Mailto
+Status            : Enabled
+Description       : URL:Mail Protocol
+Command-Line      : "%ProgramFiles%\Windows Mail\WinMail.exe" /
+mailurl:"%1"
+Product Name      : Microsoft(R) Windows(R) Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : WindowsMail.Url.news
+Status            : Enabled
+Description       : URL:News Protocol
+Command-Line      : "%ProgramFiles%\Windows Mail\WinMail.exe" /
+newsurl:"%1"
+Product Name      : Microsoft(R) Windows(R) Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : WindowsMail.Url.nntp
+Status            : Enabled
+Description       : URL:NNTP Protocol
+Command-Line      : "%ProgramFiles%\Windows Mail\WinMail.exe" /
+newsurl:"%1"
+Product Name      : Microsoft(R) Windows(R) Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : WindowsMail.Url.snews
+Status            : Enabled
+Description       : URL:Snews Protocol
+Command-Line      : "%ProgramFiles%\Windows Mail\WinMail.exe" /
+newsurl:"%1"
+Product Name      : Microsoft(R) Windows(R) Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : WLMail.Url.Mailto
+Status            : Enabled
+Description       : URL:Mail Protocol
+Command-Line      : C:\Program Files\Windows Live Mail desktop
+\wlmail.exe /mailurl:"%1"
+Product Name      : Microsoft(R) Windows(R) Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : WLMail.Url.news
+Status            : Enabled
+Description       : URL:News Protocol
+Command-Line      : C:\Program Files\Windows Live Mail desktop
+\wlmail.exe /newsurl:"%1"
+Product Name      : Microsoft(R) Windows(R) Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : WLMail.Url.nntp
+Status            : Enabled
+Description       : URL:NNTP Protocol
+Command-Line      : C:\Program Files\Windows Live Mail desktop
+\wlmail.exe /newsurl:"%1"
+Product Name      : Microsoft(R) Windows(R) Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : WLMail.Url.snews
+Status            : Enabled
+Description       : URL:Snews Protocol
+Command-Line      : C:\Program Files\Windows Live Mail desktop
+\wlmail.exe /newsurl:"%1"
+Product Name      : Microsoft(R) Windows(R) Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : WMP11.AssocProtocol.MMS
+Status            : Enabled
+Description       : URL:mms Protocol
+Command-Line      : "%ProgramFiles%\Windows Media Player\wmplayer.exe"
+"%L"
+Product Name      : Microsoft? Windows? Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : WPC
+Status            : Enabled
+Description       : URL:Windows Parental Controls URL Exemption
+Request Protocol
+Command-Line      : %systemroot%\system32\wpcer.exe %1
+Product Name      : Windows
+Company Name      : Microsoft Corporation
+==================================================
+</pre>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'yo2/543929';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

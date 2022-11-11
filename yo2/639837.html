@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NetEase Youdao Nanti PWND! [Spoiler] - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="NetEase Youdao Nanti PWND! [Spoiler]" />
+
+      <link rel="canonical" href="https://blog.est.im/yo2/639837" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">NetEase Youdao Nanti PWND! [Spoiler]</h2>
+    <p class="post-date">Posted <time datetime="2009-05-06T20:58:06+08:00">2009-05-06</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>Saw <a href="http://sr.ju690.com/meme/item/24407">an interesting puzzle</a>, blogging about it in English is <em>not</em> <strong>zhuangbility</strong>, but to avoid n00b finding solutions too easily via search engines.</p>
+<p><img src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/05/1.jpg" /></p>
+<ol>
+<li>Sniff</li>
+<li>No packets transfered when click 'submit', so all answers must be downloaded somewhere to client</li>
+<li>Firebug analyze URL requests &amp; responses </li>
+<li>Decompiled all .swf files, nothing found</li>
+<li>Found it's using PHP-RPC</li>
+<li>Tried <a href="http://www.phprpc.org/zh_CN/docs/">phprpc-python</a> but didn't work</li>
+<li>Worked out puzzle 2. answer is <strong>bomb</strong></li>
+<li>Dumped all browser memory</li>
+<li>Search for keyword <strong>bomb</strong></li>
+<li>Got all answers to 15 questions</li>
+<li>Copy, paste &amp; submit all the right answers, but nothing happend, so just blogging about it <a href="http://initiative.yo2.cn/archives/639837">http://initiative.yo2.cn/archives/639837</a></li>
+<li>???</li>
+<li>Profit!</li>
+</ol>
+<p>有道居然用PHPRPC把所有答案加密了。哼哼。任何加密都挡不住内存dump大法。</p>
+<p>So, here's the answers:</p>
+<p><a href="http://twitter.com/ripleyhu/status/1717319409">以下是剧透，丧失游戏乐趣后果自负</a>，没有自己动脑筋思考的同学请不要手贱，报名参加真正的TopCoder比赛吧：<a href="http://www.youdao.com/nanti/apply.php">http://www.youdao.com/nanti/apply.php</a></p>
+<p><code style="color: black;background-color:black"><br />
+&lt;?xml version="1.0" encoding="utf-8" ?&gt;<br />
+&lt;data radius="220" a="320" b="170" skey="youdao"&gt;<br />
+&lt;question src="questions/q1oioqzvveoalz.fa.swf" answer="o" lowcase="true" visible="true"&gt;一样的人物&lt;/question&gt;<br />
+&lt;question src="questions/q80afzfdqrezxc0-rwq.f0.swf" answer="bomb" lowcase="true" visible="true"&gt;湖边的回忆&lt;/question&gt;<br />
+&lt;question src="questions/q4098azvhlaql.f-fq53.swf" answer="0441" visible="true"&gt;危险之地&lt;/question&gt;<br />
+&lt;question src="questions/q3zlllweafl342laozl.swf" answer="@($" visible="true" locked="true"&gt;火星文&lt;/question&gt;<br />
+&lt;question src="questions/q5zpaqa.eop2-f-qe4.swf" answer="也可能" visible="true" locked="true"&gt;博客中的线索&lt;/question&gt;<br />
+&lt;question src="questions/q6pkltix.04.-af.swf" answer="本机地址" visible="true" locked="true"&gt;IT码农的留言&lt;/question&gt;<br />
+&lt;question src="questions/q70a9fdalqrexc65o.vz.swf" answer="search engine" lowcase="true" visible="true" locked="true"&gt;曲径通幽&lt;/question&gt;<br />
+&lt;question src="questions/q909qalzxovaltazt-fq.fq.swf" answer="为" visible="true" locked="true"&gt;手机词典的帮助&lt;/question&gt;<br />
+&lt;question src="questions/q10090zvalzp-f.4.swf" answer="3624087915" visible="true" locked="true"&gt;古诗中的数字&lt;/question&gt;<br />
+&lt;question src="questions/q2098alzraz.5.ao.swf" answer="12355331" visible="true" locked="true"&gt;彩铃包月&lt;/question&gt;<br />
+&lt;question src="questions/q1109zgflqre0f-aw.w2.swf" answer="2月18日||二月十八日" visible="true" locked="true"&gt;和智玲的聊天&lt;/question&gt;<br />
+&lt;question src="questions/q120z0fda2r.z0f-a2.swf" answer="cctv" lowcase="true" visible="true" locked="true"&gt;黑客是怎样炼成的&lt;/question&gt;<br />
+&lt;question src="questions/q13-zf0w2rzlf0.f43.swf" answer="圆周率||祖冲之" visible="true" open="15" locked="true"&gt;Morse的登录&lt;/question&gt;<br />
+&lt;question src="questions/q1409falz-fa.2aof.swf" answer="0731-5310163" visible="true" locked="true"&gt;错误的号码&lt;/question&gt;<br />
+&lt;question src="questions/q160z-af.4er0zafwe.swf" answer="LOVE" visible="true" locked="true"&gt;数学之美&lt;/question&gt;<br />
+&lt;question src="questions/q170z.gzzf-32zflgpqert.swf" answer="ONLMK" lowcase="true" visible="false"&gt;残破的画卷&lt;/question&gt;<br />
+&lt;/data&gt;<br />
+</code></p>
+<p>Seems that there's even a hidden puzzle: <a href="http://www.youdao.com/nanti/mi/questions/q170z.gzzf-32zflgpqert.swf">http://www.youdao.com/nanti/mi/questions/q170z.gzzf-32zflgpqert.swf</a> but I haven't figured out how to invoke it (yet) . Perhaps using some .swf hook :D</p>
+<p>转载请注明出处 <a href="http://initiative.yo2.cn/archives/639837">http://initiative.yo2.cn/archives/639837</a></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'yo2/639837';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

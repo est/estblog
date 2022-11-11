@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>编译mod_auth_mysql不成功，原来官方已经确认bug - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="编译mod_auth_mysql不成功，原来官方已经确认bug" />
+
+      <link rel="canonical" href="https://blog.est.im/yo2/602267" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">编译mod_auth_mysql不成功，原来官方已经确认bug</h2>
+    <p class="post-date">Posted <time datetime="2007-12-21T21:31:55+08:00">2007-12-21</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>According to the <a href="http://packages.qa.debian.org/liba/libapache-mod-auth-mysql.html">QA page for libapache-mod-auth-mysql</a>, it was <a href="http://packages.qa.debian.org/liba/libapache-mod-auth-mysql/news/20061022T223912Z.html">removed From&nbsp;etch</a> because of <a href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=389579">failed to build From&nbsp;source against apache2.2</a>. You could work around the missing package with libapache2-mod-auth-pam and libpam-mysql</p>
+<p>我个人推荐这个方法，100%成功。<a href="http://ubuntuforums.org/showpost.php?p=1846046&amp;postcount=18">http://ubuntuforums.org/showpost.php?p=1846046&amp;postcount=18</a></p>
+<p>Update1:<br>
+我测试了很久 libapache2-mod-auth-pam，想在apache2整合MySql认证，结果，orz<br>
+<a href="https://answers.launchpad.net/ubuntu/+source/libapache2-mod-auth-pam/+question/10853">https://answers.launchpad.net/ubuntu/+source/libapache2-mod-auth-pam/+question/10853</a></p>
+<blockquote>
+<p>mod_auth_pam is a module that requires access to one's system password file. http://pam.sourceforge.net/mod_auth_pam/ recommends the use of mod_authnz_external as mod_auth_pam is no longer developed/supported</p>
+</blockquote>
+<p>汗啊汗，我辛苦配置了3周的SVN+DAV+Apache2+MySQL认证由光荣的失败喽，现在开始研究 <a href="http://unixpapa.com/mod_auth_external.html">mod_authnz_external</a></p>
+<p>开源路漫漫</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'yo2/602267';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

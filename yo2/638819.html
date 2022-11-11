@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>IE和微软 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="IE和微软" />
+
+      <link rel="canonical" href="https://blog.est.im/yo2/638819" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">IE和微软</h2>
+    <p class="post-date">Posted <time datetime="2009-04-09T14:51:28+08:00">2009-04-09</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>IE的确是Windows的一部分，捆绑不能算垄断。因为IE的核心是mshtml.dll，而mshtml.dll非常严重的集成在了Windows GUI Shell的各个方面。Win98开始，资源管理器左边那一块就可以直接由<code>folder.htt</code>（htt全称HTML Template，实质就是HTML）定义</p>
+<p><img src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/04/davwin981.gif"></p>
+<p>mshtml.dll提供了众多接口，例如非常著名的<code>IHTMLDocument2</code>和<code>nternetExplorer.Application</code>，这些东西在Win32平台上是极度被广泛的使用。就像现在的现在被用滥了的webkit一样。Win XP控制面板里“添加删除程序”也是HTML+JS写的，绝大多数Windows帮助文件是基于hh.exe，也就是HTML Help的，GTalk的自定义外观是通过HTML+CSS实现的。要在Windows里去除IE，非常不现实。假设是根除，也就是删除了mshtml.dll，那么大多数Win32程序就废品了，普通用户连Firefox如何去下载可能都束手无策。（在只装有Windows的机器上几乎唯一的办法是通过ftp.exe命令行。）</p>
+<p>但是更加重要的一点，是HTML在Office里的应用。Office是微软最赚钱的产品之一，但是Office的Word, Powerpoint都是基于MSHTML的。例如Office里通用的矢量绘图，就是基于mshtml的<a href="http://en.wikipedia.org/wiki/Vector_Markup_Language">VML</a>引擎。VML还是多强大的。这里有一个<a href="http://wildmag.de/compo/FPS-AutoShapes/AutoShapes.html">256字节javascript调用vml例子</a>。Word/PPT里比较高级的语法，例如宏，域等等概念，最终都可以追溯到Microsoft Script Editor里HTML的变化。</p>
+<p>现在说说IE。IE的本质，不是用来上网的，而是用来查看一个html文件的。IE5如此，IE6也如此。Firefox做的，并没有太多的创新，而是遍地的marketing。Firefox实现的东西，从MyIE到GoSuRF早就实现了。现在的小白都喜欢吹嘘extension和plugin的区别，我的看法就是有个毛的区别啊，被<strong>插</strong>的深度不同而已。IE7受到FF的压力，做了个标签页浏览，其他的还是很烂。IE8受到Chrome的压力，改进了JScript.dll，但是速度依然不行。而且IE里的一些内存泄漏例如Circular Memory leaks居然还是COM+的架构问题引起的。</p>
+<p>所以IE不仅仅是浏览器那么简单，IE可以说牵扯到微软两大核心产品Windows和Office的经脉。任何IE的进步都是牵一发动全身的事情，没有那么简单的。</p>
+<p>那么微软那么牛那么大的帝国，真的连一个IE都做不好吗？我觉得这一切都是<a href="https://groups.google.com/group/pongba/msg/2b6a67461e917690">微软自己的战略失误</a>。浏览器从来都不是微软关心的盈利重点。除非市场强迫微软这么做。</p>
+<p>其实有的时候抛开一切来思考一下，现代OS、浏览器、Office真的应该改进一下了。OS不再应该是对冯·诺伊曼模型的浅包装，Office应该更加注重工作流和业务智能，浏览器应该是完全面向应用的容器式设计。微软这10年进步很少，所谓<a href="http://googlechinablog.com/2007/10/blog-post_3090.html">What Andy gives, Bill takes away</a>么。呵呵 。微软给了竞争对手和开源世界整整10年的机会，可惜是谁也没有作出有革命性的东西出来。OOo到现在还在抄袭Office，GNOME/KDE仍然没有跳出模仿OS X/Windows GUI的框框，谁也没有威胁谁，谁也没有创新。甚至我觉得这10年真正对信息载体/工具有革命性的变化的东西之一是——<a href="http://git-scm.org/">GIT</a></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'yo2/638819';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

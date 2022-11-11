@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Debian下建立PPTP VPN - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Debian下建立PPTP VPN" />
+
+      <link rel="canonical" href="https://blog.est.im/yo2/625414" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Debian下建立PPTP VPN</h2>
+    <p class="post-date">Posted <time datetime="2008-03-21T17:54:38+08:00">2008-03-21</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>PPTP VPN和OpenVPN的不同之处在于PPTP VPN支持Windows自带的VPN拨号器连接。</p>
+<p>apt-get install pptpd<br>
+vim /etc/pptpd.conf<br>
+修改<br>
+localip 10.5.1.3<br>
+remoteip 10.5.1.241-246<br>
+其中localip要保证和ifconfig里的结果一样<br>
+remoteip是一个网段，要保证被2整除。</p>
+<p>vim /etc/ppp/options<br>
+添加两个DNS<br>
+ms-dns 202.112.14.151<br>
+ms-dns 202.112.14.161</p>
+<p>vim /etc/ppp/chap-secrets<br>
+添加几个VPN帐户，例如这里的alice和bob<br>
+alice pptpd a-strong-password *<br>
+bob pptpd another-strong-password *</p>
+<p>允许forward VPN连接<br>
+vim /etc/sysctrl.conf<br>
+删除 #net.ipv4.conf.default.forwarding=1 这一行前面的 #<br>
+再 vim /etc/init.d/pptpd<br>
+在start后面加上<br>
+<code><font style="font: 10pt Fixedsys; color: #000000;">echo&nbsp;1&nbsp;&gt;&nbsp;/proc/sys/net/ipv4/ip_forward&nbsp;</font></code><br>
+也就是：<br>
+<code><font style="font: 10pt Fixedsys; color: #000000;">case&nbsp;"$1"&nbsp;in<br>
+&nbsp;&nbsp;start)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;-n&nbsp;"Starting&nbsp;PPTP&nbsp;Daemon:&nbsp;"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;1&nbsp;&gt;&nbsp;/proc/sys/net/ipv4/ip_forward<br>
+&nbsp;&nbsp;&nbsp;&nbsp;start-stop-daemon&nbsp;–start&nbsp;–quiet&nbsp;–pidfile&nbsp;$PIDFILE&nbsp;–exec&nbsp;$DAEMON&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;–&nbsp;&lt;&nbsp;/dev/null&nbsp;&gt;&nbsp;/dev/null<br>
+&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;"pptpd."<br>
+&nbsp;&nbsp;&nbsp;&nbsp;;;<br></font></code></p>
+<p>最后 /etc/init.d/pptpd restart 好了，赶快试试你的VPN是否正常工作</p>
+<p>来源：<a href="http://pigtail.net/nicholas/pptp/">http://pigtail.net/nicholas/pptp/</a></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'yo2/625414';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

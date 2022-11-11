@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LDAP的MD5算法 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="LDAP的MD5算法" />
+
+      <link rel="canonical" href="https://blog.est.im/yo2/622281" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">LDAP的MD5算法</h2>
+    <p class="post-date">Posted <time datetime="2008-01-12T15:30:06+08:00">2008-01-12</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>和php、MySQL的 md5() 函数不一样，LDAP里用户认证时候的md5算法有点不一样，留个记录。来源：<a href="http://www.openldap.org/lists/openldap-software/200507/msg00417.html">OpenLDAP邮件列表</a></p>
+
+<p>首先说说php和MySQL的md5函数，例如：<br>
+
+<code>md5("testing") = "ae2b1fca515949e5d54fb22b8ed95575";</code><br>
+
+这个和Python的 <code>hexdigest()</code> 函数结果是一样的<br>
+
+<code>&gt;&gt;&gt; md5(”testing”).hexdigest()<br>
+
+‘ae2b1fca515949e5d54fb22b8ed95575′<br></code></p>
+
+<p>在LDAP里怎么表示的呢？<br>
+
+<code><br>
+
+dn: cn=md5user,dc=my,dc=example,dc=com<br>
+
+objectClass: simpleSecurityObject<br>
+
+objectClass: organizationalRole<br>
+
+cn: md5user<br>
+
+description: MD5USER<br>
+
+userPassword: {MD5}CgIBDAUFBA4NBAsCCA0FBw==<br></code>]</p>
+
+<p>怎么得到的呢？</p>
+
+<p>我们研究 字符串 testing 的 MD5 字串：ae 2b 1f ca 51 59 49 e5 d5 4f b2 2b 8e d9 55 75<br>
+
+首先隔一个字符提取一个字符，得到一个新的字符串，例如：<br>
+
+<code><span style="color:red;">a</span>e&nbsp;<span style="color:red;">2</span>b&nbsp;<span style="color:red;">1</span>f&nbsp;<span style="color:red;">c</span>a&nbsp;<span style="color:red;">5</span>1&nbsp;<span style="color:red;">5</span>9&nbsp;<span style="color:red;">4</span>9&nbsp;<span style="color:red;">e</span>5&nbsp;<span style="color:red;">d</span>5&nbsp;<span style="color:red;">4</span>f&nbsp;<span style="color:red;">b</span>2&nbsp;<span style="color:red;">2</span>b&nbsp;<span style="color:red;">8</span>e&nbsp;<span style="color:red;">d</span>9&nbsp;<span style="color:red;">5</span>5&nbsp;<span style="color:red;">7</span>5</code><br>
+
+得到：<br>
+
+<code>a&nbsp;&nbsp;2&nbsp;&nbsp;1&nbsp;&nbsp;c&nbsp;&nbsp;5&nbsp;&nbsp;5&nbsp;&nbsp;4&nbsp;&nbsp;e&nbsp;&nbsp;d&nbsp;&nbsp;4&nbsp;&nbsp;b&nbsp;&nbsp;2&nbsp;&nbsp;8&nbsp;&nbsp;d&nbsp;&nbsp;5&nbsp;&nbsp;7</code><br>
+
+那么把每一位看成十六进制，转换成对应的ASCII字符，例如第一位的 <code>a</code>，十六进制是 \x0A，也就是个回车：<code>\n</code>，把转换后的ASCII字符连起来，那么我们可以得到一串字符，不可显示的：<code>'\n\x02\x01\x0c\x05\x05\x04\x0e\r\x04\x0b\x02\x08\r\x05\x07'</code></p>
+
+<p>最后把这串不可打印的字符用base64编码之后，就可以得到LDAP标准的MD5字串，例如我们在Python里：<br>
+
+<code><br>
+
+&gt;&gt;&gt; '\n\x02\x01\x0c\x05\x05\x04\x0e\r\x04\x0b\x02\x08\r\x05\x07'.encode('base64'<br>
+
+).strip()<br>
+
+'CgIBDAUFBA4NBAsCCA0FBw=='<br></code></p>
+
+<blockquote>
+
+<p>strip()是去掉一个没有用的回车符号。</p>
+
+</blockquote>
+
+<p>最后我们用Python实现这一算法：<br>
+
+<code><br>
+
+ActivePython 2.5.1.1 (ActiveState Software Inc.) based on<br>
+
+Python 2.5.1 (r251:54863, May 1 2007, 17:47:05) [MSC v.1310 32 bit (Intel)] on<br>
+
+win32<br>
+
+Type "help", "copyright", "credits" or "license" for more information.<br>
+
+&gt;&gt;&gt; from md5 import md5<br>
+
+&gt;&gt;&gt;<br>
+
+&gt;&gt;&gt; mysql_md5 = md5("testing").hexdigest()<br>
+
+&gt;&gt;&gt; mysql_md5<br>
+
+<span style="color:red;">‘ae2b1fca515949e5d54fb22b8ed95575′</span><br>
+
+&gt;&gt;&gt; binary_md5 = ”.join([ chr(int(mysql_md5[i:i+1],16)) for i in range(0,len(mysql_md5),2)])<br>
+
+&gt;&gt;&gt; binary_md5<br>
+
+<span style="color:red;">‘\n\x02\x01\x0c\x05\x05\x04\x0e\r\x04\x0b\x02\x08\r\x05\x07′</span><br>
+
+&gt;&gt;&gt; ldap_md5 = binary_md5.encode(”base64″).strip()<br>
+
+&gt;&gt;&gt; ldap_md5<br>
+
+<span style="color:red;">‘CgIBDAUFBA4NBAsCCA0FBw==’</span><br>
+
+&gt;&gt;&gt;<br></code></p>
+
+<p>顺便说下，一个 <a href="http://www2.dormforce.net/dormid">single sign-on</a> 的系统设计还真麻烦。要实现一个password同步、LDAP认证，<a href="http://code.google.com/apis/accounts/AuthForWebApps.html">AuthSub</a>，等等，ho～～～累！</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'yo2/622281';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

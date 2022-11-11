@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>解决XP SP2启动时Loader Error 3 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="解决XP SP2启动时Loader Error 3" />
+
+      <link rel="canonical" href="https://blog.est.im/yo2/623864" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">解决XP SP2启动时Loader Error 3</h2>
+    <p class="post-date">Posted <time datetime="2008-02-16T10:56:27+08:00">2008-02-16</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>一大清早起来，开机，结果Windows XP SP2刚启动就：</p>
+<blockquote>
+<p>Windows could not start because of an error in the software.<br>
+please report this problem as:<br>
+Loader error 3.<br>
+please contact your support person to report this problem</p>
+</blockquote>
+<p>这是非常囧的情况。</p>
+<p>安全模式 和 带网络连接的安全模式 可以进入，但是 正常模式 和 最后一次正确的配置 模式都不能进入系统。</p>
+<p>想到网上去<a href="http://www.google.com/search?hl=en&amp;q=Lloader+error+3">Google答案</a>，但是在安全模式下不能启动Telephony服务，于是也不能PPPoE上网。万恶的微软设计啊～～～想起了我的Leopard双系统，发现Leopard居然说我网线没插好……而且PPPoE也不能拨号。</p>
+<p>系统恢复盘也忘记刻了，所以只有艰苦奋斗双手解决了</p>
+<p>发现启动的时候可以带日志启动。启动失败，进入安全模式，找到了这个记录：</p>
+<p><img src='http://image.cache.yo2blog.com/wp-content/uploads/74/7487/2008/02/12.JPG' alt='12.JPG' width="600" height="363"></p>
+<blockquote>
+<p>事件来源：sptd<br>
+驱动程序为 在其数据结构中检测到了一个内部错误。</p>
+</blockquote>
+<p>万分囧的发现是SPTD驱动出错了，SPTD是Daemon Tools的虚拟光驱驱动程序，于是到 system32\drivers 下删除 sptd.sys</p>
+<p>重启，OK了。</p>
+<p>DaemonTools官方也给出了一个<a href="http://www.daemon-tools.cc/dtcc/my-system-wont-boot-after-t6828.html">解决方案</a>，懒得看了，直接重装最新版DaemonTools了事</p>
+<p>Solution in English:<br>
+delete system32\drivers\sptd.sys, reboot &amp; it’s OK<br>
+Contact Daemon Tools for <a href="http://www.daemon-tools.cc/dtcc/my-system-wont-boot-after-t6828.html">more</a> information</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'yo2/623864';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

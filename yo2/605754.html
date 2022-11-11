@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[地球上最全面]Google Toolbar、Update、Google Gear接口 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[地球上最全面]Google Toolbar、Update、Google Gear接口" />
+
+      <link rel="canonical" href="https://blog.est.im/yo2/605754" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[地球上最全面]Google Toolbar、Update、Google Gear接口</h2>
+    <p class="post-date">Posted <time datetime="2007-12-23T02:36:12+08:00">2007-12-23</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p><code><br>
+UserBrokerLib; // UserBroker library</code></p>
+<p>Class UserBroker; // UserBroker coclass object<br>
+GUID={44295CB8-D71B-11DA-8750-001185653D78};<br>
+function RegCreateOrOpenKey(key_root:ULONG_PTR; key_path:BSTR; key_access:UI4; allow_create:I4; process_id:UI4; out key_handle:^ULONG_PTR): HResult;<br>
+function RegDeleteKey(key_root:ULONG_PTR; key_path:BSTR): HResult;<br>
+function CreatePath(path:BSTR): HResult;<br>
+function CreateFile(file_name:BSTR; desired_access:UI4; share_mode:UI4; creation_disposition:UI4; flags_attributes:UI4; process_id:UI4; out file_handle:^ULONG_PTR): HResult;<br>
+function DeleteFile(file_name:BSTR; even_if_in_use:I4): HResult;<br>
+function RemoveDirectory(path:BSTR): HResult;<br>
+function MoveFileEx(file_name:BSTR; new_name:BSTR; flags:UI4): HResult;<br>
+function CopyFile(file_name:BSTR; new_name:BSTR; fail_if_exists:I4): HResult;<br>
+function ApplyPatch(patch:BSTR; process_id:UI4; out thread_handle:^ULONG_PTR): HResult;<br>
+function FixMenus: HResult;<br>
+function SetDefaultSearchToGoogle: HResult;<br>
+function Uninstall: HResult;<br>
+function CleanVirtualizedPaths: HResult;<br>
+function EnableGoogleToolbar: HResult;<br>
+function VerifyGoogleSignature(key_res_id:I4; file_path:BSTR): HResult;<br>
+function ExecuteGoogleSignedExeElevated(exe:BSTR; args:BSTR; process_id:UI4; out process_handle:^ULONG_PTR): HResult;<br>
+function EnsureBrandingParameters: HResult;<br>
+function IsUpdaterServiceAvailable: HResult;</p>
+<p>Interface IUserBroker; // IUserBroker interface<br>
+GUID={45295CB8-D71B-11DA-8750-001185653D78};<br>
+function RegCreateOrOpenKey(key_root:ULONG_PTR; key_path:BSTR; key_access:UI4; allow_create:I4; process_id:UI4; out key_handle:^ULONG_PTR): HResult;<br>
+function RegDeleteKey(key_root:ULONG_PTR; key_path:BSTR): HResult;<br>
+function CreatePath(path:BSTR): HResult;<br>
+function CreateFile(file_name:BSTR; desired_access:UI4; share_mode:UI4; creation_disposition:UI4; flags_attributes:UI4; process_id:UI4; out file_handle:^ULONG_PTR): HResult;<br>
+function DeleteFile(file_name:BSTR; even_if_in_use:I4): HResult;<br>
+function RemoveDirectory(path:BSTR): HResult;<br>
+function MoveFileEx(file_name:BSTR; new_name:BSTR; flags:UI4): HResult;<br>
+function CopyFile(file_name:BSTR; new_name:BSTR; fail_if_exists:I4): HResult;<br>
+function ApplyPatch(patch:BSTR; process_id:UI4; out thread_handle:^ULONG_PTR): HResult;<br>
+function FixMenus: HResult;<br>
+function SetDefaultSearchToGoogle: HResult;<br>
+function Uninstall: HResult;<br>
+function CleanVirtualizedPaths: HResult;<br>
+function EnableGoogleToolbar: HResult;<br>
+function VerifyGoogleSignature(key_res_id:I4; file_path:BSTR): HResult;<br>
+function ExecuteGoogleSignedExeElevated(exe:BSTR; args:BSTR; process_id:UI4; out process_handle:^ULONG_PTR): HResult;<br>
+function EnsureBrandingParameters: HResult;<br>
+function IsUpdaterServiceAvailable: HResult;</p>
+<p>Alias ULONG_PTR;<br>
+UI4</p>
+<p>GUServiceLib; // Google Updater Service 1.0 Type Library</p>
+<p>Class GUServiceCtl; // GUServiceCtl Class<br>
+GUID={89DAE4CD-9F17-4980-902A-99BA84A8F5C8};<br>
+function Execute(file_name:LPWSTR; args:LPWSTR; caller_proc_id:UI4; out proc_handle:^ULONG_PTR): HResult;</p>
+<p>Interface ISilentUpdater; // Google Updater ISilentUpdater Interface<br>
+GUID={C07A89E4-82A3-4A29-9908-DFC9DEBF8267};<br>
+function Execute(file_name:LPWSTR; args:LPWSTR; caller_proc_id:UI4; out proc_handle:^ULONG_PTR): HResult;</p>
+<p>Alias ULONG_PTR;<br>
+UI4</p>
+<p>Class GUSchedulerCtl; // GUSchedulerCtl Class<br>
+GUID={B53B7061-6584-46AA-A033-D610EB10BD9B};<br>
+function RegisterEvent(app_id:LPWSTR; event_id:LPWSTR; file_name:LPWSTR; args:LPWSTR): HResult;<br>
+function UnregisterEvent(app_id:LPWSTR; event_id:LPWSTR): HResult;<br>
+function ScheduleEvent(app_id:LPWSTR; event_id:LPWSTR; interval:UI4): HResult;<br>
+function CancelEvent(app_id:LPWSTR; event_id:LPWSTR): HResult;<br>
+function ScheduleEventNow(app_id:LPWSTR; event_id:LPWSTR; caller_proc_id:UI4; out proc_handle:^ULONG_PTR): HResult;</p>
+<p>Interface IUpdaterScheduler; // Google Updater IUpdaterScheduler Interface<br>
+GUID={5C8CE0B5-6DA0-49A1-B675-78FD03EA3224};<br>
+function RegisterEvent(app_id:LPWSTR; event_id:LPWSTR; file_name:LPWSTR; args:LPWSTR): HResult;<br>
+function UnregisterEvent(app_id:LPWSTR; event_id:LPWSTR): HResult;<br>
+function ScheduleEvent(app_id:LPWSTR; event_id:LPWSTR; interval:UI4): HResult;<br>
+function CancelEvent(app_id:LPWSTR; event_id:LPWSTR): HResult;<br>
+function ScheduleEventNow(app_id:LPWSTR; event_id:LPWSTR; caller_proc_id:UI4; out proc_handle:^ULONG_PTR): HResult;</p>
+<p>GearsTypelib;</p>
+<p>Class BrowserHelperObject;<br>
+GUID={E0FEFE40-FBF9-42AE-BA58-794CA7E3FB53};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void): HResult;<br>
+function AddRef: UI4;<br>
+function Release: UI4;</p>
+<p>Class HtmlDialogHost;<br>
+GUID={619C4FDA-4D52-4C7C-BAF2-5654DA16E675};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+function GetDialogArguments: BSTR;<br>
+function CloseDialog(result_string:BSTR);</p>
+<p>Dispatch HtmlDialogHostInterface;<br>
+GUID={5D437BB7-8634-46D2-AB33-F854034C73D6};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+function GetDialogArguments: BSTR;<br>
+function CloseDialog(result_string:BSTR);</p>
+<p>Class ToolsMenuItem;<br>
+GUID={0B4350D1-055F-47A3-B112-5F2F2B0D6F08};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void): HResult;<br>
+function AddRef: UI4;<br>
+function Release: UI4;</p>
+<p>Class GearsFactory;<br>
+GUID={C93A7319-17B3-4504-87CD-03EFC6103E6E};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+function create(class_name:BSTR; class_version:BSTR): IDispatch;<br>
+function getBuildInfo: BSTR;</p>
+<p>Dispatch GearsFactoryInterface;<br>
+GUID={CADD7DF9-B7AF-426D-AE24-5E00CB8CF982};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+function create(class_name:BSTR; class_version:BSTR): IDispatch;<br>
+function getBuildInfo: BSTR;</p>
+<p>Class GearsDatabase;<br>
+GUID={B09AFBD8-FBEE-4E91-AA27-7DC433C978AB};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+function open([database_name:^variant]);<br>
+function execute(expression:BSTR; [arg_array:^variant]): ^GearsResultSetInterface;<br>
+function close;<br>
+property-get lastInsertRowId: variant;</p>
+<p>Dispatch GearsDatabaseInterface;<br>
+GUID={DFCF5BD9-9C89-46EC-BC01-8A5E31E6DD3A};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+function open([database_name:^variant]);<br>
+function execute(expression:BSTR; [arg_array:^variant]): ^GearsResultSetInterface;<br>
+function close;<br>
+property-get lastInsertRowId: variant;</p>
+<p>Dispatch GearsResultSetInterface;<br>
+GUID={B8A9C568-C1C1-49BD-A752-FDC3A4022825};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+function field(index:INT): variant;<br>
+function fieldByName(field_name:BSTR): variant;<br>
+function fieldName(index:INT): variant;<br>
+function fieldCount: INT;<br>
+function close;<br>
+function next;<br>
+function isValidRow: bool;</p>
+<p>Class GearsWorkerPool;<br>
+GUID={B76AFB62-9BA2-43E8-B27F-9F1CAC8148B7};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+function createWorker(full_script:^BSTR): INT;<br>
+function sendMessage(message_string:^BSTR; dest_worker_id:INT);<br>
+property-put onmessage(IDispatch);</p>
+<p>Dispatch GearsWorkerPoolInterface;<br>
+GUID={D9583548-7181-4F86-8C19-C02154D5256F};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+function createWorker(full_script:^BSTR): INT;<br>
+function sendMessage(message_string:^BSTR; dest_worker_id:INT);<br>
+property-put onmessage(IDispatch);</p>
+<p>Class GearsLocalServer;<br>
+GUID={3A826505-92E3-486A-9FB5-37FE89E971F9};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+function canServeLocally(url:BSTR): bool;<br>
+function createManagedStore(name:BSTR; [required_cookie:^variant]): ^GearsManagedResourceStoreInterface;<br>
+function openManagedStore(name:BSTR; [required_cookie:^variant]): ^GearsManagedResourceStoreInterface;<br>
+function removeManagedStore(name:BSTR; [required_cookie:^variant]);<br>
+function createStore(name:BSTR; [required_cookie:^variant]): ^GearsResourceStoreInterface;<br>
+function openStore(name:BSTR; [required_cookie:^variant]): ^GearsResourceStoreInterface;<br>
+function removeStore(name:BSTR; [required_cookie:^variant]);</p>
+<p>Dispatch GearsLocalServerInterface;<br>
+GUID={A207BB88-9F3B-4B5E-A267-234C4DDDB331};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+function canServeLocally(url:BSTR): bool;<br>
+function createManagedStore(name:BSTR; [required_cookie:^variant]): ^GearsManagedResourceStoreInterface;<br>
+function openManagedStore(name:BSTR; [required_cookie:^variant]): ^GearsManagedResourceStoreInterface;<br>
+function removeManagedStore(name:BSTR; [required_cookie:^variant]);<br>
+function createStore(name:BSTR; [required_cookie:^variant]): ^GearsResourceStoreInterface;<br>
+function openStore(name:BSTR; [required_cookie:^variant]): ^GearsResourceStoreInterface;<br>
+function removeStore(name:BSTR; [required_cookie:^variant]);</p>
+<p>Dispatch GearsManagedResourceStoreInterface;<br>
+GUID={990DC8DD-A97D-4701-962A-53721251821C};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+property-get name: BSTR;<br>
+property-get requiredCookie: BSTR;<br>
+property-get enabled: bool;<br>
+property-put enabled(bool);<br>
+property-get manifestUrl: BSTR;<br>
+property-put manifestUrl(BSTR);<br>
+property-get lastUpdateCheckTime: I4;<br>
+property-get updateStatus: INT;<br>
+property-get lastErrorMessage: BSTR;<br>
+function checkForUpdate;<br>
+property-get currentVersion: BSTR;</p>
+<p>Dispatch GearsResourceStoreInterface;<br>
+GUID={3F84AC4C-F26D-4A75-9E22-6695F6953EDD};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+property-get name: BSTR;<br>
+property-get requiredCookie: BSTR;<br>
+property-get enabled: bool;<br>
+property-put enabled(bool);<br>
+function capture(urls:^variant; completion_callback:IDispatch): I4;<br>
+function abortCapture(capture_id:I4);<br>
+function isCaptured(url:BSTR): bool;<br>
+function remove(url:BSTR);<br>
+function rename(src_url:BSTR; dst_url:BSTR);<br>
+function copy(src_url:BSTR; dst_url:BSTR);<br>
+function getHeader(url:BSTR; header:BSTR): BSTR;<br>
+function getAllHeaders(url:BSTR): BSTR;<br>
+function captureFile(file_input_element:IDispatch; url:BSTR);<br>
+function getCapturedFileName(url:BSTR): BSTR;<br>
+function createFileSubmitter: ^GearsFileSubmitterInterface;</p>
+<p>Dispatch GearsFileSubmitterInterface;<br>
+GUID={0747A88C-5033-44F7-94B4-2E2823925996};<br>
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br>
+function AddRef: UI4;<br>
+function Release: UI4;<br>
+function GetTypeInfoCount(out pctinfo:^UINT);<br>
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br>
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br>
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br>
+function setFileInputElement(file_input_element:IDispatch; resource_url:BSTR);</p>
+<p>ProtectorExeLib; // ProtectorExe 2.0 Type Library</p>
+<p>Class ProtectorHost; // ProtectorHost Class<br>
+GUID={FBA44040-BD27-4A09-ACC8-C08B7C723DCD};<br>
+function Uninstall2(client:BSTR; sid:BSTR; keep_reg_settings:I4): HResult;</p>
+<p>Interface IProtectorHost2;<br>
+GUID={91959FBB-853A-4AC7-A082-2DDF787F4CA9};<br>
+function Uninstall2(client:BSTR; sid:BSTR; keep_reg_settings:I4): HResult;</p>
+<p>Interface IProtectorHost;<br>
+GUID={DA69D3CC-7676-4A65-889F-C052977F1AA9};<br>
+function GetProtector(out protector:^IUnknown): HResult;<br>
+function LockProtector(lock:I4): HResult;<br>
+function Uninstall(client:BSTR): HResult;</p>
+<p>protector_dllLib;</p>
+<p>Class Protector;<br>
+GUID={6134CEA9-DD6E-495C-A0D1-4F232027D7D7};<br>
+function SetSID(sid:BSTR): HResult;</p>
+<p>Interface IProtector3;<br>
+GUID={91F39C2A-95E7-497A-A539-0AC715DC66D2};<br>
+function SetSID(sid:BSTR): HResult;</p>
+<p>Interface IProtector2;<br>
+GUID={2212951C-1623-4095-906B-AC50B8F91016};<br>
+function SignalToShutdown: HResult;</p>
+<p>Interface IProtector;<br>
+GUID={2351B346-00E8-4EAC-9B75-B138B465D659};<br>
+function Init: HResult;<br>
+function EnableProtection(enable:I4): HResult;<br>
+function IsProtectionOn(out enabled:^I4): HResult;<br>
+function SetNotify(notify:I4): HResult;<br>
+function GetNotify(out notify:^I4): HResult;<br>
+function SetHostPriority(host_priority:I4): HResult;<br>
+function GetHostPriority(out host_priority:^I4): HResult;<br>
+function GetVersion(out major:^INT; out minor:^INT; out build:^INT; out revision:^INT): HResult;<br>
+function SetOffered(offered:I4): HResult;<br>
+function GetOffered(out offered:^I4): HResult;<br>
+function SetSearchDomain(domain:BSTR): HResult;<br>
+function GetSearchDomain(out domain:^BSTR): HResult;<br>
+function IsGoogleDefaultSearch(out is_google:^I4): HResult;<br>
+function EnableUsageStat(enable:I4): HResult;</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'yo2/605754';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

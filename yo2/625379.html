@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[XMPP]Openfire不能和Google Talk互通故障解决 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[XMPP]Openfire不能和Google Talk互通故障解决" />
+
+      <link rel="canonical" href="https://blog.est.im/yo2/625379" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[XMPP]Openfire不能和Google Talk互通故障解决</h2>
+    <p class="post-date">Posted <time datetime="2008-03-21T01:10:57+08:00">2008-03-21</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>今年2月份的时候，地球上很多XMPP服务器不能和Google Talk互通了，原因是Google App加入了即时聊天功能。我就碰到这个情况了，今天到处求助，后来Jabber.org的一位成员指点了一下，找到了<a href="http://mail.jabber.org/pipermail/operators/2008-February/000029.html">Google的官方解释</a>。</p>
+<p>例如，dormforce.net申请了Google Apps，邮件托管在Google Apps Standard，自动开启了 即时聊天 功能，Google这一举动实际上破坏了XMPP Federation。我们自己架设了Openfire作为XMPP服务器，Google总是优先连接自家的XMPP服务器，所以 @dormforce.net 就不能和 @gmail.com 的用户互通，和其他XMPP域（例如 @jabber.org 等）则正常</p>
+<p>现在把Google Apps的 即时通讯 disable了，过一会儿再看看是否正常。如果还不正常可以<a href="http://mail.jabber.org/pipermail/operators/2008-February/000058.html">向Google发邮件</a>。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'yo2/625379';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

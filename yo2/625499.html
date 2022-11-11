@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>借用django.utils.autoreload实现python程序模块热插拔 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="借用django.utils.autoreload实现python程序模块热插拔" />
+
+      <link rel="canonical" href="https://blog.est.im/yo2/625499" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">借用django.utils.autoreload实现python程序模块热插拔</h2>
+    <p class="post-date">Posted <time datetime="2008-03-23T15:32:04+08:00">2008-03-23</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>现代Web服务器应用一个重要的指标是“Uptime”，也就是在线时间。例如一个大型论坛，升级一个功能，如果需要更新配置而重启Web服务器，可能服务就暂停几秒种，几秒种的损失对于Web来说是相当大的，所以我们需要实现模块热插拔。升级一个模块之后，系统自动把内存里的代码更新为最新文件系统上的版本。再举一个例子，假如一个关键业务是一个IM聊天机器人，那么升级一个机器人的功能就不可能让机器人下线再上线。软件系统模块“热插拔”就像硬件的plug ‘n’ play 一样，方便了开发流程，把文件上传到服务器FTP，网站就自动更新。</p>
+<p>实现思路很简单，犯不着去调用文件系统的消息和事件，我们用最原始最简单的办法：用一个单独的线程，隔一段时间遍历当前目录下的 .py 和 .pyc 文件，搜集文件时间属性，如果文件时间属性变化了，则 reload(<em>module</em>)</p>
+<p>其实django内置的开发服务器已经实现了这个功能，你保存一个工程的代码，服务器在不重启的情况下自动刷新，那么秉着“不要重复造轮子”的理念，我们直接用django现有的模块。网上<a href="https://groups.google.com/group/django-users/browse_thread/thread/ac4fc9f8a82e31a2">问</a>了一下，发现是这个模块在起作用： <a href="http://code.djangoproject.com/svn/django/trunk/django/utils/autoreload.py">django.utils.autoreload</a> 。其实retoreload.py也是源自于CherryPy Project的一段代码。</p>
+<p>调用就很简单了</p>
+<p><code><font style="font: 10pt Fixedsys; color: #007F00;">#!/usr/bin/env&nbsp;python<br>
+#coding:utf-8</font></code></p>
+<p><font style="font: 10pt Fixedsys; color: #00007F;">from&nbsp;</font><font style="font: 10pt Fixedsys; color: #000000;">django.utils&nbsp;</font><font style="font: 10pt Fixedsys; color: #00007F;">import&nbsp;</font><font style="font: 10pt Fixedsys; color: #000000;">autoreload</font></p>
+<p><font style="font: 10pt Fixedsys; color: #00007F;">def&nbsp;</font><font style="font: 10pt Fixedsys; color: #007F7F;">main</font><font style="font: 10pt Fixedsys; color: #000000;">():<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</font><font style="font: 10pt Fixedsys; color: #00007F;">print&nbsp;</font><font style="font: 10pt Fixedsys; color: #007F7F;">1</font></p>
+<p><font style="font: 10pt Fixedsys; color: #007F00;">#必须从命令行启动<br></font><font style="font: 10pt Fixedsys; color: #00007F;">if&nbsp;</font><font style="font: 10pt Fixedsys; color: #FF8000;">"__main__"&nbsp;</font><font style="font: 10pt Fixedsys; color: #000000;">==&nbsp;__name__:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</font><font style="font: 10pt Fixedsys; color: #00007F;">import&nbsp;</font><font style="font: 10pt Fixedsys; color: #000000;">autoreload<br>
+&nbsp;&nbsp;&nbsp;&nbsp;autoreload.main(main)<br></font></p>
+<p>保存为 test.py ，命令行运行 python test.py ，显示 1，说明代码没有问题。好，打开 test.py 修改main()函数为 print 2，保存，发现命令行自动刷新了，显示2。</p>
+<p>如果上面的代码在工程中应用，可以在main()里写不能down的监护进程，然后所有功能通过 from <em>module</em> import <em>class</em> 来实现，要更新一个功能，只需要更新 <em>module</em> 文件，整个服务在不中断的情况下就会自动升级，我们就成功实现了模块热插拔。</p>
+<p>脚本语言的确更加适合Web，如果是C语言开发的系统，每更新一个功能模块都需要编译一次，开发效率真是底下（当然用 .so/ .dll / COM 等技术就比较高级一点了）</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'yo2/625499';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

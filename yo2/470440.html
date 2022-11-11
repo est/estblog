@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Vista下arp -s出现：ARP 项添加失败: 5，附解决方法 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Vista下arp -s出现：ARP 项添加失败: 5，附解决方法" />
+
+      <link rel="canonical" href="https://blog.est.im/yo2/470440" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Vista下arp -s出现：ARP 项添加失败: 5，附解决方法</h2>
+    <p class="post-date">Posted <time datetime="2007-10-17T19:48:17+08:00">2007-10-17</time> | <span>archive</span></p>
+  </header>
+
+  
+  <pre class="shell">
+C:\Users\est&gt;arp -s 202.115.22.129 00-0d-bc-78-07-3f
+<strong>ARP 项添加失败: 5</strong><br>
+C:\Users\est&gt;netsh i i show in<br>
+Idx  Met   MTU   状态          名称
+---  ---  -----  -----------  -------------------
+  1   50 4294967295  connected    Loopback Pseudo-Interface 1
+  8   20   1500  connected    本地连接<br>
+C:\Users\est&gt;netsh -c "i i" add neighbors 8 "202.115.22.129" "00-0d-bc-78-07-3f"<br>
+C:\Users\est&gt;arp -a<br>
+接口: 192.169.1.120 --- 0×8
+  Internet 地址         物理地址              类型
+<strong>  202.115.22.129        00-0d-bc-78-07-3f     静态</strong>
+  202.115.22.131        00-17-a4-e2-07-3f     动态
+  202.115.22.132        00-17-08-2e-78-41     静态
+  202.115.22.135        00-01-02-fd-4c-d6     动态
+  202.115.22.141        00-e0-5c-41-0d-98     动态
+  202.115.22.148        00-f0-4c-85-f4-4e     动态
+  202.115.22.149        00-0a-e4-fb-90-ac     动态
+  202.115.22.154        00-0a-eb-4f-1c-e2     动态
+  202.115.22.191        ff-ff-ff-ff-ff-ff     静态
+  224.0.0.22            01-00-5e-00-00-16     静态<br>
+C:\Users\est&gt;
+</pre>
+<p>来源：<a href="http://www.alouz.com/weblog/?p=850">http://www.alouz.com/weblog/?p=850</a></p>
+<p>只有arp -s网关的时候才会出现 ARP 项添加失败: 5这个错误</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'yo2/470440';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

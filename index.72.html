@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="This blog is rated&nbsp;&nbsp;R⃣ , viewer discretion is advised" />
+
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="list-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="card-container side-gutter">
+      <header class="list-header">
+        <p class="list-header-subtext">This blog is rated&nbsp;&nbsp;R⃣ , viewer discretion is advised</p>
+        <!-- <h1 class="list-header-title">Est's Blog</h1> -->
+      </header>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/623864"  rel="bookmark" >
+              <h2 class="card-title">解决XP SP2启动时Loader Error 3</h2>
+            </a>
+            <p class="card-text"><p>一大清早起来，开机，结果Windows XP SP2刚启动就：</p>
+<blockquote>
+<p>Windows could not start because of an error in the software.<br>
+please report this problem as:<br>
+Loader error 3.<br>
+please contact your support person to report this problem</p>
+</blockquote>
+<p>这是非常囧的情况。</p>
+<p>安全模式 和 带网络连接的安全模式 可以进入，但是 正常模式 和 最后一次正确的配置 模式都不能进入系统。</p>
+<p>想到网上去<a href="http://www.google.com/search?hl=en&amp;q=Lloader+error+3">Google答案</a>，但是在安全模式下不能启动Telephony服务，于是也不能PPPoE上网。万恶的微软设计啊～～～想起了我的Leopard双系统，发现Leopard居然说我网线没插好……而且PPPoE也不能拨号。</p>
+<p>系统恢复盘也忘记刻了，所以只有艰苦奋斗双手解决了</p>
+<p>发现启动的时候可以带日志启动。启动失败，进入安全模式，找到了这个记录：</p>
+<p><img src='http://image.cache.yo2blog.com/wp-content/uploads/74/7487/2008/02/12.JPG' alt='12.JPG' width="600" height="363"></p>
+<blockquote>
+<p>事件来源：sptd<br>
+驱动程序为 在其数据结构中检测到了一个内部错误。</p>
+</blockquote>
+<p>万分囧的发现是SPTD驱动出错了，SPTD是Daemon Tools的虚拟光驱驱动程序，于是到 system32\drivers 下删除 sptd.sys</p>
+<p>重启，OK了。</p>
+<p>DaemonTools官方也给出了一个<a href="http://www.daemon-tools.cc/dtcc/my-system-wont-boot-after-t6828.html">解决方案</a>，懒得看了，直接重装最新版DaemonTools了事</p>
+<p>Solution in English:<br>
+delete system32\drivers\sptd.sys, reboot &amp; it’s OK<br>
+Contact Daemon Tools for <a href="http://www.daemon-tools.cc/dtcc/my-system-wont-boot-after-t6828.html">more</a> information</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-02-16T10:56:27+08:00">2008-02-16</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/623848"  rel="bookmark" >
+              <h2 class="card-title">试玩Renoise</h2>
+            </a>
+            <p class="card-text"><p>最近……最近非常郁闷。家里一个劲的给我讲形势，叫我考研。弄得我啥子都不想做，到处乱逛，发现了<a href="http://www.csksoft.net/">CSK</a>对<a href="http://en.wikipedia.org/wiki/MOD_(file_format)">MOD Music</a>一篇<a href="http://www.csksoft.net/blog/post/intro2track_music.html">介绍贴</a>，有点老了，但是突然引起了我的兴趣，于是wikipedia, Google逛了一圈，开始研究Renoise这个<a href="http://en.wikipedia.org/wiki/Tracker">tracker</a></p>
+<p><img src='http://image.cache.yo2blog.com/wp-content/uploads/74/7487/2008/02/11.JPG' alt='11.JPG' width="600" height="424"></p>
+<p>化了半天研究Renoise文档，基本操作会了。玩起来很high。可怜我音乐细胞不够发达，还不能自己画曲子出来。目前把上学期钢琴课的几首曲子录制成了XRNS格式，不过volume和effects一点都没有调。相信以后一定要MOD一点曲子出来玩玩的。</p>
+<p>于是非常想去买一个MIDI键盘（查了下最入门的都1k2多大洋），但是又想买把古典吉他……对于我这种穷人+补考大户，可能最多YY一下，然后用电脑键盘+鼠标消遣了。</p>
+<p>Renoise非常容易上手，界面美观，功能非常强大，社区及其活跃。接下来准备把中国古典名曲给track出来。如果有条件的话用actionscript3实现一个XRNS Synthesizer，哇咔咔～～当然这只是一个美好的愿望罢了。还是重修和做Web要紧</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-02-15T22:40:31+08:00">2008-02-15</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/26"  rel="bookmark" >
+              <h2 class="card-title">算24：认为自己智商在130以上的进来</h2>
+            </a>
+            <p class="card-text"><p>网上看到一个题：算24 这个游戏大家都做过吧？</p>
+<p>这里出一个BT级别的：</p>
+<p><strong>0, 0, 0, 0 四个0用大学数学的函数、运算符算24</strong></p>
+<p><a href="http://ftofficer.spaces.live.com/blog/cns!423B72634E2F6B7E!471.entry">这里</a>可以看到答案</p>
+<p>&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-</p>
+<p>Update：这里有一个更加强大的算法，<strong>任意4个非虚数</strong>通过一定运算可以得到24.。例如 a, b, c, d</p>
+<p>( a&#8217;! + b&#8217;! + c&#8217;! + d&#8217;! )!=24</p>
+<p>这里 &#8216; 表示求导；! 表示阶乘，无敌了无敌了～～～呵呵 </p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-02-02T10:20:28+08:00">2008-02-02</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/622841"  rel="bookmark" >
+              <h2 class="card-title">Security and Anti-virus</h2>
+            </a>
+            <p class="card-text"><p>收到关注的东西总是vulnerable，例如个人操作系统和服务器。所以人们发明了软件来保护这些东西，但是从生态角度来看，这些防护性的措施根本不能解决问题。因为病毒样本和行为库总是落后的。同时安全软件起到的作用也只是加快了病毒和木马的进化。</p>
+
+<p>安全软件越强大，木马进化速度越快。现在国内要发一个新木马，一般都能by-pass 80% 的反病毒软件。也就是说，新的木马对80%的安全软件免疫。只有可怜的20%的软件能察觉新的木马。那么，安全软件的进化速度永远是落后于病毒的。</p>
+
+<p>也有木马是针对没有安装反病毒软件的PC机的（“裸奔”用户），但是这部分用户安全意识一般来说都很高。没有那么容易得手的。</p>
+
+<p>所以，Anti-virus和VXer之间的斗争，Anti-virus永远是失败者。</p>
+
+<p>So why bother using Anti-virus software ? 自己的习惯和了解超前时代的技术才是最重要的。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-23T14:49:49+08:00">2008-01-23</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/622828"  rel="bookmark" >
+              <h2 class="card-title">[youtube]永动机视频</h2>
+            </a>
+            <p class="card-text"><p><object width="425" height="355"><param name="movie" value="http://www.youtube.com/v/PIvZJ9xGutI&amp;rel=1">
+
+<param name="wmode" value="transparent">
+
+<embed src="http://www.youtube.com/v/PIvZJ9xGutI&amp;rel=1" type="application/x-shockwave-flash" wmode="transparent" width="425" height="355"></object></p>
+
+<p>About This Video This is a repost of the original Alsetalokin’s … (more)<br>
+
+Added: January 04, 2008<br>
+
+This is a repost of the original Alsetalokin’s video showing how his implementation of overconfident’s idea looks like so far. (The original video has been taken down by the autor, but he permitted reposting it by others.)</p>
+
+<p>Please note that this is not the final product, the “OC’s Magnetic Perpetual Motion Machine” (which is a bit more complicated and, AFAIK, not unproven to work so far). I admit that this could cause some confusion, but this video really shows only some odd ‘anomaly’ observed during the construction and trying different configurations. There is no over-unity, no infinite long runs, so don’t jump into conclusions. Magnetic perpetual motion machines can’t possibly work, didn’t you know?</p>
+
+<p>* Why is the lighting so bad/not showing the whole device/hidden motors/batteries/whatever?<br>
+
+1. Nobody cares when shooting a video (which proves nothing) for a few interested fellows.<br>
+
+2. Even if there was everything you could imagine to improve, it’s still only a video on YouTube. The world is in serious trouble if that would be enough to convince you.</p>
+
+<p>For more information, visit Steorn’s forum at http://www.steorn.com/forum/, where the always open development has been taking place.</p>
+
+<p>囧，orz，随便推荐一个超猛网站。<a href="http://appweblogic.most.gov.cn/gzwd/index.jsp?&amp;page=2">http://appweblogic.most.gov.cn/gzwd/index.jsp?&amp;page=2</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-22T20:47:26+08:00">2008-01-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/622646"  rel="bookmark" >
+              <h2 class="card-title">HP网站softpaq FTP下载地址转HTTP</h2>
+            </a>
+            <p class="card-text"><p><a href="ftp://ftp.hp.com/pub/softpaq/sp37501-38000/sp37952.exe">ftp://ftp.hp.com/pub/softpaq/sp37501-38000/sp37952.exe</a></p>
+
+<p>对应HTTP地址为：</p>
+
+<p><a href="http://h30318.www3.hp.com/pub/softpaq/sp37501-38000/sp37952.exe">http://h30318.www3.hp.com/pub/softpaq/sp37501-38000/sp37952.exe</a></p>
+
+<p>用迅雷下载HTTP的速度比FTP快2-10倍</p>
+
+<p>我上一篇日志记录了<a href="http://initiative.yo2.cn/archives/442624">Mozilla插件https转http地址</a>。用迅雷下载同样可以增加速度。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-22T16:22:00+08:00">2008-01-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/622552"  rel="bookmark" >
+              <h2 class="card-title">[Python]Google出的Django视频教程</h2>
+            </a>
+            <p class="card-text"><p><a href="http://youtube.com/watch?v=p-WXiqrzAf8">http://youtube.com/watch?v=p-WXiqrzAf8</a></p>
+
+<p>Google TechTalks<br>
+
+April 26, 2006</p>
+
+<p>Jacob Kaplan-Moss</p>
+
+<p>ABSTRACT<br>
+
+Django is one of the premier web frameworks for Python, and is often compared to Ruby-on-Rails. Jacob is one of the lead developers on Django.</p>
+
+<p><object width="425" height="355"><param name="movie" value="http://www.youtube.com/v/p-WXiqrzAf8&amp;rel=1">
+
+<param name="wmode" value="transparent">
+
+<embed src="http://www.youtube.com/v/p-WXiqrzAf8&amp;rel=1" type="application/x-shockwave-flash" wmode="transparent" width="425" height="355"></object></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-19T14:09:07+08:00">2008-01-19</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/622520"  rel="bookmark" >
+              <h2 class="card-title">半导体过了，哦也</h2>
+            </a>
+            <p class="card-text"><p>发帖庆祝～～～～～～意外的惊喜啊</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-18T22:19:59+08:00">2008-01-18</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/622402"  rel="bookmark" >
+              <h2 class="card-title">Wikipedia：7周岁快乐！</h2>
+            </a>
+            <p class="card-text"><p><img src="http://www.readwriteweb.com/images/wikipedia-logo.jpg" alt="wikipedia" width="110" height="124"></p>
+
+<p>今天的新闻：除了<a href="http://blog.twitter.com/2008/01/macworld.html">Macworld的消息瘫痪了Twitter</a>，还有一件重要的事情：<a href="http://www.wikipedia.org/">Wikipedia</a> <a href="http://en.wikipedia.org/wiki/Wikipedia:Wikipedia_Day">7 周岁了</a>。从2001年1月15日Wikipedia建站以来，维基百科诞生了2,174,371个英文条目（我写这篇blog的时候），wikipedia.org是世界排名第九的网站（更具Alexa）。Wikipedia诞生了六个子项目：：Wiktionary，Wikibooks，Wikinews，Wikiquote，Wikisource和Wikiversity</p>
+
+<p>现在Wikipedia有近250种语言，9百多万文章，150多万图片，一千万注册用户，75,000个作出贡献的作者。</p>
+
+<p><a href="http://tools.wikimedia.de/~leon/stats/wikicharts/index.php?lang=en&amp;wiki=enwiki&amp;ns=articles&amp;limit=100&amp;month=09%2F2007&amp;mode=view">WikiCharts显示</a>当今最流行的条目是它<a href="http://en.wikipedia.org/wiki/Wiki?redirect=no">自身的定义</a>：什么是wiki？</p>
+
+<p>Wikipedia同时也记载了当今文化，就像《哈利波特》、《光晕》等。Wikipedia还从侧面反映了事物的流行程度：例如<a href="http://en.wikipedia.org/wiki/Cloverfield?redirect=no">Cloverfield</a>条目的页面，在过去两周每天都有 261,000 PV。</p>
+
+<p>还有更加好玩的：<a href="http://www.wikirage.com/">Wikirage</a>。Wikirage可以跟踪条目编辑频繁程度得出：哪些条目争论最多。毫无疑问，今天争论最多的条目是<a href="http://en.wikipedia.org/wiki/MacBook_Air">MacBook Air</a></p>
+
+<p>如果250个语言版本的Wikipedia是个恐怖的数字，那么其中有一个版本是最有用的：简写版(<a href="http://simple.wikipedia.org/wiki/Main_Page">Simple English</a>)：用不超过1500个英文单词描述一个条目。例如 Harry Potter 的<a href="http://en.wikipedia.org/wiki/Harry_Potter">全文描述</a>是：</p>
+
+<blockquote>
+
+<p>“Harry Potter is a series of seven fantasy novels written by British author J. K. Rowling. The books chronicle the adventures of the eponymous adolescent wizard Harry Potter, together with Ron Weasley and Hermione Granger, his best friends. The story is mostly set at Hogwarts School of Witchcraft and Wizardry, an academy for young wizards and witches. The central story arc concerns Harry’s struggle against the evil wizard Lord Voldemort, who killed Harry’s parents in his quest to conquer the wizarding world.”</p>
+
+</blockquote>
+
+<p><a href="http://simple.wikipedia.org/wiki/Harry_Potter">简化</a>英文版：</p>
+
+<blockquote>
+
+<p>“The Harry Potter books are a popular series of fantasy books by J. K. Rowling. The character Harry Potter is the hero in the stories.</p>
+
+<p>In the books, the fantasy is about magic. Harry Potter is born with the power to do magic. He soon discovers that there is a whole lot of magic people in the world, living unknown to most ordinary people. When he is eleven, he is invited to go to a boarding school for young witches and wizards. Each book tells about one year of his life at school, about the people that he meets there, the things that he learns, and his adventures.”</p>
+
+</blockquote>
+
+<p>简写版几乎涵盖了完整版的所有内容。但是完整版有超过7000个单词。</p>
+
+<p>恩，WIkipedia生日快乐！虽然wikipedia和传统百科全书相比缺乏权威性和<a href="http://www.news.com/2100-1038_3-5997332.html">准确性</a>，还是毫无疑问Wikipedia是最方便的 <img src='http://image.cache.yo2blog.com/wp-includes/images/smilies/icon_smile.gif' alt=':-)' class='wp-smiley'></p>
+
+<p>Source: Read/WriteWeb：<a href="http://feeds.feedburner.com/~r/readwriteweb/~3/217345512/wikipedia_turns_seven.php">Happy Birthday: Wikipedia Turns 7 Today</a></p>
+
+<p>最后吼一句，Read-only，但是不用翻墙的镜像！http://labs.dormforce.net/wikipedia/Great_fire_wall/</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-16T11:55:01+08:00">2008-01-16</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/622359"  rel="bookmark" >
+              <h2 class="card-title">超级龌龊的Macrovision  - 继续扯谈unpack InstallShield的安装包</h2>
+            </a>
+            <p class="card-text"><p>前年的<a href="http://dormforce.net/Blog/electronixtar/archive/2006/10/04/10829.aspx">blog</a>今天又遇到这个问题了，再次下载<a href="http://www.installshield.com/">InstallShield</a>来提取工具……<br>
+
+<a href="http://saturn.installshield.com/is/11/windows/premier/wrapped/installshield11.exe">http://saturn.installshield.com/is/11/windows/premier/wrapped/installshield11.exe</a><br>
+
+<a href="http://saturn.installshield.com/is/12/windows/domestic/premier/installshield12.exe">http://saturn.installshield.com/is/12/windows/domestic/premier/installshield12.exe</a><br>
+
+<a href="http://saturn.installshield.com/product/is/2008/domestic/premier/installshield2008.exe">http://saturn.installshield.com/product/is/2008/domestic/premier/installshield2008.exe</a></p>
+
+<p>ISCab.exe的用法在这里：<a href="http://helpnet.installshield.com/robo/projects/installshield11helplib/ISCabExe.htm">http://helpnet.installshield.com/robo/projects/installshield11helplib/ISCabExe.htm</a></p>
+
+<p>今晚花了3个小时，提取InstallShield 10, 11, 2008里的解包工具，加入<a href="http://legroom.net/software/uniextract">UniExtract</a>小工具，建立一个<a href="http://code.google.com/p/uniextract/">开源项目</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-14T20:33:01+08:00">2008-01-14</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/622348"  rel="bookmark" >
+              <h2 class="card-title">Window Clippings 2.0 截图工具 附注册码</h2>
+            </a>
+            <p class="card-text"><p>看到<a href="http://www.appinn.com/">小众软件</a>推荐了一款截图软件，<a href="http://eng.wiziple.net/5">PicPick</a>，觉得世界上肯定有更好的替代，所以Google了一个更好的：<a href="http://www.windowclippings.com/">Window Clippings</a>，支持多屏幕、命令行参数，不用长期驻留内存，开放接口（C++和.NET）等等，难为可贵的是，Windows Clippings只有238KB，实在是杀人灭口居家旅行必备工具，口黑口黑</p>
+
+<blockquote>
+
+<p>Features:<br>
+
+Use keyboard hot key<br>
+
+Copy image to clipboard<br>
+
+Save image to disk<br>
+
+Automatically generate file name<br>
+
+Prompt for storage location and file name<br>
+
+Send image to OneNote<br>
+
+Clear window background<br>
+
+Include window shadow<br>
+
+Set background color<br>
+
+Include parent in selection<br>
+
+Include multiple windows in selection<br>
+
+Launch Options window from command line<br>
+
+Launch capture screen from command line<br>
+
+Hide notification icon Yes Yes<br>
+
+Convert to black and white<br>
+
+Include mouse pointer<br>
+
+Allow object selection<br>
+
+Freeze window during capture<br>
+
+Delay before capture (to capture pop-ups)<br>
+
+Copy file to clipboard<br>
+
+Configurable image formats<br>
+
+Post-save events<br>
+
+Register and configure add-ins<br>
+
+Crop or expand selection<br>
+
+Quick select desktop, work area or monitor</p>
+
+</blockquote>
+
+<p><a href="http://www.windowclippings.com/download/2.0.28/x86/WindowClippings.exe">32bit 下载</a> <a href="http://www.windowclippings.com/download/2.0.28/x64/WindowClippings.exe">64bit 下载</a><br>
+
+改天有心情了写个撕裂效果的插件，把<a href="http://www.moodysoft.com/spx/">SPX</a>截图工具也踢飞了～～～口黑口黑</p>
+
+<p><a href="http://bbs.sjtu.edu.cn/bbstcon?board=Crack&amp;reid=1187761912">破解过程</a><br>
+
+<img src="http://bbs.sjtu.edu.cn/file/Crack/1187761896159694.GIF" alt="Windows Clippings Serial" width="452" height="469"><br>
+
+注册名：romanogl<br>
+
+注册码：261C0CDF-8D35149F-1C42D8DF-BAFF475A-12FE0CDB</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-13T23:29:25+08:00">2008-01-13</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/622305"  rel="bookmark" >
+              <h2 class="card-title">MySQL5 STOPPING server from pid file 错误</h2>
+            </a>
+            <p class="card-text"><p><code><br>
+
+Starting mysqld daemon with databases from /var/lib/mysql<br>
+
+STOPPING server from pid file /var/run/mysqld/mysqld.pid<br>
+
+050810 11:29:48 mysqld ended<br></code><br>
+
+解决办法：找到MySQL配置文件里的 <code>socket = /tmp/mysql.sock</code></p>
+
+<p>检查<code>/tmp/mysql.sock</code>权限</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-12T23:10:39+08:00">2008-01-12</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/622281"  rel="bookmark" >
+              <h2 class="card-title">LDAP的MD5算法</h2>
+            </a>
+            <p class="card-text"><p>和php、MySQL的 md5() 函数不一样，LDAP里用户认证时候的md5算法有点不一样，留个记录。来源：<a href="http://www.openldap.org/lists/openldap-software/200507/msg00417.html">OpenLDAP邮件列表</a></p>
+
+<p>首先说说php和MySQL的md5函数，例如：<br>
+
+<code>md5("testing") = "ae2b1fca515949e5d54fb22b8ed95575";</code><br>
+
+这个和Python的 <code>hexdigest()</code> 函数结果是一样的<br>
+
+<code>&gt;&gt;&gt; md5(”testing”).hexdigest()<br>
+
+‘ae2b1fca515949e5d54fb22b8ed95575′<br></code></p>
+
+<p>在LDAP里怎么表示的呢？<br>
+
+<code><br>
+
+dn: cn=md5user,dc=my,dc=example,dc=com<br>
+
+objectClass: simpleSecurityObject<br>
+
+objectClass: organizationalRole<br>
+
+cn: md5user<br>
+
+description: MD5USER<br>
+
+userPassword: {MD5}CgIBDAUFBA4NBAsCCA0FBw==<br></code>]</p>
+
+<p>怎么得到的呢？</p>
+
+<p>我们研究 字符串 testing 的 MD5 字串：ae 2b 1f ca 51 59 49 e5 d5 4f b2 2b 8e d9 55 75<br>
+
+首先隔一个字符提取一个字符，得到一个新的字符串，例如：<br>
+
+<code><span style="color:red;">a</span>e&nbsp;<span style="color:red;">2</span>b&nbsp;<span style="color:red;">1</span>f&nbsp;<span style="color:red;">c</span>a&nbsp;<span style="color:red;">5</span>1&nbsp;<span style="color:red;">5</span>9&nbsp;<span style="color:red;">4</span>9&nbsp;<span style="color:red;">e</span>5&nbsp;<span style="color:red;">d</span>5&nbsp;<span style="color:red;">4</span>f&nbsp;<span style="color:red;">b</span>2&nbsp;<span style="color:red;">2</span>b&nbsp;<span style="color:red;">8</span>e&nbsp;<span style="color:red;">d</span>9&nbsp;<span style="color:red;">5</span>5&nbsp;<span style="color:red;">7</span>5</code><br>
+
+得到：<br>
+
+<code>a&nbsp;&nbsp;2&nbsp;&nbsp;1&nbsp;&nbsp;c&nbsp;&nbsp;5&nbsp;&nbsp;5&nbsp;&nbsp;4&nbsp;&nbsp;e&nbsp;&nbsp;d&nbsp;&nbsp;4&nbsp;&nbsp;b&nbsp;&nbsp;2&nbsp;&nbsp;8&nbsp;&nbsp;d&nbsp;&nbsp;5&nbsp;&nbsp;7</code><br>
+
+那么把每一位看成十六进制，转换成对应的ASCII字符，例如第一位的 <code>a</code>，十六进制是 \x0A，也就是个回车：<code>\n</code>，把转换后的ASCII字符连起来，那么我们可以得到一串字符，不可显示的：<code>'\n\x02\x01\x0c\x05\x05\x04\x0e\r\x04\x0b\x02\x08\r\x05\x07'</code></p>
+
+<p>最后把这串不可打印的字符用base64编码之后，就可以得到LDAP标准的MD5字串，例如我们在Python里：<br>
+
+<code><br>
+
+&gt;&gt;&gt; '\n\x02\x01\x0c\x05\x05\x04\x0e\r\x04\x0b\x02\x08\r\x05\x07'.encode('base64'<br>
+
+).strip()<br>
+
+'CgIBDAUFBA4NBAsCCA0FBw=='<br></code></p>
+
+<blockquote>
+
+<p>strip()是去掉一个没有用的回车符号。</p>
+
+</blockquote>
+
+<p>最后我们用Python实现这一算法：<br>
+
+<code><br>
+
+ActivePython 2.5.1.1 (ActiveState Software Inc.) based on<br>
+
+Python 2.5.1 (r251:54863, May 1 2007, 17:47:05) [MSC v.1310 32 bit (Intel)] on<br>
+
+win32<br>
+
+Type "help", "copyright", "credits" or "license" for more information.<br>
+
+&gt;&gt;&gt; from md5 import md5<br>
+
+&gt;&gt;&gt;<br>
+
+&gt;&gt;&gt; mysql_md5 = md5("testing").hexdigest()<br>
+
+&gt;&gt;&gt; mysql_md5<br>
+
+<span style="color:red;">‘ae2b1fca515949e5d54fb22b8ed95575′</span><br>
+
+&gt;&gt;&gt; binary_md5 = ”.join([ chr(int(mysql_md5[i:i+1],16)) for i in range(0,len(mysql_md5),2)])<br>
+
+&gt;&gt;&gt; binary_md5<br>
+
+<span style="color:red;">‘\n\x02\x01\x0c\x05\x05\x04\x0e\r\x04\x0b\x02\x08\r\x05\x07′</span><br>
+
+&gt;&gt;&gt; ldap_md5 = binary_md5.encode(”base64″).strip()<br>
+
+&gt;&gt;&gt; ldap_md5<br>
+
+<span style="color:red;">‘CgIBDAUFBA4NBAsCCA0FBw==’</span><br>
+
+&gt;&gt;&gt;<br></code></p>
+
+<p>顺便说下，一个 <a href="http://www2.dormforce.net/dormid">single sign-on</a> 的系统设计还真麻烦。要实现一个password同步、LDAP认证，<a href="http://code.google.com/apis/accounts/AuthForWebApps.html">AuthSub</a>，等等，ho～～～累！</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-12T15:30:06+08:00">2008-01-12</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/622201"  rel="bookmark" >
+              <h2 class="card-title">100条最有趣的格言</h2>
+            </a>
+            <p class="card-text"><p><strong>1.</strong> The only thing that interferes with my learning is my education.</p>
+
+<p><strong>2.</strong> As far as the laws of mathematics refer to reality, they<br>
+
+are not certain; as far as they are certain, they do not refer to reality.</p>
+
+<p><strong>3.</strong> Common sense is the collection of prejudices acquired by<br>
+
+age eighteen.</p>
+
+<p><strong>4.</strong> The release of atomic energy has not created a new problem.<br>
+
+It has merely made more urgent the necessity of solving an existing one.</p>
+
+<p><strong>5.</strong> If you are out to describe the truth, leave elegance to the<br>
+
+tailor.</p>
+
+<p><strong>6.</strong> I know not with what weapons World War III will be fought,<br>
+
+but World War IV will be fought with sticks and stones.</p>
+
+<p><strong>Fredrick Nietzsche Quotes</strong></p>
+
+<p><img height="250" src="http://www.worldofbiography.com/0063-Friedrich%20Neitzsche/images/Friedrich%20Neitzsche.jpg" width="400"></p>
+
+<p><strong>7.</strong> In the beginning was nonsense, and the nonsense was with<br>
+
+God, and the nonsense was God.</p>
+
+<p><strong>8.</strong> A casual stroll through a lunatic asylum shows that faith<br>
+
+does not prove anything.</p>
+
+<p><strong>9.</strong> <span class="body">Ah, women. They make the highs higher<br>
+
+and the lows more frequent.</span></p>
+
+<p><strong>10.</strong> <span class="body">Is man one of God’s blunders? Or is God<br>
+
+one of man’s blunders?</span></p>
+
+<p><strong>11.</strong> <span class="body">Many are stubborn in pursuit of the path<br>
+
+they have chosen, few in pursuit of the goal.</span></p>
+
+<p><strong>Mark Twain Quotes</strong></p>
+
+<p><img src="http://www.richardhenzel.com/twain.jpg" width="394" height="290"></p>
+
+<p><strong>12.</strong> Be careful about reading health books. You may die of a<br>
+
+misprint.</p>
+
+<p><strong>13.</strong> Don’t go around saying the world owes you a living. The<br>
+
+world owes you nothing. It was here first.</p>
+
+<p><strong>14.</strong> I didn’t attend the funeral, but I sent a nice letter saying<br>
+
+that I approved of it.</p>
+
+<p><strong>15.</strong> I have never let my schooling interfere with my education.</p>
+
+<p><strong>16.</strong> The man who doesn’t read good books has no advantage over<br>
+
+the man who can’t read them.</p>
+
+<p><strong>17.</strong> “Why do you sit there looking like an envelope without any<br>
+
+address on it?”</p>
+
+<p><strong>Voltaire Quotes<br></strong><br>
+
+<img height="200" src="http://www.ymca-coll.edu.hk/history/photo/chapter2/voltaire.jpg" width="150" align="right"><strong>18.<br></strong>Prejudices are what fools use for reason.</p>
+
+<p><strong>19.</strong> If there were no God, it would have been necessary to invent<br>
+
+him.</p>
+
+<p><strong>20.</strong> Every man is guilty of all the good he didn’t do.</p>
+
+<p><strong>21.</strong> No snowflake in an avalanche ever feels responsible.</p>
+
+<p><strong>22.</strong> The true triumph of reason is that it enables us to get<br>
+
+along with those who do not possess it.</p>
+
+<p><strong>23.</strong> It is hard to free fools from the chains they revere.</p>
+
+<p><strong>24.</strong> There are men who can think no deeper than a fact.</p>
+
+<p><strong>25.</strong> Anyone who has the power to make you believe absurdities<br>
+
+has the power to make you commit injustices.</p>
+
+<p><strong>26.</strong> Anything too stupid to be said is sung.</p>
+
+<p><strong>27.</strong> By appreciation, we make excellence in others our own property.</p>
+
+<p><strong>28.</strong> Governments need to have both shepherds and butchers.</p>
+
+<p><strong>Plato Quotes</strong></p>
+
+<p><img height="200" src="http://www.math.technion.ac.il/~rl/pics/plato.jpg" width="150" align="left"></p>
+
+<p><strong>29.</strong> One of the penalties for refusing to participate in politics<br>
+
+is that you end up being governed by your inferiors.</p>
+
+<p><strong>30.</strong> No one ever teaches well who wants to teach, or governs<br>
+
+well who wants to govern.</p>
+
+<p><strong>31.</strong> This City is what it is because our citizens are what they<br>
+
+are.</p>
+
+<p><strong>32.</strong> Courage is knowing what not to fear.</p>
+
+<p><strong>33.</strong> The measure of a man is what he does with power.</p>
+
+<p><strong>Winston Churchill Quotes</strong></p>
+
+<p><img src="http://columns.stlcomics.com/tftlof/XX/churchill.jpg"></p>
+
+<p><strong>34.</strong> A lie gets halfway around the world before the truth has<br>
+
+a chance to get its pants on.</p>
+
+<p><strong>35.</strong> If you are going through hell, keep going.</p>
+
+<p><strong>36.</strong> The best argument against democracy is a five-minute conversation<br>
+
+with the average voter.</p>
+
+<p><strong>37.</strong> <span class="body">It has been said that democracy is the<br>
+
+worst form of government except all the others that have been tried.</span></p>
+
+<p><strong>George Carlin Quotes</strong></p>
+
+<p><img src="http://www.funnycomedymovies.com/george_carlin.jpg" width="288" height="200"></p>
+
+<p><strong>38.</strong> Think of how stupid the average person is, and realize half<br>
+
+of them are stupider than that.</p>
+
+<p><strong>39.</strong> A house is just a place to keep your stuff while you go<br>
+
+out and get more stuff.</p>
+
+<p><strong>40.</strong> Religion has convinced people that there’s an invisible<br>
+
+man…living in the sky, who watches everything you do every minute of every day.<br>
+
+And the invisible man has a list of ten specific things he doesn’t want you to do.<br>
+
+And if you do any of these things, he will send you to a special place, of burning<br>
+
+and fire and smoke and torture and anguish for you to live forever, and suffer and<br>
+
+burn and scream until the end of time. But he loves you. He loves you and he needs<br>
+
+money.</p>
+
+<p><strong>41.</strong> You know the good part about all those executions in Texas?<br>
+
+Fewer Texans.</p>
+
+<p><strong>42.</strong> Reminds me of something my third-grade teacher said to us.<br>
+
+She said, “You show me a tropical fruit and I’ll show you a cocksucker from Guatemala.”</p>
+
+<p><strong>43.</strong> I never fucked a ten, but one night, I fucked five twos.</p>
+
+<p><strong>44.</strong> What year did Jesus think it was?</p>
+
+<p><strong>45.</strong> The real reason that we can’t have the Ten Commandments<br>
+
+in a courthouse: You cannot post “Thou shalt not steal,” “Thou shalt not commit<br>
+
+adultery,” and “Thou shalt not lie” in a building full of lawyers, judges, and politicians.<br>
+
+It creates a hostile work environment.</p>
+
+<p><strong>46.</strong> Atheism is a non-prophet organization.</p>
+
+<p><strong>47.</strong> “No comment” is a comment.</p>
+
+<p><strong>48.</strong> If a man smiles all the time, he’s probably selling something<br>
+
+that doesn’t work.</p>
+
+<p><strong>49.</strong> The reason they call it the American Dream is because you<br>
+
+have to be asleep to believe it.</p>
+
+<p><strong>Steve Martin Quotes</strong></p>
+
+<p><img src="http://images.starpulse.com/Photos/Previews/Steve-Martin-pb03.jpg" width="445" height="296"></p>
+
+<p><strong>50.</strong> Boy, those French: They have a different word for everything!</p>
+
+<p><strong>51.</strong> There is one thing I would break up over, and that is if<br>
+
+she caught me with another woman. I won’t stand for that.</p>
+
+<p><strong>52.</strong> Hosting the Oscars is much like making love to a woman.<br>
+
+It’s something I only get to do when Billy Crystal is out of town.</p>
+
+<p><strong>53.</strong> I believe that sex is one of the most beautiful, natural,<br>
+
+wholesome things that money can buy.</p>
+
+<p><strong>54.</strong> You know what your problem is, it’s that you haven’t seen<br>
+
+enough movies - all of life’s riddles are answered in the movies.</p>
+
+<p><strong>55.</strong> First the doctor told me the good news: I was going to have<br>
+
+a disease named after me.</p>
+
+<p><strong>56.</strong> Why is it we don’t always recognize the moment when love<br>
+
+begins, but we always know when it ends?<br>
+
+* As Harris K. Telemacher in “L.A. Story” (1991)</p>
+
+<p><strong>Steven Colbert Quotes</strong></p>
+
+<p><img src="http://thankyoustephencolbert.org/colbertvac.jpg" width="375" height="250"></p>
+
+<p><strong>57.</strong> “To sit here at the same table with my hero, George W. Bush…I<br>
+
+feel like I’m dreaming. Somebody pinch me. You now what, I’m a pretty sound sleeper,<br>
+
+that may not be enough…Somebody shoot me in the face.”<br>
+
+-Roasting Bush at the 2006 White House Correspondents’ dinner</p>
+
+<p><strong>58.</strong> On this show, your voice will be heard - in the form of<br>
+
+my voice.</p>
+
+<p><strong>59.</strong> There’s a phrase we live by in America: “In God We Trust”.<br>
+
+It’s right there where Jesus would want it: on our money.</p>
+
+<p><strong>60.</strong> Folks, the President needs a break. He’s like a Black and<br>
+
+Decker cordless Dirt Devil vacuum. If you don’t recharge his batteries, he can’t<br>
+
+suck.</p>
+
+<p><strong>61.</strong> I’ve always been a big fan of beauty. Sure, you can’t judge<br>
+
+a book by its cover but who wants to have sex with a book?</p>
+
+<p><strong>62.</strong> Now, I don’t see color. People tell me I’m white and I believe<br>
+
+them because police officers call me “sir”.</p>
+
+<p><strong>63.</strong> Asia: Four little letters, three billion little people.</p>
+
+<p><strong>64.</strong> “There’s nothing wrong with being gay. I have plenty of<br>
+
+friends that are going to hell.”</p>
+
+<p><strong>65.</strong> Jesus forgives sinners, not criminals.</p>
+
+<p><strong>Jon Stewart Quotes</strong></p>
+
+<p><img height="250" src="http://thebosh.com/archives/jon-stewart-with-fork.jpg" width="400"></p>
+
+<p><strong>66.</strong> I celebrated Thanksgiving in an old-fashioned way. I invited<br>
+
+everyone in my neighborhood to my house, we had an enormous feast, and then I killed<br>
+
+them and took their land.</p>
+
+<p><strong>67.</strong> Insomnia is my greatest inspiration.</p>
+
+<p><strong>68.</strong> We have it. The smoking gun. The evidence. The potential<br>
+
+weapon of mass destruction we have been looking for as our pretext of invading Iraq.<br>
+
+There’s just one problem - it’s in North Korea.</p>
+
+<p><strong>69.</strong> We declared war on terror—it’s not even a noun, so, good<br>
+
+luck.</p>
+
+<p><strong>70.</strong> Here’s how bizarre the war is that we’re in in Iraq, and<br>
+
+we should have known this right from the get-go: When we first went into Iraq, Germany<br>
+
+didn’t want to go. Germany. The Michael Jordan of war took a pass.<br>
+
+Jon Stewart’s Stand-up performance at RIT, 2005</p>
+
+<p><strong>Bill Maher Quotes</strong></p>
+
+<p><img height="250" src="http://www.getincensed.com/wp-content/uploads/Bill_Maher.jpg" width="400"></p>
+
+<p><strong>71.</strong> Everything that used to be a sin is now a disease.</p>
+
+<p><strong>72.</strong> I think flying planes into a building was a faith-based<br>
+
+initiative. I think religion is a neurological disorder.</p>
+
+<p><strong>73.</strong> Religion, to me, is a bureaucracy between man and God that<br>
+
+I don’t need.</p>
+
+<p><strong>74.</strong> They’re talking about banning cigarette smoking now in any<br>
+
+place that’s used by ten or more people in a week,<br>
+
+which, I guess, means that Madonna can’t even smoke in bed.</p>
+
+<p><strong>Jerry Seinfeld Quotes</strong></p>
+
+<p><img src="http://www1.wsvn.com/images/news_articles/389x205/061216_jerry_Seinfeld.jpg" width="389" height="205"></p>
+
+<p><strong>75.</strong> Men want the same thing from their underwear that they want<br>
+
+from women: a little<br>
+
+bit of support, and a little bit of freedom.</p>
+
+<p><strong>76.</strong> Dogs are the leaders of the planet. If you see two life<br>
+
+forms, one of them’s making a poop, the other one’s carrying it for him, who would<br>
+
+you assume is in charge.</p>
+
+<p><strong>77.</strong> There’s very little advice in men’s magazines, because men<br>
+
+don’t think there’s a lot they don’t know. Women do. Women want to learn. Men think,<br>
+
+“I know what I’m doing, just show me somebody naked.”</p>
+
+<p><strong>78.</strong> Why do people give each other flowers? To celebrate various<br>
+
+important occasions, they’re killing living creatures? Why restrict it to plants?<br>
+
+“Sweetheart, let’s make up. Have this deceased squirrel.”</p>
+
+<p><strong>Larry David Quotes</strong></p>
+
+<p><strong><br>
+
+<img height="250" src="http://www.hbo.com/larrydavid/img/castandcrew/506x315_cast_larry.jpg" width="400"></strong></p>
+
+<p><strong>79.</strong> Anyone can be confident with a full head of hair. But a<br>
+
+confident bald man - there’s your diamond in the rough.</p>
+
+<p><strong>80.</strong> If you tell the truth about how you’re feeling, it becomes<br>
+
+funny.</p>
+
+<p><strong>81.</strong> I’m surprized Hitler didn’t round up the toupee people.”</p>
+
+<p><strong>Dennis Miller Quotes</strong></p>
+
+<p><img height="150" src="http://southpark.colorado.net/shared/eventscalendar/photos/Dennis-Miller.jpg" width="150" align="left"><strong>82.<br></strong>A recent police study found that you’re much more likely to get shot by<br>
+
+a fat cop if you run.</p>
+
+<p><strong>83.</strong> The average American’s day planner has fewer holes in it<br>
+
+than Ray Charles’s dart board.</p>
+
+<p><strong>84.</strong> “The only way the French are going in is if we tell them<br>
+
+we found truffles in Iraq.”</p>
+
+<p><strong>Jay Leno Quotes</strong></p>
+
+<p><img height="150" src="http://www.dsmithz28.com/wp-content/uploads/2007/09/leno.jpg" width="150" align="right"></p>
+
+<p><strong>85.</strong> Here’s something to think about: How come you never see<br>
+
+a headline like ‘Psychic Wins Lottery’?</p>
+
+<p><strong>86.</strong> The Supreme Court has ruled that they cannot have a nativity<br>
+
+scene in Washington, D.C. This wasn’t for any religious reasons. They couldn’t find<br>
+
+three wise men and a virgin.</p>
+
+<p><strong>87.</strong> Now there are more overweight people in America than average-weight<br>
+
+people. So overweight people are now average. Which means you’ve met your New Year’s<br>
+
+resolution.</p>
+
+<p><strong>88.</strong> The New England Journal of Medicine reports that 9 out of<br>
+
+10 doctors agree that 1 out of 10 doctors is an idiot.</p>
+
+<p><strong>Rodney Dangerfield Quotes</strong></p>
+
+<p><img height="263" src="http://www.sportsonline.com.au/images/Products/7108.jpg" width="196" align="left"></p>
+
+<p><strong>89.</strong> My father carries around the picture of the kid who came<br>
+
+with his wallet.</p>
+
+<p><strong>90.</strong> Oh, when I was a kid in show business I was poor. I used<br>
+
+to go to orgies to eat the grapes.</p>
+
+<p><strong>91.</strong> I’m at the age where I want two girls. In case I fall asleep<br>
+
+they will have someone to talk to.</p>
+
+<p><strong>92.</strong> A girl phoned me and said, “Come on over. There’s nobody<br>
+
+home.” I went over. Nobody was home!</p>
+
+<p><strong>93.</strong> Bisexuality immediately doubles your chances for a date<br>
+
+on Saturday night.</p>
+
+<p><strong><br>
+
+Sarah Silverman Quotes</strong></p>
+
+<p><img src="http://www.avclub.com/content/files/images/Sarah-Silverman.article.jpg" width="360" height="203"></p>
+
+<p><strong>94.</strong> When God gives you AIDS - and God does give you AIDS, by<br>
+
+the way - make lemonAIDS.</p>
+
+<p><strong>95.</strong> I was raped by a doctor. Which is, you know, so bittersweet<br>
+
+for a Jewish girl.</p>
+
+<p><strong>Chris Rock Quotes</strong><img height="200" src="http://img.timeinc.net/Life/img/070316/070316170031_rock2_250x355.jpg" width="150" align="left"></p>
+
+<p><strong>96.</strong> Every town has the same two malls: the one white people<br>
+
+go to and the one white people used to go to.</p>
+
+<p><strong>97.</strong> I live in a neighborhood so bad that you can get shot while<br>
+
+getting shot.</p>
+
+<p><strong>98.</strong> If a woman tells you she’s twenty and looks sixteen, she’s<br>
+
+twelve. If she tells you she’s twenty-six and looks twenty-six, she’s damn near<br>
+
+fourty.</p>
+
+<p><strong>99.</strong> “You know the world is going crazy when the best rapper<br>
+
+is a white guy, the best golfer is a black guy, the tallest guy in the NBA is Chinese,<br>
+
+the Swiss hold the America’s Cup, France is accusing the U.S. of arrogance, Germany<br>
+
+doesn’t want to<br>
+
+go to war, and the three most powerful men in America are named ‘Bush’, ‘Dick’,<br>
+
+and ‘Colon.’ Need I say more?”</p>
+
+<p><strong>100.</strong> “You won’t be able to take your eyes off the next four<br>
+
+presenters: Salma Hayek and Penelope Cruz.”<br>
+
+Chris Rock while hosting the Oscars</p>
+
+<p><strong>101.</strong> Gas is getting so expensive I’m gonna ride a mexican to<br>
+
+work.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-09T14:49:56+08:00">2008-01-09</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/621360"  rel="bookmark" >
+              <h2 class="card-title">pkgmgr - Vista下命令行软件包管理工具</h2>
+            </a>
+            <p class="card-text"><p>vista默认安装没有telnet命令行工具：</p>
+
+<p>命令行执行：<code>start /w pkgmgr /iu:"TelnetClient"</code><br>
+
+或者</p>
+
+<p>Control Panel, Programs, and then Turn Windows Features on or off. In the list, scroll down and select Telnet Client. Click OK to start the installation.</p>
+
+<p>参考：<br>
+
+<a href="http://technet2.microsoft.com/WindowsVista/en/library/bc0c0afa-748d-4cdd-ab38-3868c3ca87151033.mspx?mfr=true">TechNet参考</a></p>
+
+<p><a href="http://technet2.microsoft.com/WindowsVista/en/library/77bd6146-1dae-4f3f-b172-4aa5fc876bdc1033.mspx?mfr=true">Vista包管理器概述</a></p>
+
+<p><a href="http://www.iis.net/articles/view.aspx/IIS7/Deploy-an-IIS7-Server/Installing-IIS7/Install-IIS7-from-the-Command-Line">用pkgmgr安装IIS7</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-07T15:19:32+08:00">2008-01-07</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/621358"  rel="bookmark" >
+              <h2 class="card-title">【图】当岁月逐渐腐蚀了我们的软件……</h2>
+            </a>
+            <p class="card-text"><p><img src='http://image.cache.yo2blog.com/wp-content/uploads/74/7487/2008/01/3.jpg' alt='3.jpg' width="600" height="1027"></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-07T15:11:46+08:00">2008-01-07</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/621336"  rel="bookmark" >
+              <h2 class="card-title">原来GMA950集成显卡也有性能提升的余地的</h2>
+            </a>
+            <p class="card-text"><p>好吧，我承认我火星。如果你是用的笔记本，显卡是Intel 945芯片集成的GMA 950的话，那么可以通过这个方式无损提升显卡性能50%以上：<br>
+
+首先安装好<a href="http://downloadcenter.intel.com/Product_Filter.aspx?ProductID=2301">最新的Intel显卡驱动</a><br>
+
+开始 运行 <code>igfxcfg</code><br>
+
+点击 显示设置 电源设置<br>
+
+拖到最高质量<br>
+
+<img src='http://image.cache.yo2blog.com/wp-content/uploads/74/7487/2008/01/11.jpg' alt='11.jpg' width="579" height="627"></p>
+
+<p>我是不是有点火星？？通过这个方法我成功的将CS 1.5的FPS从30提升到89，嘿嘿</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-06T18:11:36+08:00">2008-01-06</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/621334"  rel="bookmark" >
+              <h2 class="card-title">dbus-python for Windows</h2>
+            </a>
+            <p class="card-text"><pre>
+
+ActivePython 2.5.1.1 (ActiveState Software Inc.) based on
+
+Python 2.5.1 (r251:54863, May  1 2007, 17:47:05) [MSC v.1310 32 bit (Intel)] on
+
+win32
+
+Type "help", "copyright", "credits" or "license" for more information.
+
+&gt;&gt;&gt; import dbus
+
+&gt;&gt;&gt; dbus
+
+&lt;module 'dbus' from 'C:\Python25\lib\dbus\__init__.pyc'&gt;
+
+&gt;&gt;&gt;
+
+</pre>
+
+<p>成功！<br>
+
+把文件解压到 C:\Python25\lib\dbus\</p>
+
+<p><a href="http://dbus.freedesktop.org/">dbus</a>是个消息系统，dbus-python下载在<a href="http://dbus.freedesktop.org/releases/dbus-python/">这里</a>。里面的dbus-bindings不是我编译的，是一个老外编译好的 <a href="http://www.slurdge.org/comment/reply/42">http://www.slurdge.org/comment/reply/42</a></p>
+
+<p>下载：<a href='http://media.cache.yo2blog.com/wp-content/uploads/74/7487/2008/01/dbus.rar' title='dbus.rar'>dbus.rar</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-06T16:28:15+08:00">2008-01-06</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/621332"  rel="bookmark" >
+              <h2 class="card-title">直接下载Flash播放器控件离线完整版，9.0.115.0 支持X264视频</h2>
+            </a>
+            <p class="card-text"><p>Adobe收购Macromedia以后，做的东西越来越臃肿，下载越来越麻烦。</p>
+
+<p>这次装系统，Windows Server 2008，发现IE7浏览器没有自带Flash的ActiveX控件，于是去<a href="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash">官方下载</a>。</p>
+
+<p>没想到从Adobe这个JB网站下载下来的是一个 下载程序，这个巨垃圾的下载程序才会去真正的地址下载Flash控件然后安装。想天朝这种网速就别想安装成功了。</p>
+
+<p>所以必须找到真实的安装地址！<a href="http://fpdownload2.macromedia.com/get/flashplayer/current/gtb/install_flash.foo.s">http://fpdownload2.macromedia.com/get/flashplayer/current/gtb/install_flash.foo.s</a>。但是这个地址的文件被加密了，无法解开安装。</p>
+
+<p>该死的Adobe！！！</p>
+
+<p>经过多方搜索，得到了一个第三方授权下载的页面。有完整的安装包，是最新的9.0.115.0版本支持X264视频。数字签名是2007-11-21日。</p>
+
+<p>execute a <a href="http://www.adobe.com/licensing/distribution/">new<br>
+
+agreement</a>.</p>
+
+<ul class="link-list">
+
+<li><a target="mm_window" href="http://www.adobe.com/licensing/distribution/faq/"><br>
+
+Read the FAQ ›</a></li>
+
+<li><a target="mm_window" href="http://www.adobe.com/licensing/distribution/license/"><br>
+
+View the license ›</a></li>
+
+</ul>
+
+<h3>Downloads</h3>
+
+<h4>Flash Player 9</h4>
+
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<table class="max">
+
+<colgroup>
+
+<col class="datacolumns-4-aaBCD-aa"></colgroup>
+
+<col class="datacolumns-4-aaBCD-B">
+
+<col class="datacolumns-4-aaBCD-C">
+
+<col class="datacolumns-4-aaBCD-D">
+
+<tr>
+
+<th scope="col">Operating System</th>
+
+<th scope="col">Browsers</th>
+
+<th scope="col">Languages</th>
+
+<th scope="col">Installer</th>
+
+</tr>
+
+<tr>
+
+<td>Windows</td>
+
+<td>Internet Explorer</td>
+
+<td>All supported languages</td>
+
+<td>
+
+<ul class="iconmarker-16x16">
+
+<li><a href="http://www.adobe.com/go/full_flashplayer_win_ie"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+EXE Installer</a></li>
+
+<li><a s_oid="http://www.adobe.com/go/full_flashplayer_win_msi" s_oidt="0" href="http://www.adobe.com/go/full_flashplayer_win_msi"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+MSI Installer</a></li>
+
+<li><a href="http://www.adobe.com/go/full_flashplayer_win_msm"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+MSM Installer</a></li>
+
+<li><a href="http://www.adobe.com/licensing/distribution/strategies/sms.html"><br>
+
+<img alt="Information" src="http://www.adobe.com/images/icons/info.gif" width="16" height="16">Import<br>
+
+SMS Catalog</a> <span class="footnote"><a href="#sms">*</a></span></li>
+
+</ul>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Windows</td>
+
+<td>Plugin-based browsers</td>
+
+<td>All supported languages</td>
+
+<td>
+
+<ul class="iconmarker-16x16">
+
+<li><a href="http://www.adobe.com/go/full_flashplayer_win"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+EXE Installer</a></li>
+
+<li><a href="http://www.adobe.com/go/full_flashplayer_win_pl_msi"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+MSI Installer</a></li>
+
+<li><a href="http://www.adobe.com/go/full_flashplayer_win_pl_msm"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+MSM Installer</a></li>
+
+</ul>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Mac OS X<br>
+
+<span class="note">(Universal binary)</span></td>
+
+<td>All supported browsers</td>
+
+<td>All supported languages</td>
+
+<td>
+
+<ul class="iconmarker-16x16">
+
+<li><a href="http://www.adobe.com/go/full_flashplayer_macosx_ub"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+DMG Installer</a></li>
+
+</ul>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Mac OS X<br>
+
+<span class="note">(PowerPC)</span></td>
+
+<td>All supported browsers</td>
+
+<td>All supported languages</td>
+
+<td>
+
+<ul class="iconmarker-16x16">
+
+<li><a href="http://www.adobe.com/go/full_flashplayer_macosx"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+DMG Installer</a></li>
+
+</ul>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Linux</td>
+
+<td>All supported browsers</td>
+
+<td>All supported languages</td>
+
+<td>
+
+<ul class="iconmarker-16x16">
+
+<li><a href="http://www.adobe.com/go/fp9_linux_targz"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+GZIP Installer</a></li>
+
+<li><a href="http://www.adobe.com/go/fp9_linux_rpm"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+RPM Installer</a></li>
+
+</ul>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Solaris (Sparc)</td>
+
+<td>All supported browsers</td>
+
+<td>All supported languages</td>
+
+<td>
+
+<ul class="iconmarker-16x16">
+
+<li><a href="http://www.adobe.com/go/fp9_solaris_sparc"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+GZIP Installer</a></li>
+
+</ul>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Solaris (x86)</td>
+
+<td>All supported browsers</td>
+
+<td>All supported languages</td>
+
+<td>
+
+<ul class="iconmarker-16x16">
+
+<li><a href="http://www.adobe.com/go/fp9_solaris_x86"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+GZIP Installer</a></li>
+
+</ul>
+
+</td>
+
+</tr>
+
+</table>
+
+<p>See the<br>
+
+<a target="mm_window" href="http://www.adobe.com/software/flashplayer/productinfo/systemreqs/"><br>
+
+current Flash Player system requirements</a> for detailed information on<br>
+
+supported operating systems, browsers, and languages.</p>
+
+<p class="note" id="sms">* Customers using Microsoft Systems Management Server<br>
+
+(SMS) 2003 R2 can import the Flash Player Catalog for use with the Inventory<br>
+
+Tool for Custom Updates.</p>
+
+<h4>Flash Player 8</h4>
+
+<p>Flash Player 8 is no longer available from this licensing program. All<br>
+
+licensees should distribute Flash Player 9</p>
+
+<h4>Flash Player 7</h4>
+
+<p>Flash Player 9 is the most current version for Solaris. For licensees who<br>
+
+have not yet begun to distribute Flash Player 9 for Solaris, Flash Player 7 is<br>
+
+still available.</p>
+
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<table class="max">
+
+<colgroup>
+
+<col class="datacolumns-4-aaBCD-aa"></colgroup>
+
+<col class="datacolumns-4-aaBCD-B">
+
+<col class="datacolumns-4-aaBCD-C">
+
+<col class="datacolumns-4-aaBCD-D">
+
+<tr>
+
+<th scope="col">Operating System</th>
+
+<th scope="col">Browsers</th>
+
+<th scope="col">Languages</th>
+
+<th scope="col">Installer</th>
+
+</tr>
+
+<tr>
+
+<td>Solaris (Sparc)</td>
+
+<td>All supported browsers</td>
+
+<td>All supported languages</td>
+
+<td>
+
+<ul class="iconmarker-16x16">
+
+<li><a href="http://www.adobe.com/go/fp7_solaris_sparc"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+GZIP Installer</a></li>
+
+</ul>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Solaris (x86)</td>
+
+<td>All supported browsers</td>
+
+<td>All supported languages</td>
+
+<td>
+
+<ul class="iconmarker-16x16">
+
+<li><a href="http://www.adobe.com/go/fp7_solaris_x86"><br>
+
+<img alt="Download" src="http://www.adobe.com/images/icons/download.gif" width="16" height="16">Download<br>
+
+GZIP Installer</a></li>
+
+</ul>
+
+</td>
+
+</tr>
+
+</table>
+
+<p>See the<br>
+
+<a target="mm_window" href="http://www.adobe.com/software/flashplayer/productinfo/systemreqs/flashplayer7/"><br>
+
+Flash Player 7 system requirements</a> for detailed information on supported<br>
+
+operating system, browsers, and languages.</p>
+
+<p class="note">Note: If you require a Player installer that is not available<br>
+
+from this page, please<br>
+
+<a href="http://www.adobe.com/cfusion/mmform/index.cfm?name=licensing">contact a<br>
+
+Player Licensing representative</a>.</p>
+
+<p>作为普通用户下载这个文件就行了<br>
+
+<a href="http://www.adobe.com/go/full_flashplayer_win_msi">http://www.adobe.com/go/full_flashplayer_win_msi</a></p>
+
+<p>像Adobe这种垃圾公司真应该被我们共&amp;产主义国家狠狠的盗版！！！</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-06T16:04:09+08:00">2008-01-06</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/621330"  rel="bookmark" >
+              <h2 class="card-title">I hate Bootstrapper!</h2>
+            </a>
+            <p class="card-text"><p>Downloading <a href="http://www.live.com/">Windows Live</a> components like Windows Live Writer, Windows Live Messenger is fucking slow!!<br>
+
+No matter wtf you <a href="http://get.live.com/WL/config_all">selected</a> to download, you always get a ’small’ executable <a href="http://g.live.com/1rewlive/en/WLInstaller.exe">http://g.live.com/1rewlive/en/WLInstaller.exe</a>, and this fucking bootstrapper will ’smartly’ download components background themself. I cannot select a proxy connection, or multi-theaded downloading using third-party tools. Bootstrapper inventors must have an ass in pain!!!!</p>
+
+<p>Sniffering the damned WLInstaller.exe I found out that the HTTP request was encrypted, I cannot get the direct download address!!!!! Shit!!!</p>
+
+<p>So does <a href="http://www.adobe.com/go/getflashplayer">dowloading</a> Adobe Flash Player OCX control !!<br>
+
+First you get a god-damn bootstrapper <a href="http://fpdownload.macromedia.com/get/flashplayer/current/ultrashim.cab">http://fpdownload.macromedia.com/get/flashplayer/current/ultrashim.cab</a><br>
+
+then you go to Macromedia site <a href="http://fpdownload2.macromedia.com/get/flashplayer/current/gtb/install_flash.foo.s">http://fpdownload2.macromedia.com/get/flashplayer/current/gtb/install_flash.foo.s</a>. God knows what to do with the fucking install_flash.foo.s. It’s neither a valid win32 PE binary nor a compressed package.</p>
+
+<p>Bootstrapper sucks!!!!!</p>
+
+<p>I don’t know what shit is Microsoft and Adobe developers are eating, I cannot download those BIG install files through proxy to bypass firewall, I cannot download with a dowload tool like <a href="http://www.orbitdownloader.com/">Orbit Downloader</a>. Why they just can’t provide a complete OFFLINE install package?</p>
+
+<p>Curse you all MS and Adobe !!!! Go To Hell!!!!</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-06T15:07:17+08:00">2008-01-06</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+    </main>
+    <nav class="pagination-nav side-padding">
+<a href="/index.71.html" class="pagination-newer">&lt; Newer Posts</a><a href="/index.73.html" class="pagination-older">Older Posts &gt;</a>    </nav>
+
+<script src="/theme/js/core.js"></script>
+
+  </body>
+</html>

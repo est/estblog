@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>libgugemusic: Google Music Streaming &amp; Download - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="libgugemusic: Google Music Streaming &amp; Download" />
+
+      <link rel="canonical" href="https://blog.est.im/yo2/639811" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">libgugemusic: Google Music Streaming & Download</h2>
+    <p class="post-date">Posted <time datetime="2009-05-03T18:06:37+08:00">2009-05-03</time> | <span>archive</span></p>
+  </header>
+
+  
+  <h3>Basic structure</h3>
+<p>Google (China) Music website frontend is very traditional:</p>
+<p><a href="http://www.google.cn/music/song?id=S2894c9e5fc5df536">http://www.google.cn/music/song?id=S2894c9e5fc5df536</a><br />
+<a href="http://www.google.cn/music/album?id=B700dfba92c77567d">http://www.google.cn/music/album?id=B700dfba92c77567d</a><br />
+<a href="http://www.google.cn/music/artist?id=A21d5906abfad070c">http://www.google.cn/music/artist?id=A21d5906abfad070c</a></p>
+<h3>Streaming</h3>
+<p>Google (China) Music service includes an online player made with Flex. The Streaming of .mp3 files &amp; .lrc lyrics files is powered by <a href="http://www.chinacache.com/">ChinaCache</a>. Here's a <a href="http://www.google.cn/music/songstreaming?id=S40dbcfe0c610fa09&#038;client=&#038;output=xml&#038;sig=7df9df980d74d35d28efe461842d76f1&#038;cad=pl_player">sample streaming query with XML result</a></p>
+<p>In the URL query, parameter <code>sig=7df9df980d74d35d28efe461842d76f1 </code> refers to: <code>MD5.hash(KeyContainer.PLAYER_KEY + param1.id);</code>,</p>
+<p>where  <code>KeyContainer.PLAYER_KEYM</code> is defined at <code>com.google.music.projectm.player.generated.KeyContainer.as</code> as follows:<br />
+<code><br />
+package com.google.music.projectm.player.generated<br />
+{</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;public class KeyContainer extends Object<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static public const PLAYER_KEY:String = "eca5badc586962b6521ffa54d9d731b0";</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public function KeyContainer()<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+}</p>
+<p></code></p>
+<p>So the pseudo algorism for <strong><code>sig</code></strong> is:</p>
+<p>md5("eca5badc586962b6521ffa54d9d731b0" + "S40dbcfe0c610fa09") = "7df9df980d74d35d28efe461842d76f1"</p>
+<h3>Download</h3>
+<p>Download is pretty easy, just try this link:</p>
+<p>http://www.google.cn/music/top100/musicdownload?id=Sc623893aee83dfb4</p>
+<p>and parse the <code>&lt;a&gt;</code> element:</p>
+<p><code>&lt;a href="/music/top100/url?q=http%3A%2F%2Ffile1.top100.cn%2F200905031622%2FFA4C7C8006CDB6F605DE00A4714A421A%2FSpecial_28506%2FWTF.mp3&amp;ct=rdl&amp;cad=dl&amp;ei=V1T9SdDnNpuYsAKE8ua6AQ&amp;sig=9EC3F52AC3B1F3857871AAF885AD2A2D"&gt;&lt;img src="http://www.gstatic.cn/top100/images/download_icon.png" alt="" style="border: none;"&gt;&lt;/a&gt;</code></p>
+<h3>libgugemusic</h3>
+<p>libgugemusic.py is a simple library for interacting with Google (China) Music service written in pure Python</p>
+<p>Example:<br />
+<code><br />
+&gt;&gt;&gt; import libgugemusic<br />
+&gt;&gt;&gt; libgugemusic.download_mp3_by_id('S40dbcfe0c610fa09')<br />
+'http://file3.top100.cn/200905031859/42B67F4B5A23786601DB7781B75E509A/Special_12<br />
+3690/%E8%8A%B1%E8%9D%B4%E8%9D%B6.mp3'<br />
+&gt;&gt;&gt; libgugemusic.stream_mp3_by_id('S40dbcfe0c610fa09')<br />
+{'songUrl': 'http://audio2.top100.cn/200905031859/6186071D9F22FB7C15048C81BE0241<br />
+7B/streaming2/Special_123690/%E8%8A%B1%E8%9D%B4%E8%9D%B6.mp3', 'lyricsUrl': 'htt<br />
+p://lyric.top100.cn/Special_123690/M0123690001.lrc', 'label': '\xe5\x8d\x8e\xe7\<br />
+xba\xb3\xe5\x94\xb1\xe7\x89\x87\xe5\x85\xac\xe5\x8f\xb8(Warner Music)', 'provide<br />
+rId': 'M0123690001', 'albumThumbnailLink': 'http://www.gstatic.cn/base_media?q=h<br />
+ttp://pic.top100.cn/SpecialImg/middle_special_123690.jpg&amp;size=2&amp;hl=cn&#038;am<br />
+p;fact=194&amp;dhm=8bddb8f1'}<br />
+</code></p>
+<p>You can get <a href="http://zxn0.googlecode.com/svn/libgugemusic/libgugemusic.py">libgugemusic.py</a> on <a href="http://zxn0.googlecode.com/svn/libgugemusic/">my Google Code SVN repository</a></p>
+<p>I'll expand this library with music location function, and finally integrate Google (China) Music service with Last.FM <code><a href="http://www.last.fm/api/show?service=256">radio.getPlaylist</a></code> as an alternative to Last.FM, Pandora &amp; Spotify.</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'yo2/639811';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

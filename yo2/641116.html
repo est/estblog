@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WM+Coreplayer+WIFI+HTTP Streaming - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="WM+Coreplayer+WIFI+HTTP Streaming" />
+
+      <link rel="canonical" href="https://blog.est.im/yo2/641116" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">WM+Coreplayer+WIFI+HTTP Streaming</h2>
+    <p class="post-date">Posted <time datetime="2009-07-07T01:33:54+08:00">2009-07-07</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>晚上睡不着的时候，喜欢手机上网</p>
+<p>上网上多了也无聊，想躺在床上看电影听歌</p>
+<p>但是手机容量是有限的，每次下载电影传输n久，歌也放不了几首</p>
+<p>想到了wifi。在本本上建立一个http服务器，然后手机通过ad-hoc无线连上本本，流媒体播放音视频</p>
+<p>尝试了下，成功了。<a href="http://coreplayer.com/content/view/28/69/">Coreplayer</a>的缓存和播放非常流畅。</p>
+<p><img src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/07/14.jpg" /></p>
+<p>步骤大概是这样的，首先配置Windows Mobile上的wifi的IP，我笔记本设置的是192.168.3.1，手机设置的是192.168.3.2。为什么不用ad-hoc wifi默认DHCP自动分配的169.254.60.x呢？原因很简单，手机会尝试走CMNET的路由，因为手机会认为169.254.60.x是个公网IP。由于Windows Mobile添加静态路由似乎不太容易，所以自己手动设置IP吧。。。</p>
+<p>然后是本本上建立http服务器，我用的是HTTP File Server 2.1。</p>
+<p>最后就是用Coreplayer打开流媒体了 http://192.168.3.1/xxx.avi</p>
+<p>现在希望有一个支持自动生成podcast feed（MRSS, RSS, PLS, M3U, ASX）的http服务器就爽了，例如http://192.168.3.1/movies可以浏览我硬盘上 E:\movies 目录列表，然后 http://192.168.3.1/movies/?fmt=rss 可以以Media RSS方式查看。这样CorePlayer就可以很方便上一首下一首咯。哈哈～～～目前暂时解决方案是用手工生成的.m3u文件替代。</p>
+<p><ins datetime="2009-07-07T01:42:54+00:00">更新</ins></p>
+<p>看了大概一个小时，发现手机上一边看480p一边缓冲还是很卡啊，而且过一会儿手机就比较烫了。。。囧。。。。。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'yo2/641116';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[Python]更新twitter - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[Python]更新twitter" />
+
+      <link rel="canonical" href="https://blog.est.im/yo2/479144" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[Python]更新twitter</h2>
+    <p class="post-date">Posted <time datetime="2007-10-23T17:23:33+08:00">2007-10-23</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>twitter官方提供了全面的<a href="http://groups.google.com/group/twitter-development-talk/web/api-documentation">API</a>，我们可以通过python来更新twitter的消息。但是官方的文档似乎相当的简单甚至模糊，研究了几分钟，成功。给出个代码。</p>
+<p><textarea name="code" class="python" rows="15" cols="50">
+#coding:utf-8
+#注意这里必须用UTF-8编码，否则不能发送中文消息。
+import urllib2
+user_name=&quot;est&quot; #这里即可以是用户ID也可以是登录Email
+user_password=&quot;....&quot; #密码就不写出来了哈～
+user_status=&quot;测试更新，Update status text&quot;
+req=urllib2.Request('http://twitter.com/statuses/update.json')
+req.add_header('Authorization', 'Basic %s' % (user_name + ':' + user_password).encode(&quot;base64&quot;)[0:-1] )
+#我比较讨厌urllib2里蹩脚的<a href="http://docs.python.org/lib/http-password-mgr.html">add_password( realm, uri, user, passwd )</a>封装，所以直接写出HTTP Basic Authenticate的代码了
+req.add_data(&quot;status=%s&quot; % user_status)
+#发送twitter更新状态，这里官方API说明用的是json格式，但是实际直接用status=text就行了
+r=urllib2.urlopen(req).read()
+#得到返回 r，应该是个人信息的JSON数据
+</textarea></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'yo2/479144';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

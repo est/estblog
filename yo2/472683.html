@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ajax Mistakes - 容易犯的Ajax错误 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Ajax Mistakes - 容易犯的Ajax错误" />
+
+      <link rel="canonical" href="https://blog.est.im/yo2/472683" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+
+        <li><a href="/category/archive.html" class="hamburger-menu-overlay-link active">archive</a></li>
+        <li><a href="/category/stderr.html" class="hamburger-menu-overlay-link">stderr</a></li>
+        <li><a href="/category/stdin.html" class="hamburger-menu-overlay-link">stdin</a></li>
+        <li><a href="/category/stdout.html" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Ajax Mistakes - 容易犯的Ajax错误</h2>
+    <p class="post-date">Posted <time datetime="2007-10-19T10:07:03+08:00">2007-10-19</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>翻译来源：<a href="http://swik.net/Ajax/Ajax+Mistakes">http://swik.net/Ajax/Ajax+Mistakes</a></p>
+<h3>为了Ajax而Ajax</h3>
+<p>啥也不说了，鄙视跟风的。</p>
+<h3>导致 后退 按钮失效</h3>
+<p>认真学过Ajax的都会处理这个问题</p>
+<h3>没有直观的点击反映</h3>
+<p>在<a href="https://mail.google.com/">GMail</a>里点击一封邮件，右上角会有一个Loading...的提示，这样的Ajax才是对用户体验非常好的Ajax</p>
+<h3>忽略离线用户</h3>
+<p>GMail提供了POP，所以不能经常online的用户也能得到很好的体验。其他的服务例如SMS短信、Web-Servce都是很好的离线解决方案</p>
+<h3>不要让我等待</h3>
+<p>记住：Ajax的A表示：异步。</p>
+<h3>明文传输敏感信息</h3>
+<p>建议用https框架页</p>
+<h3>以为Ajax是单平台建设</h3>
+<p><a href="http://www.microsoft.com/jscript/">JScript</a>, <a href="http://www.mozilla.org/js/spidermonkey/">Spidermonkey</a>, <a href="http://www.mozilla.org/rhino/">Rhino</a>，这些Javascript解析引擎的还是有区别滴</p>
+<h3>忘记Ajax访问的并发性</h3>
+<p>可能很多人会同时访问你的同一个Ajax资源</p>
+<h3>过多JS导致浏览器缓慢</h3>
+<p>我想说，<a href="http://blog.csdn.net/electronixtar">CSDN</a>的页面真TMD的卡！</p>
+<h3>欠缺对无脚本环境的考虑</h3>
+<p>记住<a href="http://www.w3schools.com/browsers/browsers_stats.asp">noscript</a>标签！</p>
+<h3>突然变化页面</h3>
+<p>让用户摸不着头脑</p>
+<h3>无法添加页面为书签</h3>
+<p>其实Ajax的出现破坏了URL的“U”。U代表Universal，但是对于一个Ajax页面，同一个URL可能代表不同的内容，所以在设计Ajax的同时请设计好URL。<a href="http://maps.google.com/maps?f=q&amp;hl=en&amp;geocode=&amp;time=&amp;date=&amp;ttype=&amp;q=chengdu&amp;ie=UTF8&amp;z=8&amp;iwloc=addr&amp;om=1">Google Maps</a>就是一个极佳的URL-友好的例子</p>
+<h3>SEO不友好</h3>
+<p>过多过滥的Ajax导致搜索引擎对网站无法索引</p>
+<h3>页面滚动问题</h3>
+<p>据说某些蹩脚的设计会导致页面滚动消失</p>
+<h3>发明新的UI</h3>
+<p>还是符合用户的一贯UI习惯比较好。</p>
+<h3>标新立异的HTTP请求头</h3>
+<p>这点我也是深恶痛绝的，很多Ajax应用乱用GET和POST，导致一些robots或者<a href="http://webaccelerator.google.com/">Google Web Accelerator</a>一类的代理软件入法正常工作。ps我讨厌<a href="http://www.xfront.com/REST-Web-Services.html">REST</a>标准！很多防火墙、<a href="http://codeen.cs.princeton.edu/">代理</a>只允许GET和POST通过。</p>
+<h3>页面变化不完整</h3>
+<p>据说某些蹩脚的Ajax设计会造成文章驴头不对马嘴</p>
+<h3>错误报告</h3>
+<p>传统的浏览器中你可以感知每一步错误，但是Ajax应用隐藏了这些细节。</p>
+<h3>进步还是退步？</h3>
+<p>如果纯HTML能做的很好的事情，不一定非要改成Ajax不可。</p>
+<h3>工具，工具！</h3>
+<p>记住，Ajax只是另一种工具而已。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'yo2/472683';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>
