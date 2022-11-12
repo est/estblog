@@ -55,8 +55,8 @@
   
   <p>开篇帖子侃一下HAProxy这个神器有什么神器之处。</p>
 <p><a href="http://xiaoxia.org/2011/03/29/written-by-python-socks5-server/">写过proxy的人</a>都会写类似的语句：</p>
-<pre><code>localstream.write(upstream.read(1024))
-upstream.write(localstream.read(1024))
+<pre><code>  localstream.write(upstream.read(1024))
+  upstream.write(localstream.read(1024))
 </code></pre>
 <p>其中1024为业界良心艹榴网的chunk或者一个buffer size。这样的操作在各种router, proxy, firewall 里太常见了。</p>
 <p>那么HAProxy有什么<a href="http://stackoverflow.com/a/2120295/41948">特别的地方</a>呢？秘密就是，上游socket的接受buffer和本地socket的发送buffer为同一块内存。也就是说，上游socket数据来了，本地socket自动发送这一块buffer的数据。效率真是高爆了。这块buffer数据还可以用内核调用<code>splice()</code> 和 <code>tee()</code> 来达到分流和分离信号的目的。</p>

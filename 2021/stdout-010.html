@@ -59,28 +59,28 @@
 <p>I discovered a new trick from github issues that can spawn new worker first, check if new code loads correctly then restart the whole rack.</p>
 <p>According to <a href="https://docs.gunicorn.org/en/latest/signals.html#upgrading-to-a-new-binary-on-the-fly">the docs</a> you need to send several signals and blah blah, the author tried to explain in great detail of how it works rather than providing a simple option to do so.</p>
 <p>So I wrote a shell script to do that instead.</p>
-<pre><code>#!/bin/bash
+<pre><code>  #!/bin/bash
 
-oldpid=$(&lt;./deploy/gunicorn.pid)
-# forget the old kill -HUP 
-kill -USR2 $oldpid
-sleep 1
-timeout=5
-while [[ $timeout -gt 0 ]]; do
-  newpid=$(&lt;./deploy/gunicorn.pid.2) &amp;&amp; kill -0 $newpid
-  if [[ $? -eq 0 ]]; then
-    break
-  else
-    sleep 0.5
-    (( timeout-- ))
-  fi
-done;
+  oldpid=$(&lt;./deploy/gunicorn.pid)
+  # forget the old kill -HUP 
+  kill -USR2 $oldpid
+  sleep 1
+  timeout=5
+  while [[ $timeout -gt 0 ]]; do
+    newpid=$(&lt;./deploy/gunicorn.pid.2) &amp;&amp; kill -0 $newpid
+    if [[ $? -eq 0 ]]; then
+      break
+    else
+      sleep 0.5
+      (( timeout-- ))
+    fi
+  done;
 
-# shutdown old
-echo "success. newpid=$newpid"
-kill -WINCH $oldpid
-sleep 1
-kill -TERM $oldpid
+  # shutdown old
+  echo "success. newpid=$newpid"
+  kill -WINCH $oldpid
+  sleep 1
+  kill -TERM $oldpid
 </code></pre>
 <p>The script will check for new master pid to be alive then kill the old master in a maximium timeout of 5 seconds.</p>
 <p>It works perfectly to replace the simple <code>HUP</code> signal as intended.</p>

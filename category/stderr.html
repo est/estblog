@@ -791,11 +791,11 @@ In sum, neoliberalism is the immediate and foremost enemy of genuine participato
               <h2 class="card-title">北美 VPS 推荐：Racknerd</h2>
             </a>
             <p class="card-text"><p>以前买的 hostmem 总感觉高峰期速度不行。Racknerd 这家看上去英语比较地道，感觉还行？于是跑了个脚本把它家的套餐遍历了一下：</p>
-<pre><code>mkdir -p ~/Downloads/racknerd; cd $_
+<pre><code>  mkdir -p ~/Downloads/racknerd; cd $_
 
-for i in $(seq 1 423); do wget -t 0 -T 5  -U 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1'  -O ~/Downloads/racknerd/$i.html; done
+  for i in $(seq 1 423); do wget -t 0 -T 5  -U 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1'  -O ~/Downloads/racknerd/$i.html; done
 
-for f in $(ls -rt .); do python -c 'm=__import__("re").search(r"product-title\"&gt;(.+)&lt;/p&gt;.*(\d).+?CPU.+?([\d\.]+).+SSD.*\n([\d\.]+\s?.B)\sRAM.*\n(\d+.B).+Band.+?(\$[\d+\.]+)(/(\w+)|.+?\s(\w+ly))", open("'$f'").read(), 16);print("'$f' {},{}C,{}G,{},{},{} {}".format(*m.groups()[:7])) if m else "'$f'" '; sleep 0.1; done
+  for f in $(ls -rt .); do python -c 'm=__import__("re").search(r"product-title\"&gt;(.+)&lt;/p&gt;.*(\d).+?CPU.+?([\d\.]+).+SSD.*\n([\d\.]+\s?.B)\sRAM.*\n(\d+.B).+Band.+?(\$[\d+\.]+)(/(\w+)|.+?\s(\w+ly))", open("'$f'").read(), 16);print("'$f' {},{}C,{}G,{},{},{} {}".format(*m.groups()[:7])) if m else "'$f'" '; sleep 0.1; done
 </code></pre>
 <p>得到下面的表格：</p>
 <style type="text/css" id="pre-table">
@@ -2522,11 +2522,11 @@ for f in $(ls -rt .); do python -c 'm=__import__("re").search(r"product-title\"&
 <p>有的读者可能在这里会想，est 你又在怪力乱神了。且慢，有一句话叫什么来着，人类的恐惧归根结底来自于无知。所以如果从「认知」的角度来说，人们可以把不能理解的事物叫做拦路的妖魔鬼怪，有意思的一点是，如果能呼出问题的正确名字，问题就解决了一大半。</p>
 <p>怎么讲？我们做程序开发的时候，有的时候就会遇到一些拦路怪。比如我最近需要计算比较2个用户相距距离。如果在方圆1公里则进行一些操作。db 里保存的是用户的一个最近足迹的经纬度，所以2个用户构成一对二元组 <code>(lat1, lng1)</code>，<code>(lat2, lng2)</code>。那么问题来了。这2点不是平面做勾股定理，地球是个球形，最短的距离是个球面弧，这个如何计算球面2点最短弧线的长度呢？而且经纬度网格，在高纬度地区角度变化特别大，如何处理呢？</p>
 <p>想到这里，我这弱到渣的数学水平就捉襟见肘了。我就请教了资深姿势大神 google，google 告诉我，消灭这个拦路怪最简单的办法就是把握它的名字：Haversine formula</p>
-<pre><code>from math import cos, asin, sqrt
-def distance(lat1, lon1, lat2, lon2):
-    p = 0.017453292519943295     #Pi/180
-    a = 0.5 - cos((lat2 - lat1) * p)/2 + cos(lat1 * p) * cos(lat2 * p) * (1 - cos((lon2 - lon1) * p)) / 2
-    return 12742 * asin(sqrt(a))  # 2*R*asin...
+<pre><code>  from math import cos, asin, sqrt
+  def distance(lat1, lon1, lat2, lon2):
+      p = 0.017453292519943295     #Pi/180
+      a = 0.5 - cos((lat2 - lat1) * p)/2 + cos(lat1 * p) * cos(lat2 * p) * (1 - cos((lon2 - lon1) * p)) / 2
+      return 12742 * asin(sqrt(a))  # 2*R*asin...
 </code></pre>
 <p>这就把一个（对我而言）巨复杂的球面坐标系问题转化成了3行简单的三角函数和开方问题。我这样渣水平的人也能应付这只怪了。</p>
 <p>当然我们可以继续发散一下，zhihu 上这位讲命根子有4种，种子字是什么呢？有些问题的背后是一类问题，所谓「自一字可生多字，多字复可含摄於一字」。你若只解决其中一种其实是杯水车薪。所以很多时候要利用结构化的分析姿势去 meta 层面分析一类事物的「共性」。所谓「若了知一法，即了知一切法」</p>
@@ -2634,20 +2634,20 @@ def distance(lat1, lon1, lat2, lon2):
             </a>
             <p class="card-text"><p>From <a href="https://www.v2ex.com/t/354273">this</a> thread</p>
 <p>What's wrong with</p>
-<pre><code>GET     /users/                -----&gt;  `list.users` 
-GET     /users/:id/            -----&gt;  `retrieve.users`
-POST    /users/                -----&gt;  `create.users`
-PUT     /users/:id/password/   -----&gt;  `replace.users`
-PATCH   /users/:id/            -----&gt;  `update.users`
-DELETE  /users/:id/            -----&gt;  `destroy.users`
+<pre><code>  GET     /users/                -----&gt;  `list.users` 
+  GET     /users/:id/            -----&gt;  `retrieve.users`
+  POST    /users/                -----&gt;  `create.users`
+  PUT     /users/:id/password/   -----&gt;  `replace.users`
+  PATCH   /users/:id/            -----&gt;  `update.users`
+  DELETE  /users/:id/            -----&gt;  `destroy.users`
 </code></pre>
 <p>You will find these URL super ugly and annoying when doing log analysis, you have to monkey craft <code>regexp</code>s to truncate the useless <code>:id</code> part from the url so your aggregator would work properly.</p>
 <p>I prefer simply use <code>GET</code> for read and <code>POST</code> for writes. Like this</p>
-<pre><code>GET /users/list
-GET /users/retrieve
-POST /users/create
-POST /users/update
-POST /users/destroy
+<pre><code>  GET /users/list
+  GET /users/retrieve
+  POST /users/create
+  POST /users/update
+  POST /users/destroy
 </code></pre>
 <p>It's clean, it's concise, it works everywhere.</p>
 <p>Fuck those obnoxious <code>OPTIONS</code> and <code>PATCH</code>.</p>

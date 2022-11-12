@@ -57,42 +57,42 @@
             </a>
             <p class="card-text"><p>Win10启动后，锁屏界面有一些每天更新的漂亮的墙纸，但是每个用户进去却只能看到默认的墙纸，不能自动切换。很是遗憾，于是搞了一段小脚本弥补。</p>
 <p>找个地方比如桌面，右键新建一个 <code>est_win10_auto_wallpaper.bat</code></p>
-<pre><code>@if (@X)==(@Y) @end /* JScript comment
-@echo off
+<pre><code>  @if (@X)==(@Y) @end /* JScript comment
+  @echo off
 
-cscript //E:JScript %~n0.bat
+  cscript //E:JScript %~n0.bat
 
-exit /b %errorlevel%
-*/
+  exit /b %errorlevel%
+  */
 
-var oShell = new ActiveXObject("WScript.Shell") ;
-var oFSO = new ActiveXObject("Scripting.FileSystemObject");
+  var oShell = new ActiveXObject("WScript.Shell") ;
+  var oFSO = new ActiveXObject("Scripting.FileSystemObject");
 
-var sWinDir = oFSO.GetSpecialFolder(0);
-var sPath = oShell.ExpandEnvironmentStrings('%LOCALAPPDATA%\\Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets\\')
+  var sWinDir = oFSO.GetSpecialFolder(0);
+  var sPath = oShell.ExpandEnvironmentStrings('%LOCALAPPDATA%\\Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets\\')
 
-var oFolderEnum = new Enumerator(oFSO.GetFolder(sPath).Files);
-var aFiles = []
-for (;!oFolderEnum.atEnd();oFolderEnum.moveNext()) {
-    // var item = oFolderEnum.item()
-    aFiles.push(oFolderEnum.item())
-}
-var aFiles2 = aFiles.sort(function(x,y){return new Date(y.DateLastAccessed).getTime() - new Date(x.DateLastAccessed).getTime()}).slice(3)
-var sWallpaper;
-// for (var i=0;i&lt;aFiles2.length;i++){
-for (var i in aFiles2){
-    // WScript.Echo('check ' + aFiles2[i].name + ' size: ' + aFiles2[i].size);
-    if(aFiles2[i].size &gt; 500000){  // guess &gt; 500KB is good wallpaper
-        sWallpaper = aFiles2[i].path
-        break;
-    }    
-}
-if(sWallpaper){
-    // or fso.GetStandardStream(1) for stdout, 2 for stderr
-    // WScript.Echo('set to ' + sWallpaper);
-    oShell.RegWrite("HKCU\\Control Panel\\Desktop\\Wallpaper", sWallpaper);
-    oShell.Run("%windir%\\System32\\RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters 1, True");
-}
+  var oFolderEnum = new Enumerator(oFSO.GetFolder(sPath).Files);
+  var aFiles = []
+  for (;!oFolderEnum.atEnd();oFolderEnum.moveNext()) {
+      // var item = oFolderEnum.item()
+      aFiles.push(oFolderEnum.item())
+  }
+  var aFiles2 = aFiles.sort(function(x,y){return new Date(y.DateLastAccessed).getTime() - new Date(x.DateLastAccessed).getTime()}).slice(3)
+  var sWallpaper;
+  // for (var i=0;i&lt;aFiles2.length;i++){
+  for (var i in aFiles2){
+      // WScript.Echo('check ' + aFiles2[i].name + ' size: ' + aFiles2[i].size);
+      if(aFiles2[i].size &gt; 500000){  // guess &gt; 500KB is good wallpaper
+          sWallpaper = aFiles2[i].path
+          break;
+      }    
+  }
+  if(sWallpaper){
+      // or fso.GetStandardStream(1) for stdout, 2 for stderr
+      // WScript.Echo('set to ' + sWallpaper);
+      oShell.RegWrite("HKCU\\Control Panel\\Desktop\\Wallpaper", sWallpaper);
+      oShell.Run("%windir%\\System32\\RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters 1, True");
+  }
 </code></pre>
 <p>Win+R输入 <code>shell:startup</code> 回车，把刚才的 <code>est_win10_auto_wallpaper.bat</code> 在这里创建一个快捷方式</p>
 <p>解释下为啥要在 <code>shell:startup</code> 里创建快捷方式而不是直接放 .bat 。因为快捷方式可以设置当前运行目录，这样代码里的 <code>%~n0</code> 才能生效。懒得查询完整路径如何写了。。</p>
@@ -113,7 +113,7 @@ if(sWallpaper){
               <h2 class="card-title">Mac 命令行终端里获得视频文件的长度</h2>
             </a>
             <p class="card-text"><p>记录一下，Mac OS X 10.6.8 或更高版本：</p>
-<pre><code>mdls -name kMDItemDurationSeconds -name kMDItemFSName  1.mp4
+<pre><code>  mdls -name kMDItemDurationSeconds -name kMDItemFSName  1.mp4
 </code></pre>
 <p>这命令有一个很神经病的一点，同一个 .mp4 文件，获取只读的 TF 卡上的就没法获得视频长度，复制到可以读写的本地硬盘上就可以读出来。</p>
 <p>或者在 Finder 里新建一个叫  <code>Movies</code> 的文件夹，把视频文件放进去，然后列表展示，表头右键，就可以选择显示长度。。</p>
@@ -134,24 +134,24 @@ if(sWallpaper){
             </a>
             <p class="card-text"><p>因为某些拉垮的业务需要，不得不在代码里去反向代理别的 HTTP API</p>
 <p>一般格式如下：</p>
-<pre><code>@app.get('/other/{other_path:path}')
-@app.post('/other/{other_path:path}')
-async def other_api(other_path: str, req: Request):
-    """透传 API"""
-    host = 'http://example.intranet'
-    url = '{}/other/{}'.format(host, other_path)
-    body = bytes(await req.body()) or None
-    r = requests.request(
-        req.method, url,
-        headers={
-            'Cookie': req.headers.get('cookie') or '',
-            'Content-Type': req.headers.get('Content-Type')},
-        params=req.query_params, data=body, stream=True,
-        allow_redirects=False)
+<pre><code>  @app.get('/other/{other_path:path}')
+  @app.post('/other/{other_path:path}')
+  async def other_api(other_path: str, req: Request):
+      """透传 API"""
+      host = 'http://example.intranet'
+      url = '{}/other/{}'.format(host, other_path)
+      body = bytes(await req.body()) or None
+      r = requests.request(
+          req.method, url,
+          headers={
+              'Cookie': req.headers.get('cookie') or '',
+              'Content-Type': req.headers.get('Content-Type')},
+          params=req.query_params, data=body, stream=True,
+          allow_redirects=False)
 
-    h = dict(r.headers)
-    h.pop('Content-Length', None)
-    return StreamingResponse(r.raw, headers=h, status_code=r.status_code)
+      h = dict(r.headers)
+      h.pop('Content-Length', None)
+      return StreamingResponse(r.raw, headers=h, status_code=r.status_code)
 </code></pre>
 <p>解释一下为啥要这么写：</p>
 <ol>
@@ -161,9 +161,9 @@ async def other_api(other_path: str, req: Request):
 </ol>
 <p>这样写基本能跑起来了，但是有2个问题：</p>
 <ol>
-<li>如果上游返回一个 302/303/307 的跳转，那么很有可能把内网的跳转网址直接返回给浏览器了。因为 <a href="https://tools.ietf.org/html/rfc2616#section-14.30">HTTP/1.1 的标准 RFC2616</a> 强制规定，<code>Location</code> 的值必须是一个绝对网址。所以这个时候就冒犯一下这个规定，强行截断：<pre><code>loc = h.pop('Location', '')
-if loc.startswith(host):
-    h['Location'] = loc[len(host):]
+<li>如果上游返回一个 302/303/307 的跳转，那么很有可能把内网的跳转网址直接返回给浏览器了。因为 <a href="https://tools.ietf.org/html/rfc2616#section-14.30">HTTP/1.1 的标准 RFC2616</a> 强制规定，<code>Location</code> 的值必须是一个绝对网址。所以这个时候就冒犯一下这个规定，强行截断：<pre><code>    loc = h.pop('Location', '')
+    if loc.startswith(host):
+        h['Location'] = loc[len(host):]
 </code></pre>
 </li>
 </ol>
@@ -367,7 +367,7 @@ You know all this stuff makes people feel just frustrated and angry, they want a
             <p class="card-text"><p>新年第一贴！</p>
 <p>Run the command before connect to PPPoE or as cronjob</p>
 <p>添加一个重启的定时任务，在重启之间执行一个命令：</p>
-<pre><code>uci set network.wan.mac_addr=$(hexdump -n3 -e'1/3 "8c:8d:8e" 3/1 ":%02X" "\n"' /dev/random) &amp;&amp; uci commit network
+<pre><code>  uci set network.wan.mac_addr=$(hexdump -n3 -e'1/3 "8c:8d:8e" 3/1 ":%02X" "\n"' /dev/random) &amp;&amp; uci commit network
 </code></pre>
 <p>为什么要在拨号前随机生成WAN口的 MAC 地址呢？嘿嘿。</p></p>
             <div class="card-subtext muted-text">
@@ -384,11 +384,11 @@ You know all this stuff makes people feel just frustrated and angry, they want a
               <h2 class="card-title">北美 VPS 推荐：Racknerd</h2>
             </a>
             <p class="card-text"><p>以前买的 hostmem 总感觉高峰期速度不行。Racknerd 这家看上去英语比较地道，感觉还行？于是跑了个脚本把它家的套餐遍历了一下：</p>
-<pre><code>mkdir -p ~/Downloads/racknerd; cd $_
+<pre><code>  mkdir -p ~/Downloads/racknerd; cd $_
 
-for i in $(seq 1 423); do wget -t 0 -T 5  -U 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1'  -O ~/Downloads/racknerd/$i.html; done
+  for i in $(seq 1 423); do wget -t 0 -T 5  -U 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1'  -O ~/Downloads/racknerd/$i.html; done
 
-for f in $(ls -rt .); do python -c 'm=__import__("re").search(r"product-title\"&gt;(.+)&lt;/p&gt;.*(\d).+?CPU.+?([\d\.]+).+SSD.*\n([\d\.]+\s?.B)\sRAM.*\n(\d+.B).+Band.+?(\$[\d+\.]+)(/(\w+)|.+?\s(\w+ly))", open("'$f'").read(), 16);print("'$f' {},{}C,{}G,{},{},{} {}".format(*m.groups()[:7])) if m else "'$f'" '; sleep 0.1; done
+  for f in $(ls -rt .); do python -c 'm=__import__("re").search(r"product-title\"&gt;(.+)&lt;/p&gt;.*(\d).+?CPU.+?([\d\.]+).+SSD.*\n([\d\.]+\s?.B)\sRAM.*\n(\d+.B).+Band.+?(\$[\d+\.]+)(/(\w+)|.+?\s(\w+ly))", open("'$f'").read(), 16);print("'$f' {},{}C,{}G,{},{},{} {}".format(*m.groups()[:7])) if m else "'$f'" '; sleep 0.1; done
 </code></pre>
 <p>得到下面的表格：</p>
 <style type="text/css" id="pre-table">
@@ -1735,14 +1735,14 @@ for f in $(ls -rt .); do python -c 'm=__import__("re").search(r"product-title\"&
 <p>So far <code>nsq-py</code> looks reall promising because it's compatible with more options with concurrency, but when I used it with massive TCP connections to nsqd, <a href="https://github.com/gevent/gevent/issues/1348">gevent</a> threw "ValueError: filedescriptor out of range in select()" error.</p>
 <p>Upon further investigation, it was a select(2) limitation. The kernel will limit max tcp fileno 1024. </p>
 <p>See CPython <a href="https://github.com/python/cpython/blob/3317466061509c83dce257caab3661d52571cab1/Modules/selectmodule.c#L142">source of selectmodule.c</a>:</p>
-<pre><code>    if (!_PyIsSelectable_fd(v)) {
-        PyErr_SetString(PyExc_ValueError,
-                    "filedescriptor out of range in select()");
-        goto finally;
-    }
+<pre><code>      if (!_PyIsSelectable_fd(v)) {
+          PyErr_SetString(PyExc_ValueError,
+                      "filedescriptor out of range in select()");
+          goto finally;
+      }
 </code></pre>
 <p>And <a href="https://github.com/python/cpython/blob/637a09b0d6e3ad4e34e0b5e0fc82f5afeae6f74b/Include/fileobject.h#L37"><code>_PyIsSelectable_fd</code> is defined</a> as </p>
-<pre><code>#define _PyIsSelectable_fd(FD) ((unsigned int)(FD) &lt; (unsigned int)FD_SETSIZE)
+<pre><code>  #define _PyIsSelectable_fd(FD) ((unsigned int)(FD) &lt; (unsigned int)FD_SETSIZE)
 </code></pre>
 <p>And the const <code>FD_SETSIZE</code> is described at <a href="https://man7.org/linux/man-pages/man2/select.2.html">man page</a>:</p>
 <blockquote>

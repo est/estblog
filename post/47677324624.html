@@ -68,13 +68,16 @@
 <p>发信人: penny1983 (一只熊猫，两种表述||熊猫永不受伤), 信区: Database<br />
 标  题: Re: cassandra集群的去中心拓扑真是帅啊<br />
 发信站: 水木社区 (Wed Apr 10 10:31:16 2013), 站内</p>
-<p>开源实现没有靠谱的啊。</p>
-<p>Paxos 算法和满足实际需求的系统之间还存在大量的鸿沟, fault-tolerant sytem 即<br />
-使写伪代码都不容易写对，Google开发chubby时候专门写了一个state machine <br />
+<pre><code>开源实现没有靠谱的啊。
+
+Paxos 算法和满足实际需求的系统之间还存在大量的鸿沟, fault-tolerant sytem 即
+</code></pre>
+<p>使写伪代码都不容易写对，Google开发chubby时候专门写了一个state machine <br />
 语言和相应的编译器，把用state machine 表示的算法转为c++，而且在chubby一致性检<br />
 验和容错方面投入了巨大的精力。</p>
-<p>Google的chubby一开始也是基于第三方商业数据库，但是由于商业库的replication问<br />
-题（bug，无法证明replica算法正确），google不得不自己实现kv db 用于实现multi-<br />
+<pre><code> Google的chubby一开始也是基于第三方商业数据库，但是由于商业库的replication问
+</code></pre>
+<p>题（bug，无法证明replica算法正确），google不得不自己实现kv db 用于实现multi-<br />
 paxos。这一过程也是一把辛酸啊，参加google的论文<br />
 Paxos made live-An Engineering View。</p>
 

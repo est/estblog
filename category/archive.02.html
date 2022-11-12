@@ -326,8 +326,8 @@ CID=61E00</p>
 <p><img alt="" src="/images/tumblr/55311741840_1.png" /></p>
 <p>就得到了基站位置。</p>
 <p>在自己手机上也可以直接通过下边命令来即时刷新：</p>
-<pre><code># logcat -b radio RILJ:D | grep SM | grep REGISTRATION_STATE
-# logcat -b radio RILJ:D | grep SM | grep OPERA
+<pre><code>  # logcat -b radio RILJ:D | grep SM | grep REGISTRATION_STATE
+  # logcat -b radio RILJ:D | grep SM | grep OPERA
 </code></pre>
 <p>当然，这些信息可以通过Android的 <em>#</em>#INFO#<em>#</em>直接看到。</p></p>
             <div class="card-subtext muted-text">
@@ -440,13 +440,13 @@ CID=61E00</p>
             <p class="card-text"><p>First you need to <a href="http://mxcl.github.io/homebrew/">install Homebrew</a></p>
 <p>Then you need to <a href="http://stackoverflow.com/a/9329325/41948">install GCC from XCode "command line tools"</a></p>
 <p><img alt="" src="http://i.stack.imgur.com/SMQvZ.jpg" /></p>
-<pre><code>$ brew install gfortran umfpack swig
-$ sudo pip install  numpy Cheetah lxml scipy matplotlib
-$ brew tap ksnieck/homebrew-gnuradio
-$ cd /usr/local/Library/Taps/
-$ mv ksnieck-gnuradio/ titanous/homebrew-gnuradio
-$ brew install gnuradio
-$ brew install rtlsdr gr-osmosdr gr-baz --HEAD
+<pre><code>  $ brew install gfortran umfpack swig
+  $ sudo pip install  numpy Cheetah lxml scipy matplotlib
+  $ brew tap ksnieck/homebrew-gnuradio
+  $ cd /usr/local/Library/Taps/
+  $ mv ksnieck-gnuradio/ titanous/homebrew-gnuradio
+  $ brew install gnuradio
+  $ brew install rtlsdr gr-osmosdr gr-baz --HEAD
 </code></pre>
 <p>There's like a shitton of dependency for GNURadio, you'll possibly need a fast Internet connection or wait.</p></p>
             <div class="card-subtext muted-text">
@@ -718,9 +718,9 @@ $ brew install rtlsdr gr-osmosdr gr-baz --HEAD
 <p>USB\VID_0A12&amp;PID_0001&amp;REV_1989</p>
 <p>结果linux内核屏蔽了这个设备。</p>
 <p>http://lxr.free-electrons.com/source/drivers/bluetooth/btusb.c?v=3.0#L96</p>
-<pre><code>static struct usb_device_id blacklist_table[] = {
-    /* CSR BlueCore devices */
-    { USB_DEVICE(0x0a12, 0x0001), .driver_info = BTUSB_CSR },
+<pre><code>  static struct usb_device_id blacklist_table[] = {
+      /* CSR BlueCore devices */
+      { USB_DEVICE(0x0a12, 0x0001), .driver_info = BTUSB_CSR },
 </code></pre>
 <p>所以如果你也有CSR芯片(BlueCore® BC7820™)的蓝牙，那么恭喜你，Android OTG和Linux都没法用。</p>
 <p>当时觉得悲剧了。<a href="http://www.slatedroid.com/topic/46457-bluetooth-dongle/page__view__findpost__p__504113">via</a></p></p>
@@ -740,11 +740,11 @@ $ brew install rtlsdr gr-osmosdr gr-baz --HEAD
             <p class="card-text"><p>Windows下一些程序打包进了JRE</p>
 <p>一些没有。</p>
 <p>对于没有的，可以共享嘛。导入下边的注册表</p>
-<pre><code>Windows Registry Editor Version 5.00
+<pre><code>  Windows Registry Editor Version 5.00
 
-[HKEY_LOCAL_MACHINE\SOFTWARE\JavaSoft\Java Runtime Environment\1.6]
-"JavaHome"="D:\\Media\\images\\yEd\\jre"
-"RuntimeLib"="D:\\Media\\images\\yEd\\jre\\bin\\client\\jvm.dll"
+  [HKEY_LOCAL_MACHINE\SOFTWARE\JavaSoft\Java Runtime Environment\1.6]
+  "JavaHome"="D:\\Media\\images\\yEd\\jre"
+  "RuntimeLib"="D:\\Media\\images\\yEd\\jre\\bin\\client\\jvm.dll"
 </code></pre>
 <p>这样就可以公用JRE了。</p>
 <p><a href="http://www.cnblogs.com/shenhaocn/archive/2010/04/08/1707729.html">via</a></p></p>
@@ -762,34 +762,34 @@ $ brew install rtlsdr gr-osmosdr gr-baz --HEAD
               <h2 class="card-title">Google Plus is a piece of crap</h2>
             </a>
             <p class="card-text"><p>That's what happens when you put together a bunch of Indian PM and Indian coders</p>
-<pre><code>trace:CustomError
-    at new Wza (https://plus.google.com/_/scs/apps-static/_/js/k=oz.home.en.MM2nmUD9sr4.O/m=b,s/am=AAHhGADElx2FYAJBBsgAAIAxAB-ggWQIklGAYP7_-397BHABAAAC/rt=h/d=1/rs=AItRSTN8InaGcWBwBsF5rTap5RX6vnBjtw:607:24)
-    at Lv.q.myb (https://plus.google.com/_/scs/apps-static/_/js/k=oz.home.en.MM2nmUD9sr4.O/m=b,s/am=AAHhGADElx2FYAJBBsgAAIAxAB-ggWQIklGAYP7_-397BHABAAAC/rt=h/d=1/rs=AItRSTN8InaGcWBwBsF5rTap5RX6vnBjtw:1794:53)
-    at Jda (https://plus.google.com/_/scs/apps-static/_/js/k=oz.home.en.MM2nmUD9sr4.O/m=b,s/am=AAHhGADElx2FYAJBBsgAAIAxAB-ggWQIklGAYP7_-397BHABAAAC/rt=h/d=1/rs=AItRSTN8InaGcWBwBsF5rTap5RX6vnBjtw:113:214)
-    at Ida (https://plus.google.com/_/scs/apps-static/_/js/k=oz.home.en.MM2nmUD9sr4.O/m=b,s/am=AAHhGADElx2FYAJBBsgAAIAxAB-ggWQIklGAYP7_-397BHABAAAC/rt=h/d=1/rs=AItRSTN8InaGcWBwBsF5rTap5RX6vnBjtw:111:221)
-    at ag.q.jd (https://plus.google.com/_/scs/apps-static/_/js/k=oz.home.en.MM2nmUD9sr4.O/m=b,s/am=AAHhGADElx2FYAJBBsgAAIAxAB-ggWQIklGAYP7_-397BHABAAAC/rt=h/d=1/rs=AItRSTN8InaGcWBwBsF5rTap5RX6vnBjtw:771:425)
-    at Jda (https://plus.google.com/_/scs/apps-static/_/js/k=oz.home.en.MM2nmUD9sr4.O/m=b,s/am=AAHhGADElx2FYAJBBsgAAIAxAB-ggWQIklGAYP7_-397BHABAAAC/rt=h/d=1/rs=AItRSTN8InaGcWBwBsF5rTap5RX6vnBjtw:113:214)
-    at Ida (https://plus.google.com/_/scs/apps-static/_/js/k=oz.home.en.MM2nmUD9sr4.O/m=b,s/am=AAHhGADElx2FYAJBBsgAAIAxAB-ggWQIklGAYP7_-397BHABAAAC/rt=h/d=1/rs=AItRSTN8InaGcWBwBsF5rTap5RX6vnBjtw:111:221)
-    at ag.q.jd (https://plus.google.com/_/scs/apps-static/_/js/k=oz.home.en.MM2nmUD9sr4.O/m=b,s/am=AAHhGADElx2FYAJBBsgAAIAxAB-ggWQIklGAYP7_-397BHABAAAC/rt=h/d=1/rs=AItRSTN8InaGcWBwBsF5rTap5RX6vnBjtw:771:425)
-    at https://plus.google.com/_/scs/apps-static/_/js/k=oz.home.en.MM2nmUD9sr4.O/m=b,s/am=AAHhGADElx2FYAJBBsgAAIAxAB-ggWQIklGAYP7_-397BHABAAAC/rt=h/d=1/rs=AItRSTN8InaGcWBwBsF5rTap5RX6vnBjtw:141:63
-    at $da.execute (https://plus.google.com/_/scs/apps-static/_/js/k=oz.home.en.MM2nmUD9sr4.O/m=b,s/am=AAHhGADElx2FYAJBBsgAAIAxAB-ggWQIklGAYP7_-397BHABAAAC/rt=h/d=1/rs=AItRSTN8InaGcWBwBsF5rTap5RX6vnBjtw:797:81)
-context.location:https://plus.google.com/_/scs/apps-static/_/js/k=oz.home.en.MM2nmUD9sr4.O/m=b,s/am=AAHhGADElx2FYAJBBsgAAIAxAB-ggWQIklGAYP7_-397BHABAAAC/rt=h/d=1/rs=AItRSTN8InaGcWBwBsF5rTap5RX6vnBjtw
-context.top.location:https://plus.google.com/u/0/
-context.buildLabel:es_oz_20130519.13_p2
-context.version:oz.home.en.MM2nmUD9sr4.O
-context.historytoken_:
-context.propertyId:119
-context.nwTimeSinceLastLoad:140591
-context.nwIsWidgetVisible:false
-context.nwCurrentUnreadCount:0
-context.nwNotificationTypes:2,3,16,20,24
-context.call-stack:Sda(object, object, null)
-Qda(object, null, object)
-mg(object)
-Jda(object)
-Ida(object, false, object)
-[Anonymous](object)
-[...circular reference...]
+<pre><code>  trace:CustomError
+      at new Wza (https://plus.google.com/_/scs/apps-static/_/js/k=oz.home.en.MM2nmUD9sr4.O/m=b,s/am=AAHhGADElx2FYAJBBsgAAIAxAB-ggWQIklGAYP7_-397BHABAAAC/rt=h/d=1/rs=AItRSTN8InaGcWBwBsF5rTap5RX6vnBjtw:607:24)
+      at Lv.q.myb (https://plus.google.com/_/scs/apps-static/_/js/k=oz.home.en.MM2nmUD9sr4.O/m=b,s/am=AAHhGADElx2FYAJBBsgAAIAxAB-ggWQIklGAYP7_-397BHABAAAC/rt=h/d=1/rs=AItRSTN8InaGcWBwBsF5rTap5RX6vnBjtw:1794:53)
+      at Jda (https://plus.google.com/_/scs/apps-static/_/js/k=oz.home.en.MM2nmUD9sr4.O/m=b,s/am=AAHhGADElx2FYAJBBsgAAIAxAB-ggWQIklGAYP7_-397BHABAAAC/rt=h/d=1/rs=AItRSTN8InaGcWBwBsF5rTap5RX6vnBjtw:113:214)
+      at Ida (https://plus.google.com/_/scs/apps-static/_/js/k=oz.home.en.MM2nmUD9sr4.O/m=b,s/am=AAHhGADElx2FYAJBBsgAAIAxAB-ggWQIklGAYP7_-397BHABAAAC/rt=h/d=1/rs=AItRSTN8InaGcWBwBsF5rTap5RX6vnBjtw:111:221)
+      at ag.q.jd (https://plus.google.com/_/scs/apps-static/_/js/k=oz.home.en.MM2nmUD9sr4.O/m=b,s/am=AAHhGADElx2FYAJBBsgAAIAxAB-ggWQIklGAYP7_-397BHABAAAC/rt=h/d=1/rs=AItRSTN8InaGcWBwBsF5rTap5RX6vnBjtw:771:425)
+      at Jda (https://plus.google.com/_/scs/apps-static/_/js/k=oz.home.en.MM2nmUD9sr4.O/m=b,s/am=AAHhGADElx2FYAJBBsgAAIAxAB-ggWQIklGAYP7_-397BHABAAAC/rt=h/d=1/rs=AItRSTN8InaGcWBwBsF5rTap5RX6vnBjtw:113:214)
+      at Ida (https://plus.google.com/_/scs/apps-static/_/js/k=oz.home.en.MM2nmUD9sr4.O/m=b,s/am=AAHhGADElx2FYAJBBsgAAIAxAB-ggWQIklGAYP7_-397BHABAAAC/rt=h/d=1/rs=AItRSTN8InaGcWBwBsF5rTap5RX6vnBjtw:111:221)
+      at ag.q.jd (https://plus.google.com/_/scs/apps-static/_/js/k=oz.home.en.MM2nmUD9sr4.O/m=b,s/am=AAHhGADElx2FYAJBBsgAAIAxAB-ggWQIklGAYP7_-397BHABAAAC/rt=h/d=1/rs=AItRSTN8InaGcWBwBsF5rTap5RX6vnBjtw:771:425)
+      at https://plus.google.com/_/scs/apps-static/_/js/k=oz.home.en.MM2nmUD9sr4.O/m=b,s/am=AAHhGADElx2FYAJBBsgAAIAxAB-ggWQIklGAYP7_-397BHABAAAC/rt=h/d=1/rs=AItRSTN8InaGcWBwBsF5rTap5RX6vnBjtw:141:63
+      at $da.execute (https://plus.google.com/_/scs/apps-static/_/js/k=oz.home.en.MM2nmUD9sr4.O/m=b,s/am=AAHhGADElx2FYAJBBsgAAIAxAB-ggWQIklGAYP7_-397BHABAAAC/rt=h/d=1/rs=AItRSTN8InaGcWBwBsF5rTap5RX6vnBjtw:797:81)
+  context.location:https://plus.google.com/_/scs/apps-static/_/js/k=oz.home.en.MM2nmUD9sr4.O/m=b,s/am=AAHhGADElx2FYAJBBsgAAIAxAB-ggWQIklGAYP7_-397BHABAAAC/rt=h/d=1/rs=AItRSTN8InaGcWBwBsF5rTap5RX6vnBjtw
+  context.top.location:https://plus.google.com/u/0/
+  context.buildLabel:es_oz_20130519.13_p2
+  context.version:oz.home.en.MM2nmUD9sr4.O
+  context.historytoken_:
+  context.propertyId:119
+  context.nwTimeSinceLastLoad:140591
+  context.nwIsWidgetVisible:false
+  context.nwCurrentUnreadCount:0
+  context.nwNotificationTypes:2,3,16,20,24
+  context.call-stack:Sda(object, object, null)
+  Qda(object, null, object)
+  mg(object)
+  Jda(object)
+  Ida(object, false, object)
+  [Anonymous](object)
+  [...circular reference...]
 </code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-05-21T09:18:42+08:00">2013-05-21</time></p>
@@ -805,23 +805,23 @@ Ida(object, false, object)
               <h2 class="card-title">Python zfec howto/example</h2>
             </a>
             <p class="card-text"><p>To install</p>
-<pre><code>$ pip install zfec
+<pre><code>  $ pip install zfec
 </code></pre>
 <p>Suppose I have two blocks of data and want a third block as redundancy</p>
-<pre><code>&gt;&gt;&gt; zfec.Encoder(2, 3).encode(['ab', 'cd'])
-['ab', 'cd', 'en']
-&gt;&gt;&gt; zfec.Decoder(2, 3).decode(['ab', 'cd', ], [0, 1])
-['ab', 'cd']
-# somehow lost the second block, use the third block the recover
-&gt;&gt;&gt; zfec.Decoder(2, 3).decode(['ab', 'en', ], [0, 2])
-['ab', 'cd']
+<pre><code>  &gt;&gt;&gt; zfec.Encoder(2, 3).encode(['ab', 'cd'])
+  ['ab', 'cd', 'en']
+  &gt;&gt;&gt; zfec.Decoder(2, 3).decode(['ab', 'cd', ], [0, 1])
+  ['ab', 'cd']
+  # somehow lost the second block, use the third block the recover
+  &gt;&gt;&gt; zfec.Decoder(2, 3).decode(['ab', 'en', ], [0, 2])
+  ['ab', 'cd']
 </code></pre>
 <p>In the above example, k=2 and m=3</p>
 <p>ref: https://pypi.python.org/pypi/zfec</p>
 <p>btw <a href="http://en.wikipedia.org/wiki/Secret_sharing#Trivial_secret_sharing">Trivial secret sharing</a></p>
-<pre><code>secret = 123
-a, b, c = [int((random.random() * 256)) for x in range(3)]
-d = map(xor, [secret, a, b, c])
+<pre><code>  secret = 123
+  a, b, c = [int((random.random() * 256)) for x in range(3)]
+  d = map(xor, [secret, a, b, c])
 </code></pre>
 <p>so 4 players has each a share of secret. </p>
 <p>This is kinda lame... Shamir's scheme is much better</p></p>
@@ -839,15 +839,15 @@ d = map(xor, [secret, a, b, c])
               <h2 class="card-title">get rid of example.com for Django's default site</h2>
             </a>
             <p class="card-text"><p>Suppose you have the following model:</p>
-<pre><code>class MyModel(models.Model):
-    def get_absolute_url(self, *args, **kwargs):
-        return '/show/%s' % self.pk
+<pre><code>  class MyModel(models.Model):
+      def get_absolute_url(self, *args, **kwargs):
+          return '/show/%s' % self.pk
 </code></pre>
 <p>The "View on site" button on admin will always take you to example.com, which is bullshit.</p>
 <p>Even if you override it with <code>ABSOLUTE_URL_OVERRIDES</code> in settings.py.</p>
 <p>The solution is to fuck Django's default Site in your models.py:</p>
-<pre><code>from django.contrib.sites import models as SiteModels
-SiteModels.Site._meta.installed = False
+<pre><code>  from django.contrib.sites import models as SiteModels
+  SiteModels.Site._meta.installed = False
 </code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-05-15T05:39:29+08:00">2013-05-15</time></p>
@@ -863,35 +863,35 @@ SiteModels.Site._meta.installed = False
               <h2 class="card-title">比奥数题还脑残的Python题</h2>
             </a>
             <p class="card-text"><p>下边的问题是在CPython interactive shell 里<strong>按顺序</strong>执行的，请在 下划线处  ____  填上答案。</p>
-<pre><code>&gt;&gt;&gt; x = [1, 2, 3]
-&gt;&gt;&gt; for number in x:
-...     number += 1
-... 
-&gt;&gt;&gt; print x
-__________________
-&gt;&gt;&gt; print 1 == True
-__________________
-&gt;&gt;&gt; print 0 == False
-__________________
-&gt;&gt;&gt; print 2 == True
-__________________
-&gt;&gt;&gt; item = 'x'
-&gt;&gt;&gt; print item == "y" or "z"
-___________________
-&gt;&gt;&gt; l = [1,6,4,2,3,9,4,6]
-&gt;&gt;&gt; l = l.sort()
-&gt;&gt;&gt; print l
-___________________
-&gt;&gt;&gt; ll = [lambda: n for n in range(5)]
-&gt;&gt;&gt; print [l() for l in ll]
-___________________
-&gt;&gt;&gt; my_gen = (i for i in range(10))
-&gt;&gt;&gt; print(3 in my_gen)
-___________________
-&gt;&gt;&gt; print(7 in my_gen)
-___________________
-&gt;&gt;&gt; print(2 in my_gen)
-___________________
+<pre><code>  &gt;&gt;&gt; x = [1, 2, 3]
+  &gt;&gt;&gt; for number in x:
+  ...     number += 1
+  ... 
+  &gt;&gt;&gt; print x
+  __________________
+  &gt;&gt;&gt; print 1 == True
+  __________________
+  &gt;&gt;&gt; print 0 == False
+  __________________
+  &gt;&gt;&gt; print 2 == True
+  __________________
+  &gt;&gt;&gt; item = 'x'
+  &gt;&gt;&gt; print item == "y" or "z"
+  ___________________
+  &gt;&gt;&gt; l = [1,6,4,2,3,9,4,6]
+  &gt;&gt;&gt; l = l.sort()
+  &gt;&gt;&gt; print l
+  ___________________
+  &gt;&gt;&gt; ll = [lambda: n for n in range(5)]
+  &gt;&gt;&gt; print [l() for l in ll]
+  ___________________
+  &gt;&gt;&gt; my_gen = (i for i in range(10))
+  &gt;&gt;&gt; print(3 in my_gen)
+  ___________________
+  &gt;&gt;&gt; print(7 in my_gen)
+  ___________________
+  &gt;&gt;&gt; print(2 in my_gen)
+  ___________________
 </code></pre>
 <p><a href="http://www.reddit.com/r/Python/comments/1e8xw5/common_misconceptions_in_python/">via</a></p></p>
             <div class="card-subtext muted-text">
@@ -990,16 +990,16 @@ D(8,9/4) 也类似2个质心。。。</p>
             </a>
             <p class="card-text"><p>简单的例子，来自<a href="http://ponyorm.com/">官网</a></p>
 <p>python的查询代码：</p>
-<pre><code>select(c for c in Customer
-     if sum(c.orders.price) &gt; 1000)
+<pre><code>  select(c for c in Customer
+       if sum(c.orders.price) &gt; 1000)
 </code></pre>
 <p>通过PonyORM翻译成SQL：</p>
-<pre><code>SELECT "c"."id"
-FROM "Customer" "c"
-  LEFT JOIN "Order" "order-1"
-    ON "c"."id" = "order-1"."customer"
-GROUP BY "c"."id"
-HAVING coalesce(SUM("order-1"."total_price"), 0) &gt; 1000
+<pre><code>  SELECT "c"."id"
+  FROM "Customer" "c"
+    LEFT JOIN "Order" "order-1"
+      ON "c"."id" = "order-1"."customer"
+  GROUP BY "c"."id"
+  HAVING coalesce(SUM("order-1"."total_price"), 0) &gt; 1000
 </code></pre>
 <p>以前觉得<a href="http://peewee.readthedocs.org/en/latest/peewee/querying.html">peewee的查询语法</a>很clever，比Django那种丑爆的 <code>price__gt=1000</code> 好出一条街。那么PonyORM就超出其他python ORM一条银河系了。</p>
 <p>这个PonyORM的黑魔法在哪里呢？</p>
@@ -1016,10 +1016,10 @@ HAVING coalesce(SUM("order-1"."total_price"), 0) &gt; 1000
 <p>可以说Peewee和PonyORM的设计才是优雅的。但是<a href="https://news.ycombinator.com/item?id=5576562">PonyORM更加高级</a>，基本接近了LINQ和超过了Hibernate HQL。</p>
 <p>顺便提一下，有一个另外<a href="http://www.reddit.com/r/Python/comments/1ctlml/pql_02_is_out_converts_python_expressions_to/">类似的</a>ORM——PQL，用于MongoDB：</p>
 <p>比如：</p>
-<pre><code>pql.find("a &amp;gt; 1 and b == 'foo' or not c.d == False")
+<pre><code>  pql.find("a &amp;gt; 1 and b == 'foo' or not c.d == False")
 </code></pre>
 <p>翻译成MongoDB的查询：</p>
-<pre><code>{'$or': [{'$and': [{'a': {'$gt': 1}}, {'b': 'foo'}]}, {'$not': {'c.d': False}}]}
+<pre><code>  {'$or': [{'$and': [{'a': {'$gt': 1}}, {'b': 'foo'}]}, {'$not': {'c.d': False}}]}
 </code></pre>
 <p>很可惜它是基于字符串的翻译，而不是原生python表达式。</p>
 <p>其他<a href="http://www.newsmth.net/bbstcon.php?board=Python&amp;gid=103169">讨论</a></p></p>
@@ -1275,13 +1275,16 @@ pythonic是一种面向大众的编程态度     </p>
 <p>发信人: penny1983 (一只熊猫，两种表述||熊猫永不受伤), 信区: Database<br />
 标  题: Re: cassandra集群的去中心拓扑真是帅啊<br />
 发信站: 水木社区 (Wed Apr 10 10:31:16 2013), 站内</p>
-<p>开源实现没有靠谱的啊。</p>
-<p>Paxos 算法和满足实际需求的系统之间还存在大量的鸿沟, fault-tolerant sytem 即<br />
-使写伪代码都不容易写对，Google开发chubby时候专门写了一个state machine <br />
+<pre><code>开源实现没有靠谱的啊。
+
+Paxos 算法和满足实际需求的系统之间还存在大量的鸿沟, fault-tolerant sytem 即
+</code></pre>
+<p>使写伪代码都不容易写对，Google开发chubby时候专门写了一个state machine <br />
 语言和相应的编译器，把用state machine 表示的算法转为c++，而且在chubby一致性检<br />
 验和容错方面投入了巨大的精力。</p>
-<p>Google的chubby一开始也是基于第三方商业数据库，但是由于商业库的replication问<br />
-题（bug，无法证明replica算法正确），google不得不自己实现kv db 用于实现multi-<br />
+<pre><code> Google的chubby一开始也是基于第三方商业数据库，但是由于商业库的replication问
+</code></pre>
+<p>题（bug，无法证明replica算法正确），google不得不自己实现kv db 用于实现multi-<br />
 paxos。这一过程也是一把辛酸啊，参加google的论文<br />
 Paxos made live-An Engineering View。</p></p>
             <div class="card-subtext muted-text">

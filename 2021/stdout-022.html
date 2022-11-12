@@ -55,16 +55,16 @@
   
   <p>有没有好奇为什么 Flask 配置必须要求一个 <a href="https://flask.palletsprojects.com/en/latest/config/#SECRET_KEY">SECRET_KEY</a>，然后就可以在浏览器保存一个 session 状态读写数据。</p>
 <p>这里记一下它的底层实现，其实需要依赖的包是 <a href="https://itsdangerous.palletsprojects.com/">itsdangerous</a></p>
-<pre><code>import hashlib
-from itsdangerous import URLSafeTimedSerializer
-URLSafeTimedSerializer(
-        'YOUR_SECRET_KEY',  # flask SECRET_KEY
-        'cookie-session',  # from flask.sessions.SecureCookieSessionInterface.salt
-        # serializer=TaggedJSONSerializer(),
-        signer_kwargs={'key_derivation': 'hmac', 'digest_method': hashlib.sha1}
-).dumps({
-    "your_key": "your_value"
-})
+<pre><code>  import hashlib
+  from itsdangerous import URLSafeTimedSerializer
+  URLSafeTimedSerializer(
+          'YOUR_SECRET_KEY',  # flask SECRET_KEY
+          'cookie-session',  # from flask.sessions.SecureCookieSessionInterface.salt
+          # serializer=TaggedJSONSerializer(),
+          signer_kwargs={'key_derivation': 'hmac', 'digest_method': hashlib.sha1}
+  ).dumps({
+      "your_key": "your_value"
+  })
 </code></pre>
 <p>别人如果拿到你的 <code>SECRET_KEY</code> 就可以伪造任意 session cookie 了</p>
 

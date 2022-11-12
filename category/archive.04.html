@@ -98,16 +98,16 @@
               <h2 class="card-title">/dev/tcp</h2>
             </a>
             <p class="card-text"><p>马克一下。。。exec这个没想到shell里也可以用啊</p>
-<pre><code>exec 3&lt;&gt;/dev/tcp/www.google.com/80
-echo -e "GET / HTTP/1.1\n\n"&gt;&amp;3
-cat &lt;&amp;3
+<pre><code>  exec 3&lt;&gt;/dev/tcp/www.google.com/80
+  echo -e "GET / HTTP/1.1\n\n"&gt;&amp;3
+  cat &lt;&amp;3
 </code></pre>
 <p>简单的端口扫描：</p>
-<pre><code>$ for p in {1..1023}; do(echo &gt;/dev/tcp/localhost/$p) &gt;/dev/null 2&gt;&amp;1 &amp;&amp; echo "$p open"; done
+<pre><code>  $ for p in {1..1023}; do(echo &gt;/dev/tcp/localhost/$p) &gt;/dev/null 2&gt;&amp;1 &amp;&amp; echo "$p open"; done
 </code></pre>
 <p>btw 最近看到好多openvpn被k掉了。看了下sshd的[源码](xasprintf(&amp;server_version_string, "SSH-%d.%d-%.100s%s%s%s",)</p>
 <p>这一行： </p>
-<pre><code>  xasprintf(&amp;server_version_string, "SSH-%d.%d-%.100s%s%s%s",
+<pre><code>    xasprintf(&amp;server_version_string, "SSH-%d.%d-%.100s%s%s%s",
 </code></pre>
 <p>真尼玛坑爹，真心不安全啊。还是brl的patch好用。</p></p>
             <div class="card-subtext muted-text">
@@ -133,11 +133,11 @@ cat &lt;&amp;3
 <li>生成第二个key <code>ssh-keygen -t rsa  -f ~/.ssh/id_rsa.est</code></li>
 <li>
 <p>编辑ssh_config <code>vim ~/.ssh/config</code> 粘贴下边的东东： </p>
-<pre><code>Host estgit
-HostName github.com
-User git
-IdentityFile "~/.ssh/id_rsa.est"
-IdentitiesOnly yes
+<pre><code>    Host estgit
+    HostName github.com
+    User git
+    IdentityFile "~/.ssh/id_rsa.est"
+    IdentitiesOnly yes
 </code></pre>
 </li>
 <li>
@@ -320,12 +320,12 @@ IdentitiesOnly yes
             </a>
             <p class="card-text"><p>This is what you do when you have a shitting Internet connection:</p>
 <p>$ vim ~/.bash_aliases</p>
-<pre><code>function retry(){
-  false;
-  while [ $? -gt 0 ];
-    do $@;
-  done;
-}
+<pre><code>  function retry(){
+    false;
+    while [ $? -gt 0 ];
+      do $@;
+    done;
+  }
 </code></pre>
 <p>To rape your server, just <code>retry ssh -o ConnectTimeout=1 blah@foobar</code></p>
 <p>Shit just got working for now.</p></p>
@@ -467,12 +467,12 @@ IdentitiesOnly yes
               <h2 class="card-title">django extra where clause (bitwise OR) with a Q object</h2>
             </a>
             <p class="card-text"><p>So if you want to write a Queryset in Django like this:</p>
-<pre><code>models.MyModel.objects.filter( Q(a=1) | Q(b=2).extra(where=[""]) )
+<pre><code>  models.MyModel.objects.filter( Q(a=1) | Q(b=2).extra(where=[""]) )
 </code></pre>
 <p>It desn't work, because <code>extra()</code> can not be used on a <code>django.db.models.Q</code> object</p>
 <p>Instead, you can <a href="http://simeonfranklin.com/blog/2011/feb/20/hidden-django-queryset-features-II/">write like this</a>:</p>
-<pre><code>qs = models.MyModel.objects.filter(a=1)
-qs |= models.MyModel.objects.filte(b=2).extra(where=[""])
+<pre><code>  qs = models.MyModel.objects.filter(a=1)
+  qs |= models.MyModel.objects.filte(b=2).extra(where=[""])
 </code></pre>
 <p>I guess it's cool.</p></p>
             <div class="card-subtext muted-text">
@@ -712,7 +712,7 @@ qs |= models.MyModel.objects.filte(b=2).extra(where=[""])
 </li>
 </ul>
 <p>官方文档在这里 <a href="http://www.w3.org/TR/xml/#charsets">http://www.w3.org/TR/xml/#charsets</a></p>
-<pre><code>Char       ::=      #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
+<pre><code>  Char     ::=    #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
 </code></pre>
 <p><a href="http://www.reddit.com/r/programming/comments/1322te/what_every_programmer_absolutely_positively_needs/">via</a></p></p>
             <div class="card-subtext muted-text">
@@ -967,7 +967,7 @@ http://xuanpai.sinaapp.com/work/</p>
               <h2 class="card-title">用tcmalloc代替glibc的malloc()。无须重编译</h2>
             </a>
             <p class="card-text"><p>据说这样就行了</p>
-<pre><code>$ LD_PRELOAD="/usr/lib/libtcmalloc.so"
+<pre><code>  $ LD_PRELOAD="/usr/lib/libtcmalloc.so"
 </code></pre>
 <p><a href="http://news.ycombinator.com/item?id=4719705">via</a></p></p>
             <div class="card-subtext muted-text">
@@ -1023,16 +1023,16 @@ http://xuanpai.sinaapp.com/work/</p>
 </blockquote>
 <p>The fact is it will neither reload, nor the child process will terminate when you Ctrl+C the main process.</p>
 <p>Let's use Django's reloader for bottlepy development!</p>
-<pre><code>from bottle import run, Bottle
+<pre><code>  from bottle import run, Bottle
 
-app = Bottle()
+  app = Bottle()
 
-def dev_server():
-    run(app, host='0.0.0.0', port=8080, debug=True)
+  def dev_server():
+      run(app, host='0.0.0.0', port=8080, debug=True)
 
-if '__main__' == __name__:
-    from django.utils import autoreload
-    autoreload.main(dev_server)
+  if '__main__' == __name__:
+      from django.utils import autoreload
+      autoreload.main(dev_server)
 </code></pre>
 <p>Everything went better than expected.</p>
 <p>btw my Tumblr Markdown editor can not accept capital E and R, using PinYin IME is OK. strange!</p></p>
@@ -1052,14 +1052,14 @@ if '__main__' == __name__:
             <p class="card-text"><p>Running bottlepy with default server (<code>wsgiref.simple_server</code>) is always dog slow for me, after some digging I found that the fucking server is trying to resolve the IP address of 10.x.x.x, both the server and client, into hostnames so the fucking logger can 'properly' display them. FUCK THIS BULLSHIT.</p>
 <p>Find <code>BaseHTTPServer.py</code></p>
 <p>Go to line 478;</p>
-<pre><code>def address_string(self):
-    return self.client_address[0]
+<pre><code>  def address_string(self):
+      return self.client_address[0]
 </code></pre>
 <p>It works best if you have virtualenv set you can just modify a copy in the <code>lib</code> only for development use.</p>
 <p>Fuck who ever wrote BaseHTTPRequestHandler.address_string() FUCK YOU ASSHOLE. Who ever thought reverse DNS lookup is acceptable is pure piece of shit. It only spams your log with fake &amp; gay spammer domains.</p>
 <p>Bottle.py is great Web framework, it supports <a href="http://bottlepy.org/docs/stable/async.html">Async WSGI</a> calls, which Flask <a href="http://flask.pocoo.org/docs/design/">can not do</a>. . It works even without using <code>gevent</code> as server. I am thinking of adding some sessions support to it. db backend maybe?</p>
 <p>Update: for python 2.6, just write this line for monkey patch before bottle.run() or wsgiref.simple_server </p>
-<pre><code>__import__('BaseHTTPServer').BaseHTTPRequestHandler.address_string = lambda x:x.client_address[0]
+<pre><code>  __import__('BaseHTTPServer').BaseHTTPRequestHandler.address_string = lambda x:x.client_address[0]
 </code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-10-25T04:53:00+08:00">2012-10-25</time></p>
@@ -1096,32 +1096,32 @@ Rateless codes are also known by different names, e.g. fountain (LT) codes, rapt
               <h2 class="card-title">@cached_property</h2>
             </a>
             <p class="card-text"><p>在<code>django.utils.functional</code> 里发现的。</p>
-<pre><code>class cached_property(object):
-    """
-    Decorator that creates converts a method with a single
-    self argument into a property cached on the instance.
-    """
-    def __init__(self, func):
-        self.func = func
+<pre><code>  class cached_property(object):
+      """
+      Decorator that creates converts a method with a single
+      self argument into a property cached on the instance.
+      """
+      def __init__(self, func):
+          self.func = func
 
-    def __get__(self, instance, type):
-        res = instance.__dict__[self.func.__name__] = self.func(instance)
-        return res
+      def __get__(self, instance, type):
+          res = instance.__dict__[self.func.__name__] = self.func(instance)
+          return res
 </code></pre>
 <p>这玩意好用啊，比如</p>
-<pre><code>&gt;&gt;&gt; class A(object):
-...   @cached_property
-...   def val(self):
-...     print 'calc'
-...     return 1
-... 
-&gt;&gt;&gt; 
-&gt;&gt;&gt; a=A()
-&gt;&gt;&gt; a.val
-calc
-1
-&gt;&gt;&gt; a.val
-1
+<pre><code>  &gt;&gt;&gt; class A(object):
+  ...   @cached_property
+  ...   def val(self):
+  ...     print 'calc'
+  ...     return 1
+  ... 
+  &gt;&gt;&gt; 
+  &gt;&gt;&gt; a=A()
+  &gt;&gt;&gt; a.val
+  calc
+  1
+  &gt;&gt;&gt; a.val
+  1
 </code></pre>
 <p>以前自己山寨个 <code>def val(): self._val =</code> 什么的太烂了。</p></p>
             <div class="card-subtext muted-text">
@@ -1307,42 +1307,42 @@ calc
               <h2 class="card-title">ping uwsgi</h2>
             </a>
             <p class="card-text"><p>Here's a handy python script do the job of <code>uwsgi --ping &lt;address&gt;</code></p>
-<pre><code>#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals, print_function
+<pre><code>  #!/usr/bin/env python
+  # -*- coding: utf-8 -*-
+  from __future__ import unicode_literals, print_function
 
-import socket
-import struct
+  import socket
+  import struct
 
-#---------------------------------------------------------------
-#---------------------------------------------------------------
-def ping_uwsgi(sock_file):
-    '''
-    Ping UWSGI process trought socket. Return [True,...] if OK,
-    return [False,error] if UWSGO not pinging, or
-    [None,error] if common error (ex. socket file not found)
-    '''
-    rv = [None,'']
-    fmt_h = str('&lt;BHB')
-    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    try:
-        sock.connect(sock_file)
-    except socket.error,e:
-        rv = [None,e]
-    sock = None
-    if (sock):
-        ping = struct.pack(fmt_h,100,0,0)
-        sock.send(ping)
-        pong = sock.recv(struct.calcsize(fmt_h))
-        sock.close()
-        p = struct.unpack(fmt_h,pong)
-    if (p == (100,0,1)):
-        rv = [True, 'OK']
-    else:
-        rv = [False, 'ERR']
-    return rv
-#---------------------------------------------------------------
-#---------------------------------------------------------------
+  #---------------------------------------------------------------
+  #---------------------------------------------------------------
+  def ping_uwsgi(sock_file):
+      '''
+      Ping UWSGI process trought socket. Return [True,...] if OK,
+      return [False,error] if UWSGO not pinging, or
+      [None,error] if common error (ex. socket file not found)
+      '''
+      rv = [None,'']
+      fmt_h = str('&lt;BHB')
+      sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+      try:
+          sock.connect(sock_file)
+      except socket.error,e:
+          rv = [None,e]
+      sock = None
+      if (sock):
+          ping = struct.pack(fmt_h,100,0,0)
+          sock.send(ping)
+          pong = sock.recv(struct.calcsize(fmt_h))
+          sock.close()
+          p = struct.unpack(fmt_h,pong)
+      if (p == (100,0,1)):
+          rv = [True, 'OK']
+      else:
+          rv = [False, 'ERR']
+      return rv
+  #---------------------------------------------------------------
+  #---------------------------------------------------------------
 </code></pre>
 <p>via <a href="http://pypi.python.org/pypi/nust">http://pypi.python.org/pypi/nust</a></p></p>
             <div class="card-subtext muted-text">

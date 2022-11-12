@@ -55,16 +55,16 @@
   
   <p>简单的例子，来自<a href="http://ponyorm.com/">官网</a></p>
 <p>python的查询代码：</p>
-<pre><code>select(c for c in Customer
-     if sum(c.orders.price) &gt; 1000)
+<pre><code>  select(c for c in Customer
+       if sum(c.orders.price) &gt; 1000)
 </code></pre>
 <p>通过PonyORM翻译成SQL：</p>
-<pre><code>SELECT "c"."id"
-FROM "Customer" "c"
-  LEFT JOIN "Order" "order-1"
-    ON "c"."id" = "order-1"."customer"
-GROUP BY "c"."id"
-HAVING coalesce(SUM("order-1"."total_price"), 0) &gt; 1000
+<pre><code>  SELECT "c"."id"
+  FROM "Customer" "c"
+    LEFT JOIN "Order" "order-1"
+      ON "c"."id" = "order-1"."customer"
+  GROUP BY "c"."id"
+  HAVING coalesce(SUM("order-1"."total_price"), 0) &gt; 1000
 </code></pre>
 <p>以前觉得<a href="http://peewee.readthedocs.org/en/latest/peewee/querying.html">peewee的查询语法</a>很clever，比Django那种丑爆的 <code>price__gt=1000</code> 好出一条街。那么PonyORM就超出其他python ORM一条银河系了。</p>
 <p>这个PonyORM的黑魔法在哪里呢？</p>
@@ -81,10 +81,10 @@ HAVING coalesce(SUM("order-1"."total_price"), 0) &gt; 1000
 <p>可以说Peewee和PonyORM的设计才是优雅的。但是<a href="https://news.ycombinator.com/item?id=5576562">PonyORM更加高级</a>，基本接近了LINQ和超过了Hibernate HQL。</p>
 <p>顺便提一下，有一个另外<a href="http://www.reddit.com/r/Python/comments/1ctlml/pql_02_is_out_converts_python_expressions_to/">类似的</a>ORM——PQL，用于MongoDB：</p>
 <p>比如：</p>
-<pre><code>pql.find("a &amp;gt; 1 and b == 'foo' or not c.d == False")
+<pre><code>  pql.find("a &amp;gt; 1 and b == 'foo' or not c.d == False")
 </code></pre>
 <p>翻译成MongoDB的查询：</p>
-<pre><code>{'$or': [{'$and': [{'a': {'$gt': 1}}, {'b': 'foo'}]}, {'$not': {'c.d': False}}]}
+<pre><code>  {'$or': [{'$and': [{'a': {'$gt': 1}}, {'b': 'foo'}]}, {'$not': {'c.d': False}}]}
 </code></pre>
 <p>很可惜它是基于字符串的翻译，而不是原生python表达式。</p>
 <p>其他<a href="http://www.newsmth.net/bbstcon.php?board=Python&amp;gid=103169">讨论</a></p>

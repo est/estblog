@@ -54,8 +54,8 @@
 
   
   <p>code:</p>
-<pre><code>$ openssl x509 -noout -fingerprint -sha1 -in &lt;(openssl s_client -connect weibo.cn:443 -prexit 2&gt;/dev/null) | python -c "print __import__('sys').stdin.read().partition('=')[2][:-1].replace(':','').decode('hex').encode('base64')"
-fUWlLfAlsHpGFDfI4XsFOUWkA7Q=
+<pre><code>  $ openssl x509 -noout -fingerprint -sha1 -in &lt;(openssl s_client -connect weibo.cn:443 -prexit 2&gt;/dev/null) | python -c "print __import__('sys').stdin.read().partition('=')[2][:-1].replace(':','').decode('hex').encode('base64')"
+  fUWlLfAlsHpGFDfI4XsFOUWkA7Q=
 </code></pre>
 <p>website: https://www.grc.com/fingerprints.htm</p>
 

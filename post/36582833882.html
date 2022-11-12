@@ -55,12 +55,12 @@
   
   <p>This is what you do when you have a shitting Internet connection:</p>
 <p>$ vim ~/.bash_aliases</p>
-<pre><code>function retry(){
-  false;
-  while [ $? -gt 0 ];
-    do $@;
-  done;
-}
+<pre><code>  function retry(){
+    false;
+    while [ $? -gt 0 ];
+      do $@;
+    done;
+  }
 </code></pre>
 <p>To rape your server, just <code>retry ssh -o ConnectTimeout=1 blah@foobar</code></p>
 <p>Shit just got working for now.</p>

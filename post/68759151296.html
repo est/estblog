@@ -55,19 +55,19 @@
   
   <p>好吧。还在力战渣windows。非管理员权限。<a href="http://code.google.com/p/go/downloads/list?q=OpSys-Windows+Type%3DArchive">下载zip包</a>解压到 D:\dev\go</p>
 <p>sublime处理中文路径一直很bug。需要修改 /Data/Packages/Default/exec.py:45 行：</p>
-<pre><code>    for k, v in proc_env.iteritems():
-        nv =  os.path.expandvars(v)
-        if isinstance(v, unicode):
-            import locale
-            nv = nv.encode(locale.getdefaultlocale()[1])
-        proc_env[k] = nv
+<pre><code>      for k, v in proc_env.iteritems():
+          nv =  os.path.expandvars(v)
+          if isinstance(v, unicode):
+              import locale
+              nv = nv.encode(locale.getdefaultlocale()[1])
+          proc_env[k] = nv
 </code></pre>
 <p>然后菜单 Tools -&gt; Build System -&gt; New...</p>
 <pre><code>{
-    "cmd": ["go", "run", "$file"],
-    "path": "D:/dev/go/bin",
-    "file_regex": "^(.+):([0-9]+):.*",
-    "env": {"GOROOT": "D:/dev/go"}
+  "cmd": ["go", "run", "$file"],
+  "path": "D:/dev/go/bin",
+  "file_regex": "^(.+):([0-9]+):.*",
+  "env": {"GOROOT": "D:/dev/go"}
 }
 </code></pre>
 <p>这就是Go的配置咯。然后就Ctrl+B了。</p>

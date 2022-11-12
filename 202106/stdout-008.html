@@ -54,29 +54,29 @@
 
   
   <p>A simple function to upsert something atomically into MySQL</p>
-<pre><code>def upsert(val1, val2, **kwargs):
-    """upsert val1-val2 pair into mysql and return the pk"""
-    from sqlalchemy.dialects.mysql import insert
-    from sqlalchemy.sql.expression import func
+<pre><code>  def upsert(val1, val2, **kwargs):
+      """upsert val1-val2 pair into mysql and return the pk"""
+      from sqlalchemy.dialects.mysql import insert
+      from sqlalchemy.sql.expression import func
 
-    # this val1-val2 pair should have UNIQUE KEY constraint in MySQL table.
-    stmt = insert(MyModel.__table__).values(col1=val1, col2=val2)
-    if kwargs:
-        stmt = stmt.on_duplicate_key_update(kwargs)
-    else:
-        # get lastrowid https://stackoverflow.com/a/29722203/41948
-        stmt = stmt.on_duplicate_key_update(id=func.LAST_INSERT_ID(MyModel.id))
-    # inserted_primary_key (dbapi, return 0 when only insert) or lastrowid (mysql)
-    pk = db.session().execute(stmt).lastrowid
-    if not pk:
-        pk = MyModel.query.options(load_only('id')).filter_by(
-            col1=val1, col2=val2
-        ).first().id
-    return pk
+      # this val1-val2 pair should have UNIQUE KEY constraint in MySQL table.
+      stmt = insert(MyModel.__table__).values(col1=val1, col2=val2)
+      if kwargs:
+          stmt = stmt.on_duplicate_key_update(kwargs)
+      else:
+          # get lastrowid https://stackoverflow.com/a/29722203/41948
+          stmt = stmt.on_duplicate_key_update(id=func.LAST_INSERT_ID(MyModel.id))
+      # inserted_primary_key (dbapi, return 0 when only insert) or lastrowid (mysql)
+      pk = db.session().execute(stmt).lastrowid
+      if not pk:
+          pk = MyModel.query.options(load_only('id')).filter_by(
+              col1=val1, col2=val2
+          ).first().id
+      return pk
 </code></pre>
 <p>Writing complex SQL is hard, sqlalchemy makes it harder. Prefer other ORMs in Python.</p>
 <p>I really hate fighting the infamous sqlalchemy API. Everything wrong about it can be shown in this one-liner:</p>
-<pre><code>from sqlalchemy.orm import Load, load_only, joinedload
+<pre><code>  from sqlalchemy.orm import Load, load_only, joinedload
 </code></pre>
 <p>You have the three styles of CamelCase, under_score, and concatfunctionnames fucked up together. Bad and leaky abstraction.</p>
 

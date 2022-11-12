@@ -61,38 +61,38 @@
 <p>其中一个重要的东西，就是 Python 3.3里边的<a href="http://www.python.org/dev/peps/pep-3156/">PEP-3156</a>，和其参考实现<a href="https://code.google.com/p/tulip/">Tulip</a>，基于Pyuv的也有个实现叫<a href="https://github.com/saghul/rose">Rose</a>。</p>
 <p>可以大胆估计，PEP 3156是以后最重要的Python标准接口之一了。其重要性超过PEP 333 WSGI</p>
 <p>libuv和 Boost.ASIO的比较<a href="http://stackoverflow.com/questions/11423426/">看这里</a>：</p>
-<pre><code>                         libuv          Boost
-Event Loop:              yes            Asio
-Threadpool:              yes            Asio + Threads
-Threading:              
-  Threads:               yes            Threads
-  Synchronization:       yes            Threads
-File System Operations:
-  Synchronous:           yes            FileSystem
-  Asynchronous:          yes            Asio + Filesystem
-Timers:                  yes            Asio
-Scatter/Gather I/O[1]:    no             Asio
-Networking:
-  ICMP:                  no             Asio
-  DNS Resolution:        async-only     Asio
-  SSL:                   no             Asio
-  TCP:                   async-only     Asio
-  UDP:                   async-only     Asio
-Signal:
-  Handling:              yes            Asio
-  Sending:               yes            no
-IPC:
-  UNIX Domain Sockets:   yes            Asio
-  Windows Named Pipe:    yes            Asio
-Process Management:
-  Detaching:             yes            Process[2]
-  I/O Pipe:              yes            Process[2]
-  Spawning:              yes            Process[2]
-System Queries:
-  CPU:                   yes            no
-  Network Interface:     yes            no
-TTY:                     yes            no
-Shared Library Loading:  yes            Extension[3]
+<pre><code>                           libuv          Boost
+  Event Loop:              yes            Asio
+  Threadpool:              yes            Asio + Threads
+  Threading:              
+    Threads:               yes            Threads
+    Synchronization:       yes            Threads
+  File System Operations:
+    Synchronous:           yes            FileSystem
+    Asynchronous:          yes            Asio + Filesystem
+  Timers:                  yes            Asio
+  Scatter/Gather I/O[1]:    no             Asio
+  Networking:
+    ICMP:                  no             Asio
+    DNS Resolution:        async-only     Asio
+    SSL:                   no             Asio
+    TCP:                   async-only     Asio
+    UDP:                   async-only     Asio
+  Signal:
+    Handling:              yes            Asio
+    Sending:               yes            no
+  IPC:
+    UNIX Domain Sockets:   yes            Asio
+    Windows Named Pipe:    yes            Asio
+  Process Management:
+    Detaching:             yes            Process[2]
+    I/O Pipe:              yes            Process[2]
+    Spawning:              yes            Process[2]
+  System Queries:
+    CPU:                   yes            no
+    Network Interface:     yes            no
+  TTY:                     yes            no
+  Shared Library Loading:  yes            Extension[3]
 </code></pre>
 <p>Python 3.3还支持socket.sendmsg() 和 socket.recvmsg() ，这是两个碉堡了的Vector IO (Scatter/Gather I/O) 函数。POSIX里边writev() 和 readv() 这两个 都是基于他们实现。sendmsg() 还有个<a href="http://docs.python.org/dev/library/socket.html#socket.socket.recvmsg">非常诡异的功能</a></p>
 <blockquote>

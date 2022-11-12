@@ -54,15 +54,15 @@
 
   
   <p>Suppose you have the following model:</p>
-<pre><code>class MyModel(models.Model):
-    def get_absolute_url(self, *args, **kwargs):
-        return '/show/%s' % self.pk
+<pre><code>  class MyModel(models.Model):
+      def get_absolute_url(self, *args, **kwargs):
+          return '/show/%s' % self.pk
 </code></pre>
 <p>The "View on site" button on admin will always take you to example.com, which is bullshit.</p>
 <p>Even if you override it with <code>ABSOLUTE_URL_OVERRIDES</code> in settings.py.</p>
 <p>The solution is to fuck Django's default Site in your models.py:</p>
-<pre><code>from django.contrib.sites import models as SiteModels
-SiteModels.Site._meta.installed = False
+<pre><code>  from django.contrib.sites import models as SiteModels
+  SiteModels.Site._meta.installed = False
 </code></pre>
 
 </article>

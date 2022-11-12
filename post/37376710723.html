@@ -54,16 +54,16 @@
 
   
   <p>马克一下。。。exec这个没想到shell里也可以用啊</p>
-<pre><code>exec 3&lt;&gt;/dev/tcp/www.google.com/80
-echo -e "GET / HTTP/1.1\n\n"&gt;&amp;3
-cat &lt;&amp;3
+<pre><code>  exec 3&lt;&gt;/dev/tcp/www.google.com/80
+  echo -e "GET / HTTP/1.1\n\n"&gt;&amp;3
+  cat &lt;&amp;3
 </code></pre>
 <p>简单的端口扫描：</p>
-<pre><code>$ for p in {1..1023}; do(echo &gt;/dev/tcp/localhost/$p) &gt;/dev/null 2&gt;&amp;1 &amp;&amp; echo "$p open"; done
+<pre><code>  $ for p in {1..1023}; do(echo &gt;/dev/tcp/localhost/$p) &gt;/dev/null 2&gt;&amp;1 &amp;&amp; echo "$p open"; done
 </code></pre>
 <p>btw 最近看到好多openvpn被k掉了。看了下sshd的[源码](xasprintf(&amp;server_version_string, "SSH-%d.%d-%.100s%s%s%s",)</p>
 <p>这一行： </p>
-<pre><code>  xasprintf(&amp;server_version_string, "SSH-%d.%d-%.100s%s%s%s",
+<pre><code>    xasprintf(&amp;server_version_string, "SSH-%d.%d-%.100s%s%s%s",
 </code></pre>
 <p>真尼玛坑爹，真心不安全啊。还是brl的patch好用。</p>
 

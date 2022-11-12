@@ -142,18 +142,18 @@
             </a>
             <p class="card-text"><p>OS X的蛋痛特性是  <code>`launched</code> 。如果你需要修改sshd的监听端口，那么</p>
 <p>编辑 /System/Library/LaunchDaemons/ssh.plist </p>
-<pre><code>        &lt;key&gt;Listeners&lt;/key&gt;
-        &lt;dict&gt;
-                &lt;key&gt;SockServiceName&lt;/key&gt;
-                &lt;string&gt;ssh-alt&lt;/string&gt;
-        &lt;/dict&gt;
+<pre><code>          &lt;key&gt;Listeners&lt;/key&gt;
+          &lt;dict&gt;
+                  &lt;key&gt;SockServiceName&lt;/key&gt;
+                  &lt;string&gt;ssh-alt&lt;/string&gt;
+          &lt;/dict&gt;
 </code></pre>
 <p>然后在<code>/etc/services</code>里定义：</p>
-<pre><code> ssh-alt 12345/tcp # ssh-alt
+<pre><code>   ssh-alt 12345/tcp # ssh-alt
 </code></pre>
 <p>然后重启sshd服务：</p>
-<pre><code>sudo launchctl uload /System/Library/LaunchDaemons/ssh.plist 
-sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist
+<pre><code>  sudo launchctl uload /System/Library/LaunchDaemons/ssh.plist 
+  sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist
 </code></pre>
 <p>蛋碎！</p></p>
             <div class="card-subtext muted-text">
@@ -171,8 +171,8 @@ sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist
             </a>
             <p class="card-text"><p>开篇帖子侃一下HAProxy这个神器有什么神器之处。</p>
 <p><a href="http://xiaoxia.org/2011/03/29/written-by-python-socks5-server/">写过proxy的人</a>都会写类似的语句：</p>
-<pre><code>localstream.write(upstream.read(1024))
-upstream.write(localstream.read(1024))
+<pre><code>  localstream.write(upstream.read(1024))
+  upstream.write(localstream.read(1024))
 </code></pre>
 <p>其中1024为业界良心艹榴网的chunk或者一个buffer size。这样的操作在各种router, proxy, firewall 里太常见了。</p>
 <p>那么HAProxy有什么<a href="http://stackoverflow.com/a/2120295/41948">特别的地方</a>呢？秘密就是，上游socket的接受buffer和本地socket的发送buffer为同一块内存。也就是说，上游socket数据来了，本地socket自动发送这一块buffer的数据。效率真是高爆了。这块buffer数据还可以用内核调用<code>splice()</code> 和 <code>tee()</code> 来达到分流和分离信号的目的。</p>
@@ -338,23 +338,23 @@ day 0 productivity.</p></p>
             <p class="card-text"><p>suppose you have url like this:</p>
 <p><code>/api/&lt;method&gt;</code></p>
 <p>In function based view it's like:</p>
-<pre><code>def myview(req, method=''):
-  if method=='callA':
-    return ""
-  elif method=='callB':
-    return ""
-  else:
-    return ""
+<pre><code>  def myview(req, method=''):
+    if method=='callA':
+      return ""
+    elif method=='callB':
+      return ""
+    else:
+      return ""
 </code></pre>
 <p>The problem is you can't enumerate every callA and callB.</p>
 <p>But for class based view it's trivial to write more elegant code like:</p>
-<pre><code>class myview(ViewRouter):
-    def callA(req):
-        return ''
-    def callB(req):
-        return ''
-    def default(req):
-        return ''
+<pre><code>  class myview(ViewRouter):
+      def callA(req):
+          return ''
+      def callB(req):
+          return ''
+      def default(req):
+          return ''
 </code></pre>
 <p>Just want to put up an example of what class-based views are useful in Web development. The powerful object introspection allows you to map URL behaviors to a well defined class.</p></p>
             <div class="card-subtext muted-text">
@@ -394,38 +394,38 @@ day 0 productivity.</p></p>
 <p>其中一个重要的东西，就是 Python 3.3里边的<a href="http://www.python.org/dev/peps/pep-3156/">PEP-3156</a>，和其参考实现<a href="https://code.google.com/p/tulip/">Tulip</a>，基于Pyuv的也有个实现叫<a href="https://github.com/saghul/rose">Rose</a>。</p>
 <p>可以大胆估计，PEP 3156是以后最重要的Python标准接口之一了。其重要性超过PEP 333 WSGI</p>
 <p>libuv和 Boost.ASIO的比较<a href="http://stackoverflow.com/questions/11423426/">看这里</a>：</p>
-<pre><code>                         libuv          Boost
-Event Loop:              yes            Asio
-Threadpool:              yes            Asio + Threads
-Threading:              
-  Threads:               yes            Threads
-  Synchronization:       yes            Threads
-File System Operations:
-  Synchronous:           yes            FileSystem
-  Asynchronous:          yes            Asio + Filesystem
-Timers:                  yes            Asio
-Scatter/Gather I/O[1]:    no             Asio
-Networking:
-  ICMP:                  no             Asio
-  DNS Resolution:        async-only     Asio
-  SSL:                   no             Asio
-  TCP:                   async-only     Asio
-  UDP:                   async-only     Asio
-Signal:
-  Handling:              yes            Asio
-  Sending:               yes            no
-IPC:
-  UNIX Domain Sockets:   yes            Asio
-  Windows Named Pipe:    yes            Asio
-Process Management:
-  Detaching:             yes            Process[2]
-  I/O Pipe:              yes            Process[2]
-  Spawning:              yes            Process[2]
-System Queries:
-  CPU:                   yes            no
-  Network Interface:     yes            no
-TTY:                     yes            no
-Shared Library Loading:  yes            Extension[3]
+<pre><code>                           libuv          Boost
+  Event Loop:              yes            Asio
+  Threadpool:              yes            Asio + Threads
+  Threading:              
+    Threads:               yes            Threads
+    Synchronization:       yes            Threads
+  File System Operations:
+    Synchronous:           yes            FileSystem
+    Asynchronous:          yes            Asio + Filesystem
+  Timers:                  yes            Asio
+  Scatter/Gather I/O[1]:    no             Asio
+  Networking:
+    ICMP:                  no             Asio
+    DNS Resolution:        async-only     Asio
+    SSL:                   no             Asio
+    TCP:                   async-only     Asio
+    UDP:                   async-only     Asio
+  Signal:
+    Handling:              yes            Asio
+    Sending:               yes            no
+  IPC:
+    UNIX Domain Sockets:   yes            Asio
+    Windows Named Pipe:    yes            Asio
+  Process Management:
+    Detaching:             yes            Process[2]
+    I/O Pipe:              yes            Process[2]
+    Spawning:              yes            Process[2]
+  System Queries:
+    CPU:                   yes            no
+    Network Interface:     yes            no
+  TTY:                     yes            no
+  Shared Library Loading:  yes            Extension[3]
 </code></pre>
 <p>Python 3.3还支持socket.sendmsg() 和 socket.recvmsg() ，这是两个碉堡了的Vector IO (Scatter/Gather I/O) 函数。POSIX里边writev() 和 readv() 这两个 都是基于他们实现。sendmsg() 还有个<a href="http://docs.python.org/dev/library/socket.html#socket.socket.recvmsg">非常诡异的功能</a></p>
 <blockquote>
@@ -479,31 +479,31 @@ Shared Library Loading:  yes            Extension[3]
               <h2 class="card-title">Return twice in a python function</h2>
             </a>
             <p class="card-text"><p>1.py:</p>
-<pre><code>def foo():
- try:
-  return 'foo'
- finally:
-  return 'bar'
+<pre><code>  def foo():
+   try:
+    return 'foo'
+   finally:
+    return 'bar'
 
 
-print foo()
+  print foo()
 </code></pre>
 <p>2.py</p>
-<pre><code>def foo():
- try:
-  return 'foo'
- finally:
-  print 'bar'
+<pre><code>  def foo():
+   try:
+    return 'foo'
+   finally:
+    print 'bar'
 
 
-print foo()
+  print foo()
 </code></pre>
 <p>The result is shocking...</p>
-<pre><code>$ python 1.py 
-bar
-$ python 2.py 
-bar
-foo
+<pre><code>  $ python 1.py 
+  bar
+  $ python 2.py 
+  bar
+  foo
 </code></pre>
 <p>I think this particular behavior is well abused in <a href="http://code.google.com/p/modwsgi/wiki/RegisteringCleanupCode">WSGI</a></p>
 <p>two cents:</p>
@@ -633,12 +633,12 @@ In a generator function, the return statement is not allowed to include an expre
               <h2 class="card-title">Install bjoern on Gentoo</h2>
             </a>
             <p class="card-text"><p>VPS内存小，连uWSGI这种都玩不起，只能玩玩<a href="https://github.com/jonashaag/bjoern">bjoern</a>这个神器了。<a href="http://bottlepy.org/docs/dev/deployment.html#switching-the-server-backend">Bottle.py支持的WSGI容器</a>还真多啊！</p>
-<pre><code>curl -O http://python-distribute.org/distribute_setup.py
-sudo  python distribute_setup.py
-curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
-sudo python get-pip.py
-sudo emerge libev
-CFLAGS=-I/usr/include/libev sudo pip install bjoern
+<pre><code>  curl -O http://python-distribute.org/distribute_setup.py
+  sudo  python distribute_setup.py
+  curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
+  sudo python get-pip.py
+  sudo emerge libev
+  CFLAGS=-I/usr/include/libev sudo pip install bjoern
 </code></pre>
 <p>灌了个水的哟。。。</p></p>
             <div class="card-subtext muted-text">
@@ -663,37 +663,37 @@ CFLAGS=-I/usr/include/libev sudo pip install bjoern
 <p>These should be separate Bottle apps.</p>
 <p>There's <a href="http://permalink.gmane.org/gmane.comp.python.bottle.general/730">an ugly hack</a> from the official maillist, I think I can make it better.</p>
 <p>The secret is to create a customized WSGI app:</p>
-<pre><code>from fnmatch import fnmatch
-from bottle import Bottle, default_app, run
+<pre><code>  from fnmatch import fnmatch
+  from bottle import Bottle, default_app, run
 
-foo = Bottle()
-foo.hostnames = ['foo.est.im']
-@foo.route('/')
-def hello():
-    return 'hello!'
+  foo = Bottle()
+  foo.hostnames = ['foo.est.im']
+  @foo.route('/')
+  def hello():
+      return 'hello!'
 
-bar = Bottle()
-bar.hostnames = ['bar.est.im']
-@bar.route('/')
-def hi():
-    return 'hi~'
+  bar = Bottle()
+  bar.hostnames = ['bar.est.im']
+  @bar.route('/')
+  def hi():
+      return 'hi~'
 
-@route('/')
-def index():
-    print 'hello world'
+  @route('/')
+  def index():
+      print 'hello world'
 
-def application(environ, start_response):
-    for app in [foo, bar]:
-        hostnames = getattr(app, 'hostnames', [])
-        if filter(lambda x:fnmatch(hostname, x), hostnames):
-            return app(environ, start_response)
-    return default_app()(environ, start_response)
+  def application(environ, start_response):
+      for app in [foo, bar]:
+          hostnames = getattr(app, 'hostnames', [])
+          if filter(lambda x:fnmatch(hostname, x), hostnames):
+              return app(environ, start_response)
+      return default_app()(environ, start_response)
 </code></pre>
 <p>Then run this motherfucker:</p>
-<pre><code>from django.utils import autoreload
-def dev_server():
-    run(application, host='0.0.0.0', port=8002, debug=True)
-autoreload.main(dev_server)
+<pre><code>  from django.utils import autoreload
+  def dev_server():
+      run(application, host='0.0.0.0', port=8002, debug=True)
+  autoreload.main(dev_server)
 </code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-02-19T01:59:57+08:00">2013-02-19</time></p>
@@ -711,17 +711,19 @@ autoreload.main(dev_server)
             <p class="card-text"><p>Google Docs自己搞了一套类似Google App Engine的体系，只不过服务器端语言是Javascript，运行环境是 云JS——Google Apps Script</p>
 <p><a href="https://developers.google.com/apps-script/html_service">https://developers.google.com/apps-script/html_service</a></p>
 <p>看了下文档，类似php的语法，在html里嵌入js，然后服务器渲染得到一个网页。</p>
-<pre><code>&lt;table&gt;
-  &lt;? var data = getData();
-     for (var i = 0; i &lt; data.length; ++i) { ?&gt;
-    &lt;tr&gt;
-      &lt;? for  (var j = 0; j &lt; data[i].length; ++j) { ?&gt;
-        &lt;td&gt;&lt;?= data[i][j]?&gt;&lt;/td&gt;
-      &lt;? } ?&gt;
-    &lt;/tr&gt;
-  &lt;? } ?&gt;
-&lt;/table&gt;
+<pre><code>
 </code></pre>
+<table>
+    <? var data = getData();
+     for (var i = 0; i < data.length; ++i) { ?>
+    <tr>
+      <? for  (var j = 0; j < data[i].length; ++j) { ?>
+      <td><?= data[i][j]?></td>
+      <? } ?>
+    </tr>
+    <? } ?>
+  </table>
+
 <p>这是得有多蛋痛啊。那个结尾的<code>&lt;? } ?&gt;</code>更是让人菊花一紧！</p>
 <p>感脚Excel里边的VBA被秒杀了！</p></p>
             <div class="card-subtext muted-text">
@@ -819,46 +821,46 @@ of what it really is</p></p>
               <h2 class="card-title">Google Suggest spell checker</h2>
             </a>
             <p class="card-text"><p>请求：</p>
-<pre><code>POST https://www.googleapis.com/rpc HTTP/1.1
-Host: www.googleapis.com
-Connection: keep-alive
-Content-Length: 159
-Content-Type: application/json
+<pre><code>  POST https://www.googleapis.com/rpc HTTP/1.1
+  Host: www.googleapis.com
+  Connection: keep-alive
+  Content-Length: 159
+  Content-Type: application/json
 
-{"method":"spelling.check","apiVersion":"v1","params": 
-{"text":"cchrome","language":"en","originCountry":"USA", 
-"key":"AIzaSyCLlKc60a3z7lo8deV-hAyDU7rHYgL4HZg"}}
+  {"method":"spelling.check","apiVersion":"v1","params": 
+  {"text":"cchrome","language":"en","originCountry":"USA", 
+  "key":"AIzaSyCLlKc60a3z7lo8deV-hAyDU7rHYgL4HZg"}}
 </code></pre>
 <p>返回：</p>
-<pre><code>HTTP/1.1 200 OK
-Content-Type: application/json; charset=UTF-8
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-Pragma: no-cache
-Expires: Fri, 01 Jan 1990 00:00:00 GMT
-Date: Fri, 01 Feb 2013 07:01:26 GMT
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-XSS-Protection: 1; mode=block
-Content-Length: 209
-Server: GSE
+<pre><code>  HTTP/1.1 200 OK
+  Content-Type: application/json; charset=UTF-8
+  Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+  Pragma: no-cache
+  Expires: Fri, 01 Jan 1990 00:00:00 GMT
+  Date: Fri, 01 Feb 2013 07:01:26 GMT
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  X-XSS-Protection: 1; mode=block
+  Content-Length: 209
+  Server: GSE
 
-{
- "result": {
-  "spellingCheckResponse": {
-   "misspellings": [
-    {
-     "charStart": 0,
-     "charLength": 7,
-     "suggestions": [
+  {
+   "result": {
+    "spellingCheckResponse": {
+     "misspellings": [
       {
-       "suggestion": "chrome"
+       "charStart": 0,
+       "charLength": 7,
+       "suggestions": [
+        {
+         "suggestion": "chrome"
+        }
+       ]
       }
      ]
     }
-   ]
+   }
   }
- }
-}
 </code></pre>
 <p>看来是没法利用了。shit。</p>
 <p><a href="http://googlesystem.blogspot.com/2011/09/chromes-spell-checker-gets-smarter.html">参考</a></p>
@@ -896,7 +898,7 @@ HTML5的突出优点是多设备、跨平台。“HTML5 for TV”是由美国Cab
 <li>音视频内容无法DLNA到其他设备的屏幕</li>
 </ul>
 <p>如果真正要推动标准发展和技术进步，HTML5应该支持 </p>
-<pre><code>&lt;video onControlPlay="function(){}" /&gt;
+<pre><code>  &lt;video onControlPlay="function(){}" /&gt;
 </code></pre>
 <p>这样的DOM节点。</p>
 <p>只是一些粗浅看法，可能并不完善。</p></p>
@@ -944,15 +946,15 @@ dU/SlEQPUcNwE2HkLxNTCqU0xcwC7uo= <br />
               <h2 class="card-title">modify or update values django.utils.datastructures.MergeDict</h2>
             </a>
             <p class="card-text"><p>suppose you have a django form</p>
-<pre><code>f = django.forms.Form()
-f.is_valid()
-f.data['field'] = 'new value' # won't work
-f.cleaned_data['key'] = 'value' # won't work
+<pre><code>  f = django.forms.Form()
+  f.is_valid()
+  f.data['field'] = 'new value' # won't work
+  f.cleaned_data['key'] = 'value' # won't work
 </code></pre>
 <p>the output of <code>f.as_p()</code> is still the old value because the <code>f.data</code> is a MergeDict.</p>
 <p>The way to modify it:</p>
-<pre><code>d = dict(f.data, field='new value')
-f.data = d
+<pre><code>  d = dict(f.data, field='new value')
+  f.data = d
 </code></pre>
 <p>MergeDict is for pussies.</p>
 <p><code>newdict = dict(mydict, key='new value')</code> is better than <code>newdict = mydict.copy()</code></p></p>
@@ -1266,14 +1268,14 @@ f.data = d
 <p>http://pyfound.blogspot.com/2013/01/wikipythonorg-compromised.html</p>
 <p>Debian声明</p>
 <p>http://lists.debian.org/debian-devel-announce/2013/01/msg00000.html</p>
-<pre><code>$ touch "exec __import__('base64').b64decode('cHJpbnQgImhlbGxvLCB3b3JsZCI=')"            
-$ tar cf result.py !$
-tar cf result.py "exec __import__('base64').b64decode('cHJpbnQgImhlbGxvLCB3b3JsZCI=')"
-$ python result.py 
-hello, world
-$ tar xvf result.py
-x exec __import__('base64').b64decode('cHJpbnQgImhlbGxvLCB3b3JsZCI=')
-$
+<pre><code>  $ touch "exec __import__('base64').b64decode('cHJpbnQgImhlbGxvLCB3b3JsZCI=')"            
+  $ tar cf result.py !$
+  tar cf result.py "exec __import__('base64').b64decode('cHJpbnQgImhlbGxvLCB3b3JsZCI=')"
+  $ python result.py 
+  hello, world
+  $ tar xvf result.py
+  x exec __import__('base64').b64decode('cHJpbnQgImhlbGxvLCB3b3JsZCI=')
+  $
 </code></pre>
 <p>这个是0day的PoC。。。。</p>
 <p>简单的说，就是一个上传，既是合法的tar文件，又是合法的python代码。omg碉堡了。</p>
@@ -1314,13 +1316,13 @@ $
             <a href="/post/38706030148"  rel="bookmark" >
               <h2 class="card-title">迅雷 vod 云播放原来是django写的呀</h2>
             </a>
-            <p class="card-text"><pre><code>http://i.vod.xunlei.com/req_history_play_list/req_num/30/req_offset/0?type=all&amp;order=create&amp;t=1356345404623
+            <p class="card-text"><pre><code>  http://i.vod.xunlei.com/req_history_play_list/req_num/30/req_offset/0?type=all&amp;order=create&amp;t=1356345404623
 
 
-&lt;type 'exceptions.UnicodeDecodeError'&gt; at /req_history_play_list/req_num/30/req_offset/0
+  &lt;type 'exceptions.UnicodeDecodeError'&gt; at /req_history_play_list/req_num/30/req_offset/0
 </code></pre>
 <p>'utf8' codec can't decode byte 0xd7 in position 16: invalid continuation byte</p>
-<pre><code>Python  /usr/local/lib/python2.7/json/encoder.py in iterencode, line 263
+<pre><code>  Python  /usr/local/lib/python2.7/json/encoder.py in iterencode, line 263
 </code></pre>
 <p>Web GET http://i.vod.xunlei.com/req_history_play_list/req_num/30/req_offset/0</p></p>
             <div class="card-subtext muted-text">

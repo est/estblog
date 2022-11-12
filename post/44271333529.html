@@ -54,31 +54,31 @@
 
   
   <p>1.py:</p>
-<pre><code>def foo():
- try:
-  return 'foo'
- finally:
-  return 'bar'
+<pre><code>  def foo():
+   try:
+    return 'foo'
+   finally:
+    return 'bar'
 
 
-print foo()
+  print foo()
 </code></pre>
 <p>2.py</p>
-<pre><code>def foo():
- try:
-  return 'foo'
- finally:
-  print 'bar'
+<pre><code>  def foo():
+   try:
+    return 'foo'
+   finally:
+    print 'bar'
 
 
-print foo()
+  print foo()
 </code></pre>
 <p>The result is shocking...</p>
-<pre><code>$ python 1.py 
-bar
-$ python 2.py 
-bar
-foo
+<pre><code>  $ python 1.py 
+  bar
+  $ python 2.py 
+  bar
+  foo
 </code></pre>
 <p>I think this particular behavior is well abused in <a href="http://code.google.com/p/modwsgi/wiki/RegisteringCleanupCode">WSGI</a></p>
 <p>two cents:</p>

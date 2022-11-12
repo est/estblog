@@ -57,21 +57,24 @@
 <p>源码放在 bitbucket，之前比较懒都是本地跑，一直想改成 CI/CD pipeline，今天终于配置好了。记录一些坑吧</p>
 <ol>
 <li>bitbucket pipeline 不同 step 之间数据是不共享的。本来想用 parallel 功能在下载 pip 模块和 git clone 皮肤做个并行，后来发现 artifact 拷贝速度还不如串行去跑。就所有操作一个 step 做完</li>
+<li>博客源码和生成结果可以直接同步提交信息：    <pre><code>msg=$(git log -1  --pretty=%B)
+cd output
+git config user.name est
+git config user.email 邮箱
+git add .
+git commit -m "$msg"
+git push
+</code></pre>
+<ol start="3">
 <li>
-<p>博客源码和生成结果可以直接同步提交信息：    </p>
-<p>msg=$(git log -1  --pretty=%B)<br />
-cd output<br />
-git config user.name est<br />
-git config user.email 邮箱<br />
-git add .<br />
-git commit -m "$msg"<br />
-git push<br />
-3. 由于 pip 模块装了不知道在哪里，所以调试 pip 安装路径方法：    </p>
+<p>由于 pip 模块装了不知道在哪里，所以调试 pip 安装路径方法：    </p>
 <p>python -c 'import site; print(*site.getsitepackages(), sep="\n")'<br />
 4. pelican 默认居然没支持 Markdown 也是醉了    </p>
 <p>python -m pip install pelican==4.8.0 Markdown<br />
 5. 自定义皮肤依赖，由于 submodule 我没玩转，所以这样安装：    </p>
 <p>git clone --depth=1 git@github.com:est/aether-pelican.git || (cd aether-pelican; git pull --rebase)</p>
+</li>
+</ol>
 </li>
 </ol>
 <p>Bitbucket 每个月有50分钟的免费pipeline 时间，自己用下来差不多29秒 build &amp; publish 一次。感觉每个月也写不了60篇，所以目前是够了。</p>

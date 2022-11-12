@@ -56,23 +56,23 @@
   <p>suppose you have url like this:</p>
 <p><code>/api/&lt;method&gt;</code></p>
 <p>In function based view it's like:</p>
-<pre><code>def myview(req, method=''):
-  if method=='callA':
-    return ""
-  elif method=='callB':
-    return ""
-  else:
-    return ""
+<pre><code>  def myview(req, method=''):
+    if method=='callA':
+      return ""
+    elif method=='callB':
+      return ""
+    else:
+      return ""
 </code></pre>
 <p>The problem is you can't enumerate every callA and callB.</p>
 <p>But for class based view it's trivial to write more elegant code like:</p>
-<pre><code>class myview(ViewRouter):
-    def callA(req):
-        return ''
-    def callB(req):
-        return ''
-    def default(req):
-        return ''
+<pre><code>  class myview(ViewRouter):
+      def callA(req):
+          return ''
+      def callB(req):
+          return ''
+      def default(req):
+          return ''
 </code></pre>
 <p>Just want to put up an example of what class-based views are useful in Web development. The powerful object introspection allows you to map URL behaviors to a well defined class.</p>
 

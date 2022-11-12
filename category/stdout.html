@@ -125,30 +125,30 @@ btw2 把 RSS 改成全文输出了。</p></p>
               <h2 class="card-title">Cloudflare worker 返回浏览器ip:端口</h2>
             </a>
             <p class="card-text"><p>看到个贴 <a href="https://www.v2ex.com/t/885568">返回客户端连接用的 IP 和端口号</a>，想起来也需要熟悉一下 Cloudflare worker，于是拿来练练手</p>
-<pre><code>export default {
-  async fetch(request, env) {
-    return await handleRequest(request).catch(
-      (err) =&gt; new Response(err.stack, { status: 500 })
-    )
-  }
-}
-
-async function handleRequest(request) {
-  const { pathname } = new URL(request.url);
-
-  if (pathname === "/ip") {
-    const ip = request.headers.get('CF-Connecting-IP');
-    return new Response(ip + '\n');
+<pre><code>  export default {
+    async fetch(request, env) {
+      return await handleRequest(request).catch(
+        (err) =&gt; new Response(err.stack, { status: 500 })
+      )
+    }
   }
 
-  if (pathname === "/ip:port") {
-    const ip = request.headers.get('CF-Connecting-IP');
-    const port = request.headers.get('est-Connecting-Port') || '?'
-    return new Response(ip + ':' + port + '\n');
-  }
+  async function handleRequest(request) {
+    const { pathname } = new URL(request.url);
 
-  return new Response('Tools:\n /ip\n/ip:port\n');
-}
+    if (pathname === "/ip") {
+      const ip = request.headers.get('CF-Connecting-IP');
+      return new Response(ip + '\n');
+    }
+
+    if (pathname === "/ip:port") {
+      const ip = request.headers.get('CF-Connecting-IP');
+      const port = request.headers.get('est-Connecting-Port') || '?'
+      return new Response(ip + ':' + port + '\n');
+    }
+
+    return new Response('Tools:\n /ip\n/ip:port\n');
+  }
 </code></pre>
 <p>遇到一个问题，Cloudflare 官方有提供浏览器客户端IP变量 <a href="https://developers.cloudflare.com/workers/runtime-apis/headers/#cloudflare-headers"><code>CF-Connecting-IP</code></a> 但是缺少端口，查了下可以自己通过 <a href="https://developers.cloudflare.com/rules/transform/request-header-modification/reference/fields-functions"><code>cf.edge.client_port</code></a> 这个变量获得， <a href="https://community.cloudflare.com/t/need-cf-connecting-port-for-french-law/319505/8">方法</a>是在进入 CF网站管理 面板 → Rules → Transform Rules → HTTP Request Header Modification 里添加一条请求头规则。如图：</p>
 <p><img alt="" src="https://global.discourse-cdn.com/cloudflare/original/3X/b/a/ba21c8b28a8915bc57c6c6d82581827578e232ac.png" /></p>
@@ -177,7 +177,7 @@ async function handleRequest(request) {
 <code>codesign -dv --verbose=4 /usr/bin/python2.7</code></li>
 </ol>
 <p>只有官方的python2.7签名了 anaconda/miniconda 的都没签名。算了。还是直接 AppleScript 走起</p>
-<pre><code>osascript  -e 'display notification "还有1分钟到达时辰" with title "准时付费" sound name "Frog"'
+<pre><code>  osascript  -e 'display notification "还有1分钟到达时辰" with title "准时付费" sound name "Frog"'
 </code></pre>
 <p>想在这个提示里加一个 snooze 1分钟功能，但是好像无法支持。罢了。2333</p></p>
             <div class="card-subtext muted-text">
@@ -197,21 +197,24 @@ async function handleRequest(request) {
 <p>源码放在 bitbucket，之前比较懒都是本地跑，一直想改成 CI/CD pipeline，今天终于配置好了。记录一些坑吧</p>
 <ol>
 <li>bitbucket pipeline 不同 step 之间数据是不共享的。本来想用 parallel 功能在下载 pip 模块和 git clone 皮肤做个并行，后来发现 artifact 拷贝速度还不如串行去跑。就所有操作一个 step 做完</li>
+<li>博客源码和生成结果可以直接同步提交信息：    <pre><code>msg=$(git log -1  --pretty=%B)
+cd output
+git config user.name est
+git config user.email 邮箱
+git add .
+git commit -m "$msg"
+git push
+</code></pre>
+<ol start="3">
 <li>
-<p>博客源码和生成结果可以直接同步提交信息：    </p>
-<p>msg=$(git log -1  --pretty=%B)<br />
-cd output<br />
-git config user.name est<br />
-git config user.email 邮箱<br />
-git add .<br />
-git commit -m "$msg"<br />
-git push<br />
-3. 由于 pip 模块装了不知道在哪里，所以调试 pip 安装路径方法：    </p>
+<p>由于 pip 模块装了不知道在哪里，所以调试 pip 安装路径方法：    </p>
 <p>python -c 'import site; print(*site.getsitepackages(), sep="\n")'<br />
 4. pelican 默认居然没支持 Markdown 也是醉了    </p>
 <p>python -m pip install pelican==4.8.0 Markdown<br />
 5. 自定义皮肤依赖，由于 submodule 我没玩转，所以这样安装：    </p>
 <p>git clone --depth=1 git@github.com:est/aether-pelican.git || (cd aether-pelican; git pull --rebase)</p>
+</li>
+</ol>
 </li>
 </ol>
 <p>Bitbucket 每个月有50分钟的免费pipeline 时间，自己用下来差不多29秒 build &amp; publish 一次。感觉每个月也写不了60篇，所以目前是够了。</p>
@@ -244,8 +247,8 @@ git push<br />
 <p>这段话数学上来说是没问题的，但是院士可能没注意历史，建党的真正时间是一大正式召开的时间，<a href="http://www.xinhuanet.com/politics/2020-06/23/c_1126148992.htm">1921年的7月23日</a></p>
 <p>那么我们把两个时间再去看一下在 Pi 里的位置：</p>
 <p><a href="https://www.angio.net/pi/">https://www.angio.net/pi/</a></p>
-<pre><code>The string 19491001 occurs at position 82267377
-The string 19210723 occurs at position 101114100
+<pre><code>  The string 19491001 occurs at position 82267377
+  The string 19210723 occurs at position 101114100
 </code></pre>
 <p>所以这说明了啥？</p></p>
             <div class="card-subtext muted-text">
@@ -262,17 +265,17 @@ The string 19210723 occurs at position 101114100
               <h2 class="card-title">Add UTF-8 BOM header to Flask-Admin export</h2>
             </a>
             <p class="card-text"><p>A simple trick to add additional bytes prepending Flask's <code>stream_with_context</code></p>
-<pre><code>from flask_admin.contrib.sqla import ModelView
-from itertools import chain
+<pre><code>  from flask_admin.contrib.sqla import ModelView
+  from itertools import chain
 
-class MyAdminView(ModelView):
-    can_export = True
-    column_export_list = ['field1', 'field2']
+  class MyAdminView(ModelView):
+      can_export = True
+      column_export_list = ['field1', 'field2']
 
-    def _export_csv(self, return_url):
-        r = super(MyAdminView, self)._export_csv(return_url)
-        r.response = chain((b'\xef\xbb\xbf',), r.response)
-        return r
+      def _export_csv(self, return_url):
+          r = super(MyAdminView, self)._export_csv(return_url)
+          r.response = chain((b'\xef\xbb\xbf',), r.response)
+          return r
 </code></pre>
 <p>I am still using Python2 and Flask-admin shit. It's a shame but anyway.</p></p>
             <div class="card-subtext muted-text">
@@ -575,21 +578,21 @@ sudo chmod 000 GoogleSoftwareUpdate
 <p>其实实现是 starlette。这玩意可以在 <code>directory</code> 下放一个 <code>404.html</code>，恰好单页应用也需要用 <code>index.html</code> 充当所有 javascript 框架注册的 router</p>
 <p>只是有一个毛病，这货返回的 HTTP status code 是 404。用起来没啥大毛病，但是就是浏览器不会记录网址，导致没法匹配浏览历史快速找到之前访问过的页面。</p>
 <p>拿来改改继续用</p>
-<pre><code>from starlette.staticfiles import StaticFiles, Scope, Headers, Response, FileResponse
+<pre><code>  from starlette.staticfiles import StaticFiles, Scope, Headers, Response, FileResponse
 
-class StaticFilesWithout404(StaticFiles):
-    async def get_response(self, path: str, scope: Scope) -&gt; Response:
-        r = await super().get_response(path, scope)
-        h = Headers(scope=scope)
-        full_path, stat_result = await self.lookup_path('404.html')
-        if isinstance(r, FileResponse) and r.path == full_path:
-            if 'text/html' in (h.get('accept') or ''):
-                r.status_code = 200
-            else:
-                return Response('', status_code=404)
-        return r
+  class StaticFilesWithout404(StaticFiles):
+      async def get_response(self, path: str, scope: Scope) -&gt; Response:
+          r = await super().get_response(path, scope)
+          h = Headers(scope=scope)
+          full_path, stat_result = await self.lookup_path('404.html')
+          if isinstance(r, FileResponse) and r.path == full_path:
+              if 'text/html' in (h.get('accept') or ''):
+                  r.status_code = 200
+              else:
+                  return Response('', status_code=404)
+          return r
 
-app.mount("/frontend", StaticFilesWithout404(directory="frontend", html=True), name="static")
+  app.mount("/frontend", StaticFilesWithout404(directory="frontend", html=True), name="static")
 </code></pre>
 <p>这段代码大概是起到了类似 <a href="http://nginx.org/en/docs/http/ngx_http_core_module.html#try_files">nginx <code>try_files</code></a> 的作用。默认静态文件映射一个目录，但是如果找不到就按根目录的 index.html 输出。这里还判断了请求的 <code>accept</code> 头，如果是 xhr/Fetch 就会直接返回一个0字节长度无MIME的404。</p>
 <p>由此我想到了一个学究式的 leaky abstraction。众所周知，如果一个URL不存在，那么服务器应该返回404</p>
@@ -609,16 +612,16 @@ app.mount("/frontend", StaticFilesWithout404(directory="frontend", html=True), n
             </a>
             <p class="card-text"><p>有没有好奇为什么 Flask 配置必须要求一个 <a href="https://flask.palletsprojects.com/en/latest/config/#SECRET_KEY">SECRET_KEY</a>，然后就可以在浏览器保存一个 session 状态读写数据。</p>
 <p>这里记一下它的底层实现，其实需要依赖的包是 <a href="https://itsdangerous.palletsprojects.com/">itsdangerous</a></p>
-<pre><code>import hashlib
-from itsdangerous import URLSafeTimedSerializer
-URLSafeTimedSerializer(
-        'YOUR_SECRET_KEY',  # flask SECRET_KEY
-        'cookie-session',  # from flask.sessions.SecureCookieSessionInterface.salt
-        # serializer=TaggedJSONSerializer(),
-        signer_kwargs={'key_derivation': 'hmac', 'digest_method': hashlib.sha1}
-).dumps({
-    "your_key": "your_value"
-})
+<pre><code>  import hashlib
+  from itsdangerous import URLSafeTimedSerializer
+  URLSafeTimedSerializer(
+          'YOUR_SECRET_KEY',  # flask SECRET_KEY
+          'cookie-session',  # from flask.sessions.SecureCookieSessionInterface.salt
+          # serializer=TaggedJSONSerializer(),
+          signer_kwargs={'key_derivation': 'hmac', 'digest_method': hashlib.sha1}
+  ).dumps({
+      "your_key": "your_value"
+  })
 </code></pre>
 <p>别人如果拿到你的 <code>SECRET_KEY</code> 就可以伪造任意 session cookie 了</p></p>
             <div class="card-subtext muted-text">
@@ -725,20 +728,20 @@ The default value specified in a DEFAULT clause can be a literal constant or an 
 </blockquote>
 <p>虽然语法很丑但是很实用啊。</p>
 <p>所以这种语句</p>
-<pre><code>ALTER TABLE mytable MODIFY COLUMN my_json JSON DEFAULT (json_object());
+<pre><code>  ALTER TABLE mytable MODIFY COLUMN my_json JSON DEFAULT (json_object());
 </code></pre>
 <p>在 TiDB 里就没法支持。这也带来一个问题，就是要 upsert 这个 字段的时候，写起来就很拧巴，以 <code>peewee</code> 这个ORM为例：</p>
-<pre><code>MyTable.update({
-    'my_json' = fn.json_set(
-        fn.COALESCE(MyTable.my_json, Cast('{}', 'JSON')),
-        '%.some_key', 'some_value',
-)})
+<pre><code>  MyTable.update({
+      'my_json' = fn.json_set(
+          fn.COALESCE(MyTable.my_json, Cast('{}', 'JSON')),
+          '%.some_key', 'some_value',
+  )})
 </code></pre>
 <p>必须用 COALESCE 预防默认值为 <code>NULL</code> 的情况。太麻烦了。</p>
 <p>btw 玩MySQL/TiDB的 JSON 有个坑的，那就是 json 的 <code>null</code> 是有值的，和 sql 的 <code>NULL</code> 是不同的。</p>
 <p>也就是说</p>
-<pre><code>select json_extract('{}', '$.hey') IS NULL;
-select json_extract('{"hey": null}', '$.hey') = Cast('null' as JSON);
+<pre><code>  select json_extract('{}', '$.hey') IS NULL;
+  select json_extract('{"hey": null}', '$.hey') = Cast('null' as JSON);
 </code></pre>
 <p>要注意。</p>
 <p>btw2 MySQL的JSON数据抽取 <code>-&gt;&gt;</code> 是返回真正的值，等价于TiDB里的 json_unquote(json_extract(t.json_field, '$.key1.key2'))</p></p>
@@ -889,31 +892,31 @@ For example:<br />
 </table>
 <h2>reverse proxy FastCGI with uWSGI</h2>
 <p>slap this into <code>my_conf.ini</code></p>
-<pre><code>[uwsgi]
-my_port = 9000  # can be set otherwise
-route-run = addvar:SERVER_NAME=%h
-route-run = addvar:SERVER_PORT=%(my_port)
-route-if  = empty:${REQUEST_METHOD} addvar:REQUEST_METHOD=GET
-route-if  = empty:${HTTP_HOST} addvar:HTTP_HOST=%h:%(my_port)
-route-run = seturi:/fcgi-proxy${PATH_INFO}
-route-run = http:127.0.0.1:9527
-fastcgi-socket = 0.0.0.0:%(my_port)
-http-socket = 0.0.0.0:8000  # for testing purpose.
+<pre><code>  [uwsgi]
+  my_port = 9000  # can be set otherwise
+  route-run = addvar:SERVER_NAME=%h
+  route-run = addvar:SERVER_PORT=%(my_port)
+  route-if  = empty:${REQUEST_METHOD} addvar:REQUEST_METHOD=GET
+  route-if  = empty:${HTTP_HOST} addvar:HTTP_HOST=%h:%(my_port)
+  route-run = seturi:/fcgi-proxy${PATH_INFO}
+  route-run = http:127.0.0.1:9527
+  fastcgi-socket = 0.0.0.0:%(my_port)
+  http-socket = 0.0.0.0:8000  # for testing purpose.
 </code></pre>
 <p>Install uWSGI, install the binary from pypi wheels instead of compiling uwsgi.c shit</p>
-<pre><code>pip install pyuwsgi
+<pre><code>  pip install pyuwsgi
 </code></pre>
 <p>Run it</p>
-<pre><code>uwsgi --ini my_conf.ini
+<pre><code>  uwsgi --ini my_conf.ini
 </code></pre>
 <p>Now you can run your regular http service behind <code>127.0.0.1:9527</code>, while serving fcgi on <code>127.0.0.1:9000</code></p>
 <p>Requests like <code>fcgi://127.0.0.1:9000/hello</code> will be fowwarded to <code>http://127.0.0.1:9527/fcgi-proxy/hello</code></p>
 <p>You may ask why adding a <code>/fcgi-proxy</code> in path? Because there's a gotcha.</p>
 <h2>fuckedup FastCGI requests</h2>
 <p>Learned this from some php-fpm tutorial, first install the standard fcgi client tool because <code>curl</code> doesn't speak fcgi.</p>
-<pre><code>apt-get install libfcgi0ldbl
-yum --enablerepo=epel install fcgi
-SCRIPT_NAME=/ping SCRIPT_FILENAME=/ping REQUEST_METHOD=GET cgi-fcgi -bind -connect 127.0.0.1:9000
+<pre><code>  apt-get install libfcgi0ldbl
+  yum --enablerepo=epel install fcgi
+  SCRIPT_NAME=/ping SCRIPT_FILENAME=/ping REQUEST_METHOD=GET cgi-fcgi -bind -connect 127.0.0.1:9000
 </code></pre>
 <p>You can observe from uWSGI logs that <code>cgi-fcgi</code> command sends flawed requests, the <code>PATH_INFO</code> was unset.</p>
 <p>After hours wasted, I came up with a clever hack to force uWSGI's internal router to force <code>seturi</code> with a path prefix</p>
@@ -1011,11 +1014,11 @@ SCRIPT_NAME=/ping SCRIPT_FILENAME=/ping REQUEST_METHOD=GET cgi-fcgi -bind -conne
 <p>Here is a simple script to speed up the stacks of page you have click in order to submit multiple missing pages to Google. </p>
 <p>Open your <a href="https://search.google.com/search-console">Google Search Console</a>, click <strong>Coverage</strong> then open <strong>Discovered – currently not indexed</strong></p>
 <p>Now open your browser devtool, paste these into javascript console, hit them one by one.</p>
-<pre><code>document.querySelector('div[data-disabled] table td span[title] span[title="Inspect URL"]').click()
+<pre><code>  document.querySelector('div[data-disabled] table td span[title] span[title="Inspect URL"]').click()
 
-document.querySelector('span[data-event-action=request-indexing] span[jsslot] div span span').click()
+  document.querySelector('span[data-event-action=request-indexing] span[jsslot] div span span').click()
 
-document.querySelector('span[data-event-action=pivot-to-report-main-view-indexing-section] a').click()
+  document.querySelector('span[data-event-action=pivot-to-report-main-view-indexing-section] a').click()
 </code></pre>
 <p>Until you met with the daily quota. Rinse and try this shit everyday.</p>
 <p>Fuck Google.</p></p>
@@ -1035,43 +1038,43 @@ document.querySelector('span[data-event-action=pivot-to-report-main-view-indexin
             <p class="card-text"><p>一觉醒来，打开浏览器，各种连不上，调试了一下发现说lets encrypt 的 acme https证书错误</p>
 <p>仿佛记得<a href="https://www.v2ex.com/t/805339">V站讨论</a>过这个事，以为和自己无关，结果也中招了。DST Root CA X3 根证书在国庆前过期了。</p>
 <h2>老版本 Ubuntu 修复：</h2>
-<pre><code>sudo apt update
-sudo apt install ca-certificates
+<pre><code>  sudo apt update
+  sudo apt install ca-certificates
 </code></pre>
 <h2>老版本 macOS 修复：</h2>
 <p>需要手动导入并信任新的 ISRG Root X1 根证书。来自<a href="https://letsencrypt.org/certificates/">https://letsencrypt.org/certificates/</a>。</p>
 <p>保存下列为 <code>1.pem</code></p>
-<pre><code>-----BEGIN CERTIFICATE-----
-MIIFYDCCBEigAwIBAgIQQAF3ITfU6UK47naqPGQKtzANBgkqhkiG9w0BAQsFADA/
-MSQwIgYDVQQKExtEaWdpdGFsIFNpZ25hdHVyZSBUcnVzdCBDby4xFzAVBgNVBAMT
-DkRTVCBSb290IENBIFgzMB4XDTIxMDEyMDE5MTQwM1oXDTI0MDkzMDE4MTQwM1ow
-TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh
-cmNoIEdyb3VwMRUwEwYDVQQDEwxJU1JHIFJvb3QgWDEwggIiMA0GCSqGSIb3DQEB
-AQUAA4ICDwAwggIKAoICAQCt6CRz9BQ385ueK1coHIe+3LffOJCMbjzmV6B493XC
-ov71am72AE8o295ohmxEk7axY/0UEmu/H9LqMZshftEzPLpI9d1537O4/xLxIZpL
-wYqGcWlKZmZsj348cL+tKSIG8+TA5oCu4kuPt5l+lAOf00eXfJlII1PoOK5PCm+D
-LtFJV4yAdLbaL9A4jXsDcCEbdfIwPPqPrt3aY6vrFk/CjhFLfs8L6P+1dy70sntK
-4EwSJQxwjQMpoOFTJOwT2e4ZvxCzSow/iaNhUd6shweU9GNx7C7ib1uYgeGJXDR5
-bHbvO5BieebbpJovJsXQEOEO3tkQjhb7t/eo98flAgeYjzYIlefiN5YNNnWe+w5y
-sR2bvAP5SQXYgd0FtCrWQemsAXaVCg/Y39W9Eh81LygXbNKYwagJZHduRze6zqxZ
-Xmidf3LWicUGQSk+WT7dJvUkyRGnWqNMQB9GoZm1pzpRboY7nn1ypxIFeFntPlF4
-FQsDj43QLwWyPntKHEtzBRL8xurgUBN8Q5N0s8p0544fAQjQMNRbcTa0B7rBMDBc
-SLeCO5imfWCKoqMpgsy6vYMEG6KDA0Gh1gXxG8K28Kh8hjtGqEgqiNx2mna/H2ql
-PRmP6zjzZN7IKw0KKP/32+IVQtQi0Cdd4Xn+GOdwiK1O5tmLOsbdJ1Fu/7xk9TND
-TwIDAQABo4IBRjCCAUIwDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAQYw
-SwYIKwYBBQUHAQEEPzA9MDsGCCsGAQUFBzAChi9odHRwOi8vYXBwcy5pZGVudHJ1
-c3QuY29tL3Jvb3RzL2RzdHJvb3RjYXgzLnA3YzAfBgNVHSMEGDAWgBTEp7Gkeyxx
-+tvhS5B1/8QVYIWJEDBUBgNVHSAETTBLMAgGBmeBDAECATA/BgsrBgEEAYLfEwEB
-ATAwMC4GCCsGAQUFBwIBFiJodHRwOi8vY3BzLnJvb3QteDEubGV0c2VuY3J5cHQu
-b3JnMDwGA1UdHwQ1MDMwMaAvoC2GK2h0dHA6Ly9jcmwuaWRlbnRydXN0LmNvbS9E
-U1RST09UQ0FYM0NSTC5jcmwwHQYDVR0OBBYEFHm0WeZ7tuXkAXOACIjIGlj26Ztu
-MA0GCSqGSIb3DQEBCwUAA4IBAQAKcwBslm7/DlLQrt2M51oGrS+o44+/yQoDFVDC
-5WxCu2+b9LRPwkSICHXM6webFGJueN7sJ7o5XPWioW5WlHAQU7G75K/QosMrAdSW
-9MUgNTP52GE24HGNtLi1qoJFlcDyqSMo59ahy2cI2qBDLKobkx/J3vWraV0T9VuG
-WCLKTVXkcGdtwlfFRjlBz4pYg1htmf5X6DYO8A4jqv2Il9DjXA6USbW1FzXSLr9O
-he8Y4IWS6wY7bCkjCWDcRQJMEhg76fsO3txE+FiYruq9RUWhiF1myv4Q6W+CyBFC
-Dfvp7OOGAN6dEOM4+qR9sdjoSYKEBpsr6GtPAQw4dy753ec5
------END CERTIFICATE-----
+<pre><code>  -----BEGIN CERTIFICATE-----
+  MIIFYDCCBEigAwIBAgIQQAF3ITfU6UK47naqPGQKtzANBgkqhkiG9w0BAQsFADA/
+  MSQwIgYDVQQKExtEaWdpdGFsIFNpZ25hdHVyZSBUcnVzdCBDby4xFzAVBgNVBAMT
+  DkRTVCBSb290IENBIFgzMB4XDTIxMDEyMDE5MTQwM1oXDTI0MDkzMDE4MTQwM1ow
+  TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh
+  cmNoIEdyb3VwMRUwEwYDVQQDEwxJU1JHIFJvb3QgWDEwggIiMA0GCSqGSIb3DQEB
+  AQUAA4ICDwAwggIKAoICAQCt6CRz9BQ385ueK1coHIe+3LffOJCMbjzmV6B493XC
+  ov71am72AE8o295ohmxEk7axY/0UEmu/H9LqMZshftEzPLpI9d1537O4/xLxIZpL
+  wYqGcWlKZmZsj348cL+tKSIG8+TA5oCu4kuPt5l+lAOf00eXfJlII1PoOK5PCm+D
+  LtFJV4yAdLbaL9A4jXsDcCEbdfIwPPqPrt3aY6vrFk/CjhFLfs8L6P+1dy70sntK
+  4EwSJQxwjQMpoOFTJOwT2e4ZvxCzSow/iaNhUd6shweU9GNx7C7ib1uYgeGJXDR5
+  bHbvO5BieebbpJovJsXQEOEO3tkQjhb7t/eo98flAgeYjzYIlefiN5YNNnWe+w5y
+  sR2bvAP5SQXYgd0FtCrWQemsAXaVCg/Y39W9Eh81LygXbNKYwagJZHduRze6zqxZ
+  Xmidf3LWicUGQSk+WT7dJvUkyRGnWqNMQB9GoZm1pzpRboY7nn1ypxIFeFntPlF4
+  FQsDj43QLwWyPntKHEtzBRL8xurgUBN8Q5N0s8p0544fAQjQMNRbcTa0B7rBMDBc
+  SLeCO5imfWCKoqMpgsy6vYMEG6KDA0Gh1gXxG8K28Kh8hjtGqEgqiNx2mna/H2ql
+  PRmP6zjzZN7IKw0KKP/32+IVQtQi0Cdd4Xn+GOdwiK1O5tmLOsbdJ1Fu/7xk9TND
+  TwIDAQABo4IBRjCCAUIwDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAQYw
+  SwYIKwYBBQUHAQEEPzA9MDsGCCsGAQUFBzAChi9odHRwOi8vYXBwcy5pZGVudHJ1
+  c3QuY29tL3Jvb3RzL2RzdHJvb3RjYXgzLnA3YzAfBgNVHSMEGDAWgBTEp7Gkeyxx
+  +tvhS5B1/8QVYIWJEDBUBgNVHSAETTBLMAgGBmeBDAECATA/BgsrBgEEAYLfEwEB
+  ATAwMC4GCCsGAQUFBwIBFiJodHRwOi8vY3BzLnJvb3QteDEubGV0c2VuY3J5cHQu
+  b3JnMDwGA1UdHwQ1MDMwMaAvoC2GK2h0dHA6Ly9jcmwuaWRlbnRydXN0LmNvbS9E
+  U1RST09UQ0FYM0NSTC5jcmwwHQYDVR0OBBYEFHm0WeZ7tuXkAXOACIjIGlj26Ztu
+  MA0GCSqGSIb3DQEBCwUAA4IBAQAKcwBslm7/DlLQrt2M51oGrS+o44+/yQoDFVDC
+  5WxCu2+b9LRPwkSICHXM6webFGJueN7sJ7o5XPWioW5WlHAQU7G75K/QosMrAdSW
+  9MUgNTP52GE24HGNtLi1qoJFlcDyqSMo59ahy2cI2qBDLKobkx/J3vWraV0T9VuG
+  WCLKTVXkcGdtwlfFRjlBz4pYg1htmf5X6DYO8A4jqv2Il9DjXA6USbW1FzXSLr9O
+  he8Y4IWS6wY7bCkjCWDcRQJMEhg76fsO3txE+FiYruq9RUWhiF1myv4Q6W+CyBFC
+  Dfvp7OOGAN6dEOM4+qR9sdjoSYKEBpsr6GtPAQw4dy753ec5
+  -----END CERTIFICATE-----
 </code></pre>
 <p>打开 keychain access，把这个 <code>1.pem</code> 拖入 system，双击打开，在 Trust 这个下拉，选择 信任。</p>
 <p><img alt="" src="/images/2021/stdout-013-1.png" /></p>
@@ -1120,51 +1123,51 @@ Dfvp7OOGAN6dEOM4+qR9sdjoSYKEBpsr6GtPAQw4dy753ec5
               <h2 class="card-title">TiDB 的日期比较和 MySQL 不兼容</h2>
             </a>
             <p class="card-text"><p>MySQL的</p>
-<pre><code>&gt; select VERSION()
-+-----------+
-| VERSION() |
-+-----------+
-| 8.0.15-6  |
-+-----------+
+<pre><code>  &gt; select VERSION()
+  +-----------+
+  | VERSION() |
+  +-----------+
+  | 8.0.15-6  |
+  +-----------+
 
 
-&gt; select NOW() &gt; '';
-+------------+
-| NOW() &gt; '' |
-+------------+
-| 1          |
-+------------+
+  &gt; select NOW() &gt; '';
+  +------------+
+  | NOW() &gt; '' |
+  +------------+
+  | 1          |
+  +------------+
 
-&gt; show warnings;
-+---------+------+----------------------------------------+
-| Level   | Code | Message                                |
-+---------+------+----------------------------------------+
-| Warning | 1292 | Truncated incorrect datetime value: '' |
-+---------+------+----------------------------------------+
+  &gt; show warnings;
+  +---------+------+----------------------------------------+
+  | Level   | Code | Message                                |
+  +---------+------+----------------------------------------+
+  | Warning | 1292 | Truncated incorrect datetime value: '' |
+  +---------+------+----------------------------------------+
 </code></pre>
 <p>TiDB:</p>
-<pre><code>&gt; select VERSION()
-+--------------------+
-| VERSION()          |
-+--------------------+
-| 5.7.25-TiDB-v5.1.0 |
-+--------------------+
-1 row in set
+<pre><code>  &gt; select VERSION()
+  +--------------------+
+  | VERSION()          |
+  +--------------------+
+  | 5.7.25-TiDB-v5.1.0 |
+  +--------------------+
+  1 row in set
 
-&gt; select NOW() &gt; '';
-+------------+
-| NOW() &gt; '' |
-+------------+
-| &lt;null&gt;     |
-+------------+
+  &gt; select NOW() &gt; '';
+  +------------+
+  | NOW() &gt; '' |
+  +------------+
+  | &lt;null&gt;     |
+  +------------+
 
-&gt; show warnings;
-+---------+------+------------------------------+
-| Level   | Code | Message                      |
-+---------+------+------------------------------+
-| Warning | 1292 | Incorrect datetime value: '' |
-+---------+------+------------------------------+
-1 row in set
+  &gt; show warnings;
+  +---------+------+------------------------------+
+  | Level   | Code | Message                      |
+  +---------+------+------------------------------+
+  | Warning | 1292 | Incorrect datetime value: '' |
+  +---------+------+------------------------------+
+  1 row in set
 </code></pre>
 <p>记录一下 <a href="https://github.com/pingcap/tidb/issues/21354">相关 issue</a></p>
 <p>btw 顺便吐槽一下，</p>
@@ -1189,28 +1192,28 @@ Dfvp7OOGAN6dEOM4+qR9sdjoSYKEBpsr6GtPAQw4dy753ec5
 <p>I discovered a new trick from github issues that can spawn new worker first, check if new code loads correctly then restart the whole rack.</p>
 <p>According to <a href="https://docs.gunicorn.org/en/latest/signals.html#upgrading-to-a-new-binary-on-the-fly">the docs</a> you need to send several signals and blah blah, the author tried to explain in great detail of how it works rather than providing a simple option to do so.</p>
 <p>So I wrote a shell script to do that instead.</p>
-<pre><code>#!/bin/bash
+<pre><code>  #!/bin/bash
 
-oldpid=$(&lt;./deploy/gunicorn.pid)
-# forget the old kill -HUP 
-kill -USR2 $oldpid
-sleep 1
-timeout=5
-while [[ $timeout -gt 0 ]]; do
-  newpid=$(&lt;./deploy/gunicorn.pid.2) &amp;&amp; kill -0 $newpid
-  if [[ $? -eq 0 ]]; then
-    break
-  else
-    sleep 0.5
-    (( timeout-- ))
-  fi
-done;
+  oldpid=$(&lt;./deploy/gunicorn.pid)
+  # forget the old kill -HUP 
+  kill -USR2 $oldpid
+  sleep 1
+  timeout=5
+  while [[ $timeout -gt 0 ]]; do
+    newpid=$(&lt;./deploy/gunicorn.pid.2) &amp;&amp; kill -0 $newpid
+    if [[ $? -eq 0 ]]; then
+      break
+    else
+      sleep 0.5
+      (( timeout-- ))
+    fi
+  done;
 
-# shutdown old
-echo "success. newpid=$newpid"
-kill -WINCH $oldpid
-sleep 1
-kill -TERM $oldpid
+  # shutdown old
+  echo "success. newpid=$newpid"
+  kill -WINCH $oldpid
+  sleep 1
+  kill -TERM $oldpid
 </code></pre>
 <p>The script will check for new master pid to be alive then kill the old master in a maximium timeout of 5 seconds.</p>
 <p>It works perfectly to replace the simple <code>HUP</code> signal as intended.</p></p>
@@ -1230,7 +1233,7 @@ kill -TERM $oldpid
             <p class="card-text"><p>多年的疑惑今天居然被偶然解开了。</p>
 <p>由于墙内糟糕的网络环境，而且ISP甚至wifi内还有墙中墙，所以很多域名是打不开的。</p>
 <p>每次看浏览器在傻乎乎的转菊花，就觉得浪费时间。</p>
-<pre><code>sudo sysctl  net.inet.tcp.keepinit=3000
+<pre><code>  sudo sysctl  net.inet.tcp.keepinit=3000
 </code></pre>
 <p>这一条指令可以直接设置 macOS 的 TCP Keepalive 心跳包初始化时间设置为3000毫秒。</p>
 <p><code>net.inet.tcp.keepinit</code>默认值是 75000 ，单位是毫秒。注意 Linux 下没这设置，而且单位是 秒</p>
@@ -1243,11 +1246,11 @@ tcp.keepinit Timeout, in milliseconds, for new, non-established TCP connections.
 <p>我觉得，如果一个域名和TCP端口3秒钟内无法完成握手，就别执着了。你再干等75秒也不可能连上。这个值只会影响初始连接的超时，一旦连上了怎么idle都不影响，所以不会影响游戏的tcp或者websocket的长连接。也不影响udp。</p>
 <p>2021-07-06 补充：</p>
 <p>重启保持有效：</p>
-<pre><code>echo net.inet.tcp.keepinit=3000 | sudo tee -a /etc/sysctl.conf
+<pre><code>  echo net.inet.tcp.keepinit=3000 | sudo tee -a /etc/sysctl.conf
 </code></pre>
 <p>2021-09-21 补充：</p>
 <p>新版macOS 把 /etc/sysctl.conf 这文件给换位置了。应该是</p>
-<pre><code>"/Users/Shared/Relocated Items/Configuration/private/etc/sysctl.conf"
+<pre><code>  "/Users/Shared/Relocated Items/Configuration/private/etc/sysctl.conf"
 </code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-07-02T15:51:19+08:00">2021-07-02</time></p>
@@ -1263,29 +1266,29 @@ tcp.keepinit Timeout, in milliseconds, for new, non-established TCP connections.
               <h2 class="card-title">MySQL on duplicate key in SQLAlchemy</h2>
             </a>
             <p class="card-text"><p>A simple function to upsert something atomically into MySQL</p>
-<pre><code>def upsert(val1, val2, **kwargs):
-    """upsert val1-val2 pair into mysql and return the pk"""
-    from sqlalchemy.dialects.mysql import insert
-    from sqlalchemy.sql.expression import func
+<pre><code>  def upsert(val1, val2, **kwargs):
+      """upsert val1-val2 pair into mysql and return the pk"""
+      from sqlalchemy.dialects.mysql import insert
+      from sqlalchemy.sql.expression import func
 
-    # this val1-val2 pair should have UNIQUE KEY constraint in MySQL table.
-    stmt = insert(MyModel.__table__).values(col1=val1, col2=val2)
-    if kwargs:
-        stmt = stmt.on_duplicate_key_update(kwargs)
-    else:
-        # get lastrowid https://stackoverflow.com/a/29722203/41948
-        stmt = stmt.on_duplicate_key_update(id=func.LAST_INSERT_ID(MyModel.id))
-    # inserted_primary_key (dbapi, return 0 when only insert) or lastrowid (mysql)
-    pk = db.session().execute(stmt).lastrowid
-    if not pk:
-        pk = MyModel.query.options(load_only('id')).filter_by(
-            col1=val1, col2=val2
-        ).first().id
-    return pk
+      # this val1-val2 pair should have UNIQUE KEY constraint in MySQL table.
+      stmt = insert(MyModel.__table__).values(col1=val1, col2=val2)
+      if kwargs:
+          stmt = stmt.on_duplicate_key_update(kwargs)
+      else:
+          # get lastrowid https://stackoverflow.com/a/29722203/41948
+          stmt = stmt.on_duplicate_key_update(id=func.LAST_INSERT_ID(MyModel.id))
+      # inserted_primary_key (dbapi, return 0 when only insert) or lastrowid (mysql)
+      pk = db.session().execute(stmt).lastrowid
+      if not pk:
+          pk = MyModel.query.options(load_only('id')).filter_by(
+              col1=val1, col2=val2
+          ).first().id
+      return pk
 </code></pre>
 <p>Writing complex SQL is hard, sqlalchemy makes it harder. Prefer other ORMs in Python.</p>
 <p>I really hate fighting the infamous sqlalchemy API. Everything wrong about it can be shown in this one-liner:</p>
-<pre><code>from sqlalchemy.orm import Load, load_only, joinedload
+<pre><code>  from sqlalchemy.orm import Load, load_only, joinedload
 </code></pre>
 <p>You have the three styles of CamelCase, under_score, and concatfunctionnames fucked up together. Bad and leaky abstraction.</p></p>
             <div class="card-subtext muted-text">
@@ -1335,17 +1338,17 @@ tcp.keepinit Timeout, in milliseconds, for new, non-established TCP connections.
 <p>首先前摇，生成需要合并的视频文件路径列表</p>
 <p><code>ls -fd1 /Volumes/SD_CARD/DCIM/xxxxx/*</code> </p>
 <p>的结果写成如下格式：</p>
-<pre><code>file 'input1.mov'
-inpoint 10
-outpoint 300
-file 'input2.mov'
-# comment
-outpoint 300 
-file 'input3.mov'
-outpoint 300
-... 
-file 'inputN.mov'
-outpoint 300
+<pre><code>  file 'input1.mov'
+  inpoint 10
+  outpoint 300
+  file 'input2.mov'
+  # comment
+  outpoint 300 
+  file 'input3.mov'
+  outpoint 300
+  ... 
+  file 'inputN.mov'
+  outpoint 300
 </code></pre>
 <p><code>inpoint 10</code> 就是从10秒开始算，<code>outpoint 300</code> 就是到300秒结束。保存上面的为 1.txt</p>
 <p>然后念 ffmpeg 咒语</p>
@@ -1394,42 +1397,42 @@ outpoint 300
             </a>
             <p class="card-text"><p>Win10启动后，锁屏界面有一些每天更新的漂亮的墙纸，但是每个用户进去却只能看到默认的墙纸，不能自动切换。很是遗憾，于是搞了一段小脚本弥补。</p>
 <p>找个地方比如桌面，右键新建一个 <code>est_win10_auto_wallpaper.bat</code></p>
-<pre><code>@if (@X)==(@Y) @end /* JScript comment
-@echo off
+<pre><code>  @if (@X)==(@Y) @end /* JScript comment
+  @echo off
 
-cscript //E:JScript %~n0.bat
+  cscript //E:JScript %~n0.bat
 
-exit /b %errorlevel%
-*/
+  exit /b %errorlevel%
+  */
 
-var oShell = new ActiveXObject("WScript.Shell") ;
-var oFSO = new ActiveXObject("Scripting.FileSystemObject");
+  var oShell = new ActiveXObject("WScript.Shell") ;
+  var oFSO = new ActiveXObject("Scripting.FileSystemObject");
 
-var sWinDir = oFSO.GetSpecialFolder(0);
-var sPath = oShell.ExpandEnvironmentStrings('%LOCALAPPDATA%\\Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets\\')
+  var sWinDir = oFSO.GetSpecialFolder(0);
+  var sPath = oShell.ExpandEnvironmentStrings('%LOCALAPPDATA%\\Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets\\')
 
-var oFolderEnum = new Enumerator(oFSO.GetFolder(sPath).Files);
-var aFiles = []
-for (;!oFolderEnum.atEnd();oFolderEnum.moveNext()) {
-    // var item = oFolderEnum.item()
-    aFiles.push(oFolderEnum.item())
-}
-var aFiles2 = aFiles.sort(function(x,y){return new Date(y.DateLastAccessed).getTime() - new Date(x.DateLastAccessed).getTime()}).slice(3)
-var sWallpaper;
-// for (var i=0;i&lt;aFiles2.length;i++){
-for (var i in aFiles2){
-    // WScript.Echo('check ' + aFiles2[i].name + ' size: ' + aFiles2[i].size);
-    if(aFiles2[i].size &gt; 500000){  // guess &gt; 500KB is good wallpaper
-        sWallpaper = aFiles2[i].path
-        break;
-    }    
-}
-if(sWallpaper){
-    // or fso.GetStandardStream(1) for stdout, 2 for stderr
-    // WScript.Echo('set to ' + sWallpaper);
-    oShell.RegWrite("HKCU\\Control Panel\\Desktop\\Wallpaper", sWallpaper);
-    oShell.Run("%windir%\\System32\\RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters 1, True");
-}
+  var oFolderEnum = new Enumerator(oFSO.GetFolder(sPath).Files);
+  var aFiles = []
+  for (;!oFolderEnum.atEnd();oFolderEnum.moveNext()) {
+      // var item = oFolderEnum.item()
+      aFiles.push(oFolderEnum.item())
+  }
+  var aFiles2 = aFiles.sort(function(x,y){return new Date(y.DateLastAccessed).getTime() - new Date(x.DateLastAccessed).getTime()}).slice(3)
+  var sWallpaper;
+  // for (var i=0;i&lt;aFiles2.length;i++){
+  for (var i in aFiles2){
+      // WScript.Echo('check ' + aFiles2[i].name + ' size: ' + aFiles2[i].size);
+      if(aFiles2[i].size &gt; 500000){  // guess &gt; 500KB is good wallpaper
+          sWallpaper = aFiles2[i].path
+          break;
+      }    
+  }
+  if(sWallpaper){
+      // or fso.GetStandardStream(1) for stdout, 2 for stderr
+      // WScript.Echo('set to ' + sWallpaper);
+      oShell.RegWrite("HKCU\\Control Panel\\Desktop\\Wallpaper", sWallpaper);
+      oShell.Run("%windir%\\System32\\RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters 1, True");
+  }
 </code></pre>
 <p>Win+R输入 <code>shell:startup</code> 回车，把刚才的 <code>est_win10_auto_wallpaper.bat</code> 在这里创建一个快捷方式</p>
 <p>解释下为啥要在 <code>shell:startup</code> 里创建快捷方式而不是直接放 .bat 。因为快捷方式可以设置当前运行目录，这样代码里的 <code>%~n0</code> 才能生效。懒得查询完整路径如何写了。。</p>
@@ -1450,7 +1453,7 @@ if(sWallpaper){
               <h2 class="card-title">Mac 命令行终端里获得视频文件的长度</h2>
             </a>
             <p class="card-text"><p>记录一下，Mac OS X 10.6.8 或更高版本：</p>
-<pre><code>mdls -name kMDItemDurationSeconds -name kMDItemFSName  1.mp4
+<pre><code>  mdls -name kMDItemDurationSeconds -name kMDItemFSName  1.mp4
 </code></pre>
 <p>这命令有一个很神经病的一点，同一个 .mp4 文件，获取只读的 TF 卡上的就没法获得视频长度，复制到可以读写的本地硬盘上就可以读出来。</p>
 <p>或者在 Finder 里新建一个叫  <code>Movies</code> 的文件夹，把视频文件放进去，然后列表展示，表头右键，就可以选择显示长度。。</p>
@@ -1471,24 +1474,24 @@ if(sWallpaper){
             </a>
             <p class="card-text"><p>因为某些拉垮的业务需要，不得不在代码里去反向代理别的 HTTP API</p>
 <p>一般格式如下：</p>
-<pre><code>@app.get('/other/{other_path:path}')
-@app.post('/other/{other_path:path}')
-async def other_api(other_path: str, req: Request):
-    """透传 API"""
-    host = 'http://example.intranet'
-    url = '{}/other/{}'.format(host, other_path)
-    body = bytes(await req.body()) or None
-    r = requests.request(
-        req.method, url,
-        headers={
-            'Cookie': req.headers.get('cookie') or '',
-            'Content-Type': req.headers.get('Content-Type')},
-        params=req.query_params, data=body, stream=True,
-        allow_redirects=False)
+<pre><code>  @app.get('/other/{other_path:path}')
+  @app.post('/other/{other_path:path}')
+  async def other_api(other_path: str, req: Request):
+      """透传 API"""
+      host = 'http://example.intranet'
+      url = '{}/other/{}'.format(host, other_path)
+      body = bytes(await req.body()) or None
+      r = requests.request(
+          req.method, url,
+          headers={
+              'Cookie': req.headers.get('cookie') or '',
+              'Content-Type': req.headers.get('Content-Type')},
+          params=req.query_params, data=body, stream=True,
+          allow_redirects=False)
 
-    h = dict(r.headers)
-    h.pop('Content-Length', None)
-    return StreamingResponse(r.raw, headers=h, status_code=r.status_code)
+      h = dict(r.headers)
+      h.pop('Content-Length', None)
+      return StreamingResponse(r.raw, headers=h, status_code=r.status_code)
 </code></pre>
 <p>解释一下为啥要这么写：</p>
 <ol>
@@ -1498,9 +1501,9 @@ async def other_api(other_path: str, req: Request):
 </ol>
 <p>这样写基本能跑起来了，但是有2个问题：</p>
 <ol>
-<li>如果上游返回一个 302/303/307 的跳转，那么很有可能把内网的跳转网址直接返回给浏览器了。因为 <a href="https://tools.ietf.org/html/rfc2616#section-14.30">HTTP/1.1 的标准 RFC2616</a> 强制规定，<code>Location</code> 的值必须是一个绝对网址。所以这个时候就冒犯一下这个规定，强行截断：<pre><code>loc = h.pop('Location', '')
-if loc.startswith(host):
-    h['Location'] = loc[len(host):]
+<li>如果上游返回一个 302/303/307 的跳转，那么很有可能把内网的跳转网址直接返回给浏览器了。因为 <a href="https://tools.ietf.org/html/rfc2616#section-14.30">HTTP/1.1 的标准 RFC2616</a> 强制规定，<code>Location</code> 的值必须是一个绝对网址。所以这个时候就冒犯一下这个规定，强行截断：<pre><code>    loc = h.pop('Location', '')
+    if loc.startswith(host):
+        h['Location'] = loc[len(host):]
 </code></pre>
 </li>
 </ol>
@@ -1561,7 +1564,7 @@ if loc.startswith(host):
             <p class="card-text"><p>新年第一贴！</p>
 <p>Run the command before connect to PPPoE or as cronjob</p>
 <p>添加一个重启的定时任务，在重启之间执行一个命令：</p>
-<pre><code>uci set network.wan.mac_addr=$(hexdump -n3 -e'1/3 "8c:8d:8e" 3/1 ":%02X" "\n"' /dev/random) &amp;&amp; uci commit network
+<pre><code>  uci set network.wan.mac_addr=$(hexdump -n3 -e'1/3 "8c:8d:8e" 3/1 ":%02X" "\n"' /dev/random) &amp;&amp; uci commit network
 </code></pre>
 <p>为什么要在拨号前随机生成WAN口的 MAC 地址呢？嘿嘿。</p></p>
             <div class="card-subtext muted-text">
@@ -1587,14 +1590,14 @@ if loc.startswith(host):
 <p>So far <code>nsq-py</code> looks reall promising because it's compatible with more options with concurrency, but when I used it with massive TCP connections to nsqd, <a href="https://github.com/gevent/gevent/issues/1348">gevent</a> threw "ValueError: filedescriptor out of range in select()" error.</p>
 <p>Upon further investigation, it was a select(2) limitation. The kernel will limit max tcp fileno 1024. </p>
 <p>See CPython <a href="https://github.com/python/cpython/blob/3317466061509c83dce257caab3661d52571cab1/Modules/selectmodule.c#L142">source of selectmodule.c</a>:</p>
-<pre><code>    if (!_PyIsSelectable_fd(v)) {
-        PyErr_SetString(PyExc_ValueError,
-                    "filedescriptor out of range in select()");
-        goto finally;
-    }
+<pre><code>      if (!_PyIsSelectable_fd(v)) {
+          PyErr_SetString(PyExc_ValueError,
+                      "filedescriptor out of range in select()");
+          goto finally;
+      }
 </code></pre>
 <p>And <a href="https://github.com/python/cpython/blob/637a09b0d6e3ad4e34e0b5e0fc82f5afeae6f74b/Include/fileobject.h#L37"><code>_PyIsSelectable_fd</code> is defined</a> as </p>
-<pre><code>#define _PyIsSelectable_fd(FD) ((unsigned int)(FD) &lt; (unsigned int)FD_SETSIZE)
+<pre><code>  #define _PyIsSelectable_fd(FD) ((unsigned int)(FD) &lt; (unsigned int)FD_SETSIZE)
 </code></pre>
 <p>And the const <code>FD_SETSIZE</code> is described at <a href="https://man7.org/linux/man-pages/man2/select.2.html">man page</a>:</p>
 <blockquote>
@@ -1638,37 +1641,37 @@ if loc.startswith(host):
             </a>
             <p class="card-text"><p>同步发帖在 <a href="https://www.v2ex.com/t/705897">v2ex</a></p>
 <p>今天发现 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl">Intl</a> 这个 ECMAscript 内置对象，可以一句话算农历。</p>
-<pre><code>new Date().toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)\s*?年/, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子丑寅卯辰巳午未申酉戌亥".charAt((y-4)%12))
+<pre><code>  new Date().toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)\s*?年/, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子丑寅卯辰巳午未申酉戌亥".charAt((y-4)%12))
 </code></pre>
 <p>算农历最麻烦就是跨年。这个 API 处理得还挺好的。比如2020年1月的除夕夜+春节</p>
-<pre><code>new Date(2020, 0, 24).toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)年 /, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子丑寅卯辰巳午未申酉戌亥".charAt((y-4)%12))
-乙亥腊月30 上午12:00:00
-new Date(2020, 0, 25).toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)年 /, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子丑寅卯辰巳午未申酉戌亥".charAt((y-4)%12))
-庚子正月1 上午12:00:00
+<pre><code>  new Date(2020, 0, 24).toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)年 /, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子丑寅卯辰巳午未申酉戌亥".charAt((y-4)%12))
+  乙亥腊月30 上午12:00:00
+  new Date(2020, 0, 25).toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)年 /, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子丑寅卯辰巳午未申酉戌亥".charAt((y-4)%12))
+  庚子正月1 上午12:00:00
 </code></pre>
 <p>连 腊月 正月 都能显示。还是挺 6 的。浏览器支持的话 Edge, Chrome 都可以，Firefox 和 Safari 的 ICU 版本太老需要微调一下。</p>
 <p>23:39更新：网友 sarvatathagata 发现了个如下更简单的方法。不过这个方法无法地道的显示 腊月、正月。</p>
-<pre><code>new Date().toLocaleString('ja-JP-u-ca-chinese')
+<pre><code>  new Date().toLocaleString('ja-JP-u-ca-chinese')
 </code></pre>
 <p>稍微解释下 <code>zh-Hans-CN-u-ca-chinese</code> 是什么意思。这个叫 locale 也叫 language tag。<br />
 zh-Hans 是一门语言，简体中文。<code>CN</code> 表示在大陆地区用的。 <code>-u-key1-value1-key2-value2...</code> 表示打开 <em>Unicode extension</em> 模式，<code>-ca</code> 表示 calendar 日历，<code>-chinese</code> 表示农历。</p>
 <p>如果把 <code>-chinese</code> 改成 <code>-roc</code> 还可以得到今年是民国109年。奇怪的姿势又增加了。</p>
 <p>还有一个额外的参数，如 <code>.toLocaleString(locale_id, options)</code> 里面 options 可以细化</p>
 <p>另外就是奇怪的数字变形方法：</p>
-<pre><code>new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-hanidec')
-"一,二三四,五六七,八九〇"
-new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-fullwide')
-"１,２３４,５６７,８９０"
-new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathbold')
-"𝟏,𝟐𝟑𝟒,𝟓𝟔𝟕,𝟖𝟗𝟎"
-new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathdbl')
-"𝟙,𝟚𝟛𝟜,𝟝𝟞𝟟,𝟠𝟡𝟘"
-new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathmono')
-"𝟷,𝟸𝟹𝟺,𝟻𝟼𝟽,𝟾𝟿𝟶"
-new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathsanb')
-"𝟭,𝟮𝟯𝟰,𝟱𝟲𝟳,𝟴𝟵𝟬"
-new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathsans')
-"𝟣,𝟤𝟥𝟦,𝟧𝟨𝟩,𝟪𝟫𝟢"
+<pre><code>  new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-hanidec')
+  "一,二三四,五六七,八九〇"
+  new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-fullwide')
+  "１,２３４,５６７,８９０"
+  new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathbold')
+  "𝟏,𝟐𝟑𝟒,𝟓𝟔𝟕,𝟖𝟗𝟎"
+  new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathdbl')
+  "𝟙,𝟚𝟛𝟜,𝟝𝟞𝟟,𝟠𝟡𝟘"
+  new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathmono')
+  "𝟷,𝟸𝟹𝟺,𝟻𝟼𝟽,𝟾𝟿𝟶"
+  new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathsanb')
+  "𝟭,𝟮𝟯𝟰,𝟱𝟲𝟳,𝟴𝟵𝟬"
+  new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathsans')
+  "𝟣,𝟤𝟥𝟦,𝟧𝟨𝟩,𝟪𝟫𝟢"
 </code></pre>
 <p>还有获取相对时间（XX分钟前）、科学记数法、货币、地区的别名等奇奇怪怪的东西。</p>
 <p>Intl 是 ECMAScript i18n API（<a href="https://www.ecma-international.org/ecma-402/1.0/">ECMA-402</a>）的一部分。在ES5.1+语言的运行时嵌入了一个阉割版的 ICU 库。为什么是阉割版呢？比如 ICU 库是 Unicode CLDR 规范的一种实现，比如 <a href="https://github.com/unicode-org/icu/blob/master/icu4c/source/data/locales/zh.txt">zh</a>里可以发现不仅可以直接查到年（枚举60遍！），还可以查到生肖（js 里 <code>{year: "zodiacs"}</code>就不行），甚至节气(solarTerms)都包含了！js 里的 <code>year</code> 阉割得只有两种：<code>numeric</code> 和 <code>2-digit</code>。可以看 <a href="https://github.com/v8/v8/blob/4b9b23521e6fd42373ebbcb20ebe03bf445494f9/src/objects/js-date-time-format.cc#L57">v8 源码里的BuildPatternItems</a> 怎么实现的。</p>
@@ -1731,20 +1734,16 @@ new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathsans')
 <p>而且：</p>
 <ul>
 <li>检测出抗体，（小概率）不一定是 SARS-CoV-2 导致的。</li>
-<li>没检测出抗体，也可能代表你<ul>
-<li>免疫系统还没反应过来。病毒还在悄悄感染。</li>
-<li>免疫球蛋白 IgG/IgM 已经不顶用了。免疫系统被摧毁了，或者要开始细胞因子风暴了。</li>
-<li>也可能代表你的鼻腔 swab 没挖对。</li>
-<li>拭子挖对了但是未达到能显色的剂量。</li>
-<li>也可能代表病毒已经从上呼吸道转移到肺部、消化系统，甚至肛门了</li>
-</ul>
-</li>
-<li>检测出核酸：<ul>
-<li>90%肯能性 SARS-CoV-2 病毒 RNA 存在。但是 </li>
-<li>存在不代表病毒一定存活</li>
-<li>即使病毒少量存活，也不代表一定有传染性</li>
-</ul>
-</li>
+<li>没检测出抗体，也可能代表你<br />
+    - 免疫系统还没反应过来。病毒还在悄悄感染。<br />
+    - 免疫球蛋白 IgG/IgM 已经不顶用了。免疫系统被摧毁了，或者要开始细胞因子风暴了。<br />
+    - 也可能代表你的鼻腔 swab 没挖对。<br />
+    - 拭子挖对了但是未达到能显色的剂量。<br />
+    - 也可能代表病毒已经从上呼吸道转移到肺部、消化系统，甚至肛门了</li>
+<li>检测出核酸：<br />
+    - 90%肯能性 SARS-CoV-2 病毒 RNA 存在。但是 <br />
+    - 存在不代表病毒一定存活<br />
+    - 即使病毒少量存活，也不代表一定有传染性</li>
 </ul>
 <p>根据这几点，就会明白为啥有的媒体说中国15分钟快速试剂盒「<a href="https://twitter.com/wangzhian8848/status/1243748120757862400">80%测不准</a>」。为啥出院标准必须是核酸检测，间隔24小时两次。</p>
 <ol start="2">
@@ -1894,9 +1893,9 @@ new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathsans')
 <p>Q: 什么是存在 What is Being (Dasein)?<br />
 A: 存在的最根本属性是稳定性。<br />
     古希腊有个悖论说一艘船叫 忒修斯（ship of Theseus），船上的木头因为损坏和腐烂被一块一块随着时间逐渐替换，如果有一天所有的木头都不是出厂的原装的木头，那这艘船还是原来的那艘船吗？</p>
-<pre><code>所以这里的存在分两个层面的稳定。从船的用途来说，忒修斯号因为设计没变，用途一致，所以忒修斯号依然存在；从忒修斯原装价值来说，因为木头都被换过一轮了，所以追求「原汁原味」的价值已经不存在了。这艘船至少还在「设计用途」这个层面保持了稳定，所以这艘船还有一定的存在意义。如果这艘船的木头被拆下来烧掉了，空气中的 Co2 和 地上一堆灰没有人会认为这是一艘船。
+<pre><code>  所以这里的存在分两个层面的稳定。从船的用途来说，忒修斯号因为设计没变，用途一致，所以忒修斯号依然存在；从忒修斯原装价值来说，因为木头都被换过一轮了，所以追求「原汁原味」的价值已经不存在了。这艘船至少还在「设计用途」这个层面保持了稳定，所以这艘船还有一定的存在意义。如果这艘船的木头被拆下来烧掉了，空气中的 Co2 和 地上一堆灰没有人会认为这是一艘船。
 
-如果一个物体不停的变化，变化周期甚至小于普朗克时间长度，那么这样的东西压根无法观察，也无法影响我们的生活，所以就不存在。
+  如果一个物体不停的变化，变化周期甚至小于普朗克时间长度，那么这样的东西压根无法观察，也无法影响我们的生活，所以就不存在。
 </code></pre>
 <p>Q: 什么是生命？ What is life?<br />
 A: 生命区分于其他事物不能简单等同于有机物区分与无机物，碳基甚至硅基也不一定。但是生命会普遍导致熵减少。</p>
@@ -1954,9 +1953,9 @@ A: 我又不是保安。。。。哲学三大问题是：终极存在是什么�
 </ol>
 <p>However it appears to be stuck on "Completing Login" screen from time to time.</p>
 <p>To fix it, run <code>cmd</code> with Administrator provilege type these commands:</p>
-<pre><code>ipconfig /flushdns
-netsh winsock reset category
-netsh int ip reset reset.log
+<pre><code>  ipconfig /flushdns
+  netsh winsock reset category
+  netsh int ip reset reset.log
 </code></pre>
 <p>Then go to <code>Steam\steamapps\common\Paladins\Binaries\EasyAntiCheat</code>, run <code>EasyAntiCheat_Setup.exe</code> as Administrator and repair Paladins.</p>
 <p>And restart the PC. </p>

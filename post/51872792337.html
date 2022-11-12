@@ -58,9 +58,9 @@
 <p>USB\VID_0A12&amp;PID_0001&amp;REV_1989</p>
 <p>结果linux内核屏蔽了这个设备。</p>
 <p>http://lxr.free-electrons.com/source/drivers/bluetooth/btusb.c?v=3.0#L96</p>
-<pre><code>static struct usb_device_id blacklist_table[] = {
-    /* CSR BlueCore devices */
-    { USB_DEVICE(0x0a12, 0x0001), .driver_info = BTUSB_CSR },
+<pre><code>  static struct usb_device_id blacklist_table[] = {
+      /* CSR BlueCore devices */
+      { USB_DEVICE(0x0a12, 0x0001), .driver_info = BTUSB_CSR },
 </code></pre>
 <p>所以如果你也有CSR芯片(BlueCore® BC7820™)的蓝牙，那么恭喜你，Android OTG和Linux都没法用。</p>
 <p>当时觉得悲剧了。<a href="http://www.slatedroid.com/topic/46457-bluetooth-dongle/page__view__findpost__p__504113">via</a></p>

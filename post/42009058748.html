@@ -54,46 +54,46 @@
 
   
   <p>请求：</p>
-<pre><code>POST https://www.googleapis.com/rpc HTTP/1.1
-Host: www.googleapis.com
-Connection: keep-alive
-Content-Length: 159
-Content-Type: application/json
+<pre><code>  POST https://www.googleapis.com/rpc HTTP/1.1
+  Host: www.googleapis.com
+  Connection: keep-alive
+  Content-Length: 159
+  Content-Type: application/json
 
-{"method":"spelling.check","apiVersion":"v1","params": 
-{"text":"cchrome","language":"en","originCountry":"USA", 
-"key":"AIzaSyCLlKc60a3z7lo8deV-hAyDU7rHYgL4HZg"}}
+  {"method":"spelling.check","apiVersion":"v1","params": 
+  {"text":"cchrome","language":"en","originCountry":"USA", 
+  "key":"AIzaSyCLlKc60a3z7lo8deV-hAyDU7rHYgL4HZg"}}
 </code></pre>
 <p>返回：</p>
-<pre><code>HTTP/1.1 200 OK
-Content-Type: application/json; charset=UTF-8
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-Pragma: no-cache
-Expires: Fri, 01 Jan 1990 00:00:00 GMT
-Date: Fri, 01 Feb 2013 07:01:26 GMT
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-XSS-Protection: 1; mode=block
-Content-Length: 209
-Server: GSE
+<pre><code>  HTTP/1.1 200 OK
+  Content-Type: application/json; charset=UTF-8
+  Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+  Pragma: no-cache
+  Expires: Fri, 01 Jan 1990 00:00:00 GMT
+  Date: Fri, 01 Feb 2013 07:01:26 GMT
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  X-XSS-Protection: 1; mode=block
+  Content-Length: 209
+  Server: GSE
 
-{
- "result": {
-  "spellingCheckResponse": {
-   "misspellings": [
-    {
-     "charStart": 0,
-     "charLength": 7,
-     "suggestions": [
+  {
+   "result": {
+    "spellingCheckResponse": {
+     "misspellings": [
       {
-       "suggestion": "chrome"
+       "charStart": 0,
+       "charLength": 7,
+       "suggestions": [
+        {
+         "suggestion": "chrome"
+        }
+       ]
       }
      ]
     }
-   ]
+   }
   }
- }
-}
 </code></pre>
 <p>看来是没法利用了。shit。</p>
 <p><a href="http://googlesystem.blogspot.com/2011/09/chromes-spell-checker-gets-smarter.html">参考</a></p>

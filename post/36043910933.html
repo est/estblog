@@ -54,12 +54,12 @@
 
   
   <p>So if you want to write a Queryset in Django like this:</p>
-<pre><code>models.MyModel.objects.filter( Q(a=1) | Q(b=2).extra(where=[""]) )
+<pre><code>  models.MyModel.objects.filter( Q(a=1) | Q(b=2).extra(where=[""]) )
 </code></pre>
 <p>It desn't work, because <code>extra()</code> can not be used on a <code>django.db.models.Q</code> object</p>
 <p>Instead, you can <a href="http://simeonfranklin.com/blog/2011/feb/20/hidden-django-queryset-features-II/">write like this</a>:</p>
-<pre><code>qs = models.MyModel.objects.filter(a=1)
-qs |= models.MyModel.objects.filte(b=2).extra(where=[""])
+<pre><code>  qs = models.MyModel.objects.filter(a=1)
+  qs |= models.MyModel.objects.filte(b=2).extra(where=[""])
 </code></pre>
 <p>I guess it's cool.</p>
 

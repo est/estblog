@@ -54,32 +54,32 @@
 
   
   <p>在<code>django.utils.functional</code> 里发现的。</p>
-<pre><code>class cached_property(object):
-    """
-    Decorator that creates converts a method with a single
-    self argument into a property cached on the instance.
-    """
-    def __init__(self, func):
-        self.func = func
+<pre><code>  class cached_property(object):
+      """
+      Decorator that creates converts a method with a single
+      self argument into a property cached on the instance.
+      """
+      def __init__(self, func):
+          self.func = func
 
-    def __get__(self, instance, type):
-        res = instance.__dict__[self.func.__name__] = self.func(instance)
-        return res
+      def __get__(self, instance, type):
+          res = instance.__dict__[self.func.__name__] = self.func(instance)
+          return res
 </code></pre>
 <p>这玩意好用啊，比如</p>
-<pre><code>&gt;&gt;&gt; class A(object):
-...   @cached_property
-...   def val(self):
-...     print 'calc'
-...     return 1
-... 
-&gt;&gt;&gt; 
-&gt;&gt;&gt; a=A()
-&gt;&gt;&gt; a.val
-calc
-1
-&gt;&gt;&gt; a.val
-1
+<pre><code>  &gt;&gt;&gt; class A(object):
+  ...   @cached_property
+  ...   def val(self):
+  ...     print 'calc'
+  ...     return 1
+  ... 
+  &gt;&gt;&gt; 
+  &gt;&gt;&gt; a=A()
+  &gt;&gt;&gt; a.val
+  calc
+  1
+  &gt;&gt;&gt; a.val
+  1
 </code></pre>
 <p>以前自己山寨个 <code>def val(): self._val =</code> 什么的太烂了。</p>
 

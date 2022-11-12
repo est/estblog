@@ -57,11 +57,11 @@
 <p>Here is a simple script to speed up the stacks of page you have click in order to submit multiple missing pages to Google. </p>
 <p>Open your <a href="https://search.google.com/search-console">Google Search Console</a>, click <strong>Coverage</strong> then open <strong>Discovered – currently not indexed</strong></p>
 <p>Now open your browser devtool, paste these into javascript console, hit them one by one.</p>
-<pre><code>document.querySelector('div[data-disabled] table td span[title] span[title="Inspect URL"]').click()
+<pre><code>  document.querySelector('div[data-disabled] table td span[title] span[title="Inspect URL"]').click()
 
-document.querySelector('span[data-event-action=request-indexing] span[jsslot] div span span').click()
+  document.querySelector('span[data-event-action=request-indexing] span[jsslot] div span span').click()
 
-document.querySelector('span[data-event-action=pivot-to-report-main-view-indexing-section] a').click()
+  document.querySelector('span[data-event-action=pivot-to-report-main-view-indexing-section] a').click()
 </code></pre>
 <p>Until you met with the daily quota. Rinse and try this shit everyday.</p>
 <p>Fuck Google.</p>

@@ -54,13 +54,13 @@
 
   
   <p>让你丫的2+2不等于5！！！！</p>
-<pre><code>import sys
-import ctypes
-pyint_p = ctypes.POINTER(ctypes.c_byte*sys.getsizeof(5))
-five = ctypes.cast(id(5), pyint_p)
-print(2 + 2 == 5) # False
-five.contents[five.contents[:].index(5)] = 4
-print(2 + 2 == 5) # True (must be sufficiently large values of 2 there...)
+<pre><code>  import sys
+  import ctypes
+  pyint_p = ctypes.POINTER(ctypes.c_byte*sys.getsizeof(5))
+  five = ctypes.cast(id(5), pyint_p)
+  print(2 + 2 == 5) # False
+  five.contents[five.contents[:].index(5)] = 4
+  print(2 + 2 == 5) # True (must be sufficiently large values of 2 there...)
 </code></pre>
 <p><a href="http://news.ycombinator.com/item?id=4197576">via</a></p>
 

@@ -55,37 +55,37 @@
   
   <p>同步发帖在 <a href="https://www.v2ex.com/t/705897">v2ex</a></p>
 <p>今天发现 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl">Intl</a> 这个 ECMAscript 内置对象，可以一句话算农历。</p>
-<pre><code>new Date().toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)\s*?年/, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子丑寅卯辰巳午未申酉戌亥".charAt((y-4)%12))
+<pre><code>  new Date().toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)\s*?年/, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子丑寅卯辰巳午未申酉戌亥".charAt((y-4)%12))
 </code></pre>
 <p>算农历最麻烦就是跨年。这个 API 处理得还挺好的。比如2020年1月的除夕夜+春节</p>
-<pre><code>new Date(2020, 0, 24).toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)年 /, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子丑寅卯辰巳午未申酉戌亥".charAt((y-4)%12))
-乙亥腊月30 上午12:00:00
-new Date(2020, 0, 25).toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)年 /, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子丑寅卯辰巳午未申酉戌亥".charAt((y-4)%12))
-庚子正月1 上午12:00:00
+<pre><code>  new Date(2020, 0, 24).toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)年 /, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子丑寅卯辰巳午未申酉戌亥".charAt((y-4)%12))
+  乙亥腊月30 上午12:00:00
+  new Date(2020, 0, 25).toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)年 /, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子丑寅卯辰巳午未申酉戌亥".charAt((y-4)%12))
+  庚子正月1 上午12:00:00
 </code></pre>
 <p>连 腊月 正月 都能显示。还是挺 6 的。浏览器支持的话 Edge, Chrome 都可以，Firefox 和 Safari 的 ICU 版本太老需要微调一下。</p>
 <p>23:39更新：网友 sarvatathagata 发现了个如下更简单的方法。不过这个方法无法地道的显示 腊月、正月。</p>
-<pre><code>new Date().toLocaleString('ja-JP-u-ca-chinese')
+<pre><code>  new Date().toLocaleString('ja-JP-u-ca-chinese')
 </code></pre>
 <p>稍微解释下 <code>zh-Hans-CN-u-ca-chinese</code> 是什么意思。这个叫 locale 也叫 language tag。<br />
 zh-Hans 是一门语言，简体中文。<code>CN</code> 表示在大陆地区用的。 <code>-u-key1-value1-key2-value2...</code> 表示打开 <em>Unicode extension</em> 模式，<code>-ca</code> 表示 calendar 日历，<code>-chinese</code> 表示农历。</p>
 <p>如果把 <code>-chinese</code> 改成 <code>-roc</code> 还可以得到今年是民国109年。奇怪的姿势又增加了。</p>
 <p>还有一个额外的参数，如 <code>.toLocaleString(locale_id, options)</code> 里面 options 可以细化</p>
 <p>另外就是奇怪的数字变形方法：</p>
-<pre><code>new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-hanidec')
-"一,二三四,五六七,八九〇"
-new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-fullwide')
-"１,２３４,５６７,８９０"
-new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathbold')
-"𝟏,𝟐𝟑𝟒,𝟓𝟔𝟕,𝟖𝟗𝟎"
-new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathdbl')
-"𝟙,𝟚𝟛𝟜,𝟝𝟞𝟟,𝟠𝟡𝟘"
-new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathmono')
-"𝟷,𝟸𝟹𝟺,𝟻𝟼𝟽,𝟾𝟿𝟶"
-new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathsanb')
-"𝟭,𝟮𝟯𝟰,𝟱𝟲𝟳,𝟴𝟵𝟬"
-new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathsans')
-"𝟣,𝟤𝟥𝟦,𝟧𝟨𝟩,𝟪𝟫𝟢"
+<pre><code>  new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-hanidec')
+  "一,二三四,五六七,八九〇"
+  new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-fullwide')
+  "１,２３４,５６７,８９０"
+  new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathbold')
+  "𝟏,𝟐𝟑𝟒,𝟓𝟔𝟕,𝟖𝟗𝟎"
+  new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathdbl')
+  "𝟙,𝟚𝟛𝟜,𝟝𝟞𝟟,𝟠𝟡𝟘"
+  new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathmono')
+  "𝟷,𝟸𝟹𝟺,𝟻𝟼𝟽,𝟾𝟿𝟶"
+  new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathsanb')
+  "𝟭,𝟮𝟯𝟰,𝟱𝟲𝟳,𝟴𝟵𝟬"
+  new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathsans')
+  "𝟣,𝟤𝟥𝟦,𝟧𝟨𝟩,𝟪𝟫𝟢"
 </code></pre>
 <p>还有获取相对时间（XX分钟前）、科学记数法、货币、地区的别名等奇奇怪怪的东西。</p>
 <p>Intl 是 ECMAScript i18n API（<a href="https://www.ecma-international.org/ecma-402/1.0/">ECMA-402</a>）的一部分。在ES5.1+语言的运行时嵌入了一个阉割版的 ICU 库。为什么是阉割版呢？比如 ICU 库是 Unicode CLDR 规范的一种实现，比如 <a href="https://github.com/unicode-org/icu/blob/master/icu4c/source/data/locales/zh.txt">zh</a>里可以发现不仅可以直接查到年（枚举60遍！），还可以查到生肖（js 里 <code>{year: "zodiacs"}</code>就不行），甚至节气(solarTerms)都包含了！js 里的 <code>year</code> 阉割得只有两种：<code>numeric</code> 和 <code>2-digit</code>。可以看 <a href="https://github.com/v8/v8/blob/4b9b23521e6fd42373ebbcb20ebe03bf445494f9/src/objects/js-date-time-format.cc#L57">v8 源码里的BuildPatternItems</a> 怎么实现的。</p>

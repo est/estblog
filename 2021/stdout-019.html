@@ -68,20 +68,20 @@ The default value specified in a DEFAULT clause can be a literal constant or an 
 </blockquote>
 <p>虽然语法很丑但是很实用啊。</p>
 <p>所以这种语句</p>
-<pre><code>ALTER TABLE mytable MODIFY COLUMN my_json JSON DEFAULT (json_object());
+<pre><code>  ALTER TABLE mytable MODIFY COLUMN my_json JSON DEFAULT (json_object());
 </code></pre>
 <p>在 TiDB 里就没法支持。这也带来一个问题，就是要 upsert 这个 字段的时候，写起来就很拧巴，以 <code>peewee</code> 这个ORM为例：</p>
-<pre><code>MyTable.update({
-    'my_json' = fn.json_set(
-        fn.COALESCE(MyTable.my_json, Cast('{}', 'JSON')),
-        '%.some_key', 'some_value',
-)})
+<pre><code>  MyTable.update({
+      'my_json' = fn.json_set(
+          fn.COALESCE(MyTable.my_json, Cast('{}', 'JSON')),
+          '%.some_key', 'some_value',
+  )})
 </code></pre>
 <p>必须用 COALESCE 预防默认值为 <code>NULL</code> 的情况。太麻烦了。</p>
 <p>btw 玩MySQL/TiDB的 JSON 有个坑的，那就是 json 的 <code>null</code> 是有值的，和 sql 的 <code>NULL</code> 是不同的。</p>
 <p>也就是说</p>
-<pre><code>select json_extract('{}', '$.hey') IS NULL;
-select json_extract('{"hey": null}', '$.hey') = Cast('null' as JSON);
+<pre><code>  select json_extract('{}', '$.hey') IS NULL;
+  select json_extract('{"hey": null}', '$.hey') = Cast('null' as JSON);
 </code></pre>
 <p>要注意。</p>
 <p>btw2 MySQL的JSON数据抽取 <code>-&gt;&gt;</code> 是返回真正的值，等价于TiDB里的 json_unquote(json_extract(t.json_field, '$.key1.key2'))</p>

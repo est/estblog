@@ -54,15 +54,15 @@
 
   
   <p>suppose you have a django form</p>
-<pre><code>f = django.forms.Form()
-f.is_valid()
-f.data['field'] = 'new value' # won't work
-f.cleaned_data['key'] = 'value' # won't work
+<pre><code>  f = django.forms.Form()
+  f.is_valid()
+  f.data['field'] = 'new value' # won't work
+  f.cleaned_data['key'] = 'value' # won't work
 </code></pre>
 <p>the output of <code>f.as_p()</code> is still the old value because the <code>f.data</code> is a MergeDict.</p>
 <p>The way to modify it:</p>
-<pre><code>d = dict(f.data, field='new value')
-f.data = d
+<pre><code>  d = dict(f.data, field='new value')
+  f.data = d
 </code></pre>
 <p>MergeDict is for pussies.</p>
 <p><code>newdict = dict(mydict, key='new value')</code> is better than <code>newdict = mydict.copy()</code></p>

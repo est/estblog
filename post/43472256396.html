@@ -62,37 +62,37 @@
 <p>These should be separate Bottle apps.</p>
 <p>There's <a href="http://permalink.gmane.org/gmane.comp.python.bottle.general/730">an ugly hack</a> from the official maillist, I think I can make it better.</p>
 <p>The secret is to create a customized WSGI app:</p>
-<pre><code>from fnmatch import fnmatch
-from bottle import Bottle, default_app, run
+<pre><code>  from fnmatch import fnmatch
+  from bottle import Bottle, default_app, run
 
-foo = Bottle()
-foo.hostnames = ['foo.est.im']
-@foo.route('/')
-def hello():
-    return 'hello!'
+  foo = Bottle()
+  foo.hostnames = ['foo.est.im']
+  @foo.route('/')
+  def hello():
+      return 'hello!'
 
-bar = Bottle()
-bar.hostnames = ['bar.est.im']
-@bar.route('/')
-def hi():
-    return 'hi~'
+  bar = Bottle()
+  bar.hostnames = ['bar.est.im']
+  @bar.route('/')
+  def hi():
+      return 'hi~'
 
-@route('/')
-def index():
-    print 'hello world'
+  @route('/')
+  def index():
+      print 'hello world'
 
-def application(environ, start_response):
-    for app in [foo, bar]:
-        hostnames = getattr(app, 'hostnames', [])
-        if filter(lambda x:fnmatch(hostname, x), hostnames):
-            return app(environ, start_response)
-    return default_app()(environ, start_response)
+  def application(environ, start_response):
+      for app in [foo, bar]:
+          hostnames = getattr(app, 'hostnames', [])
+          if filter(lambda x:fnmatch(hostname, x), hostnames):
+              return app(environ, start_response)
+      return default_app()(environ, start_response)
 </code></pre>
 <p>Then run this motherfucker:</p>
-<pre><code>from django.utils import autoreload
-def dev_server():
-    run(application, host='0.0.0.0', port=8002, debug=True)
-autoreload.main(dev_server)
+<pre><code>  from django.utils import autoreload
+  def dev_server():
+      run(application, host='0.0.0.0', port=8002, debug=True)
+  autoreload.main(dev_server)
 </code></pre>
 
 </article>

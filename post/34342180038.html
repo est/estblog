@@ -60,16 +60,16 @@
 </blockquote>
 <p>The fact is it will neither reload, nor the child process will terminate when you Ctrl+C the main process.</p>
 <p>Let's use Django's reloader for bottlepy development!</p>
-<pre><code>from bottle import run, Bottle
+<pre><code>  from bottle import run, Bottle
 
-app = Bottle()
+  app = Bottle()
 
-def dev_server():
-    run(app, host='0.0.0.0', port=8080, debug=True)
+  def dev_server():
+      run(app, host='0.0.0.0', port=8080, debug=True)
 
-if '__main__' == __name__:
-    from django.utils import autoreload
-    autoreload.main(dev_server)
+  if '__main__' == __name__:
+      from django.utils import autoreload
+      autoreload.main(dev_server)
 </code></pre>
 <p>Everything went better than expected.</p>
 <p>btw my Tumblr Markdown editor can not accept capital E and R, using PinYin IME is OK. strange!</p>

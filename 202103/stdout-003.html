@@ -55,24 +55,24 @@
   
   <p>因为某些拉垮的业务需要，不得不在代码里去反向代理别的 HTTP API</p>
 <p>一般格式如下：</p>
-<pre><code>@app.get('/other/{other_path:path}')
-@app.post('/other/{other_path:path}')
-async def other_api(other_path: str, req: Request):
-    """透传 API"""
-    host = 'http://example.intranet'
-    url = '{}/other/{}'.format(host, other_path)
-    body = bytes(await req.body()) or None
-    r = requests.request(
-        req.method, url,
-        headers={
-            'Cookie': req.headers.get('cookie') or '',
-            'Content-Type': req.headers.get('Content-Type')},
-        params=req.query_params, data=body, stream=True,
-        allow_redirects=False)
+<pre><code>  @app.get('/other/{other_path:path}')
+  @app.post('/other/{other_path:path}')
+  async def other_api(other_path: str, req: Request):
+      """透传 API"""
+      host = 'http://example.intranet'
+      url = '{}/other/{}'.format(host, other_path)
+      body = bytes(await req.body()) or None
+      r = requests.request(
+          req.method, url,
+          headers={
+              'Cookie': req.headers.get('cookie') or '',
+              'Content-Type': req.headers.get('Content-Type')},
+          params=req.query_params, data=body, stream=True,
+          allow_redirects=False)
 
-    h = dict(r.headers)
-    h.pop('Content-Length', None)
-    return StreamingResponse(r.raw, headers=h, status_code=r.status_code)
+      h = dict(r.headers)
+      h.pop('Content-Length', None)
+      return StreamingResponse(r.raw, headers=h, status_code=r.status_code)
 </code></pre>
 <p>解释一下为啥要这么写：</p>
 <ol>
@@ -82,9 +82,9 @@ async def other_api(other_path: str, req: Request):
 </ol>
 <p>这样写基本能跑起来了，但是有2个问题：</p>
 <ol>
-<li>如果上游返回一个 302/303/307 的跳转，那么很有可能把内网的跳转网址直接返回给浏览器了。因为 <a href="https://tools.ietf.org/html/rfc2616#section-14.30">HTTP/1.1 的标准 RFC2616</a> 强制规定，<code>Location</code> 的值必须是一个绝对网址。所以这个时候就冒犯一下这个规定，强行截断：<pre><code>loc = h.pop('Location', '')
-if loc.startswith(host):
-    h['Location'] = loc[len(host):]
+<li>如果上游返回一个 302/303/307 的跳转，那么很有可能把内网的跳转网址直接返回给浏览器了。因为 <a href="https://tools.ietf.org/html/rfc2616#section-14.30">HTTP/1.1 的标准 RFC2616</a> 强制规定，<code>Location</code> 的值必须是一个绝对网址。所以这个时候就冒犯一下这个规定，强行截断：<pre><code>    loc = h.pop('Location', '')
+    if loc.startswith(host):
+        h['Location'] = loc[len(host):]
 </code></pre>
 </li>
 </ol>

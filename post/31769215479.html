@@ -55,43 +55,43 @@
   
   <p>以前发过一个<a href="http://initiative.yo2.cn/archives/635924">良民证算法</a></p>
 <p>现在发现了一个碉堡的新办法：</p>
-<pre><code>get_id = lambda s: s + '1X864209753'[int(s, 13) % 11]
+<pre><code>  get_id = lambda s: s + '1X864209753'[int(s, 13) % 11]
 </code></pre>
 <p>来自newsmth的python版：</p>
-<pre><code>发信人: Andor (珍惜), 信区: Python
-标  题: Re: Python的良民证算法，有没有更简单的写法？
-发信站: 水木社区 (Fri Sep 14 15:13:05 2012), 站内
+<pre><code>  发信人: Andor (珍惜), 信区: Python
+  标  题: Re: Python的良民证算法，有没有更简单的写法？
+  发信站: 水木社区 (Fri Sep 14 15:13:05 2012), 站内
 
-get_id = lambda s: s + '1X864209753'[int(s, 13) % 11]
-【 在 zxn0 (est) 的大作中提到: 】
-: &gt;&gt;&gt; get_id = lambda s: s+'10X98765432'[reduce(int.__add__, map(lambda 
-: a,b:int(a)*(ord(b)-64), s[0:17], 'GIJEHDBAFCGIJEHDB' )) % 11]
-: &gt;&gt;&gt; get_id('34052419800101001')
-: '34052419800101001X'
-: 大家看哪里还能精简字符不？
-
-
+  get_id = lambda s: s + '1X864209753'[int(s, 13) % 11]
+  【 在 zxn0 (est) 的大作中提到: 】
+  : &gt;&gt;&gt; get_id = lambda s: s+'10X98765432'[reduce(int.__add__, map(lambda 
+  : a,b:int(a)*(ord(b)-64), s[0:17], 'GIJEHDBAFCGIJEHDB' )) % 11]
+  : &gt;&gt;&gt; get_id('34052419800101001')
+  : '34052419800101001X'
+  : 大家看哪里还能精简字符不？
 
 
-发信人: Fermat (Fermat), 信区: Python
-标  题: Re: Python的良民证算法，有没有更简单的写法？
-发信站: 水木社区 (Mon Sep 17 01:41:42 2012), 站内
-
-既然 int(s, 13) 这么漂亮的都出来了，又何必把那么好记的 "10X98765432" 弄成一个 magic number 呢
-
-get_id = lambda s: s + '10X98765432'[(int(s, 13)*13) % 11]
-
-或者在有32位整数限制的地方使用类似的
-get_id = lambda s: s + '10X98765432'[((int(s, 13)%11)*13)%11]
 
 
-对于有算法洁癖的，下面的可能会好些
+  发信人: Fermat (Fermat), 信区: Python
+  标  题: Re: Python的良民证算法，有没有更简单的写法？
+  发信站: 水木社区 (Mon Sep 17 01:41:42 2012), 站内
 
-from itertools import chain
-get_id = lambda s: s + '10X98765432'[reduce(lambda acc, x:
-    (acc*13 + int(x)) % 11, chain(s, "0"), 0)]
+  既然 int(s, 13) 这么漂亮的都出来了，又何必把那么好记的 "10X98765432" 弄成一个 magic number 呢
 
-因为可以把输入字符串当成个无限流，且程序只占用少量固定的空间，也不需要语言对很大的整型有支持。虽然对这个程序没啥意义。
+  get_id = lambda s: s + '10X98765432'[(int(s, 13)*13) % 11]
+
+  或者在有32位整数限制的地方使用类似的
+  get_id = lambda s: s + '10X98765432'[((int(s, 13)%11)*13)%11]
+
+
+  对于有算法洁癖的，下面的可能会好些
+
+  from itertools import chain
+  get_id = lambda s: s + '10X98765432'[reduce(lambda acc, x:
+      (acc*13 + int(x)) % 11, chain(s, "0"), 0)]
+
+  因为可以把输入字符串当成个无限流，且程序只占用少量固定的空间，也不需要语言对很大的整型有支持。虽然对这个程序没啥意义。
 </code></pre>
 <p>关于良民证，python普通版描述在<a href="http://www.keakon.net/2009/03/07/%E7%94%A8Python%E8%AE%A1%E7%AE%97%E8%BA%AB%E4%BB%BD%E8%AF%81%E6%A0%A1%E9%AA%8C%E7%A0%81">这里</a>，前六位的来自官方 <a href="http://www.stats.gov.cn/tjbz/index.htm">县及县以上行政区划代码</a></p>
 

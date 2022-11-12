@@ -54,14 +54,14 @@
 
   
   <p>看到<a href="http://www.newsmth.net/bbscon.php?bid=284&amp;id=109693">javaboy在python版的发言</a> 然后发现<a href="http://rosettacode.org/wiki/N-queens_problem#Python">Raymond Hettinger的解</a></p>
-<pre><code>from itertools import permutations
+<pre><code>  from itertools import permutations
 
-n = 8 # number of bitches
-cols = range(n)
-for vec in permutations(cols):
-    if n == len(set(vec[i]+i for i in cols)) \
-         == len(set(vec[i]-i for i in cols)):
-        print ("\n".join('.' * i + 'Q' + '.' * (n-i-1) for i in vec) + "\n===\n")
+  n = 8 # number of bitches
+  cols = range(n)
+  for vec in permutations(cols):
+      if n == len(set(vec[i]+i for i in cols)) \
+           == len(set(vec[i]-i for i in cols)):
+          print ("\n".join('.' * i + 'Q' + '.' * (n-i-1) for i in vec) + "\n===\n")
 </code></pre>
 
 </article>

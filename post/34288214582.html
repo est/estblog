@@ -56,14 +56,14 @@
   <p>Running bottlepy with default server (<code>wsgiref.simple_server</code>) is always dog slow for me, after some digging I found that the fucking server is trying to resolve the IP address of 10.x.x.x, both the server and client, into hostnames so the fucking logger can 'properly' display them. FUCK THIS BULLSHIT.</p>
 <p>Find <code>BaseHTTPServer.py</code></p>
 <p>Go to line 478;</p>
-<pre><code>def address_string(self):
-    return self.client_address[0]
+<pre><code>  def address_string(self):
+      return self.client_address[0]
 </code></pre>
 <p>It works best if you have virtualenv set you can just modify a copy in the <code>lib</code> only for development use.</p>
 <p>Fuck who ever wrote BaseHTTPRequestHandler.address_string() FUCK YOU ASSHOLE. Who ever thought reverse DNS lookup is acceptable is pure piece of shit. It only spams your log with fake &amp; gay spammer domains.</p>
 <p>Bottle.py is great Web framework, it supports <a href="http://bottlepy.org/docs/stable/async.html">Async WSGI</a> calls, which Flask <a href="http://flask.pocoo.org/docs/design/">can not do</a>. . It works even without using <code>gevent</code> as server. I am thinking of adding some sessions support to it. db backend maybe?</p>
 <p>Update: for python 2.6, just write this line for monkey patch before bottle.run() or wsgiref.simple_server </p>
-<pre><code>__import__('BaseHTTPServer').BaseHTTPRequestHandler.address_string = lambda x:x.client_address[0]
+<pre><code>  __import__('BaseHTTPServer').BaseHTTPRequestHandler.address_string = lambda x:x.client_address[0]
 </code></pre>
 
 </article>

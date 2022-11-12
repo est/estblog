@@ -57,43 +57,43 @@
             </a>
             <p class="card-text"><p>以前发过一个<a href="http://initiative.yo2.cn/archives/635924">良民证算法</a></p>
 <p>现在发现了一个碉堡的新办法：</p>
-<pre><code>get_id = lambda s: s + '1X864209753'[int(s, 13) % 11]
+<pre><code>  get_id = lambda s: s + '1X864209753'[int(s, 13) % 11]
 </code></pre>
 <p>来自newsmth的python版：</p>
-<pre><code>发信人: Andor (珍惜), 信区: Python
-标  题: Re: Python的良民证算法，有没有更简单的写法？
-发信站: 水木社区 (Fri Sep 14 15:13:05 2012), 站内
+<pre><code>  发信人: Andor (珍惜), 信区: Python
+  标  题: Re: Python的良民证算法，有没有更简单的写法？
+  发信站: 水木社区 (Fri Sep 14 15:13:05 2012), 站内
 
-get_id = lambda s: s + '1X864209753'[int(s, 13) % 11]
-【 在 zxn0 (est) 的大作中提到: 】
-: &gt;&gt;&gt; get_id = lambda s: s+'10X98765432'[reduce(int.__add__, map(lambda 
-: a,b:int(a)*(ord(b)-64), s[0:17], 'GIJEHDBAFCGIJEHDB' )) % 11]
-: &gt;&gt;&gt; get_id('34052419800101001')
-: '34052419800101001X'
-: 大家看哪里还能精简字符不？
-
-
+  get_id = lambda s: s + '1X864209753'[int(s, 13) % 11]
+  【 在 zxn0 (est) 的大作中提到: 】
+  : &gt;&gt;&gt; get_id = lambda s: s+'10X98765432'[reduce(int.__add__, map(lambda 
+  : a,b:int(a)*(ord(b)-64), s[0:17], 'GIJEHDBAFCGIJEHDB' )) % 11]
+  : &gt;&gt;&gt; get_id('34052419800101001')
+  : '34052419800101001X'
+  : 大家看哪里还能精简字符不？
 
 
-发信人: Fermat (Fermat), 信区: Python
-标  题: Re: Python的良民证算法，有没有更简单的写法？
-发信站: 水木社区 (Mon Sep 17 01:41:42 2012), 站内
-
-既然 int(s, 13) 这么漂亮的都出来了，又何必把那么好记的 "10X98765432" 弄成一个 magic number 呢
-
-get_id = lambda s: s + '10X98765432'[(int(s, 13)*13) % 11]
-
-或者在有32位整数限制的地方使用类似的
-get_id = lambda s: s + '10X98765432'[((int(s, 13)%11)*13)%11]
 
 
-对于有算法洁癖的，下面的可能会好些
+  发信人: Fermat (Fermat), 信区: Python
+  标  题: Re: Python的良民证算法，有没有更简单的写法？
+  发信站: 水木社区 (Mon Sep 17 01:41:42 2012), 站内
 
-from itertools import chain
-get_id = lambda s: s + '10X98765432'[reduce(lambda acc, x:
-    (acc*13 + int(x)) % 11, chain(s, "0"), 0)]
+  既然 int(s, 13) 这么漂亮的都出来了，又何必把那么好记的 "10X98765432" 弄成一个 magic number 呢
 
-因为可以把输入字符串当成个无限流，且程序只占用少量固定的空间，也不需要语言对很大的整型有支持。虽然对这个程序没啥意义。
+  get_id = lambda s: s + '10X98765432'[(int(s, 13)*13) % 11]
+
+  或者在有32位整数限制的地方使用类似的
+  get_id = lambda s: s + '10X98765432'[((int(s, 13)%11)*13)%11]
+
+
+  对于有算法洁癖的，下面的可能会好些
+
+  from itertools import chain
+  get_id = lambda s: s + '10X98765432'[reduce(lambda acc, x:
+      (acc*13 + int(x)) % 11, chain(s, "0"), 0)]
+
+  因为可以把输入字符串当成个无限流，且程序只占用少量固定的空间，也不需要语言对很大的整型有支持。虽然对这个程序没啥意义。
 </code></pre>
 <p>关于良民证，python普通版描述在<a href="http://www.keakon.net/2009/03/07/%E7%94%A8Python%E8%AE%A1%E7%AE%97%E8%BA%AB%E4%BB%BD%E8%AF%81%E6%A0%A1%E9%AA%8C%E7%A0%81">这里</a>，前六位的来自官方 <a href="http://www.stats.gov.cn/tjbz/index.htm">县及县以上行政区划代码</a></p></p>
             <div class="card-subtext muted-text">
@@ -153,52 +153,52 @@ Indium, Silver, Rhenium, Palladium, Osmium, Iridium, Ruthenium, Gold, Platinum, 
               <h2 class="card-title">CBSi's bitch</h2>
             </a>
             <p class="card-text"><p>统计了一下属于<a href="http://www.cnet.com.cn/">CBS Interactive</a>旗下的网站</p>
-<pre><code>bnet.com.cn           BNET 商业英才网
-cnetnews.com.cn       CNET 科技资讯网
-cheshi.com            网上车市
-ea3w.com              万维家电网
-fengniao.com          蜂鸟网
-gocar.cn              购车网
-zwbang.com            小学生作文
-haibao.cn             海报时尚网
-kdslife.com           KDS 宽带山
-kimiss.com            闺蜜网
-onlylady.com          OnlyLady 女人志
-pchome.net            电脑之家
-xcar.com.cn           爱卡汽车
-xiyuit.com            西域 IT 网
-meigong5.com          网站美工
-zol.com.cn            中关村在线
-3qit.com              三秦 IT 网
-55bbs.com             我爱购物网
-cbscares.com          CBS Cares
-cbsfilms.com          CBS Films
-cbs.com               CBS.com
-cbsnews.com           CBSNews.com 
-cbssports.com         CBSSports.com 
-chow.com              CHOW
-cnet.com              CNET
-cbscollegesports.com  CBS College Sports
-cwtv.com              The CW
-ecomediacbs.com       EcoMedia
-gamespot.com          GameSpot
-help.com              Help.com
-last.fm               Last.fm
-maxpreps.com          MaxPreps
-metacritic.com        Metacritic
-moneywatch.com        MoneyWatch
-mysimon.com           mySimon
-radio.com             Radio.com
-search.com            Search.com 
-shopper.com           Shopper.com
-sho.com               Showtime
-simonandschuster.com  Simon &amp;amp; Schuster
-smartplanet.com       SmartPlanet
-techrepublic.com      TechRepublic
-theinsider.com        The Insider
-tv.com                TV.com
-urbanbaby.com         UrbanBaby
-zdnet.com             ZDNet
+<pre><code>  bnet.com.cn           BNET 商业英才网
+  cnetnews.com.cn       CNET 科技资讯网
+  cheshi.com            网上车市
+  ea3w.com              万维家电网
+  fengniao.com          蜂鸟网
+  gocar.cn              购车网
+  zwbang.com            小学生作文
+  haibao.cn             海报时尚网
+  kdslife.com           KDS 宽带山
+  kimiss.com            闺蜜网
+  onlylady.com          OnlyLady 女人志
+  pchome.net            电脑之家
+  xcar.com.cn           爱卡汽车
+  xiyuit.com            西域 IT 网
+  meigong5.com          网站美工
+  zol.com.cn            中关村在线
+  3qit.com              三秦 IT 网
+  55bbs.com             我爱购物网
+  cbscares.com          CBS Cares
+  cbsfilms.com          CBS Films
+  cbs.com               CBS.com
+  cbsnews.com           CBSNews.com 
+  cbssports.com         CBSSports.com 
+  chow.com              CHOW
+  cnet.com              CNET
+  cbscollegesports.com  CBS College Sports
+  cwtv.com              The CW
+  ecomediacbs.com       EcoMedia
+  gamespot.com          GameSpot
+  help.com              Help.com
+  last.fm               Last.fm
+  maxpreps.com          MaxPreps
+  metacritic.com        Metacritic
+  moneywatch.com        MoneyWatch
+  mysimon.com           mySimon
+  radio.com             Radio.com
+  search.com            Search.com 
+  shopper.com           Shopper.com
+  sho.com               Showtime
+  simonandschuster.com  Simon &amp;amp; Schuster
+  smartplanet.com       SmartPlanet
+  techrepublic.com      TechRepublic
+  theinsider.com        The Insider
+  tv.com                TV.com
+  urbanbaby.com         UrbanBaby
+  zdnet.com             ZDNet
 </code></pre>
 <p>比较关注的有kds, zol, xcar, fengniao, last.fm, TechRepublic</p>
 <p>然后solidot.org又属于ZDNet。</p>
@@ -380,13 +380,13 @@ zdnet.com             ZDNet
               <h2 class="card-title">POTUS竞选者的捐款贡献来源top 5</h2>
             </a>
             <p class="card-text"><p>Barack Obama  </p>
-<p>University of California      $491,868<br />
+<p>University of California    $491,868<br />
 Microsoft Corp  $443,748<br />
 Google Inc  $357,382 <br />
-DLA Piper   $331,715<br />
+DLA Piper $331,715<br />
 Harvard University  $317,516  </p>
 <p>Mitt Romney <br />
-Goldman Sachs   $676,080<br />
+Goldman Sachs $676,080<br />
 JPMorgan Chase &amp; Co $520,299<br />
 Morgan Stanley  $513,647<br />
 Bank of America $510,728<br />
@@ -429,17 +429,17 @@ Microsoft Corp  $30,259  </p>
               <h2 class="card-title">斐波那契数列求和</h2>
             </a>
             <p class="card-text"><p>今天<a href="http://www.reddit.com/r/math/comments/oiv7s/cool_fraction/c3hp6vb?context=3">学习到</a>了一个碉堡的斐波那契求和函数：</p>
-<pre><code>1
- 2
-  3
-   5
-    8
-    13
-     21
-      34
-       55
-        89...
-1235955...
+<pre><code>  1
+   2
+    3
+     5
+      8
+      13
+       21
+        34
+         55
+          89...
+  1235955...
 </code></pre>
 <p>1/89 == 0.011235955056179775</p>
 <p><a href="http://en.wikipedia.org/wiki/Generating_function">母函数</a> 这种技巧都忘记好久啦。。</p>
@@ -914,51 +914,51 @@ As a social contract this really makes sense. The problem is that a lot of the p
 <p>&gt; The rest of this article describes the specifics of creating a JWT, signing the JWT, forming the access token request, and handling the response. Libraries should abstract these specifics from your application. Again, developers are strongly encouraged to attempt to use an existing library <strong>rather than building your own</strong> support for server-to-server interactions.</p>
 <p>所以我就直接去逆向他们的<a href="http://code.google.com/p/google-api-python-client/source/browse/samples/service_account/tasks.py">Tasks API with a Service account</a> sample</p>
 <p>安装了一大票依赖，痛苦编译好pyopenssl之后，直接运行，出错：</p>
-<pre><code>oauth2client.client.AccessTokenRefreshError: invalid_grant
+<pre><code>  oauth2client.client.AccessTokenRefreshError: invalid_grant
 </code></pre>
 <p>加个Fiddler代理调试：</p>
-<pre><code>http = httplib2.Http(
-  proxy_info=httplib2.ProxyInfo(
-    httplib2.socks.PROXY_TYPE_HTTP, 
-    proxy_host='10.0.18.2', 
-    proxy_port=8888
-), ca_certs='FiddlerRoot.cer')
+<pre><code>  http = httplib2.Http(
+    proxy_info=httplib2.ProxyInfo(
+      httplib2.socks.PROXY_TYPE_HTTP, 
+      proxy_host='10.0.18.2', 
+      proxy_port=8888
+  ), ca_certs='FiddlerRoot.cer')
 </code></pre>
 <p>发现https不支持。于是</p>
-<pre><code>httplib2.debuglevel = 4
+<pre><code>  httplib2.debuglevel = 4
 </code></pre>
 <p>终于看到一坨东西了。</p>
 <p>对比上面那个 OAuth 2文档，可以轻松写出OAuth 2.0获得access_token的代码：</p>
 <p>需要用到API用户email，p12密钥两个东西，可以从Google API Console里获得。</p>
-<pre><code>import base64
+<pre><code>  import base64
 
-b64 = lambda x:base64.urlsafe_b64encode(x).rstrip('=')
+  b64 = lambda x:base64.urlsafe_b64encode(x).rstrip('=')
 
-header = '{"alg":"RS256","typ":"JWT"}'
-ts_now = int(time.time())
+  header = '{"alg":"RS256","typ":"JWT"}'
+  ts_now = int(time.time())
 
-claim_set = {
-    "iss": email,
-    "scope": ' '.join(scope),
-    "aud": "https://accounts.google.com/o/oauth2/token",
-    "exp": ts_now+3600,
-    "iat": ts_now,
-}
+  claim_set = {
+      "iss": email,
+      "scope": ' '.join(scope),
+      "aud": "https://accounts.google.com/o/oauth2/token",
+      "exp": ts_now+3600,
+      "iat": ts_now,
+  }
 
-jwt = '%s.%s' % (url_b64(header), url_b64(json.dumps(claim_set)))
-# convert pkcs12 to private key
-p = Popen('openssl pkcs12 -in key.p12 -nocerts -passin stdin -nodes -out key.pem', shell=True, stdin=PIPE, stdout=PIPE)
-p.stdin.write('notasecret') # Google's key default password
-p.stdin.close()
-p.wait()
-# RSA sign with sha256 using private key
-p = Popen('openssl dgst -sha256 -sign 'key.pem' -keyform PEM', shell=True, stdin=PIPE, stdout=PIPE)
-p.stdin.write(jwt)
-p.stdin.close()
-sig = p.stdout.read()
-p.wait()
+  jwt = '%s.%s' % (url_b64(header), url_b64(json.dumps(claim_set)))
+  # convert pkcs12 to private key
+  p = Popen('openssl pkcs12 -in key.p12 -nocerts -passin stdin -nodes -out key.pem', shell=True, stdin=PIPE, stdout=PIPE)
+  p.stdin.write('notasecret') # Google's key default password
+  p.stdin.close()
+  p.wait()
+  # RSA sign with sha256 using private key
+  p = Popen('openssl dgst -sha256 -sign 'key.pem' -keyform PEM', shell=True, stdin=PIPE, stdout=PIPE)
+  p.stdin.write(jwt)
+  p.stdin.close()
+  sig = p.stdout.read()
+  p.wait()
 
-print '%s.%s' % (jwt, url_b64(sig))
+  print '%s.%s' % (jwt, url_b64(sig))
 </code></pre>
 <p>有了access_token之后，获取spreadsheet数据就很简单了，我也拿<a href="https://developers.google.com/gdata/samples/spreadsheet_sample">sample里</a>的spreadsheet作为例子：</p>
 <p>https://spreadsheets.google.com/feeds/list/o13394135408524254648.240766968415752635/od6/public/values?alt=json&amp;access_token=1/XXXXX</p>
@@ -1056,13 +1056,13 @@ print '%s.%s' % (jwt, url_b64(sig))
               <h2 class="card-title">如何让python强制认为2+2==5</h2>
             </a>
             <p class="card-text"><p>让你丫的2+2不等于5！！！！</p>
-<pre><code>import sys
-import ctypes
-pyint_p = ctypes.POINTER(ctypes.c_byte*sys.getsizeof(5))
-five = ctypes.cast(id(5), pyint_p)
-print(2 + 2 == 5) # False
-five.contents[five.contents[:].index(5)] = 4
-print(2 + 2 == 5) # True (must be sufficiently large values of 2 there...)
+<pre><code>  import sys
+  import ctypes
+  pyint_p = ctypes.POINTER(ctypes.c_byte*sys.getsizeof(5))
+  five = ctypes.cast(id(5), pyint_p)
+  print(2 + 2 == 5) # False
+  five.contents[five.contents[:].index(5)] = 4
+  print(2 + 2 == 5) # True (must be sufficiently large values of 2 there...)
 </code></pre>
 <p><a href="http://news.ycombinator.com/item?id=4197576">via</a></p></p>
             <div class="card-subtext muted-text">
@@ -1108,7 +1108,7 @@ We are group of Chinese students study media in the UK,we love pandas and our ho
             <a href="/post/26389787349"  rel="bookmark" >
               <h2 class="card-title">360buy满意度评价自动填充脚本</h2>
             </a>
-            <p class="card-text"><pre><code>['radio_option6393', 'radio_option6398', 'radio_option6403', 'radio_option6408', 'radio_option6413', 'radio_option6418', 'radio_option6423', 'radio_option6428', 'radio_option6433'].map(function(s){document.getElementById(s).checked='checked'});document.getElementById('radioq10').textContent='ok';form1.submit()
+            <p class="card-text"><pre><code>  ['radio_option6393', 'radio_option6398', 'radio_option6403', 'radio_option6408', 'radio_option6413', 'radio_option6418', 'radio_option6423', 'radio_option6428', 'radio_option6433'].map(function(s){document.getElementById(s).checked='checked'});document.getElementById('radioq10').textContent='ok';form1.submit()
 </code></pre>
 <p>因为鼠标点击那个页面太蛋痛了。</p>
 <p>评价大于100元的订单可以获得2个积分，蚊子肉也是肉，所以还是坚决要。</p>
@@ -1136,15 +1136,23 @@ We are group of Chinese students study media in the UK,we love pandas and our ho
 <p>@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   </p>
 <p>Samsung, LG's key display technologies leaked by Israeli firm  <br />
 SEOUL, June 27 (Yonhap) -- Key technologies to manufacture advanced flat-panel displays at Samsung Mobile Display and LG Display have been leaked by an local unit of an Israeli company, local prosecutors said Wednesday, raising concerns the leakage could pose a major threat to the national interest.   </p>
-<p>The Seoul Central District Prosecutors' Office indicted under physical detention three employees at the local unit of an Israeli inspection equipment supplier, including a 36-year-old man surnamed Kim, on charges of leaking key local technologies used to produce active-matrix organic light-emitting diode (AMOLED) displays and white organic light-emitting diode (White OLED) displays.   </p>
-<p>They also indicted without physical detention three other employees and the local unit, the prosecutors said, without identifying the Israeli firm.   </p>
-<p>According to the prosecution, the indicted employees photographed circuit diagrams of yet-to-be-released 55-inch AMOLED television panels when they were let into Samsung and LG's manufacturing factories to check defects of inspection equipment from November of last year to January of this year.   </p>
-<p>They stored the images on portable memory cards and slipped them into their shoes, belts and wallets to avoid suspicion, prosecutors said.  <br />
-AMOLED displays have a faster response time then their passive-matrix OLED counterparts and are more power-efficient, and the advantages make them well suited for growingly popular portable electronics devices. Samsung and LG are by far the leading makers of AMOLED displays, for which the global market is estimated to be worth 90 trillion won (US$77.8 billion). South Korea rigorously prohibits leakage of the technologies as it tags them as the nation's core industrially strategic tech.   </p>
-<p>Prosecutors said the stolen information was likely relayed to the Israeli headquarters and Chinese and Taiwanese display-making rivals, including the biggest Chinese panel manufacturer BOE.   </p>
-<p>"It is very likely that the stolen technologies have been given by the Israeli firm to foreign rivals," a prosecution official said. "This may expectedly deal a massive economic blow to the entire nation and can cause a sea change in the landscape of the global display market."   </p>
-<p>According to industry watchers, Samsung spent nearly 1.4 trillion won in developing its AMOLED technologies with LG funneling nearly 1.3 trillion won into its research and development.   </p>
-<p>Prosecutors pledged to launch a probe into the Israeli headquarters to prevent further tech leakages.   </p>
+<pre><code> The Seoul Central District Prosecutors' Office indicted under physical detention three employees at the local unit of an Israeli inspection equipment supplier, including a 36-year-old man surnamed Kim, on charges of leaking key local technologies used to produce active-matrix organic light-emitting diode (AMOLED) displays and white organic light-emitting diode (White OLED) displays.
+
+ They also indicted without physical detention three other employees and the local unit, the prosecutors said, without identifying the Israeli firm.
+
+ According to the prosecution, the indicted employees photographed circuit diagrams of yet-to-be-released 55-inch AMOLED television panels when they were let into Samsung and LG's manufacturing factories to check defects of inspection equipment from November of last year to January of this year.
+
+ They stored the images on portable memory cards and slipped them into their shoes, belts and wallets to avoid suspicion, prosecutors said.
+</code></pre>
+<p>AMOLED displays have a faster response time then their passive-matrix OLED counterparts and are more power-efficient, and the advantages make them well suited for growingly popular portable electronics devices. Samsung and LG are by far the leading makers of AMOLED displays, for which the global market is estimated to be worth 90 trillion won (US$77.8 billion). South Korea rigorously prohibits leakage of the technologies as it tags them as the nation's core industrially strategic tech.   </p>
+<pre><code> Prosecutors said the stolen information was likely relayed to the Israeli headquarters and Chinese and Taiwanese display-making rivals, including the biggest Chinese panel manufacturer BOE.
+
+ "It is very likely that the stolen technologies have been given by the Israeli firm to foreign rivals," a prosecution official said. "This may expectedly deal a massive economic blow to the entire nation and can cause a sea change in the landscape of the global display market."
+
+ According to industry watchers, Samsung spent nearly 1.4 trillion won in developing its AMOLED technologies with LG funneling nearly 1.3 trillion won into its research and development.
+
+ Prosecutors pledged to launch a probe into the Israeli headquarters to prevent further tech leakages.
+</code></pre>
 <p>btw另外一个<a href="http://tech.163.com/digi/12/0523/22/827NJ125001618VK.html">新闻</a>   </p>
 <blockquote>
 <p>另外，京东方也将于今年9月份或者10月份，推出中国首款自主研发的46英寸OLED面板，宣布中国自己也拥有生产大尺寸OLED面板的技术。   </p>
@@ -1323,30 +1331,30 @@ AMOLED displays have a faster response time then their passive-matrix OLED count
             </a>
             <p class="card-text"><p><img alt="" src="/images/tumblr/24174090565_0.jpg" /></p>
 <p><img alt="" src="/images/tumblr/24174090565_1.jpg" /></p>
-<pre><code>SELECT DISTINCT v.fname, v.lname, i.year, i.location, i.report_file
-FROM   Incident AS i
-       LEFT JOIN V(ictim?)...  -- presumably v.incident_id = i.id
-       LEFT JOIN Keyword AS k ON k.incident_id = i.id
-WHERE  i.year BETWEEN 1947 AND 1966
-AND    i.type = 'HOMICIDE'
-AND    v.sex = 'F'
-AND    i.status = 'UNSOLVED'
-AND    ...
-       OR v.fname IN ('Mari', 'Magda')
-       OR SUBSTR ...
-AND    (k.keyword IN ('rape', 'decapitation', 'dismemberment', 'fire', 'altar', 'priest', 'prostitute')
-       ...
-       AND SUBSTR(v.fname, 1, 1) = 'R' AND SUBSTR(v.lname, 1, 1) = 'L');
+<pre><code>  SELECT DISTINCT v.fname, v.lname, i.year, i.location, i.report_file
+  FROM   Incident AS i
+         LEFT JOIN V(ictim?)...  -- presumably v.incident_id = i.id
+         LEFT JOIN Keyword AS k ON k.incident_id = i.id
+  WHERE  i.year BETWEEN 1947 AND 1966
+  AND    i.type = 'HOMICIDE'
+  AND    v.sex = 'F'
+  AND    i.status = 'UNSOLVED'
+  AND    ...
+         OR v.fname IN ('Mari', 'Magda')
+         OR SUBSTR ...
+  AND    (k.keyword IN ('rape', 'decapitation', 'dismemberment', 'fire', 'altar', 'priest', 'prostitute')
+         ...
+         AND SUBSTR(v.fname, 1, 1) = 'R' AND SUBSTR(v.lname, 1, 1) = 'L');
 
-+--------+---------+------+-----------+----------------------------------+
-| fname  | lname   | year | location  | report_file                      |
-+--------+---------+------+-----------+----------------------------------+
-| Anna   | Wedin   | 1956 | Mark      | FULL POLICE REPORT NOT DIGITIZED |
-| Linda  | Janson  | 1955 | Mariestad | FULL POLICE REPORT NOT DIGITIZED |
-| Simone | Grau    | 1958 | Goteborg  | FULL POLICE REPORT NOT DIGITIZED |
-| Lea    | Persson | 1962 | Uddevalla | FULL POLICE REPORT NOT DIGITIZED |
-| Kajsa  | Severin | 1962 | Dals-Ed   | FULL POLICE REPORT NOT DIGITIZED |
-+--------+---------+------+-----------+----------------------------------+
+  +--------+---------+------+-----------+----------------------------------+
+  | fname  | lname   | year | location  | report_file                      |
+  +--------+---------+------+-----------+----------------------------------+
+  | Anna   | Wedin   | 1956 | Mark      | FULL POLICE REPORT NOT DIGITIZED |
+  | Linda  | Janson  | 1955 | Mariestad | FULL POLICE REPORT NOT DIGITIZED |
+  | Simone | Grau    | 1958 | Goteborg  | FULL POLICE REPORT NOT DIGITIZED |
+  | Lea    | Persson | 1962 | Uddevalla | FULL POLICE REPORT NOT DIGITIZED |
+  | Kajsa  | Severin | 1962 | Dals-Ed   | FULL POLICE REPORT NOT DIGITIZED |
+  +--------+---------+------+-----------+----------------------------------+
 </code></pre>
 <p>发这个贴的目的是测试一下markdown的code formatting哈哈。</p>
 <p><a href="http://news.ycombinator.com/item?id=4047807">via</a></p></p>

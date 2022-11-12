@@ -54,23 +54,23 @@
 
   
   <p>To install</p>
-<pre><code>$ pip install zfec
+<pre><code>  $ pip install zfec
 </code></pre>
 <p>Suppose I have two blocks of data and want a third block as redundancy</p>
-<pre><code>&gt;&gt;&gt; zfec.Encoder(2, 3).encode(['ab', 'cd'])
-['ab', 'cd', 'en']
-&gt;&gt;&gt; zfec.Decoder(2, 3).decode(['ab', 'cd', ], [0, 1])
-['ab', 'cd']
-# somehow lost the second block, use the third block the recover
-&gt;&gt;&gt; zfec.Decoder(2, 3).decode(['ab', 'en', ], [0, 2])
-['ab', 'cd']
+<pre><code>  &gt;&gt;&gt; zfec.Encoder(2, 3).encode(['ab', 'cd'])
+  ['ab', 'cd', 'en']
+  &gt;&gt;&gt; zfec.Decoder(2, 3).decode(['ab', 'cd', ], [0, 1])
+  ['ab', 'cd']
+  # somehow lost the second block, use the third block the recover
+  &gt;&gt;&gt; zfec.Decoder(2, 3).decode(['ab', 'en', ], [0, 2])
+  ['ab', 'cd']
 </code></pre>
 <p>In the above example, k=2 and m=3</p>
 <p>ref: https://pypi.python.org/pypi/zfec</p>
 <p>btw <a href="http://en.wikipedia.org/wiki/Secret_sharing#Trivial_secret_sharing">Trivial secret sharing</a></p>
-<pre><code>secret = 123
-a, b, c = [int((random.random() * 256)) for x in range(3)]
-d = map(xor, [secret, a, b, c])
+<pre><code>  secret = 123
+  a, b, c = [int((random.random() * 256)) for x in range(3)]
+  d = map(xor, [secret, a, b, c])
 </code></pre>
 <p>so 4 players has each a share of secret. </p>
 <p>This is kinda lame... Shamir's scheme is much better</p>

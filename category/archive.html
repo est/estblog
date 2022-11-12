@@ -110,14 +110,14 @@
             </a>
             <p class="card-text"><p>本来是PC，连接千兆以太网上网，vmware装了个Linux，本来好好的，后来加了个usb无线网卡当软AP用，让其他设备通过wifi共享上网， 就老出现网络时断时续，甚至完全掉线。</p>
 <p>比如ping baidu.com就会出现</p>
-<pre><code>From 220.181.57.217: icmp_seq=5 Redirect Network(New nexthop: 220.181.57.217)
-64 bytes from 220.181.57.217: icmp_seq=5 ttl=53 time=69.6 ms
-From 220.181.57.217: icmp_seq=6 Redirect Network(New nexthop: 220.181.57.217)
-64 bytes from 220.181.57.217: icmp_seq=6 ttl=53 time=70.6 ms
-From 220.181.57.217: icmp_seq=7 Redirect Network(New nexthop: 220.181.57.217)
-64 bytes from 220.181.57.217: icmp_seq=7 ttl=53 time=55.4 ms
-From 220.181.57.217: icmp_seq=8 Redirect Network(New nexthop: 220.181.57.217)
-64 bytes from 220.181.57.217: icmp_seq=8 ttl=53 time=59.7 ms
+<pre><code>  From 220.181.57.217: icmp_seq=5 Redirect Network(New nexthop: 220.181.57.217)
+  64 bytes from 220.181.57.217: icmp_seq=5 ttl=53 time=69.6 ms
+  From 220.181.57.217: icmp_seq=6 Redirect Network(New nexthop: 220.181.57.217)
+  64 bytes from 220.181.57.217: icmp_seq=6 ttl=53 time=70.6 ms
+  From 220.181.57.217: icmp_seq=7 Redirect Network(New nexthop: 220.181.57.217)
+  64 bytes from 220.181.57.217: icmp_seq=7 ttl=53 time=55.4 ms
+  From 220.181.57.217: icmp_seq=8 Redirect Network(New nexthop: 220.181.57.217)
+  64 bytes from 220.181.57.217: icmp_seq=8 ttl=53 time=59.7 ms
 </code></pre>
 <p>一开始以为是路由问题，route表看了半天，后来发现windows下 无线网络 - 属性 此连接使用以下项目 里 去掉 vmware bridge protocol就好了。保留本地网络的不变。</p>
 <p>买的设备是 Realtek RTL8192CU 的芯片，用官方驱动会出现 netsh wlan start hostednetwork 失败。用 netsh wlan show drivers 发现 支持的承载网络：否。</p>
@@ -216,11 +216,11 @@ From 220.181.57.217: icmp_seq=8 Redirect Network(New nexthop: 220.181.57.217)
               <h2 class="card-title">现有git项目同步到一个新svn</h2>
             </a>
             <p class="card-text"><p>不要问我为什么这么脑残，反正这个世界就这样。自己好好的用git管理的项目，项目组又用的是svn，把git同步更新到svn，看git-scm的教程也他妈扯蛋，所以东拼西凑撸了个方法：</p>
-<pre><code>svn mkdir svn://DEST/repo/projectname/{trunk,branches,tags}
-git svn init svn://DEST/repo/projectname/{trunk,branches,tags}
-git svn fetch --username blah
-git rebase --onto remotes/git-svn --root master
-git svn dcommit
+<pre><code>  svn mkdir svn://DEST/repo/projectname/{trunk,branches,tags}
+  git svn init svn://DEST/repo/projectname/{trunk,branches,tags}
+  git svn fetch --username blah
+  git rebase --onto remotes/git-svn --root master
+  git svn dcommit
 </code></pre>
 <p>搞定。</p>
 <p>btw 提交日期全部被fuck。。。</p></p>
@@ -548,13 +548,13 @@ if后面两个语句如果不用大括号括起来，就是不一起运行。 <b
               <h2 class="card-title">Haskell, Ruby, Python, Nodejs如何把一个句子的词语倒序</h2>
             </a>
             <p class="card-text"><p>Haskell:   </p>
-<pre><code>unwords . reverse . words $ sentence
+<pre><code>  unwords . reverse . words $ sentence
 </code></pre>
 <p>Ruby:   </p>
-<pre><code>sentence.split.reverse.join ' '
+<pre><code>  sentence.split.reverse.join ' '
 </code></pre>
 <p>Python:   </p>
-<pre><code>" ".join(reversed(sentence.split()))
+<pre><code>  " ".join(reversed(sentence.split()))
 </code></pre>
 <p>Node.js:    </p>
 <pre><code>var EventEmitter = require('events').EventEmitter;
@@ -608,7 +608,7 @@ emitter.emit('got sentence', 'hello world');
               <h2 class="card-title">X是一坨翔的另一个证明：2句话木马</h2>
             </a>
             <p class="card-text"><p>$ xinput list</p>
-<p>找到类似 AT Translated Set 2 keyboard               id=7    [slave  keyboard (3)] 这个关键的 id=7</p>
+<p>找到类似 AT Translated Set 2 keyboard             id=7  [slave  keyboard (3)] 这个关键的 id=7</p>
 <p>$ xinput test 7</p>
 <p>好了。所有键盘动作记录下来了。</p>
 <p><a href="https://news.ycombinator.com/item?id=7607082">via</a></p></p>
@@ -666,7 +666,7 @@ emitter.emit('got sentence', 'hello world');
 摄像头： 无摄像头<br />
 FM：不支持   蓝牙：不支持<br />
 耳机接口：不支持<br />
-WAPI/WIFI：802.11b/g/n       C+W统一认证功能: 不支持<br />
+WAPI/WIFI：802.11b/g/n   C+W统一认证功能: 不支持<br />
 USB： 2.0 Full Speed   JAVA: 不支持   GPS导航： 不支持<br />
 基本功能：USB即插即用，快速移动上网；PIN/PUK码管理；Wi-Fi AP<br />
 特色功能：免驱动快速上网；Wi-Fi AP<br />
@@ -705,14 +705,14 @@ USB： 2.0 Full Speed   JAVA: 不支持   GPS导航： 不支持<br />
               <h2 class="card-title">LBYL vs EAFP</h2>
             </a>
             <p class="card-text"><p>Look Before You Leap</p>
-<pre><code>if key in mapping:
-    return mapping[key]
+<pre><code>  if key in mapping:
+      return mapping[key]
 </code></pre>
 <p>Ask Forgiveness than Permission</p>
-<pre><code>try:
-    return mapping[key]
-catch KeyError:
-    pass
+<pre><code>  try:
+      return mapping[key]
+  catch KeyError:
+      pass
 </code></pre>
 <p><a href="http://www.reddit.com/r/Python/comments/209k8h/pep_463_exceptioncatching_expressions_has_been/">via</a></p></p>
             <div class="card-subtext muted-text">
@@ -770,35 +770,35 @@ catch KeyError:
 <p>老老王的PS，看了忍不住想笑</p>
 <p>http://www.wcxiaoshuo.com/wcxs-23716-10509604/</p>
 <p>PS：唉，乌克兰如今的“公共知识分子”政府，当真是卖萌无极限，逗逼指数爆表了。</p>
-<pre><code>首先是上次说过的Facebook脸书征兵，虽然绝大部分壮丁都表示不在家，但居然还是有一万多人应征报到，据说主要是大学生和失业青年，也就是前些日子在广场上COSPLAY《中世纪全面战争》的那一帮人——这倒是情有可原，但如果他们把跟俄军打仗看成了之前的广场群殴……估计肯定会死得很惨。
+<pre><code>  首先是上次说过的Facebook脸书征兵，虽然绝大部分壮丁都表示不在家，但居然还是有一万多人应征报到，据说主要是大学生和失业青年，也就是前些日子在广场上COSPLAY《中世纪全面战争》的那一帮人——这倒是情有可原，但如果他们把跟俄军打仗看成了之前的广场群殴……估计肯定会死得很惨。
 
-其次。乌克兰新政府在这短短的几天里，把一切匪夷所思的作死昏招都出了一遍，屁股明明坐在火山口上。依然不管不顾地反攻倒算：逼着“金雕”特种部队在广场当众下跪，给前些日子奉命镇压的暴徒们道歉，于是气得这支最精锐的部队拖着枪逃去投奔了俄军；大敌当前之际，宣布给内务部队和警察砍薪水，结果这些武装力量纷纷倒戈——普京宣称愿意给他们一份新工作；在一天里重新任命了十八个州长用于安置亲信，让那些被撸掉的地方官员怨念滔天，心生反意；取消俄语的官方地位。凡是有双重国籍的人一律判十年有期徒刑，于是东部俄语区的老百姓再不造反就要坐牢了……感觉很像陈胜吴广的大泽乡起义？
+  其次。乌克兰新政府在这短短的几天里，把一切匪夷所思的作死昏招都出了一遍，屁股明明坐在火山口上。依然不管不顾地反攻倒算：逼着“金雕”特种部队在广场当众下跪，给前些日子奉命镇压的暴徒们道歉，于是气得这支最精锐的部队拖着枪逃去投奔了俄军；大敌当前之际，宣布给内务部队和警察砍薪水，结果这些武装力量纷纷倒戈——普京宣称愿意给他们一份新工作；在一天里重新任命了十八个州长用于安置亲信，让那些被撸掉的地方官员怨念滔天，心生反意；取消俄语的官方地位。凡是有双重国籍的人一律判十年有期徒刑，于是东部俄语区的老百姓再不造反就要坐牢了……感觉很像陈胜吴广的大泽乡起义？
 
-更恐怖的是，乌克兰新政府还接受了国际货币基金组织的全部苛刻条件。“无奈”地贱价甩卖大批国有资产——逼反了军队逼警察，逼反了警察逼地方官，逼反了地方官再逼老百姓，逼反了老百姓再宣称“万般无奈。我要卖国”……当真是空前绝后的超一流作死能手啊！于是。乌克兰海军的前任司令刚接到任命，第二天就投降了俄国。下一任司令被俄军软禁在屋子里，据说上厕所都有亲俄武装人员盯着。
+  更恐怖的是，乌克兰新政府还接受了国际货币基金组织的全部苛刻条件。“无奈”地贱价甩卖大批国有资产——逼反了军队逼警察，逼反了警察逼地方官，逼反了地方官再逼老百姓，逼反了老百姓再宣称“万般无奈。我要卖国”……当真是空前绝后的超一流作死能手啊！于是。乌克兰海军的前任司令刚接到任命，第二天就投降了俄国。下一任司令被俄军软禁在屋子里，据说上厕所都有亲俄武装人员盯着。
 
-面对如此危局，乌克兰临时政府内务部长在Facebook（脸书）上严肃表示，为了遏制住大批警察叛逃的势头，他已经拿出了切实有效的对策——那就是抢先一步解雇90%不可靠的警察！只要提前把警察解雇开除，就不怕再有警察叛逃了……就像在网上提前把别人取消关注，就不怕人家把你拉进黑名单了！
+  面对如此危局，乌克兰临时政府内务部长在Facebook（脸书）上严肃表示，为了遏制住大批警察叛逃的势头，他已经拿出了切实有效的对策——那就是抢先一步解雇90%不可靠的警察！只要提前把警察解雇开除，就不怕再有警察叛逃了……就像在网上提前把别人取消关注，就不怕人家把你拉进黑名单了！
 
-看来这帮公知政客果然是“脸书治国”的精英。政府会议估计也是每人拿个平板电脑群聊吧！
+  看来这帮公知政客果然是“脸书治国”的精英。政府会议估计也是每人拿个平板电脑群聊吧！
 
-对此有一个观点是：上台的这帮人是买办，惯于挟洋自重。当然要歧视和鄙视本民族的武装力量了。
+  对此有一个观点是：上台的这帮人是买办，惯于挟洋自重。当然要歧视和鄙视本民族的武装力量了。
 
-乌克兰的新纳粹组织也是搞笑，前两天还在基辅叫嚣着要杀光阿拉伯人和犹太人，眼下也没有停止排犹行动和对“异教徒”的骚扰，同时却又转脸向车臣游击队求援，希望他们跟“一起为信仰和自由而战”——我不由得在脑海中想象出了这样一个画面：乌烟瘴气的基辅街头，某个正在被纳粹分子殴打和凌辱的黑长袍阿拉伯妇女，凄凄惨惨地抱住某个车臣游击队战士的腿，祈求他看在真主的份上救一把，然后被车臣游击队战士一脚踢开，“滚！我们现在正要为乌克兰的上帝而战！”……那样估计就是神作了！
+  乌克兰的新纳粹组织也是搞笑，前两天还在基辅叫嚣着要杀光阿拉伯人和犹太人，眼下也没有停止排犹行动和对“异教徒”的骚扰，同时却又转脸向车臣游击队求援，希望他们跟“一起为信仰和自由而战”——我不由得在脑海中想象出了这样一个画面：乌烟瘴气的基辅街头，某个正在被纳粹分子殴打和凌辱的黑长袍阿拉伯妇女，凄凄惨惨地抱住某个车臣游击队战士的腿，祈求他看在真主的份上救一把，然后被车臣游击队战士一脚踢开，“滚！我们现在正要为乌克兰的上帝而战！”……那样估计就是神作了！
 
-啧啧，如果我在小说里也这么写的话，估计马上就有读者气势汹汹地来大骂：这些反面角色难道个个都吃了脑残片吗？你的合理性到哪里去了？没想到现实世界发生的事，居然比我的荒诞小说还要更荒诞啊！
+  啧啧，如果我在小说里也这么写的话，估计马上就有读者气势汹汹地来大骂：这些反面角色难道个个都吃了脑残片吗？你的合理性到哪里去了？没想到现实世界发生的事，居然比我的荒诞小说还要更荒诞啊！
 
-嗯，看来以后写小说，还要把政治家角色塑造得更脑残一些才行。
+  嗯，看来以后写小说，还要把政治家角色塑造得更脑残一些才行。
 
-接下来，顿河沿岸的哥萨克团体宣布效忠莫斯科，各地哥萨克正在向克里米亚和哈尔科夫集结，组建志愿军，准备用祖传的恰西克弯刀好好教训一番利沃夫的那帮波兰庄稼汉……嗯，等到正宗波兰人再从华沙杀来，就又可以上演一出《火与剑》了。就是不波兰的鸟毛骑兵，如今还有没有剩下的？
+  接下来，顿河沿岸的哥萨克团体宣布效忠莫斯科，各地哥萨克正在向克里米亚和哈尔科夫集结，组建志愿军，准备用祖传的恰西克弯刀好好教训一番利沃夫的那帮波兰庄稼汉……嗯，等到正宗波兰人再从华沙杀来，就又可以上演一出《火与剑》了。就是不波兰的鸟毛骑兵，如今还有没有剩下的？
 
-最后，作为对俄军大举入境，抢占各处乌克兰军事基地的反击，基辅的逗逼政客们组织了一群疑似有精神分裂症的逗逼大兵，让他们扛着镰刀锤子的苏联红旗，唱着不知歌谣，不带任何武器，就企图从俄军手里把基地抢——具体战术是，这帮合唱团在基地门口很欢乐地拥挤成一堆，一边架起数码相机和平板电脑，一边咋咋呼呼地高喊你们正在被摄像！视频文件马上就会传到网络！美国在支持我们！”
+  最后，作为对俄军大举入境，抢占各处乌克兰军事基地的反击，基辅的逗逼政客们组织了一群疑似有精神分裂症的逗逼大兵，让他们扛着镰刀锤子的苏联红旗，唱着不知歌谣，不带任何武器，就企图从俄军手里把基地抢——具体战术是，这帮合唱团在基地门口很欢乐地拥挤成一堆，一边架起数码相机和平板电脑，一边咋咋呼呼地高喊你们正在被摄像！视频文件马上就会传到网络！美国在支持我们！”
 
-唉，一边扛着苏联的镰刀锤子旗，一边喊着“阿美利加赐予我力量”，心里想着：苏维埃联盟的红旗，美利坚合众国的苹果电脑，世界两极都在赐福给我们这一伙人，接下来肯定是神功护体，刀枪不入……丢人都没这么丢的啊！你们难道是把街头革命当成万能模式了吗？能不能稍微严肃点，你们这是在打仗呢！
+  唉，一边扛着苏联的镰刀锤子旗，一边喊着“阿美利加赐予我力量”，心里想着：苏维埃联盟的红旗，美利坚合众国的苹果电脑，世界两极都在赐福给我们这一伙人，接下来肯定是神功护体，刀枪不入……丢人都没这么丢的啊！你们难道是把街头革命当成万能模式了吗？能不能稍微严肃点，你们这是在打仗呢！
 
-——这一“特殊作战”的结果是，从基地里走出一群身穿平民服装、不带武器的壮汉，在门口站成一排，用凶悍的眼神往这些咋咋呼呼的逗逼们一瞪，诸多乌克兰逗逼大兵就立即屁滚尿流，狼狈逃窜了。
+  ——这一“特殊作战”的结果是，从基地里走出一群身穿平民服装、不带武器的壮汉，在门口站成一排，用凶悍的眼神往这些咋咋呼呼的逗逼们一瞪，诸多乌克兰逗逼大兵就立即屁滚尿流，狼狈逃窜了。
 
-——苏联和中国果然不愧是一辈子的良师益友，就连他死了之后，都不忘用各种千奇百怪的奇葩死法来教育中国：俄罗斯告诉了我们全国私有化和寡头横行之后的下场；白俄罗斯和哈萨克斯坦则展示了政治僵化，领导人终身掌权的后果；就连让那些公知、大V、嘴炮、自由斗士、业界良心、街头政治家上台执政之后，到底会有怎样乌烟瘴气的局面，乌克兰也捏着鼻子硬是尝试了一遍给中国人看……
+  ——苏联和中国果然不愧是一辈子的良师益友，就连他死了之后，都不忘用各种千奇百怪的奇葩死法来教育中国：俄罗斯告诉了我们全国私有化和寡头横行之后的下场；白俄罗斯和哈萨克斯坦则展示了政治僵化，领导人终身掌权的后果；就连让那些公知、大V、嘴炮、自由斗士、业界良心、街头政治家上台执政之后，到底会有怎样乌烟瘴气的局面，乌克兰也捏着鼻子硬是尝试了一遍给中国人看……
 
-的乌克兰有一部励志神作《钢铁是怎样炼成的》，现在似乎可以写一部《逗逼是怎样炼成的》。(未完待续……)
+  的乌克兰有一部励志神作《钢铁是怎样炼成的》，现在似乎可以写一部《逗逼是怎样炼成的》。(未完待续……)
 </code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2014-03-06T01:09:19+08:00">2014-03-06</time></p>
@@ -865,7 +865,7 @@ catch KeyError:
             <a href="/post/73498209959"  rel="bookmark" >
               <h2 class="card-title">Manually resolve any DNS A record</h2>
             </a>
-            <p class="card-text"><pre><code>printf "\0\1\1\0\0\1\0\0\0\0\0\0\6reddit\3com\0\0\1\0\1" |nc -vvuq1 8.8.8.8  53 |xxd
+            <p class="card-text"><pre><code>  printf "\0\1\1\0\0\1\0\0\0\0\0\0\6reddit\3com\0\0\1\0\1" |nc -vvuq1 8.8.8.8  53 |xxd
 </code></pre>
 <p>Explain:</p>
 <p>0x0001 means transaction ID. Invent one as you like  <br />
@@ -879,8 +879,8 @@ catch KeyError:
 0x0001 Record Type: A  <br />
 0x0001: Class: IN. Always this.    </p>
 <p>then ping the last four bytes</p>
-<pre><code>$ ping 0x60.0x11.0xb4.0x89
-PING 0x60.0x11.0xb4.0x89 (96.17.180.137) 56(84) bytes of data.
+<pre><code>  $ ping 0x60.0x11.0xb4.0x89
+  PING 0x60.0x11.0xb4.0x89 (96.17.180.137) 56(84) bytes of data.
 </code></pre>
 <p>Why DNS Resource Record Name is always C0 0C?</p>
 <p>It's compression.</p>
@@ -963,14 +963,14 @@ And when I see the hope draining from their face like it is from yours right now
               <h2 class="card-title">8皇后问题 - python解</h2>
             </a>
             <p class="card-text"><p>看到<a href="http://www.newsmth.net/bbscon.php?bid=284&amp;id=109693">javaboy在python版的发言</a> 然后发现<a href="http://rosettacode.org/wiki/N-queens_problem#Python">Raymond Hettinger的解</a></p>
-<pre><code>from itertools import permutations
+<pre><code>  from itertools import permutations
 
-n = 8 # number of bitches
-cols = range(n)
-for vec in permutations(cols):
-    if n == len(set(vec[i]+i for i in cols)) \
-         == len(set(vec[i]-i for i in cols)):
-        print ("\n".join('.' * i + 'Q' + '.' * (n-i-1) for i in vec) + "\n===\n")
+  n = 8 # number of bitches
+  cols = range(n)
+  for vec in permutations(cols):
+      if n == len(set(vec[i]+i for i in cols)) \
+           == len(set(vec[i]-i for i in cols)):
+          print ("\n".join('.' * i + 'Q' + '.' * (n-i-1) for i in vec) + "\n===\n")
 </code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2013-12-09T01:34:00+08:00">2013-12-09</time></p>
@@ -1108,19 +1108,19 @@ for vec in permutations(cols):
             </a>
             <p class="card-text"><p>好吧。还在力战渣windows。非管理员权限。<a href="http://code.google.com/p/go/downloads/list?q=OpSys-Windows+Type%3DArchive">下载zip包</a>解压到 D:\dev\go</p>
 <p>sublime处理中文路径一直很bug。需要修改 /Data/Packages/Default/exec.py:45 行：</p>
-<pre><code>    for k, v in proc_env.iteritems():
-        nv =  os.path.expandvars(v)
-        if isinstance(v, unicode):
-            import locale
-            nv = nv.encode(locale.getdefaultlocale()[1])
-        proc_env[k] = nv
+<pre><code>      for k, v in proc_env.iteritems():
+          nv =  os.path.expandvars(v)
+          if isinstance(v, unicode):
+              import locale
+              nv = nv.encode(locale.getdefaultlocale()[1])
+          proc_env[k] = nv
 </code></pre>
 <p>然后菜单 Tools -&gt; Build System -&gt; New...</p>
 <pre><code>{
-    "cmd": ["go", "run", "$file"],
-    "path": "D:/dev/go/bin",
-    "file_regex": "^(.+):([0-9]+):.*",
-    "env": {"GOROOT": "D:/dev/go"}
+  "cmd": ["go", "run", "$file"],
+  "path": "D:/dev/go/bin",
+  "file_regex": "^(.+):([0-9]+):.*",
+  "env": {"GOROOT": "D:/dev/go"}
 }
 </code></pre>
 <p>这就是Go的配置咯。然后就Ctrl+B了。</p></p>
@@ -1259,8 +1259,8 @@ for vec in permutations(cols):
               <h2 class="card-title">pin ssl fingerprint with Chrome HSTS</h2>
             </a>
             <p class="card-text"><p>code:</p>
-<pre><code>$ openssl x509 -noout -fingerprint -sha1 -in &lt;(openssl s_client -connect weibo.cn:443 -prexit 2&gt;/dev/null) | python -c "print __import__('sys').stdin.read().partition('=')[2][:-1].replace(':','').decode('hex').encode('base64')"
-fUWlLfAlsHpGFDfI4XsFOUWkA7Q=
+<pre><code>  $ openssl x509 -noout -fingerprint -sha1 -in &lt;(openssl s_client -connect weibo.cn:443 -prexit 2&gt;/dev/null) | python -c "print __import__('sys').stdin.read().partition('=')[2][:-1].replace(':','').decode('hex').encode('base64')"
+  fUWlLfAlsHpGFDfI4XsFOUWkA7Q=
 </code></pre>
 <p>website: https://www.grc.com/fingerprints.htm</p></p>
             <div class="card-subtext muted-text">
@@ -1277,22 +1277,22 @@ fUWlLfAlsHpGFDfI4XsFOUWkA7Q=
               <h2 class="card-title">ubuntu / python编码坑一则</h2>
             </a>
             <p class="card-text"><p>一个django文件上传老是出现unicode error</p>
-<pre><code>UnicodeEncodeError: 'ascii' codec can't encode character u'\uWTFH' in position 0: ordinal not in range(128)
+<pre><code>  UnicodeEncodeError: 'ascii' codec can't encode character u'\uWTFH' in position 0: ordinal not in range(128)
 </code></pre>
 <p>折腾了好久 reload(sys) sys.setdefaultencoding() locale.setdefaultlocale() </p>
 <p>后来发现是os.environ["LANG"]居然为空。这尼玛为毛啊。</p>
 <p>LANG为空也就算了，发现另外一个神奇的bug：</p>
-<pre><code>$ export LC_ALL=en_US.UTF8
-$ python -c "print __import__('locale').getdefaultlocale()"
-('en_US', 'UTF8')
+<pre><code>  $ export LC_ALL=en_US.UTF8
+  $ python -c "print __import__('locale').getdefaultlocale()"
+  ('en_US', 'UTF8')
 
-$ export LC_ALL=en_US
-$ python -c "print __import__('locale').getdefaultlocale()"
-('en_US', 'ISO8859-1')
+  $ export LC_ALL=en_US
+  $ python -c "print __import__('locale').getdefaultlocale()"
+  ('en_US', 'ISO8859-1')
 
-$ export LANG=
-$ python -c "print __import__('locale').getdefaultlocale()"
-('en_US', 'ISO8859-1')
+  $ export LANG=
+  $ python -c "print __import__('locale').getdefaultlocale()"
+  ('en_US', 'ISO8859-1')
 </code></pre>
 <p>ISO8859-1 就是臭名昭著的latin-1编码也就是最脑残不过的 ascii 编码。反生产力啊。</p>
 <p>感谢 killkeeper :D</p></p>

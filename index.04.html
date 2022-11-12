@@ -58,43 +58,43 @@
             <p class="card-text"><p>一觉醒来，打开浏览器，各种连不上，调试了一下发现说lets encrypt 的 acme https证书错误</p>
 <p>仿佛记得<a href="https://www.v2ex.com/t/805339">V站讨论</a>过这个事，以为和自己无关，结果也中招了。DST Root CA X3 根证书在国庆前过期了。</p>
 <h2>老版本 Ubuntu 修复：</h2>
-<pre><code>sudo apt update
-sudo apt install ca-certificates
+<pre><code>  sudo apt update
+  sudo apt install ca-certificates
 </code></pre>
 <h2>老版本 macOS 修复：</h2>
 <p>需要手动导入并信任新的 ISRG Root X1 根证书。来自<a href="https://letsencrypt.org/certificates/">https://letsencrypt.org/certificates/</a>。</p>
 <p>保存下列为 <code>1.pem</code></p>
-<pre><code>-----BEGIN CERTIFICATE-----
-MIIFYDCCBEigAwIBAgIQQAF3ITfU6UK47naqPGQKtzANBgkqhkiG9w0BAQsFADA/
-MSQwIgYDVQQKExtEaWdpdGFsIFNpZ25hdHVyZSBUcnVzdCBDby4xFzAVBgNVBAMT
-DkRTVCBSb290IENBIFgzMB4XDTIxMDEyMDE5MTQwM1oXDTI0MDkzMDE4MTQwM1ow
-TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh
-cmNoIEdyb3VwMRUwEwYDVQQDEwxJU1JHIFJvb3QgWDEwggIiMA0GCSqGSIb3DQEB
-AQUAA4ICDwAwggIKAoICAQCt6CRz9BQ385ueK1coHIe+3LffOJCMbjzmV6B493XC
-ov71am72AE8o295ohmxEk7axY/0UEmu/H9LqMZshftEzPLpI9d1537O4/xLxIZpL
-wYqGcWlKZmZsj348cL+tKSIG8+TA5oCu4kuPt5l+lAOf00eXfJlII1PoOK5PCm+D
-LtFJV4yAdLbaL9A4jXsDcCEbdfIwPPqPrt3aY6vrFk/CjhFLfs8L6P+1dy70sntK
-4EwSJQxwjQMpoOFTJOwT2e4ZvxCzSow/iaNhUd6shweU9GNx7C7ib1uYgeGJXDR5
-bHbvO5BieebbpJovJsXQEOEO3tkQjhb7t/eo98flAgeYjzYIlefiN5YNNnWe+w5y
-sR2bvAP5SQXYgd0FtCrWQemsAXaVCg/Y39W9Eh81LygXbNKYwagJZHduRze6zqxZ
-Xmidf3LWicUGQSk+WT7dJvUkyRGnWqNMQB9GoZm1pzpRboY7nn1ypxIFeFntPlF4
-FQsDj43QLwWyPntKHEtzBRL8xurgUBN8Q5N0s8p0544fAQjQMNRbcTa0B7rBMDBc
-SLeCO5imfWCKoqMpgsy6vYMEG6KDA0Gh1gXxG8K28Kh8hjtGqEgqiNx2mna/H2ql
-PRmP6zjzZN7IKw0KKP/32+IVQtQi0Cdd4Xn+GOdwiK1O5tmLOsbdJ1Fu/7xk9TND
-TwIDAQABo4IBRjCCAUIwDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAQYw
-SwYIKwYBBQUHAQEEPzA9MDsGCCsGAQUFBzAChi9odHRwOi8vYXBwcy5pZGVudHJ1
-c3QuY29tL3Jvb3RzL2RzdHJvb3RjYXgzLnA3YzAfBgNVHSMEGDAWgBTEp7Gkeyxx
-+tvhS5B1/8QVYIWJEDBUBgNVHSAETTBLMAgGBmeBDAECATA/BgsrBgEEAYLfEwEB
-ATAwMC4GCCsGAQUFBwIBFiJodHRwOi8vY3BzLnJvb3QteDEubGV0c2VuY3J5cHQu
-b3JnMDwGA1UdHwQ1MDMwMaAvoC2GK2h0dHA6Ly9jcmwuaWRlbnRydXN0LmNvbS9E
-U1RST09UQ0FYM0NSTC5jcmwwHQYDVR0OBBYEFHm0WeZ7tuXkAXOACIjIGlj26Ztu
-MA0GCSqGSIb3DQEBCwUAA4IBAQAKcwBslm7/DlLQrt2M51oGrS+o44+/yQoDFVDC
-5WxCu2+b9LRPwkSICHXM6webFGJueN7sJ7o5XPWioW5WlHAQU7G75K/QosMrAdSW
-9MUgNTP52GE24HGNtLi1qoJFlcDyqSMo59ahy2cI2qBDLKobkx/J3vWraV0T9VuG
-WCLKTVXkcGdtwlfFRjlBz4pYg1htmf5X6DYO8A4jqv2Il9DjXA6USbW1FzXSLr9O
-he8Y4IWS6wY7bCkjCWDcRQJMEhg76fsO3txE+FiYruq9RUWhiF1myv4Q6W+CyBFC
-Dfvp7OOGAN6dEOM4+qR9sdjoSYKEBpsr6GtPAQw4dy753ec5
------END CERTIFICATE-----
+<pre><code>  -----BEGIN CERTIFICATE-----
+  MIIFYDCCBEigAwIBAgIQQAF3ITfU6UK47naqPGQKtzANBgkqhkiG9w0BAQsFADA/
+  MSQwIgYDVQQKExtEaWdpdGFsIFNpZ25hdHVyZSBUcnVzdCBDby4xFzAVBgNVBAMT
+  DkRTVCBSb290IENBIFgzMB4XDTIxMDEyMDE5MTQwM1oXDTI0MDkzMDE4MTQwM1ow
+  TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh
+  cmNoIEdyb3VwMRUwEwYDVQQDEwxJU1JHIFJvb3QgWDEwggIiMA0GCSqGSIb3DQEB
+  AQUAA4ICDwAwggIKAoICAQCt6CRz9BQ385ueK1coHIe+3LffOJCMbjzmV6B493XC
+  ov71am72AE8o295ohmxEk7axY/0UEmu/H9LqMZshftEzPLpI9d1537O4/xLxIZpL
+  wYqGcWlKZmZsj348cL+tKSIG8+TA5oCu4kuPt5l+lAOf00eXfJlII1PoOK5PCm+D
+  LtFJV4yAdLbaL9A4jXsDcCEbdfIwPPqPrt3aY6vrFk/CjhFLfs8L6P+1dy70sntK
+  4EwSJQxwjQMpoOFTJOwT2e4ZvxCzSow/iaNhUd6shweU9GNx7C7ib1uYgeGJXDR5
+  bHbvO5BieebbpJovJsXQEOEO3tkQjhb7t/eo98flAgeYjzYIlefiN5YNNnWe+w5y
+  sR2bvAP5SQXYgd0FtCrWQemsAXaVCg/Y39W9Eh81LygXbNKYwagJZHduRze6zqxZ
+  Xmidf3LWicUGQSk+WT7dJvUkyRGnWqNMQB9GoZm1pzpRboY7nn1ypxIFeFntPlF4
+  FQsDj43QLwWyPntKHEtzBRL8xurgUBN8Q5N0s8p0544fAQjQMNRbcTa0B7rBMDBc
+  SLeCO5imfWCKoqMpgsy6vYMEG6KDA0Gh1gXxG8K28Kh8hjtGqEgqiNx2mna/H2ql
+  PRmP6zjzZN7IKw0KKP/32+IVQtQi0Cdd4Xn+GOdwiK1O5tmLOsbdJ1Fu/7xk9TND
+  TwIDAQABo4IBRjCCAUIwDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAQYw
+  SwYIKwYBBQUHAQEEPzA9MDsGCCsGAQUFBzAChi9odHRwOi8vYXBwcy5pZGVudHJ1
+  c3QuY29tL3Jvb3RzL2RzdHJvb3RjYXgzLnA3YzAfBgNVHSMEGDAWgBTEp7Gkeyxx
+  +tvhS5B1/8QVYIWJEDBUBgNVHSAETTBLMAgGBmeBDAECATA/BgsrBgEEAYLfEwEB
+  ATAwMC4GCCsGAQUFBwIBFiJodHRwOi8vY3BzLnJvb3QteDEubGV0c2VuY3J5cHQu
+  b3JnMDwGA1UdHwQ1MDMwMaAvoC2GK2h0dHA6Ly9jcmwuaWRlbnRydXN0LmNvbS9E
+  U1RST09UQ0FYM0NSTC5jcmwwHQYDVR0OBBYEFHm0WeZ7tuXkAXOACIjIGlj26Ztu
+  MA0GCSqGSIb3DQEBCwUAA4IBAQAKcwBslm7/DlLQrt2M51oGrS+o44+/yQoDFVDC
+  5WxCu2+b9LRPwkSICHXM6webFGJueN7sJ7o5XPWioW5WlHAQU7G75K/QosMrAdSW
+  9MUgNTP52GE24HGNtLi1qoJFlcDyqSMo59ahy2cI2qBDLKobkx/J3vWraV0T9VuG
+  WCLKTVXkcGdtwlfFRjlBz4pYg1htmf5X6DYO8A4jqv2Il9DjXA6USbW1FzXSLr9O
+  he8Y4IWS6wY7bCkjCWDcRQJMEhg76fsO3txE+FiYruq9RUWhiF1myv4Q6W+CyBFC
+  Dfvp7OOGAN6dEOM4+qR9sdjoSYKEBpsr6GtPAQw4dy753ec5
+  -----END CERTIFICATE-----
 </code></pre>
 <p>打开 keychain access，把这个 <code>1.pem</code> 拖入 system，双击打开，在 Trust 这个下拉，选择 信任。</p>
 <p><img alt="" src="/images/2021/stdout-013-1.png" /></p>
@@ -870,51 +870,51 @@ Dfvp7OOGAN6dEOM4+qR9sdjoSYKEBpsr6GtPAQw4dy753ec5
               <h2 class="card-title">TiDB 的日期比较和 MySQL 不兼容</h2>
             </a>
             <p class="card-text"><p>MySQL的</p>
-<pre><code>&gt; select VERSION()
-+-----------+
-| VERSION() |
-+-----------+
-| 8.0.15-6  |
-+-----------+
+<pre><code>  &gt; select VERSION()
+  +-----------+
+  | VERSION() |
+  +-----------+
+  | 8.0.15-6  |
+  +-----------+
 
 
-&gt; select NOW() &gt; '';
-+------------+
-| NOW() &gt; '' |
-+------------+
-| 1          |
-+------------+
+  &gt; select NOW() &gt; '';
+  +------------+
+  | NOW() &gt; '' |
+  +------------+
+  | 1          |
+  +------------+
 
-&gt; show warnings;
-+---------+------+----------------------------------------+
-| Level   | Code | Message                                |
-+---------+------+----------------------------------------+
-| Warning | 1292 | Truncated incorrect datetime value: '' |
-+---------+------+----------------------------------------+
+  &gt; show warnings;
+  +---------+------+----------------------------------------+
+  | Level   | Code | Message                                |
+  +---------+------+----------------------------------------+
+  | Warning | 1292 | Truncated incorrect datetime value: '' |
+  +---------+------+----------------------------------------+
 </code></pre>
 <p>TiDB:</p>
-<pre><code>&gt; select VERSION()
-+--------------------+
-| VERSION()          |
-+--------------------+
-| 5.7.25-TiDB-v5.1.0 |
-+--------------------+
-1 row in set
+<pre><code>  &gt; select VERSION()
+  +--------------------+
+  | VERSION()          |
+  +--------------------+
+  | 5.7.25-TiDB-v5.1.0 |
+  +--------------------+
+  1 row in set
 
-&gt; select NOW() &gt; '';
-+------------+
-| NOW() &gt; '' |
-+------------+
-| &lt;null&gt;     |
-+------------+
+  &gt; select NOW() &gt; '';
+  +------------+
+  | NOW() &gt; '' |
+  +------------+
+  | &lt;null&gt;     |
+  +------------+
 
-&gt; show warnings;
-+---------+------+------------------------------+
-| Level   | Code | Message                      |
-+---------+------+------------------------------+
-| Warning | 1292 | Incorrect datetime value: '' |
-+---------+------+------------------------------+
-1 row in set
+  &gt; show warnings;
+  +---------+------+------------------------------+
+  | Level   | Code | Message                      |
+  +---------+------+------------------------------+
+  | Warning | 1292 | Incorrect datetime value: '' |
+  +---------+------+------------------------------+
+  1 row in set
 </code></pre>
 <p>记录一下 <a href="https://github.com/pingcap/tidb/issues/21354">相关 issue</a></p>
 <p>btw 顺便吐槽一下，</p>
@@ -3234,28 +3234,28 @@ Dfvp7OOGAN6dEOM4+qR9sdjoSYKEBpsr6GtPAQw4dy753ec5
 <p>I discovered a new trick from github issues that can spawn new worker first, check if new code loads correctly then restart the whole rack.</p>
 <p>According to <a href="https://docs.gunicorn.org/en/latest/signals.html#upgrading-to-a-new-binary-on-the-fly">the docs</a> you need to send several signals and blah blah, the author tried to explain in great detail of how it works rather than providing a simple option to do so.</p>
 <p>So I wrote a shell script to do that instead.</p>
-<pre><code>#!/bin/bash
+<pre><code>  #!/bin/bash
 
-oldpid=$(&lt;./deploy/gunicorn.pid)
-# forget the old kill -HUP 
-kill -USR2 $oldpid
-sleep 1
-timeout=5
-while [[ $timeout -gt 0 ]]; do
-  newpid=$(&lt;./deploy/gunicorn.pid.2) &amp;&amp; kill -0 $newpid
-  if [[ $? -eq 0 ]]; then
-    break
-  else
-    sleep 0.5
-    (( timeout-- ))
-  fi
-done;
+  oldpid=$(&lt;./deploy/gunicorn.pid)
+  # forget the old kill -HUP 
+  kill -USR2 $oldpid
+  sleep 1
+  timeout=5
+  while [[ $timeout -gt 0 ]]; do
+    newpid=$(&lt;./deploy/gunicorn.pid.2) &amp;&amp; kill -0 $newpid
+    if [[ $? -eq 0 ]]; then
+      break
+    else
+      sleep 0.5
+      (( timeout-- ))
+    fi
+  done;
 
-# shutdown old
-echo "success. newpid=$newpid"
-kill -WINCH $oldpid
-sleep 1
-kill -TERM $oldpid
+  # shutdown old
+  echo "success. newpid=$newpid"
+  kill -WINCH $oldpid
+  sleep 1
+  kill -TERM $oldpid
 </code></pre>
 <p>The script will check for new master pid to be alive then kill the old master in a maximium timeout of 5 seconds.</p>
 <p>It works perfectly to replace the simple <code>HUP</code> signal as intended.</p></p>
@@ -3374,7 +3374,7 @@ kill -TERM $oldpid
             <p class="card-text"><p>多年的疑惑今天居然被偶然解开了。</p>
 <p>由于墙内糟糕的网络环境，而且ISP甚至wifi内还有墙中墙，所以很多域名是打不开的。</p>
 <p>每次看浏览器在傻乎乎的转菊花，就觉得浪费时间。</p>
-<pre><code>sudo sysctl  net.inet.tcp.keepinit=3000
+<pre><code>  sudo sysctl  net.inet.tcp.keepinit=3000
 </code></pre>
 <p>这一条指令可以直接设置 macOS 的 TCP Keepalive 心跳包初始化时间设置为3000毫秒。</p>
 <p><code>net.inet.tcp.keepinit</code>默认值是 75000 ，单位是毫秒。注意 Linux 下没这设置，而且单位是 秒</p>
@@ -3387,11 +3387,11 @@ tcp.keepinit Timeout, in milliseconds, for new, non-established TCP connections.
 <p>我觉得，如果一个域名和TCP端口3秒钟内无法完成握手，就别执着了。你再干等75秒也不可能连上。这个值只会影响初始连接的超时，一旦连上了怎么idle都不影响，所以不会影响游戏的tcp或者websocket的长连接。也不影响udp。</p>
 <p>2021-07-06 补充：</p>
 <p>重启保持有效：</p>
-<pre><code>echo net.inet.tcp.keepinit=3000 | sudo tee -a /etc/sysctl.conf
+<pre><code>  echo net.inet.tcp.keepinit=3000 | sudo tee -a /etc/sysctl.conf
 </code></pre>
 <p>2021-09-21 补充：</p>
 <p>新版macOS 把 /etc/sysctl.conf 这文件给换位置了。应该是</p>
-<pre><code>"/Users/Shared/Relocated Items/Configuration/private/etc/sysctl.conf"
+<pre><code>  "/Users/Shared/Relocated Items/Configuration/private/etc/sysctl.conf"
 </code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-07-02T15:51:19+08:00">2021-07-02</time></p>
@@ -3407,29 +3407,29 @@ tcp.keepinit Timeout, in milliseconds, for new, non-established TCP connections.
               <h2 class="card-title">MySQL on duplicate key in SQLAlchemy</h2>
             </a>
             <p class="card-text"><p>A simple function to upsert something atomically into MySQL</p>
-<pre><code>def upsert(val1, val2, **kwargs):
-    """upsert val1-val2 pair into mysql and return the pk"""
-    from sqlalchemy.dialects.mysql import insert
-    from sqlalchemy.sql.expression import func
+<pre><code>  def upsert(val1, val2, **kwargs):
+      """upsert val1-val2 pair into mysql and return the pk"""
+      from sqlalchemy.dialects.mysql import insert
+      from sqlalchemy.sql.expression import func
 
-    # this val1-val2 pair should have UNIQUE KEY constraint in MySQL table.
-    stmt = insert(MyModel.__table__).values(col1=val1, col2=val2)
-    if kwargs:
-        stmt = stmt.on_duplicate_key_update(kwargs)
-    else:
-        # get lastrowid https://stackoverflow.com/a/29722203/41948
-        stmt = stmt.on_duplicate_key_update(id=func.LAST_INSERT_ID(MyModel.id))
-    # inserted_primary_key (dbapi, return 0 when only insert) or lastrowid (mysql)
-    pk = db.session().execute(stmt).lastrowid
-    if not pk:
-        pk = MyModel.query.options(load_only('id')).filter_by(
-            col1=val1, col2=val2
-        ).first().id
-    return pk
+      # this val1-val2 pair should have UNIQUE KEY constraint in MySQL table.
+      stmt = insert(MyModel.__table__).values(col1=val1, col2=val2)
+      if kwargs:
+          stmt = stmt.on_duplicate_key_update(kwargs)
+      else:
+          # get lastrowid https://stackoverflow.com/a/29722203/41948
+          stmt = stmt.on_duplicate_key_update(id=func.LAST_INSERT_ID(MyModel.id))
+      # inserted_primary_key (dbapi, return 0 when only insert) or lastrowid (mysql)
+      pk = db.session().execute(stmt).lastrowid
+      if not pk:
+          pk = MyModel.query.options(load_only('id')).filter_by(
+              col1=val1, col2=val2
+          ).first().id
+      return pk
 </code></pre>
 <p>Writing complex SQL is hard, sqlalchemy makes it harder. Prefer other ORMs in Python.</p>
 <p>I really hate fighting the infamous sqlalchemy API. Everything wrong about it can be shown in this one-liner:</p>
-<pre><code>from sqlalchemy.orm import Load, load_only, joinedload
+<pre><code>  from sqlalchemy.orm import Load, load_only, joinedload
 </code></pre>
 <p>You have the three styles of CamelCase, under_score, and concatfunctionnames fucked up together. Bad and leaky abstraction.</p></p>
             <div class="card-subtext muted-text">
@@ -3633,17 +3633,17 @@ tcp.keepinit Timeout, in milliseconds, for new, non-established TCP connections.
 <p>首先前摇，生成需要合并的视频文件路径列表</p>
 <p><code>ls -fd1 /Volumes/SD_CARD/DCIM/xxxxx/*</code> </p>
 <p>的结果写成如下格式：</p>
-<pre><code>file 'input1.mov'
-inpoint 10
-outpoint 300
-file 'input2.mov'
-# comment
-outpoint 300 
-file 'input3.mov'
-outpoint 300
-... 
-file 'inputN.mov'
-outpoint 300
+<pre><code>  file 'input1.mov'
+  inpoint 10
+  outpoint 300
+  file 'input2.mov'
+  # comment
+  outpoint 300 
+  file 'input3.mov'
+  outpoint 300
+  ... 
+  file 'inputN.mov'
+  outpoint 300
 </code></pre>
 <p><code>inpoint 10</code> 就是从10秒开始算，<code>outpoint 300</code> 就是到300秒结束。保存上面的为 1.txt</p>
 <p>然后念 ffmpeg 咒语</p>

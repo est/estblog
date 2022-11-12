@@ -55,14 +55,14 @@
   
   <p>本来是PC，连接千兆以太网上网，vmware装了个Linux，本来好好的，后来加了个usb无线网卡当软AP用，让其他设备通过wifi共享上网， 就老出现网络时断时续，甚至完全掉线。</p>
 <p>比如ping baidu.com就会出现</p>
-<pre><code>From 220.181.57.217: icmp_seq=5 Redirect Network(New nexthop: 220.181.57.217)
-64 bytes from 220.181.57.217: icmp_seq=5 ttl=53 time=69.6 ms
-From 220.181.57.217: icmp_seq=6 Redirect Network(New nexthop: 220.181.57.217)
-64 bytes from 220.181.57.217: icmp_seq=6 ttl=53 time=70.6 ms
-From 220.181.57.217: icmp_seq=7 Redirect Network(New nexthop: 220.181.57.217)
-64 bytes from 220.181.57.217: icmp_seq=7 ttl=53 time=55.4 ms
-From 220.181.57.217: icmp_seq=8 Redirect Network(New nexthop: 220.181.57.217)
-64 bytes from 220.181.57.217: icmp_seq=8 ttl=53 time=59.7 ms
+<pre><code>  From 220.181.57.217: icmp_seq=5 Redirect Network(New nexthop: 220.181.57.217)
+  64 bytes from 220.181.57.217: icmp_seq=5 ttl=53 time=69.6 ms
+  From 220.181.57.217: icmp_seq=6 Redirect Network(New nexthop: 220.181.57.217)
+  64 bytes from 220.181.57.217: icmp_seq=6 ttl=53 time=70.6 ms
+  From 220.181.57.217: icmp_seq=7 Redirect Network(New nexthop: 220.181.57.217)
+  64 bytes from 220.181.57.217: icmp_seq=7 ttl=53 time=55.4 ms
+  From 220.181.57.217: icmp_seq=8 Redirect Network(New nexthop: 220.181.57.217)
+  64 bytes from 220.181.57.217: icmp_seq=8 ttl=53 time=59.7 ms
 </code></pre>
 <p>一开始以为是路由问题，route表看了半天，后来发现windows下 无线网络 - 属性 此连接使用以下项目 里 去掉 vmware bridge protocol就好了。保留本地网络的不变。</p>
 <p>买的设备是 Realtek RTL8192CU 的芯片，用官方驱动会出现 netsh wlan start hostednetwork 失败。用 netsh wlan show drivers 发现 支持的承载网络：否。</p>

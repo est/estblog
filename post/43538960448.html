@@ -54,12 +54,12 @@
 
   
   <p>VPS内存小，连uWSGI这种都玩不起，只能玩玩<a href="https://github.com/jonashaag/bjoern">bjoern</a>这个神器了。<a href="http://bottlepy.org/docs/dev/deployment.html#switching-the-server-backend">Bottle.py支持的WSGI容器</a>还真多啊！</p>
-<pre><code>curl -O http://python-distribute.org/distribute_setup.py
-sudo  python distribute_setup.py
-curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
-sudo python get-pip.py
-sudo emerge libev
-CFLAGS=-I/usr/include/libev sudo pip install bjoern
+<pre><code>  curl -O http://python-distribute.org/distribute_setup.py
+  sudo  python distribute_setup.py
+  curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
+  sudo python get-pip.py
+  sudo emerge libev
+  CFLAGS=-I/usr/include/libev sudo pip install bjoern
 </code></pre>
 <p>灌了个水的哟。。。</p>
 

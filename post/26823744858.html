@@ -61,51 +61,51 @@
 <p>&gt; The rest of this article describes the specifics of creating a JWT, signing the JWT, forming the access token request, and handling the response. Libraries should abstract these specifics from your application. Again, developers are strongly encouraged to attempt to use an existing library <strong>rather than building your own</strong> support for server-to-server interactions.</p>
 <p>所以我就直接去逆向他们的<a href="http://code.google.com/p/google-api-python-client/source/browse/samples/service_account/tasks.py">Tasks API with a Service account</a> sample</p>
 <p>安装了一大票依赖，痛苦编译好pyopenssl之后，直接运行，出错：</p>
-<pre><code>oauth2client.client.AccessTokenRefreshError: invalid_grant
+<pre><code>  oauth2client.client.AccessTokenRefreshError: invalid_grant
 </code></pre>
 <p>加个Fiddler代理调试：</p>
-<pre><code>http = httplib2.Http(
-  proxy_info=httplib2.ProxyInfo(
-    httplib2.socks.PROXY_TYPE_HTTP, 
-    proxy_host='10.0.18.2', 
-    proxy_port=8888
-), ca_certs='FiddlerRoot.cer')
+<pre><code>  http = httplib2.Http(
+    proxy_info=httplib2.ProxyInfo(
+      httplib2.socks.PROXY_TYPE_HTTP, 
+      proxy_host='10.0.18.2', 
+      proxy_port=8888
+  ), ca_certs='FiddlerRoot.cer')
 </code></pre>
 <p>发现https不支持。于是</p>
-<pre><code>httplib2.debuglevel = 4
+<pre><code>  httplib2.debuglevel = 4
 </code></pre>
 <p>终于看到一坨东西了。</p>
 <p>对比上面那个 OAuth 2文档，可以轻松写出OAuth 2.0获得access_token的代码：</p>
 <p>需要用到API用户email，p12密钥两个东西，可以从Google API Console里获得。</p>
-<pre><code>import base64
+<pre><code>  import base64
 
-b64 = lambda x:base64.urlsafe_b64encode(x).rstrip('=')
+  b64 = lambda x:base64.urlsafe_b64encode(x).rstrip('=')
 
-header = '{"alg":"RS256","typ":"JWT"}'
-ts_now = int(time.time())
+  header = '{"alg":"RS256","typ":"JWT"}'
+  ts_now = int(time.time())
 
-claim_set = {
-    "iss": email,
-    "scope": ' '.join(scope),
-    "aud": "https://accounts.google.com/o/oauth2/token",
-    "exp": ts_now+3600,
-    "iat": ts_now,
-}
+  claim_set = {
+      "iss": email,
+      "scope": ' '.join(scope),
+      "aud": "https://accounts.google.com/o/oauth2/token",
+      "exp": ts_now+3600,
+      "iat": ts_now,
+  }
 
-jwt = '%s.%s' % (url_b64(header), url_b64(json.dumps(claim_set)))
-# convert pkcs12 to private key
-p = Popen('openssl pkcs12 -in key.p12 -nocerts -passin stdin -nodes -out key.pem', shell=True, stdin=PIPE, stdout=PIPE)
-p.stdin.write('notasecret') # Google's key default password
-p.stdin.close()
-p.wait()
-# RSA sign with sha256 using private key
-p = Popen('openssl dgst -sha256 -sign 'key.pem' -keyform PEM', shell=True, stdin=PIPE, stdout=PIPE)
-p.stdin.write(jwt)
-p.stdin.close()
-sig = p.stdout.read()
-p.wait()
+  jwt = '%s.%s' % (url_b64(header), url_b64(json.dumps(claim_set)))
+  # convert pkcs12 to private key
+  p = Popen('openssl pkcs12 -in key.p12 -nocerts -passin stdin -nodes -out key.pem', shell=True, stdin=PIPE, stdout=PIPE)
+  p.stdin.write('notasecret') # Google's key default password
+  p.stdin.close()
+  p.wait()
+  # RSA sign with sha256 using private key
+  p = Popen('openssl dgst -sha256 -sign 'key.pem' -keyform PEM', shell=True, stdin=PIPE, stdout=PIPE)
+  p.stdin.write(jwt)
+  p.stdin.close()
+  sig = p.stdout.read()
+  p.wait()
 
-print '%s.%s' % (jwt, url_b64(sig))
+  print '%s.%s' % (jwt, url_b64(sig))
 </code></pre>
 <p>有了access_token之后，获取spreadsheet数据就很简单了，我也拿<a href="https://developers.google.com/gdata/samples/spreadsheet_sample">sample里</a>的spreadsheet作为例子：</p>
 <p>https://spreadsheets.google.com/feeds/list/o13394135408524254648.240766968415752635/od6/public/values?alt=json&amp;access_token=1/XXXXX</p>

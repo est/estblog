@@ -54,17 +54,17 @@
 
   
   <p>A simple trick to add additional bytes prepending Flask's <code>stream_with_context</code></p>
-<pre><code>from flask_admin.contrib.sqla import ModelView
-from itertools import chain
+<pre><code>  from flask_admin.contrib.sqla import ModelView
+  from itertools import chain
 
-class MyAdminView(ModelView):
-    can_export = True
-    column_export_list = ['field1', 'field2']
+  class MyAdminView(ModelView):
+      can_export = True
+      column_export_list = ['field1', 'field2']
 
-    def _export_csv(self, return_url):
-        r = super(MyAdminView, self)._export_csv(return_url)
-        r.response = chain((b'\xef\xbb\xbf',), r.response)
-        return r
+      def _export_csv(self, return_url):
+          r = super(MyAdminView, self)._export_csv(return_url)
+          r.response = chain((b'\xef\xbb\xbf',), r.response)
+          return r
 </code></pre>
 <p>I am still using Python2 and Flask-admin shit. It's a shame but anyway.</p>
 

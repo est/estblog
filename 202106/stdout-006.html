@@ -64,17 +64,17 @@
 <p>首先前摇，生成需要合并的视频文件路径列表</p>
 <p><code>ls -fd1 /Volumes/SD_CARD/DCIM/xxxxx/*</code> </p>
 <p>的结果写成如下格式：</p>
-<pre><code>file 'input1.mov'
-inpoint 10
-outpoint 300
-file 'input2.mov'
-# comment
-outpoint 300 
-file 'input3.mov'
-outpoint 300
-... 
-file 'inputN.mov'
-outpoint 300
+<pre><code>  file 'input1.mov'
+  inpoint 10
+  outpoint 300
+  file 'input2.mov'
+  # comment
+  outpoint 300 
+  file 'input3.mov'
+  outpoint 300
+  ... 
+  file 'inputN.mov'
+  outpoint 300
 </code></pre>
 <p><code>inpoint 10</code> 就是从10秒开始算，<code>outpoint 300</code> 就是到300秒结束。保存上面的为 1.txt</p>
 <p>然后念 ffmpeg 咒语</p>

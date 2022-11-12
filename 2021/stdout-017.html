@@ -144,31 +144,31 @@
 </table>
 <h2>reverse proxy FastCGI with uWSGI</h2>
 <p>slap this into <code>my_conf.ini</code></p>
-<pre><code>[uwsgi]
-my_port = 9000  # can be set otherwise
-route-run = addvar:SERVER_NAME=%h
-route-run = addvar:SERVER_PORT=%(my_port)
-route-if  = empty:${REQUEST_METHOD} addvar:REQUEST_METHOD=GET
-route-if  = empty:${HTTP_HOST} addvar:HTTP_HOST=%h:%(my_port)
-route-run = seturi:/fcgi-proxy${PATH_INFO}
-route-run = http:127.0.0.1:9527
-fastcgi-socket = 0.0.0.0:%(my_port)
-http-socket = 0.0.0.0:8000  # for testing purpose.
+<pre><code>  [uwsgi]
+  my_port = 9000  # can be set otherwise
+  route-run = addvar:SERVER_NAME=%h
+  route-run = addvar:SERVER_PORT=%(my_port)
+  route-if  = empty:${REQUEST_METHOD} addvar:REQUEST_METHOD=GET
+  route-if  = empty:${HTTP_HOST} addvar:HTTP_HOST=%h:%(my_port)
+  route-run = seturi:/fcgi-proxy${PATH_INFO}
+  route-run = http:127.0.0.1:9527
+  fastcgi-socket = 0.0.0.0:%(my_port)
+  http-socket = 0.0.0.0:8000  # for testing purpose.
 </code></pre>
 <p>Install uWSGI, install the binary from pypi wheels instead of compiling uwsgi.c shit</p>
-<pre><code>pip install pyuwsgi
+<pre><code>  pip install pyuwsgi
 </code></pre>
 <p>Run it</p>
-<pre><code>uwsgi --ini my_conf.ini
+<pre><code>  uwsgi --ini my_conf.ini
 </code></pre>
 <p>Now you can run your regular http service behind <code>127.0.0.1:9527</code>, while serving fcgi on <code>127.0.0.1:9000</code></p>
 <p>Requests like <code>fcgi://127.0.0.1:9000/hello</code> will be fowwarded to <code>http://127.0.0.1:9527/fcgi-proxy/hello</code></p>
 <p>You may ask why adding a <code>/fcgi-proxy</code> in path? Because there's a gotcha.</p>
 <h2>fuckedup FastCGI requests</h2>
 <p>Learned this from some php-fpm tutorial, first install the standard fcgi client tool because <code>curl</code> doesn't speak fcgi.</p>
-<pre><code>apt-get install libfcgi0ldbl
-yum --enablerepo=epel install fcgi
-SCRIPT_NAME=/ping SCRIPT_FILENAME=/ping REQUEST_METHOD=GET cgi-fcgi -bind -connect 127.0.0.1:9000
+<pre><code>  apt-get install libfcgi0ldbl
+  yum --enablerepo=epel install fcgi
+  SCRIPT_NAME=/ping SCRIPT_FILENAME=/ping REQUEST_METHOD=GET cgi-fcgi -bind -connect 127.0.0.1:9000
 </code></pre>
 <p>You can observe from uWSGI logs that <code>cgi-fcgi</code> command sends flawed requests, the <code>PATH_INFO</code> was unset.</p>
 <p>After hours wasted, I came up with a clever hack to force uWSGI's internal router to force <code>seturi</code> with a path prefix</p>

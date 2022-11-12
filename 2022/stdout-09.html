@@ -54,30 +54,30 @@
 
   
   <p>看到个贴 <a href="https://www.v2ex.com/t/885568">返回客户端连接用的 IP 和端口号</a>，想起来也需要熟悉一下 Cloudflare worker，于是拿来练练手</p>
-<pre><code>export default {
-  async fetch(request, env) {
-    return await handleRequest(request).catch(
-      (err) =&gt; new Response(err.stack, { status: 500 })
-    )
-  }
-}
-
-async function handleRequest(request) {
-  const { pathname } = new URL(request.url);
-
-  if (pathname === "/ip") {
-    const ip = request.headers.get('CF-Connecting-IP');
-    return new Response(ip + '\n');
+<pre><code>  export default {
+    async fetch(request, env) {
+      return await handleRequest(request).catch(
+        (err) =&gt; new Response(err.stack, { status: 500 })
+      )
+    }
   }
 
-  if (pathname === "/ip:port") {
-    const ip = request.headers.get('CF-Connecting-IP');
-    const port = request.headers.get('est-Connecting-Port') || '?'
-    return new Response(ip + ':' + port + '\n');
-  }
+  async function handleRequest(request) {
+    const { pathname } = new URL(request.url);
 
-  return new Response('Tools:\n /ip\n/ip:port\n');
-}
+    if (pathname === "/ip") {
+      const ip = request.headers.get('CF-Connecting-IP');
+      return new Response(ip + '\n');
+    }
+
+    if (pathname === "/ip:port") {
+      const ip = request.headers.get('CF-Connecting-IP');
+      const port = request.headers.get('est-Connecting-Port') || '?'
+      return new Response(ip + ':' + port + '\n');
+    }
+
+    return new Response('Tools:\n /ip\n/ip:port\n');
+  }
 </code></pre>
 <p>遇到一个问题，Cloudflare 官方有提供浏览器客户端IP变量 <a href="https://developers.cloudflare.com/workers/runtime-apis/headers/#cloudflare-headers"><code>CF-Connecting-IP</code></a> 但是缺少端口，查了下可以自己通过 <a href="https://developers.cloudflare.com/rules/transform/request-header-modification/reference/fields-functions"><code>cf.edge.client_port</code></a> 这个变量获得， <a href="https://community.cloudflare.com/t/need-cf-connecting-port-for-french-law/319505/8">方法</a>是在进入 CF网站管理 面板 → Rules → Transform Rules → HTTP Request Header Modification 里添加一条请求头规则。如图：</p>
 <p><img alt="" src="https://global.discourse-cdn.com/cloudflare/original/3X/b/a/ba21c8b28a8915bc57c6c6d82581827578e232ac.png" /></p>
