@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>8行javascript录制屏幕 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="8行javascript录制屏幕" />
+
+      <link rel="canonical" href="https://blog.est.im/2022/stdout-11" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">8行javascript录制屏幕</h2>
+    <p class="post-date">Posted <time datetime="2022-11-18T18:50:05+08:00">2022-11-18</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>看到个骚操作，玩了一下，写了个 bookmarklet</p>
+<pre><code class="language-javascript">
+navigator.mediaDevices.getDisplayMedia({video:true}).then(function(stream){
+  const mr=new MediaRecorder(stream,{mimeType:&quot;video/webm;codecs=h264,opus&quot;});
+  mr.ondataavailable=function(ev){
+    const a=document.createElement('a');a.href=URL.createObjectURL(ev.data);
+    a.download ='screen_capture.webm';a.click();
+  }; // will be called when .stop() with ev.data as a Blob
+  mr.start();
+})
+</code></pre>
+<p>这段代码也是很多WebRTC共享白板的实现原理。看起来也很简单，而且不需要额外的权限确认。</p>
+<p>如果不需要另存为一个名字，则可以直接 <code>location.assign()</code> 又节约几个字。不知道还有没有办法继续节约代码量？</p>
+<p>只是很好奇为啥chrome不支持 .mp4 封装。偏袒自家的 webm ？</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2022/stdout-11';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>
