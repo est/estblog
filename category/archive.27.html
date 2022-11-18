@@ -3472,58 +3472,82 @@ trackback:ping="http://franticindustries.com/blog/2007/01/28/google-is-the-new-h
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/cnblogs/622499"  rel="bookmark" >
-              <h2 class="card-title">[原]一个极其BT的批处理：任务栏系统托盘汽泡提示</h2>
+            <a href="/cnblogs/622498"  rel="bookmark" >
+              <h2 class="card-title">在Windows下安装Ubuntu！注意，是直接在Win32下安装</h2>
             </a>
-            <p class="card-text"><p>这种极其超出p处理讨论范围的话题真的有点BT，而且很无聊，所以我的解决方案也很无聊，那就是调用无所不能的 C#，所以需要 .NET Framework 支持，看代码` <blockquote class="code"><b class="smalltxt"><font size="2">CODE:</font></b>&nbsp;&nbsp;<a class="smalltxt" onclick="copycode(findobj('code0'));" href="http://www.cn-dos.net/forum/viewthread.php?tid=26751&amp;pid=166694&amp;page=1###"><font color="#003366" size="2">[Copy to clipboard]</font></a> <hr color="#dde3ec" size="1"/></p>
-<div id="code0" style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">@echo off<br/>
-set &quot;dnfpath=C:\Windows\Microsoft.NET\Framework&quot;<br/>
-set &quot;est=DO_NOT_ZT_WITHOUT_PERMISSION&quot;<br/>
-for /f &quot;delims=&quot; %%v in ('dir /ad /b %dnfpath%\v?.*') do (<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;if exist &quot;%dnfpath%\%%v\csc.exe&quot; set &quot;cscpath=%dnfpath%\%%v\csc.exe&quot;<br/>
-)<br/>
+            <p class="card-text"><p>很早就这么想，开源世界的 Linux 和 Windows 正面对抗是不现实的，那么我们可以作出一点好玩的事情来，这就是，把 Linux 当成一个很大的&ldquo;Windows软件&rdquo;安装到系统中，Linux直接发布成一个几百兆的 <strong>lin</strong>staller.exe，双击安装，在Windows下用Win32API实现磁盘分区，修改MBR挂Grub，然后解压安装包，复制系统文件的文件到分区，呵呵，这样安装Linux的时候也不至于那么无聊，至于Linux的在线升级也可以得到实施，例如电子科大的DrCom上网认证，因为 Ubuntu 是在 Windows 下直接安装的，那么 APT 源就可以不用通过代理直接通过DrCom拨号了，更惬意的是，可以一边安装 Linux 一边上网，听歌，it's super kool！</p>
+<p>这样做的令一个好处是：可以直接复制现有Windows系统理的 字体 和 解码包（Win32Codec）到Linux下，从而避免了版权方面的麻烦，这样做是符合 EULA 的。</p>
+<p>What are you waiting for? Check it out here:</p>
+<p><a href="http://www.ubuntuforums.org/showthread.php?t=338279">http://www.ubuntuforums.org/showthread.php?t=338279</a></p>
+<p>Now the screenshots and demo from ubuntuforums.org</p>
+<p><img src="http://dormforce.net/Blog/Attachment/663" alt=""/></p>
+<p><img src="http://dormforce.net/Blog/Attachment/664" alt=""/></p>
+<p><img src="http://dormforce.net/Blog/Attachment/665" alt=""/></p>
+<p>希望GNU/FOSS的精神能够做出更多有趣的东西出来！</p>
+<p>至于Ubuntu小组的具体实施，和我的想法有点不同，首先他们不修改MBR，直接修改boot.ini，（发本文为止，Vista下的BootManager还不支持），其次，这个项目是用 NullSoft <a href="http://nsis.sourceforge.net/BattleTorrent_plug-ins">Installation System</a> 做的，挂载了 BattleTorrent ，也就是说，一边下载一边安装。由于FAT格式的分区对大体积文件支持不好，所以这个安装程序并不支持Win95/98。</p>
+<div class="smallfont"><strong>Windows based installer - testers and developers wanted</strong> </div>
+<hr style="COLOR: #ffffff" size="1"/>
+<!-- / icon and title --><!-- message --><div class="ubuntu_messagebody" id="post_message_2011371"><font size="1">This thread is a continuation of the very long and unmanageable thread: <a href="http://www2.edn.cn/cache/http/index.php?q=http%3A%2F%2Fubuntuforums.org%2Fshowthread.php%3Ft%3D305109" target="_blank">http://ubuntuforums.org/showthread.php?t=305109</a></font><br/>
 <br/>
-&lt; &quot;%~f0&quot; more +17 &gt; &quot;%temp%\estTrayTip.cs&quot;<br/>
-%cscpath% &quot;/out:%cd%\estTrayTip.exe&quot; &quot;%temp%\estTrayTip.cs&quot;<br/>
-estTrayTip.exe C:\Windows\System32\acwizard.ico 看什么看 没见过批处理啊？没见过任务栏的汽泡信息啊？见过了吧？见过了顶electronixtar的帖子。 2<br/>
-:exe的参数解释：estTrayTip.exe 图标路径　标题　内容　提示图标类型Error、Info、None、Warning，这里取2=Info。每个参数都必须正确填写<br/>
-&gt;nul ping 127.1 -n 1<br/>
-del estTrayTip.exe<br/>
+We have a development version of a Windows based installer for Ubuntu which is designed to be:
+<ul>
+    <li>very simple to use </li>
+    <li>provide a no-risk installation </li>
+    <li>no repartitioning the hard disk </li>
+    <li>no changing the windows boot loader </li>
+    <li>Easy uninstallation. </li>
+    <li>Low risk </li>
+    <li>Doesn't use a virtual machine </li>
+    <li>Doesn't significantly reduce performance of the resulting installation </li>
+    <li>Resulting installation supports everything a normal install does. </li>
+    <li>Fast install </li>
+</ul>
 <br/>
-goto:eof<br/>
+<div align="center">*************************</div>
 <br/>
-:estTrayTip<br/>
+<b>Currently there is a prototype of the installer. see <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2Fwiki.ubuntu.com%2Finstall.exe%2FPrototype" target="_blank">https://wiki.ubuntu.com/install.exe/Prototype</a> for download and install instructions.</b><br/>
 <br/>
-using System;<br/>
-using System.Windows.Forms;<br/>
-using System.Drawing;<br/>
+<div align="center">*************************</div>
 <br/>
-namespace estTrayTip<br/>
-{<br/>
-&nbsp; &nbsp; class Program<br/>
-&nbsp; &nbsp; {<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;static void Main(string[] args)<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;{<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;NotifyIcon estIcon = new NotifyIcon();<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;estIcon.Icon = new Icon(args[0]);<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;estIcon.Visible = true;<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;ToolTipIcon estToolTipIcon = new ToolTipIcon();<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;switch(args[3])<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;{<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;1&quot;: <br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.Error; break;<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;2&quot;:<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.Info; break;<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;3&quot;:<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.None; break;<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;4&quot;:<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.Warning; break;<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;}<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;estIcon.ShowBalloonTip(1,args[1],args[2],estToolTipIcon);<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;}<br/>
-&nbsp; &nbsp; }<br/>
-}</div>
-<p></blockquote><img src ="http://202.115.22.199/Blog/electronixtar/aggbug/13411.aspx" width = "1" height = "1" /><br>文章来源:<a href='http://202.115.22.199/Blog/electronixtar/archive/2007/01/16/13411.aspx'>http://202.115.22.199/Blog/electronixtar/archive/2007/01/16/13411.aspx</a><img src ="http://www.cnblogs.com/est/aggbug/622499.html" width = "1" height = "1" /><br><br><div align=right><a style="text-decoration:none;" href="http://est.cnblogs.com/" target="_blank">est</a> 2007-01-17 11:48 <a href="http://www.cnblogs.com/est/archive/2007/01/17/622499.html#Feedback" target="_blank" style="text-decoration:none;">发表评论</a></div></p></p>
+The aim of this installer is to provide an easier way for a Windows user to install Ubuntu without having to know how to burn a cd iso, set the bios to boot from cd, repartition the disks, set up a multiboot system, etc. It will not replace any of the current Ubuntu installation options, and will not require that windows is installed prior to the installation of Ubuntu.<br/>
+<br/>
+The installer works by creating a disk image of a pre-installed ubuntu system on the hard disk (downloaded with a bittorrent downloader integrated into the installer, or a standard http download when we find mirrors), and then installing GRUB for windows, which can be chain loaded by the existing boot loader, and which then loads the linux kerner and initrd from the ntfs partition. The initrd is modified to support mounting the image file mentioned above as a root file system, and then continuing the boot process like a normal installation.<br/>
+<br/>
+This does not use a virtual machine to run linux on, so the performance of the resulting system will be similar to the performance of any other linux installation. The system will use ext3 in the image file, so users will get all the benefits of a linux filesystem.<br/>
+<br/>
+<b><u>Current progress</u></b><br/>
+A prototype has been made (see <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2Fwiki.ubuntu.com%2Finstall.exe%2FPrototype" target="_blank">https://wiki.ubuntu.com/install.exe/Prototype</a>) which works, however there are still a few unresolved issues:<br/>
+<br/>
+GUI Installer:
+<ul>
+    <li>UPNP </li>
+    <li>Advanced/Expert install </li>
+    <li>installation of other distributions (kubuntu, edubuntu, xubuntu etc.) </li>
+    <li>Langage support </li>
+    <li>slideshow during install </li>
+    <li>Disk space checks required </li>
+    <li>Support for installing on a secondary drive </li>
+    <li>Supporting installation of boot loader where the boot drive isn't c:\ </li>
+</ul>
+<br/>
+First boot:
+<ul>
+    <li>Hardware Detection </li>
+    <li>Importing settings from config.ini file </li>
+    <li>Swap file </li>
+</ul>
+<br/>
+For more details, refer to the following links:<br/>
+<br/>
+Launchpad entry here: <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2Fblueprints.launchpad.net%2Fubuntu%2F%2Bspec%2Fwindows-installer" target="_blank">https://blueprints.launchpad.net/ubu...dows-installer</a> <br/>
+Specification here: <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2Fwiki.ubuntu.com%2Finstall.exe" target="_blank">https://wiki.ubuntu.com/install.exe</a> <br/>
+Comments here: <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2Fwiki.ubuntu.com%2Finstall.exe%2FComments" target="_blank">https://wiki.ubuntu.com/install.exe/Comments</a> <br/>
+Prototype here: <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2Fwiki.ubuntu.com%2Finstall.exe%2FPrototype" target="_blank">https://wiki.ubuntu.com/install.exe/Prototype</a></div>
+<!-- / message -->
+<!-- attachments --><p>[内有附件]</p>
+<p><br>文章来源:<a href='http://202.115.22.199/Blog/electronixtar/archive/2007/01/16/13413.aspx'>http://202.115.22.199/Blog/electronixtar/archive/2007/01/16/13413.aspx</a><br><br><br />
+<img src ="http://202.115.22.199/Blog/electronixtar/aggbug/13413.aspx" width = "1" height = "1" /><img src ="http://www.cnblogs.com/est/aggbug/622498.html" width = "1" height = "1" /><div align=right><a style="text-decoration:none;" href="http://est.cnblogs.com/" target="_blank">est</a> 2007-01-17 11:48 <a href="http://www.cnblogs.com/est/archive/2007/01/17/622498.html#Feedback" target="_blank" style="text-decoration:none;">发表评论</a></div>
+</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
 <p>archive</p>            </div>
@@ -3534,65 +3558,17 @@ namespace estTrayTip<br/>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/cnblogs/622500"  rel="bookmark" >
-              <h2 class="card-title">VBS创建eml mht文件</h2>
+            <a href="/cnblogs/622506"  rel="bookmark" >
+              <h2 class="card-title">[导入]Alt+Shift+PrintScreen</h2>
             </a>
-            <p class="card-text"><p><a href="http://www.goldb.org/goldblog/2007/01/10/VBScriptCreatingAMicrosoftWebArchiveMhtFileProgramatically.aspx">http://www.goldb.org/goldblog/2007/01/10/VBScriptCreatingAMicrosoftWebArchiveMhtFileProgramatically.aspx</a></p>
-<p>&nbsp;</p>
-<p>Here is a little VBScript for generating a Microsoft Web Archive (*.mht) file.&nbsp; Web archives are a convenient way to pack a bunch of web files (HTML/CSS/JavaScript) into a single file that is viewable in your browser.&nbsp; The downside is MHT files are only viewable in MS Internet Explorer (lame).<br/>
-<br/>
-Normally you would create an MHT by using the &quot;Save As...&quot; option in IE.&nbsp; This script allows you to create one programatically.<br/>
-<br/>
-Sample Usage:<br/>
-<br/>
-for a remote html file:<br/>
-</p>
-<p><span style="FONT-SIZE: 11px; COLOR: black; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">&gt;cscript mht_converter.vbs http://www.example.com/temp/foo.html foo.mht</span></p>
-<p><br/>
-for a local html file:<br/>
-</p>
-<p><span style="FONT-SIZE: 11px; COLOR: black; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">&gt;cscript mht_converter.vbs file:/temp/foo.html foo.mht</span></p>
-<p><br/>
-<br/>
-... And now the code:<br/>
-<br/>
-<br/>
-</p>
-<hr width="100%" size="2"/>
-<p><br/>
-</p>
-<p><span style="FONT-SIZE: 11px; COLOR: black; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent"><span style="FONT-SIZE: 11px; COLOR: green; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">'mht_converter.vbs</span><br/>
-<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Const</span> adSaveCreateNotExist <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 1<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Const</span> adSaveCreateOverWrite <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 2<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Const</span> adTypeBinary <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 1<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Const</span> adTypeText <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 2<br/>
-<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Set</span> args <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> WScript.Arguments<br/>
-<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">if</span> args.<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Count</span> <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 0 <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">then</span><br/>
-WScript.Echo <span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;Usage: [CScript | WScript] mht_converter.vbs &lt;html file&gt; &lt;mht filename&gt;&quot;</span><br/>
-WScript.Quit 1<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">end</span> <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">if</span><br/>
-<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Set</span> objMessage <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">CreateObject</span>(<span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;CDO.Message&quot;</span>)<br/>
-objMessage.CreateMHTMLBody args.<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Item</span>(0)<br/>
-SaveToFile objMessage, args.<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Item</span>(1)<br/>
-<br/>
-<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Sub</span> SaveToFile(Msg, Fn)<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Dim</span> Strm, Dsk<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Set</span> Strm <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">CreateObject</span>(<span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;ADODB.Stream&quot;</span>)<br/>
-Strm.Type <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> adTypeText<br/>
-Strm.Charset <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> <span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;US-ASCII&quot;</span><br/>
-Strm.Open<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Set</span> Dsk <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> Msg.DataSource<br/>
-Dsk.SaveToObject Strm, <span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;_Stream&quot;</span><br/>
-Strm.SaveToFile Fn, adSaveCreateOverWrite<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">End</span> <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Sub</span></span></p>
-<p><br>文章来源:<a href='http://202.115.22.199/Blog/electronixtar/archive/2007/01/14/13407.aspx'>http://202.115.22.199/Blog/electronixtar/archive/2007/01/14/13407.aspx</a><br><br><br />
-<img src ="http://202.115.22.199/Blog/electronixtar/aggbug/13407.aspx" width = "1" height = "1" /><img src ="http://www.cnblogs.com/est/aggbug/622500.html" width = "1" height = "1" /><div align=right><a style="text-decoration:none;" href="http://est.cnblogs.com/" target="_blank">est</a> 2007-01-17 11:48 <a href="http://www.cnblogs.com/est/archive/2007/01/17/622500.html#Feedback" target="_blank" style="text-decoration:none;">发表评论</a></div>
-</p></p>
+            <p class="card-text"><p>这不是XP/Vista的彩蛋，这是XP/VIsta的功能，高对比度，呵呵</p>
+<p>有什么用呢？</p>
+<p>比如说，图书馆的公用电脑，只有一个 书籍查阅软件 的界面，把explorer屏蔽了，但是</p>
+<p>1. 打开输入法，点帮助，然后C:\windows\explorer.exe，经典的输入法漏洞啊</p>
+<p>2. 按5次shift，然后随便找个帮助什么的，就可以打开C:了</p>
+<p>3. 按Win+U，放大镜，关于，有个&ldquo;访问Microsoft网站&rdquo;的链接</p>
+<p>4. 就是现在的了，Shift+Alt+PrtSc，呵呵</p>
+<p>一般的软件绝对想不到，要封这么多系统默认快捷键，汗。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
 <p>archive</p>            </div>
