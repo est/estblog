@@ -55,8 +55,7 @@
 
   
   <p>看到个骚操作，玩了一下，写了个 bookmarklet</p>
-<pre><code class="language-javascript">
-navigator.mediaDevices.getDisplayMedia({video:true}).then(function(stream){
+<pre><code class="language-javascript">navigator.mediaDevices.getDisplayMedia({video:true}).then(function(stream){
   const mr=new MediaRecorder(stream,{mimeType:&quot;video/webm;codecs=h264,opus&quot;});
   mr.ondataavailable=function(ev){
     const a=document.createElement('a');a.href=URL.createObjectURL(ev.data);
@@ -67,7 +66,7 @@ navigator.mediaDevices.getDisplayMedia({video:true}).then(function(stream){
 </code></pre>
 <p>这段代码也是很多WebRTC共享白板的实现原理。看起来也很简单，而且不需要额外的权限确认。</p>
 <p>如果不需要另存为一个名字，则可以直接 <code>location.assign()</code> 又节约几个字。不知道还有没有办法继续节约代码量？</p>
-<p>只是很好奇为啥chrome不支持 .mp4 封装。偏袒自家的 webm ？</p>
+<p>有点很好奇为啥chrome不支持 .mp4 封装。偏袒自家的 webm ？</p>
 
 </article>
 
