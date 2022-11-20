@@ -3472,82 +3472,17 @@ trackback:ping="http://franticindustries.com/blog/2007/01/28/google-is-the-new-h
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/cnblogs/622498"  rel="bookmark" >
-              <h2 class="card-title">在Windows下安装Ubuntu！注意，是直接在Win32下安装</h2>
+            <a href="/cnblogs/622506"  rel="bookmark" >
+              <h2 class="card-title">[导入]Alt+Shift+PrintScreen</h2>
             </a>
-            <p class="card-text"><p>很早就这么想，开源世界的 Linux 和 Windows 正面对抗是不现实的，那么我们可以作出一点好玩的事情来，这就是，把 Linux 当成一个很大的&ldquo;Windows软件&rdquo;安装到系统中，Linux直接发布成一个几百兆的 <strong>lin</strong>staller.exe，双击安装，在Windows下用Win32API实现磁盘分区，修改MBR挂Grub，然后解压安装包，复制系统文件的文件到分区，呵呵，这样安装Linux的时候也不至于那么无聊，至于Linux的在线升级也可以得到实施，例如电子科大的DrCom上网认证，因为 Ubuntu 是在 Windows 下直接安装的，那么 APT 源就可以不用通过代理直接通过DrCom拨号了，更惬意的是，可以一边安装 Linux 一边上网，听歌，it's super kool！</p>
-<p>这样做的令一个好处是：可以直接复制现有Windows系统理的 字体 和 解码包（Win32Codec）到Linux下，从而避免了版权方面的麻烦，这样做是符合 EULA 的。</p>
-<p>What are you waiting for? Check it out here:</p>
-<p><a href="http://www.ubuntuforums.org/showthread.php?t=338279">http://www.ubuntuforums.org/showthread.php?t=338279</a></p>
-<p>Now the screenshots and demo from ubuntuforums.org</p>
-<p><img src="http://dormforce.net/Blog/Attachment/663" alt=""/></p>
-<p><img src="http://dormforce.net/Blog/Attachment/664" alt=""/></p>
-<p><img src="http://dormforce.net/Blog/Attachment/665" alt=""/></p>
-<p>希望GNU/FOSS的精神能够做出更多有趣的东西出来！</p>
-<p>至于Ubuntu小组的具体实施，和我的想法有点不同，首先他们不修改MBR，直接修改boot.ini，（发本文为止，Vista下的BootManager还不支持），其次，这个项目是用 NullSoft <a href="http://nsis.sourceforge.net/BattleTorrent_plug-ins">Installation System</a> 做的，挂载了 BattleTorrent ，也就是说，一边下载一边安装。由于FAT格式的分区对大体积文件支持不好，所以这个安装程序并不支持Win95/98。</p>
-<div class="smallfont"><strong>Windows based installer - testers and developers wanted</strong> </div>
-<hr style="COLOR: #ffffff" size="1"/>
-<!-- / icon and title --><!-- message --><div class="ubuntu_messagebody" id="post_message_2011371"><font size="1">This thread is a continuation of the very long and unmanageable thread: <a href="http://www2.edn.cn/cache/http/index.php?q=http%3A%2F%2Fubuntuforums.org%2Fshowthread.php%3Ft%3D305109" target="_blank">http://ubuntuforums.org/showthread.php?t=305109</a></font><br/>
-<br/>
-We have a development version of a Windows based installer for Ubuntu which is designed to be:
-<ul>
-    <li>very simple to use </li>
-    <li>provide a no-risk installation </li>
-    <li>no repartitioning the hard disk </li>
-    <li>no changing the windows boot loader </li>
-    <li>Easy uninstallation. </li>
-    <li>Low risk </li>
-    <li>Doesn't use a virtual machine </li>
-    <li>Doesn't significantly reduce performance of the resulting installation </li>
-    <li>Resulting installation supports everything a normal install does. </li>
-    <li>Fast install </li>
-</ul>
-<br/>
-<div align="center">*************************</div>
-<br/>
-<b>Currently there is a prototype of the installer. see <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2Fwiki.ubuntu.com%2Finstall.exe%2FPrototype" target="_blank">https://wiki.ubuntu.com/install.exe/Prototype</a> for download and install instructions.</b><br/>
-<br/>
-<div align="center">*************************</div>
-<br/>
-The aim of this installer is to provide an easier way for a Windows user to install Ubuntu without having to know how to burn a cd iso, set the bios to boot from cd, repartition the disks, set up a multiboot system, etc. It will not replace any of the current Ubuntu installation options, and will not require that windows is installed prior to the installation of Ubuntu.<br/>
-<br/>
-The installer works by creating a disk image of a pre-installed ubuntu system on the hard disk (downloaded with a bittorrent downloader integrated into the installer, or a standard http download when we find mirrors), and then installing GRUB for windows, which can be chain loaded by the existing boot loader, and which then loads the linux kerner and initrd from the ntfs partition. The initrd is modified to support mounting the image file mentioned above as a root file system, and then continuing the boot process like a normal installation.<br/>
-<br/>
-This does not use a virtual machine to run linux on, so the performance of the resulting system will be similar to the performance of any other linux installation. The system will use ext3 in the image file, so users will get all the benefits of a linux filesystem.<br/>
-<br/>
-<b><u>Current progress</u></b><br/>
-A prototype has been made (see <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2Fwiki.ubuntu.com%2Finstall.exe%2FPrototype" target="_blank">https://wiki.ubuntu.com/install.exe/Prototype</a>) which works, however there are still a few unresolved issues:<br/>
-<br/>
-GUI Installer:
-<ul>
-    <li>UPNP </li>
-    <li>Advanced/Expert install </li>
-    <li>installation of other distributions (kubuntu, edubuntu, xubuntu etc.) </li>
-    <li>Langage support </li>
-    <li>slideshow during install </li>
-    <li>Disk space checks required </li>
-    <li>Support for installing on a secondary drive </li>
-    <li>Supporting installation of boot loader where the boot drive isn't c:\ </li>
-</ul>
-<br/>
-First boot:
-<ul>
-    <li>Hardware Detection </li>
-    <li>Importing settings from config.ini file </li>
-    <li>Swap file </li>
-</ul>
-<br/>
-For more details, refer to the following links:<br/>
-<br/>
-Launchpad entry here: <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2Fblueprints.launchpad.net%2Fubuntu%2F%2Bspec%2Fwindows-installer" target="_blank">https://blueprints.launchpad.net/ubu...dows-installer</a> <br/>
-Specification here: <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2Fwiki.ubuntu.com%2Finstall.exe" target="_blank">https://wiki.ubuntu.com/install.exe</a> <br/>
-Comments here: <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2Fwiki.ubuntu.com%2Finstall.exe%2FComments" target="_blank">https://wiki.ubuntu.com/install.exe/Comments</a> <br/>
-Prototype here: <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2Fwiki.ubuntu.com%2Finstall.exe%2FPrototype" target="_blank">https://wiki.ubuntu.com/install.exe/Prototype</a></div>
-<!-- / message -->
-<!-- attachments --><p>[内有附件]</p>
-<p><br>文章来源:<a href='http://202.115.22.199/Blog/electronixtar/archive/2007/01/16/13413.aspx'>http://202.115.22.199/Blog/electronixtar/archive/2007/01/16/13413.aspx</a><br><br><br />
-<img src ="http://202.115.22.199/Blog/electronixtar/aggbug/13413.aspx" width = "1" height = "1" /><img src ="http://www.cnblogs.com/est/aggbug/622498.html" width = "1" height = "1" /><div align=right><a style="text-decoration:none;" href="http://est.cnblogs.com/" target="_blank">est</a> 2007-01-17 11:48 <a href="http://www.cnblogs.com/est/archive/2007/01/17/622498.html#Feedback" target="_blank" style="text-decoration:none;">发表评论</a></div>
-</p></p>
+            <p class="card-text"><p>这不是XP/Vista的彩蛋，这是XP/VIsta的功能，高对比度，呵呵</p>
+<p>有什么用呢？</p>
+<p>比如说，图书馆的公用电脑，只有一个 书籍查阅软件 的界面，把explorer屏蔽了，但是</p>
+<p>1. 打开输入法，点帮助，然后C:\windows\explorer.exe，经典的输入法漏洞啊</p>
+<p>2. 按5次shift，然后随便找个帮助什么的，就可以打开C:了</p>
+<p>3. 按Win+U，放大镜，关于，有个&ldquo;访问Microsoft网站&rdquo;的链接</p>
+<p>4. 就是现在的了，Shift+Alt+PrtSc，呵呵</p>
+<p>一般的软件绝对想不到，要封这么多系统默认快捷键，汗。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
 <p>archive</p>            </div>
