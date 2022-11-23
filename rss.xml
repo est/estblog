@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Est's Blog</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 22 Nov 2022 01:38:59 +0800</lastBuildDate><item><title>8行javascript录制屏幕</title><link>https://blog.est.im/2022/stdout-11</link><description>&lt;p&gt;看到个骚操作，玩了一下，写了个 bookmarklet&lt;/p&gt;
+<rss version="2.0"><channel><title>Est's Blog</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Wed, 23 Nov 2022 16:33:14 +0800</lastBuildDate><item><title>生命的苦恼</title><link>https://blog.est.im/2022/stderr-11</link><description>&lt;p&gt;看到一则 &lt;a href="https://twitter.com/batfree/status/1589814655907958787"&gt;tweet&lt;/a&gt; 作者是 @batfree&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;2022-11-08 糖尿病是因为气候变化导致的，历史上曾经有在1000年内全球气温降了30度。进化导致血液中糖含量变高以抵御寒冷天气。这些人生存下来，但现在成了病。&lt;/li&gt;
+&lt;li&gt;2022-11-08 囊性纤维化会是种致命的遗传病，但是当年对抗&lt;a href="https://www.bilibili.com/video/BV1Vd4y1b7gX"&gt;结核病&lt;/a&gt;遗传下来的。病被消灭了，遗传就成了病。&lt;/li&gt;
+&lt;li&gt;2022-11-08 进化是为了保证你活到繁殖期。过了繁殖年龄之后，就自求多福了。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;从这个角度出发，可以得到一个简单粗暴的二极管结论：&lt;/p&gt;
+&lt;p&gt;从自然的角度来说，人生的快乐和欢愉都指向同一个终点——繁殖；繁殖之后剩下的生命，所有的苦恼纯粹是自找的。&lt;/p&gt;
+&lt;p&gt;这个道理对于动物来说估计都成立吧。但是我感觉人类又不一样：人类额外发明了语言和文化，又是群居社会动物。无论是猿人部落还是现代院子家庭，直亲还经常出于愿意和被迫把扶养后代的活儿外包给祖父母辈。人类幼崽超长幼年期麻烦还是不少的。&lt;/p&gt;
+&lt;p&gt;想起来有个说法，说古代人平均寿命也就30左右，现代人能活到70+的寿命其实历史不长。超长的寿命带来的问题是古人解决不了的，因为古人普遍活不了那么长。古人送命的机会太多了，难产，饥饿，野兽，战争。&lt;/p&gt;
+&lt;p&gt;又想起来为啥春秋多义士，我猜是那个年代稍微人丁兴旺的农耕家族，个人的存在意义是很渺小的，除了家族能提供的有限支持，普遍没有社会保障，普通庶出的人，在碌碌无为中意外死亡的情况太多了。所以能成就一点「义」其实很划得来。相比「秦」制之下，每个人的发展被固定到了国家机器的轨道上，整个人生就被二向化：要么立军功，要么被隔壁老王立军功来束缚你。这个制度刚性到什么程度，连战神白起晚年被贬为普通士卒发配到甘肃，居然不用担心他任何反叛的可能性。后世那种什么节度使拥军自重的 bug 压根不存在。&lt;/p&gt;
+&lt;p&gt;扯远了。之前也想过&lt;a href="/201910/stdout-006"&gt;生命的意义&lt;/a&gt;这些问题，但是没想过的是这个意义完成之后会发生什么？现代人普遍活到 70+ 的寿命，其实不是一个历史常见的现象。这是工业革命带来的农药化肥+青霉素作为保障，商业社会带来海量的以和平为主的个体发展机遇，&lt;/p&gt;
+&lt;p&gt;比如&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;某加拿大极端保守播主：女人能活到80岁，但40岁就不能生孩子了！如果没有小孩，她怎么过剩下来的40年？&lt;br /&gt;
+《雷神》导演回复：环游世界、感受生活的美好、创造艺术、帮扶自己的亲属、遇到自己爱的人、找寻属于自己的快乐、成就事业、获得别人的认可，然后在你这个满怀仇恨渡过渺小一生的人的坟头蹦迪。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img alt="" src="/images/2022/stderr-11-01.webp" /&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 23 Nov 2022 16:33:14 +0800</pubDate><guid isPermaLink="false">tag:None,2022-11-23:/2022/stderr-11</guid><category>stderr</category></item><item><title>8行javascript录制屏幕</title><link>https://blog.est.im/2022/stdout-11</link><description>&lt;p&gt;看到个骚操作，玩了一下，写了个 bookmarklet&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-javascript"&gt;navigator.mediaDevices.getDisplayMedia({video:true}).then(function(stream){
   const mr=new MediaRecorder(stream,{mimeType:&amp;quot;video/webm;codecs=h264,opus&amp;quot;});
   mr.ondataavailable=function(ev){
@@ -495,37 +512,4 @@ git push
 &lt;/ol&gt;
 &lt;p&gt;以「搜索」为核心的购物，有一个根本性的缺陷，有些东西不知道搜什么关键词好，比如我家厨房垃圾处理器和洗碗机连接头，没专用名字的东西，你是没法搜的。搜索购物必须是已知的。也就是说他面向的是一个存量的商品，货架上现成的。但是这个世界创新又往往发生在边界。甚至有些东西不是你想搜就能搜的，比如究竟什么款式和颜色的衣服更适合特定形体的观众？这个东西是无法用「关键词」描述的。关键词是离散的，而人的需求是平滑连续的。&lt;/p&gt;
 &lt;p&gt;如果你是个带货主播，那么长期来看，个人品味可能会决定生存和人气。或许渠道的价值要大于品牌本身的价值了？比如穿搭这一块，很可能会是视频导购的基本盘，细分市场被几个头部主播把持。然而这一点很矛盾的是，穿着是一件很个性的事，撞衫这种事见光死。有一点可以确定的是，有一些 niche market 应该会积累一大批忠实观众。比如车评人、手机圈、PC圈、相机圈、美妆圈等。&lt;/p&gt;
-&lt;p&gt;直播带货虽然谈不上什么大创造发明，但这种方式恐怕会在将来统治这个时代。或者说将来很长一段时间，在解决了如何上手和如何配送的问题后，很多人购物的习惯可能会以直播/小视频为主了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 14 Jun 2022 15:15:20 +0800</pubDate><guid isPermaLink="false">tag:None,2022-06-14:/2022/stderr-07</guid><category>stderr</category></item><item><title>格局打开：要社会主义，要民主，请买房</title><link>https://blog.est.im/2022/stderr-06</link><description>&lt;p&gt;最近房地产因为政策原因又火爆起来了，很多人说起房子就头痛，说这房子这泡沫，误国殃民，那么我今天键政一个扯谈的道理，格局打开，要实现民主，要实现社会主义，要达到人间天堂，请大力买房。&lt;/p&gt;
-&lt;h3&gt;论买房&lt;/h3&gt;
-&lt;p&gt;首先用 etymology 讲一个概念，有房者 == 布尔乔亚。&lt;a href="https://weibo.com/ttarticle/p/show?id=2309404293876352424418"&gt;论述过程&lt;/a&gt;：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;bourgeoisie来自于法语bourgeois；作为与法语有颇多亲戚关系的意大利语，对应的则是borghese；作为距离拉丁语衍化距离比较近的意大利语，自然也能够能希腊语中找到其对应的词，而意大利语的borghese则是源自希腊语πύργος，πύργος演化自πόλη即村庄 borgo，而布尔乔亚本身放之希腊语中即意味着在村庄中心拥有房子的自由人&lt;br /&gt;
-布尔乔亚出现在中古时期的意大利，那时住在村庄中的居民开始变得比住在附近乡间的人还要富有。因此他们可以获得相对上较多的权力和影响力，越来越接近统治阶级和神职人员，同时逐渐远离平民阶级。这种中古时期的布尔乔亚原型就是磨坊拥有者，他们能够快速地对当地经济产生重大影响力，以至于可以对统治者表达否决权。&lt;br /&gt;
-在接下来的世纪里，布尔乔亚这个名词则较适合用来指称最初的银行家，以及那些从事新兴活动如贸易和金融的人。11世纪，法语中的burgeis指那些摆脱了封建管辖权而获得法律权利的中世纪城镇（bourgs）居民。19世纪之前，这个词大部分情况下指的就是低于贵族、高于农奴和无产阶级的广大人群。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;所以什么是布尔乔亚呢？在农村，就是在乡镇最繁华的集市旁有房的人；在城市，就是在CBD商圈附近有房的人。&lt;/p&gt;
-&lt;p&gt;在后来被中国人熟悉的马先知的预言体系里，布尔乔亚除了不动产这个空间上的意义之外，还有一层时间上的意思：&lt;/p&gt;
-&lt;p&gt;布尔乔亚，就是躺平靠资产收入也能过比较好的日子的人&lt;/p&gt;
-&lt;p&gt;当然这个「资产」在彼时的欧洲，也可以指工厂和种植园等资产，但是放在今时，还是房地产更保值。但最重要的是，他们受封建领主和神职人员的约束较小，有一定的经济自持能力。&lt;/p&gt;
-&lt;h3&gt;拥房躺平意味着什么&lt;/h3&gt;
-&lt;p&gt;首先，布尔乔亚意味着脱产，有源源不断的被动收入，布尔乔亚就开始包养科学、技术和文艺的发展，如果你仔细观察文艺复兴和启蒙运动甚至工业革命，可以发现这些东西的发明跟贫苦大众一毛线关系都木有，都是为了实现资产增值。达芬奇 米开朗基罗的艺术成就是给布尔乔亚画大头照，哥白尼、弟谷、开普勒是给布尔乔亚论证信仰的纯正性，瓦特改进蒸汽机，是为了资方 Soho Manufactory用来制作金属艺术品，像金属钮扣、白铁矿钻石模仿物等等供应英国布尔乔亚消费。更古老的希腊人已知正多面体共有5种，这种知识更多是纯粹是脱产的布尔乔亚之间拿来炫技展示智商优越感的一种娱乐方式。&lt;/p&gt;
-&lt;h3&gt;拥房者才能推翻封建统治&lt;/h3&gt;
-&lt;p&gt;房产属于私产，这里私是次要的，重要的是产，它是个物理存在，不是虚拟的大饼，不能用爱发电。虽然神职人员天天洗脑没有上帝就没有旧世界，但是房可是自己辛辛苦苦打拼才能维护的，所以布尔乔亚没有负罪感。所以布尔乔亚对现实物质利益的认知和判断远远大于对信仰的坚持或者领主的忠诚。所以后来打破封建统治的标志性事件——法国大革命，在马先知看来，就是布尔乔亚革命，也被叫做 bourgeois-democratic revolution。布尔乔亚谁都不服谁，干脆各自退一步妥协凑合过日子。有妥协才有民主。&lt;/p&gt;
-&lt;p&gt;而为什么布尔乔亚要打破旧制度，革命呢？课本上有很多解释，比如路易十六打了败仗要加税，布尔乔亚需要政治地位等等。这些解释都没有一个理由有力：&lt;em&gt;布尔乔亚为了防止自己的资产贬值&lt;/em&gt;。所以法国很快3年就变天了。&lt;/p&gt;
-&lt;h3&gt;有产才会背水一战&lt;/h3&gt;
-&lt;p&gt;最近看到&lt;a href="https://www.zhihu.com/question/531138749/answer/2470308571"&gt;一个理论&lt;/a&gt;很有感叹，那就是 「所有争论不休都是因为双方没有利益方，都是隔空对线」&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;事实证明，超前的，基于进步主义意识形态，而非基于真实利益的改革，最后的归宿就是政治化——因为这件事情无论按照谁的观点做成了，也互相都没什么钱收卖不爽的一方，那就只能梗着脖子争道理了，这就会成为政党之间斗争的焦点。罗诉韦德案是这样的，奥巴马在位时期大力推广的对弱势族裔的平权政策也是一样。但是，要找到一个既能解放生产力产生巨大的利益，又符合意识形态的改革点，是很难很难的。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;从这个意义上来说，我觉得那个骑自行车「it's my duty」只是一句口号罢了。你全身家当只有一个破自行车，有太多的变通退路了。&lt;/p&gt;
-&lt;p&gt;当你真的为了保护家产无路可退，才会产生如同土地革命一样的革命被动积极性。&lt;/p&gt;
-&lt;h3&gt;产劫&lt;/h3&gt;
-&lt;p&gt;马先知预言一个流淌着牛奶与蜂蜜的远方，但其实有另一个&lt;a href="https://en.wikipedia.org/wiki/Two-stage_theory"&gt;两段诅咒&lt;/a&gt;，也就是说，无产信众欲到达天堂，首先信众得有产；有产经过「产劫」，才能变共产。&lt;/p&gt;
-&lt;p&gt;翻译成人话，就是得买房。现在想起来很有道理。比如上海为什么封控闹得这么欢？我感觉一大部分因素还是上海有体面住房的人太多了，屁事多。对于北京或者其他城市地下室吭窝窝头的租房人，被主子从天上额外赏赐几个馅饼，不是更高兴么。上海人的幻灭，可能是发现了教权国家的本来面目，教权是大于人权的&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;中国自古以来就是一个高度宗教化的社会，教权不仅远大于王权，而且王权在某些时候甚至还有附庸于教权的性质，实际上世界上极少有如中国这样在历史上相当长的时期内完全围绕宗教展开社会组织的文明体系&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;觉得上面的论述离经叛道？请务必点开链接围观 &lt;a href="https://www.zhihu.com/question/28864242/answer/2435378426"&gt;https://www.zhihu.com/question/28864242/answer/2435378426&lt;/a&gt;&lt;/p&gt;
-&lt;h3&gt;结论&lt;/h3&gt;
-&lt;p&gt;如果马先知的预言正确，那么无论你支持民主，还是支持社会主义，都请你买房，鼓励身边的人买房，特别是公务员和干部朋友买房，要早买，大买，投入全身家当买；有了房才有城市，有了城市才有居民自治，有了居民自治才有物管权和产权的认知启蒙，才会有最基础的去教权的公民政治底蕴。&lt;/p&gt;
-&lt;p&gt;哦对了，还有不要租房、分房，租房和分房只会把你变成封建附庸。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 18 May 2022 10:43:27 +0800</pubDate><guid isPermaLink="false">tag:None,2022-05-18:/2022/stderr-06</guid><category>stderr</category></item></channel></rss>
+&lt;p&gt;直播带货虽然谈不上什么大创造发明，但这种方式恐怕会在将来统治这个时代。或者说将来很长一段时间，在解决了如何上手和如何配送的问题后，很多人购物的习惯可能会以直播/小视频为主了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 14 Jun 2022 15:15:20 +0800</pubDate><guid isPermaLink="false">tag:None,2022-06-14:/2022/stderr-07</guid><category>stderr</category></item></channel></rss>
