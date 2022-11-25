@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Twitter资助的 Bluesky项目 - Est's Blog</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Twitter资助的 Bluesky项目" />
+
+      <link rel="canonical" href="https://blog.est.im/2022/stdin-19" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    Est's Blog
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link active">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Twitter资助的 Bluesky项目</h2>
+    <p class="post-date">Posted <time datetime="2022-11-25T10:41:05+08:00">2022-11-25</time> | <span>stdin</span></p>
+  </header>
+
+  
+  <p>发现一个有点好玩的东东 <a href="https://github.com/bluesky-social/atproto">ATP(Authenticated Transfer Protocol)协议</a>，是 ActivityPub 的竞品。ATP对应 blusky，AP 对应 Mastodon</p>
+<p>其中<a href="https://github.com/bluesky-social/atproto/issues/255#issuecomment-1287953987">维护者pfraze谈到为什么</a>要抛开 ActivityPub 单独搞一套协议：</p>
+<blockquote>
+<p>There are a lot of differing design decisions.</p>
+<p>Account portability is a major reason why we chose to build a separate protocol. Signed data repositories and DIDs are both unique to ATP and not terribly easy to retrofit into ActivityPub.</p>
+<p>There are smaller things as well: a different viewpoint about how schemas should be handled, a preference for domain usernames over AP’s double-@ email usernames, and the goal of having large scale search and discovery (rather than the hashtag style of discovery that AP favors).</p>
+<p>Meta:</p>
+<p>The AP community has always been somewhat suspicious of Bluesky, for reasons that are understandable. AP’s community is volunteer driven and the users joined to escape Twitter. So, here we come, a startup funded by Twitter, with strong opinions on how the tech should be done. I’ve heard concerns that we’d “embrace, extend, &amp; extinguish.” I’ve heard concerns that we’d force through changes that people don’t want by dint of being a funded company. You can criticize us for going a different direction but I think it’d have been a difficult collaboration if we chose to use AP, especially since we weren’t willing to compromise on some of the decisions above.</p>
+</blockquote>
+<p>其中ATP 支持直接用域名而不是 Mastodon 的双at <code>@someone@somesite.com</code> 的形式，我觉得非常好！</p>
+<p><a href="https://news.ycombinator.com/item?id=33737896">via</a></p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2022/stdin-19';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>
