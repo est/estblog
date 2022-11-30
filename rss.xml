@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Est's Blog</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Wed, 30 Nov 2022 18:02:18 +0800</lastBuildDate><item><title>Web Animation实现动画变灰</title><link>https://blog.est.im/2022/stdout-12</link><description>&lt;p&gt;在2006年我开始网上留下印记的时候，写了一个 dHTML 特效模拟&lt;a href="https://blog.est.im/cnblogs/600413"&gt;XP关机对话框变灰&lt;/a&gt;， 那个时候大行其道的还是IE6，用的还是微软特有的 &lt;code&gt;filter:progid:DXImageTransform.Microsoft.Fade&lt;/code&gt; 叠加两个&lt;code&gt;&amp;lt;div&amp;gt;&lt;/code&gt;实现。&lt;/p&gt;
-&lt;p&gt;今天（2022-11-30）恰好长者去逝，学习一下最新的css姿势。本来想用 CSS Animation+Filter实现，还是比较麻烦。比如我参考的例子是&lt;a href="https://levelup.gitconnected.com/recreating-the-red-dead-redemption-2-tintype-loading-screen-effect-in-css-10ca87d5b9de"&gt;模仿 Red Dead Redemption 2 黑白图&lt;/a&gt;的动画效果css&lt;/p&gt;
+<rss version="2.0"><channel><title>Est's Blog</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Wed, 30 Nov 2022 18:02:18 +0800</lastBuildDate><item><title>Web Animation实现页面逐渐变灰</title><link>https://blog.est.im/2022/stdout-12</link><description>&lt;p&gt;在2006年我开始网上留下印记的时候，写了一个 dHTML 特效模拟&lt;a href="https://blog.est.im/cnblogs/600413"&gt;XP关机对话框变灰&lt;/a&gt;， 那个时候大行其道的还是IE6，用的还是微软特有的 &lt;code&gt;filter:progid:DXImageTransform.Microsoft.Fade&lt;/code&gt; 叠加两个&lt;code&gt;&amp;lt;div&amp;gt;&lt;/code&gt;实现。&lt;/p&gt;
+&lt;p&gt;今天（2022-11-30）恰好长者去逝，学习一下最新的css姿势再实现一次。本来想用 CSS Animation+Filter实现，还是比较麻烦。比如我参考的例子是&lt;a href="https://levelup.gitconnected.com/recreating-the-red-dead-redemption-2-tintype-loading-screen-effect-in-css-10ca87d5b9de"&gt;模仿 Red Dead Redemption 2&lt;/a&gt; 照片效果css&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;  #invert{
-    animation: mask 5s steps(69) infinite alternate;
+    filter: invert(1.0) grayscale(1.0);
   }
-  @keyframes mask{
+  #photo{
+    animation: blur 5s infinite alternate;
+  }
+  @keyframes blur{
     from{
-      mask-position: 0% 0%;
+      filter: blur(3px);
+      opacity: 0;
     }
     to{
-      mask-position: 100% 0%;
+      filter: blur(0px);
+      opacity: 1;
     }
   }
 &lt;/code&gt;&lt;/pre&gt;
@@ -21,7 +26,7 @@
   ], {duration: 2000, fill: 'forwards'})
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;这样写比 css 方便多了。加一个类似照相机闪光灯过曝的效果。其中 &lt;code&gt;fill: 'forwards'&lt;/code&gt; 可以让变灰之后停下来。&lt;/p&gt;
-&lt;p&gt;放一个 demo 在这里：https://lab.est.im/grayscale_animation&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 30 Nov 2022 18:02:18 +0800</pubDate><guid isPermaLink="false">tag:None,2022-11-30:/2022/stdout-12</guid><category>stdout</category></item><item><title>Twitter资助的 Bluesky项目</title><link>https://blog.est.im/2022/stdin-19</link><description>&lt;p&gt;发现一个有点好玩的东东 &lt;a href="https://github.com/bluesky-social/atproto"&gt;ATP(Authenticated Transfer Protocol)协议&lt;/a&gt;，是 ActivityPub 的竞品。ATP对应 blusky，AP 对应 Mastodon&lt;/p&gt;
+&lt;p&gt;放一个 demo 在这里：&lt;a href="https://lab.est.im/grayscale_animation"&gt;https://lab.est.im/grayscale_animation&lt;/a&gt; 点一下可以再变一次&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 30 Nov 2022 18:02:18 +0800</pubDate><guid isPermaLink="false">tag:None,2022-11-30:/2022/stdout-12</guid><category>stdout</category></item><item><title>Twitter资助的 Bluesky项目</title><link>https://blog.est.im/2022/stdin-19</link><description>&lt;p&gt;发现一个有点好玩的东东 &lt;a href="https://github.com/bluesky-social/atproto"&gt;ATP(Authenticated Transfer Protocol)协议&lt;/a&gt;，是 ActivityPub 的竞品。ATP对应 blusky，AP 对应 Mastodon&lt;/p&gt;
 &lt;p&gt;其中&lt;a href="https://github.com/bluesky-social/atproto/issues/255#issuecomment-1287953987"&gt;维护者pfraze谈到为什么&lt;/a&gt;要抛开 ActivityPub 单独搞一套协议：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;There are a lot of differing design decisions.&lt;/p&gt;

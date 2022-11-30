@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Web Animation实现动画变灰 - Est's Blog</title>
+    <title>Web Animation实现页面逐渐变灰 - Est's Blog</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Web Animation实现动画变灰" />
+    <meta name="description" content="Web Animation实现页面逐渐变灰" />
 
       <link rel="canonical" href="https://blog.est.im/2022/stdout-12" />
 
@@ -49,22 +49,27 @@
 
 <article class="post">
   <header class="post-header">
-    <h2 class="post-title">Web Animation实现动画变灰</h2>
+    <h2 class="post-title">Web Animation实现页面逐渐变灰</h2>
     <p class="post-date">Posted <time datetime="2022-11-30T18:02:18+08:00">2022-11-30</time> | <span>stdout</span></p>
   </header>
 
   
   <p>在2006年我开始网上留下印记的时候，写了一个 dHTML 特效模拟<a href="https://blog.est.im/cnblogs/600413">XP关机对话框变灰</a>， 那个时候大行其道的还是IE6，用的还是微软特有的 <code>filter:progid:DXImageTransform.Microsoft.Fade</code> 叠加两个<code>&lt;div&gt;</code>实现。</p>
-<p>今天（2022-11-30）恰好长者去逝，学习一下最新的css姿势。本来想用 CSS Animation+Filter实现，还是比较麻烦。比如我参考的例子是<a href="https://levelup.gitconnected.com/recreating-the-red-dead-redemption-2-tintype-loading-screen-effect-in-css-10ca87d5b9de">模仿 Red Dead Redemption 2 黑白图</a>的动画效果css</p>
+<p>今天（2022-11-30）恰好长者去逝，学习一下最新的css姿势再实现一次。本来想用 CSS Animation+Filter实现，还是比较麻烦。比如我参考的例子是<a href="https://levelup.gitconnected.com/recreating-the-red-dead-redemption-2-tintype-loading-screen-effect-in-css-10ca87d5b9de">模仿 Red Dead Redemption 2</a> 照片效果css</p>
 <pre><code>  #invert{
-    animation: mask 5s steps(69) infinite alternate;
+    filter: invert(1.0) grayscale(1.0);
   }
-  @keyframes mask{
+  #photo{
+    animation: blur 5s infinite alternate;
+  }
+  @keyframes blur{
     from{
-      mask-position: 0% 0%;
+      filter: blur(3px);
+      opacity: 0;
     }
     to{
-      mask-position: 100% 0%;
+      filter: blur(0px);
+      opacity: 1;
     }
   }
 </code></pre>
@@ -76,7 +81,7 @@
   ], {duration: 2000, fill: 'forwards'})
 </code></pre>
 <p>这样写比 css 方便多了。加一个类似照相机闪光灯过曝的效果。其中 <code>fill: 'forwards'</code> 可以让变灰之后停下来。</p>
-<p>放一个 demo 在这里：https://lab.est.im/grayscale_animation</p>
+<p>放一个 demo 在这里：<a href="https://lab.est.im/grayscale_animation">https://lab.est.im/grayscale_animation</a> 点一下可以再变一次</p>
 
 </article>
 
