@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Est's Blog</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Wed, 30 Nov 2022 10:20:21 +0800</lastBuildDate><item><title>Twitter资助的 Bluesky项目</title><link>https://blog.est.im/2022/stdin-19</link><description>&lt;p&gt;发现一个有点好玩的东东 &lt;a href="https://github.com/bluesky-social/atproto"&gt;ATP(Authenticated Transfer Protocol)协议&lt;/a&gt;，是 ActivityPub 的竞品。ATP对应 blusky，AP 对应 Mastodon&lt;/p&gt;
+<rss version="2.0"><channel><title>Est's Blog</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Wed, 30 Nov 2022 18:02:18 +0800</lastBuildDate><item><title>Web Animation实现动画变灰</title><link>https://blog.est.im/2022/stdout-12</link><description>&lt;p&gt;在2006年我开始网上留下印记的时候，写了一个 dHTML 特效模拟&lt;a href="https://blog.est.im/cnblogs/600413"&gt;XP关机对话框变灰&lt;/a&gt;， 那个时候大行其道的还是IE6，用的还是微软特有的 &lt;code&gt;filter:progid:DXImageTransform.Microsoft.Fade&lt;/code&gt; 叠加两个&lt;code&gt;&amp;lt;div&amp;gt;&lt;/code&gt;实现。&lt;/p&gt;
+&lt;p&gt;今天（2022-11-30）恰好长者去逝，学习一下最新的css姿势。本来想用 CSS Animation+Filter实现，还是比较麻烦。比如我参考的例子是&lt;a href="https://levelup.gitconnected.com/recreating-the-red-dead-redemption-2-tintype-loading-screen-effect-in-css-10ca87d5b9de"&gt;模仿 Red Dead Redemption 2 黑白图&lt;/a&gt;的动画效果css&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  #invert{
+    animation: mask 5s steps(69) infinite alternate;
+  }
+  @keyframes mask{
+    from{
+      mask-position: 0% 0%;
+    }
+    to{
+      mask-position: 100% 0%;
+    }
+  }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这个方式有个问题就是需要单独设置一个 &lt;code&gt;&amp;lt;script&amp;gt;&lt;/code&gt; 元素。后来经过 &lt;a href="https://twitter.com/yuanchuan23"&gt;@yuanchuan23&lt;/a&gt; 的指点发现可以通过 Web Animation 更简单的实现：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  document.body.animate([
+    {filter: 'brightness(none) grayscale(0%)'},
+    {filter: 'brightness(10) grayscale(10%)', offset: 0.2},
+    {filter: 'brightness(1) grayscale(100%)'}
+  ], {duration: 2000, fill: 'forwards'})
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这样写比 css 方便多了。加一个类似照相机闪光灯过曝的效果。其中 &lt;code&gt;fill: 'forwards'&lt;/code&gt; 可以让变灰之后停下来。&lt;/p&gt;
+&lt;p&gt;放一个 demo 在这里：https://lab.est.im/grayscale_animation&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 30 Nov 2022 18:02:18 +0800</pubDate><guid isPermaLink="false">tag:None,2022-11-30:/2022/stdout-12</guid><category>stdout</category></item><item><title>Twitter资助的 Bluesky项目</title><link>https://blog.est.im/2022/stdin-19</link><description>&lt;p&gt;发现一个有点好玩的东东 &lt;a href="https://github.com/bluesky-social/atproto"&gt;ATP(Authenticated Transfer Protocol)协议&lt;/a&gt;，是 ActivityPub 的竞品。ATP对应 blusky，AP 对应 Mastodon&lt;/p&gt;
 &lt;p&gt;其中&lt;a href="https://github.com/bluesky-social/atproto/issues/255#issuecomment-1287953987"&gt;维护者pfraze谈到为什么&lt;/a&gt;要抛开 ActivityPub 单独搞一套协议：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;There are a lot of differing design decisions.&lt;/p&gt;
@@ -259,20 +281,20 @@ btw2 把 RSS 改成全文输出了。&lt;/p&gt;</description><dc:creator xmlns:d
 &lt;li&gt;(D) 开车出事&lt;/li&gt;
 &lt;li&gt;(E) 打架、杀人、伤人&lt;/li&gt;
 &lt;li&gt;(F) 帮别人修理电脑或者网络&lt;/li&gt;
-&lt;li&gt;(G) 贿赂&lt;pre&gt;&lt;code&gt;&amp;lt;details&amp;gt;
-    &amp;lt;summary&amp;gt;正确答案：&amp;lt;/summary&amp;gt;
-    (D) (B) (G) 帮助信息网络犯罪活动罪（以下简称帮信罪）是2015年11月起施行的刑法修正案（九）新增罪名，主要指行为人明知他人利用信息网络实施犯罪，为其犯罪提供互联网接入、服务器托管、网络存储、通信传输等技术支持，或者提供广告推广、支付结算等帮助的犯罪行为，是电信网络犯罪的重要“帮凶”。2019年11月，最高检联合最高法制定出台《关于办理非法利用信息网络、帮助信息网络犯罪活动等刑事案件适用法律若干问题的解释》，明确了帮信罪定罪量刑标准和有关司法认定问题。近年来，特别是2020年10月“断卡”行动以来，检察机关起诉涉嫌帮信犯罪案件上涨较快，目前已成为各类刑事犯罪中起诉人数排名第3的罪名（前两位分别是危险驾驶罪、盗窃罪）。
-&amp;lt;/details&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
+&lt;li&gt;(G) 贿赂&lt;/li&gt;
 &lt;/ul&gt;
+&lt;details&gt;
+  &lt;summary&gt;正确答案：&lt;/summary&gt;
+  (D) (B) (G) 帮助信息网络犯罪活动罪（以下简称帮信罪）是2015年11月起施行的刑法修正案（九）新增罪名，主要指行为人明知他人利用信息网络实施犯罪，为其犯罪提供互联网接入、服务器托管、网络存储、通信传输等技术支持，或者提供广告推广、支付结算等帮助的犯罪行为，是电信网络犯罪的重要“帮凶”。2019年11月，最高检联合最高法制定出台《关于办理非法利用信息网络、帮助信息网络犯罪活动等刑事案件适用法律若干问题的解释》，明确了帮信罪定罪量刑标准和有关司法认定问题。近年来，特别是2020年10月“断卡”行动以来，检察机关起诉涉嫌帮信犯罪案件上涨较快，目前已成为各类刑事犯罪中起诉人数排名第3的罪名（前两位分别是危险驾驶罪、盗窃罪）。
+&lt;/details&gt;
+
 &lt;p&gt;然后说回爬虫，最近看到&lt;a href="https://www.spp.gov.cn/spp/llyj/202202/t20220215_544538.shtml"&gt;《明确越界网络爬虫行为的刑事处罚边界》&lt;/a&gt;，虽然不是法规文件，但是可以参考。总体来说：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;如果你是 IT  从业人员，那么明知故犯罪加一等&lt;/li&gt;
 &lt;li&gt;小爬没事，把别人服务器爬出500错误了就麻烦了。需要登录或者有反爬最好不要去碰&lt;/li&gt;
 &lt;li&gt;公开数据理论上没事。不遵守 &lt;code&gt;robots.txt&lt;/code&gt; 也无所谓&lt;/li&gt;
 &lt;/ol&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 18 Oct 2022 22:28:20 +0800</pubDate><guid isPermaLink="false">tag:None,2022-10-18:/2022/stdin-12</guid><category>stdin</category></item><item><title>乌克兰的 Starlink 究竟是美帝还是 Elon Musk 出的钱？</title><link>https://blog.est.im/2022/stdin-11</link><description>&lt;p&gt;事情起因：Elon Musk 闲的蛋痛发起了一个关于俄乌战争如何和平的投票&lt;/p&gt;
-&lt;p&gt;https://twitter.com/MelnykAndrij/status/1576977000178208768&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://twitter.com/MelnykAndrij/status/1576977000178208768"&gt;https://twitter.com/MelnykAndrij/status/1576977000178208768&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;乌克兰前外交官回了一句 Fuck off&lt;/p&gt;
 &lt;p&gt;Elon Musk 就说给乌克兰的 starlink 已经烧了 $80 million，不再免费了。拜拜。&lt;/p&gt;
 &lt;p&gt;有人说，Starlink 其实是美帝联邦政府（USAID，U.S. Agency for International Development）出的钱。&lt;/p&gt;
@@ -293,13 +315,13 @@ btw2 把 RSS 改成全文输出了。&lt;/p&gt;</description><dc:creator xmlns:d
 &lt;li&gt;(C): 张飞&lt;/li&gt;
 &lt;li&gt;(D): 卢植&lt;/li&gt;
 &lt;li&gt;(E): 袁绍&lt;/li&gt;
-&lt;li&gt;(F): 何进&lt;pre&gt;&lt;code&gt;&amp;lt;details&amp;gt;
-    &amp;lt;summary&amp;gt;正确答案：&amp;lt;/summary&amp;gt;
-    (A)。年十五，母使行学，与同宗刘德然、辽西公孙瓒俱事故九江太守同郡卢植。…… 而瓒深与先主相友。瓒年长，先主以兄事之。
-&amp;lt;/details&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
+&lt;li&gt;(F): 何进&lt;/li&gt;
 &lt;/ul&gt;
+&lt;details&gt;
+    &lt;summary&gt;正确答案：&lt;/summary&gt;
+    (A)。年十五，母使行学，与同宗刘德然、辽西公孙瓒俱事故九江太守同郡卢植。…… 而瓒深与先主相友。瓒年长，先主以兄事之。
+&lt;/details&gt;
+
 &lt;ol start="2"&gt;
 &lt;li&gt;刘备在15岁左右最大的爱好是？（多选），最不喜欢做的是？&lt;/li&gt;
 &lt;/ol&gt;
@@ -310,13 +332,13 @@ btw2 把 RSS 改成全文输出了。&lt;/p&gt;</description><dc:creator xmlns:d
 &lt;li&gt;(D): 开车(ju)&lt;/li&gt;
 &lt;li&gt;(E): 穿潮牌衣服&lt;/li&gt;
 &lt;li&gt;(F): 读书&lt;/li&gt;
-&lt;li&gt;(G): 军事和键政&lt;pre&gt;&lt;code&gt;&amp;lt;details&amp;gt;
-    &amp;lt;summary&amp;gt;正确答案：&amp;lt;/summary&amp;gt;
-    喜欢：(D) (C) (E) (A)；不喜欢：(F) 先主不甚乐读书，喜狗马、音乐、美衣服……好交结豪侠
-&amp;lt;/details&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
+&lt;li&gt;(G): 军事和键政&lt;/li&gt;
 &lt;/ul&gt;
+&lt;details&gt;
+    &lt;summary&gt;正确答案：&lt;/summary&gt;
+    喜欢：(D) (C) (E) (A)；不喜欢：(F) 先主不甚乐读书，喜狗马、音乐、美衣服……好交结豪侠
+&lt;/details&gt;
+
 &lt;ol start="3"&gt;
 &lt;li&gt;汉灵帝末年，黄巾军起义，刘备参军，通过什么方式获得了第一次军功？&lt;/li&gt;
 &lt;/ol&gt;
@@ -326,13 +348,13 @@ btw2 把 RSS 改成全文输出了。&lt;/p&gt;</description><dc:creator xmlns:d
 &lt;li&gt;(C): 自己和兄弟的勇猛冲锋&lt;/li&gt;
 &lt;li&gt;(D): 收买敌人&lt;/li&gt;
 &lt;li&gt;(E): 军力，装备和军事武器器械&lt;/li&gt;
-&lt;li&gt;(F): 物资多，耗死对方&lt;pre&gt;&lt;code&gt;&amp;lt;details&amp;gt;
-    &amp;lt;summary&amp;gt;正确答案：&amp;lt;/summary&amp;gt;
-    (B) 典略曰：平原刘子平……遣（刘备）从事将兵讨纯……遇贼于野，备中创阳死，贼去后，故人以车载之，得免。后以军功，为中山安喜尉。
-&amp;lt;/details&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
+&lt;li&gt;(F): 物资多，耗死对方&lt;/li&gt;
 &lt;/ul&gt;
+&lt;details&gt;
+    &lt;summary&gt;正确答案：&lt;/summary&gt;
+    (B) 典略曰：平原刘子平……遣（刘备）从事将兵讨纯……遇贼于野，备中创阳死，贼去后，故人以车载之，得免。后以军功，为中山安喜尉。
+&lt;/details&gt;
+
 &lt;ol start="4"&gt;
 &lt;li&gt;刘备临死之前托孤给丞相诸葛亮，诏书中跟他儿子（刘禅）总结了他这辈子的缺点是：&lt;/li&gt;
 &lt;/ol&gt;
@@ -341,13 +363,12 @@ btw2 把 RSS 改成全文输出了。&lt;/p&gt;</description><dc:creator xmlns:d
 &lt;li&gt;(B): 人才梯队建设欠缺&lt;/li&gt;
 &lt;li&gt;(C): 时机和背景机遇弱&lt;/li&gt;
 &lt;li&gt;(D): 人品道德问题&lt;/li&gt;
-&lt;li&gt;(E): 战略或执行错误&lt;pre&gt;&lt;code&gt;&amp;lt;details&amp;gt;
-    &amp;lt;summary&amp;gt;正确答案：&amp;lt;/summary&amp;gt;
+&lt;li&gt;(E): 战略或执行错误&lt;/li&gt;
+&lt;/ul&gt;
+&lt;details&gt;
+    &lt;summary&gt;正确答案：&lt;/summary&gt;
     (D)。先主病笃，托孤于丞相亮，尚书令李严为副。夏四月癸巳，先主殂于永安宫，时年六十三。诸葛亮集载先主遗诏勑后主曰：“……勿以恶小而为之，勿以善小而不为。惟贤惟德，能服于人。汝父德薄，勿效之。……”
-&amp;lt;/details&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 13 Oct 2022 09:21:55 +0800</pubDate><guid isPermaLink="false">tag:None,2022-10-13:/2022/stdin-10</guid><category>stdin</category></item><item><title>Cloudflare worker 返回浏览器ip:端口</title><link>https://blog.est.im/2022/stdout-09</link><description>&lt;p&gt;看到个贴 &lt;a href="https://www.v2ex.com/t/885568"&gt;返回客户端连接用的 IP 和端口号&lt;/a&gt;，想起来也需要熟悉一下 Cloudflare worker，于是拿来练练手&lt;/p&gt;
+&lt;/details&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 13 Oct 2022 09:21:55 +0800</pubDate><guid isPermaLink="false">tag:None,2022-10-13:/2022/stdin-10</guid><category>stdin</category></item><item><title>Cloudflare worker 返回浏览器ip:端口</title><link>https://blog.est.im/2022/stdout-09</link><description>&lt;p&gt;看到个贴 &lt;a href="https://www.v2ex.com/t/885568"&gt;返回客户端连接用的 IP 和端口号&lt;/a&gt;，想起来也需要熟悉一下 Cloudflare worker，于是拿来练练手&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;  export default {
     async fetch(request, env) {
       return await handleRequest(request).catch(
@@ -476,33 +497,4 @@ Corporate Memphis&lt;/p&gt;
 &lt;p&gt;只有官方的python2.7签名了 anaconda/miniconda 的都没签名。算了。还是直接 AppleScript 走起&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;  osascript  -e 'display notification "还有1分钟到达时辰" with title "准时付费" sound name "Frog"'
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;想在这个提示里加一个 snooze 1分钟功能，但是好像无法支持。罢了。2333&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 20 Jul 2022 14:52:56 +0800</pubDate><guid isPermaLink="false">tag:None,2022-07-20:/2022/stdout-08</guid><category>stdout</category></item><item><title>终于吧 blog 的自动构建 pipeline 配置好了</title><link>https://blog.est.im/2022/stdout-07</link><description>&lt;p&gt;目前博客是基于 pelican 的 static-site generator，一个 python 模块本地渲染成静态文件然后通过 github pages 发布。&lt;/p&gt;
-&lt;p&gt;源码放在 bitbucket，之前比较懒都是本地跑，一直想改成 CI/CD pipeline，今天终于配置好了。记录一些坑吧&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;bitbucket pipeline 不同 step 之间数据是不共享的。本来想用 parallel 功能在下载 pip 模块和 git clone 皮肤做个并行，后来发现 artifact 拷贝速度还不如串行去跑。就所有操作一个 step 做完&lt;/li&gt;
-&lt;li&gt;博客源码和生成结果可以直接同步提交信息：    &lt;pre&gt;&lt;code&gt;msg=$(git log -1  --pretty=%B)
-cd output
-git config user.name est
-git config user.email 邮箱
-git add .
-git commit -m "$msg"
-git push
-&lt;/code&gt;&lt;/pre&gt;
-&lt;ol start="3"&gt;
-&lt;li&gt;
-&lt;p&gt;由于 pip 模块装了不知道在哪里，所以调试 pip 安装路径方法：    &lt;/p&gt;
-&lt;p&gt;python -c 'import site; print(*site.getsitepackages(), sep="\n")'&lt;br /&gt;
-4. pelican 默认居然没支持 Markdown 也是醉了    &lt;/p&gt;
-&lt;p&gt;python -m pip install pelican==4.8.0 Markdown&lt;br /&gt;
-5. 自定义皮肤依赖，由于 submodule 我没玩转，所以这样安装：    &lt;/p&gt;
-&lt;p&gt;git clone --depth=1 git@github.com:est/aether-pelican.git || (cd aether-pelican; git pull --rebase)&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Bitbucket 每个月有50分钟的免费pipeline 时间，自己用下来差不多29秒 build &amp;amp; publish 一次。感觉每个月也写不了60篇，所以目前是够了。&lt;/p&gt;
-&lt;p&gt;接下来的优化：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;新图片通过 squoosh 压缩优化&lt;/li&gt;
-&lt;li&gt;通过 cloudflare worker 替换掉 disqus 评论功能&lt;/li&gt;
-&lt;/ol&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 19 Jul 2022 19:06:49 +0800</pubDate><guid isPermaLink="false">tag:None,2022-07-19:/2022/stdout-07</guid><category>stdout</category></item></channel></rss>
+&lt;p&gt;想在这个提示里加一个 snooze 1分钟功能，但是好像无法支持。罢了。2333&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 20 Jul 2022 14:52:56 +0800</pubDate><guid isPermaLink="false">tag:None,2022-07-20:/2022/stdout-08</guid><category>stdout</category></item></channel></rss>

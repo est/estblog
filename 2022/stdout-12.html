@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>乌克兰的 Starlink 究竟是美帝还是 Elon Musk 出的钱？ - Est's Blog</title>
+    <title>Web Animation实现动画变灰 - Est's Blog</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="Est's Blog RSS Feed" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="乌克兰的 Starlink 究竟是美帝还是 Elon Musk 出的钱？" />
+    <meta name="description" content="Web Animation实现动画变灰" />
 
-      <link rel="canonical" href="https://blog.est.im/2022/stdin-11" />
+      <link rel="canonical" href="https://blog.est.im/2022/stdout-12" />
 
     <link rel="stylesheet" href="/theme/css/normalize.min.css" />
     <link rel="stylesheet" href="/theme/css/style.css" />
@@ -39,8 +39,8 @@
 
       <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
       <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
-      <li><a href="/category/stdin" class="hamburger-menu-overlay-link active">stdin</a></li>
-      <li><a href="/category/stdout" class="hamburger-menu-overlay-link">stdout</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
 
     </ul>
   </div>
@@ -49,23 +49,34 @@
 
 <article class="post">
   <header class="post-header">
-    <h2 class="post-title">乌克兰的 Starlink 究竟是美帝还是 Elon Musk 出的钱？</h2>
-    <p class="post-date">Posted <time datetime="2022-10-14T17:16:51+08:00">2022-10-14</time> | <span>stdin</span></p>
+    <h2 class="post-title">Web Animation实现动画变灰</h2>
+    <p class="post-date">Posted <time datetime="2022-11-30T18:02:18+08:00">2022-11-30</time> | <span>stdout</span></p>
   </header>
 
   
-  <p>事情起因：Elon Musk 闲的蛋痛发起了一个关于俄乌战争如何和平的投票</p>
-<p><a href="https://twitter.com/MelnykAndrij/status/1576977000178208768">https://twitter.com/MelnykAndrij/status/1576977000178208768</a></p>
-<p>乌克兰前外交官回了一句 Fuck off</p>
-<p>Elon Musk 就说给乌克兰的 starlink 已经烧了 $80 million，不再免费了。拜拜。</p>
-<p>有人说，Starlink 其实是美帝联邦政府（USAID，U.S. Agency for International Development）出的钱。</p>
-<p><img alt="" src="/images/2022/stdin-11-01.webp" /></p>
-<p>其实两个人都说得对，但都片面。准确的说法是：</p>
-<ul>
-<li>3,670 donated by SpaceX</li>
-<li>1,330 purchased (by USAID)</li>
-</ul>
-<p>让我感到意外的是 Twitter Birdwatch。很准确的给出了上下文和关键结论，还第一次见。想加入 birdwatch 的话，需要绑美国手机号码。算了。但是这个形式还是很不错的。想知道它的摘要算法是NLP自动的还是人肉 outline 的</p>
+  <p>在2006年我开始网上留下印记的时候，写了一个 dHTML 特效模拟<a href="https://blog.est.im/cnblogs/600413">XP关机对话框变灰</a>， 那个时候大行其道的还是IE6，用的还是微软特有的 <code>filter:progid:DXImageTransform.Microsoft.Fade</code> 叠加两个<code>&lt;div&gt;</code>实现。</p>
+<p>今天（2022-11-30）恰好长者去逝，学习一下最新的css姿势。本来想用 CSS Animation+Filter实现，还是比较麻烦。比如我参考的例子是<a href="https://levelup.gitconnected.com/recreating-the-red-dead-redemption-2-tintype-loading-screen-effect-in-css-10ca87d5b9de">模仿 Red Dead Redemption 2 黑白图</a>的动画效果css</p>
+<pre><code>  #invert{
+    animation: mask 5s steps(69) infinite alternate;
+  }
+  @keyframes mask{
+    from{
+      mask-position: 0% 0%;
+    }
+    to{
+      mask-position: 100% 0%;
+    }
+  }
+</code></pre>
+<p>这个方式有个问题就是需要单独设置一个 <code>&lt;script&gt;</code> 元素。后来经过 <a href="https://twitter.com/yuanchuan23">@yuanchuan23</a> 的指点发现可以通过 Web Animation 更简单的实现：</p>
+<pre><code>  document.body.animate([
+    {filter: 'brightness(none) grayscale(0%)'},
+    {filter: 'brightness(10) grayscale(10%)', offset: 0.2},
+    {filter: 'brightness(1) grayscale(100%)'}
+  ], {duration: 2000, fill: 'forwards'})
+</code></pre>
+<p>这样写比 css 方便多了。加一个类似照相机闪光灯过曝的效果。其中 <code>fill: 'forwards'</code> 可以让变灰之后停下来。</p>
+<p>放一个 demo 在这里：https://lab.est.im/grayscale_animation</p>
 
 </article>
 
@@ -75,7 +86,7 @@
   <div id="disqus_thread"></div>
   <script type="text/javascript">
     var disqus_shortname = 'estblog';
-    var disqus_identifier = '2022/stdin-11';
+    var disqus_identifier = '2022/stdout-12';
     var disqus_url = location.href;
     (function() {
     var dsq = document.createElement('script'); 
