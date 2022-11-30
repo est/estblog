@@ -54,7 +54,11 @@
   </header>
 
   
-  <p>const c=document.createElement('style');c.textContent='@keyframes brightness {0%  { filter: brightness(none) grayscale(0%) } 10%  { filter: brightness(10) grayscale(10%) }100% { filter: brightness(1) grayscale(100%) }}';document.body.appendChild(c);void(document.body.style.animation+='brightness 3s forwards')</p>
+  <p>document.body.animate([<br />
+    {filter: 'brightness(none) grayscale(0%)'},<br />
+    {filter: 'brightness(10) grayscale(10%)', offset: 0.2},<br />
+    {filter: 'brightness(1) grayscale(100%)'}<br />
+  ], {duration: 2000, fill: 'forwards'})</p>
 
 </article>
 
