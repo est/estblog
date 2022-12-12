@@ -53,6 +53,33 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/129551894040"  rel="bookmark" >
+              <h2 class="card-title">vmware 桥接网络导致linux Redirect Network(New nexthop)</h2>
+            </a>
+            <p class="card-text"><p>本来是PC，连接千兆以太网上网，vmware装了个Linux，本来好好的，后来加了个usb无线网卡当软AP用，让其他设备通过wifi共享上网， 就老出现网络时断时续，甚至完全掉线。</p>
+<p>比如ping baidu.com就会出现</p>
+<pre><code>  From 220.181.57.217: icmp_seq=5 Redirect Network(New nexthop: 220.181.57.217)
+  64 bytes from 220.181.57.217: icmp_seq=5 ttl=53 time=69.6 ms
+  From 220.181.57.217: icmp_seq=6 Redirect Network(New nexthop: 220.181.57.217)
+  64 bytes from 220.181.57.217: icmp_seq=6 ttl=53 time=70.6 ms
+  From 220.181.57.217: icmp_seq=7 Redirect Network(New nexthop: 220.181.57.217)
+  64 bytes from 220.181.57.217: icmp_seq=7 ttl=53 time=55.4 ms
+  From 220.181.57.217: icmp_seq=8 Redirect Network(New nexthop: 220.181.57.217)
+  64 bytes from 220.181.57.217: icmp_seq=8 ttl=53 time=59.7 ms
+</code></pre>
+<p>一开始以为是路由问题，route表看了半天，后来发现windows下 无线网络 - 属性 此连接使用以下项目 里 去掉 vmware bridge protocol就好了。保留本地网络的不变。</p>
+<p>买的设备是 Realtek RTL8192CU 的芯片，用官方驱动会出现 netsh wlan start hostednetwork 失败。用 netsh wlan show drivers 发现 支持的承载网络：否。</p>
+<p>因为Realtek官方驱动不支持 vmwifibus.sys，用微软自带的 802.11n USB 2.0 驱动就行了。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2015-09-21T01:49:05+08:00">2015-09-21</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/129271276635"  rel="bookmark" >
               <h2 class="card-title">AI自动做作业？作业帮？</h2>
             </a>
@@ -535,32 +562,6 @@ emitter.emit('got sentence', 'hello world');
 <p><a href="https://news.ycombinator.com/item?id=7607082">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2014-04-17T21:16:49+08:00">2014-04-17</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/82389333364"  rel="bookmark" >
-              <h2 class="card-title">系统IO一些数据</h2>
-            </a>
-            <p class="card-text"><p>Macmini 下</p>
-<p>$ pv /dev/zero  &gt; /dev/null<br />
-[11.6GiB/s]</p>
-<p>这个应该是DDR3内存带宽了。</p>
-<p>$ pv /dev/zero  &gt; 1.dat<br />
-[ 102MiB/s] </p>
-<p>Macmini的硬盘速度还是不错。没有SSD快。</p>
-<p>$ yes | pv &gt; /dev/null<br />
- [20.3MiB/s] </p>
-<p>yes这么慢没想到啊。</p>
-<p>$ pv /dev/urandom  &gt; /dev/null<br />
-[11.9MiB/s]</p>
-<p>过一下CPU速度就减半了。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2014-04-11T11:20:00+08:00">2014-04-11</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

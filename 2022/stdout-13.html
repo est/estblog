@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Jira里JQL实现查找上一个「工作日」的任务 - ℰ𝒮𝒯 💫 𝔹㏒</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="ℰ𝒮𝒯 💫 𝔹㏒ RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Jira里JQL实现查找上一个「工作日」的任务" />
+
+      <link rel="canonical" href="https://blog.est.im/2022/stdout-13" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    ℰ𝒮𝒯 💫 𝔹㏒
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Jira里JQL实现查找上一个「工作日」的任务</h2>
+    <p class="post-date">Posted <time datetime="2022-12-12T14:51:50+08:00">2022-12-12</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>厂里终于开始用笨拙的Jira了。总体用下来跟 Teambition 相比各有各的笨处。。。</p>
+<p>默认的 board 过滤器有点不好用。本着为了stand meeting和周报快速检索上一个工作日和当周干了什么，找到一个 filter 写法：</p>
+<h3>JQL过滤上一个工作日干了啥：</h3>
+<pre><code>  (updatedDate &lt; endofweek("-8d") AND updatedDate &gt; startofday("-3d")) OR updatedDate &gt; startofday("-1d")
+</code></pre>
+<p>这里不是简单的查昨天干了啥。比如周一需要看周五干了啥。所以有个 <code>-8d</code> 并 <code>-3d</code> 的神奇操作。具体的逻辑自己琢磨</p>
+<h3>过滤本周干了啥</h3>
+<pre><code>  updatedDate &gt;= startOfWeek(0)
+</code></pre>
+<p>Jira这种资本主义软件是没法适配我们社会主义法定节假日的设定。所以遇到非双休放假还是判断起来比较蛋痛。</p>
+<p>其实我比较反感每天早上开站会。我比较推荐每天下班前最后10分钟开会。好处有：</p>
+<ol>
+<li>当天干了什么记得很清楚。明天需要干什么也很显然。</li>
+<li>如果谁拖堂，谁就承担对不起大家不能准时下班的道德压力</li>
+<li>如果都开会了你事情都还没做完，要么你事情安排得太多，要么你完成能力不足，要么你时间安排有问题。</li>
+</ol>
+<p>之前在两个公司这样执行过。结果被大老板强行改到早上开会了。无语。</p>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2022/stdout-13';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>
