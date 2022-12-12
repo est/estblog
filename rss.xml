@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>ℰ𝒮𝒯 💫 𝔹㏒</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Mon, 12 Dec 2022 14:51:50 +0800</lastBuildDate><item><title>Jira里JQL实现查找上一个「工作日」的任务</title><link>https://blog.est.im/2022/stdout-13</link><description>&lt;p&gt;厂里终于开始用笨拙的Jira了。总体用下来跟 Teambition 相比各有各的笨处。。。&lt;/p&gt;
-&lt;p&gt;默认的 board 过滤器有点不好用。本着为了stand meeting和周报快速检索上一个工作日和当周干了什么，找到一个 filter 写法：&lt;/p&gt;
+<rss version="2.0"><channel><title>ℰ𝒮𝒯 💫 𝔹㏒</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Mon, 12 Dec 2022 15:04:33 +0800</lastBuildDate><item><title>Jira里JQL实现查找上一个「工作日」的任务</title><link>https://blog.est.im/2022/stdout-13</link><description>&lt;p&gt;厂里终于开始用笨拙的Jira了。总体用下来跟 Teambition 相比各有各的笨处。。。&lt;/p&gt;
+&lt;p&gt;默认的 board 过滤器有点不好用。本着为了stand-up meeting和周报快速检索上一个工作日和当周干了什么，找到一个 filter 写法：&lt;/p&gt;
 &lt;h3&gt;JQL过滤上一个工作日干了啥：&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;  (updatedDate &amp;lt; endofweek("-8d") AND updatedDate &amp;gt; startofday("-3d")) OR updatedDate &amp;gt; startofday("-1d")
+&lt;pre&gt;&lt;code&gt;(updatedDate &amp;lt; endofweek("-8d") AND updatedDate &amp;gt; startofday("-3d")) OR updatedDate &amp;gt; startofday("-1d")
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;这里不是简单的查昨天干了啥。比如周一需要看周五干了啥。所以有个 &lt;code&gt;-8d&lt;/code&gt; 并 &lt;code&gt;-3d&lt;/code&gt; 的神奇操作。具体的逻辑自己琢磨&lt;/p&gt;
 &lt;h3&gt;过滤本周干了啥&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;  updatedDate &amp;gt;= startOfWeek(0)
+&lt;pre&gt;&lt;code&gt;updatedDate &amp;gt;= startOfWeek(0)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Jira这种资本主义软件是没法适配我们社会主义法定节假日的设定。所以遇到非双休放假还是判断起来比较蛋痛。&lt;/p&gt;
 &lt;p&gt;其实我比较反感每天早上开站会。我比较推荐每天下班前最后10分钟开会。好处有：&lt;/p&gt;
