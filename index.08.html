@@ -53,6 +53,44 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/201908/stdout-005"  rel="bookmark" >
+              <h2 class="card-title">Fix Paladins stuck at Completing Login</h2>
+            </a>
+            <p class="card-text"><p><a href="https://store.steampowered.com/app/444090/Paladins/">Paladins</a> is one of the F2P games on Steam. It's called 枪火游侠 in Chinese market with Tencent as its Partner operator.</p>
+<p>To play it on Steam:</p>
+<ol>
+<li>Add any game to cart</li>
+<li>Modify region to US on the checkout page</li>
+<li>Type the following script into browser's DevTool<br />
+<code>jQuery.post('//store.steampowered.com/checkout/addfreelicense', {
+        action: 'add_to_cart',
+        sessionid: g_sessionID,
+        subid:94404})</code></li>
+<li>Go to <a href="https://store.steampowered.com/account/licenses/">https://store.steampowered.com/account/licenses/</a> and see if Paladins were added to your account</li>
+<li>To install the game, run <code>steam://install/444090</code> in Win+R</li>
+</ol>
+<p>However it appears to be stuck on "Completing Login" screen from time to time.</p>
+<p>To fix it, run <code>cmd</code> with Administrator provilege type these commands:</p>
+<pre><code>  ipconfig /flushdns
+  netsh winsock reset category
+  netsh int ip reset reset.log
+</code></pre>
+<p>Then go to <code>Steam\steamapps\common\Paladins\Binaries\EasyAntiCheat</code>, run <code>EasyAntiCheat_Setup.exe</code> as Administrator and repair Paladins.</p>
+<p>And restart the PC. </p>
+<p>Now try play again. 80% of the case the issue will go away.</p>
+<p>If it still doesn't work, and you are still stuck at the "Completing Login", try hit the "Settings" button during login, then hit Esc to close the settings window, the login screen will display a message saying "Player is offline", and a "Reconnect" button magically appears. Now hit the button exactly once! I captured the in/out packets to TCP port 9000 and found that you after you click the "Reconnect" button, the Paladins client will retry negociating login process. Don't hit it too many times. </p>
+<p>Once you see "Loading Vendors" you are 99% through this, just be patient and you will load to main menus.</p>
+<p>Hope this helps.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2019-08-21T20:43:54+08:00">2019-08-21</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/201907/stdout-004"  rel="bookmark" >
               <h2 class="card-title">公司文化的三种类型</h2>
             </a>
@@ -603,24 +641,6 @@ Silk Market, Beijing, China</p>
 <p>阿里上假货多么？我觉得随便一个自由市场假货都多。商场里也多。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2016-12-30T11:00:03+08:00">2016-12-30</time></p>
-<p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/139714016880"  rel="bookmark" >
-              <h2 class="card-title">原来，方黑，方粉，都是因为村通网。。。。</h2>
-            </a>
-            <p class="card-text"><p>无意中看到一个回答 https://www.zhihu.com/question/40561921/answer/87253551</p>
-<p>很多人觉得方这篇文章写得好。。。。。。。。。黑转粉。。。这让我很惊讶。这是方舟子很普通的一片文章了。。。</p>
-<p>我个人对方舟子的认识从来都是立体的。有些方面做得很好，有些方面一条2b筋。。。现在想来，可能很多网民对方舟子的认识就是从转基因和安保基金开始的。。。这不黑才怪了。</p>
-<p>网络社交和线下社交有什么不一样，普通社交，比如熟人介绍，都是一个全面的好坏都有的介绍，不会偏差太大。网络永远给人都是第一印象。因为熟悉你的人可能不再关注你，注意力到其他人去了，关注你的往往都是村通网的新人。而且你永远给网民展示的都只是一个当前的一个snapshot，而不是全面。</p>
-<p>所以我感觉在网上还是要多把自己比较好的一面展示出来。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2016-02-21T04:33:39+08:00">2016-02-21</time></p>
 <p>stdin</p>            </div>
           </article>
         </div>
