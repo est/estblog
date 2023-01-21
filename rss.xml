@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>ℰ𝒮𝒯 💫 𝔹㏒</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 17 Jan 2023 16:42:08 +0800</lastBuildDate><item><title>为什么要读大学拿文凭</title><link>https://blog.est.im/2023/stdin-03</link><description>&lt;p&gt;刷到&lt;a href="https://twitter.com/mrbleem_eth/status/1614968917801472000"&gt;一则推&lt;/a&gt;：&lt;/p&gt;
+<rss version="2.0"><channel><title>ℰ𝒮𝒯 💫 𝔹㏒</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sat, 21 Jan 2023 11:28:37 +0800</lastBuildDate><item><title>《阿凡达2:水之道》是一部辱日片啊</title><link>https://blog.est.im/2023/stderr-02</link><description>&lt;p&gt;刚开始还对为啥找个东亚面孔扮演反派感到奇怪&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="/imagegs/2023/stderr-02-01.webp" /&gt;&lt;/p&gt;
+&lt;p&gt;然后就出现了好几秒的「日捕」爆炸捕鲸叉的特写&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="/imagegs/2023/stderr-02-02.webp" /&gt;&lt;/p&gt;
+&lt;p&gt;截图来自tiktok不是很清晰。但是这妥妥辱日了吧。。。阿凡达2不好看的，是不是拿了日本外务省的钱？233333 &lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">ℰ𝒮𝒯</dc:creator><pubDate>Sat, 21 Jan 2023 11:28:37 +0800</pubDate><guid isPermaLink="false">tag:None,2023-01-21:/2023/stderr-02</guid><category>stdout</category></item><item><title>为什么要读大学拿文凭</title><link>https://blog.est.im/2023/stdin-03</link><description>&lt;p&gt;刷到&lt;a href="https://twitter.com/mrbleem_eth/status/1614968917801472000"&gt;一则推&lt;/a&gt;：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;我其实不太理解&lt;br /&gt;
 为啥高中毕业要上大学？&lt;br /&gt;
@@ -574,34 +578,4 @@ btw2 把 RSS 改成全文输出了。&lt;/p&gt;</description><dc:creator xmlns:d
 &lt;details&gt;
     &lt;summary&gt;正确答案：&lt;/summary&gt;
     (D)。先主病笃，托孤于丞相亮，尚书令李严为副。夏四月癸巳，先主殂于永安宫，时年六十三。诸葛亮集载先主遗诏勑后主曰：“……勿以恶小而为之，勿以善小而不为。惟贤惟德，能服于人。汝父德薄，勿效之。……”
-&lt;/details&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">ℰ𝒮𝒯</dc:creator><pubDate>Thu, 13 Oct 2022 09:21:55 +0800</pubDate><guid isPermaLink="false">tag:None,2022-10-13:/2022/stdin-10</guid><category>stdin</category></item><item><title>Cloudflare worker 返回浏览器ip:端口</title><link>https://blog.est.im/2022/stdout-09</link><description>&lt;p&gt;看到个贴 &lt;a href="https://www.v2ex.com/t/885568"&gt;返回客户端连接用的 IP 和端口号&lt;/a&gt;，想起来也需要熟悉一下 Cloudflare worker，于是拿来练练手&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;  export default {
-    async fetch(request, env) {
-      return await handleRequest(request).catch(
-        (err) =&amp;gt; new Response(err.stack, { status: 500 })
-      )
-    }
-  }
-
-  async function handleRequest(request) {
-    const { pathname } = new URL(request.url);
-
-    if (pathname === "/ip") {
-      const ip = request.headers.get('CF-Connecting-IP');
-      return new Response(ip + '\n');
-    }
-
-    if (pathname === "/ip:port") {
-      const ip = request.headers.get('CF-Connecting-IP');
-      const port = request.headers.get('est-Connecting-Port') || '?'
-      return new Response(ip + ':' + port + '\n');
-    }
-
-    return new Response('Tools:\n /ip\n/ip:port\n');
-  }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;遇到一个问题，Cloudflare 官方有提供浏览器客户端IP变量 &lt;a href="https://developers.cloudflare.com/workers/runtime-apis/headers/#cloudflare-headers"&gt;&lt;code&gt;CF-Connecting-IP&lt;/code&gt;&lt;/a&gt; 但是缺少端口，查了下可以自己通过 &lt;a href="https://developers.cloudflare.com/rules/transform/request-header-modification/reference/fields-functions"&gt;&lt;code&gt;cf.edge.client_port&lt;/code&gt;&lt;/a&gt; 这个变量获得， &lt;a href="https://community.cloudflare.com/t/need-cf-connecting-port-for-french-law/319505/8"&gt;方法&lt;/a&gt;是在进入 CF网站管理 面板 → Rules → Transform Rules → HTTP Request Header Modification 里添加一条请求头规则。如图：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="" src="https://global.discourse-cdn.com/cloudflare/original/3X/b/a/ba21c8b28a8915bc57c6c6d82581827578e232ac.png" /&gt;&lt;/p&gt;
-&lt;p&gt;但是 header 不能以  &lt;code&gt;CF-&lt;/code&gt; 开头，所以这里改成 &lt;code&gt;est-Connecting-Port&lt;/code&gt;，就能获得客户端请求的 IP+端口 了&lt;/p&gt;
-&lt;p&gt;测试地址： t.本网站根域名/ip:port&lt;/p&gt;
-&lt;p&gt;目前还缺：IPv6 的正确表示。。。。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">ℰ𝒮𝒯</dc:creator><pubDate>Sun, 09 Oct 2022 23:12:02 +0800</pubDate><guid isPermaLink="false">tag:None,2022-10-09:/2022/stdout-09</guid><category>stdout</category></item></channel></rss>
+&lt;/details&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">ℰ𝒮𝒯</dc:creator><pubDate>Thu, 13 Oct 2022 09:21:55 +0800</pubDate><guid isPermaLink="false">tag:None,2022-10-13:/2022/stdin-10</guid><category>stdin</category></item></channel></rss>
