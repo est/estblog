@@ -56,15 +56,15 @@
             <a href="/2023/stdout-03"  rel="bookmark" >
               <h2 class="card-title">Play Cities:Skylines on Windows/MacOS without Paradox Launcher</h2>
             </a>
-            <p class="card-text"><p>Haven't played Cities: Skylines for ages, so I re-installed it on Steam, after some updates there's this new Paradox Launcher which does nothing but wasting time. So I decided to remove it, googled some <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=1976349559">guide</a> but had some trouble fowlling it. Here's how I did it.</p>
+            <p class="card-text"><p>Haven't played Cities: Skylines for ages, so I re-installed it on Steam, after some updates there's this new Paradox Launcher which serves no purpose but wasting time. So I decided to remove it, googled some <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=1976349559">guide</a> and unfortunately it contains too many steps and some error occured while following it. Here's the simpler &amp; correct step of what I did instead.</p>
 <p>After the game is downloaded, open the Steam library, find the game, right click, choose <code>Properties...</code></p>
 <p><img alt="" src="/images/2023/stdout-03-01.webp" /></p>
 <p>Next for the <code>Launch Options</code>, type</p>
 <h3>on Windows</h3>
-<pre><code>  cmd /c start cities.exe %command%
+<pre><code>cmd /c start cities.exe %command%
 </code></pre>
 <h3>on MacOS</h3>
-<pre><code>  /Users/$USER/Library/Application\ Support/Steam/steamapps/common/Cities_Skylines/Cities.app/Contents/MacOS/Cities %command%
+<pre><code>/Users/$USER/Library/Application\ Support/Steam/steamapps/common/Cities_Skylines/Cities.app/Contents/MacOS/Cities %command%
 </code></pre>
 <p>Make sure you replace <code>$USER</code> with your username</p>
 <p>Then the game works like good o' times, straight to the menu.</p></p>
