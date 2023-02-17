@@ -53,6 +53,39 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/post/159476100930"  rel="bookmark" >
+              <h2 class="card-title">RESTful is bad and you should feel bad</h2>
+            </a>
+            <p class="card-text"><p>From <a href="https://www.v2ex.com/t/354273">this</a> thread</p>
+<p>What's wrong with</p>
+<pre><code>  GET     /users/                -----&gt;  `list.users` 
+  GET     /users/:id/            -----&gt;  `retrieve.users`
+  POST    /users/                -----&gt;  `create.users`
+  PUT     /users/:id/password/   -----&gt;  `replace.users`
+  PATCH   /users/:id/            -----&gt;  `update.users`
+  DELETE  /users/:id/            -----&gt;  `destroy.users`
+</code></pre>
+<p>You will find these URL super ugly and annoying when doing log analysis, you have to monkey craft <code>regexp</code>s to truncate the useless <code>:id</code> part from the url so your aggregator would work properly.</p>
+<p>I prefer simply use <code>GET</code> for read and <code>POST</code> for writes. Like this</p>
+<pre><code>  GET /users/list
+  GET /users/retrieve
+  POST /users/create
+  POST /users/update
+  POST /users/destroy
+</code></pre>
+<p>It's clean, it's concise, it works everywhere.</p>
+<p>Fuck those obnoxious <code>OPTIONS</code> and <code>PATCH</code>.</p>
+<p>BTW who the fuck invents a <code>users.replaec()</code> functions?</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2017-04-11T23:10:11+08:00">2017-04-11</time></p>
+<p>stderr</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/post/159250087845"  rel="bookmark" >
               <h2 class="card-title">Trump & China’s highway permit problem</h2>
             </a>
@@ -481,55 +514,6 @@ Silk Market, Beijing, China</p>
 <p><a href="http://www.reddit.com/r/Military/comments/2qkm4m/usmc_vs_a_stick/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2014-12-28T09:43:51+08:00">2014-12-28</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/100221677835"  rel="bookmark" >
-              <h2 class="card-title">mitbbs上一娃靠背题进了oracle</h2>
-            </a>
-            <p class="card-text"><p>发信人: xixixihahaha (xixihaha), 信区: JobHunting <br />
-标  题: 真羡慕CS科班出身的马公的记忆力 <br />
-发信站: BBS 未名空间站 (Thu Oct 16 13:08:31 2014, 美东)   </p>
-<p>我刷了6遍leetcode了，有的标点符号还是记错。该用大括号的地方还是忘记了。 <br />
-if后面两个语句如果不用大括号括起来，就是不一起运行。 <br />
-为什么要设计成这么麻烦的语言?   </p>
-<p>这才拿到了oracle的offer，什么时候可以进flag呢，更别说ms了。   </p>
-<p>发信人: xixixihahaha (xixihaha), 信区: JobHunting <br />
-标  题: Re: 真羡慕CS科班出身的马公的记忆力 <br />
-发信站: BBS 未名空间站 (Thu Oct 16 13:42:48 2014, 美东)   </p>
-<p>我觉得这个比托福还难背，虽然只有152题，但是每个题目答案太长了，好多还有几个 <br />
-答案。 <br />
-我背第一遍的时候经常把这个题的答案记成另外的题目的答案了。 <br />
-现在好多了，oracle攻城师说只有小bug了。   </p>
-<p>发信人: xixixihahaha (xixihaha), 信区: JobHunting <br />
-标  题: Re: 真羡慕CS科班出身的马公的记忆力 <br />
-发信站: BBS 未名空间站 (Thu Oct 16 14:00:34 2014, 美东)   </p>
-<p>还有好几十道题记不住   </p>
-<p>那个isnumber的state machine的列表太难背了，现在还有几个地方出错。但是oracle <br />
-攻城师没有看出来，现在想来都后怕。   </p>
-<p>发信人: xixixihahaha (xixihaha), 信区: JobHunting <br />
-标  题: Re: 真羡慕CS科班出身的马公的记忆力 <br />
-发信站: BBS 未名空间站 (Thu Oct 16 14:16:50 2014, 美东)   </p>
-<p>肯定有诀窍呀。   </p>
-<p>最开始记关键字，比如这个题目有3个if，两个while <br />
-然后慢慢往细了记 <br />
-临睡前记，早上上班途中反复回忆，记不得的上班第一件事就是赶紧看一看   </p>
-<p>【 在 Tianhuaban (Sweet home) 的大作中提到: 】 <br />
-: 膜拜大牛！能传授一下怎么记的不？我连题目都经常记混。。。更别说答案了。   </p>
-<p>发信人: xixixihahaha (xixihaha), 信区: JobHunting <br />
-标  题: Re: 真羡慕CS科班出身的马公的记忆力 <br />
-发信站: BBS 未名空间站 (Thu Oct 16 23:50:13 2014, 美东)   </p>
-<p>我今天一上午把那个sdx大哥的秒杀valid number给背下来了。 <br />
-所以state machine我可以暂时不背了，太难背了。   </p>
-<p>【 在 yzl232 (三十三) 的大作中提到: 】 <br />
-: 你这个细节让我觉得半信半疑，，</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2014-10-17T01:42:36+08:00">2014-10-17</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
