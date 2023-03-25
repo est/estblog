@@ -53,6 +53,33 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2022/stdout-05"  rel="bookmark" >
+              <h2 class="card-title">Add UTF-8 BOM header to Flask-Admin export</h2>
+            </a>
+            <p class="card-text"><p>A simple trick to add additional bytes prepending Flask's <code>stream_with_context</code></p>
+<pre><code>  from flask_admin.contrib.sqla import ModelView
+  from itertools import chain
+
+  class MyAdminView(ModelView):
+      can_export = True
+      column_export_list = ['field1', 'field2']
+
+      def _export_csv(self, return_url):
+          r = super(MyAdminView, self)._export_csv(return_url)
+          r.response = chain((b'\xef\xbb\xbf',), r.response)
+          return r
+</code></pre>
+<p>I am still using Python2 and Flask-admin shit. It's a shame but anyway.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2022-04-14T15:47:17+08:00">2022-04-14</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2022/stderr-04"  rel="bookmark" >
               <h2 class="card-title">为什么拜登这么喜欢说别人 Genocide</h2>
             </a>
@@ -719,42 +746,6 @@ RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-12-08T21:39:36+08:00">2021-12-08</time></p>
 <p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2021/stdout-023"  rel="bookmark" >
-              <h2 class="card-title">FastAPI/Starlette支持静态文件支持SPA</h2>
-            </a>
-            <p class="card-text"><p>FastAPI 官方支持 <code>from fastapi.staticfiles import StaticFiles</code> 充当一个静态文件服务器</p>
-<p>其实实现是 starlette。这玩意可以在 <code>directory</code> 下放一个 <code>404.html</code>，恰好单页应用也需要用 <code>index.html</code> 充当所有 javascript 框架注册的 router</p>
-<p>只是有一个毛病，这货返回的 HTTP status code 是 404。用起来没啥大毛病，但是就是浏览器不会记录网址，导致没法匹配浏览历史快速找到之前访问过的页面。</p>
-<p>拿来改改继续用</p>
-<pre><code>  from starlette.staticfiles import StaticFiles, Scope, Headers, Response, FileResponse
-
-  class StaticFilesWithout404(StaticFiles):
-      async def get_response(self, path: str, scope: Scope) -&gt; Response:
-          r = await super().get_response(path, scope)
-          h = Headers(scope=scope)
-          full_path, stat_result = await self.lookup_path('404.html')
-          if isinstance(r, FileResponse) and r.path == full_path:
-              if 'text/html' in (h.get('accept') or ''):
-                  r.status_code = 200
-              else:
-                  return Response('', status_code=404)
-          return r
-
-  app.mount("/frontend", StaticFilesWithout404(directory="frontend", html=True), name="static")
-</code></pre>
-<p>这段代码大概是起到了类似 <a href="http://nginx.org/en/docs/http/ngx_http_core_module.html#try_files">nginx <code>try_files</code></a> 的作用。默认静态文件映射一个目录，但是如果找不到就按根目录的 index.html 输出。这里还判断了请求的 <code>accept</code> 头，如果是 xhr/Fetch 就会直接返回一个0字节长度无MIME的404。</p>
-<p>由此我想到了一个学究式的 leaky abstraction。众所周知，如果一个URL不存在，那么服务器应该返回404</p>
-<p>但是现在都是 SPA 单页应用，都是先 200 返回 <code>index.html</code> 的内容，再由 javascript 的 router 去决定是否正常显示还是404 。所以返回 200 但是显示 404 就破坏了这个语义。如果要精确匹配SPA里的router如果不存在由服务器返回404，第一是搞 SSR，把前端那一坨代码跑在服务器端，第二种办法是 npm build 的时候输出一个可路由URL列表，然后部署的时候导入静态文件服务器更新。这个具体实现就留作homework由读者自行解决了。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-12-08T07:38:38+08:00">2021-12-08</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 
