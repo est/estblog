@@ -53,6 +53,63 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/202104/stdout-005"  rel="bookmark" >
+              <h2 class="card-title">Win10 自动设置开机锁屏壁纸</h2>
+            </a>
+            <p class="card-text"><p>Win10启动后，锁屏界面有一些每天更新的漂亮的墙纸，但是每个用户进去却只能看到默认的墙纸，不能自动切换。很是遗憾，于是搞了一段小脚本弥补。</p>
+<p>找个地方比如桌面，右键新建一个 <code>est_win10_auto_wallpaper.bat</code></p>
+<pre><code>  @if (@X)==(@Y) @end /* JScript comment
+  @echo off
+
+  cscript //E:JScript %~n0.bat
+
+  exit /b %errorlevel%
+  */
+
+  var oShell = new ActiveXObject("WScript.Shell") ;
+  var oFSO = new ActiveXObject("Scripting.FileSystemObject");
+
+  var sWinDir = oFSO.GetSpecialFolder(0);
+  var sPath = oShell.ExpandEnvironmentStrings('%LOCALAPPDATA%\\Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets\\')
+
+  var oFolderEnum = new Enumerator(oFSO.GetFolder(sPath).Files);
+  var aFiles = []
+  for (;!oFolderEnum.atEnd();oFolderEnum.moveNext()) {
+      // var item = oFolderEnum.item()
+      aFiles.push(oFolderEnum.item())
+  }
+  var aFiles2 = aFiles.sort(function(x,y){return new Date(y.DateLastAccessed).getTime() - new Date(x.DateLastAccessed).getTime()}).slice(3)
+  var sWallpaper;
+  // for (var i=0;i&lt;aFiles2.length;i++){
+  for (var i in aFiles2){
+      // WScript.Echo('check ' + aFiles2[i].name + ' size: ' + aFiles2[i].size);
+      if(aFiles2[i].size &gt; 500000){  // guess &gt; 500KB is good wallpaper
+          sWallpaper = aFiles2[i].path
+          break;
+      }    
+  }
+  if(sWallpaper){
+      // or fso.GetStandardStream(1) for stdout, 2 for stderr
+      // WScript.Echo('set to ' + sWallpaper);
+      oShell.RegWrite("HKCU\\Control Panel\\Desktop\\Wallpaper", sWallpaper);
+      oShell.Run("%windir%\\System32\\RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters 1, True");
+  }
+</code></pre>
+<p>Win+R输入 <code>shell:startup</code> 回车，把刚才的 <code>est_win10_auto_wallpaper.bat</code> 在这里创建一个快捷方式</p>
+<p>解释下为啥要在 <code>shell:startup</code> 里创建快捷方式而不是直接放 .bat 。因为快捷方式可以设置当前运行目录，这样代码里的 <code>%~n0</code> 才能生效。懒得查询完整路径如何写了。。</p>
+<p>然后这段代码其实用了一个比较高级的 <a href="https://stackoverflow.com/a/28250760/41948">.js .bat 混合格式</a>。因为 Windows Smart Screen 会拦截 WScript 的直接执行，认为特别危险。但是如果你在 cmd 里执行系统就觉得很安全。。。。嗯。。</p>
+<p>吐槽1： 开始 → 启动 菜单都不见了。。。</p>
+<p>吐槽2：好久没写 WScript 了感觉都忘完了。vbs 是肯定不会的了。<a href="https://docs.microsoft.com/en-us/previous-versions//hbxc2t98(v=vs.85)?redirectedfrom=MSDN">JScript 居然是 ESMAScript3</a>。好多现代写法都不支持。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-04-11T22:35:12+08:00">2021-04-11</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/202104/stdout-004"  rel="bookmark" >
               <h2 class="card-title">Mac 命令行终端里获得视频文件的长度</h2>
             </a>
@@ -1781,27 +1838,6 @@ You know all this stuff makes people feel just frustrated and angry, they want a
 <p>via <a href="https://www.reddit.com/r/PhilosophyTube/comments/j40dk1/">reddit</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-10-06T08:07:56+08:00">2020-10-06</time></p>
-<p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202009/stdin-012"  rel="bookmark" >
-              <h2 class="card-title">儿童是一种阶级</h2>
-            </a>
-            <p class="card-text"><blockquote>
-<p>儿童这个阶层的成型是很近的事情，这是美国传播学者尼尔·波兹曼的一个洞见。<br />
-在传统社会，儿童和成年之间的界限是非常模糊的。因为大家用的都是一套学习和传播工具，那就是口语。只要都会说话，听得懂别人的话，那小孩和大人，就只有体能和见识上的区别。那小孩做大人的工作，就也没有什么了不起。<br />
-但是印刷机出现之后，人类文化的传承，主要靠文字了。而熟练使用文字，那是需要漫长的学习和训练的。你才能熟练用文字表达，或者说阅读文本。是因为传播媒介的这个变化，才塑造了“童年”这个概念。<br />
-所以越是文明社会，儿童就越是面临两个问题。第一，儿童和成人的知识差距迅速拉开。成人的工作，儿童是干不了的，因为儿童阅读不了那么复杂的文字；第二，儿童如果不抓紧这个时间接受教育，将来长大了，还会严重影响成人之后的社会竞争力。</p>
-</blockquote>
-<p>来自《<a href="https://m.igetget.com/share/course/article?id=bqzNakylrn9WVaZZZNJ7DOop10vZwL">罗辑思维 第785期 | 为什么你的观点是正确的？</a>》</p>
-<p>以上观点来自《童年的消逝 The disappearance of childhood》，算这是我近几年认识事物比较升华的一个收获。之前一次升华是，人要区分性，爱情，婚姻和家庭。然后婚姻本质上是一种财产分配制度，然后就看了恩格斯的《家庭、私有制和国家的起源》，也是脑洞大开。原来母系氏族社会并不是母系，而是舅系。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2020-09-29T23:34:07+08:00">2020-09-29</time></p>
 <p>stdin</p>            </div>
           </article>
         </div>
