@@ -3472,6 +3472,21 @@ trackback:ping="http://franticindustries.com/blog/2007/01/28/google-is-the-new-h
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/cnblogs/622501"  rel="bookmark" >
+              <h2 class="card-title">让Google评价你的密码的安全性</h2>
+            </a>
+            <p class="card-text"><p><a href="https://www.google.com/accounts/RatePassword?Passwd">https://www.google.com/accounts/RatePassword?Passwd</a>=你的密码</p>
+<p>数值越高越安全</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/cnblogs/622498"  rel="bookmark" >
               <h2 class="card-title">在Windows下安装Ubuntu！注意，是直接在Win32下安装</h2>
             </a>
@@ -3558,80 +3573,58 @@ Prototype here: <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/cnblogs/622500"  rel="bookmark" >
-              <h2 class="card-title">VBS创建eml mht文件</h2>
+            <a href="/cnblogs/622499"  rel="bookmark" >
+              <h2 class="card-title">[原]一个极其BT的批处理：任务栏系统托盘汽泡提示</h2>
             </a>
-            <p class="card-text"><p><a href="http://www.goldb.org/goldblog/2007/01/10/VBScriptCreatingAMicrosoftWebArchiveMhtFileProgramatically.aspx">http://www.goldb.org/goldblog/2007/01/10/VBScriptCreatingAMicrosoftWebArchiveMhtFileProgramatically.aspx</a></p>
-<p>&nbsp;</p>
-<p>Here is a little VBScript for generating a Microsoft Web Archive (*.mht) file.&nbsp; Web archives are a convenient way to pack a bunch of web files (HTML/CSS/JavaScript) into a single file that is viewable in your browser.&nbsp; The downside is MHT files are only viewable in MS Internet Explorer (lame).<br/>
+            <p class="card-text"><p>这种极其超出p处理讨论范围的话题真的有点BT，而且很无聊，所以我的解决方案也很无聊，那就是调用无所不能的 C#，所以需要 .NET Framework 支持，看代码` <blockquote class="code"><b class="smalltxt"><font size="2">CODE:</font></b>&nbsp;&nbsp;<a class="smalltxt" onclick="copycode(findobj('code0'));" href="http://www.cn-dos.net/forum/viewthread.php?tid=26751&amp;pid=166694&amp;page=1###"><font color="#003366" size="2">[Copy to clipboard]</font></a> <hr color="#dde3ec" size="1"/></p>
+<div id="code0" style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">@echo off<br/>
+set &quot;dnfpath=C:\Windows\Microsoft.NET\Framework&quot;<br/>
+set &quot;est=DO_NOT_ZT_WITHOUT_PERMISSION&quot;<br/>
+for /f &quot;delims=&quot; %%v in ('dir /ad /b %dnfpath%\v?.*') do (<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;if exist &quot;%dnfpath%\%%v\csc.exe&quot; set &quot;cscpath=%dnfpath%\%%v\csc.exe&quot;<br/>
+)<br/>
 <br/>
-Normally you would create an MHT by using the &quot;Save As...&quot; option in IE.&nbsp; This script allows you to create one programatically.<br/>
+&lt; &quot;%~f0&quot; more +17 &gt; &quot;%temp%\estTrayTip.cs&quot;<br/>
+%cscpath% &quot;/out:%cd%\estTrayTip.exe&quot; &quot;%temp%\estTrayTip.cs&quot;<br/>
+estTrayTip.exe C:\Windows\System32\acwizard.ico 看什么看 没见过批处理啊？没见过任务栏的汽泡信息啊？见过了吧？见过了顶electronixtar的帖子。 2<br/>
+:exe的参数解释：estTrayTip.exe 图标路径　标题　内容　提示图标类型Error、Info、None、Warning，这里取2=Info。每个参数都必须正确填写<br/>
+&gt;nul ping 127.1 -n 1<br/>
+del estTrayTip.exe<br/>
 <br/>
-Sample Usage:<br/>
+goto:eof<br/>
 <br/>
-for a remote html file:<br/>
-</p>
-<p><span style="FONT-SIZE: 11px; COLOR: black; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">&gt;cscript mht_converter.vbs http://www.example.com/temp/foo.html foo.mht</span></p>
-<p><br/>
-for a local html file:<br/>
-</p>
-<p><span style="FONT-SIZE: 11px; COLOR: black; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">&gt;cscript mht_converter.vbs file:/temp/foo.html foo.mht</span></p>
-<p><br/>
+:estTrayTip<br/>
 <br/>
-... And now the code:<br/>
+using System;<br/>
+using System.Windows.Forms;<br/>
+using System.Drawing;<br/>
 <br/>
-<br/>
-</p>
-<hr width="100%" size="2"/>
-<p><br/>
-</p>
-<p><span style="FONT-SIZE: 11px; COLOR: black; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent"><span style="FONT-SIZE: 11px; COLOR: green; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">'mht_converter.vbs</span><br/>
-<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Const</span> adSaveCreateNotExist <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 1<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Const</span> adSaveCreateOverWrite <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 2<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Const</span> adTypeBinary <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 1<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Const</span> adTypeText <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 2<br/>
-<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Set</span> args <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> WScript.Arguments<br/>
-<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">if</span> args.<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Count</span> <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 0 <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">then</span><br/>
-WScript.Echo <span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;Usage: [CScript | WScript] mht_converter.vbs &lt;html file&gt; &lt;mht filename&gt;&quot;</span><br/>
-WScript.Quit 1<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">end</span> <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">if</span><br/>
-<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Set</span> objMessage <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">CreateObject</span>(<span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;CDO.Message&quot;</span>)<br/>
-objMessage.CreateMHTMLBody args.<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Item</span>(0)<br/>
-SaveToFile objMessage, args.<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Item</span>(1)<br/>
-<br/>
-<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Sub</span> SaveToFile(Msg, Fn)<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Dim</span> Strm, Dsk<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Set</span> Strm <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">CreateObject</span>(<span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;ADODB.Stream&quot;</span>)<br/>
-Strm.Type <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> adTypeText<br/>
-Strm.Charset <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> <span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;US-ASCII&quot;</span><br/>
-Strm.Open<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Set</span> Dsk <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> Msg.DataSource<br/>
-Dsk.SaveToObject Strm, <span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;_Stream&quot;</span><br/>
-Strm.SaveToFile Fn, adSaveCreateOverWrite<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">End</span> <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Sub</span></span></p>
-<p><br>文章来源:<a href='http://202.115.22.199/Blog/electronixtar/archive/2007/01/14/13407.aspx'>http://202.115.22.199/Blog/electronixtar/archive/2007/01/14/13407.aspx</a><br><br><br />
-<img src ="http://202.115.22.199/Blog/electronixtar/aggbug/13407.aspx" width = "1" height = "1" /><img src ="http://www.cnblogs.com/est/aggbug/622500.html" width = "1" height = "1" /><div align=right><a style="text-decoration:none;" href="http://est.cnblogs.com/" target="_blank">est</a> 2007-01-17 11:48 <a href="http://www.cnblogs.com/est/archive/2007/01/17/622500.html#Feedback" target="_blank" style="text-decoration:none;">发表评论</a></div>
-</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/cnblogs/622501"  rel="bookmark" >
-              <h2 class="card-title">让Google评价你的密码的安全性</h2>
-            </a>
-            <p class="card-text"><p><a href="https://www.google.com/accounts/RatePassword?Passwd">https://www.google.com/accounts/RatePassword?Passwd</a>=你的密码</p>
-<p>数值越高越安全</p></p>
+namespace estTrayTip<br/>
+{<br/>
+&nbsp; &nbsp; class Program<br/>
+&nbsp; &nbsp; {<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;static void Main(string[] args)<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;{<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;NotifyIcon estIcon = new NotifyIcon();<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;estIcon.Icon = new Icon(args[0]);<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;estIcon.Visible = true;<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;ToolTipIcon estToolTipIcon = new ToolTipIcon();<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;switch(args[3])<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;{<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;1&quot;: <br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.Error; break;<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;2&quot;:<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.Info; break;<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;3&quot;:<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.None; break;<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;4&quot;:<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.Warning; break;<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;}<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;estIcon.ShowBalloonTip(1,args[1],args[2],estToolTipIcon);<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;}<br/>
+&nbsp; &nbsp; }<br/>
+}</div>
+<p></blockquote><img src ="http://202.115.22.199/Blog/electronixtar/aggbug/13411.aspx" width = "1" height = "1" /><br>文章来源:<a href='http://202.115.22.199/Blog/electronixtar/archive/2007/01/16/13411.aspx'>http://202.115.22.199/Blog/electronixtar/archive/2007/01/16/13411.aspx</a><img src ="http://www.cnblogs.com/est/aggbug/622499.html" width = "1" height = "1" /><br><br><div align=right><a style="text-decoration:none;" href="http://est.cnblogs.com/" target="_blank">est</a> 2007-01-17 11:48 <a href="http://www.cnblogs.com/est/archive/2007/01/17/622499.html#Feedback" target="_blank" style="text-decoration:none;">发表评论</a></div></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
 <p>archive</p>            </div>
