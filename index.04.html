@@ -53,6 +53,27 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2022/stdout-01"  rel="bookmark" >
+              <h2 class="card-title">python-phoenixdb 设置读取超时</h2>
+            </a>
+            <p class="card-text"><p>PhoenixDB 居然是基于 requests + pb2 做的传输层协议。连接的是 queryserver 的 http 接口</p>
+<p>看 <a href="https://git-wip-us.apache.org/repos/asf?p=phoenix-queryserver.git;a=blob;f=python-phoenixdb/phoenixdb/avatica/client.py">avatica/client.py 源码</a> 可以得知这玩意默认是不支持设置read timeout的。强行hack一个：</p>
+<pre><code>import phoenixdb
+import functools
+c = phoenixdb.connect('http://localhost:8765/', autocommit=True, auth=&quot;SPNEGO&quot;)
+c._client.session.request = functools.partial(c._client.session.request, timeout=2)
+</code></pre>
+<p><code>partial</code> 这个神奇的魔法可以设置一个默认参数。其它地方传入了别的timeout也可以自行覆盖，无缝兼容。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2022-01-11T12:00:56+08:00">2022-01-11</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2022/stderr-01"  rel="bookmark" >
               <h2 class="card-title">信息时代 的 娃</h2>
             </a>
@@ -790,29 +811,6 @@ Humankind
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-11-02T22:46:55+08:00">2021-11-02</time></p>
 <p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2021/stdout-018"  rel="bookmark" >
-              <h2 class="card-title">淘宝同一手机最多绑定6个小号</h2>
-            </a>
-            <p class="card-text"><p>总结一些没用的知识</p>
-<ol>
-<li>
-<p>淘宝/阿里账号，可以一个手机最多绑定6个账号。淘宝注册的时候点击「企业注册」然后用邮箱注册，最后用同一个手机验证即可</p>
-</li>
-<li>
-<p>「支付宝」在淘宝/阿里系里app里是和「账号」一一绑定的，这就产生了很多冲突。比如你一个第三方外卖app，支付的时候可以选择 微信/支付宝，一般不会限制下单手机号和支付手机号是否一样，你甚至可以帮别人支付订单，但是淘宝/阿里的app不一样，只能自己账号支付自己账号的订单。如果你有两个手机号和两个支付宝账号，那么没法交叉支付。</p>
-</li>
-</ol>
-<p>还有一个想不起了，想起了再补充。2333</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-10-28T16:21:23+08:00">2021-10-28</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 
