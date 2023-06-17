@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Rimworld 1.4 Biotech Xenogene/Endogene code names - est の 输入输出</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入输出 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Rimworld 1.4 Biotech Xenogene/Endogene code names" />
+
+      <link rel="canonical" href="https://blog.est.im/2023/dtdout-06" />
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入输出
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+
+
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Rimworld 1.4 Biotech Xenogene/Endogene code names</h2>
+    <p class="post-date">Posted <time datetime="2023-06-12T23:13:48+08:00">2023-06-12</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>I found out the corresponding gene code by accident, for Yuran Race mod it's located under</p>
+<p><code>~/Library/Application\ Support/Steam/SteamApps/workshop/content/*/2844129100/Bio1.4/Defs/YuranBioTitle.xml</code></p>
+<p>So the official description can be found at (or <a href="https://rimworldwiki.com/wiki/Modding_Tutorials/Xenotypes">wiki</a>):</p>
+<p><code>~/Library/Application\ Support/Steam/SteamApps/common/RimWorld/RimWorldMac.app/Data/Biotech/Defs/GeneDefs/</code></p>
+<p>I need to use the dev tool to modify gene of my pawn, so here's the table:</p>
+<pre><code>import os
+import xml.etree.ElementTree as ET
+p = os.path.expanduser('~/Library/Application Support/Steam/SteamApps/common/RimWorld/RimWorldMac.app/Data/Biotech/Defs/GeneDefs/')
+fields = 'defName label description biostatCpx biostatMet biostatArc'.split()
+print('| %s |' % ' | '.join(fields))
+print('|--------' * len(fields) + '|')
+for f in os.listdir(p):
+    root = ET.fromstring(open(p + f).read())
+    for elem in root.findall('GeneDef'):
+        vals = [t.text if isinstance(t:=elem.find(x), ET.Element) else '' for x in fields]
+        if vals[0]:
+            print('| %s |' % ' | '.join(vals))
+</code></pre>
+<p>The result is:</p>
+<style type="text/css" id="pre-table">
+    style#pre-table + table{
+        font-size: 65%;
+    }
+</style>
+
+<table>
+<thead>
+<tr>
+<th>defName</th>
+<th>label</th>
+<th>description</th>
+<th>biostatCpx</th>
+<th>biostatMet</th>
+<th>biostatArc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hair_BaldOnly</td>
+<td>no hair</td>
+<td>Carriers of this gene grow no hair on the head.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Hair_ShortOnly</td>
+<td>short-haired</td>
+<td>Carriers of this gene can only grow short hair.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Hair_LongOnly</td>
+<td>long-haired</td>
+<td>Carriers of this gene grow hair on the head very quickly.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Hair_Grayless</td>
+<td>grayless hair</td>
+<td>Carriers of this gene keep their natural hair color as they age.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Beard_BushyOnly</td>
+<td>only bushy beards</td>
+<td>Male carriers of this gene experience rapid beard growth and are uncomfortable cutting their beards.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Beard_NoBeardOnly</td>
+<td>beardless</td>
+<td>Carriers of this gene grow no facial hair.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Beard_Always</td>
+<td>unisex beards</td>
+<td>Carriers of this gene always have thick facial hair, even women.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Skin_InkBlack</td>
+<td>ink black skin</td>
+<td>Carriers of this gene produce a pigment that turns their skin a pale black color almost as dark as ink.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Skin_SlateGray</td>
+<td>slate gray skin</td>
+<td>Carriers of this gene produce a pigment that turns their skin slate gray.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Skin_LightGray</td>
+<td>light gray skin</td>
+<td>Carriers of this produce a light-gray pigment in their skin.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Skin_SheerWhite</td>
+<td>sheer white skin</td>
+<td>Carriers of this gene have sheer white skin, unlike natural skin tones, due to a special engineered reflective cell covering.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Skin_Blue</td>
+<td>blue skin</td>
+<td>Carriers of this gene produce a pigment that turns their skin a blue color.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Skin_Purple</td>
+<td>purple skin</td>
+<td>Carriers of this gene produce a pigment that gives their skin a purple color.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Skin_PaleRed</td>
+<td>pale red skin</td>
+<td>Carriers of this gene produce a pigment that turns their skin a moderate red color.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Skin_DeepRed</td>
+<td>deep red skin</td>
+<td>Carriers of this gene produce a deep-red pigment that gives their skin an almost bloody appearance.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Skin_PaleYellow</td>
+<td>pale yellow skin</td>
+<td>Carriers of this gene produce a pigment that turns their skin a grayish yellow color.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Skin_DeepYellow</td>
+<td>deep yellow skin</td>
+<td>Carriers of this gene produce a pigment that gives their skin a deep yellow color.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Skin_Orange</td>
+<td>orange skin</td>
+<td>Carriers of this gene produce a pigment that gives their skin an orange color.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Skin_Green</td>
+<td>green skin</td>
+<td>Carriers of this gene produce a pigment that gives their skin a green color.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Furskin</td>
+<td>furskin</td>
+<td>Carriers of this gene grow thick fur all over their body, which protects them from cold temperatures.</td>
+<td>1</td>
+<td>-1</td>
+<td></td>
+</tr>
+<tr>
+<td>Eyes_Red</td>
+<td>red eyes</td>
+<td>Carriers of this gene have deeply red-pigmented eyes.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Eyes_Gray</td>
+<td>gray eyes</td>
+<td>Carriers of this gene have pale white-gray eyes.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Brow_Heavy</td>
+<td>heavy brow</td>
+<td>Carriers of this gene have a prominent brow.</td>
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Tail_Furry</td>
+<td>furry tail</td>
+<td>Carriers of this gene grow a fluffy tail which partially protects them from cold temperatures.</td>
+<td>1</td>
+<td>-1</td>
+<td></td>
+</tr>
+<tr>
+<td>Tail_Smooth</td>
+<td>smooth tail</td>
+<td>Carriers of this gene grow a slender tail that can act as a dexterous fifth limb.</td>
+<td>1</td>
+<td>-1</td>
+<td></td>
+</tr>
+<tr>
+<td>FacialRidges</td>
+<td>facial ridges</td>
+<td>Carriers of this gene grow raised ridges of skin on their face.</td>
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>MinTemp_SmallIncrease</td>
+<td>cold weakness</td>
+<td>Carriers of this gene are slightly less comfortable in cold temperatures.</td>
+<td></td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>MinTemp_SmallDecrease</td>
+<td>cold tolerant</td>
+<td>Carriers of this gene are slightly more comfortable in cold temperatures.</td>
+<td></td>
+<td>-1</td>
+<td></td>
+</tr>
+<tr>
+<td>MinTemp_LargeDecrease</td>
+<td>cold super-tolerant</td>
+<td>Carriers of this gene are much more comfortable in cold temperatures.</td>
+<td></td>
+<td>-2</td>
+<td></td>
+</tr>
+<tr>
+<td>MaxTemp_LargeIncrease</td>
+<td>heat super-tolerant</td>
+<td>Carriers of this gene are more comfortable in warm temperatures.</td>
+<td></td>
+<td>-2</td>
+<td></td>
+</tr>
+<tr>
+<td>MaxTemp_SmallIncrease</td>
+<td>heat tolerant</td>
+<td>Carriers of this gene are slightly more comfortable in warm temperatures.</td>
+<td></td>
+<td>-1</td>
+<td></td>
+</tr>
+<tr>
+<td>MaxTemp_SmallDecrease</td>
+<td>heat weakness</td>
+<td>Carriers of this gene are slightly less comfortable in warm temperatures.</td>
+<td></td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>PsychicAbility_Deaf</td>
+<td>psychically deaf</td>
+<td>Carriers of this gene are deaf to all psychic energy and influence outside their own minds. They cannot be affected by psychic influence, nor can they ever wield psychic power.</td>
+<td></td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>PsychicAbility_Dull</td>
+<td>psychically dull</td>
+<td>Carriers of this gene are less psychically-sensitive than others.</td>
+<td></td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>PsychicAbility_Enhanced</td>
+<td>psy-sensitive</td>
+<td>Carriers of this gene are more psychically-sensitive than average.</td>
+<td></td>
+<td>-2</td>
+<td></td>
+</tr>
+<tr>
+<td>PsychicAbility_Extreme</td>
+<td>super psy-sensitive</td>
+<td>Carriers of this gene are much more psychically-sensitive than most.</td>
+<td>2</td>
+<td>-5</td>
+<td></td>
+</tr>
+<tr>
+<td>MoveSpeed_Slow</td>
+<td>slow runner</td>
+<td>Carriers of this gene move more slowly than normal.</td>
+<td></td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td>MoveSpeed_Quick</td>
+<td>fast runner</td>
+<td>Carriers of this gene move more quickly than normal.</td>
+<td></td>
+<td>-3</td>
+<td></td>
+</tr>
+<tr>
+<td>MoveSpeed_VeryQuick</td>
+<td>very fast runner</td>
+<td>Carriers of this gene move much more quickly than normal.</td>
+<td></td>
+<td>-5</td>
+<td></td>
+</tr>
+<tr>
+<td>Beauty_VeryUgly</td>
+<td>very unattractive</td>
+<td>Carriers of this gene have misshapen, asymmetrical facial structures and blotchy skin. They're hard to look at.</td>
+<td></td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>Beauty_Ugly</td>
+<td>unattractive</td>
+<td>Carriers of this gene have exaggerated facial features and poor skin that are generally considered ugly.</td>
+<td></td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>Beauty_Pretty</td>
+<td>attractive</td>
+<td>Carriers of this gene have unusually symmetrical, balanced facial features and extra-clear skin which gives them a pleasing appearance.</td>
+<td></td>
+<td>-1</td>
+<td></td>
+</tr>
+<tr>
+<td>Beauty_Beautiful</td>
+<td>very attractive</td>
+<td>Carriers of this gene have remarkably precise and symmetrical faces. Their features are distinctive and strong without being exaggerated, and their skin is nearly perfect. They are generally seen as beautiful.</td>
+<td></td>
+<td>-2</td>
+<td></td>
+</tr>
+<tr>
+<td>Learning_Slow</td>
+<td>slow study</td>
+<td>Carriers of this gene have deficient long-term memories and don't understand new ideas quickly. They are slow at learning new skills and knowledge.</td>
+<td></td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>Learning_Fast</td>
+<td>quick study</td>
+<td>Carriers of this gene have excellent memories and grasp new ideas quickly. They learn faster than others.</td>
+<td>2</td>
+<td>-3</td>
+<td></td>
+</tr>
+<tr>
+<td>Mood_Depressive</td>
+<td>very unhappy</td>
+<td>Carriers of this gene are highly predisposed to negative emotion. They'll see the bad in every situation and have a much lower mood than others.</td>
+<td></td>
+<td>5</td>
+<td></td>
+</tr>
+<tr>
+<td>Mood_Pessimist</td>
+<td>unhappy</td>
+<td>Carriers of this gene are predisposed to pessimistic perceptions. They'll tend to interpret things negatively and have lower mood than others.</td>
+<td></td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td>Mood_Optimist</td>
+<td>happy</td>
+<td>Carriers of this gene are predisposed to optimistic feelings. They'll have higher mood than others.</td>
+<td>2</td>
+<td>-1</td>
+<td></td>
+</tr>
+<tr>
+<td>Mood_Sanguine</td>
+<td>very happy</td>
+<td>Carriers of this gene are highly predisposed to optimism and not at all inclined to think negatively. They'll have much higher mood than others.</td>
+<td>3</td>
+<td>-2</td>
+<td></td>
+</tr>
+<tr>
+<td>ToxResist_Partial</td>
+<td>tox resistance</td>
+<td>Carriers of this gene are resistant to toxic buildup from any source. This includes pollution, toxic fallout, tox gas, and direct attacks with venom or injected poison. They'll gain half the amount of toxic buildup compared to others.\n\nCellular filters in the lung and skin reduce the dose of toxins entering the bloodstream.</td>
+<td></td>
+<td>-2</td>
+<td></td>
+</tr>
+<tr>
+<td>ToxResist_Total</td>
+<td>tox immunity</td>
+<td>Carriers of this gene are totally immune to toxic buildup from all sources including polluted terrain, toxic fallout, tox gas, and direct attacks with venom or injected poison. They are also not bothered by acidic smog.\n\nThe carrier's biochemical pathways are modified to route around interference from nearly all known toxins. Along with enhancements to the kidneys and liver, this keeps carriers comfortable in even the most toxic of environments.</td>
+<td>2</td>
+<td>-4</td>
+<td></td>
+</tr>
+<tr>
+<td>Delicate</td>
+<td>delicate</td>
+<td>Carriers of this gene take greater injuries than others from the same damage. They have thin, brittle bones and less binding molecules in joints and flesh.</td>
+<td></td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td>Robust</td>
+<td>robust</td>
+<td>Carriers of this gene take less injuries than others from the same damage. They have thickened, densified bones, nearly-solid ribcages, and strengthened binding factors in joints and flesh.</td>
+<td></td>
+<td>-2</td>
+<td></td>
+</tr>
+<tr>
+<td>Pain_Reduced</td>
+<td>reduced pain</td>
+<td>Carriers of this gene feel half as much pain compared to a baseliner. Reduced neuron activity in the brain's nociception centers makes pain dull and faint. This can be advantageous sometimes, and dangerous other times.</td>
+<td></td>
+<td>-1</td>
+<td></td>
+</tr>
+<tr>
+<td>Pain_Extra</td>
+<td>extra pain</td>
+<td>Carriers of this gene feel more pain than others given the same injuries. Neuron activity in the brain's nociception center is amplified, so pain feels extra-intense and fiery. This can be protective, but overall it's considered a negative and makes it hard to push through difficult situations.</td>
+<td></td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>Aggression_DeadCalm</td>
+<td>dead calm</td>
+<td>Carriers of this gene feel calm in every situation and have a very placid demeanor. They will never start social fights or have aggressive mental breaks.</td>
+<td></td>
+<td>-1</td>
+<td></td>
+</tr>
+<tr>
+<td>Aggression_Aggressive</td>
+<td>aggressive</td>
+<td>Carriers of this gene are quick to anger. They are twice as likely to start social fights. When they have mental breaks, they are twice as likely to choose an aggressive kind of break.</td>
+<td></td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>Aggression_HyperAggressive</td>
+<td>hyper-aggressive</td>
+<td>Carriers of this gene are hormonally high-strung and very aggressive. They are three times as likely to start social fights. Any mental break they have will be of an aggressive type.</td>
+<td></td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td>VerySleepy</td>
+<td>very sleepy</td>
+<td>Carriers of this gene get tired much faster than others.</td>
+<td></td>
+<td>4</td>
+<td></td>
+</tr>
+<tr>
+<td>Sleepy</td>
+<td>sleepy</td>
+<td>Carriers of this gene get tired somewhat faster than others.</td>
+<td></td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>LowSleep</td>
+<td>low sleep</td>
+<td>Carriers of this gene get tired less quickly than others.</td>
+<td>2</td>
+<td>-4</td>
+<td></td>
+</tr>
+<tr>
+<td>Neversleep</td>
+<td>never sleep</td>
+<td>Carriers of this gene have a unique metabolic process which allows clusters of neurons to sleep while the rest of the brain stays awake. They never need to sleep.</td>
+<td>3</td>
+<td>-6</td>
+<td></td>
+</tr>
+<tr>
+<td>MeleeDamage_Weak</td>
+<td>weak melee damage</td>
+<td>Carriers of this gene do less damage in close-quarters combat. Weak fast-twitch muscle fibers make their strikes shaky and weak.</td>
+<td></td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>MeleeDamage_Strong</td>
+<td>strong melee damage</td>
+<td>Carriers of this gene do more damage in close-quarters combat. Extra-strong fast-twitch muscle fibers make their strikes accurate and powerful.</td>
+<td></td>
+<td>-2</td>
+<td></td>
+</tr>
+<tr>
+<td>UVSensitivity_Mild</td>
+<td>mild UV sensitivity</td>
+<td>Carriers of this gene have biological compounds in their skin that react painfully to UV radiation. They are unusually sensitive to sunlight.</td>
+<td></td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td>UVSensitivity_Intense</td>
+<td>intense UV sensitivity</td>
+<td>Carriers of this gene have biological compounds in their skin that react dangerously to UV radiation. They are intensely sensitive to sunlight.</td>
+<td>2</td>
+<td>4</td>
+<td></td>
+</tr>
+<tr>
+<td>Libido_Low</td>
+<td>low libido</td>
+<td>Carriers of this gene are less likely to engage in lovin' with their partner.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Libido_High</td>
+<td>high libido</td>
+<td>Carriers of this gene are more likely to engage in lovin' with their partner.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>FireSpew</td>
+<td>fire spew</td>
+<td>Carriers are able to spew flammable bile generated by a special organ in their neck. The bile sticks to anything in a small area and can ignite people, objects, and the ground.</td>
+<td></td>
+<td>-2</td>
+<td></td>
+</tr>
+<tr>
+<td>FoamSpray</td>
+<td>foam spray</td>
+<td>Carriers grow glands in the neck that generate and store a fire-retardant foam. They can spew this foam over an area to extinguish fires.</td>
+<td></td>
+<td>-2</td>
+<td></td>
+</tr>
+<tr>
+<td>LongjumpLegs</td>
+<td>longjump legs</td>
+<td>Carriers have special hemogen-powered muscle fibers in their legs which allow them to jump great distances.</td>
+<td></td>
+<td>-2</td>
+<td></td>
+</tr>
+<tr>
+<td>AnimalWarcall</td>
+<td>animal warcall</td>
+<td>Carriers of this gene can perform an animal warcall, using a powerful bellow and psychic connection to call an animal to fight for them.</td>
+<td>1</td>
+<td>-3</td>
+<td></td>
+</tr>
+<tr>
+<td>Bloodfeeder</td>
+<td>bloodfeeder</td>
+<td>Carriers of this gene have small retractable fangs and an organ on the roof of the mouth which can extract hemogen from fresh warm blood. They can bite an unresisting person, suck the blood, and gain hemogen directly.</td>
+<td></td>
+<td>-1</td>
+<td></td>
+</tr>
+<tr>
+<td>Coagulate</td>
+<td>coagulate</td>
+<td>Carriers of this gene have special glands on their hands and wrists, as well as a unique salivary compound that they can use to rapidly tend wounds.</td>
+<td></td>
+<td>-1</td>
+<td></td>
+</tr>
+<tr>
+<td>XenogermReimplanter</td>
+<td>gene implanter</td>
+<td>Carriers of this gene can implant a copy of their xenogerm into another person through a somewhat gross-looking injector organ. Their own genetic material will then regrow very slowly. If they implant while their genes are regrowing, they will die. Germline genes will be unaffected.</td>
+<td>3</td>
+<td></td>
+<td>1</td>
+</tr>
+<tr>
+<td>PiercingSpine</td>
+<td>piercing spine</td>
+<td>Carriers grow an opening in their upper chest along with a quiver of keratin spines. Using a hemogen-powered chemical reaction, they can fire these spines at high speed at nearby targets with surprising accuracy.</td>
+<td></td>
+<td>-1</td>
+<td></td>
+</tr>
+<tr>
+<td>AcidSpray</td>
+<td>acid spray</td>
+<td>Carriers grow glands in the neck that generate and store a sticky acid substance, along with acid-tolerant tissues in the mouth. They can spew this acid over an area, where it will stick to enemies and burn them over time.</td>
+<td></td>
+<td>-2</td>
+<td></td>
+</tr>
+<tr>
+<td>Body_Fat</td>
+<td>fat body</td>
+<td>Carriers can have fat bodies. A person can have more than one body type gene; one body type will be chosen among those that are allowed.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Body_Thin</td>
+<td>thin body</td>
+<td>Carriers can have thin bodies. A person can have more than one body type gene; one body type will be chosen among those that are allowed.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Body_Hulk</td>
+<td>hulk body</td>
+<td>Carriers can have large bodies. A person can have more than one body type gene; one body type will be chosen among those that are allowed.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Body_Standard</td>
+<td>standard body</td>
+<td>Carriers can have average-shaped bodies. A person can have more than one body type gene; one body type will be chosen among those that are allowed.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Ears_Human</td>
+<td>human ears</td>
+<td>Carriers of this gene have regular human ears.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Ears_Pig</td>
+<td>pig ears</td>
+<td>Carriers of this gene will grow pointed pig-like ears.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Ears_Floppy</td>
+<td>floppy ears</td>
+<td>Carriers of this gene grow long, floppy hound-like ears.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Ears_Cat</td>
+<td>cat ears</td>
+<td>Carriers of this gene have cat-like ears.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Ears_Pointed</td>
+<td>pointed ears</td>
+<td>Carriers of this gene have pointed ears.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Nose_Human</td>
+<td>human nose</td>
+<td>Carriers of this gene have regular human noses.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Nose_Pig</td>
+<td>pig nose</td>
+<td>Carriers of this gene have pig-like snouts.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Jaw_Baseline</td>
+<td>human jaw</td>
+<td>Carriers of this gene have regularly-shaped jaws.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Jaw_Heavy</td>
+<td>heavy jaw</td>
+<td>Carriers of this gene have large jaws.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Head_Gaunt</td>
+<td>gaunt head</td>
+<td>Carriers of this gene have a pinched, gaunt appearance in their face and head.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Hands_Human</td>
+<td>human hands</td>
+<td>Carriers of this gene have regular human hands.</td>
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Hands_Pig</td>
+<td>trotter hands</td>
+<td>Carriers of this gene have hands that partially resemble pig trotters. This reduces their ability to manipulate objects.</td>
+<td>1</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>ElongatedFingers</td>
+<td>elongated fingers</td>
+<td>Long, delicate fingers improve the carrier's manipulation capacity. This aids with many tasks, especially crafting and construction.</td>
+<td>1</td>
+<td>-1</td>
+<td></td>
+</tr>
+<tr>
+<td>Headbone_Human</td>
+<td>human headbone</td>
+<td>Carriers of this gene have regular human skulls.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Headbone_MiniHorns</td>
+<td>mini-horns</td>
+<td>Carriers of this gene grow two small horns protruding from the forehead.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Headbone_CenterHorn</td>
+<td>center-horn</td>
+<td>Carriers of this gene grow a single horn protruding from the center of the forehead.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Voice_Human</td>
+<td>human voice</td>
+<td>Carriers of this gene have regular human vocal chords.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>VoicePig</td>
+<td>pig voice</td>
+<td>Carriers have a squealing voice like that of a pig.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>VoiceRoar</td>
+<td>roar voice</td>
+<td>Carriers have an animal-like roaring voice.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Hemogenic</td>
+<td>hemogenic</td>
+<td>Carriers of this gene have a reserve of biological strength powered by a resource called hemogen. The resource can be gained and spent in various ways, all of which are unlocked by other genes.\n\nCarriers lose 2 hemogen per day from biological entropy.</td>
+<td>1</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>HemogenDrain</td>
+<td>hemogen drain</td>
+<td>Carriers lose an additional 8 hemogen per day from biological entropy.</td>
+<td>1</td>
+<td>6</td>
+<td></td>
+</tr>
+<tr>
+<td>FireWeakness</td>
+<td>tinderskin</td>
+<td>Carriers have dry, thin skin which burns easily from fire, and their immune systems react very poorly to this kind of threat. Damage from fire is multiplied by 4.</td>
+<td></td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>FireTerror</td>
+<td>pyrophobia</td>
+<td>Carriers of this gene have an intense fear of fire. When fires are close, there is a chance they will have a mental breakdown at any moment.</td>
+<td></td>
+<td>4</td>
+<td></td>
+</tr>
+<tr>
+<td>PerfectImmunity</td>
+<td>perfect immunity</td>
+<td>Carriers of this gene have archite-enhanced immune systems which intelligently destroy invaders. They are totally immune to most normal illnesses.</td>
+<td>3</td>
+<td></td>
+<td>1</td>
+</tr>
+<tr>
+<td>DiseaseFree</td>
+<td>non-senescent</td>
+<td>Carriers of this gene do not go through senescence in the normal way. They never get chronic age-related diseases like cancer, bad back, cataracts, or dementia.</td>
+<td>3</td>
+<td></td>
+<td>1</td>
+</tr>
+<tr>
+<td>TotalHealing</td>
+<td>scarless</td>
+<td>Carriers of this gene have a special type of regenerator cell which can heal old wounds and chronic illnesses like bad back.</td>
+<td>4</td>
+<td></td>
+<td>1</td>
+</tr>
+<tr>
+<td>Deathrest</td>
+<td>deathrest</td>
+<td>Carriers of this gene must periodically regenerate themselves in a special coma called deathrest. Deathrest takes days, but can confer substantial bonuses. Deathrest can be accelerated and its effects enhanced by the use of a variety of special buildings and technologies.\n\nThose who put off deathresting will suffer from deathrest exhaustion.</td>
+<td></td>
+<td>6</td>
+<td></td>
+</tr>
+<tr>
+<td>Ageless</td>
+<td>ageless</td>
+<td>Carriers of this gene have archites in the bloodstream which continuously reverse the process of aging. Starting at the age of 13, carriers begin to biologically age slower. By 18, the aging process stops completely.</td>
+<td>3</td>
+<td></td>
+<td>1</td>
+</tr>
+<tr>
+<td>Deathless</td>
+<td>deathless</td>
+<td>Carriers of this gene have archites in the blood which will sustain their life processes no matter what. As long as the brain remains intact, a carrier of this gene will never die.</td>
+<td>7</td>
+<td></td>
+<td>1</td>
+</tr>
+<tr>
+<td>ArchiteMetabolism</td>
+<td>archite metabolism</td>
+<td>Carriers of this gene have special archites in their cells that facilitate and optimize metabolism. This improves overall genetic and metabolic quality.</td>
+<td>6</td>
+<td>6</td>
+<td>2</td>
+</tr>
+<tr>
+<td>WoundHealing_Slow</td>
+<td>slow wound healing</td>
+<td>Carriers of this gene heal from wounds half as fast as normal.</td>
+<td></td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>WoundHealing_Fast</td>
+<td>fast wound healing</td>
+<td>Carriers of this gene heal from wounds twice as fast as normal.</td>
+<td></td>
+<td>-2</td>
+<td></td>
+</tr>
+<tr>
+<td>WoundHealing_SuperFast</td>
+<td>superfast wound healing</td>
+<td>Carriers of this gene heal from wounds four times as fast as normal.</td>
+<td></td>
+<td>-3</td>
+<td></td>
+</tr>
+<tr>
+<td>Immunity_Weak</td>
+<td>weak immunity</td>
+<td>Carriers of this gene gain immunity to diseases more slowly than normal. They may die from infections that others would survive.</td>
+<td></td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>Immunity_Strong</td>
+<td>strong immunity</td>
+<td>Carriers of this gene gain immunity to diseases faster than normal.</td>
+<td></td>
+<td>-1</td>
+<td></td>
+</tr>
+<tr>
+<td>Immunity_SuperStrong</td>
+<td>super immunity</td>
+<td>Carriers of this gene gain immunity to diseases considerably faster than normal.</td>
+<td>2</td>
+<td>-2</td>
+<td></td>
+</tr>
+<tr>
+<td>ToxicEnvironmentResistance_Partial</td>
+<td>partial antitoxic lungs</td>
+<td>Carriers of this gene are resistant to environmental toxins. They get less toxic buildup from tox gas, polluted terrain, and toxic fallout, but are still vulnerable to direct attacks with venom or injected poison. Additionally, they build up rot stink exposure slower.</td>
+<td></td>
+<td>-1</td>
+<td></td>
+</tr>
+<tr>
+<td>ToxicEnvironmentResistance_Total</td>
+<td>total antitoxic lungs</td>
+<td>Carriers of this gene are immune to environmental toxins, but not from direct toxic attacks. They get no toxic buildup from tox gas, polluted terrain, or toxic fallout, and they are not bothered by acidic smog. They are still vulnerable to direct attacks like venom and injected poison. Additionally, they are immune to rot stink exposure.</td>
+<td>2</td>
+<td>-3</td>
+<td></td>
+</tr>
+<tr>
+<td>Sterile</td>
+<td>sterile</td>
+<td>Carriers of this gene cannot reproduce by natural means.</td>
+<td></td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>Fertile</td>
+<td>fertile</td>
+<td>Carriers of this gene have a higher chance of becoming pregnant or impregnating others.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Superclotting</td>
+<td>superclotting</td>
+<td>Carriers of this gene have extra-power coagulating factors in their blood, and will stop bleeding very quickly when wounded.</td>
+<td></td>
+<td>-1</td>
+<td></td>
+</tr>
+<tr>
+<td>KindInstinct</td>
+<td>kind instinct</td>
+<td>Carriers of this gene are high in trait agreeableness and are very conscientious. They rarely insult others and will sometimes offer kind words to brighten the moods of those around them. They also never judge people by their appearance.</td>
+<td></td>
+<td>-1</td>
+<td></td>
+</tr>
+<tr>
+<td>ViolenceDisabled</td>
+<td>violence disabled</td>
+<td>Carriers of this gene are emotionally and mentally incapable of engaging in violence. They are overwhelmingly resistant to and horrified by the idea of hurting another.</td>
+<td></td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td>Nearsighted</td>
+<td>nearsighted</td>
+<td>Carriers of this gene have difficulty seeing at a distance. Their shooting accuracy at long ranges is reduced.</td>
+<td></td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>StrongStomach</td>
+<td>strong stomach</td>
+<td>Carriers of this gene have an extra toxin-filtering organ in their stomach and will never suffer from food poisoning even after eating rotten food.</td>
+<td></td>
+<td>-1</td>
+<td></td>
+</tr>
+<tr>
+<td>DarkVision</td>
+<td>dark vision</td>
+<td>Carriers of this gene see well in low light and are unaffected by mood penalties related to darkness. They have a reflective layer behind the retina that amplifies their ability to see in the dark.</td>
+<td></td>
+<td>-1</td>
+<td></td>
+</tr>
+<tr>
+<td>KillThirst</td>
+<td>kill thirst</td>
+<td>Carriers of this gene lust for the feeling of ending another's life. They will become irritated if they go for too long without killing someone in close combat.</td>
+<td></td>
+<td>4</td>
+<td></td>
+</tr>
+<tr>
+<td>FireResistant</td>
+<td>fire resistant</td>
+<td>Carriers of this gene have special fast-acting sweat glands and heat-resistant skin. They only take 25% of the normal damage from fire. The chance of them catching on fire is also drastically reduced.</td>
+<td></td>
+<td>-2</td>
+<td></td>
+</tr>
+<tr>
+<td>Inbred</td>
+<td>inbred</td>
+<td>This genetic condition affects a person's fertility, immunity, and mental capacity.</td>
+<td></td>
+<td>-2</td>
+<td></td>
+</tr>
+<tr>
+<td>RobustDigestion</td>
+<td>robust digestion</td>
+<td>Carriers of this gene grow a multi-fold stomach, allowing them to digest raw foods more efficiently than baseline humans. In general, they get the same nutrition from raw food as from if it is cooked. They also don't mind the taste of raw food at all.</td>
+<td>2</td>
+<td>-2</td>
+<td></td>
+</tr>
+<tr>
+<td>Instability_Mild</td>
+<td>mild cell instability</td>
+<td>Carriers of this gene need less metabolic energy to stay alive, at the cost of reduced stability in their cell-replication machinery.</td>
+<td></td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>Instability_Major</td>
+<td>major cell instability</td>
+<td>Carriers of this gene need much less metabolic energy to stay alive, at the cost of greatly-reduced stability in their cell-replication machinery.</td>
+<td></td>
+<td>4</td>
+<td></td>
+</tr>
+<tr>
+<td>PsychicBonding</td>
+<td>psychic bonding</td>
+<td>Carriers of this gene have a special neural organ that makes them psychically bond with a lover for life. As long as the lovers are together, they will be happy. If they are physically separated, they will be disturbed by the distance. If one dies, the other's mind will be badly disrupted.</td>
+<td>1</td>
+<td>-1</td>
+<td></td>
+</tr>
+<tr>
+<td>PollutionRush</td>
+<td>pollution stimulus</td>
+<td>Carriers of this gene get a chemical rush from being exposed to pollution. This makes them move faster and helps them think clearer. A similar gene is found in combat-engineered mega-insects.</td>
+<td>1</td>
+<td>-1</td>
+<td></td>
+</tr>
+<tr>
+<td>Unstoppable</td>
+<td>unstoppable</td>
+<td>Carriers of this gene are not slowed down when taking damage.</td>
+<td>1</td>
+<td>-2</td>
+<td></td>
+</tr>
+<tr>
+<td>NakedSpeed</td>
+<td>naked speed</td>
+<td>Carriers of this gene move slower while clothed, and faster while naked.</td>
+<td>1</td>
+<td>2</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+</article>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2023/dtdout-06';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>
