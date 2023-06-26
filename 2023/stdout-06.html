@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>git切换马甲 – est の 输入输出</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入输出 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="git切换马甲" />
+
+    <link rel="canonical" href="https://blog.est.im/2023/stdout-06" />
+    <meta property="og:url" content="https://blog.est.im/2023/stdout-06">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="git切换马甲">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入输出
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">git切换马甲</h2>
+    <p class="post-date">Posted <time datetime="2023-06-26T16:27:28+08:00">2023-06-26</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>如果你有多个 github、bitbucket、gitlab 账号需要来回切换，那么这个方法或许对你有用。</p>
+<p>使用git你需要配置一个 <code>~/.ssh/id_rsa</code>，如果你有多个身份就麻烦了。传统网上搜到的办法是编辑 <code>~/.ssh/config</code> 然后加入个类似这样的配置：</p>
+<pre><code>  Host estgit
+  HostName github.com
+  Port 22
+  User git
+  IdentityFile ~/.ssh/est_github
+  IdentitiesOnly yes
+</code></pre>
+<p>这样做也不是不行，就是你输入命令的时候得把主机名改了。比如</p>
+<p><code>git clone git@github.com:est/aether-pelican.git</code></p>
+<p>你需要改成 </p>
+<p><code>git@estgit:est/aether-pelican.git</code></p>
+<p>当然这还不是最蛋痛的。最蛋痛的是如果你用了 <code>git submodules</code> 那么你切换马甲变得非常麻烦。因为别人用你的项目没法解析 <code>git@estgit</code> 这样的玩意。</p>
+<p>我研究出来了一个hack，直接改repo的 <code>.git/config</code> 可以达到同样的效果。比如</p>
+<pre><code>  [core]
+      sshCommand = /usr/bin/ssh -o IdentitiesOnly=yes -i ~/.ssh/est_github -a
+  [user]
+      name = est
+      email = ...@...
+</code></pre>
+<p>这样你可以随意在不同的repo切换n个 ssh identity 身份。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2023/stdout-06';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

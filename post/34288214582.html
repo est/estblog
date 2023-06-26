@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>fix bottle.py / wsgiref.simple_server slow - est の 输入输出</title>
+    <title>fix bottle.py / wsgiref.simple_server slow – est の 输入输出</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -11,7 +11,7 @@
     <meta name="description" content="fix bottle.py / wsgiref.simple_server slow" />
 
     <link rel="canonical" href="https://blog.est.im/post/34288214582" />
-    <meta property="og:url" content="/post/34288214582">
+    <meta property="og:url" content="https://blog.est.im/post/34288214582">
     <meta property="og:type" content="article">
     <meta property="og:title" content="fix bottle.py / wsgiref.simple_server slow">
 
@@ -48,8 +48,6 @@
     </ul>
   </div>
 </nav>    <main class="content side-text-padding">
-
-
 <article class="post">
   <header class="post-header">
     <h2 class="post-title">fix bottle.py / wsgiref.simple_server slow</h2>
@@ -69,9 +67,7 @@
 <p>Update: for python 2.6, just write this line for monkey patch before bottle.run() or wsgiref.simple_server </p>
 <pre><code>  __import__('BaseHTTPServer').BaseHTTPRequestHandler.address_string = lambda x:x.client_address[0]
 </code></pre>
-
 </article>
-
 
 <div class="comments">
   <h2>Comments</h2>

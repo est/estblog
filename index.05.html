@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="This blog is rated 🔞, viewer discretion is advised" />
 
-    <meta property="og:url" content="">
+    <meta property="og:url" content="https://blog.est.im">
     <meta property="og:type" content="website">
     <meta property="og:title" content="est の 输入输出">
     <meta property="og:description" content="This blog is rated 🔞, viewer discretion is advised">
@@ -52,6 +52,49 @@
         <p class="list-header-subtext">This blog is rated 🔞, viewer discretion is advised</p>
         <!-- <h1 class="list-header-title">est の 输入输出</h1> -->
       </header>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/2021/stdout-016"  rel="bookmark" >
+              <h2 class="card-title">Chrome 指定域名解析，绕过 hosts</h2>
+            </a>
+            <p class="card-text"><p>看到 <a href="https://www.v2ex.com/t/813626">V站有人问</a>这个，随手一记</p>
+<p>可以参考<a href="https://chromium.googlesource.com/chromium/src/+/refs/heads/main/components/network_session_configurator/common/network_switch_list.h">源码里的注释文档</a></p>
+<h2>--host-resolver-rules=rules</h2>
+<p>Like <code>--host-rules</code> but these rules only apply to the host resolver.<br />
+A comma-separated list of rules that control how hostnames are mapped.<br />
+For example:<br />
+- <code>MAP * 127.0.0.1</code> Forces all hostnames to be mapped to <code>127.0.0.1</code><br />
+- <code>MAP *.google.com proxy</code> Forces all google.com subdomains to be resolved to <code>proxy</code>.<br />
+- <code>MAP test.com [::1]:77</code> Forces <code>test.com</code> to resolve to IPv6 loopback. Will also force the port of the resulting socket address to be 77.<br />
+- <code>MAP * baz, EXCLUDE www.google.com</code> Remaps everything to <code>baz</code>, except for <code>www.google.com</code>.</p>
+<p>These mappings apply to the endpoint host in a net request (the TCP connect and host resolver in a direct connection, and the CONNECT in an HTTP proxy connection, and the endpoint host in a SOCKS proxy connection).</p>
+<p>官方文档有语焉不详的提到过</p>
+<p>https://chromium.googlesource.com/chromium/src/+/refs/heads/main/net/dns/README.md</p>
+<blockquote>
+<p>Starting Chrome with --host-resolver-rules="MAP the.hostname.com [dead::beef]" where the.hostname.com is the hostname to allow resolving and dead::beef is the IPv6 address to resolve it to. net::MappedHostResolver acts at a level before IPv6 connectivity checks, and if a hostname is remapped to an IP literal, connectivity checks do not apply.</p>
+</blockquote>
+<p>还有很多 <a href="https://chromium.googlesource.com/chromium/src/+/HEAD/net/docs/proxy.md">proxy的参数</a></p>
+<h2>curl 的参数</h2>
+<p>也顺便贴一下。调试的时候用得上</p>
+<p>参数：</p>
+<ul>
+<li><code>-4</code>, <code>--ipv4</code></li>
+<li><code>-6</code>, <code>--ipv6</code></li>
+<li><code>--dns-interface &lt;interface&gt;</code></li>
+<li><code>--dns-ipv4-addr &lt;ip-address&gt;</code> Tell curl to bind to <code>&lt;ip-address&gt;</code> when making IPv4 DNS requests</li>
+<li><code>--dns-ipv6-addr &lt;ip-address&gt;</code> Tell curl to bind to <code>&lt;ip-address&gt;</code> when making IPv6 DNS requests</li>
+<li><code>--dns-servers &lt;ip-address,ip-address&gt;</code> Set the list of DNS servers to be used instead of the system default. The  list  of  IP  addresses should  be  separated  with commas. Port numbers may also optionally be given as <code>:&lt;port-number&gt;</code> after each IP address.</li>
+<li><code>--resolve &lt;host:port:address&gt;</code> Make the curl requests(s) use a specified address and prevent the otherwise normally resolved address to  be  used. Consider  it a sort of /etc/hosts alternative provided on the command line. The port number should be the number used for the specific protocol the host will be  used  for.  It  means  you  need  several entries if you want to provide address for the same host but different ports. This option can be used many times to add many host names to resolve. (Added in 7.21.3)</li>
+</ul>
+<p>最后一个很有用 😹</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-11-07T16:01:19+08:00">2021-11-07</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
 
 
         <!-- new article -->
@@ -3815,45 +3858,6 @@ tcp.keepinit Timeout, in milliseconds, for new, non-established TCP connections.
 </code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-07-02T15:51:19+08:00">2021-07-02</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202106/stdout-008"  rel="bookmark" >
-              <h2 class="card-title">MySQL on duplicate key in SQLAlchemy</h2>
-            </a>
-            <p class="card-text"><p>A simple function to upsert something atomically into MySQL</p>
-<pre><code>  def upsert(val1, val2, **kwargs):
-      """upsert val1-val2 pair into mysql and return the pk"""
-      from sqlalchemy.dialects.mysql import insert
-      from sqlalchemy.sql.expression import func
-
-      # this val1-val2 pair should have UNIQUE KEY constraint in MySQL table.
-      stmt = insert(MyModel.__table__).values(col1=val1, col2=val2)
-      if kwargs:
-          stmt = stmt.on_duplicate_key_update(kwargs)
-      else:
-          # get lastrowid https://stackoverflow.com/a/29722203/41948
-          stmt = stmt.on_duplicate_key_update(id=func.LAST_INSERT_ID(MyModel.id))
-      # inserted_primary_key (dbapi, return 0 when only insert) or lastrowid (mysql)
-      pk = db.session().execute(stmt).lastrowid
-      if not pk:
-          pk = MyModel.query.options(load_only('id')).filter_by(
-              col1=val1, col2=val2
-          ).first().id
-      return pk
-</code></pre>
-<p>Writing complex SQL is hard, sqlalchemy makes it harder. Prefer other ORMs in Python.</p>
-<p>I really hate fighting the infamous sqlalchemy API. Everything wrong about it can be shown in this one-liner:</p>
-<pre><code>  from sqlalchemy.orm import Load, load_only, joinedload
-</code></pre>
-<p>You have the three styles of CamelCase, under_score, and concatfunctionnames fucked up together. Bad and leaky abstraction.</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-06-29T11:55:13+08:00">2021-06-29</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

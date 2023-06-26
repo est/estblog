@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>终于吧 blog 的自动构建 pipeline 配置好了 - est の 输入输出</title>
+    <title>终于吧 blog 的自动构建 pipeline 配置好了 – est の 输入输出</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -11,7 +11,7 @@
     <meta name="description" content="终于吧 blog 的自动构建 pipeline 配置好了" />
 
     <link rel="canonical" href="https://blog.est.im/2022/stdout-07" />
-    <meta property="og:url" content="/2022/stdout-07">
+    <meta property="og:url" content="https://blog.est.im/2022/stdout-07">
     <meta property="og:type" content="article">
     <meta property="og:title" content="终于吧 blog 的自动构建 pipeline 配置好了">
 
@@ -48,8 +48,6 @@
     </ul>
   </div>
 </nav>    <main class="content side-text-padding">
-
-
 <article class="post">
   <header class="post-header">
     <h2 class="post-title">终于吧 blog 的自动构建 pipeline 配置好了</h2>
@@ -61,7 +59,9 @@
 <p>源码放在 bitbucket，之前比较懒都是本地跑，一直想改成 CI/CD pipeline，今天终于配置好了。记录一些坑吧</p>
 <ol>
 <li>bitbucket pipeline 不同 step 之间数据是不共享的。本来想用 parallel 功能在下载 pip 模块和 git clone 皮肤做个并行，后来发现 artifact 拷贝速度还不如串行去跑。就所有操作一个 step 做完</li>
-<li>博客源码和生成结果可以直接同步提交信息：    <pre><code>msg=$(git log -1  --pretty=%B)
+<li>
+<p>博客源码和生成结果可以直接同步提交信息：    </p>
+<pre><code>msg=$(git log -1  --pretty=%B)
 cd output
 git config user.name est
 git config user.email 邮箱
@@ -72,10 +72,17 @@ git push
 <ol start="3">
 <li>
 <p>由于 pip 模块装了不知道在哪里，所以调试 pip 安装路径方法：    </p>
-<p>python -c 'import site; print(*site.getsitepackages(), sep="\n")'<br />
-4. pelican 默认居然没支持 Markdown 也是醉了    </p>
-<p>python -m pip install pelican==4.8.0 Markdown<br />
-5. 自定义皮肤依赖，由于 submodule 我没玩转，所以这样安装：    </p>
+<p><code>python -c 'import site; print(*site.getsitepackages(), sep="\n")'</code></p>
+</li>
+</ol>
+</li>
+<li>
+<p>pelican 默认居然没支持 Markdown 也是醉了    </p>
+<pre><code>python -m pip install pelican==4.8.0 Markdown
+</code></pre>
+<ol start="5">
+<li>
+<p>自定义皮肤依赖，由于 submodule 我没玩转，所以这样安装：    </p>
 <p>git clone --depth=1 git@github.com:est/aether-pelican.git || (cd aether-pelican; git pull --rebase)</p>
 </li>
 </ol>
@@ -87,9 +94,7 @@ git push
 <li>新图片通过 squoosh 压缩优化</li>
 <li>通过 cloudflare worker 替换掉 disqus 评论功能</li>
 </ol>
-
 </article>
-
 
 <div class="comments">
   <h2>Comments</h2>

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="This blog is rated 🔞, viewer discretion is advised" />
 
-    <meta property="og:url" content="">
+    <meta property="og:url" content="https://blog.est.im">
     <meta property="og:type" content="website">
     <meta property="og:title" content="est の 输入输出">
     <meta property="og:description" content="This blog is rated 🔞, viewer discretion is advised">
@@ -52,6 +52,45 @@
         <p class="list-header-subtext">This blog is rated 🔞, viewer discretion is advised</p>
         <!-- <h1 class="list-header-title">est の 输入输出</h1> -->
       </header>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/202106/stdout-008"  rel="bookmark" >
+              <h2 class="card-title">MySQL on duplicate key in SQLAlchemy</h2>
+            </a>
+            <p class="card-text"><p>A simple function to upsert something atomically into MySQL</p>
+<pre><code>  def upsert(val1, val2, **kwargs):
+      """upsert val1-val2 pair into mysql and return the pk"""
+      from sqlalchemy.dialects.mysql import insert
+      from sqlalchemy.sql.expression import func
+
+      # this val1-val2 pair should have UNIQUE KEY constraint in MySQL table.
+      stmt = insert(MyModel.__table__).values(col1=val1, col2=val2)
+      if kwargs:
+          stmt = stmt.on_duplicate_key_update(kwargs)
+      else:
+          # get lastrowid https://stackoverflow.com/a/29722203/41948
+          stmt = stmt.on_duplicate_key_update(id=func.LAST_INSERT_ID(MyModel.id))
+      # inserted_primary_key (dbapi, return 0 when only insert) or lastrowid (mysql)
+      pk = db.session().execute(stmt).lastrowid
+      if not pk:
+          pk = MyModel.query.options(load_only('id')).filter_by(
+              col1=val1, col2=val2
+          ).first().id
+      return pk
+</code></pre>
+<p>Writing complex SQL is hard, sqlalchemy makes it harder. Prefer other ORMs in Python.</p>
+<p>I really hate fighting the infamous sqlalchemy API. Everything wrong about it can be shown in this one-liner:</p>
+<pre><code>  from sqlalchemy.orm import Load, load_only, joinedload
+</code></pre>
+<p>You have the three styles of CamelCase, under_score, and concatfunctionnames fucked up together. Bad and leaky abstraction.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-06-29T11:55:13+08:00">2021-06-29</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
 
 
         <!-- new article -->
@@ -1934,30 +1973,6 @@ You know all this stuff makes people feel just frustrated and angry, they want a
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-12-26T01:03:36+08:00">2020-12-26</time></p>
 <p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202011/stdin-017"  rel="bookmark" >
-              <h2 class="card-title">为什么不受欢迎更能「客观」的看这个世界</h2>
-            </a>
-            <p class="card-text"><p>美国心理学博士 普林斯汀(Mitch Prinstein)写了本书叫 《欢迎度 Popular》，里面讲到按欢迎度可以给人分为5种类型：</p>
-<p><img alt="" src="/images/2020/stdin-017-1.jpg" /></p>
-<p>里面讲到最重要的结论就是，受欢迎是人本身的一个特性，不会随着群体和环境的变化而变化。作为比较劣势的，被拒绝者，其实还是有一些优点的</p>
-<blockquote>
-<p>而普林斯汀这本书说，这个实验你还可以从另一个角度解释。经常被接受的人，自信心太强，做事比较主观。而经常被拒绝的人，因为善于察觉社交中的蛛丝马迹，所以更能够体察别人的情绪，能用别人的视角来保护自己<br />
-这在很多时候是一个优势。比如你们公司要说服另一个公司跟你们合作。领导作报告说得眉飞色舞，对方公司听得也是频频点头 —— 那么如果在场的你们公司的人都是被接受的类型，可能就会过分乐观，认为合作肯定能谈成。但是如果这时候你们有个高中时代有过被拒绝枷锁的人，他就能察觉到，领导讲到某某处的时候，对方反应不太好。这个关键信息就给你们带来一个改进的提示。<br />
-所以这个世界虽然不怎么公平，但毕竟还是各有所长。从小被接受，你固然获得了自信和乐观，但是你可能是个傲慢的人，缺少真正的智慧；从小被拒绝，虽然你的生活可能不太愉快，但是黑夜给了你黑色的眼睛。<br />
-如果一个国家一个民族曾经有过长期被人欺负的历史，她看问题的眼光恐怕也会有所不同。中国的近代史上历经了屈辱，几十年前的中国并不是“被接受”的角色。那我们想想今天的国人，对国际事务特别敏感，动不动就是谁谁“辱华”、谁谁“伤害了中国人民的感情” —— 这难道不也是精神枷锁的效应吗？</p>
-</blockquote>
-<p>这个很好的解释了，为什么简体中文网上这么多能对国内外局势进行「客观」分析的键盘政治家。。。。。。American Exceptionalism 就是那种一直被上帝眷顾的优待的受欢迎的人，一下子变得不受欢迎，会有很大的心里落差。就想这本书里描写的那些高中生 cool kids 没落一样。</p>
-<p>本篇主要内容摘录自《万维刚·精英日课第一季 欢迎度 4讲》</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2020-11-30T22:49:51+08:00">2020-11-30</time></p>
-<p>stdin</p>            </div>
           </article>
         </div>
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>PyPy performance post is very misleading - est の 输入输出</title>
+    <title>PyPy performance post is very misleading – est の 输入输出</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -11,7 +11,7 @@
     <meta name="description" content="PyPy performance post is very misleading" />
 
     <link rel="canonical" href="https://blog.est.im/post/58311721863" />
-    <meta property="og:url" content="/post/58311721863">
+    <meta property="og:url" content="https://blog.est.im/post/58311721863">
     <meta property="og:type" content="article">
     <meta property="og:title" content="PyPy performance post is very misleading">
 
@@ -48,8 +48,6 @@
     </ul>
   </div>
 </nav>    <main class="content side-text-padding">
-
-
 <article class="post">
   <header class="post-header">
     <h2 class="post-title">PyPy performance post is very misleading</h2>
@@ -61,9 +59,7 @@
 <p>PyPy performance post is very misleading. PyPy only has better printf performance than C in the particular case where you print the same expression twice. Specifically, their JIT figures out that it can decode the value only once instead of twice, which C cannot do because libc's printf is all run-time, so PyPy is about twice as fast since decoding is almost all of the work. If you change the test to anything where you're printing different expressions, PyPy is no faster than C. It seems to me that this post was either intentionally misleading or they didn't understand why their compiler was doing so suspiciously well on this benchmark (any time you're handily beating C is cause for suspicion). Moreover, as soon as PyPy has to print to an output stream instead of just creating a string in memory, the performance tanks becoming 7x slower than C.</p>
 </blockquote>
 <p><a href="https://groups.google.com/d/topic/julia-users/B3ZOUEaGOJY/discussion">via</a></p>
-
 </article>
-
 
 <div class="comments">
   <h2>Comments</h2>

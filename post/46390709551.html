@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>HAProxy like zero-copy in Python with memoryview - est の 输入输出</title>
+    <title>HAProxy like zero-copy in Python with memoryview – est の 输入输出</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -11,7 +11,7 @@
     <meta name="description" content="HAProxy like zero-copy in Python with memoryview" />
 
     <link rel="canonical" href="https://blog.est.im/post/46390709551" />
-    <meta property="og:url" content="/post/46390709551">
+    <meta property="og:url" content="https://blog.est.im/post/46390709551">
     <meta property="og:type" content="article">
     <meta property="og:title" content="HAProxy like zero-copy in Python with memoryview">
 
@@ -48,8 +48,6 @@
     </ul>
   </div>
 </nav>    <main class="content side-text-padding">
-
-
 <article class="post">
   <header class="post-header">
     <h2 class="post-title">HAProxy like zero-copy in Python with memoryview</h2>
@@ -68,9 +66,7 @@
 <p>那么弱爆了的python可否跪舔这种高级特性呢？2.7和3.X里是可以的，因为现在PEP 3118统一了各种streaming object 的buffer protocol。只需要用一个<a href="http://docs.python.org/2/library/stdtypes.html#memoryview">叫memoryview的引用</a><br />
 就可以实现共享buffer而达到zero-copy的目的了。</p>
 <p>C API见<a href="http://eli.thegreenplace.net/2011/11/28/less-copies-in-python-with-the-buffer-protocol-and-memoryviews/">这里</a>，python代码例子在<a href="https://profiles.google.com/116139041198229909169/buzz/SmLJKHwpLPC">这里</a>，具体核心调用就是 <code>file.readinto()</code> 和 <code>socket.recv_into()</code> 方法。具体代码留作读者课后练习。</p>
-
 </article>
-
 
 <div class="comments">
   <h2>Comments</h2>

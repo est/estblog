@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>nsq-py, pynsq, gnsq compared - est の 输入输出</title>
+    <title>nsq-py, pynsq, gnsq compared – est の 输入输出</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -11,7 +11,7 @@
     <meta name="description" content="nsq-py, pynsq, gnsq compared" />
 
     <link rel="canonical" href="https://blog.est.im/202010/stdout-011" />
-    <meta property="og:url" content="/202010/stdout-011">
+    <meta property="og:url" content="https://blog.est.im/202010/stdout-011">
     <meta property="og:type" content="article">
     <meta property="og:title" content="nsq-py, pynsq, gnsq compared">
 
@@ -48,8 +48,6 @@
     </ul>
   </div>
 </nav>    <main class="content side-text-padding">
-
-
 <article class="post">
   <header class="post-header">
     <h2 class="post-title">nsq-py, pynsq, gnsq compared</h2>
@@ -81,9 +79,7 @@
 <p>The Linux kernel imposes no fixed limit, but the glibc implementation makes fd_set a fixed- size type, with FD_SETSIZE defined as 1024, and the FD_*() macros operating according to that limit.  To monitor file descriptors greater than 1023, use poll(2) or epoll(7) instead.</p>
 </blockquote>
 <p>Lessons I learned today: don't use libraries based on <code>select.select()</code> if you have too many connections. Even with Gevent's monkey patch, <code>select()</code> wont block on each eventlet, but still it will not allow fileno greater or equal to 1024. Sad.</p>
-
 </article>
-
 
 <div class="comments">
   <h2>Comments</h2>

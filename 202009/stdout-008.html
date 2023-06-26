@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>javascript 一句话算农历 - est の 输入输出</title>
+    <title>javascript 一句话算农历 – est の 输入输出</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -11,7 +11,7 @@
     <meta name="description" content="javascript 一句话算农历" />
 
     <link rel="canonical" href="https://blog.est.im/202009/stdout-008" />
-    <meta property="og:url" content="/202009/stdout-008">
+    <meta property="og:url" content="https://blog.est.im/202009/stdout-008">
     <meta property="og:type" content="article">
     <meta property="og:title" content="javascript 一句话算农历">
 
@@ -48,8 +48,6 @@
     </ul>
   </div>
 </nav>    <main class="content side-text-padding">
-
-
 <article class="post">
   <header class="post-header">
     <h2 class="post-title">javascript 一句话算农历</h2>
@@ -95,9 +93,7 @@ zh-Hans 是一门语言，简体中文。<code>CN</code> 表示在大陆地区�
 <p>Intl 是 ECMAScript i18n API（<a href="https://www.ecma-international.org/ecma-402/1.0/">ECMA-402</a>）的一部分。在ES5.1+语言的运行时嵌入了一个阉割版的 ICU 库。为什么是阉割版呢？比如 ICU 库是 Unicode CLDR 规范的一种实现，比如 <a href="https://github.com/unicode-org/icu/blob/master/icu4c/source/data/locales/zh.txt">zh</a>里可以发现不仅可以直接查到年（枚举60遍！），还可以查到生肖（js 里 <code>{year: "zodiacs"}</code>就不行），甚至节气(solarTerms)都包含了！js 里的 <code>year</code> 阉割得只有两种：<code>numeric</code> 和 <code>2-digit</code>。可以看 <a href="https://github.com/v8/v8/blob/4b9b23521e6fd42373ebbcb20ebe03bf445494f9/src/objects/js-date-time-format.cc#L57">v8 源码里的BuildPatternItems</a> 怎么实现的。</p>
 <p>值得注意的是，ICU 居然收录了日本天皇从大化 (645–650) 开始到现在 令和 年号。不公平啊。我大中华应该从西周的共和元年，公元前841年开始把年号都给补上啊混蛋！</p>
 <p>还有就是货币大写 零壹贰叁肆伍陆柒捌玖拾 谁去给 ICU 提 issue 加上啊。</p>
-
 </article>
-
 
 <div class="comments">
   <h2>Comments</h2>

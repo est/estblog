@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>为什么不太看好 Nostr/ActivityPub - est の 输入输出</title>
+    <title>为什么不太看好 Nostr/ActivityPub – est の 输入输出</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -11,7 +11,7 @@
     <meta name="description" content="为什么不太看好 Nostr/ActivityPub" />
 
     <link rel="canonical" href="https://blog.est.im/2023/stderr-03" />
-    <meta property="og:url" content="/2023/stderr-03">
+    <meta property="og:url" content="https://blog.est.im/2023/stderr-03">
     <meta property="og:type" content="article">
     <meta property="og:title" content="为什么不太看好 Nostr/ActivityPub">
 
@@ -48,8 +48,6 @@
     </ul>
   </div>
 </nav>    <main class="content side-text-padding">
-
-
 <article class="post">
   <header class="post-header">
     <h2 class="post-title">为什么不太看好 Nostr/ActivityPub</h2>
@@ -77,9 +75,7 @@
 <h2>静态建站</h2>
 <p>据我所知，ActivityPub 基础交互都需要 HTTP <code>POST</code>。我特别希望有一个 fediverse 协议能设计成比如 github pages 就能托管。站方时不时更新一个 比如旧时代的 <code>feed.rss</code> 之类的文件就完成发布，每次更新的时候ping(HTTP GET)一个网址表示有更新让爬虫来取一下。这样的轮询简单粗暴，推广成本最低，不需要复杂的 RoR 或者 nodejs 搭建技能。</p>
 <p>如果站点流量实在太大，需要长连接同步，可以采用 <a href="https://devdocs.io/dom/eventsource"><code>EventSource</code></a> 之类的单向流就行。使之基于 serverless/lambda 服务比如cloudflare worker就能跑，不要搞得太复杂。nostr 的 websocket 就麻烦得多。</p>
-
 </article>
-
 
 <div class="comments">
   <h2>Comments</h2>

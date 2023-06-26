@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>FastAPI/Starlette支持静态文件支持SPA - est の 输入输出</title>
+    <title>FastAPI/Starlette支持静态文件支持SPA – est の 输入输出</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -11,7 +11,7 @@
     <meta name="description" content="FastAPI/Starlette支持静态文件支持SPA" />
 
     <link rel="canonical" href="https://blog.est.im/2021/stdout-023" />
-    <meta property="og:url" content="/2021/stdout-023">
+    <meta property="og:url" content="https://blog.est.im/2021/stdout-023">
     <meta property="og:type" content="article">
     <meta property="og:title" content="FastAPI/Starlette支持静态文件支持SPA">
 
@@ -48,8 +48,6 @@
     </ul>
   </div>
 </nav>    <main class="content side-text-padding">
-
-
 <article class="post">
   <header class="post-header">
     <h2 class="post-title">FastAPI/Starlette支持静态文件支持SPA</h2>
@@ -80,9 +78,7 @@
 <p>这段代码大概是起到了类似 <a href="http://nginx.org/en/docs/http/ngx_http_core_module.html#try_files">nginx <code>try_files</code></a> 的作用。默认静态文件映射一个目录，但是如果找不到就按根目录的 index.html 输出。这里还判断了请求的 <code>accept</code> 头，如果是 xhr/Fetch 就会直接返回一个0字节长度无MIME的404。</p>
 <p>由此我想到了一个学究式的 leaky abstraction。众所周知，如果一个URL不存在，那么服务器应该返回404</p>
 <p>但是现在都是 SPA 单页应用，都是先 200 返回 <code>index.html</code> 的内容，再由 javascript 的 router 去决定是否正常显示还是404 。所以返回 200 但是显示 404 就破坏了这个语义。如果要精确匹配SPA里的router如果不存在由服务器返回404，第一是搞 SSR，把前端那一坨代码跑在服务器端，第二种办法是 npm build 的时候输出一个可路由URL列表，然后部署的时候导入静态文件服务器更新。这个具体实现就留作homework由读者自行解决了。</p>
-
 </article>
-
 
 <div class="comments">
   <h2>Comments</h2>

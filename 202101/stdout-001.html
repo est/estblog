@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>OpenWRT 随机设置 PPPoE 拨号的 MAC 地址 Randomize WAN MAC address in OpenWRT PPPoE - est の 输入输出</title>
+    <title>OpenWRT 随机设置 PPPoE 拨号的 MAC 地址 Randomize WAN MAC address in OpenWRT PPPoE – est の 输入输出</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -11,7 +11,7 @@
     <meta name="description" content="OpenWRT 随机设置 PPPoE 拨号的 MAC 地址 Randomize WAN MAC address in OpenWRT PPPoE" />
 
     <link rel="canonical" href="https://blog.est.im/202101/stdout-001" />
-    <meta property="og:url" content="/202101/stdout-001">
+    <meta property="og:url" content="https://blog.est.im/202101/stdout-001">
     <meta property="og:type" content="article">
     <meta property="og:title" content="OpenWRT 随机设置 PPPoE 拨号的 MAC 地址 Randomize WAN MAC address in OpenWRT PPPoE">
 
@@ -48,8 +48,6 @@
     </ul>
   </div>
 </nav>    <main class="content side-text-padding">
-
-
 <article class="post">
   <header class="post-header">
     <h2 class="post-title">OpenWRT 随机设置 PPPoE 拨号的 MAC 地址 Randomize WAN MAC address in OpenWRT PPPoE</h2>
@@ -63,9 +61,7 @@
 <pre><code>  uci set network.wan.mac_addr=$(hexdump -n3 -e'1/3 "8c:8d:8e" 3/1 ":%02X" "\n"' /dev/random) &amp;&amp; uci commit network
 </code></pre>
 <p>为什么要在拨号前随机生成WAN口的 MAC 地址呢？嘿嘿。</p>
-
 </article>
-
 
 <div class="comments">
   <h2>Comments</h2>

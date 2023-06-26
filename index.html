@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="This blog is rated 🔞, viewer discretion is advised" />
 
-    <meta property="og:url" content="">
+    <meta property="og:url" content="https://blog.est.im">
     <meta property="og:type" content="website">
     <meta property="og:title" content="est の 输入输出">
     <meta property="og:description" content="This blog is rated 🔞, viewer discretion is advised">
@@ -52,6 +52,41 @@
         <p class="list-header-subtext">This blog is rated 🔞, viewer discretion is advised</p>
         <!-- <h1 class="list-header-title">est の 输入输出</h1> -->
       </header>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/2023/stdout-06"  rel="bookmark" >
+              <h2 class="card-title">git切换马甲</h2>
+            </a>
+            <p class="card-text"><p>如果你有多个 github、bitbucket、gitlab 账号需要来回切换，那么这个方法或许对你有用。</p>
+<p>使用git你需要配置一个 <code>~/.ssh/id_rsa</code>，如果你有多个身份就麻烦了。传统网上搜到的办法是编辑 <code>~/.ssh/config</code> 然后加入个类似这样的配置：</p>
+<pre><code>  Host estgit
+  HostName github.com
+  Port 22
+  User git
+  IdentityFile ~/.ssh/est_github
+  IdentitiesOnly yes
+</code></pre>
+<p>这样做也不是不行，就是你输入命令的时候得把主机名改了。比如</p>
+<p><code>git clone git@github.com:est/aether-pelican.git</code></p>
+<p>你需要改成 </p>
+<p><code>git@estgit:est/aether-pelican.git</code></p>
+<p>当然这还不是最蛋痛的。最蛋痛的是如果你用了 <code>git submodules</code> 那么你切换马甲变得非常麻烦。因为别人用你的项目没法解析 <code>git@estgit</code> 这样的玩意。</p>
+<p>我研究出来了一个hack，直接改repo的 <code>.git/config</code> 可以达到同样的效果。比如</p>
+<pre><code>  [core]
+      sshCommand = /usr/bin/ssh -o IdentitiesOnly=yes -i ~/.ssh/est_github -a
+  [user]
+      name = est
+      email = ...@...
+</code></pre>
+<p>这样你可以随意在不同的repo切换n个 ssh identity 身份。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2023-06-26T16:27:28+08:00">2023-06-26</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
 
 
         <!-- new article -->
@@ -1937,30 +1972,6 @@ user3043964493022: i 100% agree! i see it also at the preschool level... we are 
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2023-01-12T23:12:03+08:00">2023-01-12</time></p>
 <p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2023/stderr-01"  rel="bookmark" >
-              <h2 class="card-title">会员卡作为留存手段</h2>
-            </a>
-            <p class="card-text"><p>小区附近开了一家糕点店，开业首日搞活动路过，就买了些甜甜圈、蛋挞之类的投喂娃。接下来莫名其妙就在他们家连续买了好几周各式糕点，老妈和老婆还专门去开了会员充了值。本来没觉得有啥，但是今天突然<a href="https://www.dedao.cn/share/course/article?id=DAgOBQ46R1rnXRQzAPJdLzGqEZ3aY7">读到个东西</a>来自 《销售与市场》杂志上另一个母婴用品店的案例突然觉得收到启发，觉得这玩意不简单。</p>
-<p>首先个人家里长辈是比较反对这件事的，觉得外边的食品「不卫生」，老婆也反对「甜食」，所以去光顾糕点店本来就是个罕见行为，更是低频行为。是什么因素导致这个变化呢？就是开业首日结账的时候，店员非常推荐我们钱办会员。比如当时我们在店里消费16元，如果充64元，那么今天这16元就当场免单。而且会员卡以后可以参加8.8折活动。</p>
-<p>当时因为孩子也想吃，所以这个16元肯定是要花了。心里一想这64元也就4倍，来消费4次就花光了，这店肯定不会在这之前跑路。几十元的金额也不多，要不先充点小钱试试反正以后88折也不亏。</p>
-<p>于是就这样我家连续在这家店消费了3周。本来以为这开业的限时活动，结果每天都可以参加。随时会员充值都是这样的优惠条件。当场免单+4倍充值。</p>
-<p>看到上面那篇文章的分析，这个说法很关键：</p>
-<blockquote>
-<p>人这一辈子只会记住两类人：一类是自己的亲人，一类是欠自己钱的人。只要顾客觉得你这家店欠他的钱，你放心，他肯定不会把你忘了。有消费需求，一定会先想到你，到你家店里逛逛。这样一来就能形成持续的复购。从这个角度讲，商家是欠顾客10块钱，还是1000块钱，其实并不重要。商家没必要追求大额度的充值，只要通过小额度的充值，跟顾客形成亏欠关系，就达到目的了。不管用什么办法，让顾客适当充点钱，能够立竿见影地提升门店复购率。会员充值不是用来圈钱的，而是为了制造对顾客的亏欠。让一个人一直惦记你的最好方式，就是欠他点钱。</p>
-</blockquote>
-<p>为啥充值就能直接免单？算了下，这不就等于是每5单免单一次，就是个8折？它家的8.8折也不是随时可以参加，只能周三会员日才行。其实这就培养出来了每周三复购的习惯。实际上我家也是这样操作的。每周三去光顾它家一次，因为会员卡里还剩了一丁点钱，没需求也要创造需求买点东西会来吃。。。实际上，它家的东西价格本来就不便宜，8折说不定还有得赚。</p>
-<p>这种拿几十元消费者自己的小钱，把消费者一直惦记在一家店反复复购，方法真的高明。</p>
-<p>又突然想到，我 steam 钱包上周都还有6.99刀不知道怎么花。于是圣诞促销就去买了TF2的一个稀有taunt。。这下好了。。钱包里还剩1.99刀。啥都买不成。要买多的，最低充值还得5刀起。。。。。。买别的东西肯定又有剩，又得惦记什么时候找个机会把这零钱给花了。真是几毛钱能让消费者惦记你一辈子。给跪了。。。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2023-01-05T23:19:13+08:00">2023-01-05</time></p>
-<p>stderr</p>            </div>
           </article>
         </div>
 

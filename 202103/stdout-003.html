@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>FastAPI/Starlette+Requests实现反向代理 - est の 输入输出</title>
+    <title>FastAPI/Starlette+Requests实现反向代理 – est の 输入输出</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -11,7 +11,7 @@
     <meta name="description" content="FastAPI/Starlette+Requests实现反向代理" />
 
     <link rel="canonical" href="https://blog.est.im/202103/stdout-003" />
-    <meta property="og:url" content="/202103/stdout-003">
+    <meta property="og:url" content="https://blog.est.im/202103/stdout-003">
     <meta property="og:type" content="article">
     <meta property="og:title" content="FastAPI/Starlette+Requests实现反向代理">
 
@@ -48,8 +48,6 @@
     </ul>
   </div>
 </nav>    <main class="content side-text-padding">
-
-
 <article class="post">
   <header class="post-header">
     <h2 class="post-title">FastAPI/Starlette+Requests实现反向代理</h2>
@@ -94,9 +92,7 @@
 </ol>
 <p>注意这里不要用 <code>.lstrip()</code> 。这方法和你想象的完全不是一回事。它是基于单个字符的挨个替换而不是整个字符串。<br />
 2. 实测这种在业务代码实现的「软」反向代理性能堪忧。上游4s左右的整个页面加载时间，反向代理之后就变成了 120s 左右。盲猜是 <code>StreamingResponse</code> 是一个字节一个字节去遍历迭代器？实测并不是。主要的锅还是 <code>Requests</code> 的 <code>.raw</code> 是按照 <code>chunked</code> 一段一段返回的。最好还是准备个 4KB 的 buffer，提高性能。解决方案是把  <code>r.raw</code> 改成 <code>r.raw.stream(4096000)</code> 性能一下就高了。注意这里不要用官方文档提供的 <code>.iter_contents()</code> 或者 <code>.iter_lines()</code> 这两者又会自作聪明的去解析文本编码或者换行符，降低了性能。</p>
-
 </article>
-
 
 <div class="comments">
   <h2>Comments</h2>

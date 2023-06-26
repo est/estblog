@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>python-phoenixdb 设置读取超时 - est の 输入输出</title>
+    <title>python-phoenixdb 设置读取超时 – est の 输入输出</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -11,7 +11,7 @@
     <meta name="description" content="python-phoenixdb 设置读取超时" />
 
     <link rel="canonical" href="https://blog.est.im/2022/stdout-01" />
-    <meta property="og:url" content="/2022/stdout-01">
+    <meta property="og:url" content="https://blog.est.im/2022/stdout-01">
     <meta property="og:type" content="article">
     <meta property="og:title" content="python-phoenixdb 设置读取超时">
 
@@ -48,8 +48,6 @@
     </ul>
   </div>
 </nav>    <main class="content side-text-padding">
-
-
 <article class="post">
   <header class="post-header">
     <h2 class="post-title">python-phoenixdb 设置读取超时</h2>
@@ -65,9 +63,7 @@ c = phoenixdb.connect('http://localhost:8765/', autocommit=True, auth=&quot;SPNE
 c._client.session.request = functools.partial(c._client.session.request, timeout=2)
 </code></pre>
 <p><code>partial</code> 这个神奇的魔法可以设置一个默认参数。其它地方传入了别的timeout也可以自行覆盖，无缝兼容。</p>
-
 </article>
-
 
 <div class="comments">
   <h2>Comments</h2>
