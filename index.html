@@ -57,19 +57,46 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2023/stdin-10"  rel="bookmark" >
+              <h2 class="card-title">为啥Linux下病毒比较少</h2>
+            </a>
+            <p class="card-text"><p>Category; stdin<br />
+Date: 2023-08-22 15:04:30</p>
+<p><img alt="" src="/images/2023/stdin-10-01.webp" /></p>
+<blockquote>
+<p>最近下载了一个Linux的病毒，把它解包了。<br />
+尝试用root身份运行，发现啥也没有。<br />
+Google了俩小时，发现这病毒没解包到 /usr/local/bin 而是解压到了 malware 用户没有写入权限的 /usr/bin，于是病毒创建不了进程文件。<br />
+从某个中文论坛里找到了修改过的 .configure 和 .make 文件，重新编译重新运行了一下。<br />
+病毒说它需要 cmalw-lib-2.0，结果发现这玩意是 CentOS 里的，Ubuntu 里没有。Google 了好几个小时找到了从源码构建 .deb 包的方法。<br />
+这病毒总算开始跑了，然后打出来几行日志，吐了个 core dump 就 crash 了。翻了一个小时日志发现这病毒假定自己跑在 ext4 文件系统上然后调用了 ext4 的加密 API。但是在 btrfs 里这个 API 已经弃用了，内核发现了这个问题然后把这个分区变成只读的了。<br />
+打开源文件，grep 搜索出病毒里的 BTC 钱包地址然后出于同情给它打了 $5。</p>
+</blockquote>
+<p>哈哈虽然现在linux病毒也多，但是这个也太搞笑了 <a href="https://t.me/rvalue_daily/4255">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2023-08-22T07:07:16.920995+08:00">2023-08-22</time></p>
+<p>stderr</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2023/stdin-09"  rel="bookmark" >
               <h2 class="card-title">北京，为什么会没有大家说的那么繁华？</h2>
             </a>
             <p class="card-text"><p>看了这篇文章之后，感受颇深。强烈推荐阅读</p>
-<p>https://mp.weixin.qq.com/s/hqIMDADiPDVSWp8EKh5gbw</p>
-<p>之前看到行业说法，北京便利店少的原因是“三个半”，即由于纬度高，天气寒冷，只能做“半年”生意，每日只能做“半天”生意，马路宽隔绝了人流，只能做“半条路”的生意。不知道为啥北京有这么多栏杆，现在知道了</p>
+<p><a href="https://mp.weixin.qq.com/s/hqIMDADiPDVSWp8EKh5gbw">https://mp.weixin.qq.com/s/hqIMDADiPDVSWp8EKh5gbw</a></p>
+<p>之前看到行业说法，北京便利店少的原因是“三个半”，即由于纬度高，天气寒冷，只能做“半年”生意，每日只能做“半天”生意，马路宽隔绝了人流，只能做“半条路”的生意。</p>
+<p>当时不知道为啥北京有这么多栏杆，现在知道了，原来是模仿苏联的城市规划。</p>
 <p>文章里提到</p>
 <blockquote>
 <p>“窄马路、密路网、路口多”这种在风水上叫做“雍聚”，是上上之选，有利于聚财、聚气、增加流动性、繁荣商业、降低拥堵。那种“宽马路、大广场、路口少”叫做“散迭”，会造成西北风煞冲散街区的热气，导致地气不旺、商业冷落萧条。城市变成睡城、死城，民众精气散迭，日渐贫穷衰落。</p>
 </blockquote>
-<p>搜了下，居然这个说法是公众号里早就有之的洗稿文。不过从另一个角度想，你分析blah那么一大堆，给没耐心或者没文化的小学生讲这个道理，不如就简化成：雍聚是上上之选。有的时候我觉得很多「道理」被过度复杂化了。不如直接给出上 - 中 - 下这种线性结论杀伤力更大。</p>
+<p>搜了下，居然这个说法是公众号里早就有之的洗稿文。不过从另一个角度想，你分析blah那么一大堆，给没耐心或者没文化的小学生讲这个道理，不如就简化成：雍聚是上上之选。有的时候「道理」被过度复杂化了。不如直接给出上 - 中 - 下这种线性结论杀伤力更大。</p>
 <p>想到现在政策层面反复炒作的「烟火气」，又想起2016年那个「不再建设封闭式小区」，当时被好多人骂来着。</p>
-<p>最后感觉这篇文章讲的道理，如果放在网络社区上，也是同样的道理。把流量都往「主干道」「主旋律」上赶，最后得到的一定是商业上的萧条。</p></p>
+<p>最后感觉这篇文章讲的故事，如果放在网络社区上，也是同样的结论。把流量都往「主干道」「主旋律」上赶，必然会有大量的舆论翻车事故，最后得到的一定是商业上的萧条。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2023-08-14T16:10:06+08:00">2023-08-14</time></p>
 <p>stdin</p>            </div>
@@ -1963,31 +1990,6 @@ user3043964493022: i 100% agree! i see it also at the preschool level... we are 
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2023-02-01T23:39:13+08:00">2023-02-01</time></p>
 <p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2023/stdout-03"  rel="bookmark" >
-              <h2 class="card-title">Play Cities:Skylines on Windows/MacOS without Paradox Launcher</h2>
-            </a>
-            <p class="card-text"><p>Haven't played Cities: Skylines for ages, so I re-installed it on Steam, after some updates there's this new Paradox Launcher which serves no purpose but wasting time. So I decided to remove it, googled some <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=1976349559">guide</a> and unfortunately it contains too many steps and some error occured while following it. Here's the simpler &amp; correct step of what I did instead.</p>
-<p>After the game is downloaded, open the Steam library, find the game, right click, choose <code>Properties...</code></p>
-<p><img alt="" src="/images/2023/stdout-03-01.webp" /></p>
-<p>Next for the <code>Launch Options</code>, type</p>
-<h3>on Windows</h3>
-<pre><code>cmd /c start cities.exe %command%
-</code></pre>
-<h3>on MacOS</h3>
-<pre><code>/Users/$USER/Library/Application\ Support/Steam/steamapps/common/Cities_Skylines/Cities.app/Contents/MacOS/Cities %command%
-</code></pre>
-<p>Make sure you replace <code>$USER</code> with your username</p>
-<p>Then the game works like good o' times, straight to the menu.</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2023-01-30T22:13:49+08:00">2023-01-30</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 

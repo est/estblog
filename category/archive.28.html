@@ -72,82 +72,58 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/cnblogs/622498"  rel="bookmark" >
-              <h2 class="card-title">在Windows下安装Ubuntu！注意，是直接在Win32下安装</h2>
+            <a href="/cnblogs/622499"  rel="bookmark" >
+              <h2 class="card-title">[原]一个极其BT的批处理：任务栏系统托盘汽泡提示</h2>
             </a>
-            <p class="card-text"><p>很早就这么想，开源世界的 Linux 和 Windows 正面对抗是不现实的，那么我们可以作出一点好玩的事情来，这就是，把 Linux 当成一个很大的&ldquo;Windows软件&rdquo;安装到系统中，Linux直接发布成一个几百兆的 <strong>lin</strong>staller.exe，双击安装，在Windows下用Win32API实现磁盘分区，修改MBR挂Grub，然后解压安装包，复制系统文件的文件到分区，呵呵，这样安装Linux的时候也不至于那么无聊，至于Linux的在线升级也可以得到实施，例如电子科大的DrCom上网认证，因为 Ubuntu 是在 Windows 下直接安装的，那么 APT 源就可以不用通过代理直接通过DrCom拨号了，更惬意的是，可以一边安装 Linux 一边上网，听歌，it's super kool！</p>
-<p>这样做的令一个好处是：可以直接复制现有Windows系统理的 字体 和 解码包（Win32Codec）到Linux下，从而避免了版权方面的麻烦，这样做是符合 EULA 的。</p>
-<p>What are you waiting for? Check it out here:</p>
-<p><a href="http://www.ubuntuforums.org/showthread.php?t=338279">http://www.ubuntuforums.org/showthread.php?t=338279</a></p>
-<p>Now the screenshots and demo from ubuntuforums.org</p>
-<p><img src="http://dormforce.net/Blog/Attachment/663" alt=""/></p>
-<p><img src="http://dormforce.net/Blog/Attachment/664" alt=""/></p>
-<p><img src="http://dormforce.net/Blog/Attachment/665" alt=""/></p>
-<p>希望GNU/FOSS的精神能够做出更多有趣的东西出来！</p>
-<p>至于Ubuntu小组的具体实施，和我的想法有点不同，首先他们不修改MBR，直接修改boot.ini，（发本文为止，Vista下的BootManager还不支持），其次，这个项目是用 NullSoft <a href="http://nsis.sourceforge.net/BattleTorrent_plug-ins">Installation System</a> 做的，挂载了 BattleTorrent ，也就是说，一边下载一边安装。由于FAT格式的分区对大体积文件支持不好，所以这个安装程序并不支持Win95/98。</p>
-<div class="smallfont"><strong>Windows based installer - testers and developers wanted</strong> </div>
-<hr style="COLOR: #ffffff" size="1"/>
-<!-- / icon and title --><!-- message --><div class="ubuntu_messagebody" id="post_message_2011371"><font size="1">This thread is a continuation of the very long and unmanageable thread: <a href="http://www2.edn.cn/cache/http/index.php?q=http%3A%2F%2Fubuntuforums.org%2Fshowthread.php%3Ft%3D305109" target="_blank">http://ubuntuforums.org/showthread.php?t=305109</a></font><br/>
+            <p class="card-text"><p>这种极其超出p处理讨论范围的话题真的有点BT，而且很无聊，所以我的解决方案也很无聊，那就是调用无所不能的 C#，所以需要 .NET Framework 支持，看代码` <blockquote class="code"><b class="smalltxt"><font size="2">CODE:</font></b>&nbsp;&nbsp;<a class="smalltxt" onclick="copycode(findobj('code0'));" href="http://www.cn-dos.net/forum/viewthread.php?tid=26751&amp;pid=166694&amp;page=1###"><font color="#003366" size="2">[Copy to clipboard]</font></a> <hr color="#dde3ec" size="1"/></p>
+<div id="code0" style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">@echo off<br/>
+set &quot;dnfpath=C:\Windows\Microsoft.NET\Framework&quot;<br/>
+set &quot;est=DO_NOT_ZT_WITHOUT_PERMISSION&quot;<br/>
+for /f &quot;delims=&quot; %%v in ('dir /ad /b %dnfpath%\v?.*') do (<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;if exist &quot;%dnfpath%\%%v\csc.exe&quot; set &quot;cscpath=%dnfpath%\%%v\csc.exe&quot;<br/>
+)<br/>
 <br/>
-We have a development version of a Windows based installer for Ubuntu which is designed to be:
-<ul>
-    <li>very simple to use </li>
-    <li>provide a no-risk installation </li>
-    <li>no repartitioning the hard disk </li>
-    <li>no changing the windows boot loader </li>
-    <li>Easy uninstallation. </li>
-    <li>Low risk </li>
-    <li>Doesn't use a virtual machine </li>
-    <li>Doesn't significantly reduce performance of the resulting installation </li>
-    <li>Resulting installation supports everything a normal install does. </li>
-    <li>Fast install </li>
-</ul>
+&lt; &quot;%~f0&quot; more +17 &gt; &quot;%temp%\estTrayTip.cs&quot;<br/>
+%cscpath% &quot;/out:%cd%\estTrayTip.exe&quot; &quot;%temp%\estTrayTip.cs&quot;<br/>
+estTrayTip.exe C:\Windows\System32\acwizard.ico 看什么看 没见过批处理啊？没见过任务栏的汽泡信息啊？见过了吧？见过了顶electronixtar的帖子。 2<br/>
+:exe的参数解释：estTrayTip.exe 图标路径　标题　内容　提示图标类型Error、Info、None、Warning，这里取2=Info。每个参数都必须正确填写<br/>
+&gt;nul ping 127.1 -n 1<br/>
+del estTrayTip.exe<br/>
 <br/>
-<div align="center">*************************</div>
+goto:eof<br/>
 <br/>
-<b>Currently there is a prototype of the installer. see <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2Fwiki.ubuntu.com%2Finstall.exe%2FPrototype" target="_blank">https://wiki.ubuntu.com/install.exe/Prototype</a> for download and install instructions.</b><br/>
+:estTrayTip<br/>
 <br/>
-<div align="center">*************************</div>
+using System;<br/>
+using System.Windows.Forms;<br/>
+using System.Drawing;<br/>
 <br/>
-The aim of this installer is to provide an easier way for a Windows user to install Ubuntu without having to know how to burn a cd iso, set the bios to boot from cd, repartition the disks, set up a multiboot system, etc. It will not replace any of the current Ubuntu installation options, and will not require that windows is installed prior to the installation of Ubuntu.<br/>
-<br/>
-The installer works by creating a disk image of a pre-installed ubuntu system on the hard disk (downloaded with a bittorrent downloader integrated into the installer, or a standard http download when we find mirrors), and then installing GRUB for windows, which can be chain loaded by the existing boot loader, and which then loads the linux kerner and initrd from the ntfs partition. The initrd is modified to support mounting the image file mentioned above as a root file system, and then continuing the boot process like a normal installation.<br/>
-<br/>
-This does not use a virtual machine to run linux on, so the performance of the resulting system will be similar to the performance of any other linux installation. The system will use ext3 in the image file, so users will get all the benefits of a linux filesystem.<br/>
-<br/>
-<b><u>Current progress</u></b><br/>
-A prototype has been made (see <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2Fwiki.ubuntu.com%2Finstall.exe%2FPrototype" target="_blank">https://wiki.ubuntu.com/install.exe/Prototype</a>) which works, however there are still a few unresolved issues:<br/>
-<br/>
-GUI Installer:
-<ul>
-    <li>UPNP </li>
-    <li>Advanced/Expert install </li>
-    <li>installation of other distributions (kubuntu, edubuntu, xubuntu etc.) </li>
-    <li>Langage support </li>
-    <li>slideshow during install </li>
-    <li>Disk space checks required </li>
-    <li>Support for installing on a secondary drive </li>
-    <li>Supporting installation of boot loader where the boot drive isn't c:\ </li>
-</ul>
-<br/>
-First boot:
-<ul>
-    <li>Hardware Detection </li>
-    <li>Importing settings from config.ini file </li>
-    <li>Swap file </li>
-</ul>
-<br/>
-For more details, refer to the following links:<br/>
-<br/>
-Launchpad entry here: <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2Fblueprints.launchpad.net%2Fubuntu%2F%2Bspec%2Fwindows-installer" target="_blank">https://blueprints.launchpad.net/ubu...dows-installer</a> <br/>
-Specification here: <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2Fwiki.ubuntu.com%2Finstall.exe" target="_blank">https://wiki.ubuntu.com/install.exe</a> <br/>
-Comments here: <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2Fwiki.ubuntu.com%2Finstall.exe%2FComments" target="_blank">https://wiki.ubuntu.com/install.exe/Comments</a> <br/>
-Prototype here: <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2Fwiki.ubuntu.com%2Finstall.exe%2FPrototype" target="_blank">https://wiki.ubuntu.com/install.exe/Prototype</a></div>
-<!-- / message -->
-<!-- attachments --><p>[内有附件]</p>
-<p><br>文章来源:<a href='http://202.115.22.199/Blog/electronixtar/archive/2007/01/16/13413.aspx'>http://202.115.22.199/Blog/electronixtar/archive/2007/01/16/13413.aspx</a><br><br><br />
-<img src ="http://202.115.22.199/Blog/electronixtar/aggbug/13413.aspx" width = "1" height = "1" /><img src ="http://www.cnblogs.com/est/aggbug/622498.html" width = "1" height = "1" /><div align=right><a style="text-decoration:none;" href="http://est.cnblogs.com/" target="_blank">est</a> 2007-01-17 11:48 <a href="http://www.cnblogs.com/est/archive/2007/01/17/622498.html#Feedback" target="_blank" style="text-decoration:none;">发表评论</a></div>
-</p></p>
+namespace estTrayTip<br/>
+{<br/>
+&nbsp; &nbsp; class Program<br/>
+&nbsp; &nbsp; {<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;static void Main(string[] args)<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;{<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;NotifyIcon estIcon = new NotifyIcon();<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;estIcon.Icon = new Icon(args[0]);<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;estIcon.Visible = true;<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;ToolTipIcon estToolTipIcon = new ToolTipIcon();<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;switch(args[3])<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;{<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;1&quot;: <br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.Error; break;<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;2&quot;:<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.Info; break;<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;3&quot;:<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.None; break;<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;4&quot;:<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.Warning; break;<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;}<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;estIcon.ShowBalloonTip(1,args[1],args[2],estToolTipIcon);<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;}<br/>
+&nbsp; &nbsp; }<br/>
+}</div>
+<p></blockquote><img src ="http://202.115.22.199/Blog/electronixtar/aggbug/13411.aspx" width = "1" height = "1" /><br>文章来源:<a href='http://202.115.22.199/Blog/electronixtar/archive/2007/01/16/13411.aspx'>http://202.115.22.199/Blog/electronixtar/archive/2007/01/16/13411.aspx</a><img src ="http://www.cnblogs.com/est/aggbug/622499.html" width = "1" height = "1" /><br><br><div align=right><a style="text-decoration:none;" href="http://est.cnblogs.com/" target="_blank">est</a> 2007-01-17 11:48 <a href="http://www.cnblogs.com/est/archive/2007/01/17/622499.html#Feedback" target="_blank" style="text-decoration:none;">发表评论</a></div></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
 <p>archive</p>            </div>
@@ -236,20 +212,6 @@ The server encountered a temporary error and could not complete your request.
 <p><img src ="http://dormforce.net/Blog/electronixtar/aggbug/13360.aspx" width = "1" height = "1" /></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-01-10T08:10:00+08:00">2007-01-10</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/nu/13357"  rel="bookmark" >
-              <h2 class="card-title">Web没前途的</h2>
-            </a>
-            <p class="card-text"><p>今天很是生气，哎，1000多字的blog，点了个 保存 ，结果给弹一个框框说&ldquo;.Text Application Error：OutOfMemeory Exception&rdquo;，真TMD的烂啊，偶写blog的心情一下子就&hellip;&hellip;说到技术层面上，Web程序好看，制作简单，但是结构超级复杂和麻烦。如果blog是个C/S结构，或者B/S的blog系统支持xmlhttp后台提交的话&hellip;&hellip;就不会有这种后果了&hellip;&hellip;&hellip;&hellip;呜呜呜呜，Web程序&hellip;&hellip;是 不可靠 和 低效率的，你看做一个 DOM 拖动的 div 就要写那么多代码，或者用那么多的类啊，真的很累。现在Web 2.0被Google炒得很热，但是这些其实很很泡沫的，什么WebOS也是极其SB和夸张的。我始终认为，电脑软件，用户至上，不要把什么开源啊面向对象啊弄到用户层去。心情不好乱说几句，呵呵</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-01-10T07:06:00+08:00">2007-01-10</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
@@ -1026,6 +988,20 @@ NUM LOCK 5妙种：切换键<br/>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/nu/13357"  rel="bookmark" >
+              <h2 class="card-title">Web没前途的</h2>
+            </a>
+            <p class="card-text"><p>今天很是生气，哎，1000多字的blog，点了个 保存 ，结果给弹一个框框说&ldquo;.Text Application Error：OutOfMemeory Exception&rdquo;，真TMD的烂啊，偶写blog的心情一下子就&hellip;&hellip;说到技术层面上，Web程序好看，制作简单，但是结构超级复杂和麻烦。如果blog是个C/S结构，或者B/S的blog系统支持xmlhttp后台提交的话&hellip;&hellip;就不会有这种后果了&hellip;&hellip;&hellip;&hellip;呜呜呜呜，Web程序&hellip;&hellip;是 不可靠 和 低效率的，你看做一个 DOM 拖动的 div 就要写那么多代码，或者用那么多的类啊，真的很累。现在Web 2.0被Google炒得很热，但是这些其实很很泡沫的，什么WebOS也是极其SB和夸张的。我始终认为，电脑软件，用户至上，不要把什么开源啊面向对象啊弄到用户层去。心情不好乱说几句，呵呵</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-10T07:06:00+08:00">2007-01-10</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/nu/13355"  rel="bookmark" >
               <h2 class="card-title">Alt+Shift+PrintScreen</h2>
             </a>
@@ -1341,56 +1317,46 @@ Well，接下来，你可以自由地在批处理中书写vbs脚本了，效率�
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/cnblogs/600413"  rel="bookmark" >
-              <h2 class="card-title">[原创]XP关机对话框的变灰dHTML特效</h2>
+            <a href="/cnblogs/600410"  rel="bookmark" >
+              <h2 class="card-title">WinNT Namespace 与 ext3 结构</h2>
             </a>
-            <p class="card-text"><p>&lt;!-- This element has the filter applied. --&gt;<br/>
-<br/>
-&lt;DIV ID=&quot;oTrans&quot; STYLE=&quot;position:absolute; top:0px; left:0px; width:100%; height:100%;<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; background-image=url(file:///C:/WINDOWS/Web/Wallpaper/Bliss.bmp);<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; filter:progid:DXImageTransform.Microsoft.Fade(duration=2);&quot;&gt;<br/>
-&lt;BUTTON onclick=&quot;fnToggle()&quot;&gt;Logout&lt;/BUTTON&gt;<br/>
-<br/>
-&lt;DIV ID=&quot;oTrans1&quot; STYLE=&quot;position:absolute; top:0px; left:0px; width:100%; height:100%; visibility:hidden;<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; background-image=url(file:///C:/WINDOWS/Web/Wallpaper/Bliss.bmp);<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);&quot;&gt;<br/>
-&lt;BUTTON onclick=&quot;fnToggle()&quot;&gt;Cancel&lt;/BUTTON&gt;<br/>
-&lt;/DIV&gt;<br/>
-<br/>
-&lt;/DIV&gt;<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-&lt;SCRIPT&gt;<br/>
-var bTranState = 0;<br/>
-<br/>
-<br/>
-function fnToggle()<br/>
-{<br/>
-&nbsp; &nbsp; oTrans.filters[0].Apply();<br/>
-&nbsp; &nbsp; <br/>
-&nbsp; &nbsp; if (bTranState==0)<br/>
-&nbsp; &nbsp; {<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; bTranState = 1;<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; oTrans1.style.visibility=&quot;visible&quot;;<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; }<br/>
-&nbsp; &nbsp; else<br/>
-&nbsp; &nbsp; {<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; oTrans.filters[0].stop();<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; bTranState = 0;<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; oTrans1.style.visibility=&quot;hidden&quot;;<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; }<br/>
-<br/>
-&nbsp; &nbsp; oTrans.filters[0].Play();<br/>
-}<br/>
-<br/>
-&lt;/SCRIPT&gt;<br/>
-</p>
-<p>&nbsp;</p>
-<p>初次写 js 特效，有点不精简，呵呵。</p>
-<p>最开始是做一个 div ，直接用 fade 和 baseimage 两个虑境，但是由于某些原因，fade虑境被省略了，于是做两个 img 呵呵。</p>
-<p>我最开始是发布在51js上的，搜索了下，网上已经有人乱转代码了。国内软件行业就这种抄过去抄过来的混乱。</p></p>
+            <p class="card-text"><p>Linux的 ext3 文件系统结构是 一个 / 根，然后衍生出整个PC的文件、设备、一切。 其实呢，WinNT 也是这样设计的，只是没有暴露给用户罢了。说白了， C:\ D:\ 等只是一个符号连接。如图：用了反汇编高手WQXNETQIQI推荐的工具，Sysinternals 的大作：WinObj</p>
+<p><img alt="" src="http://dormforce.net/Blog/Attachment/610"/></p>
+<p>&nbsp;在 cmd 命令行里，我们可以通过<br/>
+tree \\?\CdRom0<br/>
+来查看机器上第一个光驱的 目录结构，也可以通过<br/>
+type \\?\GLOBALROOT\Device\CdRom0\autorun.inf<br/>
+来读取 第一个光驱根目录下 autorun.ini 的内容。</p>
+<p>是不是和 Linux 的 cat /media/cdrom 有点相似呢？</p>
+<p>再看看一个WinNT NTFS的的命令：<br/>
+C:\&gt;mountvol<br/>
+创建、删除或列出卷装载点。<br/>
+MOUNTVOL [drive:]path VolumeName<br/>
+MOUNTVOL [drive:]path /D<br/>
+MOUNTVOL [drive:]path /L</p>
+<p>&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a0-85e1-11db-9bf6-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a1-85e1-11db-9bf6-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; D:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a2-85e1-11db-9bf6-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; E:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{aa4a8921-f599-11da-9600-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; F:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{b2938600-f565-11da-a449-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; G:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{aa4a8920-f599-11da-9600-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A:\</p>
+<p>输入 <br/>
+C:\&gt;dir \\?\Volume{d1dd98a0-85e1-11db-9bf6-806d6172696f}\Windows<br/>
+就相当于<br/>
+dir %WinDir% 了。</p>
+<p>输入<br/>
+type \\?\GLOBALROOT\Device\HardDiskVolume1\boot.ini<br/>
+就相当于<br/>
+type C:\Boot.ini</p>
+<p>看来Windows 也有一个类似于 ext3 的文件系统啊。加上 Windows Shell Namespace，应该比 ext3 丰富了吧。</p>
+<p>粗略的估计，用命令行可以查看一些Win32的 NamedPipe 和 内存、TCP 连接的情况。由于本人才疏学浅，不知道从哪里入手，不过总体感觉是：Windows&nbsp; 到底还是MS几亿美金打造的OS，还是有其深刻内涵的。从这点看来，Linux又显得原始了点。</p>
+<p>[内有附件]</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
 <p>archive</p>            </div>
@@ -1614,110 +1580,6 @@ function fnToggle()<br/>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/cnblogs/600411"  rel="bookmark" >
-              <h2 class="card-title">vbs 调用 Win32 API</h2>
-            </a>
-            <p class="card-text"><p>Option Explicit<br/>
-Dim UserWrap <br/>
-Set UserWrap = CreateObject(&quot;DynamicWrapper&quot;)</p>
-<p>' Call MessageBoxA(), first register the API function<br/>
-UserWrap.Register &quot;USER32.DLL&quot;, &quot;MessageBoxA&quot;, &quot;I=HsSu&quot;, _<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;f=s&quot;, &quot;R=l&quot;<br/>
-' now call the function<br/>
-UserWrap.MessageBoxA Null, &quot;MessageBox (ANSI)&quot;, _<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;From DynaWrap Object&quot;, 3</p>
-<p>&nbsp;Readme.txt</p>
-<p>This is the dynacall.dll that I described as &quot;bringing back the Declare<br/>
-statement&quot;&nbsp; in VBScript. Basically it will allow you to call functions<br/>
-in other dlls...like any of the win32 api functions. This will be my<br/>
-only distribution.</p>
-<p>Many thanks to Ton Plooy and Jeff Stong who wrote the code and published<br/>
-it in WDJ. And more thanks to William Epp for getting it to work with my<br/>
-sample script ccupd.vbs using the GETPROFILESTRING function. However I<br/>
-have another function in the sample that still doesn't work<br/>
-GETPROFILESECTION. This is a work in progress but I think it is a handy<br/>
-little feature. Hopefully by this distributions it will get where it<br/>
-needs to be. Clarence and Ian have offered to post it on their sites so<br/>
-further updates can be had at either WSH site. (anyone else call this<br/>
-thing woosh? Hopefully it will perform this way).</p>
-<p>Basically you declare functions and other DLLS like this:</p>
-<p>'&nbsp;&nbsp; Create the wrapper object for dynamic DLL function calling<br/>
-Dim UserWrap <br/>
-Set UserWrap = CreateObject(&quot;DynamicWrapper&quot;)<br/>
-'&nbsp;&nbsp; GetProcAddress for GetPrivateProfileStringA()<br/>
-UserWrap.Register &quot;kernel32.DLL&quot;, &quot;GetPrivateProfileString&quot;, &quot;i=ssssls&quot;,<br/>
-&quot;f=s&quot;, &quot;r=l&quot;</p>
-<p><br/>
-The input parameters are:</p>
-<p>i=describes the number and data type of the functions parameters</p>
-<p>f=type of call _stdcall or _cdecl. So it can work with both MS C++ and<br/>
-Borland C++. Default to _stdcall. If that doesn't work use _cdecl. If<br/>
-that doesn't work good luck!</p>
-<p>r=return data type.</p>
-<p><br/>
-Data types are:</p>
-<p>const ARGTYPEINFO ArgInfo[] = <br/>
-{<br/>
-{'a', sizeof(IDispatch*),&nbsp;&nbsp;&nbsp; VT_DISPATCH}, // a&nbsp;&nbsp; IDispatch*<br/>
-{'c', sizeof(unsigned char), VT_I4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // c&nbsp;&nbsp; signed char&nbsp; <br/>
-{'d', sizeof(double),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_R8},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // d&nbsp;&nbsp; 8 byte real <br/>
-{'f', sizeof(float),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_R4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // f&nbsp;&nbsp; 4 byte real <br/>
-{'k', sizeof(IUnknown*),&nbsp;&nbsp;&nbsp;&nbsp; VT_UNKNOWN},&nbsp; // k&nbsp;&nbsp; IUnknown* <br/>
-{'h', sizeof(long),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_I4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // h&nbsp;&nbsp; HANDLE <br/>
-{'l', sizeof(long),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_I4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // l&nbsp;&nbsp; long <br/>
-{'p', sizeof(void*),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_PTR},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // p&nbsp;&nbsp; pointer <br/>
-{'s', sizeof(BSTR),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_LPSTR},&nbsp;&nbsp;&nbsp; // s&nbsp;&nbsp; string <br/>
-{'t', sizeof(short),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_I2},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // t&nbsp;&nbsp; short <br/>
-{'u', sizeof(UINT),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_UINT},&nbsp;&nbsp;&nbsp;&nbsp; // u&nbsp;&nbsp; unsigned int <br/>
-{'w', sizeof(BSTR),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_LPWSTR},&nbsp;&nbsp; // w&nbsp;&nbsp; wide string <br/>
-}</p>
-<p>William Epp added anr 'r' for VT_BYREF (pass by reference)but is for<br/>
-strings only. This made the GETPROFILESTRING function to work. But it<br/>
-didn't work for the GETPROFILESECTION. If anyone gets it to work please<br/>
-let me know.</p>
-<p><br/>
-Attachments:</p>
-<p>stong.zip - original download from WDJ<br/>
-DynaWrap.zip - the modified code, the DLL with modifications.<br/>
-feature.htm - the feature article for this code by Jeff Stong. Only<br/>
-thing I could find on WDJ. I couldn't find Ton's article.</p>
-<p><a href="http://cwashington.netreach.net/site/downloads.html">http://cwashington.netreach.net/site/downloads.html</a></p>
-<p><a href="http://www.mvps.org/scripting/">http://www.mvps.org/scripting/</a></p>
-<p>[内有附件]</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/cnblogs/600414"  rel="bookmark" >
-              <h2 class="card-title">CSS Filter: Light</h2>
-            </a>
-            <p class="card-text"><p>Added light FX to the picture on the left</p>
-<p>code:</p>
-<p>&nbsp;</p>
-<p>&lt;img<br/>
-style=&quot;filter:light();&quot;<br/>
-id=&quot;mypic&quot;<br/>
-src=&quot;C:\windows\web\wallpaper\bliss.bmp&quot;<br/>
-onload=&quot;javascript:this.filters.light.addCone(this.width/2,this.height/2,100,this.width/2,this.height/2,255,255,255,100,30)&quot;<br/>
-onmousemove=&quot;javascript:this.filters.light.moveLight(0,event.offsetX,event.offsetY,200,1)&quot; <br/>
-/&gt;</p>
-<p>&nbsp;</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/cnblogs/600412"  rel="bookmark" >
               <h2 class="card-title">[原创]dHTML特效 alpha虑境之柔和边缘效果</h2>
             </a>
@@ -1814,45 +1676,159 @@ asdasd&lt;br /&gt;<br/>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/cnblogs/600410"  rel="bookmark" >
-              <h2 class="card-title">WinNT Namespace 与 ext3 结构</h2>
+            <a href="/cnblogs/600414"  rel="bookmark" >
+              <h2 class="card-title">CSS Filter: Light</h2>
             </a>
-            <p class="card-text"><p>Linux的 ext3 文件系统结构是 一个 / 根，然后衍生出整个PC的文件、设备、一切。 其实呢，WinNT 也是这样设计的，只是没有暴露给用户罢了。说白了， C:\ D:\ 等只是一个符号连接。如图：用了反汇编高手WQXNETQIQI推荐的工具，Sysinternals 的大作：WinObj</p>
-<p><img alt="" src="http://dormforce.net/Blog/Attachment/610"/></p>
-<p>&nbsp;在 cmd 命令行里，我们可以通过<br/>
-tree \\?\CdRom0<br/>
-来查看机器上第一个光驱的 目录结构，也可以通过<br/>
-type \\?\GLOBALROOT\Device\CdRom0\autorun.inf<br/>
-来读取 第一个光驱根目录下 autorun.ini 的内容。</p>
-<p>是不是和 Linux 的 cat /media/cdrom 有点相似呢？</p>
-<p>再看看一个WinNT NTFS的的命令：<br/>
-C:\&gt;mountvol<br/>
-创建、删除或列出卷装载点。<br/>
-MOUNTVOL [drive:]path VolumeName<br/>
-MOUNTVOL [drive:]path /D<br/>
-MOUNTVOL [drive:]path /L</p>
-<p>&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a0-85e1-11db-9bf6-806d6172696f}\<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C:\<br/>
-&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a1-85e1-11db-9bf6-806d6172696f}\<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; D:\<br/>
-&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a2-85e1-11db-9bf6-806d6172696f}\<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; E:\<br/>
-&nbsp;&nbsp;&nbsp; \\?\Volume{aa4a8921-f599-11da-9600-806d6172696f}\<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; F:\<br/>
-&nbsp;&nbsp;&nbsp; \\?\Volume{b2938600-f565-11da-a449-806d6172696f}\<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; G:\<br/>
-&nbsp;&nbsp;&nbsp; \\?\Volume{aa4a8920-f599-11da-9600-806d6172696f}\<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A:\</p>
-<p>输入 <br/>
-C:\&gt;dir \\?\Volume{d1dd98a0-85e1-11db-9bf6-806d6172696f}\Windows<br/>
-就相当于<br/>
-dir %WinDir% 了。</p>
-<p>输入<br/>
-type \\?\GLOBALROOT\Device\HardDiskVolume1\boot.ini<br/>
-就相当于<br/>
-type C:\Boot.ini</p>
-<p>看来Windows 也有一个类似于 ext3 的文件系统啊。加上 Windows Shell Namespace，应该比 ext3 丰富了吧。</p>
-<p>粗略的估计，用命令行可以查看一些Win32的 NamedPipe 和 内存、TCP 连接的情况。由于本人才疏学浅，不知道从哪里入手，不过总体感觉是：Windows&nbsp; 到底还是MS几亿美金打造的OS，还是有其深刻内涵的。从这点看来，Linux又显得原始了点。</p>
+            <p class="card-text"><p>Added light FX to the picture on the left</p>
+<p>code:</p>
+<p>&nbsp;</p>
+<p>&lt;img<br/>
+style=&quot;filter:light();&quot;<br/>
+id=&quot;mypic&quot;<br/>
+src=&quot;C:\windows\web\wallpaper\bliss.bmp&quot;<br/>
+onload=&quot;javascript:this.filters.light.addCone(this.width/2,this.height/2,100,this.width/2,this.height/2,255,255,255,100,30)&quot;<br/>
+onmousemove=&quot;javascript:this.filters.light.moveLight(0,event.offsetX,event.offsetY,200,1)&quot; <br/>
+/&gt;</p>
+<p>&nbsp;</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/600413"  rel="bookmark" >
+              <h2 class="card-title">[原创]XP关机对话框的变灰dHTML特效</h2>
+            </a>
+            <p class="card-text"><p>&lt;!-- This element has the filter applied. --&gt;<br/>
+<br/>
+&lt;DIV ID=&quot;oTrans&quot; STYLE=&quot;position:absolute; top:0px; left:0px; width:100%; height:100%;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; background-image=url(file:///C:/WINDOWS/Web/Wallpaper/Bliss.bmp);<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; filter:progid:DXImageTransform.Microsoft.Fade(duration=2);&quot;&gt;<br/>
+&lt;BUTTON onclick=&quot;fnToggle()&quot;&gt;Logout&lt;/BUTTON&gt;<br/>
+<br/>
+&lt;DIV ID=&quot;oTrans1&quot; STYLE=&quot;position:absolute; top:0px; left:0px; width:100%; height:100%; visibility:hidden;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; background-image=url(file:///C:/WINDOWS/Web/Wallpaper/Bliss.bmp);<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);&quot;&gt;<br/>
+&lt;BUTTON onclick=&quot;fnToggle()&quot;&gt;Cancel&lt;/BUTTON&gt;<br/>
+&lt;/DIV&gt;<br/>
+<br/>
+&lt;/DIV&gt;<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+&lt;SCRIPT&gt;<br/>
+var bTranState = 0;<br/>
+<br/>
+<br/>
+function fnToggle()<br/>
+{<br/>
+&nbsp; &nbsp; oTrans.filters[0].Apply();<br/>
+&nbsp; &nbsp; <br/>
+&nbsp; &nbsp; if (bTranState==0)<br/>
+&nbsp; &nbsp; {<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; bTranState = 1;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; oTrans1.style.visibility=&quot;visible&quot;;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; }<br/>
+&nbsp; &nbsp; else<br/>
+&nbsp; &nbsp; {<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; oTrans.filters[0].stop();<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; bTranState = 0;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; oTrans1.style.visibility=&quot;hidden&quot;;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; }<br/>
+<br/>
+&nbsp; &nbsp; oTrans.filters[0].Play();<br/>
+}<br/>
+<br/>
+&lt;/SCRIPT&gt;<br/>
+</p>
+<p>&nbsp;</p>
+<p>初次写 js 特效，有点不精简，呵呵。</p>
+<p>最开始是做一个 div ，直接用 fade 和 baseimage 两个虑境，但是由于某些原因，fade虑境被省略了，于是做两个 img 呵呵。</p>
+<p>我最开始是发布在51js上的，搜索了下，网上已经有人乱转代码了。国内软件行业就这种抄过去抄过来的混乱。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/600411"  rel="bookmark" >
+              <h2 class="card-title">vbs 调用 Win32 API</h2>
+            </a>
+            <p class="card-text"><p>Option Explicit<br/>
+Dim UserWrap <br/>
+Set UserWrap = CreateObject(&quot;DynamicWrapper&quot;)</p>
+<p>' Call MessageBoxA(), first register the API function<br/>
+UserWrap.Register &quot;USER32.DLL&quot;, &quot;MessageBoxA&quot;, &quot;I=HsSu&quot;, _<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;f=s&quot;, &quot;R=l&quot;<br/>
+' now call the function<br/>
+UserWrap.MessageBoxA Null, &quot;MessageBox (ANSI)&quot;, _<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;From DynaWrap Object&quot;, 3</p>
+<p>&nbsp;Readme.txt</p>
+<p>This is the dynacall.dll that I described as &quot;bringing back the Declare<br/>
+statement&quot;&nbsp; in VBScript. Basically it will allow you to call functions<br/>
+in other dlls...like any of the win32 api functions. This will be my<br/>
+only distribution.</p>
+<p>Many thanks to Ton Plooy and Jeff Stong who wrote the code and published<br/>
+it in WDJ. And more thanks to William Epp for getting it to work with my<br/>
+sample script ccupd.vbs using the GETPROFILESTRING function. However I<br/>
+have another function in the sample that still doesn't work<br/>
+GETPROFILESECTION. This is a work in progress but I think it is a handy<br/>
+little feature. Hopefully by this distributions it will get where it<br/>
+needs to be. Clarence and Ian have offered to post it on their sites so<br/>
+further updates can be had at either WSH site. (anyone else call this<br/>
+thing woosh? Hopefully it will perform this way).</p>
+<p>Basically you declare functions and other DLLS like this:</p>
+<p>'&nbsp;&nbsp; Create the wrapper object for dynamic DLL function calling<br/>
+Dim UserWrap <br/>
+Set UserWrap = CreateObject(&quot;DynamicWrapper&quot;)<br/>
+'&nbsp;&nbsp; GetProcAddress for GetPrivateProfileStringA()<br/>
+UserWrap.Register &quot;kernel32.DLL&quot;, &quot;GetPrivateProfileString&quot;, &quot;i=ssssls&quot;,<br/>
+&quot;f=s&quot;, &quot;r=l&quot;</p>
+<p><br/>
+The input parameters are:</p>
+<p>i=describes the number and data type of the functions parameters</p>
+<p>f=type of call _stdcall or _cdecl. So it can work with both MS C++ and<br/>
+Borland C++. Default to _stdcall. If that doesn't work use _cdecl. If<br/>
+that doesn't work good luck!</p>
+<p>r=return data type.</p>
+<p><br/>
+Data types are:</p>
+<p>const ARGTYPEINFO ArgInfo[] = <br/>
+{<br/>
+{'a', sizeof(IDispatch*),&nbsp;&nbsp;&nbsp; VT_DISPATCH}, // a&nbsp;&nbsp; IDispatch*<br/>
+{'c', sizeof(unsigned char), VT_I4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // c&nbsp;&nbsp; signed char&nbsp; <br/>
+{'d', sizeof(double),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_R8},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // d&nbsp;&nbsp; 8 byte real <br/>
+{'f', sizeof(float),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_R4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // f&nbsp;&nbsp; 4 byte real <br/>
+{'k', sizeof(IUnknown*),&nbsp;&nbsp;&nbsp;&nbsp; VT_UNKNOWN},&nbsp; // k&nbsp;&nbsp; IUnknown* <br/>
+{'h', sizeof(long),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_I4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // h&nbsp;&nbsp; HANDLE <br/>
+{'l', sizeof(long),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_I4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // l&nbsp;&nbsp; long <br/>
+{'p', sizeof(void*),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_PTR},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // p&nbsp;&nbsp; pointer <br/>
+{'s', sizeof(BSTR),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_LPSTR},&nbsp;&nbsp;&nbsp; // s&nbsp;&nbsp; string <br/>
+{'t', sizeof(short),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_I2},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // t&nbsp;&nbsp; short <br/>
+{'u', sizeof(UINT),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_UINT},&nbsp;&nbsp;&nbsp;&nbsp; // u&nbsp;&nbsp; unsigned int <br/>
+{'w', sizeof(BSTR),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_LPWSTR},&nbsp;&nbsp; // w&nbsp;&nbsp; wide string <br/>
+}</p>
+<p>William Epp added anr 'r' for VT_BYREF (pass by reference)but is for<br/>
+strings only. This made the GETPROFILESTRING function to work. But it<br/>
+didn't work for the GETPROFILESECTION. If anyone gets it to work please<br/>
+let me know.</p>
+<p><br/>
+Attachments:</p>
+<p>stong.zip - original download from WDJ<br/>
+DynaWrap.zip - the modified code, the DLL with modifications.<br/>
+feature.htm - the feature article for this code by Jeff Stong. Only<br/>
+thing I could find on WDJ. I couldn't find Ton's article.</p>
+<p><a href="http://cwashington.netreach.net/site/downloads.html">http://cwashington.netreach.net/site/downloads.html</a></p>
+<p><a href="http://www.mvps.org/scripting/">http://www.mvps.org/scripting/</a></p>
 <p>[内有附件]</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
