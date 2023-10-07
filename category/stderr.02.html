@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>est の 输入输出 - stderr category</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入输出 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="This blog is rated 🔞, viewer discretion is advised" />
+
+    <meta property="og:url" content="https://blog.est.im">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="est の 输入输出">
+    <meta property="og:description" content="This blog is rated 🔞, viewer discretion is advised">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="list-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入输出
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link active">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="card-container side-gutter">
+      <header class="list-header">
+        <p class="list-header-subtext">This blog is rated 🔞, viewer discretion is advised</p>
+        <!-- <h1 class="list-header-title">est の 输入输出</h1> -->
+      </header>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/159476100930"  rel="bookmark" >
+              <h2 class="card-title">RESTful is bad and you should feel bad</h2>
+            </a>
+            <p class="card-text"><p>From <a href="https://www.v2ex.com/t/354273">this</a> thread</p>
+<p>What's wrong with</p>
+<pre><code>  GET     /users/                -----&gt;  `list.users` 
+  GET     /users/:id/            -----&gt;  `retrieve.users`
+  POST    /users/                -----&gt;  `create.users`
+  PUT     /users/:id/password/   -----&gt;  `replace.users`
+  PATCH   /users/:id/            -----&gt;  `update.users`
+  DELETE  /users/:id/            -----&gt;  `destroy.users`
+</code></pre>
+<p>You will find these URL super ugly and annoying when doing log analysis, you have to monkey craft <code>regexp</code>s to truncate the useless <code>:id</code> part from the url so your aggregator would work properly.</p>
+<p>I prefer simply use <code>GET</code> for read and <code>POST</code> for writes. Like this</p>
+<pre><code>  GET /users/list
+  GET /users/retrieve
+  POST /users/create
+  POST /users/update
+  POST /users/destroy
+</code></pre>
+<p>It's clean, it's concise, it works everywhere.</p>
+<p>Fuck those obnoxious <code>OPTIONS</code> and <code>PATCH</code>.</p>
+<p>BTW who the fuck invents a <code>users.replaec()</code> functions?</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2017-04-11T23:10:11+08:00">2017-04-11</time></p>
+<p>stderr</p>            </div>
+          </article>
+        </div>
+
+    </main>
+    <nav class="pagination-nav side-padding">
+<a href="/category/stderr.html" class="pagination-newer">&lt; Newer Posts</a>    </nav>
+
+<script src="/theme/js/core.js"></script>
+
+  </body>
+</html>
