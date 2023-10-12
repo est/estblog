@@ -57,6 +57,56 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/202103/stdout-003"  rel="bookmark" >
+              <h2 class="card-title">FastAPI/Starlette+Requests实现反向代理</h2>
+            </a>
+            <p class="card-text"><p>因为某些拉垮的业务需要，不得不在代码里去反向代理别的 HTTP API</p>
+<p>一般格式如下：</p>
+<pre><code>  @app.get('/other/{other_path:path}')
+  @app.post('/other/{other_path:path}')
+  async def other_api(other_path: str, req: Request):
+      """透传 API"""
+      host = 'http://example.intranet'
+      url = '{}/other/{}'.format(host, other_path)
+      body = bytes(await req.body()) or None
+      r = requests.request(
+          req.method, url,
+          headers={
+              'Cookie': req.headers.get('cookie') or '',
+              'Content-Type': req.headers.get('Content-Type')},
+          params=req.query_params, data=body, stream=True,
+          allow_redirects=False)
+
+      h = dict(r.headers)
+      h.pop('Content-Length', None)
+      return StreamingResponse(r.raw, headers=h, status_code=r.status_code)
+</code></pre>
+<p>解释一下为啥要这么写：</p>
+<ol>
+<li>采用 <code>stream=True</code> + <code>StreamingResponse</code>，防止上游给你返回一个GB体量的文件把 FastAPI 进程内存撑爆</li>
+<li>只摘取浏览器的 <code>Cookie</code> + <code>Content-Type</code> 两个头。别的不给上游。</li>
+<li>要去掉返回的 Content-Length 头。因为 StreamingResponse 会自己定义返回长度。</li>
+</ol>
+<p>这样写基本能跑起来了，但是有2个问题：</p>
+<ol>
+<li>如果上游返回一个 302/303/307 的跳转，那么很有可能把内网的跳转网址直接返回给浏览器了。因为 <a href="https://tools.ietf.org/html/rfc2616#section-14.30">HTTP/1.1 的标准 RFC2616</a> 强制规定，<code>Location</code> 的值必须是一个绝对网址。所以这个时候就冒犯一下这个规定，强行截断：<pre><code>    loc = h.pop('Location', '')
+    if loc.startswith(host):
+        h['Location'] = loc[len(host):]
+</code></pre>
+</li>
+</ol>
+<p>注意这里不要用 <code>.lstrip()</code> 。这方法和你想象的完全不是一回事。它是基于单个字符的挨个替换而不是整个字符串。<br />
+2. 实测这种在业务代码实现的「软」反向代理性能堪忧。上游4s左右的整个页面加载时间，反向代理之后就变成了 120s 左右。盲猜是 <code>StreamingResponse</code> 是一个字节一个字节去遍历迭代器？实测并不是。主要的锅还是 <code>Requests</code> 的 <code>.raw</code> 是按照 <code>chunked</code> 一段一段返回的。最好还是准备个 4KB 的 buffer，提高性能。解决方案是把  <code>r.raw</code> 改成 <code>r.raw.stream(4096000)</code> 性能一下就高了。注意这里不要用官方文档提供的 <code>.iter_contents()</code> 或者 <code>.iter_lines()</code> 这两者又会自作聪明的去解析文本编码或者换行符，降低了性能。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-03-30T15:07:01+08:00">2021-03-30</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/202103/stderr-003"  rel="bookmark" >
               <h2 class="card-title">纪念 Sewall Wright</h2>
             </a>
@@ -1760,40 +1810,6 @@ You know all this stuff makes people feel just frustrated and angry, they want a
 <p>为了绩点去冲 KPI 的日子真是苦逼</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-09-24T22:42:45+08:00">2020-09-24</time></p>
-<p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202009/stdin-010"  rel="bookmark" >
-              <h2 class="card-title">罗马教廷要整顿一下中国传教事务</h2>
-            </a>
-            <p class="card-text"><blockquote>
-<p>利玛窦也是很有弹性，也在儒家学说和天主教之间和稀泥。他说，儒家和天主教本就是一回事。儒家所崇尚的“天”，和天主教的上帝，没有什么不同啊。“天道”和天主教教义，也没有什么不同啊。<br />
-你看，很有弹性吧？很智慧吧？其实，跳出来一看，你想，如果你的公司派你到一个人生地不熟的陌生市场推销一个当地人从来没有见过的产品，你也能想出这样的招。核心就是两条。第一，借用当地成熟的社会网络。第二，把陌生的东西包装成当地人熟悉的东西。当年利玛窦这么干，和我们今天一个普通的推销员这么干，底层原因都一样：这个时候的耶稣会或者今天的一个推销公司，都是一个绩效导向的组织，只要能传教、能卖东西，怎么有效怎么来。<br />
-但是到了清朝康熙皇帝时期，这时间可又过去了100多年，欧洲的政治形势出现了很多变化。比如教廷的靠山从葡萄牙变成了法国。比如，耶稣会觉得在中国已经有了几十万信众，传教成功，站稳脚跟了。<br />
-总之，这个时候的罗马教廷，觉得有可能要整顿一下中国传教事务，和中国文化的那些陋习要掰掰腕子了。看看谁才是真理。具体过程就不细说了，过程中很多八卦。到了1704年，罗马教皇克雷芒十一世就最终搞了七条专门针对中国天主教徒的规定。简单说说，比如，中国人不能管上帝叫上帝，上天，要叫“斗斯”，不准中国人祭祖先、不准祭孔子、甚至把孔子叫成圣人也不行、家里摆个祖先牌位也不行。<br />
-这些规定，你要是站在罗马教廷的角度，很好理解，他们是宗教组织，要保持信仰的纯洁性嘛。但是站在中国这边看，祖先不让拜，孔子不让敬，这还是个人吗？这么规定不是欺人太甚嘛。<br />
-这场冲突背后是什么？其实不是什么文化冲突。文化冲突这东西，100多年前利玛窦那个时候也在啊，为啥不体现出来呢？实质上是因为 <strong>罗马教廷的组织导向变了。这个时候的罗马教廷、耶稣会，它不再是一个绩效导向的组织了，而是意识形态导向的组织了。它不再以向外扩展规模为己任了，而是以对内统一共识为己任了。</strong><br />
-打个比方，这就像是今天，公司总部突然对地方分公司下各种指令，完全不顾及各地的特殊情况，强行要求上下一盘棋，统一动作。如果你是地方分公司总经理，你应该心里清楚，这已经不是业务好不好开展的问题了。是这个公司的实质已经变了，从一个业绩型的发展的公司，变成了一个内部斗争型的公司了。<br />
-对，当年的中国人一脸懵圈，不知道罗马教廷为什么突然变得这么强硬，这100多年不都好好的吗？本质原因跟中国这的事没关系，就是因为万里之外的政治格局变化。到了1719年，罗马教皇派出大型使团到中国，要和皇帝谈谈，要求贯彻落实教廷的命令。康熙皇帝很耐心啊，先后接见了十三次使团，亲自向他们解释儒家礼仪、中国的习俗是怎么回事，同时也明确说，如果教廷非要坚持这么干，你们传教士就都回家去吧。最后当然也没有谈拢，从1719年拖到1721年，康熙皇帝只好发布了我们开头提到的禁教令。</p>
-</blockquote>
-<p>总感觉这篇《<a href="https://m.igetget.com/share/course/article?id=6EBOqDNZ27YlVdweQ4Km4bQ1odMAkg">第701期 | 康熙为什么禁止洋人传教？</a>》 意有所指啊。hhhh</p>
-<p>但是反过来讲，为什么一个组织会从 规模扩展 变成 对内统一共识 呢？我想了半天。突然记得之前记录过的一篇 Steve Jobs 访谈：《<a href="https://blog.est.im/post/80234879432">Process 流程</a>》。摘录几句：</p>
-<blockquote>
-<p>公司规模扩大之后，就会变得因循守旧，他们觉得只要遵守流程，就能奇迹般地继续成功，于是开始推行严格的流程制度，很快员工就把遵守流程和纪律当作工作本身。<br />
-People get confused; companies get confused. When they start getting bigger, they want to replicate their initial success. And a lot of them think, ‘Well, somehow, there’s some magic in the process of how that success was created.’ So they start to institutionalize process across the company.</p>
-</blockquote>
-<p>我们今天也处以这样一个变革的时代。记得小时候政治课本学习的是，我国要坚持两个一个中心、两个基本点。这个中心就是扩大经济规模。然而<a href="http://cpc.people.com.cn/pinglun/n/2013/1126/c241220-23657283.html">2013年以来</a>，这个中心已经发生了悄然转移。所谓要绿水青山嘛。今年疫情特殊，更加是<a href="http://www.gov.cn/zhengce/2020-05/23/content_5514173.htm">不设经济增速目标</a>。这就导致其他指标占了上风，比如<a href="https://www.bilibili.com/s/video/BV1Nv41117ip">创建文明城市</a>。按照罗马教廷的这个故事，我再复制一句话：</p>
-<blockquote>
-<p>这个时候的罗马教廷、耶稣会，它不再是一个绩效导向的组织了，而是意识形态导向的组织了。它不再以向外扩展规模为己任了，而是以对内统一共识为己任了。</p>
-</blockquote>
-<p>谨以为记。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2020-09-17T23:21:57+08:00">2020-09-17</time></p>
 <p>stdin</p>            </div>
           </article>
         </div>

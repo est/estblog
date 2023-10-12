@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 10 Oct 2023 21:56:20 +0800</lastBuildDate><item><title>B站百大up 和 国拟</title><link>https://blog.est.im/2023/stderr-14</link><description>&lt;p&gt;bilibili.com 是国内热门长视频网站，俗称B站，百大UP是头部百万粉丝的视频上传者，前段时间无聊看了下《&lt;a href="https://www.bilibili.com/video/BV17N411E7ry/"&gt;征集两万份问卷！全站最受欢迎的UP主居然是..?&lt;/a&gt;》，这部视频作者 &lt;code&gt;-LKs-&lt;/code&gt; 抛出了一个惊世骇俗（对我而言）的理论：&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Thu, 12 Oct 2023 07:45:50 +0800</lastBuildDate><item><title>B站百大up 和 国拟</title><link>https://blog.est.im/2023/stderr-14</link><description>&lt;p&gt;bilibili.com 是国内热门长视频网站，俗称B站，百大UP是头部百万粉丝的视频上传者，前段时间无聊看了下《&lt;a href="https://www.bilibili.com/video/BV17N411E7ry/"&gt;征集两万份问卷！全站最受欢迎的UP主居然是..?&lt;/a&gt;》，这部视频作者 &lt;code&gt;-LKs-&lt;/code&gt; 抛出了一个惊世骇俗（对我而言）的理论：&lt;/p&gt;
 &lt;p&gt;&lt;img alt="" src="/images/2023/stderr-14-01.webp" /&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;频道和频道之间，天生就有占领心智和认知上的高低之分&lt;br /&gt;
@@ -51,7 +51,27 @@
 &lt;li&gt;大清的核心阶级是八旗。满城沦陷就完蛋&lt;/li&gt;
 &lt;li&gt;本朝的核心阶级是 ☭ &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;除了核心阶级所形成的可以继承的利益集团，其他人要么是归顺的食邑劳动力，要么是“穷凶极恶”的印第安人。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 07 Oct 2023 07:34:04 +0800</pubDate><guid isPermaLink="false">tag:None,2023-10-07:/2023/stderr-13</guid><category>stderr</category></item><item><title>无为，智力和因果论</title><link>https://blog.est.im/2023/stderr-12</link><description>&lt;p&gt;最近看渤海小吏讲汉文帝、汉景帝的《&lt;a href="https://www.bilibili.com/video/BV1Yu4y1v7Bo/"&gt;秦汉帝国完全体99%&lt;/a&gt;》很有收获，特别是 23:00 这段：&lt;/p&gt;
+&lt;p&gt;除了核心阶级所形成的可以继承的利益集团，其他人要么是归顺的食邑劳动力，要么是“穷凶极恶”的印第安人。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 07 Oct 2023 07:34:04 +0800</pubDate><guid isPermaLink="false">tag:None,2023-10-07:/2023/stderr-13</guid><category>stderr</category></item><item><title>市以上行政区划去掉后缀</title><link>https://blog.est.im/2023/stdout-12</link><description>&lt;p&gt;今天才知道，中国一共333个市一级行政单位。数据来源是 &lt;a href="https://www.mca.gov.cn/n156/index.html"&gt;民政部首页 ➡ 民政数据&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import re
+
+def short_name(name):
+    m = re.search(r'''
+        (\S+?)
+        (?:
+            壮族|回族|维吾尔|省|自治区|特别|  # 省
+            (?:侗|傈僳|傣|哈尼|回|土家|壮|布依|彝|景颇|朝鲜|白|羌|苗|藏)族|
+            蒙古|柯尔克孜|哈萨克|
+            地区|市|盟|自治州|自治县
+        ).*$
+    ''', name, re.VERBOSE)
+    if m:
+        return m.group(1)
+    return name
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这段代码的作用是把比如 &lt;code&gt;"黔南布依族苗族自治州"&lt;/code&gt; 这样的名字，缩短成 &lt;code&gt;"黔南"&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;有一个小坑是，市一级行政区包含 &lt;code&gt;蒙古|柯尔克孜|哈萨克&lt;/code&gt; 这三个名字后面没有 &lt;code&gt;族&lt;/code&gt; 字。&lt;/p&gt;
+&lt;p&gt;有一些 &lt;code&gt;XX林区&lt;/code&gt; &lt;code&gt;XX矿区&lt;/code&gt; 什么的，我觉得保留比较好。&lt;/p&gt;
+&lt;p&gt;Python的 &lt;code&gt;re.VERBOSE&lt;/code&gt; 真是好东西！&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 12 Sep 2023 20:01:23 +0800</pubDate><guid isPermaLink="false">tag:None,2023-09-12:/2023/stdout-12</guid><category>stdout</category></item><item><title>无为，智力和因果论</title><link>https://blog.est.im/2023/stderr-12</link><description>&lt;p&gt;最近看渤海小吏讲汉文帝、汉景帝的《&lt;a href="https://www.bilibili.com/video/BV1Yu4y1v7Bo/"&gt;秦汉帝国完全体99%&lt;/a&gt;》很有收获，特别是 23:00 这段：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;总体而言，汉代初期的官僚人数少，制度简单，政府没有整体干预经济的想法，所以超级省钱。养活当时的整个官僚，每年所需的粮食不过几十万石。哪怕按一百万石算，只用全国大约八百分之一的土地就可以养活这个官僚系统。这是整个中国历史上政府运营成本自成一档的优秀存在。&lt;br /&gt;
 这套体制虽然简约，但却并不简单。中央对于局势的控制力度一点也没有弱化。这段时间，反而是整个有汉一朝，刑事案件与社会矛盾最少的年代。&lt;br /&gt;
@@ -1621,61 +1641,4 @@ user3043964493022: i 100% agree! i see it also at the preschool level... we are 
 &lt;p&gt;Our vision is that VR / AR will be the next major computing platform after mobile in about 10 years. It can be even more ubiquitous than mobile – especially once we reach AR – since you can always have it on. It’s more natural than mobile since it uses our normal human visual and gestural systems. It can even be more economical, because once you have a good VR / AR system, you no longer need to buy phones or TV’s or many other physical objects – they can just become apps in a digital store. ... We are vulnerable on mobile to Google and Apple because they make major mobile platforms. We would like a stronger strategic position... We can achieve this only by building both a major platform as well as key apps.&lt;br /&gt;
 我们的愿景是，在大约十年后，VR / AR将成为继移动设备之后的下一个主要计算平台。它甚至可以比移动设备更普及 - 特别是一旦我们达到AR - 因为您可以随时随地使用它。它比移动设备更自然，因为它使用我们正常的人类视觉和手势系统。它甚至可以更经济，因为一旦您拥有了一个好的VR / AR系统，您就不再需要购买手机、电视或许多其他物理物品 - 它们只能成为数字商店中的应用程序。我们在移动设备上对谷歌和苹果公司非常脆弱，因为它们制作了主要的移动平台。我们希望拥有更强大的战略地位... 我们只有通过建立一个主要平台和关键应用程序才能实现这一点。&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;问题是，VR/AR 并不是手机的下一代。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 28 Mar 2023 21:49:11 +0800</pubDate><guid isPermaLink="false">tag:None,2023-03-28:/2023/stderr-08</guid><category>stdout</category></item><item><title>为什么网上喷子那么多，戾气那么大？</title><link>https://blog.est.im/2023/stderr-07</link><description>&lt;p&gt;记录一些最近的胡思乱想。为什么网上喷子那么多，戾气那么大？&lt;/p&gt;
-&lt;p&gt;这个问题，按照常规的解释，原因是喷子们逻辑谬误，论证滑坡，不能就事论事，喜欢搞人身攻击。&lt;/p&gt;
-&lt;p&gt;那么怎么样才能做到「就事论事」呢？现在而今眼目下，我有一个偏激的 opinion：人类越来越不可能就事论事了。原因需要从一个分类开始说起：人类的语言越来越分为三种用途：&lt;/p&gt;
-&lt;p&gt;Ⅰ. 人和人的情感交流和情绪模拟需要&lt;br /&gt;
-Ⅱ. 人对周边「事」的描述的需要&lt;br /&gt;
-Ⅲ. 语言是知识存储和运输的介质&lt;/p&gt;
-&lt;p&gt;下面倒序分开讨论：&lt;/p&gt;
-&lt;h3&gt;Ⅲ. 语言就是知识&lt;/h3&gt;
-&lt;p&gt;一个人掌握的绝大部分知识，都是 declarative knowledge。比如法国首都在哪里？巴黎；水分子由什么原子构成？H₂ 和 O。这些东西无一例外都得通过语言来存储和传输。现代学科高度发达，甚至有很多通用语言之外的专用语言也被发明和使用：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;肢体语言、手语等&lt;/li&gt;
-&lt;li&gt;数学语言，mathematical notation&lt;/li&gt;
-&lt;li&gt;计算机编程语言&lt;/li&gt;
-&lt;li&gt;逻辑符号&lt;/li&gt;
-&lt;li&gt;物理、化学、生物公式，医用术语等&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;如果说「理性」的世界是由人类特有的「因果」推演建立起来的，那么我们可以说，无法被语言描述的知识不存在。语言是知识存储和运输的唯一介质。即便有人发明/发现了语言无法描述的知识，那么也只能由他一个人知道不能传播或继承所以权且当它不存在。&lt;/p&gt;
-&lt;p&gt;我们甚至可以抛出一个暴论，事物都是能被理解，才能称为事物(Was vernünftig ist, das ist wirklich)。能合理推演出来的假设，必定也可以成为对应的事物。(und was wirklich ist, das ist vernünftig)&lt;/p&gt;
-&lt;p&gt;当然某些知识，已经快超过人类语言能力天花板了。比如 &lt;code&gt;coq&lt;/code&gt; 证明的四色定理，人只能说程序验证了没错，至于证明过程没人能看懂。&lt;/p&gt;
-&lt;h3&gt;Ⅱ. 对「事」的描述&lt;/h3&gt;
-&lt;p&gt;语言难以描述单又很重要、常见事物有：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;图像。比如照片、一幅画、图表、符号。所谓一图胜千言，有的时候很难用语言描述&lt;/li&gt;
-&lt;li&gt;动作或者运动的过程。属于procedure，非declarative的 know-how。比如弹钢琴，骑自行车。你即便能用语言把所有关于乐理、演奏的技巧讲给别人，别人如果不亲自练，还是不会。&lt;/li&gt;
-&lt;li&gt;直接体验。比如气味，振动等。比如火不能用手摸，石头砸到脚会痛。只有亲身的教训才够深刻&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;其中，「音乐」语言也被发明了出来，用来描述特定的节奏和声波。「语言」在如今的世界甚至已经脱离了文字的范式，变得非常抽象，比如 视觉语言(VI) 和 设计语言(design language)。这里和分类Ⅲ 分开讨论，是因为图片和感性的东西很难被语音/文字序列化。&lt;/p&gt;
-&lt;h3&gt;Ⅰ. 对「情绪」的传递&lt;/h3&gt;
-&lt;p&gt;实际上，前面对「语言」的讨论，都是经过「感官」作为 IO 接口的。主要就 手+眼睛 和 嘴+耳朵这两对渠道。但是人是个复杂生物，它有更高级的需要——精神追求。人被社会定义，需要认同；人对其他人和世界需要一个 好/坏 的基本判断。具体到网络上讨论，情绪交换无非就是两性关系和时政辩经。其中键政又以军事和国家大政为主。这些都是情绪 AOE 的重灾区，此类话题是喷子的 natural habitat（我本人也不能免俗）&lt;/p&gt;
-&lt;h3&gt;自然语言史&lt;/h3&gt;
-&lt;p&gt;说完语言的用处三个分类，思考一个问题：人类为什么发明语言？普遍的理由说一开始是为了觅食，比如采集和狩猎，为了描述动植物和位置。其次最重要的是「&lt;a href="/2022/stderr-05"&gt;讲故事&lt;/a&gt;」&lt;/p&gt;
-&lt;p&gt;随着口头语言的成熟，人类还发明文字和书写，主要为了服务三个方面：巫医占卜祭祀，所有权归属和交易。&lt;/p&gt;
-&lt;p&gt;社会分工出现后，「自然」语言对「知识」和「事」的描述的功能已经被剥离了。最古老的人类需求已经高度专业分化了：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;采集和狩猎用的语言退化为美食语言。为了填肚子，所有人不得不工作才能生存。工作的语言是高度异化的。行业的黑话外行根本不懂。说起这个，英语教育有个滑稽的问题。绝大部分大学生毕业了去国外发现对食物的名字和菜单一脸懵逼。可见现代语言教育有多么的离谱，脱离了最根本和基础的生理需要。&lt;/li&gt;
-&lt;li&gt;描述环境和地理，被高科技快速替代。以前出个远门是真的冒险，还得规划线路，按照旅行手册向陌生人问路。现在都是手机导航、点评和 guide。这方面人类语言能力被工具代替。&lt;/li&gt;
-&lt;li&gt;古人类围着篝火讲故事，被丰富的影视娱乐工业代替。&lt;/li&gt;
-&lt;li&gt;巫医占卜祭祀，被分化成多个职业。医生的语言，比如医嘱普通人压根看不懂。占卜被打成封建迷信，人们只能按照媒体对行业进行预测，祭祀就是政治活动，党八股也需要释经。所有权归属被法律语言确定，交易是由一套复杂的金融和物流体系决定。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;不知道读到这里，你发现没有，人类语言在我这里分类 Ⅲ、Ⅱ 里的应用已经高度职业化、工业化了。那么结论是显而易见的：&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;人类传统意义上自然形成的语言，在业余生活中只剩下一种主要作用：Ⅰ. 情绪输出。&lt;/strong&gt;&lt;/p&gt;
-&lt;h3&gt;回答开头的问题&lt;/h3&gt;
-&lt;p&gt;如果需要进一步阐述这个观点的话，那就是「客观」的语言应用，已经各行各业成熟改造了。各个文明留给祖传语言残留的功能，就是按照文化驱动的「主观」观点释放。&lt;/p&gt;
-&lt;p&gt;网上为什么喷子那么多？工作上的语言都是毕恭毕敬，专业领域的东西你一般没耐心看。非专业的内容，只剩下情绪。完毕&lt;/p&gt;
-&lt;h3&gt;AI 和 未来&lt;/h3&gt;
-&lt;p&gt;喷子的问题撸完了，突然想起我之前我一个疑惑：&lt;/p&gt;
-&lt;p&gt;为什么 NLP 里 sentiment analysis 那么流行？&lt;/p&gt;
-&lt;p&gt;作为野生业余NLP爱好者，我对这个领域第一入门印象就是情感分析，训练一个 classifier 看这句话到底是正面还是负面；说实话我第一次知道这个是比较意外的，因为我下意识觉得「正能量」和「负能量」是一个主观的东西，而且人类喜欢正话反说，阴阳怪气，很难分析准确。特别是那种话中有话的隐喻。作为外行的我原本以为 NLP 是用来提取「信息」和「情报」的学问，没想到只是政企用这个技术来扫言论是不是好评~市场用它来分析韭菜是否有乐观或悲观的预期。当然，情感分析这个问题很常见还因为技术上它是一个经典的监督学习+语聊搜集的案例，而且结果比较好。&lt;/p&gt;
-&lt;p&gt;chatgpt/gpt-4 这类工具的出现给我启发，一个来自《&lt;a href="https://zhuanlan.zhihu.com/p/607847588"&gt;复现ChatGPT的难点与平替&lt;/a&gt;》&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;把训模型当作带孩子：&lt;br /&gt;
-1. Pretrain：在孩子0-3岁的时候，我们没法讲太多道理，他也听不懂，更多的是让他自己观察这个世界，自由学习。&lt;br /&gt;
-2. Instruction Tuning：孩子学会说话了，也对世界有了基本认知，我们就可以开始通过示范教他一些东西，比如怎么穿衣服、怎么刷牙。&lt;br /&gt;
-3. RLHF：等孩子再大点，很多事情都会了，便不会再完全模仿父母，而是有自己不一样的行为，这时候父母就需要对这些不可预料的行为给出反馈，在他取得好成绩时奖励，在做坏事后惩罚。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;结合语言的 Ⅰ Ⅱ Ⅲ 分类，或许 AI 可以被用来解决网上戾气太重的问题，弄出不一样的玩法。毕竟情绪价值是暂时的，语言作为知识的价值是长久的。但是别忘了， 情绪是达成长久价值的重要途经。人类必须基于道德和上下文作出恰到好处的选择。&lt;/p&gt;
-&lt;h3&gt;注&lt;/h3&gt;
-&lt;p&gt;本文无任何学术理论支撑，纯粹个人胡思乱想。如有谬误纯属正常。完结于 2023-03-26 02:07:08&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 25 Mar 2023 22:21:27 +0800</pubDate><guid isPermaLink="false">tag:None,2023-03-25:/2023/stderr-07</guid><category>stderr</category></item></channel></rss>
+&lt;p&gt;问题是，VR/AR 并不是手机的下一代。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 28 Mar 2023 21:49:11 +0800</pubDate><guid isPermaLink="false">tag:None,2023-03-28:/2023/stderr-08</guid><category>stdout</category></item></channel></rss>

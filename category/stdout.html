@@ -57,6 +57,40 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2023/stdout-12"  rel="bookmark" >
+              <h2 class="card-title">市以上行政区划去掉后缀</h2>
+            </a>
+            <p class="card-text"><p>今天才知道，中国一共333个市一级行政单位。数据来源是 <a href="https://www.mca.gov.cn/n156/index.html">民政部首页 ➡ 民政数据</a></p>
+<pre><code>import re
+
+def short_name(name):
+    m = re.search(r'''
+        (\S+?)
+        (?:
+            壮族|回族|维吾尔|省|自治区|特别|  # 省
+            (?:侗|傈僳|傣|哈尼|回|土家|壮|布依|彝|景颇|朝鲜|白|羌|苗|藏)族|
+            蒙古|柯尔克孜|哈萨克|
+            地区|市|盟|自治州|自治县
+        ).*$
+    ''', name, re.VERBOSE)
+    if m:
+        return m.group(1)
+    return name
+</code></pre>
+<p>这段代码的作用是把比如 <code>"黔南布依族苗族自治州"</code> 这样的名字，缩短成 <code>"黔南"</code>。</p>
+<p>有一个小坑是，市一级行政区包含 <code>蒙古|柯尔克孜|哈萨克</code> 这三个名字后面没有 <code>族</code> 字。</p>
+<p>有一些 <code>XX林区</code> <code>XX矿区</code> 什么的，我觉得保留比较好。</p>
+<p>Python的 <code>re.VERBOSE</code> 真是好东西！</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2023-09-12T20:01:23+08:00">2023-09-12</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2023/stdout-07"  rel="bookmark" >
               <h2 class="card-title">在py3里同步/异步混合使用 httpx 调用</h2>
             </a>
@@ -3090,43 +3124,6 @@ tcp.keepinit Timeout, in milliseconds, for new, non-established TCP connections.
 <p>为什么要在拨号前随机生成WAN口的 MAC 地址呢？嘿嘿。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-01-01T00:27:52+08:00">2021-01-01</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202010/stdout-011"  rel="bookmark" >
-              <h2 class="card-title">nsq-py, pynsq, gnsq compared</h2>
-            </a>
-            <p class="card-text"><p><a href="https://nsq.io">nsq</a> is a lightweight message queue like Kafka/RabbitMQ/RocketMQ/RedisQueue/Celery.</p>
-<p>For python bindings there ware three libraries out there:</p>
-<ul>
-<li>pynsq: the official build, but requires <code>tornado</code></li>
-<li>gnsq: the gevent only consumer/publisher, might have race condition in state machine. Don't use.</li>
-<li>nsq-py: <code>select()</code> based, but compatible with gevent/tornado/threading+select.</li>
-</ul>
-<p>So far <code>nsq-py</code> looks reall promising because it's compatible with more options with concurrency, but when I used it with massive TCP connections to nsqd, <a href="https://github.com/gevent/gevent/issues/1348">gevent</a> threw "ValueError: filedescriptor out of range in select()" error.</p>
-<p>Upon further investigation, it was a select(2) limitation. The kernel will limit max tcp fileno 1024. </p>
-<p>See CPython <a href="https://github.com/python/cpython/blob/3317466061509c83dce257caab3661d52571cab1/Modules/selectmodule.c#L142">source of selectmodule.c</a>:</p>
-<pre><code>      if (!_PyIsSelectable_fd(v)) {
-          PyErr_SetString(PyExc_ValueError,
-                      "filedescriptor out of range in select()");
-          goto finally;
-      }
-</code></pre>
-<p>And <a href="https://github.com/python/cpython/blob/637a09b0d6e3ad4e34e0b5e0fc82f5afeae6f74b/Include/fileobject.h#L37"><code>_PyIsSelectable_fd</code> is defined</a> as </p>
-<pre><code>  #define _PyIsSelectable_fd(FD) ((unsigned int)(FD) &lt; (unsigned int)FD_SETSIZE)
-</code></pre>
-<p>And the const <code>FD_SETSIZE</code> is described at <a href="https://man7.org/linux/man-pages/man2/select.2.html">man page</a>:</p>
-<blockquote>
-<p>The Linux kernel imposes no fixed limit, but the glibc implementation makes fd_set a fixed- size type, with FD_SETSIZE defined as 1024, and the FD_*() macros operating according to that limit.  To monitor file descriptors greater than 1023, use poll(2) or epoll(7) instead.</p>
-</blockquote>
-<p>Lessons I learned today: don't use libraries based on <code>select.select()</code> if you have too many connections. Even with Gevent's monkey patch, <code>select()</code> wont block on each eventlet, but still it will not allow fileno greater or equal to 1024. Sad.</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2020-10-30T15:35:45+08:00">2020-10-30</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
