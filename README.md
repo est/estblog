@@ -10,10 +10,12 @@ The repo contains [blog of est](https://blog.est.im/). This static site is gener
 
 ## ToDo:
 
-- [X] 导入以前的 blog 并且保持 url 不变
-- [X] 导入图片
-- [X] 修复 css 文字撑爆卡片框错误
-- [X] 提供 RSS
+- [ ] aether主题去掉js文件依赖
+- [ ] 首页文章太长，缩短些 [@saveai](https://v2ex.com/t/980228?p=2#r_13752744)
+- [X] ~~导入以前的 blog 并且保持 url 不变~~
+- [X] ~~导入图片~~
+- [X] ~~修复 css 文字撑爆卡片框错误~~
+- [X] ~~提供 RSS~~
 - [X] ~~SEO ping~~（已废弃）
 - [X] ~~提供分类页面~~ 不分类了
-- [X] 安装 disqus
+- [X] ~~安装 disqus~~
