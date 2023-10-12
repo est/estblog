@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>市以上行政区划去掉后缀 – est の 输入输出</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入输出 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="市以上行政区划去掉后缀" />
+
+    <link rel="canonical" href="https://blog.est.im/2023/stdout-09" />
+    <meta property="og:url" content="https://blog.est.im/2023/stdout-09">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="市以上行政区划去掉后缀">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入输出
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">市以上行政区划去掉后缀</h2>
+    <p class="post-date">Posted <time datetime="2023-09-12T20:01:23+08:00">2023-09-12</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>今天才知道，中国一共333个市一级行政单位。数据来源是 <a href="https://www.mca.gov.cn/n156/index.html">民政部首页 ➡ 民政数据</a></p>
+<pre><code>import re
+
+def short_name(name):
+    m = re.search(r'''
+        (\S+?)
+        (?:
+            壮族|回族|维吾尔|省|自治区|特别|  # 省
+            (?:侗|傈僳|傣|哈尼|回|土家|壮|布依|彝|景颇|朝鲜|白|羌|苗|藏)族|
+            蒙古|柯尔克孜|哈萨克|
+            地区|市|盟|自治州|自治县
+        ).*$
+    ''', name, re.VERBOSE)
+    if m:
+        return m.group(1)
+    return name
+</code></pre>
+<p>这段代码的作用是把比如 <code>"黔南布依族苗族自治州"</code> 这样的名字，缩短成 <code>"黔南"</code>。</p>
+<p>有一个小坑是，市一级行政区包含 <code>蒙古|柯尔克孜|哈萨克</code> 这三个名字后面没有 <code>族</code> 字。</p>
+<p>有一些 <code>XX林区</code> <code>XX矿区</code> 什么的，我觉得保留比较好。</p>
+<p>Python的 <code>re.VERBOSE</code> 真是好东西！</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2023/stdout-09';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>
