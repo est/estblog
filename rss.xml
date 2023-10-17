@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 17 Oct 2023 22:13:18 +0800</lastBuildDate><item><title>SVG放在中不能加载图片/字体</title><link>https://blog.est.im/2023/stdout-10</link><description>&lt;p&gt;最近想在 markdown 里搞图文混排，遇到一个大图把版面占完了，想缩小一些，由于 .md 渲染器安全限制，没法直接指定宽高&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 17 Oct 2023 22:13:18 +0800</lastBuildDate><item><title>SVG放在 img 中不能加载图片/字体</title><link>https://blog.est.im/2023/stdout-10</link><description>&lt;p&gt;最近想在 markdown 里搞图文混排，遇到一个大图把版面占完了，想缩小一些，由于 .md 渲染器安全限制，没法直接指定宽高&lt;/p&gt;
 &lt;p&gt;只能从图片本身想办法，首先最直接的手段就是服务器再缩放一次，但是蛋痛的问题是缩放之后文件怎么存，怎么给静态文件路由，怎么保障图片可用性，怎么兼容各种尺寸，想想都头大。&lt;/p&gt;
 &lt;p&gt;想到一个 hack，要不直接放一个 .svg 进去，因为 svg 支持加载位图资源，所以把 svg 位图缩小一点，让浏览器渲染 svg 不就行了。&lt;/p&gt;
 &lt;p&gt;没想到就被这个 hack 坑了。原因是 svg 如果被 &lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt; 标签渲染，那么禁止加载任何外部资源，脚本也禁止执行。&lt;/p&gt;
@@ -23,8 +23,8 @@ Scripts must not be executed.   &lt;/li&gt;
 &lt;p&gt;不过查阅资料的时候发现个好玩的，&lt;a href="https://www.w3.org/TR/SVG11/single-page.html#linking-LinksIntoSVG"&gt;SVG 1.1 支持 URL fragments&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;比如：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;原图 &lt;a href="https://lab.est.im/shit_svg/1.svg"&gt;&lt;embed src="https://lab.est.im/shit_svg/1.svg"&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;放大 &lt;a href="https://lab.est.im/shit_svg/1.svg#svgView(viewBox(20,20,60,60))"&gt;&lt;embed src="https://lab.est.im/shit_svg/1.svg#svgView(viewBox(20,20,60,60))"&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;原图 &lt;a href="https://lab.est.im/shit_svg/1.svg"&gt;https://lab.est.im/shit_svg/1.svg&lt;/a&gt; &lt;embed src="https://lab.est.im/shit_svg/1.svg"&gt;&lt;/li&gt;
+&lt;li&gt;放大 &lt;a href="https://lab.est.im/shit_svg/1.svg#svgView(viewBox(20,20,60,60))"&gt;https://lab.est.im/shit_svg/1.svg#svgView(viewBox(20,20,60,60))&lt;/a&gt; &lt;embed src="https://lab.est.im/shit_svg/1.svg#svgView(viewBox(20,20,60,60))"&gt;&lt;/li&gt;
 &lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 17 Oct 2023 22:13:18 +0800</pubDate><guid isPermaLink="false">tag:None,2023-10-17:/2023/stdout-10</guid><category>stdout</category></item><item><title>市以上行政区划去掉后缀</title><link>https://blog.est.im/2023/stdout-09</link><description>&lt;p&gt;今天才知道，中国一共333个市一级行政单位。数据来源是 &lt;a href="https://www.mca.gov.cn/n156/index.html"&gt;民政部首页 ➡ 民政数据&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;import re
 

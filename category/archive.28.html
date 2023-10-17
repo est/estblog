@@ -157,6 +157,62 @@ subtest=Another Name </p>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/cnblogs/600416"  rel="bookmark" >
+              <h2 class="card-title">[原创]vbs/bat混合编程(2006-12-5修订版，支持参数传递)</h2>
+            </a>
+            <p class="card-text"><p>这个想法我思考了很久。<br/>
+<br/>
+巧妙利用 bat 和 vbs 的语法特征，让<font color="#ff0000">同一个</font>文件，被 cmd.exe 识别成批处理，让 wscrpt.exe 识别成 vbs，并且同时符合两者的语法，并且保证都没有错误，保证两者的高度兼容。经过一个通宵的努力，我实现了这种 bat/vbs 复合编程。<br/>
+<br/>
+<br/>
+一个 批处理&nbsp;&nbsp;.vbs 文件，在前面加一段代码（头），就变成了 .bat 批处理，注意，没有生成临时文件，不用修改任何原有代码。<br/>
+<br/>
+例子：保存下列代码为 test.bat，注意是批处理，但是这个批处理却成功的被 wsh 解析执行了！ </p>
+<blockquote class="code"><b class="smalltxt"><font size="2">CODE:</font></b>&nbsp;&nbsp;<a class="smalltxt" onclick="copycode(findobj('code0'));" href="http://www.cn-dos.net/forum/viewthread.php?tid=25333&amp;fpage=0&amp;highlight=&amp;page=1###"><font color="#003366" size="2">[Copy to clipboard]</font></a> <hr color="#dde3ec" size="1"/>
+<div id="code0" style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">:On Error Resume Next</div>
+<div style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">:Sub bat<br/>
+echo off &amp; cls<br/>
+echo Batching_codez_here_following_vbs_rules &amp; pause &gt;nul<br/>
+echo '&gt;nul &amp; start &quot;&quot; wscript //e:vbscript &quot;%~f0&quot; %*<br/>
+Exit Sub : End Sub</div>
+<div style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">MsgBox &quot;This is vbs&quot;<br/>
+for each i in wscript.arguments<br/>
+wscript.echo i<br/>
+next</div>
+<div style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">&nbsp;</div>
+</blockquote>
+<p>保存代码为 test.bat，可以看到 echo 出来的东西和 msgbox 出来的消息，呵呵<br/>
+<br/>
+以上代码只是一个示例，同时执行了 一段 批处理 和 vbs，没有生成临时文件。用了大量的 hack 技巧<br/>
+<br/>
+下面粗略解释下代码<br/>
+</p>
+<p>:On Error Resume Next </p>
+<p>cmd.exe 识别成一段注释<br/>
+wscript.exe 这样识别， : 在vbs语法里代表分行，然后 On Error Resume Next，也就是让WSH忽略一些错误</p>
+<p>echo '&gt;nul &amp; start &quot;&quot; wscript //e:vbscript &quot;%~f0&quot; %* <br/>
+<br/>
+cmd.exe 识别成：echo一个 '&nbsp; 到 空设备，也就是什么都不显示。&amp; 的意思是同时执行，那么同时执行了 start &quot;&quot; wscript //e:vbscript &quot;%~f0&quot; %*，也就是启动WSH，用VBS语法解析自身。<br/>
+<br/>
+这段代码的核心思想已经介绍完毕了。下面，为了让 批处理 以vbs调用其自身后，马上退出，我们需要 exit 或者 goto :eof，但是 goto call exit 在vbs又是一个关键词，所以我们只能用符合 vbs 语法的 exit sub，所以我们在第二句加一个<br/>
+:sub bat，作为注释 cmd.exe 跳过。然后在 6 句加一个 exit sub&nbsp;: end sub，让 批处理结束，exit 无论接什么参数都会使批处理退出的，同时又符合 vbs 的语法地借宿了一个 sub<br/>
+<br/>
+那个 echo off &amp; cls&nbsp;&nbsp;，批处理的意思就是相当于 @echo off ，但是 vbs 不认 @ 符号，所以改成 echo off &amp; cls ， vbs 可以解析为，调用一个叫 echo() 的函数，参数为 off &amp; cls ，也就是两个字符串 off 和 cls 相加 <br/>
+<br/>
+Well，接下来，你可以自由地在批处理中书写vbs脚本了，效率和真正的vbs一样高！<br/>
+<br/>
+这段代码的好处是：不用生成临时文件。其实用 echo 或者 more 或者 find 来生成临时vbs很浪费系统资源的，用我写的这段代码，就完全免去了这些麻烦。直接混合编程，以 start wscript -e:vbs &quot;%~f0&quot; 为界限，上面写 批处理，下面写 vbs，并行不悖！<br/>
+</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:52:00+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/cnblogs/600417"  rel="bookmark" >
               <h2 class="card-title">[原创]Windows的11种快捷方式（2006-12-21修订版）</h2>
             </a>
@@ -275,54 +331,94 @@ ZIP压缩文件夹.ZFSendToTarget<br/>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/cnblogs/600416"  rel="bookmark" >
-              <h2 class="card-title">[原创]vbs/bat混合编程(2006-12-5修订版，支持参数传递)</h2>
+            <a href="/cnblogs/600412"  rel="bookmark" >
+              <h2 class="card-title">[原创]dHTML特效 alpha虑境之柔和边缘效果</h2>
             </a>
-            <p class="card-text"><p>这个想法我思考了很久。<br/>
-<br/>
-巧妙利用 bat 和 vbs 的语法特征，让<font color="#ff0000">同一个</font>文件，被 cmd.exe 识别成批处理，让 wscrpt.exe 识别成 vbs，并且同时符合两者的语法，并且保证都没有错误，保证两者的高度兼容。经过一个通宵的努力，我实现了这种 bat/vbs 复合编程。<br/>
-<br/>
-<br/>
-一个 批处理&nbsp;&nbsp;.vbs 文件，在前面加一段代码（头），就变成了 .bat 批处理，注意，没有生成临时文件，不用修改任何原有代码。<br/>
-<br/>
-例子：保存下列代码为 test.bat，注意是批处理，但是这个批处理却成功的被 wsh 解析执行了！ </p>
-<blockquote class="code"><b class="smalltxt"><font size="2">CODE:</font></b>&nbsp;&nbsp;<a class="smalltxt" onclick="copycode(findobj('code0'));" href="http://www.cn-dos.net/forum/viewthread.php?tid=25333&amp;fpage=0&amp;highlight=&amp;page=1###"><font color="#003366" size="2">[Copy to clipboard]</font></a> <hr color="#dde3ec" size="1"/>
-<div id="code0" style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">:On Error Resume Next</div>
-<div style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">:Sub bat<br/>
-echo off &amp; cls<br/>
-echo Batching_codez_here_following_vbs_rules &amp; pause &gt;nul<br/>
-echo '&gt;nul &amp; start &quot;&quot; wscript //e:vbscript &quot;%~f0&quot; %*<br/>
-Exit Sub : End Sub</div>
-<div style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">MsgBox &quot;This is vbs&quot;<br/>
-for each i in wscript.arguments<br/>
-wscript.echo i<br/>
-next</div>
-<div style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">&nbsp;</div>
-</blockquote>
-<p>保存代码为 test.bat，可以看到 echo 出来的东西和 msgbox 出来的消息，呵呵<br/>
-<br/>
-以上代码只是一个示例，同时执行了 一段 批处理 和 vbs，没有生成临时文件。用了大量的 hack 技巧<br/>
-<br/>
-下面粗略解释下代码<br/>
-</p>
-<p>:On Error Resume Next </p>
-<p>cmd.exe 识别成一段注释<br/>
-wscript.exe 这样识别， : 在vbs语法里代表分行，然后 On Error Resume Next，也就是让WSH忽略一些错误</p>
-<p>echo '&gt;nul &amp; start &quot;&quot; wscript //e:vbscript &quot;%~f0&quot; %* <br/>
-<br/>
-cmd.exe 识别成：echo一个 '&nbsp; 到 空设备，也就是什么都不显示。&amp; 的意思是同时执行，那么同时执行了 start &quot;&quot; wscript //e:vbscript &quot;%~f0&quot; %*，也就是启动WSH，用VBS语法解析自身。<br/>
-<br/>
-这段代码的核心思想已经介绍完毕了。下面，为了让 批处理 以vbs调用其自身后，马上退出，我们需要 exit 或者 goto :eof，但是 goto call exit 在vbs又是一个关键词，所以我们只能用符合 vbs 语法的 exit sub，所以我们在第二句加一个<br/>
-:sub bat，作为注释 cmd.exe 跳过。然后在 6 句加一个 exit sub&nbsp;: end sub，让 批处理结束，exit 无论接什么参数都会使批处理退出的，同时又符合 vbs 的语法地借宿了一个 sub<br/>
-<br/>
-那个 echo off &amp; cls&nbsp;&nbsp;，批处理的意思就是相当于 @echo off ，但是 vbs 不认 @ 符号，所以改成 echo off &amp; cls ， vbs 可以解析为，调用一个叫 echo() 的函数，参数为 off &amp; cls ，也就是两个字符串 off 和 cls 相加 <br/>
-<br/>
-Well，接下来，你可以自由地在批处理中书写vbs脚本了，效率和真正的vbs一样高！<br/>
-<br/>
-这段代码的好处是：不用生成临时文件。其实用 echo 或者 more 或者 find 来生成临时vbs很浪费系统资源的，用我写的这段代码，就完全免去了这些麻烦。直接混合编程，以 start wscript -e:vbs &quot;%~f0&quot; 为界限，上面写 批处理，下面写 vbs，并行不悖！<br/>
+            <p class="card-text"><p><marquee onmouseover="this.stop()" style="OVERFLOW-Y: scroll; FILTER: alpha(Style=1,StartX=0,StartY=80,FinishX=0,FinishY=100)
+alpha(Style=1,StartX=0,StartY=20,FinishX=0,FinishY=0)" onmouseout="this.start()" direction="up" height="200">asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+</marquee></p>
+<p>&nbsp;</p>
+<p>&lt;marquee<br/>
+height=&quot;200px&quot;<br/>
+direction=&quot;up&quot;<br/>
+onmouseover=&quot;this.stop()&quot;<br/>
+onmouseout=&quot;this.start()&quot;<br/>
+style=&quot;<br/>
+overflow-y:scroll;<br/>
+filter:<br/>
+alpha(Style=1,StartX=0,StartY=80,FinishX=0,FinishY=100)<br/>
+alpha(Style=1,StartX=0,StartY=20,FinishX=0,FinishY=0)<br/>
+;<br/>
+&quot;&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+&lt;/marquee&gt;<br/>
 </p></p>
             <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2006-12-22T05:52:00+08:00">2006-12-22</time></p>
+              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
@@ -748,102 +844,6 @@ function fnToggle()<br/>
 <p>初次写 js 特效，有点不精简，呵呵。</p>
 <p>最开始是做一个 div ，直接用 fade 和 baseimage 两个虑境，但是由于某些原因，fade虑境被省略了，于是做两个 img 呵呵。</p>
 <p>我最开始是发布在51js上的，搜索了下，网上已经有人乱转代码了。国内软件行业就这种抄过去抄过来的混乱。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/cnblogs/600412"  rel="bookmark" >
-              <h2 class="card-title">[原创]dHTML特效 alpha虑境之柔和边缘效果</h2>
-            </a>
-            <p class="card-text"><p><marquee onmouseover="this.stop()" style="OVERFLOW-Y: scroll; FILTER: alpha(Style=1,StartX=0,StartY=80,FinishX=0,FinishY=100)
-alpha(Style=1,StartX=0,StartY=20,FinishX=0,FinishY=0)" onmouseout="this.start()" direction="up" height="200">asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-</marquee></p>
-<p>&nbsp;</p>
-<p>&lt;marquee<br/>
-height=&quot;200px&quot;<br/>
-direction=&quot;up&quot;<br/>
-onmouseover=&quot;this.stop()&quot;<br/>
-onmouseout=&quot;this.start()&quot;<br/>
-style=&quot;<br/>
-overflow-y:scroll;<br/>
-filter:<br/>
-alpha(Style=1,StartX=0,StartY=80,FinishX=0,FinishY=100)<br/>
-alpha(Style=1,StartX=0,StartY=20,FinishX=0,FinishY=0)<br/>
-;<br/>
-&quot;&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-&lt;/marquee&gt;<br/>
-</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
 <p>archive</p>            </div>

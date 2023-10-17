@@ -58,7 +58,7 @@
         <div class="card blog-card">
           <article class="card-body">
             <a href="/2023/stdout-10"  rel="bookmark" >
-              <h2 class="card-title">SVG放在<img>中不能加载图片/字体</h2>
+              <h2 class="card-title">SVG放在 img 中不能加载图片/字体</h2>
             </a>
             <p class="card-text"><p>最近想在 markdown 里搞图文混排，遇到一个大图把版面占完了，想缩小一些，由于 .md 渲染器安全限制，没法直接指定宽高</p>
 <p>只能从图片本身想办法，首先最直接的手段就是服务器再缩放一次，但是蛋痛的问题是缩放之后文件怎么存，怎么给静态文件路由，怎么保障图片可用性，怎么兼容各种尺寸，想想都头大。</p>
@@ -84,8 +84,8 @@ Scripts must not be executed.   </li>
 <p>不过查阅资料的时候发现个好玩的，<a href="https://www.w3.org/TR/SVG11/single-page.html#linking-LinksIntoSVG">SVG 1.1 支持 URL fragments</a></p>
 <p>比如：</p>
 <ul>
-<li>原图 <a href="https://lab.est.im/shit_svg/1.svg"><embed src="https://lab.est.im/shit_svg/1.svg"></a></li>
-<li>放大 <a href="https://lab.est.im/shit_svg/1.svg#svgView(viewBox(20,20,60,60))"><embed src="https://lab.est.im/shit_svg/1.svg#svgView(viewBox(20,20,60,60))"></a></li>
+<li>原图 <a href="https://lab.est.im/shit_svg/1.svg">https://lab.est.im/shit_svg/1.svg</a> <embed src="https://lab.est.im/shit_svg/1.svg"></li>
+<li>放大 <a href="https://lab.est.im/shit_svg/1.svg#svgView(viewBox(20,20,60,60))">https://lab.est.im/shit_svg/1.svg#svgView(viewBox(20,20,60,60))</a> <embed src="https://lab.est.im/shit_svg/1.svg#svgView(viewBox(20,20,60,60))"></li>
 </ul></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2023-10-17T22:13:18+08:00">2023-10-17</time></p>
