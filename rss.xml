@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 17 Oct 2023 22:13:18 +0800</lastBuildDate><item><title>SVG放在 img 中不能加载图片/字体</title><link>https://blog.est.im/2023/stdout-10</link><description>&lt;p&gt;最近想在 markdown 里搞图文混排，遇到一个大图把版面占完了，想缩小一些，由于 .md 渲染器安全限制，没法直接指定宽高&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Wed, 18 Oct 2023 14:57:00 +0800</lastBuildDate><item><title>浏览器拉起钉钉客户端并跳转OA工单</title><link>https://blog.est.im/2023/stdout-11</link><description>&lt;p&gt;又是 corporate software engineering 吃屎的一天。用户在内部系统走流程，厂里用的是钉钉自带的OA工单审批。已经接入了API创建、完成工单&lt;/p&gt;
+&lt;p&gt;问题在于发起工单之后，用户并没有感知，不知道工单去哪里了，流程就断了，向钉钉官方售后发起咨询，对方丢了一句：不支持。无语&lt;/p&gt;
+&lt;p&gt;只能自己鼓捣。已知工单链接，在钉钉聊天窗口内部的最短的网址为：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  https://aflow.dingtalk.com/dingtalk/mobile/homepage.htm?corpid=...&amp;amp;procInstId=...#approval
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;对方丢了一个 &lt;a href="https://open.dingtalk.com/document/isvapp/webapp-unified-routing-protocol#title-kkq-kgx-lbq"&gt;dingtalk:// 跳转协议&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;反复尝试，发现一个很有用：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;桌面端打开URL &lt;br /&gt;
+&lt;code&gt;dingtalk://dingtalkclient/page/link&lt;/code&gt; &lt;br /&gt;
+侧边栏： &lt;code&gt;pc_slide=true&lt;/code&gt; &lt;br /&gt;
+大容器（类似工作台容器）&lt;code&gt;ddtab=true&lt;/code&gt;   &lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;于是构造一个试试：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  dingtalk://dingtalkclient/page/link?url=https%3A%2F%2Faflow.dingtalk.com%2Fdingtalk%2Fpc%2Fquery%2Fpchomepage.htm%3Fcorpid%3D...%26procInstId%3D...%23%2Fapproval
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后果然ok了。&lt;/p&gt;
+&lt;p&gt;钉钉给人的感觉就是各个部门 hack 强行揉合起来一个怪物。各种不完善、不一致的问题。有空写一下吐槽。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 18 Oct 2023 14:57:00 +0800</pubDate><guid isPermaLink="false">tag:None,2023-10-18:/2023/stdout-11</guid><category>stdout</category></item><item><title>SVG放在 img 中不能加载图片/字体</title><link>https://blog.est.im/2023/stdout-10</link><description>&lt;p&gt;最近想在 markdown 里搞图文混排，遇到一个大图把版面占完了，想缩小一些，由于 .md 渲染器安全限制，没法直接指定宽高&lt;/p&gt;
 &lt;p&gt;只能从图片本身想办法，首先最直接的手段就是服务器再缩放一次，但是蛋痛的问题是缩放之后文件怎么存，怎么给静态文件路由，怎么保障图片可用性，怎么兼容各种尺寸，想想都头大。&lt;/p&gt;
 &lt;p&gt;想到一个 hack，要不直接放一个 .svg 进去，因为 svg 支持加载位图资源，所以把 svg 位图缩小一点，让浏览器渲染 svg 不就行了。&lt;/p&gt;
 &lt;p&gt;没想到就被这个 hack 坑了。原因是 svg 如果被 &lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt; 标签渲染，那么禁止加载任何外部资源，脚本也禁止执行。&lt;/p&gt;
@@ -1635,19 +1652,4 @@ user3043964493022: i 100% agree! i see it also at the preschool level... we are 
 &lt;p&gt;不知道是Zambezi河边的土著真的这么蠢，还是俞敏洪发挥歪了？直到我看到了第二个故事：&lt;/p&gt;
 &lt;p&gt;李商隐的那句诗：“何当共剪西窗烛，却话巴山夜雨时”。奇怪，剪烛是什么意思？你想，蜡烛燃烧得快，但是烛芯，就是那根中间的棉线，燃烧得慢，所以点蜡烛的时候长期不剪掉烛芯，就会导致火焰太大，浪费。所以，古人用蜡烛旁边还得配把剪子。这太麻烦了啊。那今天的蜡烛为啥不会出现这个问题呢？这个问题是直到1820年才解决的。法国人强巴歇列发明了三根棉线编成的烛芯，蜡烛烧的时候，自然就松开，末端正好翘到火焰的外侧，然后就被火烧掉了。就没有剪烛这个问题了。你看，就这么一个简单的技术，要等到19世纪初期，蒸汽机都发明了，才有机会解决。从这个例子，你看得出来，人类文明有多复杂，创新的发生有多偶然了。&lt;/p&gt;
 &lt;p&gt;这个故事来自《罗胖60秒·2019年·056》，搜了下，这个叫 &lt;a href="https://pubquizammo.wordpress.com/2009/04/23/7-the-candle-wick-is-probably-the-best-re-invention-of-the-19th-century/"&gt;braided wick&lt;/a&gt;，但是具体是不是这法国人发明的我没查到。但是的确说是19世纪，灯芯才被改良。读完这篇对蜡烛这个古老的「发明」有了全新的认知。好神奇啊。比如为什么「香」是直接拿来燃烧，而蜡烛一定要有根棉线做的「灯芯」？蜡作为固体是没法直接燃烧的，蜡自己熔点低而且烧得慢，上面的石蜡融化后就会盖住下面的石蜡，隔绝空气，使下面的石蜡难以燃烧。解决办法是让石蜡液化、气化。灯芯起了一个capillary action毛细作用，蜡烛燃烧先把表面一层蜡融化，然后吸到焰心再充分燃烧。所谓 the wick is simply a delivery devise for the wax。如何控制燃烧速度不要太快导致黑烟，而不要太暗导致照明不够，听上去又是一个负反馈优化问题？&lt;/p&gt;
-&lt;p&gt;感觉蜡烛其实也不简单。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Mon, 17 Apr 2023 16:24:07 +0800</pubDate><guid isPermaLink="false">tag:None,2023-04-17:/2023/stdin-04</guid><category>stdin</category></item><item><title>当前版本gpt的根本弱点</title><link>https://blog.est.im/2023/stdout-04</link><description>&lt;p&gt;下面的东西仅限当前，不是不可以解决的。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;gpt系列数学能力不行，是因为它把每一个数字当成一个整体在背加法表、乘法表。没理解到十进制的精髓&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;img alt="" src="/images/2023/stdout-04-01.webp" /&gt;&lt;/p&gt;
-&lt;p&gt;上图来自&lt;a href="https://arxiv.org/abs/2005.14165"&gt;2020年 GPT-3 论文&lt;/a&gt; 22页。主要还是因为 BPE 太糙。 &lt;/p&gt;
-&lt;ol start="2"&gt;
-&lt;li&gt;
-&lt;p&gt;gpt-4能通过一些文字材料和描述感知到每个字母大概长什么样，甚至知道一些简单汉字的结构，但是确切的书写结构它是不知道的。&lt;br /&gt;
-所以要避免你的想法被 gpt 感知学会，得考虑每个字的偏旁部首作文章，而且你的变形得很少见。估计这个技巧在将来被AI监视的生活里会被用得上。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;还有一些语音漂移它知道概念但是因为没发音器官所以不能直接感知。但这也不是不能解决，只要语料够大也能摸到规律。相比英语等拼音文字而言，汉字这类表意但是又有同音的文字应该是文本类 AI 的普遍弱点。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;如果你要秘密表达一些观点，可以通过描述发音、形状或者动作但是不直接写出来让对方领会。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 31 Mar 2023 15:07:02 +0800</pubDate><guid isPermaLink="false">tag:None,2023-03-31:/2023/stdout-04</guid><category>stdout</category></item></channel></rss>
+&lt;p&gt;感觉蜡烛其实也不简单。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Mon, 17 Apr 2023 16:24:07 +0800</pubDate><guid isPermaLink="false">tag:None,2023-04-17:/2023/stdin-04</guid><category>stdin</category></item></channel></rss>

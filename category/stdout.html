@@ -57,6 +57,37 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2023/stdout-11"  rel="bookmark" >
+              <h2 class="card-title">浏览器拉起钉钉客户端并跳转OA工单</h2>
+            </a>
+            <p class="card-text"><p>又是 corporate software engineering 吃屎的一天。用户在内部系统走流程，厂里用的是钉钉自带的OA工单审批。已经接入了API创建、完成工单</p>
+<p>问题在于发起工单之后，用户并没有感知，不知道工单去哪里了，流程就断了，向钉钉官方售后发起咨询，对方丢了一句：不支持。无语</p>
+<p>只能自己鼓捣。已知工单链接，在钉钉聊天窗口内部的最短的网址为：</p>
+<pre><code>  https://aflow.dingtalk.com/dingtalk/mobile/homepage.htm?corpid=...&amp;procInstId=...#approval
+</code></pre>
+<p>对方丢了一个 <a href="https://open.dingtalk.com/document/isvapp/webapp-unified-routing-protocol#title-kkq-kgx-lbq">dingtalk:// 跳转协议</a></p>
+<p>反复尝试，发现一个很有用：</p>
+<blockquote>
+<p>桌面端打开URL <br />
+<code>dingtalk://dingtalkclient/page/link</code> <br />
+侧边栏： <code>pc_slide=true</code> <br />
+大容器（类似工作台容器）<code>ddtab=true</code>   </p>
+</blockquote>
+<p>于是构造一个试试：</p>
+<pre><code>  dingtalk://dingtalkclient/page/link?url=https%3A%2F%2Faflow.dingtalk.com%2Fdingtalk%2Fpc%2Fquery%2Fpchomepage.htm%3Fcorpid%3D...%26procInstId%3D...%23%2Fapproval
+</code></pre>
+<p>然后果然ok了。</p>
+<p>钉钉给人的感觉就是各个部门 hack 强行揉合起来一个怪物。各种不完善、不一致的问题。有空写一下吐槽。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2023-10-18T14:57:00+08:00">2023-10-18</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2023/stdout-10"  rel="bookmark" >
               <h2 class="card-title">SVG放在 img 中不能加载图片/字体</h2>
             </a>
@@ -3106,45 +3137,6 @@ tcp.keepinit Timeout, in milliseconds, for new, non-established TCP connections.
 2. 实测这种在业务代码实现的「软」反向代理性能堪忧。上游4s左右的整个页面加载时间，反向代理之后就变成了 120s 左右。盲猜是 <code>StreamingResponse</code> 是一个字节一个字节去遍历迭代器？实测并不是。主要的锅还是 <code>Requests</code> 的 <code>.raw</code> 是按照 <code>chunked</code> 一段一段返回的。最好还是准备个 4KB 的 buffer，提高性能。解决方案是把  <code>r.raw</code> 改成 <code>r.raw.stream(4096000)</code> 性能一下就高了。注意这里不要用官方文档提供的 <code>.iter_contents()</code> 或者 <code>.iter_lines()</code> 这两者又会自作聪明的去解析文本编码或者换行符，降低了性能。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-03-30T15:07:01+08:00">2021-03-30</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202101/stdout-002"  rel="bookmark" >
-              <h2 class="card-title">OpenWRT 实现 Cloudflare 动态域名 dynamic DNS</h2>
-            </a>
-            <p class="card-text"><p>首先得有公网 IP （废话），然后你得 OpenWRT 路由器桥接直拨。</p>
-<p>这个方法的核心是通过 <code>ifstatus wan |  jsonfilter -e '@["ipv4-address"][0].address'</code> 命令得到本机 WAN 的公网 IP。</p>
-<p>根据官方的<a href="https://support.cloudflare.com/hc/en-us/articles/360020524512-Manage-dynamic-IPs-in-Cloudflare-DNS-programmatically">说明</a>走</p>
-<ol>
-<li>创建 <a href="https://dash.cloudflare.com/profile/api-tokens">API Token</a> 。权限选 <code>All Zones</code>，得到 <code>TOKEN</code></li>
-<li>验证 API 是否 ok<br />
-        curl - X GET "https://api.cloudflare.com/client/v4/user/tokens/verify" \<br />
-          -H "Authorization: Bearer TOKEN" \<br />
-          -H "Content-Type:application/json"</li>
-<li>获取 <code>:zone_identifier</code>。找那个长得像 ID 的<br />
-        curl - X GET "https://api.cloudflare.com/client/v4/zones"\ <br />
-          -H "Authorization: Bearer TOKEN" \<br />
-          -H "Content-Type:application/json"</li>
-<li>因为脑残的 RESTful 风格 API 无法实现 upsert，先创建个DNS。得到 <code>:identifier</code><br />
-        curl -svk -X POST "https://api.cloudflare.com/client/v4/zones/:zone_identifier/dns_records"\<br />
-          -H "Authorization: Bearer TOKEN" \<br />
-          -H "Content-Type: application/json" \<br />
-          -d '{"type":"A","name":"my_ddns.est.im","content":"'$(ifstatus wan |  jsonfilter -e '@["ipv4-address"][0].address')'","ttl":600,"proxied":false}'</li>
-<li>日常更新 DNS<br />
-        curl -svk -X PUT "https://api.cloudflare.com/client/v4/zones/:zone_identifier/dns_records/:identifier" \<br />
-          -H "Authorization: Bearer TOKEN" \<br />
-          -H "Content-Type: application/json" \<br />
-          -d '{"type":"A","name":"my_ddns.est.im","content":"'$(ifstatus wan |  jsonfilter -e '@["ipv4-address"][0].address')'","ttl":600,"proxied":false}'</li>
-</ol>
-<p>感觉挺麻烦。而且没法 API 网关自动把调用者的 IP 设为 A 记录。但是聊胜于无吧。高版本的 OpenWRT <a href="https://openwrt.org/docs/guide-user/base-system/ddns">/usr/lib/ddns/services<br />
-</a> 直接支持 Cloudflare 了不用这么麻烦了。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-01-05T23:36:09+08:00">2021-01-05</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
