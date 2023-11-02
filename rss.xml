@@ -1,5 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Wed, 18 Oct 2023 23:27:40 +0800</lastBuildDate><item><title>浏览器拉起钉钉客户端并跳转OA工单</title><link>https://blog.est.im/2023/stdout-11</link><description>&lt;p&gt;又是 corporate software engineering 吃屎的一天。用户在内部系统走流程，厂里用的是钉钉自带的OA工单审批。已经接入了API创建、完成工单&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Thu, 02 Nov 2023 09:44:12 +0800</lastBuildDate><item><title>FastAPI/Starlette graceful shutdown server-sent events</title><link>https://blog.est.im/2023/stdout-12</link><description>&lt;h3&gt;缘起&lt;/h3&gt;
+&lt;p&gt;假如你用 FastAPI/Starlette框架，写了一段 &lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events"&gt;Server-sent Events&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;@app.get('/api/my_stream')
+async def api_stream():
+  async def gen():
+    while 1:
+      yield &amp;quot;data: {}\n\n&amp;quot;
+      await asyncio.sleep(1.0)
+
+  return StreamingResponse(gen, media_type=&amp;quot;text/event-stream&amp;quot;, headers={
+    'X-Accel-Buffering': 'no',
+    'Cache-Control': &amp;quot;no-cache&amp;quot;,
+    'Connection': &amp;quot;keep-alive&amp;quot;,
+  })
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;FastAPI 事件&lt;/h3&gt;
+&lt;p&gt;然后你重启了服务器，比如 gunicorn+uvicorn，你会发现这个连接不会断开，一直输出结果。直到 worker 进程超过配置里的 &lt;code&gt;timeout&lt;/code&gt; 参数（默认60秒），被 master 强行杀死然后重启。&lt;/p&gt;
+&lt;p&gt;一开始尝试了 &lt;a href="https://fastapi.tiangolo.com/advanced/events/#shutdown-event"&gt;FastAPI 官方的 &lt;code&gt;shutdown&lt;/code&gt; 事件&lt;/a&gt;，再在代码的 &lt;code&gt;while 1&lt;/code&gt; 加一个 &lt;code&gt;if&lt;/code&gt; 判断。发现不管用&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;@app.on_event('shutdown')
+def on_server_shutdown():
+    app.state.running = False
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;发现这段代码执行是执行了，但是是在杀死worker的时候生效的。得更加提前。用&lt;a href="https://asgi.readthedocs.io/en/latest/specs/lifespan.html"&gt;ASGI推荐的&lt;code&gt;lifespan&lt;/code&gt;&lt;/a&gt;和 &lt;a href="https://asgi.readthedocs.io/en/latest/specs/www.html#disconnect-receive-event"&gt;&lt;code&gt;http.disconnect&lt;/code&gt;&lt;/a&gt; 太复杂，放弃。&lt;/p&gt;
+&lt;h3&gt;Linux signal&lt;/h3&gt;
+&lt;p&gt;尝试暴力监听 worker signal&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;import signal
+signal.signal(signal.SIGINT, on_server_shutdown)  # ctrl+c
+signal.signal(signal.SIGUSR2, on_server_shutdown)
+signal.signal(signal.SIGTERM, on_server_shutdown)
+signal.signal(signal.SIGWINCH, on_server_shutdown)
+signal.signal(signal.SIGHUP, on_server_shutdown)
+signal.signal(signal.SIGQUIT, on_server_shutdown)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;发现也不管用。研究了半天，似乎是 &lt;code&gt;UvicornWorker.init_signals&lt;/code&gt; 的时候&lt;a href="https://github.com/encode/uvicorn/issues/894"&gt;给&lt;code&gt;signal.SIG_DFL&lt;/code&gt;了&lt;/a&gt;。无语ing&lt;/p&gt;
+&lt;h3&gt;uvicorn shutdown 流程&lt;/h3&gt;
+&lt;p&gt;看gunicorn日志：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[2023-11-02 09:50:38 +0800] [25918] [INFO] Shutting down
+[2023-11-02 09:50:38 +0800] [25918] [INFO] Waiting for application shutdown.
+[2023-11-02 09:50:38 +0800] [25918] [INFO] Waiting for connections to close. (CTRL+C to force quit)
+....
+[2023-11-02 09:51:18 +0800] [25918] [INFO] Application shutdown complete.
+[2023-11-02 09:51:18 +0800] [25918] [INFO] Finished server process [25918]
+[2023-11-02 09:51:18 +0800] [25918] [INFO] Worker exiting (pid: 25918)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;观察到 Waiting for connections to close 之后卡住。&lt;/p&gt;
+&lt;p&gt;属于 uvicorn 的 &lt;a href="](https://github.com/encode/uvicorn/blob/07c2b36455b5475ff7edfa54068ff2c0581a2be1/uvicorn/server.py#L303)"&gt;&lt;code&gt;Server.shutdown()&lt;/code&gt;&lt;/a&gt; 方法&lt;/p&gt;
+&lt;p&gt;这个方法调用链：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;Server.install_signal_handlers&lt;/code&gt; 里注册 signal &lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Server.handle_exit&lt;/code&gt; 里设置 &lt;code&gt;Server.should_exit = True&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;每秒一次的 &lt;code&gt;Server.on_tick&lt;/code&gt; 就会打断 &lt;code&gt;Server.main_loop()&lt;/code&gt; 死循环&lt;/li&gt;
+&lt;li&gt;调用 &lt;code&gt;Server.shutdown&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;如果能拿到 &lt;code&gt;Server.should_exit&lt;/code&gt; 自行判断就好了，但是 ASGI 是容器无感的，只继续研究&lt;/p&gt;
+&lt;h3&gt;断开http连接&lt;/h3&gt;
+&lt;p&gt;上面日志有一个比较关键：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;# Request shutdown on all existing connections.
+for connection in list(self.server_state.connections):
+    connection.shutdown()
+    await asyncio.sleep(0.1)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;其http连接关闭方法实现为：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;def shutdown(self):
+    &amp;quot;&amp;quot;&amp;quot;
+    Called by the server to commence a graceful shutdown.
+    &amp;quot;&amp;quot;&amp;quot;
+    if self.cycle is None or self.cycle.response_complete:
+        self.transport.close()
+    else:
+        self.cycle.keep_alive = False
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这里应该走的是 &lt;code&gt;else&lt;/code&gt; 分支。所以解决方法就是去代码里拿到 &lt;code&gt;cycle.keep_alive&lt;/code&gt; 这个属性。&lt;/p&gt;
+&lt;h3&gt;ASGI 接口&lt;/h3&gt;
+&lt;p&gt;跟了一会儿，发现ASGI 在  starlette 里如下流程：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;Route()&lt;/code&gt; 初始化 &lt;code&gt;self.app = request_response(endpoint)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Route().handle()&lt;/code&gt; 的时候会调用 &lt;code&gt;self.app(scope, receive, send)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;unicorn&lt;/code&gt; 的 &lt;code&gt;run_asgi&lt;/code&gt; 会 &lt;code&gt;result = await app(self.scope, self.receive, self.send)&lt;/code&gt; 。其中 &lt;code&gt;app&lt;/code&gt; 就是 starlette 的 &lt;code&gt;Route()&lt;/code&gt; 实例&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;所以解决方案逐渐明朗了&lt;/p&gt;
+&lt;h3&gt;黎明的前夜&lt;/h3&gt;
+&lt;p&gt;通过 FastAPI/Starlette 请求的 &lt;code&gt;.receive&lt;/code&gt; 属性的 &lt;code&gt;__self__&lt;/code&gt; 拿到 unicorn 的 &lt;code&gt;cycle&lt;/code&gt; 实例，然后定时判断上面 &lt;code&gt;shutdown&lt;/code&gt; 赋值的 &lt;code&gt;self.cycle.keep_alive = False&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;@app.get('/api/my_stream')
+async def api_stream(req: Request):
+  async def gen():
+    while 1:
+      yield &amp;quot;data: {}\n\n&amp;quot;
+      await asyncio.sleep(1.0)
+      if getattr(req.receive.__self__, 'keep_alive', None) is False:
+        break
+
+  return StreamingResponse(...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这里用了个 &lt;code&gt;getattr()&lt;/code&gt; 是保证这个 hack 在非 unicorn 下代码也能正常跑&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git commit . -m "haha"&lt;/code&gt; 上机联调，发现坑了。。。我特么。。。。这个 &lt;code&gt;cycle.keep_alive&lt;/code&gt; 默认就是 &lt;code&gt;False&lt;/code&gt;&lt;/p&gt;
+&lt;h3&gt;扭转 keep_alive&lt;/h3&gt;
+&lt;p&gt;这玩意一直为 &lt;code&gt;False&lt;/code&gt; 的原因是，unicorn 的 &lt;code&gt;HttpToolsProtocol.on_headers_complete&lt;/code&gt; 赋值过程：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;self.cycle = RequestResponseCycle(..., keep_alive=http_version != "1.0")&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;这里 &lt;code&gt;http_version&lt;/code&gt; 可以通过  &lt;code&gt;req.scope['http_version']&lt;/code&gt; 得到，打印了一下，你猜怎么着，还真tm是。。。原因就是厂里反代 &lt;a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_http_version"&gt;nginx的proxy_http_version&lt;/a&gt;没配置。这里是个常见的坑，非常影响性能，因为每个请求会生成一个新的 http 连接。&lt;/p&gt;
+&lt;p&gt;但是也等不急SA去改配置了。于是直接在代码 &lt;code&gt;async def gen():&lt;/code&gt; 前面写死：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;req.receive.__self__.keep_alive = True&lt;/code&gt; 。提交，再试。。。咦，怎么 &lt;code&gt;keep_alive&lt;/code&gt; 依然为 &lt;code&gt;False&lt;/code&gt;？？？？明明刚刚赋值了？&lt;/p&gt;
+&lt;p&gt;继续读代码，发现第二个坑，发现 unicorn 的 &lt;code&gt;RequestResponseCycle.send()&lt;/code&gt; 方法里，在构造返回的时候，有一句&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;for name, value in headers:
+    elif name == b&amp;quot;connection&amp;quot; and value.lower() == b&amp;quot;close&amp;quot;:
+        self.keep_alive = False
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;好吧。。。那么解决方法就是，把 &lt;code&gt;keep_alive = True&lt;/code&gt; 挪到返回内部。先完成返回构造，再强行改值。&lt;/p&gt;
+&lt;h4&gt;最后的代码&lt;/h4&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;@app.get('/api/my_stream')
+async def api_stream(req: Request):
+  async def gen():
+    req.receive.__self__.keep_alive = True
+    while 1:
+      yield &amp;quot;data: {}\n\n&amp;quot;
+      await asyncio.sleep(1.0)
+      if req.receive.__self__.keep_alive is False:
+        break
+
+  return StreamingResponse(gen, media_type=&amp;quot;text/event-stream&amp;quot;, headers={
+    'X-Accel-Buffering': 'no',
+    'Cache-Control': &amp;quot;no-cache&amp;quot;,
+    'Connection': &amp;quot;keep-alive&amp;quot;,
+  })
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;测试，看到如果 worker 重启，那么该连接会在1秒后断开，worker平稳重启。&lt;/p&gt;
+&lt;p&gt;苦逼撸业务的一天又开始了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 02 Nov 2023 09:44:12 +0800</pubDate><guid isPermaLink="false">tag:None,2023-11-02:/2023/stdout-12</guid><category>stdout</category></item><item><title>浏览器拉起钉钉客户端并跳转OA工单</title><link>https://blog.est.im/2023/stdout-11</link><description>&lt;p&gt;又是 corporate software engineering 吃屎的一天。用户在内部系统走流程，厂里用的是钉钉自带的OA工单审批。已经接入了API创建、完成工单&lt;/p&gt;
 &lt;p&gt;问题在于发起工单之后，用户并没有感知，不知道工单去哪里了，流程就断了，向钉钉官方售后发起咨询，对方丢了一句：不支持。无语&lt;/p&gt;
 &lt;p&gt;只能自己鼓捣。已知工单链接，在钉钉聊天窗口内部的最短的网址为：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;  https://aflow.dingtalk.com/dingtalk/mobile/homepage.htm?corpid=...&amp;amp;procInstId=...#approval
@@ -1647,11 +1772,4 @@ user3043964493022: i 100% agree! i see it also at the preschool level... we are 
 &lt;p&gt;学校里的问题都是来自人类已经解决的成熟领域，而行业里各个层次的新问题是层出不穷的。这里面既有自然涌现的，也有人为组织的问题。考试这样的选拔制度，很容易让人觉得既定目标很容易明确。最可怕的不是没目标，也不是没执行力，而是在多个目标之间摇摆。看《三国演义》和《孙子兵法》里，对优柔寡断，既要还要的人很容易嘲笑，但是真的当自己亲自承担选择的后果，又有几个人能够挑选最理智的目标，并且坚定行动不偏离呢？&lt;/p&gt;
 &lt;h3&gt;3. 情感交流、口头沟通的能力&lt;/h3&gt;
 &lt;p&gt;以成绩为导向的考核，很容易过分强调文字能力，但生产生活最让人社恐，尴尬和手足无措的往往是人和人面对面的场景，但往往也是最值钱最关键的机会，并且时间有限。没法给你提前打磨，也无法撤销更改。很多人这个时候讲话喜欢罗列1 2 3，但实际上最有效的准则是讲 linear-story。而且要随时根据对方反应给到 spoonfeed。这一点是需要大量磨练，但是在标准答案大行其道的今天很是欠缺。&lt;/p&gt;
-&lt;p&gt;即便你能清晰的定义问题，能够设立一步一步去解决这个问题的目标，但是现在社会越来越复杂，分工不可避免，如何说服别人，如何 align 一致，需要耗费太多的精力。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 04 May 2023 21:15:01 +0800</pubDate><guid isPermaLink="false">tag:None,2023-05-04:/2023/stderr-09</guid><category>stderr</category></item><item><title>关于发明的故事两则</title><link>https://blog.est.im/2023/stdin-04</link><description>&lt;p&gt;&lt;img alt="" src="/images/2023/stdin-04-01.jpg" /&gt;&lt;/p&gt;
-&lt;p&gt;过去在非洲赞比西(Zambezi)河河边有许多鳄鱼，攻击到河边取水的人，结果不少人被鳄鱼吃掉。一个传教士李文斯顿(David Livingstone)路过，帮当地人想出一个好方法，在河边用木头建了一个栅栏，人在栅栏内定点取水，鳄鱼便无法伤害他们。&lt;/p&gt;
-&lt;p&gt;这个故事出自道光一鸦年间，一个去非洲传教的苏格兰人自传《深入非洲三万里&lt;br /&gt;
-·Biography of David Livingstone》，俞敏洪阐述这个故事说上千年来人们就这么打水没人想过去解决被鳄鱼吃掉的问题。而走出非洲的人类遇到了太多的挑战——不同季节的挑战、不同环境的挑战、不同族群的挑战，在一次次挑战中人类变得越来越机警和有创造力，越来越懂得利用工具和群体合作。&lt;/p&gt;
-&lt;p&gt;不知道是Zambezi河边的土著真的这么蠢，还是俞敏洪发挥歪了？直到我看到了第二个故事：&lt;/p&gt;
-&lt;p&gt;李商隐的那句诗：“何当共剪西窗烛，却话巴山夜雨时”。奇怪，剪烛是什么意思？你想，蜡烛燃烧得快，但是烛芯，就是那根中间的棉线，燃烧得慢，所以点蜡烛的时候长期不剪掉烛芯，就会导致火焰太大，浪费。所以，古人用蜡烛旁边还得配把剪子。这太麻烦了啊。那今天的蜡烛为啥不会出现这个问题呢？这个问题是直到1820年才解决的。法国人强巴歇列发明了三根棉线编成的烛芯，蜡烛烧的时候，自然就松开，末端正好翘到火焰的外侧，然后就被火烧掉了。就没有剪烛这个问题了。你看，就这么一个简单的技术，要等到19世纪初期，蒸汽机都发明了，才有机会解决。从这个例子，你看得出来，人类文明有多复杂，创新的发生有多偶然了。&lt;/p&gt;
-&lt;p&gt;这个故事来自《罗胖60秒·2019年·056》，搜了下，这个叫 &lt;a href="https://pubquizammo.wordpress.com/2009/04/23/7-the-candle-wick-is-probably-the-best-re-invention-of-the-19th-century/"&gt;braided wick&lt;/a&gt;，但是具体是不是这法国人发明的我没查到。但是的确说是19世纪，灯芯才被改良。读完这篇对蜡烛这个古老的「发明」有了全新的认知。好神奇啊。比如为什么「香」是直接拿来燃烧，而蜡烛一定要有根棉线做的「灯芯」？蜡作为固体是没法直接燃烧的，蜡自己熔点低而且烧得慢，上面的石蜡融化后就会盖住下面的石蜡，隔绝空气，使下面的石蜡难以燃烧。解决办法是让石蜡液化、气化。灯芯起了一个capillary action毛细作用，蜡烛燃烧先把表面一层蜡融化，然后吸到焰心再充分燃烧。所谓 the wick is simply a delivery devise for the wax。如何控制燃烧速度不要太快导致黑烟，而不要太暗导致照明不够，听上去又是一个负反馈优化问题？&lt;/p&gt;
-&lt;p&gt;感觉蜡烛其实也不简单。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Mon, 17 Apr 2023 16:24:07 +0800</pubDate><guid isPermaLink="false">tag:None,2023-04-17:/2023/stdin-04</guid><category>stdin</category></item></channel></rss>
+&lt;p&gt;即便你能清晰的定义问题，能够设立一步一步去解决这个问题的目标，但是现在社会越来越复杂，分工不可避免，如何说服别人，如何 align 一致，需要耗费太多的精力。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 04 May 2023 21:15:01 +0800</pubDate><guid isPermaLink="false">tag:None,2023-05-04:/2023/stderr-09</guid><category>stderr</category></item></channel></rss>
