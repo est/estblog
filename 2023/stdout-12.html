@@ -165,8 +165,9 @@ async def api_stream(req: Request):
 <h4>最后的代码</h4>
 <pre><code class="language-python">@app.get('/api/my_stream')
 async def api_stream(req: Request):
+  # req.receive.__self__.keep_alive = True  # doesn't work here
   async def gen():
-    req.receive.__self__.keep_alive = True
+    req.receive.__self__.keep_alive = True  # works here
     while 1:
       yield &quot;data: {}\n\n&quot;
       await asyncio.sleep(1.0)
@@ -179,7 +180,7 @@ async def api_stream(req: Request):
     'Connection': &quot;keep-alive&quot;,
   })
 </code></pre>
-<p>测试，看到如果 worker 重启，那么该连接会在1秒后断开，worker平稳重启。</p>
+<p>测试重启 worker，该连接在1秒后断开，worker平稳重启。完美。</p>
 <p>苦逼撸业务的一天又开始了。</p>
 </article>
 

@@ -109,8 +109,9 @@ async def api_stream(req: Request):
 &lt;h4&gt;最后的代码&lt;/h4&gt;
 &lt;pre&gt;&lt;code class="language-python"&gt;@app.get('/api/my_stream')
 async def api_stream(req: Request):
+  # req.receive.__self__.keep_alive = True  # doesn't work here
   async def gen():
-    req.receive.__self__.keep_alive = True
+    req.receive.__self__.keep_alive = True  # works here
     while 1:
       yield &amp;quot;data: {}\n\n&amp;quot;
       await asyncio.sleep(1.0)
@@ -123,7 +124,7 @@ async def api_stream(req: Request):
     'Connection': &amp;quot;keep-alive&amp;quot;,
   })
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;测试，看到如果 worker 重启，那么该连接会在1秒后断开，worker平稳重启。&lt;/p&gt;
+&lt;p&gt;测试重启 worker，该连接在1秒后断开，worker平稳重启。完美。&lt;/p&gt;
 &lt;p&gt;苦逼撸业务的一天又开始了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 02 Nov 2023 09:44:12 +0800</pubDate><guid isPermaLink="false">tag:None,2023-11-02:/2023/stdout-12</guid><category>stdout</category></item><item><title>浏览器拉起钉钉客户端并跳转OA工单</title><link>https://blog.est.im/2023/stdout-11</link><description>&lt;p&gt;又是 corporate software engineering 吃屎的一天。用户在内部系统走流程，厂里用的是钉钉自带的OA工单审批。已经接入了API创建、完成工单&lt;/p&gt;
 &lt;p&gt;问题在于发起工单之后，用户并没有感知，不知道工单去哪里了，流程就断了，向钉钉官方售后发起咨询，对方丢了一句：不支持。无语&lt;/p&gt;
 &lt;p&gt;只能自己鼓捣。已知工单链接，在钉钉聊天窗口内部的最短的网址为：&lt;/p&gt;
