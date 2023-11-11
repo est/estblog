@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Getting started blogging on Win10 – est の 输入输出</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入输出 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Getting started blogging on Win10" />
+
+    <link rel="canonical" href="https://blog.est.im/2023/stdout-14" />
+    <meta property="og:url" content="https://blog.est.im/2023/stdout-14">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Getting started blogging on Win10">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入输出
+  </a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Getting started blogging on Win10</h2>
+    <p class="post-date">Posted <time datetime="2023-11-11T10:31:11+08:00">2023-11-11</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>I am planning to setup by blogging environment on my Windows PC.</p>
+<ul>
+<li>OS: Windows 10</li>
+<li>Shell: Bash on WSL1</li>
+<li>Program: <code>pelican</code> on Miniconda3 with Python 3.11</li>
+</ul>
+<p>My objective today is get rid of the <code>static/js/core.js</code> from <code>aether-pelican</code> theme and replace it with <a href="https://jsfiddle.net/t78mf7jb/3/">a simple CSS</a>, and it turns out quite challenging.</p>
+<h3>WSL1 and file system</h3>
+<p>As it turns out, the installed Ubuntu root filesystem on WSL1 is located here:</p>
+<p><code>%localappdata%\Packages\CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc\LocalState\rootfs</code></p>
+<p>I plan to move my home dir (at least) to another SSD on my PC, as the <code>C:\</code> drive is an old SanDisk Plus240, which is unforgivablly slow these days. I tried to <code>mv ~ /mnt/d/home</code>, ok but the permission gets weird.</p>
+<p>So I tried to copy the folder on Windows to <code>D:\home</code>, and <code>mklink</code> back. I tried both <code>mklink /D</code> and <code>mklink /J</code> ( the <code>/D</code> switch works on a remote drive whereas the <code>/J</code> junction works on local NTFS disks only) and they both failed be recognized by WSL1. The bash yields <code>Broken stdout/stdin</code> upon launch</p>
+<p>So OK, default home dir then. Bad luck for me.</p>
+<h3>Ubuntu 22</h3>
+<p>I just found out my <code>cat /etc/lsb-release</code> shows Ubuntu 18, which is the default distro installed on <code>WSL1</code> I assume. I tried to install Ubuntu 22 from the Microsoft Store, after several wasted minutes (curse the slow Internet in Mainland!) it turns out for WSL2 only. Luckily the Windows Subsystem for Linux was successfully upgraded to latest version:</p>
+<pre><code>C:\&gt; wsl --version
+WSL version: 1.2.5.0
+Kernel version: 5.15.90.1
+WSLg version: 1.0.51
+MSRDC version: 1.2.3770
+Direct3D version: 1.608.2-61064218
+DXCore version: 10.0.25131.1002-220531-1700.rs-onecore-base2-hyp
+Windows version: 10.0.19045.3570
+</code></pre>
+<p>the <code>wsl --list --online</code> commands stuck for a total of 10 minutes and returns nothing (curse the AS4134 163NET!)</p>
+<h3>Getting Python, Miniconda and Pelican</h3>
+<p>So linux distro setup was back to where started, I only have Python to mess with. Miniconda3 gets insalled easily, now that's a some progress. The static site generator I am using <code>pip install pelican[markdown]</code> finishes ok, the pypi was not blocked? Keke.</p>
+<p>Then I typed <code>make</code>. It was not part of WSL1? Blaspheme!</p>
+<p>Manually running <code>python -m pelican.server</code>, and voila! The Windows asks for firewall listening permission, granted, open up browser, BAM! My blog setup process is done and now I can write and tweak it on Windows. </p>
+<p>Oh, and there's <code>git config core.fileMode false</code> needs to be checked!</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2023/stdout-14';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+<script src="/theme/js/core.js"></script>
+
+  </body>
+
+</html>

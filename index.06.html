@@ -57,6 +57,31 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2021/stdout-014"  rel="bookmark" >
+              <h2 class="card-title">Re-index page on Google Search Console</h2>
+            </a>
+            <p class="card-text"><p>Request indexing webpage with Google used to be fun and simple, now it's a tedious task especially when you have tons of old pages ready to be crawled yet Google is reluctant to move.</p>
+<p>Here is a simple script to speed up the stacks of page you have click in order to submit multiple missing pages to Google. </p>
+<p>Open your <a href="https://search.google.com/search-console">Google Search Console</a>, click <strong>Coverage</strong> then open <strong>Discovered – currently not indexed</strong></p>
+<p>Now open your browser devtool, paste these into javascript console, hit them one by one.</p>
+<pre><code>  document.querySelector('div[data-disabled] table td span[title] span[title="Inspect URL"]').click()
+
+  document.querySelector('span[data-event-action=request-indexing] span[jsslot] div span span').click()
+
+  document.querySelector('span[data-event-action=pivot-to-report-main-view-indexing-section] a').click()
+</code></pre>
+<p>Until you met with the daily quota. Rinse and try this shit everyday.</p>
+<p>Fuck Google.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-10-21T14:53:25+08:00">2021-10-21</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2021/stderr-009"  rel="bookmark" >
               <h2 class="card-title">人教版语文课程《一只奶酪》</h2>
             </a>
@@ -3719,74 +3744,6 @@ tcp.keepinit Timeout, in milliseconds, for new, non-established TCP connections.
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-06-14T08:31:17+08:00">2021-06-14</time></p>
 <p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202106/stdout-006"  rel="bookmark" >
-              <h2 class="card-title">行车记录仪视频ffmpeg合并转录存档，跳过重复的漏秒</h2>
-            </a>
-            <p class="card-text"><p>手上有几个行车记录仪</p>
-<ul>
-<li>VOSONIC 勤宇V10，也叫群华 路不平，用的 联咏 Novatek NT96550BG 的芯片，1080p</li>
-<li>BLACKVIEW 凌度A12，采用 安霸(Ambarella) A12 方案，2k</li>
-<li>PAPAGO 趴趴狗，GoSafe 560WiFi，采用 NT96670 芯片+IMX415的 sony CMOS，4k</li>
-</ul>
-<p>特点是每5分钟切割成一个单独的文件，为了防止每两个视频之间漏秒，所以会额外重复写入1秒的内容</p>
-<p>现在想把一段时间的视频合并成一个存档，并且要<a href="https://www.v2ex.com/t/248037">跳过那些额外的1秒</a>，上 ffmpeg。</p>
-<p>首先前摇，生成需要合并的视频文件路径列表</p>
-<p><code>ls -fd1 /Volumes/SD_CARD/DCIM/xxxxx/*</code> </p>
-<p>的结果写成如下格式：</p>
-<pre><code>  file 'input1.mov'
-  inpoint 10
-  outpoint 300
-  file 'input2.mov'
-  # comment
-  outpoint 300 
-  file 'input3.mov'
-  outpoint 300
-  ... 
-  file 'inputN.mov'
-  outpoint 300
-</code></pre>
-<p><code>inpoint 10</code> 就是从10秒开始算，<code>outpoint 300</code> 就是到300秒结束。保存上面的为 1.txt</p>
-<p>然后念 ffmpeg 咒语</p>
-<p><code>ffmpeg -hwaccel cuda -hwaccel_output_format cuda -safe 0 -r 48  -f concat -i 1.txt -an -vf "select=concatdec_select,scale_cuda=w=1280:h=720:interp_algo=lanczos,setpts=0.125*PTS" -c:v h264_nvenc -preset:v p7 -profile:v high -tune:v hq -cq:v 19 -qmax 22 -b:v 0 -maxrate 8M -rc vbr out.mp4</code></p>
-<p>逐个解释下：</p>
-<ul>
-<li><code>-hwaccel cuda</code> 用nVIDIA的 H.264 解码器硬件加速解码行车记录仪的原始 .MOV 文件。如果没显卡有 Intel 处理器可以 把 cuda 换成 qsv 也有加速效果。也可以换成 cuvid 但是速度更慢</li>
-<li><code>-hwaccel_output_format cuda</code> 生成  out.mp4 的时候也采用 nVIDIA 显卡H.264编码器加速。这里如果和上面都是 <code>cuda</code> 那么直接显存对拷，避免了内存和 PCI 拷贝速率瓶颈。</li>
-<li><code>-safe 0</code> 允许读写外部文件</li>
-<li><code>-r 48</code>  和后面的 <code>setpts=0.125*PTS</code>  一起，把帧率提高到 48fps ，把回放速度提高 8倍。方便存档。不需要的可以去掉</li>
-<li><code>-f concat</code>  和 <code>select=concatdec_select</code> 就是通过前摇的 <code>1.txt</code> 指定合并哪些文件（并且去掉时间起止点之外的）</li>
-<li><code>-an</code> 丢掉音轨。如果保留的话应该是 <code>-v:a copy</code></li>
-<li><code>-vf</code> 后面指定一系列巨复杂的ffmpeg滤镜操作。</li>
-<li><code>scale_cuda=w=1280:h=720:interp_algo=lanczos</code>，用显卡 CUDA 操作缩放操作。lanczos是一种 downsampling 算法让画面更加平滑。如果你自己编译的还可以把 scale_cuda 换成 scale_npp 进一步提速。</li>
-<li>如果没有独显换成软缩放 <code>-vf "select=concatdec_select,scale=1280x720,setsar=1,setpts=0.125*PTS" -sws_flags lanczos</code></li>
-<li><code>-c:v h264_nvenc</code> 视频压缩引擎：nVIDIA 的 H.264 编码器。如果没有独显可以改成 libx264</li>
-<li><code>-preset:v p7</code> 这里代替之前的 slow fast 等选项。参考 <a href="https://docs.nvidia.com/video-technologies/video-codec-sdk/nvenc-preset-migration-guide/">HEVC Preset Migration</a></li>
-<li><code>-profile:v high</code> 如果你要兼容初代 iPad 等古董设备就只能用 <code>main</code></li>
-<li><code>-tune:v hq</code> 面向画质优化（而不是码率或者延时）</li>
-<li><code>-cq:v 19</code> 画质非常接近无损的。但是体积也变大。一般22中等配置不能再大了。H.265 可以设置成 26。如果是 <code>libx264</code> 改成 <code>-crf 19</code> 指定</li>
-<li><code>-qmax 22</code> 上面的值最大为 22</li>
-<li><code>-b:v 0</code> 取消码率指定</li>
-<li><code>-maxrate 8M</code> 最高码率 8Mbps</li>
-<li><code>-rc vbr</code> 可变码率。注意 vbr_hq 之类的已经不在支持了。</li>
-</ul>
-<p>还有一些坑点：</p>
-<ul>
-<li>2k@60fps的分辨率需要指定 <code>-level 51</code>。因为默认的 <a href="https://en.wikipedia.org/wiki/Advanced_Video_Coding#Levels">H.264 级别</a>太低frame size支持不了。。。</li>
-<li>如果不缩放原始尺寸压制，很有可能会出错 No decoder surfaces left. Error while decoding stream #0:0: Invalid data found when processing input。这是 <a href="https://trac.ffmpeg.org/ticket/7562">ffmpeg 4.1 以后的 bug</a> 解决方案是 <code>-extra_hw_frames 2</code> 或者更大。但是 CUDA 最多支持32所以估计会报错，就只能 CPU 负责解码 GPU 负责编码。</li>
-<li>压制的时候发现 TF 卡或者是读卡器20M/s是瓶颈。拷到本地发现 GPU decoder 是100%，encoder只有30%左右。</li>
-<li>2k分辨率20Mbps码率30fps的原始视频占用体积太大，1080p 16Mbps码率效果比 720p 8Mbps好不了多少。最后选择的是8M码率。在超快移动的时候有色块，其他堵车的时候画质很高。识别车牌几乎不受影响</li>
-</ul>
-<p>总的来说，ffmpeg 真是操作糟糕而功能强大的工具的典型。以上参数为东拼西凑撞大运偶得，如有不对敬请指正。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-06-05T20:42:15+08:00">2021-06-05</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 

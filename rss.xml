@@ -1,5 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Thu, 09 Nov 2023 15:50:11 +0800</lastBuildDate><item><title>火星上怎么结算工资</title><link>https://blog.est.im/2023/stdout-13</link><description>&lt;p&gt;看到个段子&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sat, 11 Nov 2023 15:01:09 +0800</lastBuildDate><item><title>Getting started blogging on Win10</title><link>https://blog.est.im/2023/stdout-14</link><description>&lt;p&gt;I am planning to setup by blogging environment on my Windows PC.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;OS: Windows 10&lt;/li&gt;
+&lt;li&gt;Shell: Bash on WSL1&lt;/li&gt;
+&lt;li&gt;Program: &lt;code&gt;pelican&lt;/code&gt; on Miniconda3 with Python 3.11&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;My objective today is get rid of the &lt;code&gt;static/js/core.js&lt;/code&gt; from &lt;code&gt;aether-pelican&lt;/code&gt; theme and replace it with &lt;a href="https://jsfiddle.net/t78mf7jb/3/"&gt;a simple CSS&lt;/a&gt;, and it turns out quite challenging.&lt;/p&gt;
+&lt;h3&gt;WSL1 and file system&lt;/h3&gt;
+&lt;p&gt;As it turns out, the installed Ubuntu root filesystem on WSL1 is located here:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;%localappdata%\Packages\CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc\LocalState\rootfs&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;I plan to move my home dir (at least) to another SSD on my PC, as the &lt;code&gt;C:\&lt;/code&gt; drive is an old SanDisk Plus240, which is unforgivablly slow these days. I tried to &lt;code&gt;mv ~ /mnt/d/home&lt;/code&gt;, ok but the permission gets weird.&lt;/p&gt;
+&lt;p&gt;So I tried to copy the folder on Windows to &lt;code&gt;D:\home&lt;/code&gt;, and &lt;code&gt;mklink&lt;/code&gt; back. I tried both &lt;code&gt;mklink /D&lt;/code&gt; and &lt;code&gt;mklink /J&lt;/code&gt; ( the &lt;code&gt;/D&lt;/code&gt; switch works on a remote drive whereas the &lt;code&gt;/J&lt;/code&gt; junction works on local NTFS disks only) and they both failed be recognized by WSL1. The bash yields &lt;code&gt;Broken stdout/stdin&lt;/code&gt; upon launch&lt;/p&gt;
+&lt;p&gt;So OK, default home dir then. Bad luck for me.&lt;/p&gt;
+&lt;h3&gt;Ubuntu 22&lt;/h3&gt;
+&lt;p&gt;I just found out my &lt;code&gt;cat /etc/lsb-release&lt;/code&gt; shows Ubuntu 18, which is the default distro installed on &lt;code&gt;WSL1&lt;/code&gt; I assume. I tried to install Ubuntu 22 from the Microsoft Store, after several wasted minutes (curse the slow Internet in Mainland!) it turns out for WSL2 only. Luckily the Windows Subsystem for Linux was successfully upgraded to latest version:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;C:\&amp;gt; wsl --version
+WSL version: 1.2.5.0
+Kernel version: 5.15.90.1
+WSLg version: 1.0.51
+MSRDC version: 1.2.3770
+Direct3D version: 1.608.2-61064218
+DXCore version: 10.0.25131.1002-220531-1700.rs-onecore-base2-hyp
+Windows version: 10.0.19045.3570
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;the &lt;code&gt;wsl --list --online&lt;/code&gt; commands stuck for a total of 10 minutes and returns nothing (curse the AS4134 163NET!)&lt;/p&gt;
+&lt;h3&gt;Getting Python, Miniconda and Pelican&lt;/h3&gt;
+&lt;p&gt;So linux distro setup was back to where started, I only have Python to mess with. Miniconda3 gets insalled easily, now that's a some progress. The static site generator I am using &lt;code&gt;pip install pelican[markdown]&lt;/code&gt; finishes ok, the pypi was not blocked? Keke.&lt;/p&gt;
+&lt;p&gt;Then I typed &lt;code&gt;make&lt;/code&gt;. It was not part of WSL1? Blaspheme!&lt;/p&gt;
+&lt;p&gt;Manually running &lt;code&gt;python -m pelican.server&lt;/code&gt;, and voila! The Windows asks for firewall listening permission, granted, open up browser, BAM! My blog setup process is done and now I can write and tweak it on Windows. &lt;/p&gt;
+&lt;p&gt;Oh, and there's &lt;code&gt;git config core.fileMode false&lt;/code&gt; needs to be checked!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 11 Nov 2023 10:31:11 +0800</pubDate><guid isPermaLink="false">tag:None,2023-11-11:/2023/stdout-14</guid><category>stdout</category></item><item><title>火星上怎么结算工资</title><link>https://blog.est.im/2023/stdout-13</link><description>&lt;p&gt;看到个段子&lt;/p&gt;
 &lt;p&gt;&lt;img alt="" src="/images/2023/stdout-13-01.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;突然让我想起个事，如果去火星打工，薪资该怎么计算？摘录 wikipedia&lt;/p&gt;
 &lt;blockquote&gt;
@@ -1756,21 +1785,4 @@ user3043964493022: i 100% agree! i see it also at the preschool level... we are 
 &lt;li&gt;文史哲最好的出路是当师爷，同样也无用武之地&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;如果说学校是象牙塔，那么干脆把温室里的花朵浇灌到底。应该极大加大各学科的难度和深度。让青春期无从安放的基因去耗在学科理论上去。如果智力不行，那么学校应该提供比武和口才，让竞技体育、辩经和社交带来的ranking代替打闹。&lt;/p&gt;
-&lt;p&gt;另外，再开个地图炮，强调「父母」在教育角色重要性的老师，是对不起这碗饭的。什么样的父母能提供以身作则的榜样和循循善诱的课程辅导？脱产的、有资产收入的有教育经验的贵族才行。靠劳动吃饭的双亲几乎不可能当好这个角色，要么牺牲一个全职妈妈，要么父母本身就在从事教培相关的职业。当然也有少数能事业+家庭+育儿全能对付的，我更喜欢称之为时间管理大师。既然社会分工出来了老师和学校，那么孩子理所应当回到家庭和社区就应该只玩耍。是不是有一点马督工社会化扶养的味道了，只是我很反感这个名字。叫社区扶养可能会更好。因为人类的娃自古以来都是跟别的娃一起一边劳动一边学习的，而不是现在这样单家独户的关起门来高成本扶养。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 04 Jun 2023 07:08:33 +0800</pubDate><guid isPermaLink="false">tag:None,2023-06-04:/2023/stdin-06</guid><category>stdin</category></item><item><title>如何在出远门的时候关闭洗碗机定时启动</title><link>https://blog.est.im/2023/stdout-05</link><description>&lt;p&gt;家里有个「美的」的某型号洗碗机，一般是积累了当天的碗筷餐具，每天23:00低谷电价之后自动开始定时洗碗。这个功能可以在app上设置实现，还可以设置烘干和通风保存，第二天就能拿出来洁净且干燥的碗筷使用，平时日常这样用起来挺不错。&lt;/p&gt;
-&lt;p&gt;但是这也导致一个问题，如果节假日出门旅行几天，这个洗碗机里即便没有碗筷，也会傻傻的启动浪费水电，所以需要禁用几天，我的操作流程是：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;掏出手机，解锁屏幕，找到「美的美居」 app并打开&lt;/li&gt;
-&lt;li&gt;欣赏该厂家运营设置的精美开屏广告并等待&lt;/li&gt;
-&lt;li&gt;打开「场景」&lt;/li&gt;
-&lt;li&gt;找到自动化 - 已开启 列表里，关于洗碗机的部分&lt;/li&gt;
-&lt;li&gt;找到进入每天自动洗碗的选项，编辑，选择关闭&lt;/li&gt;
-&lt;li&gt;保存设置，退出 app&lt;/li&gt;
-&lt;li&gt;回到家，又需要按照上面的流程操作一番启用该流程&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;每次想起这个事，真是又繁琐又蛋痛。特别是回来如果忘记启用，第二天早上起来会发现一篮子未洗的碗筷傻眼。&lt;/p&gt;
-&lt;p&gt;这次五·一假，我压根忘记了禁用定时洗碗的事。但是回到家添加洗碗粉的时候发现，这几天洗碗机并未启动。问了下是我老婆操作的，她的流程是：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;给洗碗机门板开一条缝&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;洗碗机不会在门没关严的情况下启动，所以。。。。&lt;/p&gt;
-&lt;p&gt;我问她这样做是故意的还是不小心的，她说故意不小心的。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 13 May 2023 06:11:28 +0800</pubDate><guid isPermaLink="false">tag:None,2023-05-13:/2023/stdout-05</guid><category>stdout</category></item></channel></rss>
+&lt;p&gt;另外，再开个地图炮，强调「父母」在教育角色重要性的老师，是对不起这碗饭的。什么样的父母能提供以身作则的榜样和循循善诱的课程辅导？脱产的、有资产收入的有教育经验的贵族才行。靠劳动吃饭的双亲几乎不可能当好这个角色，要么牺牲一个全职妈妈，要么父母本身就在从事教培相关的职业。当然也有少数能事业+家庭+育儿全能对付的，我更喜欢称之为时间管理大师。既然社会分工出来了老师和学校，那么孩子理所应当回到家庭和社区就应该只玩耍。是不是有一点马督工社会化扶养的味道了，只是我很反感这个名字。叫社区扶养可能会更好。因为人类的娃自古以来都是跟别的娃一起一边劳动一边学习的，而不是现在这样单家独户的关起门来高成本扶养。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 04 Jun 2023 07:08:33 +0800</pubDate><guid isPermaLink="false">tag:None,2023-06-04:/2023/stdin-06</guid><category>stdin</category></item></channel></rss>
