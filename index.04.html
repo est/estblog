@@ -57,6 +57,31 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2022/stdout-08"  rel="bookmark" >
+              <h2 class="card-title">macOS动态定时弹提醒</h2>
+            </a>
+            <p class="card-text"><p>上班地方有个付费计时，想在倒计时结束前在电脑弹个提醒，手动结束计费，趴下来API了。接下来就是如何弹窗了。</p>
+<p>本来想用macOS自带的 <code>UNUserNotificationCenter</code> 通过 PyObjC 撸个弹窗，遇到两个问题：</p>
+<ol>
+<li>系统自带的 PyObjC 太老了。还是Python2.7的。在<code>/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/PyObjC</code></li>
+<li>只能兼容旧款的 <code>NSUserNotification</code>，状态为 macOS 10.8–11.0 Deprecated<br />
+ 新的API调用需要进程签名。<br />
+<code>codesign -dv --verbose=4 /usr/bin/python2.7</code></li>
+</ol>
+<p>只有官方的python2.7签名了 anaconda/miniconda 的都没签名。算了。还是直接 AppleScript 走起</p>
+<pre><code>  osascript  -e 'display notification "还有1分钟到达时辰" with title "准时付费" sound name "Frog"'
+</code></pre>
+<p>想在这个提示里加一个 snooze 1分钟功能，但是好像无法支持。罢了。2333</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2022-07-20T14:52:56+08:00">2022-07-20</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2022/stdout-07"  rel="bookmark" >
               <h2 class="card-title">终于吧 blog 的自动构建 pipeline 配置好了</h2>
             </a>
@@ -766,27 +791,6 @@ jgrahamc 6 minutes ago: I am literally Cloudflare's CTO. I'm pretty sure I know 
 <p>最后一个感触，大家都顾着去看2500年前楚国人和当今院士的笑话了，却很少有人正面分析一下问题。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-01-19T23:15:24+08:00">2022-01-19</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2022/stdout-01"  rel="bookmark" >
-              <h2 class="card-title">python-phoenixdb 设置读取超时</h2>
-            </a>
-            <p class="card-text"><p>PhoenixDB 居然是基于 requests + pb2 做的传输层协议。连接的是 queryserver 的 http 接口</p>
-<p>看 <a href="https://git-wip-us.apache.org/repos/asf?p=phoenix-queryserver.git;a=blob;f=python-phoenixdb/phoenixdb/avatica/client.py">avatica/client.py 源码</a> 可以得知这玩意默认是不支持设置read timeout的。强行hack一个：</p>
-<pre><code>import phoenixdb
-import functools
-c = phoenixdb.connect('http://localhost:8765/', autocommit=True, auth=&quot;SPNEGO&quot;)
-c._client.session.request = functools.partial(c._client.session.request, timeout=2)
-</code></pre>
-<p><code>partial</code> 这个神奇的魔法可以设置一个默认参数。其它地方传入了别的timeout也可以自行覆盖，无缝兼容。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2022-01-11T12:00:56+08:00">2022-01-11</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
