@@ -1,5 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Mon, 20 Nov 2023 12:57:21 +0800</lastBuildDate><item><title>VPS推荐：Hosteon</title><link>https://blog.est.im/2023/stdout-16</link><description>&lt;p&gt;继续&lt;a href="/202012/stderr-012"&gt;上次 Racknerd&lt;/a&gt; 之后发现这家还行。写了个&lt;a href="https://github.com/est/snippets/blob/master/vps_scan/main.py"&gt;爬虫&lt;/a&gt;扒了一下各色配置，独立服除外，有需要的自取&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Mon, 27 Nov 2023 09:06:11 +0800</lastBuildDate><item><title>query git notes with Github GraphQL</title><link>https://blog.est.im/2023/stdout-17</link><description>&lt;p&gt;git notes is an interesting feature, you can use it like &lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-bash"&gt;git notes add -m &amp;quot;hello test git notes&amp;quot;
+git push origin 'refs/notes/*'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Github supported them back &lt;a href="https://github.blog/2010-08-25-git-notes-display/"&gt;in 2010&lt;/a&gt; then gave up LMAO.&lt;/p&gt;
+&lt;p&gt;If you need to retrive them with Github API, try GraphQL like this&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  {
+    repository(owner: "est", name: "snippets") {
+      refs(refPrefix:"refs/notes/",first:1) {
+        nodes{
+          ... on Ref{
+            target {
+              oid
+              ... on Commit{
+                changedFilesIfAvailable
+                message
+                tree{
+                  oid
+                  entries{
+                    oid
+                    path
+                    size
+                    lineCount
+                    mode
+                    object{
+                      ... on Blob{
+                        byteSize
+                        text
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It will return something like:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  {
+    "data": {
+      "repository": {
+        "refs": {
+          "nodes": [
+            {
+              "target": {
+                "oid": "bfdfda121f3d8a2d6aa399e3e8f0d58b3db0a543",
+                "changedFilesIfAvailable": 1,
+                "message": "Notes added by 'git notes add'",
+                "tree": {
+                  "oid": "2ab3e6a8b0dff6596fa60ecfb3c61bf91e5b4e1f",
+                  "entries": [
+                    {
+                      "oid": "404d353a254ffbc97b2e16d17b8c100461aef586",
+                      "path": "4fb1272f1e235580f87e3ec071984658de050dc9",
+                      "size": 21,
+                      "lineCount": 1,
+                      "mode": 33188,
+                      "object": {
+                        "byteSize": 21,
+                        "text": "hello test git notes\n"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here &lt;code&gt;"path": "4fb1272f1e235580f87e3ec071984658de050dc9"&lt;/code&gt; is the commit SHA.&lt;/p&gt;
+&lt;p&gt;If you add more filter parameters in &lt;code&gt;refs()&lt;/code&gt; you can fetch all the notes.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Mon, 27 Nov 2023 09:06:11 +0800</pubDate><guid isPermaLink="false">tag:None,2023-11-27:/2023/stdout-17</guid><category>stdout</category></item><item><title>VPS推荐：Hosteon</title><link>https://blog.est.im/2023/stdout-16</link><description>&lt;p&gt;继续&lt;a href="/202012/stderr-012"&gt;上次 Racknerd&lt;/a&gt; 之后发现这家还行。写了个&lt;a href="https://github.com/est/snippets/blob/master/vps_scan/main.py"&gt;爬虫&lt;/a&gt;扒了一下各色配置，独立服除外，有需要的自取&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -1004,24 +1080,4 @@ r.request.parse(r.json())
 &lt;li&gt;一类是认为，信息就是人和人之间传播的经验。如果看对方面善就可以相信，对方不靠谱，就让对方拍个胸脯保证靠谱&lt;/li&gt;
 &lt;li&gt;一类把世界看成一个「多元宇宙」，世界分为「真正的世界」和「感知的版本」。真正的世界只有一个，但是无法100%准确还原，只能通过概念、理论和感知去逼近。但是每个人对这个「真正」有大概差不多但是细节又有很多不同的「version」。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;ChatGPT一类的模型恰好可以按照要求「扮演」某个特定样式的「narrative」用来描述这个世界。它是否靠谱呢？关键看你如何对它进行提词设定。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 25 Jun 2023 14:03:07 +0800</pubDate><guid isPermaLink="false">tag:None,2023-06-25:/2023/stdin-08</guid><category>stdin</category></item><item><title>吐蕃问题和名正言顺</title><link>https://blog.est.im/2023/stdin-07</link><description>&lt;p&gt;最近在 reddit 上看到一个很扯的对话，当年国际上有谁承认吐蕃是个 country？有人说 UK，但是被马上被人指出臭名昭著的 McMahon line 也没承认吐蕃啊。这人&lt;a href="https://np.reddit.com/r/worldnews/comments/149ify5/_/jo6kr3s/?context=6"&gt;回复&lt;/a&gt;到：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;China was seen as a suzerain over Tibet by the UK until the 1914 Simla Convention, which led to the creation of the McMahon line. In China's refusal to sign the convention, they forfeited their rights of suzerainty in the eyes of the British and Tibet signed it for itself.&lt;br /&gt;
-If China signed the treaty, Tibet would've been seen as a vassal under China and ineligible to sign for itself. In accepting Tibet's signature as a party to the Simla Convention as sufficient, the UK de facto recognized Tibet as an independent nation capable of conducting it's own foreign relations.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;也就是说，UK 按照 Simla Convention 认为中央政府是吐蕃的宗主国，但是宗主国不在条约上签字，而吐蕃擅自做了主张，那么就等于中央政府放弃了宗主权力。&lt;/p&gt;
-&lt;p&gt;我靠，还能这样强词夺理弯弯绕绕？不愧是搅屎棍带英。这个说辞的问题在哪里呢？对于一个莫名其妙的条约，你以为有两种状态：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;code&gt;signed&lt;/code&gt;   2. &lt;code&gt;unsigned&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;但是按这套说辞，条约是一个 &lt;code&gt;bool | null&lt;/code&gt; 类型，有3个状态：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;code&gt;true&lt;/code&gt;  2. &lt;code&gt;false&lt;/code&gt; 3. &lt;code&gt;null&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;其中 &lt;code&gt;null&lt;/code&gt; 才表示未签署也就是放弃权力。当时应该签一个 NOPE &amp;amp; FUCK YOU。&lt;/p&gt;
-&lt;p&gt;不过这让我想起一个事，当时英国渗透印度、阿富汗、吐蕃多严重？1944年，当时RoC政府新任驻藏办事处处长沈宗濂带领随员一行赴西藏上任，因为内地和拉萨交通不便，却需要绕路新德里。妈的太难了。&lt;/p&gt;
-&lt;p&gt;然后又想起来那个著名的&lt;a href="https://zh.wikipedia.org/zh-cn/%E6%B1%89%E5%A7%94%E5%A5%B4%E5%9B%BD%E7%8E%8B%E5%8D%B0"&gt;汉委奴国王印&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/King_of_Na_gold_seal_knob.jpg/600px-King_of_Na_gold_seal_knob.jpg" /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/King_of_Na_gold_seal_imprint.svg/600px-King_of_Na_gold_seal_imprint.svg.png" /&gt;&lt;/p&gt;
-&lt;p&gt;不得不说，老祖宗在弯弯道道这一方面还是很精，你接了我的印，就代表接受我的权威。你拿这个印处理国事，那么就意味着你的权威是通过我这个印授予的。你不用这个印，那就意味着 &lt;em&gt;casus belli&lt;/em&gt; ！。从这个意义上来说，国际秩序其实真不是靠铁拳砸出来的，而是靠这些弯弯道道形成一个威慑和平衡。&lt;/p&gt;
-&lt;p&gt;那么回到开头，最近一直在想一个问题，名正言顺，师出有名，名份这个东西，说起来挺虚的，但是文明的核心也就是一个名份。孔丘不就是为了争他爹一个贵族的title搞了那么多花样，他一辈子至高追求也就是要求别人尊重周天子这个所谓的天下共主的名份。礼就是社会秩序，社会秩序核心就是一个名份。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 15 Jun 2023 11:20:09 +0800</pubDate><guid isPermaLink="false">tag:None,2023-06-15:/2023/stdin-07</guid><category>stdin</category></item></channel></rss>
+&lt;p&gt;ChatGPT一类的模型恰好可以按照要求「扮演」某个特定样式的「narrative」用来描述这个世界。它是否靠谱呢？关键看你如何对它进行提词设定。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 25 Jun 2023 14:03:07 +0800</pubDate><guid isPermaLink="false">tag:None,2023-06-25:/2023/stdin-08</guid><category>stdin</category></item></channel></rss>

@@ -57,6 +57,96 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2023/stdout-17"  rel="bookmark" >
+              <h2 class="card-title">query git notes with Github GraphQL</h2>
+            </a>
+            <p class="card-text"><p>git notes is an interesting feature, you can use it like </p>
+<pre><code class="language-bash">git notes add -m &quot;hello test git notes&quot;
+git push origin 'refs/notes/*'
+</code></pre>
+<p>Github supported them back <a href="https://github.blog/2010-08-25-git-notes-display/">in 2010</a> then gave up LMAO.</p>
+<p>If you need to retrive them with Github API, try GraphQL like this</p>
+<pre><code>  {
+    repository(owner: "est", name: "snippets") {
+      refs(refPrefix:"refs/notes/",first:1) {
+        nodes{
+          ... on Ref{
+            target {
+              oid
+              ... on Commit{
+                changedFilesIfAvailable
+                message
+                tree{
+                  oid
+                  entries{
+                    oid
+                    path
+                    size
+                    lineCount
+                    mode
+                    object{
+                      ... on Blob{
+                        byteSize
+                        text
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+</code></pre>
+<p>It will return something like:</p>
+<pre><code>  {
+    "data": {
+      "repository": {
+        "refs": {
+          "nodes": [
+            {
+              "target": {
+                "oid": "bfdfda121f3d8a2d6aa399e3e8f0d58b3db0a543",
+                "changedFilesIfAvailable": 1,
+                "message": "Notes added by 'git notes add'",
+                "tree": {
+                  "oid": "2ab3e6a8b0dff6596fa60ecfb3c61bf91e5b4e1f",
+                  "entries": [
+                    {
+                      "oid": "404d353a254ffbc97b2e16d17b8c100461aef586",
+                      "path": "4fb1272f1e235580f87e3ec071984658de050dc9",
+                      "size": 21,
+                      "lineCount": 1,
+                      "mode": 33188,
+                      "object": {
+                        "byteSize": 21,
+                        "text": "hello test git notes\n"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+</code></pre>
+<p>Here <code>"path": "4fb1272f1e235580f87e3ec071984658de050dc9"</code> is the commit SHA.</p>
+<p>If you add more filter parameters in <code>refs()</code> you can fetch all the notes.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2023-11-27T09:06:11+08:00">2023-11-27</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2023/stdout-16"  rel="bookmark" >
               <h2 class="card-title">VPS推荐：Hosteon</h2>
             </a>
@@ -3662,45 +3752,6 @@ tcp.keepinit Timeout, in milliseconds, for new, non-established TCP connections.
 </code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-07-02T15:51:19+08:00">2021-07-02</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202106/stdout-008"  rel="bookmark" >
-              <h2 class="card-title">MySQL on duplicate key in SQLAlchemy</h2>
-            </a>
-            <p class="card-text"><p>A simple function to upsert something atomically into MySQL</p>
-<pre><code>  def upsert(val1, val2, **kwargs):
-      """upsert val1-val2 pair into mysql and return the pk"""
-      from sqlalchemy.dialects.mysql import insert
-      from sqlalchemy.sql.expression import func
-
-      # this val1-val2 pair should have UNIQUE KEY constraint in MySQL table.
-      stmt = insert(MyModel.__table__).values(col1=val1, col2=val2)
-      if kwargs:
-          stmt = stmt.on_duplicate_key_update(kwargs)
-      else:
-          # get lastrowid https://stackoverflow.com/a/29722203/41948
-          stmt = stmt.on_duplicate_key_update(id=func.LAST_INSERT_ID(MyModel.id))
-      # inserted_primary_key (dbapi, return 0 when only insert) or lastrowid (mysql)
-      pk = db.session().execute(stmt).lastrowid
-      if not pk:
-          pk = MyModel.query.options(load_only('id')).filter_by(
-              col1=val1, col2=val2
-          ).first().id
-      return pk
-</code></pre>
-<p>Writing complex SQL is hard, sqlalchemy makes it harder. Prefer other ORMs in Python.</p>
-<p>I really hate fighting the infamous sqlalchemy API. Everything wrong about it can be shown in this one-liner:</p>
-<pre><code>  from sqlalchemy.orm import Load, load_only, joinedload
-</code></pre>
-<p>You have the three styles of CamelCase, under_score, and concatfunctionnames fucked up together. Bad and leaky abstraction.</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-06-29T11:55:13+08:00">2021-06-29</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
