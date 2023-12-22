@@ -57,6 +57,27 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2023/stderr-16"  rel="bookmark" >
+              <h2 class="card-title">这个糟糕的世界对中年男人的恶意</h2>
+            </a>
+            <p class="card-text"><p>人到中年，形败气衰，总有一种有心无力的感觉。到了这个年龄段，最大的不舒服就是和这个世界从摩擦愈演愈烈，变成轰轰烈烈的冲突。</p>
+<p>前几天工作上，快下班的时候甲方紧张兮兮找到我要支持一些业务，问就是急。结果我这边调整之后，另外的对接方放鸽子了。我也因为手头忙别的没在意。好巧不巧几天过后，调整导致了业务问题。全责，惨。</p>
+<p>你说我懒吧，我它妈居然愿意在下班的时候接需求；你说我不负责吧，不负责我为啥不找个冠冕堂皇的理由推脱掉或者至少拖延一点时间。你说我为啥不仔细一点吧，犯错真的是个概率问题，而且我在对接方跑路的情况下独自也做不了什么。为啥调整导致了问题，屎山呗。屎山怎么来的？还不都是「紧急需求」日积月累来的。为啥屎山不缝缝补补熨平一点？这玩意不记劳也不记功啊。但归根结底，谁理会这些苦衷啊，只能默默承担。</p>
+<p>21点回家吃饭，拿起手机刚刷到学校「抵制洋节」，刚想问孩子怎么看，还没开口，孩子说了解到国外过圣诞节要在家里放一颗圣诞树，抱怨说老爸太抠了。我语塞。想起来之前（实际上是2012年）淘宝买一颗1.5的也就30元也不贵，结果现在一搜，好家伙普遍70、80了。没买到便宜货，比亏钱还难受。顿时心里非常不爽！</p>
+<p>吃完饭，丈母娘在抱怨为啥昨晚（因为穷，所以定时在谷电时段启动的）洗碗机没工作。我看了下洗碗机的门没关好，当然不会启动。这件事从来都是反复抱怨，就是舍不得去关一下门。合着因为洗碗机是我买的和推广的，所有鸡毛蒜皮的事都得我来兜底呗。</p>
+<p>真是备受打击的一天啊。长大的过程，从来没在乎来自身边的关爱和鼓励，到现在逐渐沦落成指责和嫌弃，才追悔莫及。似乎全世界终究会剥夺老男人的一切，只留下沉甸甸的责任，或许这就是中年男人的命吧。</p>
+<p>今天政策方面发生了大事，《网络游戏管理办法（草案征求意见稿）》搞得鸡飞狗跳，对整个行业的悲观，加剧了心情的低落。</p>
+<p>于是又想到，可能很多聪明的人早早就察觉了老男人迟早被吃干抹净这个事实，所以默契的联合起来形成父权，对关键资源和社会关系形成垄断。自己辛辛苦苦创造的财富，凭啥要被傻逼们摆布？这可能就是对全世界的一份报复吧。Screw y'all! Fuck this world!</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2023-12-23T00:44:45+08:00">2023-12-23</time></p>
+<p>stderr</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2023/stdout-19"  rel="bookmark" >
               <h2 class="card-title">不能忘却的记忆</h2>
             </a>
@@ -1548,60 +1569,6 @@ Google了俩小时，发现这病毒没解包到 /usr/local/bin 而是解压到�
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2023-07-13T17:30:36+08:00">2023-07-13</time></p>
 <p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2023/stdout-07"  rel="bookmark" >
-              <h2 class="card-title">在py3里同步/异步混合使用 httpx 调用</h2>
-            </a>
-            <p class="card-text"><p>比如开发需求是请求一个 http API，得到数据，解析一下返回，那么一般的做法是封装一个方法，比如</p>
-<pre><code>import httpx
-
-
-def get_sth(p1, default=MY_VAL):
-    # network
-    r = httpx.get(API_URL, params={'t1': p1})
-    # parsing
-    res = r.json().get('my_key') or MY_VAL
-</code></pre>
-<p>但是如果想在 async/await 里用这段代码，就得改成</p>
-<pre><code>import httpx
-
-
-async def get_sth(p1, default=MY_VAL):
-    # network
-    with http.AsyncClient() as client:
-        r = await client.get(API_URL, params={'t1': p1})
-    # parsing
-    res = r.json().get('my_key') or MY_VAL
-</code></pre>
-<p>注意其中 <code>def get_sth()</code> 也必须改成 <code>async def get_sth</code> 。这就是所谓 async/await 传染性</p>
-<p>这个时候，如果你想把这块代码抽象出来，让同步/异步的库都能调用，我在最近重构里找到一个最佳实践：</p>
-<pre><code>import httpx
-
-
-def get_sth(p1, default=MY_VAL):
-    r = httpx.Request('GET', API_URL, params={'t1': p1})
-    r.parse = lambda x: (x.get('my_key') or MY_VAL)
-
-# 同步调用：
-with httpx.Client() as client:
-    r = client.send(get_sth())
-r.request.parse(r.json())
-
-# 异步调用：
-async with httpx.AsyncClient() as client:
-    r = await client.send(get_sth())
-r.request.parse(r.json())
-</code></pre>
-<p>思路是 逻辑和 transport解耦，也是某种意义上的 <a href="https://sans-io.readthedocs.io/">Sans-IO</a> 了吧？</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2023-07-05T17:39:54+08:00">2023-07-05</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 

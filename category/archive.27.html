@@ -2626,6 +2626,90 @@ trackback:ping="http://franticindustries.com/blog/2007/01/28/google-is-the-new-h
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/cnblogs/622500"  rel="bookmark" >
+              <h2 class="card-title">VBS创建eml mht文件</h2>
+            </a>
+            <p class="card-text"><p><a href="http://www.goldb.org/goldblog/2007/01/10/VBScriptCreatingAMicrosoftWebArchiveMhtFileProgramatically.aspx">http://www.goldb.org/goldblog/2007/01/10/VBScriptCreatingAMicrosoftWebArchiveMhtFileProgramatically.aspx</a></p>
+<p>&nbsp;</p>
+<p>Here is a little VBScript for generating a Microsoft Web Archive (*.mht) file.&nbsp; Web archives are a convenient way to pack a bunch of web files (HTML/CSS/JavaScript) into a single file that is viewable in your browser.&nbsp; The downside is MHT files are only viewable in MS Internet Explorer (lame).<br/>
+<br/>
+Normally you would create an MHT by using the &quot;Save As...&quot; option in IE.&nbsp; This script allows you to create one programatically.<br/>
+<br/>
+Sample Usage:<br/>
+<br/>
+for a remote html file:<br/>
+</p>
+<p><span style="FONT-SIZE: 11px; COLOR: black; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">&gt;cscript mht_converter.vbs http://www.example.com/temp/foo.html foo.mht</span></p>
+<p><br/>
+for a local html file:<br/>
+</p>
+<p><span style="FONT-SIZE: 11px; COLOR: black; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">&gt;cscript mht_converter.vbs file:/temp/foo.html foo.mht</span></p>
+<p><br/>
+<br/>
+... And now the code:<br/>
+<br/>
+<br/>
+</p>
+<hr width="100%" size="2"/>
+<p><br/>
+</p>
+<p><span style="FONT-SIZE: 11px; COLOR: black; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent"><span style="FONT-SIZE: 11px; COLOR: green; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">'mht_converter.vbs</span><br/>
+<br/>
+<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Const</span> adSaveCreateNotExist <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 1<br/>
+<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Const</span> adSaveCreateOverWrite <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 2<br/>
+<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Const</span> adTypeBinary <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 1<br/>
+<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Const</span> adTypeText <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 2<br/>
+<br/>
+<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Set</span> args <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> WScript.Arguments<br/>
+<br/>
+<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">if</span> args.<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Count</span> <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 0 <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">then</span><br/>
+WScript.Echo <span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;Usage: [CScript | WScript] mht_converter.vbs &lt;html file&gt; &lt;mht filename&gt;&quot;</span><br/>
+WScript.Quit 1<br/>
+<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">end</span> <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">if</span><br/>
+<br/>
+<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Set</span> objMessage <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">CreateObject</span>(<span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;CDO.Message&quot;</span>)<br/>
+objMessage.CreateMHTMLBody args.<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Item</span>(0)<br/>
+SaveToFile objMessage, args.<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Item</span>(1)<br/>
+<br/>
+<br/>
+<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Sub</span> SaveToFile(Msg, Fn)<br/>
+<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Dim</span> Strm, Dsk<br/>
+<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Set</span> Strm <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">CreateObject</span>(<span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;ADODB.Stream&quot;</span>)<br/>
+Strm.Type <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> adTypeText<br/>
+Strm.Charset <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> <span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;US-ASCII&quot;</span><br/>
+Strm.Open<br/>
+<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Set</span> Dsk <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> Msg.DataSource<br/>
+Dsk.SaveToObject Strm, <span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;_Stream&quot;</span><br/>
+Strm.SaveToFile Fn, adSaveCreateOverWrite<br/>
+<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">End</span> <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Sub</span></span></p>
+<p><br>文章来源:<a href='http://202.115.22.199/Blog/electronixtar/archive/2007/01/14/13407.aspx'>http://202.115.22.199/Blog/electronixtar/archive/2007/01/14/13407.aspx</a><br><br><br />
+<img src ="http://202.115.22.199/Blog/electronixtar/aggbug/13407.aspx" width = "1" height = "1" /><img src ="http://www.cnblogs.com/est/aggbug/622500.html" width = "1" height = "1" /><div align=right><a style="text-decoration:none;" href="http://est.cnblogs.com/" target="_blank">est</a> 2007-01-17 11:48 <a href="http://www.cnblogs.com/est/archive/2007/01/17/622500.html#Feedback" target="_blank" style="text-decoration:none;">发表评论</a></div>
+</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/622501"  rel="bookmark" >
+              <h2 class="card-title">让Google评价你的密码的安全性</h2>
+            </a>
+            <p class="card-text"><p><a href="https://www.google.com/accounts/RatePassword?Passwd">https://www.google.com/accounts/RatePassword?Passwd</a>=你的密码</p>
+<p>数值越高越安全</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/cnblogs/622499"  rel="bookmark" >
               <h2 class="card-title">[原]一个极其BT的批处理：任务栏系统托盘汽泡提示</h2>
             </a>
@@ -2678,6 +2762,27 @@ namespace estTrayTip<br/>
 &nbsp; &nbsp; }<br/>
 }</div>
 <p></blockquote><img src ="http://202.115.22.199/Blog/electronixtar/aggbug/13411.aspx" width = "1" height = "1" /><br>文章来源:<a href='http://202.115.22.199/Blog/electronixtar/archive/2007/01/16/13411.aspx'>http://202.115.22.199/Blog/electronixtar/archive/2007/01/16/13411.aspx</a><img src ="http://www.cnblogs.com/est/aggbug/622499.html" width = "1" height = "1" /><br><br><div align=right><a style="text-decoration:none;" href="http://est.cnblogs.com/" target="_blank">est</a> 2007-01-17 11:48 <a href="http://www.cnblogs.com/est/archive/2007/01/17/622499.html#Feedback" target="_blank" style="text-decoration:none;">发表评论</a></div></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/622506"  rel="bookmark" >
+              <h2 class="card-title">[导入]Alt+Shift+PrintScreen</h2>
+            </a>
+            <p class="card-text"><p>这不是XP/Vista的彩蛋，这是XP/VIsta的功能，高对比度，呵呵</p>
+<p>有什么用呢？</p>
+<p>比如说，图书馆的公用电脑，只有一个 书籍查阅软件 的界面，把explorer屏蔽了，但是</p>
+<p>1. 打开输入法，点帮助，然后C:\windows\explorer.exe，经典的输入法漏洞啊</p>
+<p>2. 按5次shift，然后随便找个帮助什么的，就可以打开C:了</p>
+<p>3. 按Win+U，放大镜，关于，有个&ldquo;访问Microsoft网站&rdquo;的链接</p>
+<p>4. 就是现在的了，Shift+Alt+PrtSc，呵呵</p>
+<p>一般的软件绝对想不到，要封这么多系统默认快捷键，汗。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
 <p>archive</p>            </div>
@@ -2764,111 +2869,6 @@ Prototype here: <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2
 <p><br>文章来源:<a href='http://202.115.22.199/Blog/electronixtar/archive/2007/01/16/13413.aspx'>http://202.115.22.199/Blog/electronixtar/archive/2007/01/16/13413.aspx</a><br><br><br />
 <img src ="http://202.115.22.199/Blog/electronixtar/aggbug/13413.aspx" width = "1" height = "1" /><img src ="http://www.cnblogs.com/est/aggbug/622498.html" width = "1" height = "1" /><div align=right><a style="text-decoration:none;" href="http://est.cnblogs.com/" target="_blank">est</a> 2007-01-17 11:48 <a href="http://www.cnblogs.com/est/archive/2007/01/17/622498.html#Feedback" target="_blank" style="text-decoration:none;">发表评论</a></div>
 </p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/cnblogs/622500"  rel="bookmark" >
-              <h2 class="card-title">VBS创建eml mht文件</h2>
-            </a>
-            <p class="card-text"><p><a href="http://www.goldb.org/goldblog/2007/01/10/VBScriptCreatingAMicrosoftWebArchiveMhtFileProgramatically.aspx">http://www.goldb.org/goldblog/2007/01/10/VBScriptCreatingAMicrosoftWebArchiveMhtFileProgramatically.aspx</a></p>
-<p>&nbsp;</p>
-<p>Here is a little VBScript for generating a Microsoft Web Archive (*.mht) file.&nbsp; Web archives are a convenient way to pack a bunch of web files (HTML/CSS/JavaScript) into a single file that is viewable in your browser.&nbsp; The downside is MHT files are only viewable in MS Internet Explorer (lame).<br/>
-<br/>
-Normally you would create an MHT by using the &quot;Save As...&quot; option in IE.&nbsp; This script allows you to create one programatically.<br/>
-<br/>
-Sample Usage:<br/>
-<br/>
-for a remote html file:<br/>
-</p>
-<p><span style="FONT-SIZE: 11px; COLOR: black; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">&gt;cscript mht_converter.vbs http://www.example.com/temp/foo.html foo.mht</span></p>
-<p><br/>
-for a local html file:<br/>
-</p>
-<p><span style="FONT-SIZE: 11px; COLOR: black; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">&gt;cscript mht_converter.vbs file:/temp/foo.html foo.mht</span></p>
-<p><br/>
-<br/>
-... And now the code:<br/>
-<br/>
-<br/>
-</p>
-<hr width="100%" size="2"/>
-<p><br/>
-</p>
-<p><span style="FONT-SIZE: 11px; COLOR: black; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent"><span style="FONT-SIZE: 11px; COLOR: green; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">'mht_converter.vbs</span><br/>
-<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Const</span> adSaveCreateNotExist <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 1<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Const</span> adSaveCreateOverWrite <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 2<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Const</span> adTypeBinary <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 1<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Const</span> adTypeText <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 2<br/>
-<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Set</span> args <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> WScript.Arguments<br/>
-<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">if</span> args.<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Count</span> <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 0 <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">then</span><br/>
-WScript.Echo <span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;Usage: [CScript | WScript] mht_converter.vbs &lt;html file&gt; &lt;mht filename&gt;&quot;</span><br/>
-WScript.Quit 1<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">end</span> <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">if</span><br/>
-<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Set</span> objMessage <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">CreateObject</span>(<span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;CDO.Message&quot;</span>)<br/>
-objMessage.CreateMHTMLBody args.<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Item</span>(0)<br/>
-SaveToFile objMessage, args.<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Item</span>(1)<br/>
-<br/>
-<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Sub</span> SaveToFile(Msg, Fn)<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Dim</span> Strm, Dsk<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Set</span> Strm <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">CreateObject</span>(<span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;ADODB.Stream&quot;</span>)<br/>
-Strm.Type <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> adTypeText<br/>
-Strm.Charset <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> <span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;US-ASCII&quot;</span><br/>
-Strm.Open<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Set</span> Dsk <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> Msg.DataSource<br/>
-Dsk.SaveToObject Strm, <span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;_Stream&quot;</span><br/>
-Strm.SaveToFile Fn, adSaveCreateOverWrite<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">End</span> <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Sub</span></span></p>
-<p><br>文章来源:<a href='http://202.115.22.199/Blog/electronixtar/archive/2007/01/14/13407.aspx'>http://202.115.22.199/Blog/electronixtar/archive/2007/01/14/13407.aspx</a><br><br><br />
-<img src ="http://202.115.22.199/Blog/electronixtar/aggbug/13407.aspx" width = "1" height = "1" /><img src ="http://www.cnblogs.com/est/aggbug/622500.html" width = "1" height = "1" /><div align=right><a style="text-decoration:none;" href="http://est.cnblogs.com/" target="_blank">est</a> 2007-01-17 11:48 <a href="http://www.cnblogs.com/est/archive/2007/01/17/622500.html#Feedback" target="_blank" style="text-decoration:none;">发表评论</a></div>
-</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/cnblogs/622501"  rel="bookmark" >
-              <h2 class="card-title">让Google评价你的密码的安全性</h2>
-            </a>
-            <p class="card-text"><p><a href="https://www.google.com/accounts/RatePassword?Passwd">https://www.google.com/accounts/RatePassword?Passwd</a>=你的密码</p>
-<p>数值越高越安全</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/cnblogs/622506"  rel="bookmark" >
-              <h2 class="card-title">[导入]Alt+Shift+PrintScreen</h2>
-            </a>
-            <p class="card-text"><p>这不是XP/Vista的彩蛋，这是XP/VIsta的功能，高对比度，呵呵</p>
-<p>有什么用呢？</p>
-<p>比如说，图书馆的公用电脑，只有一个 书籍查阅软件 的界面，把explorer屏蔽了，但是</p>
-<p>1. 打开输入法，点帮助，然后C:\windows\explorer.exe，经典的输入法漏洞啊</p>
-<p>2. 按5次shift，然后随便找个帮助什么的，就可以打开C:了</p>
-<p>3. 按Win+U，放大镜，关于，有个&ldquo;访问Microsoft网站&rdquo;的链接</p>
-<p>4. 就是现在的了，Shift+Alt+PrtSc，呵呵</p>
-<p>一般的软件绝对想不到，要封这么多系统默认快捷键，汗。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
 <p>archive</p>            </div>
