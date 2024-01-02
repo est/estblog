@@ -2626,58 +2626,17 @@ trackback:ping="http://franticindustries.com/blog/2007/01/28/google-is-the-new-h
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/cnblogs/622499"  rel="bookmark" >
-              <h2 class="card-title">[原]一个极其BT的批处理：任务栏系统托盘汽泡提示</h2>
+            <a href="/cnblogs/622506"  rel="bookmark" >
+              <h2 class="card-title">[导入]Alt+Shift+PrintScreen</h2>
             </a>
-            <p class="card-text"><p>这种极其超出p处理讨论范围的话题真的有点BT，而且很无聊，所以我的解决方案也很无聊，那就是调用无所不能的 C#，所以需要 .NET Framework 支持，看代码` <blockquote class="code"><b class="smalltxt"><font size="2">CODE:</font></b>&nbsp;&nbsp;<a class="smalltxt" onclick="copycode(findobj('code0'));" href="http://www.cn-dos.net/forum/viewthread.php?tid=26751&amp;pid=166694&amp;page=1###"><font color="#003366" size="2">[Copy to clipboard]</font></a> <hr color="#dde3ec" size="1"/></p>
-<div id="code0" style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">@echo off<br/>
-set &quot;dnfpath=C:\Windows\Microsoft.NET\Framework&quot;<br/>
-set &quot;est=DO_NOT_ZT_WITHOUT_PERMISSION&quot;<br/>
-for /f &quot;delims=&quot; %%v in ('dir /ad /b %dnfpath%\v?.*') do (<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;if exist &quot;%dnfpath%\%%v\csc.exe&quot; set &quot;cscpath=%dnfpath%\%%v\csc.exe&quot;<br/>
-)<br/>
-<br/>
-&lt; &quot;%~f0&quot; more +17 &gt; &quot;%temp%\estTrayTip.cs&quot;<br/>
-%cscpath% &quot;/out:%cd%\estTrayTip.exe&quot; &quot;%temp%\estTrayTip.cs&quot;<br/>
-estTrayTip.exe C:\Windows\System32\acwizard.ico 看什么看 没见过批处理啊？没见过任务栏的汽泡信息啊？见过了吧？见过了顶electronixtar的帖子。 2<br/>
-:exe的参数解释：estTrayTip.exe 图标路径　标题　内容　提示图标类型Error、Info、None、Warning，这里取2=Info。每个参数都必须正确填写<br/>
-&gt;nul ping 127.1 -n 1<br/>
-del estTrayTip.exe<br/>
-<br/>
-goto:eof<br/>
-<br/>
-:estTrayTip<br/>
-<br/>
-using System;<br/>
-using System.Windows.Forms;<br/>
-using System.Drawing;<br/>
-<br/>
-namespace estTrayTip<br/>
-{<br/>
-&nbsp; &nbsp; class Program<br/>
-&nbsp; &nbsp; {<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;static void Main(string[] args)<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;{<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;NotifyIcon estIcon = new NotifyIcon();<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;estIcon.Icon = new Icon(args[0]);<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;estIcon.Visible = true;<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;ToolTipIcon estToolTipIcon = new ToolTipIcon();<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;switch(args[3])<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;{<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;1&quot;: <br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.Error; break;<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;2&quot;:<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.Info; break;<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;3&quot;:<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.None; break;<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;4&quot;:<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.Warning; break;<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;}<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;estIcon.ShowBalloonTip(1,args[1],args[2],estToolTipIcon);<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;}<br/>
-&nbsp; &nbsp; }<br/>
-}</div>
-<p></blockquote><img src ="http://202.115.22.199/Blog/electronixtar/aggbug/13411.aspx" width = "1" height = "1" /><br>文章来源:<a href='http://202.115.22.199/Blog/electronixtar/archive/2007/01/16/13411.aspx'>http://202.115.22.199/Blog/electronixtar/archive/2007/01/16/13411.aspx</a><img src ="http://www.cnblogs.com/est/aggbug/622499.html" width = "1" height = "1" /><br><br><div align=right><a style="text-decoration:none;" href="http://est.cnblogs.com/" target="_blank">est</a> 2007-01-17 11:48 <a href="http://www.cnblogs.com/est/archive/2007/01/17/622499.html#Feedback" target="_blank" style="text-decoration:none;">发表评论</a></div></p></p>
+            <p class="card-text"><p>这不是XP/Vista的彩蛋，这是XP/VIsta的功能，高对比度，呵呵</p>
+<p>有什么用呢？</p>
+<p>比如说，图书馆的公用电脑，只有一个 书籍查阅软件 的界面，把explorer屏蔽了，但是</p>
+<p>1. 打开输入法，点帮助，然后C:\windows\explorer.exe，经典的输入法漏洞啊</p>
+<p>2. 按5次shift，然后随便找个帮助什么的，就可以打开C:了</p>
+<p>3. 按Win+U，放大镜，关于，有个&ldquo;访问Microsoft网站&rdquo;的链接</p>
+<p>4. 就是现在的了，Shift+Alt+PrtSc，呵呵</p>
+<p>一般的软件绝对想不到，要封这么多系统默认快捷键，汗。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
 <p>archive</p>            </div>
@@ -2693,27 +2652,6 @@ namespace estTrayTip<br/>
             </a>
             <p class="card-text"><p><a href="https://www.google.com/accounts/RatePassword?Passwd">https://www.google.com/accounts/RatePassword?Passwd</a>=你的密码</p>
 <p>数值越高越安全</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/cnblogs/622506"  rel="bookmark" >
-              <h2 class="card-title">[导入]Alt+Shift+PrintScreen</h2>
-            </a>
-            <p class="card-text"><p>这不是XP/Vista的彩蛋，这是XP/VIsta的功能，高对比度，呵呵</p>
-<p>有什么用呢？</p>
-<p>比如说，图书馆的公用电脑，只有一个 书籍查阅软件 的界面，把explorer屏蔽了，但是</p>
-<p>1. 打开输入法，点帮助，然后C:\windows\explorer.exe，经典的输入法漏洞啊</p>
-<p>2. 按5次shift，然后随便找个帮助什么的，就可以打开C:了</p>
-<p>3. 按Win+U，放大镜，关于，有个&ldquo;访问Microsoft网站&rdquo;的链接</p>
-<p>4. 就是现在的了，Shift+Alt+PrtSc，呵呵</p>
-<p>一般的软件绝对想不到，要封这么多系统默认快捷键，汗。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
 <p>archive</p>            </div>
@@ -2879,6 +2817,68 @@ Prototype here: <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/cnblogs/622499"  rel="bookmark" >
+              <h2 class="card-title">[原]一个极其BT的批处理：任务栏系统托盘汽泡提示</h2>
+            </a>
+            <p class="card-text"><p>这种极其超出p处理讨论范围的话题真的有点BT，而且很无聊，所以我的解决方案也很无聊，那就是调用无所不能的 C#，所以需要 .NET Framework 支持，看代码` <blockquote class="code"><b class="smalltxt"><font size="2">CODE:</font></b>&nbsp;&nbsp;<a class="smalltxt" onclick="copycode(findobj('code0'));" href="http://www.cn-dos.net/forum/viewthread.php?tid=26751&amp;pid=166694&amp;page=1###"><font color="#003366" size="2">[Copy to clipboard]</font></a> <hr color="#dde3ec" size="1"/></p>
+<div id="code0" style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">@echo off<br/>
+set &quot;dnfpath=C:\Windows\Microsoft.NET\Framework&quot;<br/>
+set &quot;est=DO_NOT_ZT_WITHOUT_PERMISSION&quot;<br/>
+for /f &quot;delims=&quot; %%v in ('dir /ad /b %dnfpath%\v?.*') do (<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;if exist &quot;%dnfpath%\%%v\csc.exe&quot; set &quot;cscpath=%dnfpath%\%%v\csc.exe&quot;<br/>
+)<br/>
+<br/>
+&lt; &quot;%~f0&quot; more +17 &gt; &quot;%temp%\estTrayTip.cs&quot;<br/>
+%cscpath% &quot;/out:%cd%\estTrayTip.exe&quot; &quot;%temp%\estTrayTip.cs&quot;<br/>
+estTrayTip.exe C:\Windows\System32\acwizard.ico 看什么看 没见过批处理啊？没见过任务栏的汽泡信息啊？见过了吧？见过了顶electronixtar的帖子。 2<br/>
+:exe的参数解释：estTrayTip.exe 图标路径　标题　内容　提示图标类型Error、Info、None、Warning，这里取2=Info。每个参数都必须正确填写<br/>
+&gt;nul ping 127.1 -n 1<br/>
+del estTrayTip.exe<br/>
+<br/>
+goto:eof<br/>
+<br/>
+:estTrayTip<br/>
+<br/>
+using System;<br/>
+using System.Windows.Forms;<br/>
+using System.Drawing;<br/>
+<br/>
+namespace estTrayTip<br/>
+{<br/>
+&nbsp; &nbsp; class Program<br/>
+&nbsp; &nbsp; {<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;static void Main(string[] args)<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;{<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;NotifyIcon estIcon = new NotifyIcon();<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;estIcon.Icon = new Icon(args[0]);<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;estIcon.Visible = true;<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;ToolTipIcon estToolTipIcon = new ToolTipIcon();<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;switch(args[3])<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;{<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;1&quot;: <br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.Error; break;<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;2&quot;:<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.Info; break;<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;3&quot;:<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.None; break;<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;4&quot;:<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.Warning; break;<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;}<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;estIcon.ShowBalloonTip(1,args[1],args[2],estToolTipIcon);<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;}<br/>
+&nbsp; &nbsp; }<br/>
+}</div>
+<p></blockquote><img src ="http://202.115.22.199/Blog/electronixtar/aggbug/13411.aspx" width = "1" height = "1" /><br>文章来源:<a href='http://202.115.22.199/Blog/electronixtar/archive/2007/01/16/13411.aspx'>http://202.115.22.199/Blog/electronixtar/archive/2007/01/16/13411.aspx</a><img src ="http://www.cnblogs.com/est/aggbug/622499.html" width = "1" height = "1" /><br><br><div align=right><a style="text-decoration:none;" href="http://est.cnblogs.com/" target="_blank">est</a> 2007-01-17 11:48 <a href="http://www.cnblogs.com/est/archive/2007/01/17/622499.html#Feedback" target="_blank" style="text-decoration:none;">发表评论</a></div></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/nu/13367"  rel="bookmark" >
               <h2 class="card-title">[原创]批处理屏幕截图</h2>
             </a>
@@ -2957,6 +2957,20 @@ The server encountered a temporary error and could not complete your request.
 <p><img src ="http://dormforce.net/Blog/electronixtar/aggbug/13360.aspx" width = "1" height = "1" /></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-01-10T08:10:00+08:00">2007-01-10</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13357"  rel="bookmark" >
+              <h2 class="card-title">Web没前途的</h2>
+            </a>
+            <p class="card-text"><p>今天很是生气，哎，1000多字的blog，点了个 保存 ，结果给弹一个框框说&ldquo;.Text Application Error：OutOfMemeory Exception&rdquo;，真TMD的烂啊，偶写blog的心情一下子就&hellip;&hellip;说到技术层面上，Web程序好看，制作简单，但是结构超级复杂和麻烦。如果blog是个C/S结构，或者B/S的blog系统支持xmlhttp后台提交的话&hellip;&hellip;就不会有这种后果了&hellip;&hellip;&hellip;&hellip;呜呜呜呜，Web程序&hellip;&hellip;是 不可靠 和 低效率的，你看做一个 DOM 拖动的 div 就要写那么多代码，或者用那么多的类啊，真的很累。现在Web 2.0被Google炒得很热，但是这些其实很很泡沫的，什么WebOS也是极其SB和夸张的。我始终认为，电脑软件，用户至上，不要把什么开源啊面向对象啊弄到用户层去。心情不好乱说几句，呵呵</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-10T07:06:00+08:00">2007-01-10</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
@@ -3723,20 +3737,6 @@ NUM LOCK 5妙种：切换键<br/>
 <p>还有就是一开始说的新建文件夹的最快方法了，用的多，所以好用。右键+F，W</p>
 <p>&nbsp;</p>
 <p><img src ="http://dormforce.net/Blog/electronixtar/aggbug/13358.aspx" width = "1" height = "1" /></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-01-10T07:06:00+08:00">2007-01-10</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/nu/13357"  rel="bookmark" >
-              <h2 class="card-title">Web没前途的</h2>
-            </a>
-            <p class="card-text"><p>今天很是生气，哎，1000多字的blog，点了个 保存 ，结果给弹一个框框说&ldquo;.Text Application Error：OutOfMemeory Exception&rdquo;，真TMD的烂啊，偶写blog的心情一下子就&hellip;&hellip;说到技术层面上，Web程序好看，制作简单，但是结构超级复杂和麻烦。如果blog是个C/S结构，或者B/S的blog系统支持xmlhttp后台提交的话&hellip;&hellip;就不会有这种后果了&hellip;&hellip;&hellip;&hellip;呜呜呜呜，Web程序&hellip;&hellip;是 不可靠 和 低效率的，你看做一个 DOM 拖动的 div 就要写那么多代码，或者用那么多的类啊，真的很累。现在Web 2.0被Google炒得很热，但是这些其实很很泡沫的，什么WebOS也是极其SB和夸张的。我始终认为，电脑软件，用户至上，不要把什么开源啊面向对象啊弄到用户层去。心情不好乱说几句，呵呵</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-01-10T07:06:00+08:00">2007-01-10</time></p>
 <p>archive</p>            </div>
