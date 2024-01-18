@@ -57,6 +57,50 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2021/stdout-010"  rel="bookmark" >
+              <h2 class="card-title">shell script to graceful restart gunicorn with source code reloading</h2>
+            </a>
+            <p class="card-text"><p>I always thought restart <a href="https://gunicorn.org/">gnicorn</a> is as easy as <code>kill -HUP &lt;pid&gt;</code>, but there are two pitfalls:</p>
+<p>First of all the code might be loaded in master process then fork'ed into workers, so the <code>HUP</code> signal won't reload the source code, only gunicorn config is updated.</p>
+<p>Then there might be some bugs and your new code won't boot correctly, the worker will quit and drags down the master process along with it.</p>
+<p>I discovered a new trick from github issues that can spawn new worker first, check if new code loads correctly then restart the whole rack.</p>
+<p>According to <a href="https://docs.gunicorn.org/en/latest/signals.html#upgrading-to-a-new-binary-on-the-fly">the docs</a> you need to send several signals and blah blah, the author tried to explain in great detail of how it works rather than providing a simple option to do so.</p>
+<p>So I wrote a shell script to do that instead.</p>
+<pre><code>  #!/bin/bash
+
+  oldpid=$(&lt;./deploy/gunicorn.pid)
+  # forget the old kill -HUP 
+  kill -USR2 $oldpid
+  sleep 1
+  timeout=5
+  while [[ $timeout -gt 0 ]]; do
+    newpid=$(&lt;./deploy/gunicorn.pid.2) &amp;&amp; kill -0 $newpid
+    if [[ $? -eq 0 ]]; then
+      break
+    else
+      sleep 0.5
+      (( timeout-- ))
+    fi
+  done;
+
+  # shutdown old
+  echo "success. newpid=$newpid"
+  kill -WINCH $oldpid
+  sleep 1
+  kill -TERM $oldpid
+</code></pre>
+<p>The script will check for new master pid to be alive then kill the old master in a maximium timeout of 5 seconds.</p>
+<p>It works perfectly to replace the simple <code>HUP</code> signal as intended.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-08-21T00:53:20+08:00">2021-08-21</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2021/stderr-008"  rel="bookmark" >
               <h2 class="card-title">记一次离奇的梦</h2>
             </a>
@@ -764,41 +808,6 @@ In sum, neoliberalism is the immediate and foremost enemy of genuine participato
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-01-26T05:49:36+08:00">2021-01-26</time></p>
 <p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202101/stdin-002"  rel="bookmark" >
-              <h2 class="card-title">阶级滑落已经在发生</h2>
-            </a>
-            <p class="card-text"><p>刷到个视频</p>
-<div class="div-iframe"><iframe src="https://www.youtube.com/embed/XXWYPeEfOb8?start=12:10" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-
-<p>12:10 开始那个哥说的话，很有感触</p>
-<blockquote>
-<p>I think a lot of the anger stems from people who grew up believing their life was going to be a certain way and then it's not. right? And they don't have the opportunities their parents did.<br />
-I think my generation is the first one that is going to do <em>less</em> well than their parents, that's kind of at root of a lot of this anger. A lot of the frustration people feel, is is expecting life to be a certain way, and then being like NOPE you can't afford a house, you have to pay back all this college debt, you can't afford health care, because that's gone up crazily.<br />
-You know all this stuff makes people feel just frustrated and angry, they want a place to to to lash out and maybe it comes in the in in the ruse of of far-right politics or or whatever else, but um i think that problem has to be addressed.</p>
-</blockquote>
-<p>简单翻译一下：</p>
-<blockquote>
-<p>我们这代人，是第一波干得不如父母好的一代。可能接下来几代也是。或许这就是很多困惑和怒火的根源。人们总是期望生活会某种程度变好，但现实却是：不行。你买不起房，你给不起大学学费，你养老没依靠了。所以我们这代人希望有个发泄的渠道。比如通过极有翼政治体现，但无论如何这些问题都需要得到正视</p>
-</blockquote>
-<p>类似的论调，在 Occupy Wallstreet 的时候就看到过。说二战后美国经济极大发展，很多老一辈的人年轻的时候找工作，高中文凭随便去街上一转，就能找到类似 IBM 这种大公司的优良职位。所以老一辈压根没法理解为啥<a href="https://www.urban.org/sites/default/files/publication/99707/young_adults_living_in_parents_basements_0.pdf">有20%的美国年轻人都住在父母甚至祖父母的地下室</a>。</p>
-<p>国内也有这种问题，其实也有很多啃老的住父母家的。但国内的说法不是阶级滑落，而是阶级「分化」。</p>
-<p>然后恰好今天又看到这篇报道<a href="https://mp.weixin.qq.com/s/9N_F6k2a2Tu-o76F3-Q0IQ">《一群穷孩子的人生实验》</a></p>
-<blockquote>
-<p>实际上，他们早已在漫长过程里修正了对自我的认识。他们确实度过过一个「被选中」的阶段，觉得可以通过努力，成为伟大的、和别人都不一样的人。但后来慢慢发现，大家本来都是不一样的，伟大和成功也没有确切标准，而且——外部环境对一个人的影响太大了。<br />
-在澳洲，孩子们还是「一如既往地穷，还是舍不得花钱」，几乎所有人都是一边上学一边打工，或者送外卖，或者在餐厅。他们不再志存高远、想着成为科学大牛，但都是踏实努力的人。<br />
-在与徐博的越洋电话里，我们聊到青云计划远大的目标，和后来逐渐残酷的现实，以及目前生活里的一些困境，谈话渐渐黯淡下来。准备挂电话的时候，他突然叫住我，「其实我还有一句话想说，」他有些哽咽：「从外界看，这可能是一个非常失败的投资，是一个不太成功的教育案例。但我觉得它是成功的，它教会了我们，如何做一个向上的人、一个正直的人。」Image</p>
-</blockquote>
-<p>我感觉国内机会多，还有空间让普通人成为一个向上的人，正直的人，但是假想未来10年、20年后，年轻人恐怕连大城市的一个房租都给不起，各行业都残暴竞争，这样的未来恐怕跟视频里那个老美描述的现状也差不多吧。阶级滑落是一个无可奈何的事。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-01-19T20:53:44+08:00">2021-01-19</time></p>
-<p>stdin</p>            </div>
           </article>
         </div>
 

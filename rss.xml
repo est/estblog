@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sat, 13 Jan 2024 22:45:53 +0800</lastBuildDate><item><title>碎碎念一下《年会不能停》，微剧透</title><link>https://blog.est.im/2024/stderr-02</link><description>&lt;p&gt;首先，《年会不能停》是一部喜剧电影。不是纪录片。在这个设定下，我可以给这个喜剧片9分。它给我带来2个小时的吸引力和快乐，这一点就很值。&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Thu, 18 Jan 2024 14:44:12 +0800</lastBuildDate><item><title>FastAPI/Starlette 长连接感知断开</title><link>https://blog.est.im/2024/stdout-01</link><description>&lt;p&gt;之前写过如何 &lt;a href="/2023/stdout-12"&gt;在服务器重启的时候感知长连接&lt;/a&gt;，最近发现折腾复杂了。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/encode/starlette/discussions/1776"&gt;https://github.com/encode/starlette/discussions/1776&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;测试代码： &lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import asyncio
+
+async def async_streamer():
+    try:
+        while True:
+            yield b&amp;quot;--boundary\r\nContent-Type: text/plain\r\nContent-Length: 1\r\n\r\n1\r\n&amp;quot;
+            await asyncio.sleep(0)
+    except asyncio.CancelledError:
+        print(&amp;quot;caught cancelled error&amp;quot;)
+
+app = Starlette(routes=[
+    Route('/async', async_endpoint),
+])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;跑起来： &lt;code&gt;uvicorn stream:app&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;这段代码粗一看没啥大不了的，但是神奇的地方在于，如果去掉 &lt;code&gt;try ... except asyncio.CancelledError&lt;/code&gt; ，代码也能正常跑&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+async def async_streamer():
+    while True:
+        yield b&amp;quot;--boundary\r\nContent-Type: text/plain\r\nContent-Length: 1\r\n\r\n1\r\n&amp;quot;
+        await asyncio.sleep(0)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;而且不会报错！最蛋痛的是，这玩意因为是个 &lt;code&gt;while True&lt;/code&gt;，如果你里面有打开的数据库连接，是不会中断的，也不会回收的。因为这个 coroutine 没有继续 &lt;code&gt;async for&lt;/code&gt; 来消费，就一直挂在进程里当僵尸了！&lt;/p&gt;
+&lt;p&gt;加上 &lt;code&gt;try ... except asyncio.CancelledError&lt;/code&gt;，能捕获出错，也能处理善后了。&lt;/p&gt;
+&lt;p&gt;真是神奇啊。不知道是 uvicorn 的特性，还是 ASGI 都这样。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 18 Jan 2024 14:44:12 +0800</pubDate><guid isPermaLink="false">tag:None,2024-01-18:/2024/stdout-01</guid><category>stdout</category></item><item><title>碎碎念一下《年会不能停》，微剧透</title><link>https://blog.est.im/2024/stderr-02</link><description>&lt;p&gt;首先，《年会不能停》是一部喜剧电影。不是纪录片。在这个设定下，我可以给这个喜剧片9分。它给我带来2个小时的吸引力和快乐，这一点就很值。&lt;/p&gt;
 &lt;p&gt;我去看之前还四处查阅了是否适合带小孩和长辈去看。看完的结论是全家看得其乐融融毫无压力。那么多职场黑话丝毫不妨碍非职场人群理解故事。&lt;/p&gt;
 &lt;p&gt;然后说几点感受吧。&lt;/p&gt;
 &lt;p&gt;第一，女一号感觉是硬安排的。对剧情推动作用不大。但是形象好气质佳，很让人看得下，去从而忍受角色定位问题和演技问题。&lt;/p&gt;
@@ -1222,14 +1249,4 @@ def short_name(name):
 &lt;p&gt;人的主观能动性——作为，有一个经常被忽略的大前提，你得抱着一定的「目的」才可能去作为，也就是拿着预设的最终结果去改变现状。准确的目的设定，需要对真实世界的反复推演和总结因果律。因果律的掌握程度就是智力水平，智力的高低就看你掌握的是有损压缩还是无损压缩，因为压缩的本质就是用更少的信息去模拟真实的全部信息。聪明就是用更小的成本去还原更多的事物，笨就是还原成本更高。这个成本，在学术上的定义就是 Kolmogorov复杂度。它有个上限但是不可及算，某些可计算的变体，比如conditional time-bounded Kolmogorov 复杂度是 NP 问题，不可知也。&lt;/p&gt;
 &lt;p&gt;以前一直不知道信息论学了有什么用，现在似乎摸到了一些门道。信息是中性的，但是因果就有得失和优劣之分。以前不会用，是因为不知道武器的哪一端是剑柄才能握住挥舞。&lt;/p&gt;
 &lt;p&gt;生活中许多东西是需要去「作为」的，但是需要区分哪些是自然事物，那些是人为的设置。人这个神奇的动物可以把&lt;a href="/201910/stdout-006"&gt;不存在的实体看成实体&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;胡思乱想一些心得，记录一下，或许将来可以整理得更清晰。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 22 Aug 2023 22:27:47 +0800</pubDate><guid isPermaLink="false">tag:None,2023-08-22:/2023/stderr-12</guid><category>stderr</category></item><item><title>为啥Linux下病毒比较少</title><link>https://blog.est.im/2023/stdin-10</link><description>&lt;p&gt;&lt;img alt="" src="/images/2023/stdin-10-01.webp" /&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;最近下载了一个Linux的病毒，把它解包了。&lt;br /&gt;
-尝试用root身份运行，发现啥也没有。&lt;br /&gt;
-Google了俩小时，发现这病毒没解包到 /usr/local/bin 而是解压到了 malware 用户没有写入权限的 /usr/bin，于是病毒创建不了进程文件。&lt;br /&gt;
-从某个中文论坛里找到了修改过的 .configure 和 .make 文件，重新编译重新运行了一下。&lt;br /&gt;
-病毒说它需要 cmalw-lib-2.0，结果发现这玩意是 CentOS 里的，Ubuntu 里没有。Google 了好几个小时找到了从源码构建 .deb 包的方法。&lt;br /&gt;
-这病毒总算开始跑了，然后打出来几行日志，吐了个 core dump 就 crash 了。翻了一个小时日志发现这病毒假定自己跑在 ext4 文件系统上然后调用了 ext4 的加密 API。但是在 btrfs 里这个 API 已经弃用了，内核发现了这个问题然后把这个分区变成只读的了。&lt;br /&gt;
-打开源文件，grep 搜索出病毒里的 BTC 钱包地址然后出于同情给它打了 $5。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;哈哈虽然现在linux病毒也多，但是这个也太搞笑了 &lt;a href="https://t.me/rvalue_daily/4255"&gt;via&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 22 Aug 2023 15:04:30 +0800</pubDate><guid isPermaLink="false">tag:None,2023-08-22:/2023/stdin-10</guid><category>stdin</category></item></channel></rss>
+&lt;p&gt;胡思乱想一些心得，记录一下，或许将来可以整理得更清晰。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 22 Aug 2023 22:27:47 +0800</pubDate><guid isPermaLink="false">tag:None,2023-08-22:/2023/stderr-12</guid><category>stderr</category></item></channel></rss>
