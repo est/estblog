@@ -57,6 +57,57 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/202009/stdout-008"  rel="bookmark" >
+              <h2 class="card-title">javascript 一句话算农历</h2>
+            </a>
+            <p class="card-text"><p>同步发帖在 <a href="https://www.v2ex.com/t/705897">v2ex</a></p>
+<p>今天发现 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl">Intl</a> 这个 ECMAscript 内置对象，可以一句话算农历。</p>
+<pre><code>  new Date().toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)\s*?年/, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子丑寅卯辰巳午未申酉戌亥".charAt((y-4)%12))
+</code></pre>
+<p>算农历最麻烦就是跨年。这个 API 处理得还挺好的。比如2020年1月的除夕夜+春节</p>
+<pre><code>  new Date(2020, 0, 24).toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)年 /, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子丑寅卯辰巳午未申酉戌亥".charAt((y-4)%12))
+  乙亥腊月30 上午12:00:00
+  new Date(2020, 0, 25).toLocaleString('zh-CN-u-ca-chinese').replace(/(\d+)年 /, (_,y)=&gt;"甲乙丙丁戊己庚辛壬癸".charAt((y-4)%10) + "子丑寅卯辰巳午未申酉戌亥".charAt((y-4)%12))
+  庚子正月1 上午12:00:00
+</code></pre>
+<p>连 腊月 正月 都能显示。还是挺 6 的。浏览器支持的话 Edge, Chrome 都可以，Firefox 和 Safari 的 ICU 版本太老需要微调一下。</p>
+<p>23:39更新：网友 sarvatathagata 发现了个如下更简单的方法。不过这个方法无法地道的显示 腊月、正月。</p>
+<pre><code>  new Date().toLocaleString('ja-JP-u-ca-chinese')
+</code></pre>
+<p>稍微解释下 <code>zh-Hans-CN-u-ca-chinese</code> 是什么意思。这个叫 locale 也叫 language tag。<br />
+zh-Hans 是一门语言，简体中文。<code>CN</code> 表示在大陆地区用的。 <code>-u-key1-value1-key2-value2...</code> 表示打开 <em>Unicode extension</em> 模式，<code>-ca</code> 表示 calendar 日历，<code>-chinese</code> 表示农历。</p>
+<p>如果把 <code>-chinese</code> 改成 <code>-roc</code> 还可以得到今年是民国109年。奇怪的姿势又增加了。</p>
+<p>还有一个额外的参数，如 <code>.toLocaleString(locale_id, options)</code> 里面 options 可以细化</p>
+<p>另外就是奇怪的数字变形方法：</p>
+<pre><code>  new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-hanidec')
+  "一,二三四,五六七,八九〇"
+  new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-fullwide')
+  "１,２３４,５６７,８９０"
+  new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathbold')
+  "𝟏,𝟐𝟑𝟒,𝟓𝟔𝟕,𝟖𝟗𝟎"
+  new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathdbl')
+  "𝟙,𝟚𝟛𝟜,𝟝𝟞𝟟,𝟠𝟡𝟘"
+  new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathmono')
+  "𝟷,𝟸𝟹𝟺,𝟻𝟼𝟽,𝟾𝟿𝟶"
+  new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathsanb')
+  "𝟭,𝟮𝟯𝟰,𝟱𝟲𝟳,𝟴𝟵𝟬"
+  new Number(1234567890).toLocaleString('zh-Hans-CN-u-nu-mathsans')
+  "𝟣,𝟤𝟥𝟦,𝟧𝟨𝟩,𝟪𝟫𝟢"
+</code></pre>
+<p>还有获取相对时间（XX分钟前）、科学记数法、货币、地区的别名等奇奇怪怪的东西。</p>
+<p>Intl 是 ECMAScript i18n API（<a href="https://www.ecma-international.org/ecma-402/1.0/">ECMA-402</a>）的一部分。在ES5.1+语言的运行时嵌入了一个阉割版的 ICU 库。为什么是阉割版呢？比如 ICU 库是 Unicode CLDR 规范的一种实现，比如 <a href="https://github.com/unicode-org/icu/blob/master/icu4c/source/data/locales/zh.txt">zh</a>里可以发现不仅可以直接查到年（枚举60遍！），还可以查到生肖（js 里 <code>{year: "zodiacs"}</code>就不行），甚至节气(solarTerms)都包含了！js 里的 <code>year</code> 阉割得只有两种：<code>numeric</code> 和 <code>2-digit</code>。可以看 <a href="https://github.com/v8/v8/blob/4b9b23521e6fd42373ebbcb20ebe03bf445494f9/src/objects/js-date-time-format.cc#L57">v8 源码里的BuildPatternItems</a> 怎么实现的。</p>
+<p>值得注意的是，ICU 居然收录了日本天皇从大化 (645–650) 开始到现在 令和 年号。不公平啊。我大中华应该从西周的共和元年，公元前841年开始把年号都给补上啊混蛋！</p>
+<p>还有就是货币大写 零壹贰叁肆伍陆柒捌玖拾 谁去给 ICU 提 issue 加上啊。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2020-09-10T22:39:01+08:00">2020-09-10</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/202008/stdin-008"  rel="bookmark" >
               <h2 class="card-title">策略性同理心：小孩哭闹不穿衣服怎么办</h2>
             </a>
@@ -629,45 +680,6 @@
 <p>现代医学的确对于很多病是无法彻底理解并且束手无策的。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2020-02-22T00:26:16+08:00">2020-02-22</time></p>
-<p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202002/stderr-002"  rel="bookmark" >
-              <h2 class="card-title">后工业化时代的老师，和主播应该是同一类职业</h2>
-            </a>
-            <p class="card-text"><p>最近新冠病毒带来的疫情，导致很多家庭被隔离在家，包括我。小孩都不能上课，一些中学、高中纷纷开始网课。</p>
-<p>今晚微信朋友圈里传播一个截图，英语老师，网课上完之后忘记关直播了，听上去就是跟男友开始嘿咻嘿咻，结果学生的小弟弟一个一个都震惊了。</p>
-<p><img alt="仙桃一中教学事故" src="/images/2020/stderr-002-1.jpg" /></p>
-<p>话说回来，其实可能大多数人都觉得老师变身主播怪怪的，我这几天也在思考这个问题。先说我的观点结论</p>
-<ul>
-<li>直播才是教育的本质。</li>
-<li>教师和主播应该是同一类职业</li>
-<li>或许21世纪，正经的职业就是主播——这个观点是罗辑思维的。我比较赞同。</li>
-</ul>
-<p>其实近现代学校不是一个常见的社会机构。古人猿时代，都是氏族群居，集体扶养后代。甚至小孩不能分辨自己的父亲是谁。</p>
-<p>由于没有避孕措施，人们定居或者游牧的生活里，一般小孩根本没有受教育的机会，稍微长大就要干活，大的带小的。子承父业，家族传承，比如英语 Smith 就表示祖宗是个匠人。</p>
-<p>就算现在的印度的种姓制度，也是跟职业挂钩的，其实就等同一个受教育范围选择器。中国就算在明朝也有军籍、贱籍的继承制。</p>
-<p>由于子嗣众多，中世纪的贵族和上流社会，城堡领主一般会让孩子去别的城堡学习长大；中国的士大夫阶层，会有私塾，让教书先生来教育一个最有学习潜力的。其他的可能喜欢体力的，喜欢武术的，喜欢经商的，都各自发展，会有一个继承人来学习文化。</p>
-<p>随着社会的发展，人类社会普遍定下来一夫一妻制。到了工业革命，最缺的是劳动力。这个时候，双亲都需要积极投入到工厂劳动去接受剥削。</p>
-<p>这个时候，谁来带孩子，就成了一个巨大的社会问题。公立学校、师范培训也才兴起。我们常见的老师这个职业也是这个时代才确定下来。</p>
-<p>到了共产主义苏联，全民受教育不是一个权力，被当成每一个公民义务。彼此同时的美国人，还在搞肤色隔离，教育也都是私立为主。直到 CCCP 的 Sputnik 升空之后，美联邦政府把这个 STEM 教育的差异<a href="https://news.harvard.edu/gazette/story/2007/10/how-sputnik-changed-u-s-education/">上升到国家安全威胁的高度</a>。进行了一系列大刀阔斧的改革：<br />
- - National Science Foundation (NSF) of 1950<br />
- - the National Defense Education Act (NDEA) of 1958<br />
- - Civil Rights Act of 1964<br />
- - Great Society of 1964<br />
- - Higher Education Act (HEA) of 1965</p>
-<p>等等。所以从这个角度来说，不要说老师是什么人类灵魂工程师了。这压根就是流水线生产能不能打的公民。</p>
-<p>但是教育的本质是什么。传道授业解惑？其实，把目光拉回几千年前，教育的本质很简单，就如同孔子那样，支一个棚子，开始现场说书。</p>
-<p>想起来，感谢颜回的肉干，老铁双击666，多谢子路束脩。这不就是打赏么。只是现在隔了一个屏幕而已。</p>
-<p>直播的时代，让信息的传播没有了地理和座位的限制。衣食无忧的人随手一个打赏，支持一下思想的交流，或许这个时代应该会出现教育大家。</p>
-<p>老师这个职业，还会存在多久呢？</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2020-02-11T21:24:55+08:00">2020-02-11</time></p>
 <p>stderr</p>            </div>
           </article>
         </div>

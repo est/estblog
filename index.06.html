@@ -57,6 +57,27 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2021/stdin-016"  rel="bookmark" >
+              <h2 class="card-title">苏35的UI汉化</h2>
+            </a>
+            <p class="card-text"><p><a href="https://www.zhihu.com/question/304693612/answer/2250648177">原文</a>禁止转载，那我就转载原文的<a href="https://mil.sina.cn/sd/2016-10-11/detail-ifxwrhpm2928730.d.html">原文</a></p>
+<blockquote>
+<p>日前，俄罗斯《消息报》采访了俄罗斯无线电电子技术集团（俄罗斯技术集团下属企业）副总经理吉维∙占季加夫，该集团是苏-35几乎所有航电系统的研制生产单位。<br />
+占季加夫表示，“根据订购方的国情要求改装机载设备是重要的技术程序之一，一年多来我们都在致力于将驾驶舱内的信息翻译成汉语。但是，不像斯拉夫和拉丁字母，汉语的象形文字“很难”在LCD显示器上阅读。最终，中方要求维持原样，即显示器上保留西里尔字母。中国飞行员已有驾驶俄苏-27战机的飞行经验，该飞机的驾驶舱同样没有为中国进行改装，但飞行员们‘阅读’俄语的机上信息。”<br />
+该报称，苏-35显示器上译成汉语的仪表读数说明和指令太过微小和模糊，以致难以阅读。通过扩大显示器的尺寸可以解决该问题，但这样就要彻底改造驾驶舱，研制和试验需要额外的资金和时间，中方伙伴并不希望这样。<br />
+报道还指出，提供给中国的苏-35飞机唯一的特殊之处是在机载系统中加入了中国的“北斗”卫星导航系统。</p>
+</blockquote>
+<p>中文字库还是很大的，渲染也麻烦。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-12-02T07:20:03+08:00">2021-12-02</time></p>
+<p>stdin</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2021/stdout-021"  rel="bookmark" >
               <h2 class="card-title">Python 3.X ctypes 和 greenlet size changed 坑三则</h2>
             </a>
@@ -1508,70 +1529,6 @@ A: 蚂蚁队长第一次下命令是想让蚂蚁们离开，自己吃了这点�
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-09-16T15:29:47+08:00">2021-09-16</time></p>
 <p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2021/stdout-011"  rel="bookmark" >
-              <h2 class="card-title">TiDB 的日期比较和 MySQL 不兼容</h2>
-            </a>
-            <p class="card-text"><p>MySQL的</p>
-<pre><code>  &gt; select VERSION()
-  +-----------+
-  | VERSION() |
-  +-----------+
-  | 8.0.15-6  |
-  +-----------+
-
-
-  &gt; select NOW() &gt; '';
-  +------------+
-  | NOW() &gt; '' |
-  +------------+
-  | 1          |
-  +------------+
-
-  &gt; show warnings;
-  +---------+------+----------------------------------------+
-  | Level   | Code | Message                                |
-  +---------+------+----------------------------------------+
-  | Warning | 1292 | Truncated incorrect datetime value: '' |
-  +---------+------+----------------------------------------+
-</code></pre>
-<p>TiDB:</p>
-<pre><code>  &gt; select VERSION()
-  +--------------------+
-  | VERSION()          |
-  +--------------------+
-  | 5.7.25-TiDB-v5.1.0 |
-  +--------------------+
-  1 row in set
-
-  &gt; select NOW() &gt; '';
-  +------------+
-  | NOW() &gt; '' |
-  +------------+
-  | &lt;null&gt;     |
-  +------------+
-
-  &gt; show warnings;
-  +---------+------+------------------------------+
-  | Level   | Code | Message                      |
-  +---------+------+------------------------------+
-  | Warning | 1292 | Incorrect datetime value: '' |
-  +---------+------+------------------------------+
-  1 row in set
-</code></pre>
-<p>记录一下 <a href="https://github.com/pingcap/tidb/issues/21354">相关 issue</a></p>
-<p>btw 顺便吐槽一下，</p>
-<p><code>json_extract('{"a": null}', '$.a')</code> 返回的值是 <code>CAST('null' AS JSON)</code></p>
-<p>注意区分  <code>json_extract('{"a": null}', '$.b') IS NULL</code> </p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-09-07T17:52:51+08:00">2021-09-07</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 
