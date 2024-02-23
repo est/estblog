@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Wed, 21 Feb 2024 18:29:00 +0800</lastBuildDate><item><title>[ZZ]西周灭亡的根本原因是什么？</title><link>https://blog.est.im/2024/stdin-04</link><description>&lt;p&gt;只想archive一下，原作者禁止转载，但是这样的&lt;a href="https://www.zhihu.com/question/370117152/answer/3403811146"&gt;好东西&lt;/a&gt;估计很容易消失。所以就无耻的复制粘贴了。&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Fri, 23 Feb 2024 15:32:00 +0800</lastBuildDate><item><title>LLM, RAG 和 Groq</title><link>https://blog.est.im/2024/stderr-04</link><description>&lt;p&gt;最近跟朋友聊起LLM，RAG 究竟有没有用，能不能拿来做成产品或者服务。由于我对AI的了解也很肤浅，所以没太敢下结论。&lt;/p&gt;
+&lt;p&gt;但是今天突然想起一个趣事，相传 账单·大门 院士有一句名言「640KB ought to be enough for anybody」&lt;/p&gt;
+&lt;p&gt;这句话是不是他老人家说的不重要了，重要的是 IBM PC 的这个 &lt;a href="https://en.wikipedia.org/wiki/Conventional_memory"&gt;640KB内存&lt;/a&gt; 的梗是绕不过去了。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/IBM_PC_Memory_areas.svg/220px-IBM_PC_Memory_areas.svg.png" /&gt;&lt;/p&gt;
+&lt;p&gt;后来发现 640KB 不够了怎么办？屎山上接着hack呗。于是发明了 EMM386 ，在&lt;code&gt;CONFIG.SYS&lt;/code&gt; 里吟唱一句&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  DEVICE=C:\DOS\HIMEM.SYS
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;可以保平安。&lt;/p&gt;
+&lt;p&gt;如果人人都能用 Gemini 1.5 Pro 那个 1M context tokens， 那么 RAG 技术也没啥用了吧。猜想能用 RAG 卖钱的，估计跟定制 &lt;code&gt;HIMEM.SYS&lt;/code&gt; 和 &lt;code&gt;EMM386.EXE&lt;/code&gt; 的市场一样。。。。。在 PC 普及的初期是一个神级，但是随着日本政府主导 VLSI产业+三星DRAM的崛起和价格战，一切都成了历史。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;又想起另外一件事：Groq&lt;/p&gt;
+&lt;p&gt;也是啥都不懂，翻了些资料，发现比较有意思。CUDA vs Groq 可以看成DRAM vs SRAM。context window不足的问题：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;疯石头 2024-02-23 02-21： Context window到100K后，即使batch=1，GPT-3级别的大模型,KV-cache占显存的容量已经比weight要大了。实际部署时batch size至少得64才能用上tensor core。4-bit quant可以降到1/4，GQA group=8时可以再降1/8，不过还是比weight要大。sliding window不可取，遗忘问题会完全丢掉long context的优势。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;更详细的讲解：&lt;/p&gt;
+&lt;p&gt;https://kipp.ly/transformer-inference-arithmetic/#kv-cache&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="https://kipp.ly/img/arithmetic_transformers/roofline.png" /&gt;&lt;/p&gt;
+&lt;p&gt;在zhihu上翻到一些资料说，LLM推理主要成本不是矩阵计算，而是 memory access。可惜帖子找不到了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 23 Feb 2024 15:32:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-02-23:/2024/stderr-04</guid><category>stderr</category></item><item><title>[ZZ]西周灭亡的根本原因是什么？</title><link>https://blog.est.im/2024/stdin-04</link><description>&lt;p&gt;只想archive一下，原作者禁止转载，但是这样的&lt;a href="https://www.zhihu.com/question/370117152/answer/3403811146"&gt;好东西&lt;/a&gt;估计很容易消失。所以就无耻的复制粘贴了。&lt;/p&gt;
 &lt;p&gt;作者：&lt;a href="https://www.zhihu.com/people/mingjun2016"&gt;于朝阳&lt;/a&gt;&lt;br /&gt;
 签名：不读书，不求甚解。&lt;br /&gt;
 发表：2024-02-21 16:09&lt;br /&gt;
@@ -1234,21 +1252,4 @@ async def api_stream(req: Request):
   })
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;测试重启 worker，该连接在1秒后断开，worker平稳重启。完美。&lt;/p&gt;
-&lt;p&gt;苦逼撸业务的一天又开始了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 02 Nov 2023 09:44:12 +0800</pubDate><guid isPermaLink="false">tag:None,2023-11-02:/2023/stdout-12</guid><category>stdout</category></item><item><title>浏览器拉起钉钉客户端并跳转OA工单</title><link>https://blog.est.im/2023/stdout-11</link><description>&lt;p&gt;又是 corporate software engineering 吃屎的一天。用户在内部系统走流程，厂里用的是钉钉自带的OA工单审批。已经接入了API创建、完成工单&lt;/p&gt;
-&lt;p&gt;问题在于发起工单之后，用户并没有感知，不知道工单去哪里了，流程就断了，向钉钉官方售后发起咨询，对方丢了一句：不支持。无语&lt;/p&gt;
-&lt;p&gt;只能自己鼓捣。已知工单链接，在钉钉聊天窗口内部的最短的网址为：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;  https://aflow.dingtalk.com/dingtalk/mobile/homepage.htm?corpid=...&amp;amp;procInstId=...#approval
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;对方丢了一个 &lt;a href="https://open.dingtalk.com/document/isvapp/webapp-unified-routing-protocol#title-kkq-kgx-lbq"&gt;dingtalk:// 跳转协议&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;反复尝试，发现一个很有用：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;桌面端打开URL &lt;br /&gt;
-&lt;code&gt;dingtalk://dingtalkclient/page/link&lt;/code&gt; &lt;br /&gt;
-侧边栏： &lt;code&gt;pc_slide=true&lt;/code&gt; &lt;br /&gt;
-大容器（类似工作台容器）&lt;code&gt;ddtab=true&lt;/code&gt;   &lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;于是构造一个试试：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;  dingtalk://dingtalkclient/page/link?url=https%3A%2F%2Faflow.dingtalk.com%2Fdingtalk%2Fpc%2Fquery%2Fpchomepage.htm%3Fcorpid%3D...%26procInstId%3D...%23%2Fapproval
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;然后果然ok了。&lt;/p&gt;
-&lt;p&gt;钉钉给人的感觉就是各个部门 hack 强行揉合起来一个怪物。各种不完善、不一致的问题。有空写一下吐槽。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 18 Oct 2023 14:57:00 +0800</pubDate><guid isPermaLink="false">tag:None,2023-10-18:/2023/stdout-11</guid><category>stdout</category></item></channel></rss>
+&lt;p&gt;苦逼撸业务的一天又开始了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 02 Nov 2023 09:44:12 +0800</pubDate><guid isPermaLink="false">tag:None,2023-11-02:/2023/stdout-12</guid><category>stdout</category></item></channel></rss>
