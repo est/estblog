@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Mon, 26 Feb 2024 11:48:00 +0800</lastBuildDate><item><title>Windows 任务管理器(taskmgr.exe) 作者讲趣闻</title><link>https://blog.est.im/2024/stdin-05</link><description>&lt;p&gt;下文出自 Windows 任务管理器(taskmgr.exe) 作者 &lt;a href="https://x.com/davepl1968/status/1761846541453791535"&gt;Dave W Plummer&lt;/a&gt;&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 27 Feb 2024 16:48:00 +0800</lastBuildDate><item><title>穷人的supervisor OOM killer</title><link>https://blog.est.im/2024/stdout-03</link><description>&lt;p&gt;厂里的docker上跑了个supervisord，用来把挂掉的进程拉起来。最近的问题不是进程挂掉，而是内存泄漏&lt;/p&gt;
+&lt;p&gt;跑着跑着内存爆了，然后宿主机OOM随机杀掉一个进程，结果占用内存最大的那个还活着，正常的进程反而gg，该漏的继续漏，然后反复OOM。想看下哪里漏了，&lt;code&gt;--cap-add=SYS_PTRACE&lt;/code&gt; 也不给加，OOM策略也不给调，思来想去只能自己做防水补漏了。做起来也简单，supervisor再跑一套bash脚本即可：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;while true; do
+  p=`ps --no-headers  -xo rss,pid --sort=-rss | awk '{if($1 &amp;gt; 1000000){ print $2 }}'`
+    kill $p 2&amp;gt;/dev/null || echo "everything fine";
+  sleep 60;
+done;
+&lt;/code&gt;&lt;/pre&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 27 Feb 2024 16:48:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-02-27:/2024/stdout-03</guid><category>stdout</category></item><item><title>Windows 任务管理器(taskmgr.exe) 作者讲趣闻</title><link>https://blog.est.im/2024/stdin-05</link><description>&lt;p&gt;下文出自 Windows 任务管理器(taskmgr.exe) 作者 &lt;a href="https://x.com/davepl1968/status/1761846541453791535"&gt;Dave W Plummer&lt;/a&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Windows 任务管理器(taskmgr.exe)趣闻：“保持简洁”&lt;/p&gt;
 &lt;p&gt;当你按下 &lt;code&gt;Ctrl&lt;/code&gt;+&lt;code&gt;Shift&lt;/code&gt;+&lt;code&gt;Esc&lt;/code&gt; 时，&lt;code&gt;winlogon&lt;/code&gt; 会启动 &lt;code&gt;taskmgr.exe&lt;/code&gt;，并且它首先会寻找一个正在运行的进程实例，如果它通过了某些运行时检查，则激活该实例。这意味着激活任务管理器所需的时间，至少与读取exe文件的时间一样长，因此我想要保持它文件体积足够小。&lt;br /&gt;
@@ -1121,18 +1128,4 @@ Windows version: 10.0.19045.3570
 &lt;p&gt;火星因为有&lt;code&gt;25.19°&lt;/code&gt;的自转倾角，跟地球相近，所以也可以划分四季。但问题是，火星的轨道长这样：&lt;/p&gt;
 &lt;p&gt;&lt;img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Mars_earth_orbit.png/600px-Mars_earth_orbit.png" /&gt;&lt;/p&gt;
 &lt;p&gt;所以如果按照四个季节划分，最长的季节有 &lt;code&gt;194 个 Martian Sols&lt;/code&gt;，最短的 &lt;code&gt;142 Martian sols&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;那么问题来了。在火星上怎么算工资呢？我觉得得安天结了。还有，假如亲爱的读者小伙伴将来到火星务工，应聘的时候一定确认好是按地球年结算还是火星年哦。谨防火星历诈骗！&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 09 Nov 2023 15:50:11 +0800</pubDate><guid isPermaLink="false">tag:None,2023-11-09:/2023/stdout-13</guid><category>stdout</category></item><item><title>跟孩子掰扯活着的意义</title><link>https://blog.est.im/2023/stderr-15</link><description>&lt;p&gt;今天趁着11·11买了个 GZ104 黄轴键盘，感觉之前随便买的青轴的好了很多，于是手痒想打字。哈哈&lt;/p&gt;
-&lt;h2&gt;人的意义 是什么&lt;/h2&gt;
-&lt;p&gt;娃今天吃饭的时候突然问了我一个问题：「人活着的意义是什么呀」，很不凑巧我也闲来无事琢磨过这事，但是想要在孩子面前把这事说清楚可能没那么容易。&lt;/p&gt;
-&lt;p&gt;于是我换了个思路，我问他，如果你是一个动物，你觉得意义是什么？他没回答，我又问，如果你是一块石头，石头会考虑自己的意义嘛？&lt;/p&gt;
-&lt;p&gt;孩子也没回答。最后我说，人活着的意义呀，可能很多人也不知道，但是有一点可以确定，正因为你有一个聪明的小脑袋，才会去思考「什么是意义」这样的问题&lt;/p&gt;
-&lt;h2&gt;国家是什么&lt;/h2&gt;
-&lt;p&gt;他又问到，为什么世界上有那么多国家呢，为什么联合国不是一个国家。怎么样才能统一全世界成为一个国家。&lt;/p&gt;
-&lt;p&gt;我的回答又把刚才的套路重复了一遍。如果你是一只动物，你会觉得自己属于某个国家吗？娃想了下，可能不会吧。我看到碗里的饭说，如果你是一粒大米，你会觉得自己有国家吗，孩子也不说话。最后我说，国家有很多个定义，但是正是因为人有了大脑，有了想象力，才会产生国家这个概念。所谓国家，就是一个想象的共同体。&lt;/p&gt;
-&lt;h2&gt;反思&lt;/h2&gt;
-&lt;p&gt;这可能是我会记录的最无聊的两件事。因为我真的想拿着键盘痛快的打一打字哈哈。&lt;/p&gt;
-&lt;p&gt;或许我的回答都不是最好的，现在想起来真的有很多改进之处。比如没能鼓励孩子进一步对这个问题进行探索。&lt;/p&gt;
-&lt;p&gt;蹲茅坑的时候想了一下，我们小时候哪里会思考这些问题呀。小时候都在为了作业发愁，心思都花在了怎么玩上面。现在的孩子能思考这些问题说明生活条件比较好了。人在穷的时候，物质匮乏的时候是不会去思考存在的意义的，都忙着奔波生活去了。生存都照顾不过来，如何去顾及意义呢。&lt;/p&gt;
-&lt;p&gt;生命或许最大的意义就是生存。仅仅丰衣足食之后，才有闲心来考虑一下奋斗折腾这么大半辈子，究竟是图了个啥。&lt;/p&gt;
-&lt;h1&gt;后记&lt;/h1&gt;
-&lt;p&gt;本文完成于 2023-11-05 22:39:59。  &lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 05 Nov 2023 22:26:35 +0800</pubDate><guid isPermaLink="false">tag:None,2023-11-05:/2023/stderr-15</guid><category>stderr</category></item></channel></rss>
+&lt;p&gt;那么问题来了。在火星上怎么算工资呢？我觉得得安天结了。还有，假如亲爱的读者小伙伴将来到火星务工，应聘的时候一定确认好是按地球年结算还是火星年哦。谨防火星历诈骗！&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 09 Nov 2023 15:50:11 +0800</pubDate><guid isPermaLink="false">tag:None,2023-11-09:/2023/stdout-13</guid><category>stdout</category></item></channel></rss>

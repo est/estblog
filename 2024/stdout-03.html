@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>穷人的supervisor OOM killer – est の 输入输出</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入输出 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="穷人的supervisor OOM killer" />
+
+    <link rel="canonical" href="https://blog.est.im/2024/stdout-03" />
+    <meta property="og:url" content="https://blog.est.im/2024/stdout-03">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="穷人的supervisor OOM killer">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入输出
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">穷人的supervisor OOM killer</h2>
+    <p class="post-date">Posted <time datetime="2024-02-27T16:48:00+08:00">2024-02-27</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>厂里的docker上跑了个supervisord，用来把挂掉的进程拉起来。最近的问题不是进程挂掉，而是内存泄漏</p>
+<p>跑着跑着内存爆了，然后宿主机OOM随机杀掉一个进程，结果占用内存最大的那个还活着，正常的进程反而gg，该漏的继续漏，然后反复OOM。想看下哪里漏了，<code>--cap-add=SYS_PTRACE</code> 也不给加，OOM策略也不给调，思来想去只能自己做防水补漏了。做起来也简单，supervisor再跑一套bash脚本即可：</p>
+<pre><code>while true; do
+  p=`ps --no-headers  -xo rss,pid --sort=-rss | awk '{if($1 &gt; 1000000){ print $2 }}'`
+    kill $p 2&gt;/dev/null || echo "everything fine";
+  sleep 60;
+done;
+</code></pre>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2024/stdout-03';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+
+  </body>
+
+</html>
