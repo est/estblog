@@ -58,11 +58,14 @@
   <p>厂里的docker上跑了个supervisord，用来把挂掉的进程拉起来。最近的问题不是进程挂掉，而是内存泄漏</p>
 <p>跑着跑着内存爆了，然后宿主机OOM随机杀掉一个进程，结果占用内存最大的那个还活着，正常的进程反而gg，该漏的继续漏，然后反复OOM。想看下哪里漏了，<code>--cap-add=SYS_PTRACE</code> 也不给加，OOM策略也不给调，思来想去只能自己做防水补漏了。做起来也简单，supervisor再跑一套bash脚本即可：</p>
 <pre><code>while true; do
-  p=`ps --no-headers  -xo rss,pid --sort=-rss | awk '{if($1 &gt; 1000000){ print $2 }}'`
-    kill $p 2&gt;/dev/null || echo "everything fine";
+  p=`ps --no-headers  -xo rss,pid --sort=-rss | awk '{
+    if($1 &gt; 1000000){ print $2 }
+  }'`
+  kill $p 2&gt;/dev/null || echo "everything fine";
   sleep 60;
 done;
 </code></pre>
+<p><code>1000000</code> 代表1G 内存。 <code>sleep 60</code> 表示 每60秒检查一次。</p>
 </article>
 
 <div class="comments">

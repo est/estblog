@@ -2,11 +2,14 @@
 <rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 27 Feb 2024 16:48:00 +0800</lastBuildDate><item><title>穷人的supervisor OOM killer</title><link>https://blog.est.im/2024/stdout-03</link><description>&lt;p&gt;厂里的docker上跑了个supervisord，用来把挂掉的进程拉起来。最近的问题不是进程挂掉，而是内存泄漏&lt;/p&gt;
 &lt;p&gt;跑着跑着内存爆了，然后宿主机OOM随机杀掉一个进程，结果占用内存最大的那个还活着，正常的进程反而gg，该漏的继续漏，然后反复OOM。想看下哪里漏了，&lt;code&gt;--cap-add=SYS_PTRACE&lt;/code&gt; 也不给加，OOM策略也不给调，思来想去只能自己做防水补漏了。做起来也简单，supervisor再跑一套bash脚本即可：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;while true; do
-  p=`ps --no-headers  -xo rss,pid --sort=-rss | awk '{if($1 &amp;gt; 1000000){ print $2 }}'`
-    kill $p 2&amp;gt;/dev/null || echo "everything fine";
+  p=`ps --no-headers  -xo rss,pid --sort=-rss | awk '{
+    if($1 &amp;gt; 1000000){ print $2 }
+  }'`
+  kill $p 2&amp;gt;/dev/null || echo "everything fine";
   sleep 60;
 done;
-&lt;/code&gt;&lt;/pre&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 27 Feb 2024 16:48:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-02-27:/2024/stdout-03</guid><category>stdout</category></item><item><title>Windows 任务管理器(taskmgr.exe) 作者讲趣闻</title><link>https://blog.est.im/2024/stdin-05</link><description>&lt;p&gt;下文出自 Windows 任务管理器(taskmgr.exe) 作者 &lt;a href="https://x.com/davepl1968/status/1761846541453791535"&gt;Dave W Plummer&lt;/a&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;1000000&lt;/code&gt; 代表1G 内存。 &lt;code&gt;sleep 60&lt;/code&gt; 表示 每60秒检查一次。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 27 Feb 2024 16:48:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-02-27:/2024/stdout-03</guid><category>stdout</category></item><item><title>Windows 任务管理器(taskmgr.exe) 作者讲趣闻</title><link>https://blog.est.im/2024/stdin-05</link><description>&lt;p&gt;下文出自 Windows 任务管理器(taskmgr.exe) 作者 &lt;a href="https://x.com/davepl1968/status/1761846541453791535"&gt;Dave W Plummer&lt;/a&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Windows 任务管理器(taskmgr.exe)趣闻：“保持简洁”&lt;/p&gt;
 &lt;p&gt;当你按下 &lt;code&gt;Ctrl&lt;/code&gt;+&lt;code&gt;Shift&lt;/code&gt;+&lt;code&gt;Esc&lt;/code&gt; 时，&lt;code&gt;winlogon&lt;/code&gt; 会启动 &lt;code&gt;taskmgr.exe&lt;/code&gt;，并且它首先会寻找一个正在运行的进程实例，如果它通过了某些运行时检查，则激活该实例。这意味着激活任务管理器所需的时间，至少与读取exe文件的时间一样长，因此我想要保持它文件体积足够小。&lt;br /&gt;
