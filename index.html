@@ -57,6 +57,33 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2024/stdout-04"  rel="bookmark" >
+              <h2 class="card-title">1900年居然不是闰年？</h2>
+            </a>
+            <p class="card-text"><p>看HN讨论 <a href="https://news.ycombinator.com/item?id=39554995">昨天2024-02-29有哪些闰年的bug</a>，有一个吃惊了</p>
+<pre><code>&gt;&gt;&gt; datetime.datetime.strptime('Feb 29', '%b %d')
+ValueError: day is out of range for month
+</code></pre>
+<p>python的 <code>datetime()</code> 默认 <code>year=1900</code>。但是心里想 1900 不应该也是闰年吗？</p>
+<p>查了下还真不是。囧。一年有 365.242374 天：</p>
+<ul>
+<li>近似看成 365.25 天就是4年一润；</li>
+<li>剩余的精度 365.25-365.242374 == 0.0076 天</li>
+<li>而且，0.0076 ✖️ 400 == 3.0504，也就是每400年要润3天</li>
+<li>结论就是每100年一润，但是每400年又不润</li>
+<li>比如 1700, 1800, 1900, 2100, 2200, 2300, 2500, 2600 这些年都不是闰年</li>
+</ul>
+<p>真复杂！</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-03-01T13:57:00+08:00">2024-03-01</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stdin-06"  rel="bookmark" >
               <h2 class="card-title">小米14Ultra的「陶瓷」风波</h2>
             </a>
@@ -1427,49 +1454,6 @@ git push origin 'refs/notes/*'
 <p>本文源自《<a href="https://www.cricetuscricetus.co.uk/post/copernicus-galileo-kepler-they-all-lacked-proof">哥白尼、伽利略、开普勒都是脱离证据拍脑袋撕逼</a>》一文。<a href="https://news.ycombinator.com/item?id=38300902">HN</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2023-11-18T16:15:51+08:00">2023-11-18</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2023/stdout-14"  rel="bookmark" >
-              <h2 class="card-title">Getting started blogging on Win10</h2>
-            </a>
-            <p class="card-text"><p>I am planning to setup by blogging environment on my Windows PC.</p>
-<ul>
-<li>OS: Windows 10</li>
-<li>Shell: Bash on WSL1</li>
-<li>Program: <code>pelican</code> on Miniconda3 with Python 3.11</li>
-</ul>
-<p>My objective today is get rid of the <code>static/js/core.js</code> from <code>aether-pelican</code> theme and replace it with <a href="https://jsfiddle.net/t78mf7jb/3/">a simple CSS</a>, and it turns out quite challenging.</p>
-<h3>WSL1 and file system</h3>
-<p>As it turns out, the installed Ubuntu root filesystem on WSL1 is located here:</p>
-<p><code>%localappdata%\Packages\CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc\LocalState\rootfs</code></p>
-<p>I plan to move my home dir (at least) to another SSD on my PC, as the <code>C:\</code> drive is an old SanDisk Plus240, which is unforgivablly slow these days. I tried to <code>mv ~ /mnt/d/home</code>, ok but the permission gets weird.</p>
-<p>So I tried to copy the folder on Windows to <code>D:\home</code>, and <code>mklink</code> back. I tried both <code>mklink /D</code> and <code>mklink /J</code> ( the <code>/D</code> switch works on a remote drive whereas the <code>/J</code> junction works on local NTFS disks only) and they both failed be recognized by WSL1. The bash yields <code>Broken stdout/stdin</code> upon launch</p>
-<p>So OK, default home dir then. Bad luck for me.</p>
-<h3>Ubuntu 22</h3>
-<p>I just found out my <code>cat /etc/lsb-release</code> shows Ubuntu 18, which is the default distro installed on <code>WSL1</code> I assume. I tried to install Ubuntu 22 from the Microsoft Store, after several wasted minutes (curse the slow Internet in Mainland!) it turns out for WSL2 only. Luckily the Windows Subsystem for Linux was successfully upgraded to latest version:</p>
-<pre><code>C:\&gt; wsl --version
-WSL version: 1.2.5.0
-Kernel version: 5.15.90.1
-WSLg version: 1.0.51
-MSRDC version: 1.2.3770
-Direct3D version: 1.608.2-61064218
-DXCore version: 10.0.25131.1002-220531-1700.rs-onecore-base2-hyp
-Windows version: 10.0.19045.3570
-</code></pre>
-<p>the <code>wsl --list --online</code> commands stuck for a total of 10 minutes and returns nothing (curse the AS4134 163NET!)</p>
-<h3>Getting Python, Miniconda and Pelican</h3>
-<p>So linux distro setup was back to where started, I only have Python to mess with. Miniconda3 gets insalled easily, now that's a some progress. The static site generator I am using <code>pip install pelican[markdown]</code> finishes ok, the pypi was not blocked? Keke.</p>
-<p>Then I typed <code>make</code>. It was not part of WSL1? Blaspheme!</p>
-<p>Manually running <code>python -m pelican.server</code>, and voila! The Windows asks for firewall listening permission, granted, open up browser, BAM! My blog setup process is done and now I can write and tweak it on Windows. </p>
-<p>Oh, and there's <code>git config core.fileMode false</code> needs to be checked!</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2023-11-11T10:31:11+08:00">2023-11-11</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

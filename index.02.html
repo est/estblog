@@ -57,6 +57,49 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2023/stdout-14"  rel="bookmark" >
+              <h2 class="card-title">Getting started blogging on Win10</h2>
+            </a>
+            <p class="card-text"><p>I am planning to setup by blogging environment on my Windows PC.</p>
+<ul>
+<li>OS: Windows 10</li>
+<li>Shell: Bash on WSL1</li>
+<li>Program: <code>pelican</code> on Miniconda3 with Python 3.11</li>
+</ul>
+<p>My objective today is get rid of the <code>static/js/core.js</code> from <code>aether-pelican</code> theme and replace it with <a href="https://jsfiddle.net/t78mf7jb/3/">a simple CSS</a>, and it turns out quite challenging.</p>
+<h3>WSL1 and file system</h3>
+<p>As it turns out, the installed Ubuntu root filesystem on WSL1 is located here:</p>
+<p><code>%localappdata%\Packages\CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc\LocalState\rootfs</code></p>
+<p>I plan to move my home dir (at least) to another SSD on my PC, as the <code>C:\</code> drive is an old SanDisk Plus240, which is unforgivablly slow these days. I tried to <code>mv ~ /mnt/d/home</code>, ok but the permission gets weird.</p>
+<p>So I tried to copy the folder on Windows to <code>D:\home</code>, and <code>mklink</code> back. I tried both <code>mklink /D</code> and <code>mklink /J</code> ( the <code>/D</code> switch works on a remote drive whereas the <code>/J</code> junction works on local NTFS disks only) and they both failed be recognized by WSL1. The bash yields <code>Broken stdout/stdin</code> upon launch</p>
+<p>So OK, default home dir then. Bad luck for me.</p>
+<h3>Ubuntu 22</h3>
+<p>I just found out my <code>cat /etc/lsb-release</code> shows Ubuntu 18, which is the default distro installed on <code>WSL1</code> I assume. I tried to install Ubuntu 22 from the Microsoft Store, after several wasted minutes (curse the slow Internet in Mainland!) it turns out for WSL2 only. Luckily the Windows Subsystem for Linux was successfully upgraded to latest version:</p>
+<pre><code>C:\&gt; wsl --version
+WSL version: 1.2.5.0
+Kernel version: 5.15.90.1
+WSLg version: 1.0.51
+MSRDC version: 1.2.3770
+Direct3D version: 1.608.2-61064218
+DXCore version: 10.0.25131.1002-220531-1700.rs-onecore-base2-hyp
+Windows version: 10.0.19045.3570
+</code></pre>
+<p>the <code>wsl --list --online</code> commands stuck for a total of 10 minutes and returns nothing (curse the AS4134 163NET!)</p>
+<h3>Getting Python, Miniconda and Pelican</h3>
+<p>So linux distro setup was back to where started, I only have Python to mess with. Miniconda3 gets insalled easily, now that's a some progress. The static site generator I am using <code>pip install pelican[markdown]</code> finishes ok, the pypi was not blocked? Keke.</p>
+<p>Then I typed <code>make</code>. It was not part of WSL1? Blaspheme!</p>
+<p>Manually running <code>python -m pelican.server</code>, and voila! The Windows asks for firewall listening permission, granted, open up browser, BAM! My blog setup process is done and now I can write and tweak it on Windows. </p>
+<p>Oh, and there's <code>git config core.fileMode false</code> needs to be checked!</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2023-11-11T10:31:11+08:00">2023-11-11</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2023/stdout-13"  rel="bookmark" >
               <h2 class="card-title">火星上怎么结算工资</h2>
             </a>
@@ -2073,37 +2116,6 @@ user3043964493022: i 100% agree! i see it also at the preschool level... we are 
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2023-06-04T07:08:33+08:00">2023-06-04</time></p>
 <p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2023/stdout-05"  rel="bookmark" >
-              <h2 class="card-title">如何在出远门的时候关闭洗碗机定时启动</h2>
-            </a>
-            <p class="card-text"><p>家里有个「美的」的某型号洗碗机，一般是积累了当天的碗筷餐具，每天23:00低谷电价之后自动开始定时洗碗。这个功能可以在app上设置实现，还可以设置烘干和通风保存，第二天就能拿出来洁净且干燥的碗筷使用，平时日常这样用起来挺不错。</p>
-<p>但是这也导致一个问题，如果节假日出门旅行几天，这个洗碗机里即便没有碗筷，也会傻傻的启动浪费水电，所以需要禁用几天，我的操作流程是：</p>
-<ol>
-<li>掏出手机，解锁屏幕，找到「美的美居」 app并打开</li>
-<li>欣赏该厂家运营设置的精美开屏广告并等待</li>
-<li>打开「场景」</li>
-<li>找到自动化 - 已开启 列表里，关于洗碗机的部分</li>
-<li>找到进入每天自动洗碗的选项，编辑，选择关闭</li>
-<li>保存设置，退出 app</li>
-<li>回到家，又需要按照上面的流程操作一番启用该流程</li>
-</ol>
-<p>每次想起这个事，真是又繁琐又蛋痛。特别是回来如果忘记启用，第二天早上起来会发现一篮子未洗的碗筷傻眼。</p>
-<p>这次五·一假，我压根忘记了禁用定时洗碗的事。但是回到家添加洗碗粉的时候发现，这几天洗碗机并未启动。问了下是我老婆操作的，她的流程是：</p>
-<ol>
-<li>给洗碗机门板开一条缝</li>
-</ol>
-<p>洗碗机不会在门没关严的情况下启动，所以。。。。</p>
-<p>我问她这样做是故意的还是不小心的，她说故意不小心的。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2023-05-13T06:11:28+08:00">2023-05-13</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 

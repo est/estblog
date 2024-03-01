@@ -57,6 +57,31 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2021/stdout-014"  rel="bookmark" >
+              <h2 class="card-title">Re-index page on Google Search Console</h2>
+            </a>
+            <p class="card-text"><p>Request indexing webpage with Google used to be fun and simple, now it's a tedious task especially when you have tons of old pages ready to be crawled yet Google is reluctant to move.</p>
+<p>Here is a simple script to speed up the stacks of page you have click in order to submit multiple missing pages to Google. </p>
+<p>Open your <a href="https://search.google.com/search-console">Google Search Console</a>, click <strong>Coverage</strong> then open <strong>Discovered – currently not indexed</strong></p>
+<p>Now open your browser devtool, paste these into javascript console, hit them one by one.</p>
+<pre><code>  document.querySelector('div[data-disabled] table td span[title] span[title="Inspect URL"]').click()
+
+  document.querySelector('span[data-event-action=request-indexing] span[jsslot] div span span').click()
+
+  document.querySelector('span[data-event-action=pivot-to-report-main-view-indexing-section] a').click()
+</code></pre>
+<p>Until you met with the daily quota. Rinse and try this shit everyday.</p>
+<p>Fuck Google.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-10-21T14:53:25+08:00">2021-10-21</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2021/stdout-013"  rel="bookmark" >
               <h2 class="card-title">Letsencrypt 在老版本macOS Ubuntu 上修复TLS证书错误</h2>
             </a>

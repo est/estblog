@@ -57,6 +57,33 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2024/stdout-04"  rel="bookmark" >
+              <h2 class="card-title">1900年居然不是闰年？</h2>
+            </a>
+            <p class="card-text"><p>看HN讨论 <a href="https://news.ycombinator.com/item?id=39554995">昨天2024-02-29有哪些闰年的bug</a>，有一个吃惊了</p>
+<pre><code>&gt;&gt;&gt; datetime.datetime.strptime('Feb 29', '%b %d')
+ValueError: day is out of range for month
+</code></pre>
+<p>python的 <code>datetime()</code> 默认 <code>year=1900</code>。但是心里想 1900 不应该也是闰年吗？</p>
+<p>查了下还真不是。囧。一年有 365.242374 天：</p>
+<ul>
+<li>近似看成 365.25 天就是4年一润；</li>
+<li>剩余的精度 365.25-365.242374 == 0.0076 天</li>
+<li>而且，0.0076 ✖️ 400 == 3.0504，也就是每400年要润3天</li>
+<li>结论就是每100年一润，但是每400年又不润</li>
+<li>比如 1700, 1800, 1900, 2100, 2200, 2300, 2500, 2600 这些年都不是闰年</li>
+</ul>
+<p>真复杂！</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-03-01T13:57:00+08:00">2024-03-01</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stdout-03"  rel="bookmark" >
               <h2 class="card-title">穷人的supervisor OOM killer</h2>
             </a>
@@ -3883,31 +3910,6 @@ For example:<br />
 <p>字体来自 <a href="http://zenozeng.github.io/fonts.css/">fonts.css</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-10-21T23:28:21+08:00">2021-10-21</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2021/stdout-014"  rel="bookmark" >
-              <h2 class="card-title">Re-index page on Google Search Console</h2>
-            </a>
-            <p class="card-text"><p>Request indexing webpage with Google used to be fun and simple, now it's a tedious task especially when you have tons of old pages ready to be crawled yet Google is reluctant to move.</p>
-<p>Here is a simple script to speed up the stacks of page you have click in order to submit multiple missing pages to Google. </p>
-<p>Open your <a href="https://search.google.com/search-console">Google Search Console</a>, click <strong>Coverage</strong> then open <strong>Discovered – currently not indexed</strong></p>
-<p>Now open your browser devtool, paste these into javascript console, hit them one by one.</p>
-<pre><code>  document.querySelector('div[data-disabled] table td span[title] span[title="Inspect URL"]').click()
-
-  document.querySelector('span[data-event-action=request-indexing] span[jsslot] div span span').click()
-
-  document.querySelector('span[data-event-action=pivot-to-report-main-view-indexing-section] a').click()
-</code></pre>
-<p>Until you met with the daily quota. Rinse and try this shit everyday.</p>
-<p>Fuck Google.</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-10-21T14:53:25+08:00">2021-10-21</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

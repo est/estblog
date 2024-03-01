@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Fri, 01 Mar 2024 02:41:46 +0800</lastBuildDate><item><title>小米14Ultra的「陶瓷」风波</title><link>https://blog.est.im/2024/stdin-06</link><description>&lt;p&gt;zhihu给我推了个讨论  &lt;a href="https://www.zhihu.com/question/646354999"&gt;小米14Ultra 的龙晶陶瓷究竟是不是陶瓷？&lt;/a&gt; 各种讨论都吵上天了。。&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Fri, 01 Mar 2024 13:57:00 +0800</lastBuildDate><item><title>1900年居然不是闰年？</title><link>https://blog.est.im/2024/stdout-04</link><description>&lt;p&gt;看HN讨论 &lt;a href="https://news.ycombinator.com/item?id=39554995"&gt;昨天2024-02-29有哪些闰年的bug&lt;/a&gt;，有一个吃惊了&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; datetime.datetime.strptime('Feb 29', '%b %d')
+ValueError: day is out of range for month
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;python的 &lt;code&gt;datetime()&lt;/code&gt; 默认 &lt;code&gt;year=1900&lt;/code&gt;。但是心里想 1900 不应该也是闰年吗？&lt;/p&gt;
+&lt;p&gt;查了下还真不是。囧。一年有 365.242374 天：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;近似看成 365.25 天就是4年一润；&lt;/li&gt;
+&lt;li&gt;剩余的精度 365.25-365.242374 == 0.0076 天&lt;/li&gt;
+&lt;li&gt;而且，0.0076 ✖️ 400 == 3.0504，也就是每400年要润3天&lt;/li&gt;
+&lt;li&gt;结论就是每100年一润，但是每400年又不润&lt;/li&gt;
+&lt;li&gt;比如 1700, 1800, 1900, 2100, 2200, 2300, 2500, 2600 这些年都不是闰年&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;真复杂！&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 01 Mar 2024 13:57:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-03-01:/2024/stdout-04</guid><category>stdout</category></item><item><title>小米14Ultra的「陶瓷」风波</title><link>https://blog.est.im/2024/stdin-06</link><description>&lt;p&gt;zhihu给我推了个讨论  &lt;a href="https://www.zhihu.com/question/646354999"&gt;小米14Ultra 的龙晶陶瓷究竟是不是陶瓷？&lt;/a&gt; 各种讨论都吵上天了。。&lt;/p&gt;
 &lt;p&gt;&lt;img referrerpolicy="no-referrer" src="https://pic1.zhimg.com/v2-10a46c1f7dd4993834478bf2f31ba0a0_b.jpeg"&gt;&lt;/p&gt;
 &lt;p&gt;有个评论挺神：&lt;/p&gt;
 &lt;blockquote&gt;
@@ -1111,33 +1124,4 @@ git push origin 'refs/notes/*'
 &lt;p&gt;其它各种卫星，小行星的名字就懒得贴了。&lt;/p&gt;
 &lt;p&gt;有了这些符号，我们可以画一个比如托勒密的简化版太阳系模型：&lt;/p&gt;
 &lt;p&gt;&lt;img alt="" src="/images/2023/stdout-15-01.jpg" /&gt;&lt;/p&gt;
-&lt;p&gt;本文源自《&lt;a href="https://www.cricetuscricetus.co.uk/post/copernicus-galileo-kepler-they-all-lacked-proof"&gt;哥白尼、伽利略、开普勒都是脱离证据拍脑袋撕逼&lt;/a&gt;》一文。&lt;a href="https://news.ycombinator.com/item?id=38300902"&gt;HN&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 18 Nov 2023 16:15:51 +0800</pubDate><guid isPermaLink="false">tag:None,2023-11-18:/2023/stdout-15</guid><category>stdout</category></item><item><title>Getting started blogging on Win10</title><link>https://blog.est.im/2023/stdout-14</link><description>&lt;p&gt;I am planning to setup by blogging environment on my Windows PC.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;OS: Windows 10&lt;/li&gt;
-&lt;li&gt;Shell: Bash on WSL1&lt;/li&gt;
-&lt;li&gt;Program: &lt;code&gt;pelican&lt;/code&gt; on Miniconda3 with Python 3.11&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;My objective today is get rid of the &lt;code&gt;static/js/core.js&lt;/code&gt; from &lt;code&gt;aether-pelican&lt;/code&gt; theme and replace it with &lt;a href="https://jsfiddle.net/t78mf7jb/3/"&gt;a simple CSS&lt;/a&gt;, and it turns out quite challenging.&lt;/p&gt;
-&lt;h3&gt;WSL1 and file system&lt;/h3&gt;
-&lt;p&gt;As it turns out, the installed Ubuntu root filesystem on WSL1 is located here:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;%localappdata%\Packages\CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc\LocalState\rootfs&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;I plan to move my home dir (at least) to another SSD on my PC, as the &lt;code&gt;C:\&lt;/code&gt; drive is an old SanDisk Plus240, which is unforgivablly slow these days. I tried to &lt;code&gt;mv ~ /mnt/d/home&lt;/code&gt;, ok but the permission gets weird.&lt;/p&gt;
-&lt;p&gt;So I tried to copy the folder on Windows to &lt;code&gt;D:\home&lt;/code&gt;, and &lt;code&gt;mklink&lt;/code&gt; back. I tried both &lt;code&gt;mklink /D&lt;/code&gt; and &lt;code&gt;mklink /J&lt;/code&gt; ( the &lt;code&gt;/D&lt;/code&gt; switch works on a remote drive whereas the &lt;code&gt;/J&lt;/code&gt; junction works on local NTFS disks only) and they both failed be recognized by WSL1. The bash yields &lt;code&gt;Broken stdout/stdin&lt;/code&gt; upon launch&lt;/p&gt;
-&lt;p&gt;So OK, default home dir then. Bad luck for me.&lt;/p&gt;
-&lt;h3&gt;Ubuntu 22&lt;/h3&gt;
-&lt;p&gt;I just found out my &lt;code&gt;cat /etc/lsb-release&lt;/code&gt; shows Ubuntu 18, which is the default distro installed on &lt;code&gt;WSL1&lt;/code&gt; I assume. I tried to install Ubuntu 22 from the Microsoft Store, after several wasted minutes (curse the slow Internet in Mainland!) it turns out for WSL2 only. Luckily the Windows Subsystem for Linux was successfully upgraded to latest version:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;C:\&amp;gt; wsl --version
-WSL version: 1.2.5.0
-Kernel version: 5.15.90.1
-WSLg version: 1.0.51
-MSRDC version: 1.2.3770
-Direct3D version: 1.608.2-61064218
-DXCore version: 10.0.25131.1002-220531-1700.rs-onecore-base2-hyp
-Windows version: 10.0.19045.3570
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;the &lt;code&gt;wsl --list --online&lt;/code&gt; commands stuck for a total of 10 minutes and returns nothing (curse the AS4134 163NET!)&lt;/p&gt;
-&lt;h3&gt;Getting Python, Miniconda and Pelican&lt;/h3&gt;
-&lt;p&gt;So linux distro setup was back to where started, I only have Python to mess with. Miniconda3 gets insalled easily, now that's a some progress. The static site generator I am using &lt;code&gt;pip install pelican[markdown]&lt;/code&gt; finishes ok, the pypi was not blocked? Keke.&lt;/p&gt;
-&lt;p&gt;Then I typed &lt;code&gt;make&lt;/code&gt;. It was not part of WSL1? Blaspheme!&lt;/p&gt;
-&lt;p&gt;Manually running &lt;code&gt;python -m pelican.server&lt;/code&gt;, and voila! The Windows asks for firewall listening permission, granted, open up browser, BAM! My blog setup process is done and now I can write and tweak it on Windows. &lt;/p&gt;
-&lt;p&gt;Oh, and there's &lt;code&gt;git config core.fileMode false&lt;/code&gt; needs to be checked!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 11 Nov 2023 10:31:11 +0800</pubDate><guid isPermaLink="false">tag:None,2023-11-11:/2023/stdout-14</guid><category>stdout</category></item></channel></rss>
+&lt;p&gt;本文源自《&lt;a href="https://www.cricetuscricetus.co.uk/post/copernicus-galileo-kepler-they-all-lacked-proof"&gt;哥白尼、伽利略、开普勒都是脱离证据拍脑袋撕逼&lt;/a&gt;》一文。&lt;a href="https://news.ycombinator.com/item?id=38300902"&gt;HN&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 18 Nov 2023 16:15:51 +0800</pubDate><guid isPermaLink="false">tag:None,2023-11-18:/2023/stdout-15</guid><category>stdout</category></item></channel></rss>
