@@ -57,6 +57,47 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2022/stdout-12"  rel="bookmark" >
+              <h2 class="card-title">Web Animation实现页面逐渐变灰</h2>
+            </a>
+            <p class="card-text"><p>在2006年我开始网上留下印记的时候，写了一个 dHTML 特效模拟<a href="https://blog.est.im/cnblogs/600413">XP关机对话框变灰</a>， 那个时候大行其道的还是IE6，用的还是微软特有的 <code>filter:progid:DXImageTransform.Microsoft.Fade</code> 叠加两个<code>&lt;div&gt;</code>实现。</p>
+<p>今天（2022-11-30）恰好长者去逝，学习一下最新的css姿势再实现一次。本来想用 CSS Animation+Filter实现，还是比较麻烦。比如我参考的例子是<a href="https://levelup.gitconnected.com/recreating-the-red-dead-redemption-2-tintype-loading-screen-effect-in-css-10ca87d5b9de">模仿 Red Dead Redemption 2</a> 照片效果css</p>
+<pre><code>  #invert{
+    filter: invert(1.0) grayscale(1.0);
+  }
+  #photo{
+    animation: blur 5s infinite alternate;
+  }
+  @keyframes blur{
+    from{
+      filter: blur(3px);
+      opacity: 0;
+    }
+    to{
+      filter: blur(0px);
+      opacity: 1;
+    }
+  }
+</code></pre>
+<p>这个方式有个问题就是需要单独设置一个 <code>&lt;script&gt;</code> 元素。后来经过 <a href="https://twitter.com/yuanchuan23">@yuanchuan23</a> 的指点发现可以通过 Web Animation 更简单的实现：</p>
+<pre><code>  document.body.animate([
+    {filter: 'brightness(none) grayscale(0%)'},
+    {filter: 'brightness(10) grayscale(10%)', offset: 0.2},
+    {filter: 'brightness(1) grayscale(100%)'}
+  ], {duration: 2000, fill: 'forwards'})
+</code></pre>
+<p>这样写比 css 方便多了。加一个类似照相机闪光灯过曝的效果。其中 <code>fill: 'forwards'</code> 可以让变灰之后停下来。</p>
+<p>放一个 demo 在这里：<a href="https://lab.est.im/grayscale_animation">https://lab.est.im/grayscale_animation</a> 点一下可以再变一次</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2022-11-30T18:02:18+08:00">2022-11-30</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2022/stdin-19"  rel="bookmark" >
               <h2 class="card-title">Twitter资助的 Bluesky项目</h2>
             </a>
@@ -791,58 +832,6 @@ Corporate Memphis</p>
 <p>想在这个提示里加一个 snooze 1分钟功能，但是好像无法支持。罢了。2333</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-07-20T14:52:56+08:00">2022-07-20</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2022/stdout-07"  rel="bookmark" >
-              <h2 class="card-title">终于吧 blog 的自动构建 pipeline 配置好了</h2>
-            </a>
-            <p class="card-text"><p>目前博客是基于 pelican 的 static-site generator，一个 python 模块本地渲染成静态文件然后通过 github pages 发布。</p>
-<p>源码放在 bitbucket，之前比较懒都是本地跑，一直想改成 CI/CD pipeline，今天终于配置好了。记录一些坑吧</p>
-<ol>
-<li>bitbucket pipeline 不同 step 之间数据是不共享的。本来想用 parallel 功能在下载 pip 模块和 git clone 皮肤做个并行，后来发现 artifact 拷贝速度还不如串行去跑。就所有操作一个 step 做完</li>
-<li>
-<p>博客源码和生成结果可以直接同步提交信息：    </p>
-<pre><code>msg=$(git log -1  --pretty=%B)
-cd output
-git config user.name est
-git config user.email 邮箱
-git add .
-git commit -m "$msg"
-git push
-</code></pre>
-<ol start="3">
-<li>
-<p>由于 pip 模块装了不知道在哪里，所以调试 pip 安装路径方法：    </p>
-<p><code>python -c 'import site; print(*site.getsitepackages(), sep="\n")'</code></p>
-</li>
-</ol>
-</li>
-<li>
-<p>pelican 默认居然没支持 Markdown 也是醉了    </p>
-<pre><code>python -m pip install pelican==4.8.0 Markdown
-</code></pre>
-<ol start="5">
-<li>
-<p>自定义皮肤依赖，由于 submodule 我没玩转，所以这样安装：    </p>
-<p>git clone --depth=1 git@github.com:est/aether-pelican.git || (cd aether-pelican; git pull --rebase)</p>
-</li>
-</ol>
-</li>
-</ol>
-<p>Bitbucket 每个月有50分钟的免费pipeline 时间，自己用下来差不多29秒 build &amp; publish 一次。感觉每个月也写不了60篇，所以目前是够了。</p>
-<p>接下来的优化：</p>
-<ol>
-<li>新图片通过 squoosh 压缩优化</li>
-<li>通过 cloudflare worker 替换掉 disqus 评论功能</li>
-</ol></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2022-07-19T19:06:49+08:00">2022-07-19</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
