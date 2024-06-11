@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>从 Leanote 迁移到 Obsidian – est の 输入输出</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入输出 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="从 Leanote 迁移到 Obsidian" />
+
+    <link rel="canonical" href="https://blog.est.im/2024/stdout-07" />
+    <meta property="og:url" content="https://blog.est.im/2024/stdout-07">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="从 Leanote 迁移到 Obsidian">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入输出
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">从 Leanote 迁移到 Obsidian</h2>
+    <p class="post-date">Posted <time datetime="2024-06-10T22:21:00+08:00">2024-06-10</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>差不多积累了<a href="https://www.v2ex.com/t/133479">10年</a>的笔记，因为软件开发商跑路去做 2B 了，这玩意也没人维护了。换 Obsidian</p>
+<p>Leanote 不支持导出 <code>.md</code> 但是它自己的格式就是 json，转换一下很简单。</p>
+<ol>
+<li>把一个目录下的笔记批量导出为 Leanote 格式，比如导出到 <code>/tmp/folder1</code></li>
+<li>执行Python代码<br />
+<code>import json
+    dir = '/tmp/folder1'
+    for n in os.listdir(dir):
+    if not n.endswith('.leanote'): continue
+    with open(f"{dir}{n.replace('.leanote', '.md')}", "w") as f2, open(dir+n) as f1:
+        f2.write(json.load(f1)['notes'][0]['content'])
+    os.remove(dir+n)</code></li>
+<li>你会发现该目录下的 <code>.leanote</code> 都变成了 <code>.md</code>。拖拽到 Obsidian 即可</li>
+</ol>
+<p>希望对搜到这篇文章的人有所帮助。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2024/stdout-07';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+
+  </body>
+
+</html>

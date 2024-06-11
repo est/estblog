@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 11 Jun 2024 03:46:08 +0800</lastBuildDate><item><title>挑简历看麻了，就业市场太卷了</title><link>https://blog.est.im/2024/stderr-10</link><description>&lt;p&gt;最近帮挑选简历，二线城市中低端技术岗，需求是上午发的，邮箱中午就炸了。这投递量给搞麻了，这也太多了。&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 11 Jun 2024 16:14:10 +0800</lastBuildDate><item><title>从 Leanote 迁移到 Obsidian</title><link>https://blog.est.im/2024/stdout-07</link><description>&lt;p&gt;差不多积累了&lt;a href="https://www.v2ex.com/t/133479"&gt;10年&lt;/a&gt;的笔记，因为软件开发商跑路去做 2B 了，这玩意也没人维护了。换 Obsidian&lt;/p&gt;
+&lt;p&gt;Leanote 不支持导出 &lt;code&gt;.md&lt;/code&gt; 但是它自己的格式就是 json，转换一下很简单。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;把一个目录下的笔记批量导出为 Leanote 格式，比如导出到 &lt;code&gt;/tmp/folder1&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;执行Python代码&lt;br /&gt;
+&lt;code&gt;import json
+    dir = '/tmp/folder1'
+    for n in os.listdir(dir):
+    if not n.endswith('.leanote'): continue
+    with open(f"{dir}{n.replace('.leanote', '.md')}", "w") as f2, open(dir+n) as f1:
+        f2.write(json.load(f1)['notes'][0]['content'])
+    os.remove(dir+n)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;你会发现该目录下的 &lt;code&gt;.leanote&lt;/code&gt; 都变成了 &lt;code&gt;.md&lt;/code&gt;。拖拽到 Obsidian 即可&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;希望对搜到这篇文章的人有所帮助。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Mon, 10 Jun 2024 22:21:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-06-10:/2024/stdout-07</guid><category>stdout</category></item><item><title>挑简历看麻了，就业市场太卷了</title><link>https://blog.est.im/2024/stderr-10</link><description>&lt;p&gt;最近帮挑选简历，二线城市中低端技术岗，需求是上午发的，邮箱中午就炸了。这投递量给搞麻了，这也太多了。&lt;/p&gt;
 &lt;p&gt;想到什么写什么&lt;/p&gt;
 &lt;h3&gt;几个感悟&lt;/h3&gt;
 &lt;ol&gt;
@@ -382,31 +396,4 @@ IP属地：陕西&lt;/p&gt;
 &lt;p&gt;I engage with online arguments from strangers on the Interweb from time to time. Some of replies I receive often is "Essence of Leverage", a slang/meme in Chinese which resembles "trolling". I confess I did do this on purpose in order to consume my bordom and adjust my low self-esteem. During &lt;a href="https://www.v2ex.com/t/1015322"&gt;today's heated back &amp;amp; forth replies&lt;/a&gt;, the thread was moved to flamewar section, the opposition laughed me for been too childish like a tolder, or too old like a stuborn 40yo, which if funny, because apparently there's &lt;a href="archives/2993.html"&gt;something wrong&lt;/a&gt; that urgently needs correction?&lt;/p&gt;
 &lt;p&gt;Calling me old might &lt;em&gt;ouch&lt;/em&gt; me if I were younger, but now it's hurting less, maybe just a meh. In retrospection, I came to the conclusion that there are two stages of world-view: for young adults, there's a strong opinion that some part of the world is wrong, and there's strong motivation of pursuade others how the world &lt;strong&gt;should be&lt;/strong&gt;. Few years back I was in that precise state, I spent hours and days battling speech from others, like to defend my faith or something, hoping to achieve something out of it.&lt;/p&gt;
 &lt;p&gt;As age grows, I found stalemate , and hopefully peace. There's nothing wrong with the world, in fact that the world is inperfect by design, our brain is modeling the world in a causuality-reality way. But physical world can't always be encapsulated in matters of verbatim reasons, shit happens all the time for no reason. and would never go the way with most people's wish. There's little one could do to change it, maybe at special occasions, by some extreme luck, chosen ones can play a role in some social movement showing how the world &lt;strong&gt;could be&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;This brings up my favorite  episodes from 2023, &lt;em&gt;What If&lt;/em&gt; from Marvel Studios. There are so many possibilities for each alternate story line. So in real life, why do we have to assign ourselves to the fixed label given by desiganated social hierarchy? Does 40yo have to be wise and know-all? Does opinions from adults have to be affirmative? I think it's not. People grow up accustomed with education background and socio-economic environments, and get used and blind-folded by it. Staying curious and foolish is the key to jump out of the circle. Challenge one's world-view and vice-versa is benificial for one's own good, and especially so in "collective" culture sphere of China, but changing others' is a waste of time.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 11 Feb 2024 22:52:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-02-11:/2024/stderr-03</guid><category>stderr</category></item><item><title>FastAPI/Starlette 长连接感知断开</title><link>https://blog.est.im/2024/stdout-01</link><description>&lt;p&gt;之前写过如何 &lt;a href="/2023/stdout-12"&gt;在服务器重启的时候感知长连接&lt;/a&gt;，最近发现折腾复杂了。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://github.com/encode/starlette/discussions/1776"&gt;https://github.com/encode/starlette/discussions/1776&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;测试代码： &lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;import asyncio
-
-async def async_streamer():
-    try:
-        while True:
-            yield b&amp;quot;--boundary\r\nContent-Type: text/plain\r\nContent-Length: 1\r\n\r\n1\r\n&amp;quot;
-            await asyncio.sleep(0)
-    except asyncio.CancelledError:
-        print(&amp;quot;caught cancelled error&amp;quot;)
-
-app = Starlette(routes=[
-    Route('/async', async_endpoint),
-])
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;跑起来： &lt;code&gt;uvicorn stream:app&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;这段代码粗一看没啥大不了的，但是神奇的地方在于，如果去掉 &lt;code&gt;try ... except asyncio.CancelledError&lt;/code&gt; ，代码也能正常跑&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;
-async def async_streamer():
-    while True:
-        yield b&amp;quot;--boundary\r\nContent-Type: text/plain\r\nContent-Length: 1\r\n\r\n1\r\n&amp;quot;
-        await asyncio.sleep(0)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;而且不会报错！最蛋痛的是，这玩意因为是个 &lt;code&gt;while True&lt;/code&gt;，如果你里面有打开的数据库连接，是不会中断的，也不会回收的。因为这个 coroutine 没有继续 &lt;code&gt;async for&lt;/code&gt; 来消费，就一直挂在进程里当僵尸了！&lt;/p&gt;
-&lt;p&gt;加上 &lt;code&gt;try ... except asyncio.CancelledError&lt;/code&gt;，能捕获出错，也能处理善后了。&lt;/p&gt;
-&lt;p&gt;真是神奇啊。不知道是 uvicorn 的特性，还是 ASGI 都这样。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 18 Jan 2024 14:44:12 +0800</pubDate><guid isPermaLink="false">tag:None,2024-01-18:/2024/stdout-01</guid><category>stdout</category></item></channel></rss>
+&lt;p&gt;This brings up my favorite  episodes from 2023, &lt;em&gt;What If&lt;/em&gt; from Marvel Studios. There are so many possibilities for each alternate story line. So in real life, why do we have to assign ourselves to the fixed label given by desiganated social hierarchy? Does 40yo have to be wise and know-all? Does opinions from adults have to be affirmative? I think it's not. People grow up accustomed with education background and socio-economic environments, and get used and blind-folded by it. Staying curious and foolish is the key to jump out of the circle. Challenge one's world-view and vice-versa is benificial for one's own good, and especially so in "collective" culture sphere of China, but changing others' is a waste of time.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 11 Feb 2024 22:52:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-02-11:/2024/stderr-03</guid><category>stderr</category></item></channel></rss>

@@ -57,6 +57,34 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2024/stdout-07"  rel="bookmark" >
+              <h2 class="card-title">从 Leanote 迁移到 Obsidian</h2>
+            </a>
+            <p class="card-text"><p>差不多积累了<a href="https://www.v2ex.com/t/133479">10年</a>的笔记，因为软件开发商跑路去做 2B 了，这玩意也没人维护了。换 Obsidian</p>
+<p>Leanote 不支持导出 <code>.md</code> 但是它自己的格式就是 json，转换一下很简单。</p>
+<ol>
+<li>把一个目录下的笔记批量导出为 Leanote 格式，比如导出到 <code>/tmp/folder1</code></li>
+<li>执行Python代码<br />
+<code>import json
+    dir = '/tmp/folder1'
+    for n in os.listdir(dir):
+    if not n.endswith('.leanote'): continue
+    with open(f"{dir}{n.replace('.leanote', '.md')}", "w") as f2, open(dir+n) as f1:
+        f2.write(json.load(f1)['notes'][0]['content'])
+    os.remove(dir+n)</code></li>
+<li>你会发现该目录下的 <code>.leanote</code> 都变成了 <code>.md</code>。拖拽到 Obsidian 即可</li>
+</ol>
+<p>希望对搜到这篇文章的人有所帮助。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-06-10T22:21:00+08:00">2024-06-10</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stdout-05"  rel="bookmark" >
               <h2 class="card-title">快速入睡的技巧和原理</h2>
             </a>
@@ -3876,29 +3904,6 @@ For example:<br />
 <p>Thanks for reading my shitpost. Questions?</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-11-05T18:12:45+08:00">2021-11-05</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2021/stdout-018"  rel="bookmark" >
-              <h2 class="card-title">淘宝同一手机最多绑定6个小号</h2>
-            </a>
-            <p class="card-text"><p>总结一些没用的知识</p>
-<ol>
-<li>
-<p>淘宝/阿里账号，可以一个手机最多绑定6个账号。淘宝注册的时候点击「企业注册」然后用邮箱注册，最后用同一个手机验证即可</p>
-</li>
-<li>
-<p>「支付宝」在淘宝/阿里系里app里是和「账号」一一绑定的，这就产生了很多冲突。比如你一个第三方外卖app，支付的时候可以选择 微信/支付宝，一般不会限制下单手机号和支付手机号是否一样，你甚至可以帮别人支付订单，但是淘宝/阿里的app不一样，只能自己账号支付自己账号的订单。如果你有两个手机号和两个支付宝账号，那么没法交叉支付。</p>
-</li>
-</ol>
-<p>还有一个想不起了，想起了再补充。2333</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-10-28T16:21:23+08:00">2021-10-28</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

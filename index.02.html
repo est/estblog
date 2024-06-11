@@ -57,6 +57,47 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2024/stdout-01"  rel="bookmark" >
+              <h2 class="card-title">FastAPI/Starlette 长连接感知断开</h2>
+            </a>
+            <p class="card-text"><p>之前写过如何 <a href="/2023/stdout-12">在服务器重启的时候感知长连接</a>，最近发现折腾复杂了。</p>
+<p><a href="https://github.com/encode/starlette/discussions/1776">https://github.com/encode/starlette/discussions/1776</a></p>
+<p>测试代码： </p>
+<pre><code>import asyncio
+
+async def async_streamer():
+    try:
+        while True:
+            yield b&quot;--boundary\r\nContent-Type: text/plain\r\nContent-Length: 1\r\n\r\n1\r\n&quot;
+            await asyncio.sleep(0)
+    except asyncio.CancelledError:
+        print(&quot;caught cancelled error&quot;)
+
+app = Starlette(routes=[
+    Route('/async', async_endpoint),
+])
+</code></pre>
+<p>跑起来： <code>uvicorn stream:app</code></p>
+<p>这段代码粗一看没啥大不了的，但是神奇的地方在于，如果去掉 <code>try ... except asyncio.CancelledError</code> ，代码也能正常跑</p>
+<pre><code>
+async def async_streamer():
+    while True:
+        yield b&quot;--boundary\r\nContent-Type: text/plain\r\nContent-Length: 1\r\n\r\n1\r\n&quot;
+        await asyncio.sleep(0)
+</code></pre>
+<p>而且不会报错！最蛋痛的是，这玩意因为是个 <code>while True</code>，如果你里面有打开的数据库连接，是不会中断的，也不会回收的。因为这个 coroutine 没有继续 <code>async for</code> 来消费，就一直挂在进程里当僵尸了！</p>
+<p>加上 <code>try ... except asyncio.CancelledError</code>，能捕获出错，也能处理善后了。</p>
+<p>真是神奇啊。不知道是 uvicorn 的特性，还是 ASGI 都这样。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-01-18T14:44:12+08:00">2024-01-18</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stderr-02"  rel="bookmark" >
               <h2 class="card-title">碎碎念一下《年会不能停》，微剧透</h2>
             </a>
@@ -1539,30 +1580,6 @@ def short_name(name):
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2023-08-22T22:27:47+08:00">2023-08-22</time></p>
 <p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2023/stdin-10"  rel="bookmark" >
-              <h2 class="card-title">为啥Linux下病毒比较少</h2>
-            </a>
-            <p class="card-text"><p><img alt="" src="/images/2023/stdin-10-01.webp" /></p>
-<blockquote>
-<p>最近下载了一个Linux的病毒，把它解包了。<br />
-尝试用root身份运行，发现啥也没有。<br />
-Google了俩小时，发现这病毒没解包到 /usr/local/bin 而是解压到了 malware 用户没有写入权限的 /usr/bin，于是病毒创建不了进程文件。<br />
-从某个中文论坛里找到了修改过的 .configure 和 .make 文件，重新编译重新运行了一下。<br />
-病毒说它需要 cmalw-lib-2.0，结果发现这玩意是 CentOS 里的，Ubuntu 里没有。Google 了好几个小时找到了从源码构建 .deb 包的方法。<br />
-这病毒总算开始跑了，然后打出来几行日志，吐了个 core dump 就 crash 了。翻了一个小时日志发现这病毒假定自己跑在 ext4 文件系统上然后调用了 ext4 的加密 API。但是在 btrfs 里这个 API 已经弃用了，内核发现了这个问题然后把这个分区变成只读的了。<br />
-打开源文件，grep 搜索出病毒里的 BTC 钱包地址然后出于同情给它打了 $5。</p>
-</blockquote>
-<p>哈哈虽然现在linux病毒也多，但是这个也太搞笑了 <a href="https://t.me/rvalue_daily/4255">via</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2023-08-22T15:04:30+08:00">2023-08-22</time></p>
-<p>stdin</p>            </div>
           </article>
         </div>
 
