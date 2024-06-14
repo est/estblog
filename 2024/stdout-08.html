@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>如何删除 C:\Windows\WinSxS 文件 – est の 输入输出</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入输出 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="如何删除 C:\Windows\WinSxS 文件" />
+
+    <link rel="canonical" href="https://blog.est.im/2024/stdout-08" />
+    <meta property="og:url" content="https://blog.est.im/2024/stdout-08">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="如何删除 C:\Windows\WinSxS 文件">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入输出
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">如何删除 C:\Windows\WinSxS 文件</h2>
+    <p class="post-date">Posted <time datetime="2024-06-14T22:50:00+08:00">2024-06-14</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>天气热得心慌，看Win10不爽，决定删几个文件玩玩</p>
+<ol>
+<li>首先你需要以 <code>SYSTEM</code> 用户启动 <code>cmd.exe</code><br />
+Win+R 敲入：<br />
+<code>"\\live.sysinternals.com@SSL\DavWWWRoot\tools\PsExec.exe" -i -s cmd.exe</code><br />
+回车。确认当前身份敲入 <code>whoami</code></li>
+<li>夺权：<code>takeown /F "C:\Windows\WinSxS\Backup" /A /R /D Y</code></li>
+<li>授权：<code>cacls "C:\Windows\WinSxS\Backup" /T /G SYSTEM:F /C</code></li>
+<li>开删：<code>rd /s /q "C:\Windows\WinSxS\Backup"</code></li>
+</ol>
+<p>爽！</p>
+<p>当然，你也可以让系统代替你清理：</p>
+<p><code>Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase</code></p>
+<p>很老的磁盘清理工具 <code>cleanmgr.exe</code>  也可以试试，删不要的程序 <code>appwiz.cpl</code></p>
+<p>老黄家的  DXCache 也十分让人不解。这破玩意还存2个地方：</p>
+<ol>
+<li><code>%LOCALAPPDATA%\NVIDIA\</code></li>
+<li><code>%APPDATA%\NVIDIA</code></li>
+</ol>
+<p>老夫当年给 <code>C:</code> 装了个最慢的SSD，失策。去年（2023）那一波M.2降价潮一直等等结果错过了，拍断大腿追悔莫及。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2024/stdout-08';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+
+  </body>
+
+</html>

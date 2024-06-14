@@ -57,6 +57,144 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2021/stdout-017"  rel="bookmark" >
+              <h2 class="card-title">reverse proxy FastCGI (fcgi) with uWSGI</h2>
+            </a>
+            <p class="card-text"><p>People are still using FastCGI, and it's hard. I used uWSGI to convert FCGI traffic to regular http/1.0 so I can keep my existing http service running without apache mod_fcgi shit.</p>
+<h2>CGI environ variables</h2>
+<p>This is some ancient knowledge, better keep them noted</p>
+<table>
+<thead>
+<tr>
+<th>KEY</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AUTH_TYPE</td>
+<td>ignore this</td>
+</tr>
+<tr>
+<td>REMOTE_IDENT</td>
+<td>The user making the request.</td>
+</tr>
+<tr>
+<td>REMOTE_USER</td>
+<td>The authenticated name of the user making the query.</td>
+</tr>
+<tr>
+<td>CONTENT_LENGTH</td>
+<td>byte length of body</td>
+</tr>
+<tr>
+<td>CONTENT_TYPE</td>
+<td>MIME such as text/html, without the charset shit</td>
+</tr>
+<tr>
+<td>DOCUMENT_ROOT</td>
+<td>NEW. The directory from which web documents are served.</td>
+</tr>
+<tr>
+<td>REQUEST_URI</td>
+<td>NEW. confusing shit similar with PATH_INFO</td>
+</tr>
+<tr>
+<td>HTTP_*</td>
+<td>HTTP headers</td>
+</tr>
+<tr>
+<td>PATH_INFO</td>
+<td>like /a/b/c</td>
+</tr>
+<tr>
+<td>PATH_TRANSLATED</td>
+<td>not really used</td>
+</tr>
+<tr>
+<td>QUERY_STRING</td>
+<td>the part after ? in an URL</td>
+</tr>
+<tr>
+<td>REMOTE_ADDR</td>
+<td>client IP</td>
+</tr>
+<tr>
+<td>REMOTE_HOST</td>
+<td>client host name by lookup ip</td>
+</tr>
+<tr>
+<td>REQUEST_METHOD</td>
+<td>GET/POST</td>
+</tr>
+<tr>
+<td>SCRIPT_NAME</td>
+<td>The virtual path (e.g., /cgi-bin/program.pl) of the script being executed.</td>
+</tr>
+<tr>
+<td>SCRIPT_FILENAME</td>
+<td>confusing shit similar with SCRIPT_NAME</td>
+</tr>
+<tr>
+<td>SERVER_NAME</td>
+<td>The server's hostname or IP address.</td>
+</tr>
+<tr>
+<td>SERVER_PORT</td>
+<td>The port number of the host on which the server is running.</td>
+</tr>
+<tr>
+<td>SERVER_PROTOCOL</td>
+<td>The name and revision number of the server protocol.</td>
+</tr>
+</tbody>
+</table>
+<h2>reverse proxy FastCGI with uWSGI</h2>
+<p>slap this into <code>my_conf.ini</code></p>
+<pre><code>  [uwsgi]
+  my_port = 9000  # can be set otherwise
+  route-run = addvar:SERVER_NAME=%h
+  route-run = addvar:SERVER_PORT=%(my_port)
+  route-if  = empty:${REQUEST_METHOD} addvar:REQUEST_METHOD=GET
+  route-if  = empty:${HTTP_HOST} addvar:HTTP_HOST=%h:%(my_port)
+  route-run = seturi:/fcgi-proxy${PATH_INFO}
+  route-run = http:127.0.0.1:9527
+  fastcgi-socket = 0.0.0.0:%(my_port)
+  http-socket = 0.0.0.0:8000  # for testing purpose.
+</code></pre>
+<p>Install uWSGI, install the binary from pypi wheels instead of compiling uwsgi.c shit</p>
+<pre><code>  pip install pyuwsgi
+</code></pre>
+<p>Run it</p>
+<pre><code>  uwsgi --ini my_conf.ini
+</code></pre>
+<p>Now you can run your regular http service behind <code>127.0.0.1:9527</code>, while serving fcgi on <code>127.0.0.1:9000</code></p>
+<p>Requests like <code>fcgi://127.0.0.1:9000/hello</code> will be fowwarded to <code>http://127.0.0.1:9527/fcgi-proxy/hello</code></p>
+<p>You may ask why adding a <code>/fcgi-proxy</code> in path? Because there's a gotcha.</p>
+<h2>fuckedup FastCGI requests</h2>
+<p>Learned this from some php-fpm tutorial, first install the standard fcgi client tool because <code>curl</code> doesn't speak fcgi.</p>
+<pre><code>  apt-get install libfcgi0ldbl
+  yum --enablerepo=epel install fcgi
+  SCRIPT_NAME=/ping SCRIPT_FILENAME=/ping REQUEST_METHOD=GET cgi-fcgi -bind -connect 127.0.0.1:9000
+</code></pre>
+<p>You can observe from uWSGI logs that <code>cgi-fcgi</code> command sends flawed requests, the <code>PATH_INFO</code> was unset.</p>
+<p>After hours wasted, I came up with a clever hack to force uWSGI's internal router to force <code>seturi</code> with a path prefix</p>
+<h2>ToDo</h2>
+<p>There are further problems that can be improved, for example, my http service is running <code>uvicorn</code>, it can not guess the client ip:port infor from its stupid <code>get_remote_addr</code></p>
+<p>what's worse, the uWSGI <code>addheader</code> directive are for <em>responses</em>, so I can't add <em>request</em> headers like <code>x-forwared-for</code>.</p>
+<p>Also the reverse proxy is HTTP/1.0 only. to make the <code>Connection: Keep-alive</code> happen needs some further investigation.</p>
+<h2>Q&amp;A</h2>
+<p>Thanks for reading my shitpost. Questions?</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-11-05T18:12:45+08:00">2021-11-05</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2021/stdout-018"  rel="bookmark" >
               <h2 class="card-title">淘宝同一手机最多绑定6个小号</h2>
             </a>
