@@ -3,6 +3,7 @@
 &lt;p&gt;先用 ffmpeg 提音轨 &lt;code&gt;ffmpeg -i v.mp4  -ac 1 1.mp3&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;微信小程序上的全是骗充值的，网上的服务：&lt;/p&gt;
 &lt;ol&gt;
+&lt;li&gt;没卵用 https://vocalremover.org/ 名气很大，搜出来第一就这个&lt;/li&gt;
 &lt;li&gt;没用 https://www.conversion-tool.com/karaoke/&lt;/li&gt;
 &lt;li&gt;卡死 https://www.songpeel.com/song-to-karaoke&lt;/li&gt;
 &lt;li&gt;要安装 https://github.com/adefossez/demucs&lt;/li&gt;
@@ -11,7 +12,8 @@
 &lt;/ol&gt;
 &lt;p&gt;看来人声分离，特别是童声，还是有点难。&lt;/p&gt;
 &lt;p&gt;最后把得到的 a.mp3 塞回去&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;ffmpeg -i v.mp4 -i a.mp3 -c:v copy -map 0:v:0 -map 1:a:0 new.mp4&lt;/code&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 21 Jun 2024 22:48:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-06-21:/2024/stdout-10</guid><category>stdout</category></item><item><title>吐槽pynsq，另外给subprocess糊了一个异步</title><link>https://blog.est.im/2024/stdout-09</link><description>&lt;h3&gt;pynsq太烂了&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;ffmpeg -i v.mp4 -i a.mp3 -c:v copy -map 0:v:0 -map 1:a:0 new.mp4&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;btw 打了这么多网址，该不会被误认为SEO吧。囧。。。。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 21 Jun 2024 22:48:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-06-21:/2024/stdout-10</guid><category>stdout</category></item><item><title>吐槽pynsq，另外给subprocess糊了一个异步</title><link>https://blog.est.im/2024/stdout-09</link><description>&lt;h3&gt;pynsq太烂了&lt;/h3&gt;
 &lt;p&gt;起初是因为需要在 Web API 里消费一个消息队列(nsq)，给浏览器返回 &lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource"&gt;EventSource&lt;/a&gt; 做实时输出。但是没想到&lt;a href="https://github.com/nsqio/pynsq/blob/master/nsq/__init__.py"&gt;官方库pynsq&lt;/a&gt;居然写得这么渣：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;def _handle_term_signal(sig_num, frame):
     logging.getLogger(__name__).info(
