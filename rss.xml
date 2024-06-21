@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Fri, 21 Jun 2024 09:30:00 +0800</lastBuildDate><item><title>吐槽pynsq，另外给subprocess糊了一个异步</title><link>https://blog.est.im/2024/stdout-09</link><description>&lt;p&gt;起初是因为需要在 Web API 里消费一个消息队列(nsq)，给浏览器返回 &lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource"&gt;EventSource&lt;/a&gt; 做实时输出。但是没想到&lt;a href="https://github.com/nsqio/pynsq/blob/master/nsq/__init__.py"&gt;官方库pynsq&lt;/a&gt;居然写得这么渣：&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Fri, 21 Jun 2024 09:30:00 +0800</lastBuildDate><item><title>吐槽pynsq，另外给subprocess糊了一个异步</title><link>https://blog.est.im/2024/stdout-09</link><description>&lt;h3&gt;pynsq太烂了&lt;/h3&gt;
+&lt;p&gt;起初是因为需要在 Web API 里消费一个消息队列(nsq)，给浏览器返回 &lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource"&gt;EventSource&lt;/a&gt; 做实时输出。但是没想到&lt;a href="https://github.com/nsqio/pynsq/blob/master/nsq/__init__.py"&gt;官方库pynsq&lt;/a&gt;居然写得这么渣：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;def _handle_term_signal(sig_num, frame):
     logging.getLogger(__name__).info(
         'TERM Signal handler called with signal %r', sig_num)
@@ -21,6 +22,7 @@ r = nsq.Reader(message_handler=handler,
 nsq.run()
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;这个 &lt;code&gt;r&lt;/code&gt; 莫名其妙的就能跑起来了。真是魔法。anyway，在Web API兼容这一坨是失败了，爆了一堆错，对付魔法的办法就是隔离，所以打算糊个脚本，通过多进程+PIPE来得到数据。&lt;/p&gt;
+&lt;h3&gt;给 subprocess 加一个异步补丁&lt;/h3&gt;
 &lt;p&gt;糊的时候发现，&lt;code&gt;subprocess&lt;/code&gt; 模块的 &lt;code&gt;.communicate()&lt;/code&gt; 方法是 blocking的， 居然不支持 async/await，于是只能继续糊：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;import subprocess, fcntl, asyncio
 p = subprocess.Popen(
@@ -42,11 +44,30 @@ while p.poll() is None:
     buf = contents.pop(-1)
     for x in contents:
         yield x
+
+p.terminate()
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;这里用 &lt;code&gt;buf&lt;/code&gt;、&lt;code&gt;contents&lt;/code&gt; 是因为直接调用消息队列，每个消息都是分割好的；但是通过管道来读。得自己去处理字节流如何分割的问题，也就是传说简中特供的「粘包」问题。&lt;/p&gt;
+&lt;p&gt;另外子进程可能因为Web框架的种种原因，不自觉退出或者变僵尸进程，需要向 stdout/stderr 做输出的时候检查一下 BrokenPipeError 处理后事主动退出即可。&lt;/p&gt;
+&lt;p&gt;还有子进程如果输出完毕，需要代码里调用一下 &lt;code&gt;p.terminate()&lt;/code&gt;，才能回收，避免变zombie&lt;/p&gt;
 &lt;p&gt;试了一下，也不是不能用，成功！正觉得自己又行了的时候，发现官方：&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://docs.python.org/3.8/library/asyncio-subprocess.html"&gt;https://docs.python.org/3.8/library/asyncio-subprocess.html&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;啊这。白忙活。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 21 Jun 2024 09:30:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-06-21:/2024/stdout-09</guid><category>stdout</category></item><item><title>如何删除 C:\Windows\WinSxS 文件</title><link>https://blog.est.im/2024/stdout-08</link><description>&lt;p&gt;天气热得心慌，看Win10不爽，决定删几个文件玩玩&lt;/p&gt;
+&lt;p&gt;啊这。白忙活。&lt;/p&gt;
+&lt;h3&gt;超长待机 subprocess&lt;/h3&gt;
+&lt;p&gt;想起来之前还有个问题，一个API调用一个subprocess，然后等它执行，不想管。这个时候可以加一个参数 detach 模式：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;subprocess.Popen(..., start_new_session=True)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;然后在同进程用里跑一个后台检查循环去检查子进程的 &lt;code&gt;WNOHANG&lt;/code&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;while 1:
+    try:
+        chpid, retcode, res = os.wait3(os.WNOHANG)
+    except ChildProcessError:
+        break
+    sleep(5)
+    if chpid == os.getpid():
+        do_sth()
+        break
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;想了下好像也搞复杂了。要不直接跑一个 &lt;code&gt;sh -c "blah.sh &amp;amp;"&lt;/code&gt; 算了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 21 Jun 2024 09:30:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-06-21:/2024/stdout-09</guid><category>stdout</category></item><item><title>如何删除 C:\Windows\WinSxS 文件</title><link>https://blog.est.im/2024/stdout-08</link><description>&lt;p&gt;天气热得心慌，看Win10不爽，决定删几个文件玩玩&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;首先你需要以 &lt;code&gt;SYSTEM&lt;/code&gt; 用户启动 &lt;code&gt;cmd.exe&lt;/code&gt;&lt;br /&gt;
 Win+R 敲入：&lt;br /&gt;

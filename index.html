@@ -60,7 +60,8 @@
             <a href="/2024/stdout-09"  rel="bookmark" >
               <h2 class="card-title">吐槽pynsq，另外给subprocess糊了一个异步</h2>
             </a>
-            <p class="card-text"><p>起初是因为需要在 Web API 里消费一个消息队列(nsq)，给浏览器返回 <a href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource">EventSource</a> 做实时输出。但是没想到<a href="https://github.com/nsqio/pynsq/blob/master/nsq/__init__.py">官方库pynsq</a>居然写得这么渣：</p>
+            <p class="card-text"><h3>pynsq太烂了</h3>
+<p>起初是因为需要在 Web API 里消费一个消息队列(nsq)，给浏览器返回 <a href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource">EventSource</a> 做实时输出。但是没想到<a href="https://github.com/nsqio/pynsq/blob/master/nsq/__init__.py">官方库pynsq</a>居然写得这么渣：</p>
 <pre><code>def _handle_term_signal(sig_num, frame):
     logging.getLogger(__name__).info(
         'TERM Signal handler called with signal %r', sig_num)
@@ -82,6 +83,7 @@ r = nsq.Reader(message_handler=handler,
 nsq.run()
 </code></pre>
 <p>这个 <code>r</code> 莫名其妙的就能跑起来了。真是魔法。anyway，在Web API兼容这一坨是失败了，爆了一堆错，对付魔法的办法就是隔离，所以打算糊个脚本，通过多进程+PIPE来得到数据。</p>
+<h3>给 subprocess 加一个异步补丁</h3>
 <p>糊的时候发现，<code>subprocess</code> 模块的 <code>.communicate()</code> 方法是 blocking的， 居然不支持 async/await，于是只能继续糊：</p>
 <pre><code>import subprocess, fcntl, asyncio
 p = subprocess.Popen(
@@ -103,11 +105,30 @@ while p.poll() is None:
     buf = contents.pop(-1)
     for x in contents:
         yield x
+
+p.terminate()
 </code></pre>
 <p>这里用 <code>buf</code>、<code>contents</code> 是因为直接调用消息队列，每个消息都是分割好的；但是通过管道来读。得自己去处理字节流如何分割的问题，也就是传说简中特供的「粘包」问题。</p>
+<p>另外子进程可能因为Web框架的种种原因，不自觉退出或者变僵尸进程，需要向 stdout/stderr 做输出的时候检查一下 BrokenPipeError 处理后事主动退出即可。</p>
+<p>还有子进程如果输出完毕，需要代码里调用一下 <code>p.terminate()</code>，才能回收，避免变zombie</p>
 <p>试了一下，也不是不能用，成功！正觉得自己又行了的时候，发现官方：</p>
 <p><a href="https://docs.python.org/3.8/library/asyncio-subprocess.html">https://docs.python.org/3.8/library/asyncio-subprocess.html</a></p>
-<p>啊这。白忙活。</p></p>
+<p>啊这。白忙活。</p>
+<h3>超长待机 subprocess</h3>
+<p>想起来之前还有个问题，一个API调用一个subprocess，然后等它执行，不想管。这个时候可以加一个参数 detach 模式：</p>
+<p><code>subprocess.Popen(..., start_new_session=True)</code></p>
+<p>然后在同进程用里跑一个后台检查循环去检查子进程的 <code>WNOHANG</code>：</p>
+<pre><code>while 1:
+    try:
+        chpid, retcode, res = os.wait3(os.WNOHANG)
+    except ChildProcessError:
+        break
+    sleep(5)
+    if chpid == os.getpid():
+        do_sth()
+        break
+</code></pre>
+<p>想了下好像也搞复杂了。要不直接跑一个 <code>sh -c "blah.sh &amp;"</code> 算了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-06-21T09:30:00+08:00">2024-06-21</time></p>
 <p>stdout</p>            </div>
