@@ -1,5 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Fri, 14 Jun 2024 22:50:00 +0800</lastBuildDate><item><title>如何删除 C:\Windows\WinSxS 文件</title><link>https://blog.est.im/2024/stdout-08</link><description>&lt;p&gt;天气热得心慌，看Win10不爽，决定删几个文件玩玩&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Fri, 21 Jun 2024 09:30:00 +0800</lastBuildDate><item><title>吐槽pynsq，另外给subprocess糊了一个异步</title><link>https://blog.est.im/2024/stdout-09</link><description>&lt;p&gt;起初是因为需要在 Web API 里消费一个消息队列(nsq)，给浏览器返回 &lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource"&gt;EventSource&lt;/a&gt; 做实时输出。但是没想到&lt;a href="https://github.com/nsqio/pynsq/blob/master/nsq/__init__.py"&gt;官方库pynsq&lt;/a&gt;居然写得这么渣：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;def _handle_term_signal(sig_num, frame):
+    logging.getLogger(__name__).info(
+        'TERM Signal handler called with signal %r', sig_num)
+    tornado.ioloop.IOLoop.current().stop()
+
+def run():
+    """
+    Starts any instantiated :class:`nsq.Reader` or :class:`nsq.Writer`
+    """
+    signal.signal(signal.SIGTERM, _handle_term_signal)
+    signal.signal(signal.SIGINT, _handle_term_signal)
+    tornado.ioloop.IOLoop.current().start()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这都什么玩意儿？一个库何德何能也敢去乱劫持 signal？最他妈逗的是这个库的推荐写法：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import nsq
+r = nsq.Reader(message_handler=handler,
+        lookupd_http_addresses=['http://127.0.0.1:4161'],
+        topic='nsq_reader', channel='asdf', lookupd_poll_interval=15)
+nsq.run()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这个 &lt;code&gt;r&lt;/code&gt; 莫名其妙的就能跑起来了。真是魔法。anyway，在Web API兼容这一坨是失败了，爆了一堆错，对付魔法的办法就是隔离，所以打算糊个脚本，通过多进程+PIPE来得到数据。&lt;/p&gt;
+&lt;p&gt;糊的时候发现，&lt;code&gt;subprocess&lt;/code&gt; 模块的 &lt;code&gt;.communicate()&lt;/code&gt; 方法是 blocking的， 居然不支持 async/await，于是只能继续糊：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import subprocess, fcntl, asyncio
+p = subprocess.Popen(
+    cmd, bufsize=0, text=True, stdin=subprocess.PIPE,
+    stderr=subprocess.PIPE,  stdout=subprocess.PIPE, close_fds=True)
+fcntl.fcntl(p.stdout.fileno(), fcntl.F_SETFL, os.O_NONBLOCK)
+content = ''
+while p.poll() is None:
+    try:
+        # read() with O_NONBLOCK might gets None thus TypeError
+        content += (p.stdout.read(1024) or '')
+        buf = content.split('\n')
+        if len(buf) &amp;lt; 2:
+            raise TypeError('Not enough')
+    except TypeError:
+        await asyncio.sleep(1)
+        yield None
+        continue
+    content = buf.pop(-1)
+    for x in buf:
+        yield x
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;也不是不能用，成功！正觉得自己又行了的时候，发现官方：&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://docs.python.org/3.8/library/asyncio-subprocess.html"&gt;https://docs.python.org/3.8/library/asyncio-subprocess.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;啊这。白忙活。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 21 Jun 2024 09:30:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-06-21:/2024/stdout-09</guid><category>stdout</category></item><item><title>如何删除 C:\Windows\WinSxS 文件</title><link>https://blog.est.im/2024/stdout-08</link><description>&lt;p&gt;天气热得心慌，看Win10不爽，决定删几个文件玩玩&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;首先你需要以 &lt;code&gt;SYSTEM&lt;/code&gt; 用户启动 &lt;code&gt;cmd.exe&lt;/code&gt;&lt;br /&gt;
 Win+R 敲入：&lt;br /&gt;
@@ -379,12 +425,4 @@ IP属地：陕西&lt;/p&gt;
 &lt;p&gt;我觉得这个机制能解释很多生理和情绪的问题。准确的说是，人是活在预期里的。预期脆弱，人就脆弱；人觉得累，觉得困，不是身体不行了，而是脑子觉得预算不够，脑子觉得这点机会要不拉倒把，能折腾个der 。。。&lt;/p&gt;
 &lt;p&gt;然后今天 OpenAI 推出了 &lt;a href="https://openai.com/sora"&gt;sora&lt;/a&gt; 这玩意对影视、创意行业震撼就不说了，我觉得它可能真的是 AGI 的开端了。按照上面的理论，意识和智力不是说一个世界戳一下，从一个模型得到一个响应；而应该是一个模型随时随地都在对眼睛、感官的输入进行建模和预测，然后随时预测下一秒、5秒、10秒会发生什么，然后根据是不是真实发生了进行模型的正向激励，或者负向feedback。&lt;/p&gt;
 &lt;p&gt;大脑把视觉为主的感官输入，在想象里预演并作出价值判断，权衡利弊。人从小就是这样磕磕绊绊的去理解世界，和世界互动，改变世界的。sora 如果能在1-2秒内对将来发生的事快速预演一遍并作出利害判断，那么这样摸爬滚打1年后绝逼就是通用人工智能，吊打大多数稀里糊涂长大的人。人类的很多行为就是画面的预演，根本不是文字。文字是高级逻辑思辨，其实平时用的不多。&lt;/p&gt;
-&lt;p&gt;btw  sora 这名字不是「空」么。。。Sora Aoi——苍井そら!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 16 Feb 2024 20:23:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-02-16:/2024/stdin-03</guid><category>stdin</category></item><item><title>为啥开车加塞、插队的特别多</title><link>https://blog.est.im/2024/stdin-02</link><description>&lt;p&gt;前几天&lt;a href="https://www.v2ex.com/t/1015409"&gt;水了个帖子&lt;/a&gt;：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;加塞的本质是道路通行效率低下，加塞是果，不是因。现实中，很多地方转弯车道的设置就是和实际车流量脱节、不合理的。本身应该用在优化交通的资金，都用来安装抓拍摄像头了。道路规划部门没有动力和压力去推动改良。更糟糕的是，道路规划和交通管理往往是 2 个部门，一个挖坑一个踩坑，踢皮球屡见不鲜。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;当时这只是我的猜测。今晚无意中刷到一个B站视频《&lt;a href="https://www.bilibili.com/video/BV1fC41147ck/"&gt;2024年，中国城市不会修直路&lt;/a&gt;》&lt;/p&gt;
-&lt;p&gt;视频比较长，简单概括就是：如果你是直行车依次通过多个红绿灯路口，如果需要不断变道躲开左转道、右转道和变道，那么道路就是失败的设计。&lt;/p&gt;
-&lt;p&gt;然后评论有人去问了真正做道路设计的老哥：&lt;/p&gt;
-&lt;p&gt;&lt;img referrerpolicy="no-referrer" src="https://album.biliimg.com/bfs/new_dyn/d83c91502828fdb6006aeba72c970e5210916201.jpg" /&gt;&lt;/p&gt;
-&lt;p&gt;hmm，谁设计道路，谁就应该背这个道路的车流量通畅指标。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 15 Feb 2024 01:02:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-02-15:/2024/stdin-02</guid><category>stdin</category></item></channel></rss>
+&lt;p&gt;btw  sora 这名字不是「空」么。。。Sora Aoi——苍井そら!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 16 Feb 2024 20:23:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-02-16:/2024/stdin-03</guid><category>stdin</category></item></channel></rss>

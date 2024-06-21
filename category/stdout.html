@@ -57,6 +57,66 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2024/stdout-09"  rel="bookmark" >
+              <h2 class="card-title">吐槽pynsq，另外给subprocess糊了一个异步</h2>
+            </a>
+            <p class="card-text"><p>起初是因为需要在 Web API 里消费一个消息队列(nsq)，给浏览器返回 <a href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource">EventSource</a> 做实时输出。但是没想到<a href="https://github.com/nsqio/pynsq/blob/master/nsq/__init__.py">官方库pynsq</a>居然写得这么渣：</p>
+<pre><code>def _handle_term_signal(sig_num, frame):
+    logging.getLogger(__name__).info(
+        'TERM Signal handler called with signal %r', sig_num)
+    tornado.ioloop.IOLoop.current().stop()
+
+def run():
+    """
+    Starts any instantiated :class:`nsq.Reader` or :class:`nsq.Writer`
+    """
+    signal.signal(signal.SIGTERM, _handle_term_signal)
+    signal.signal(signal.SIGINT, _handle_term_signal)
+    tornado.ioloop.IOLoop.current().start()
+</code></pre>
+<p>这都什么玩意儿？一个库何德何能也敢去乱劫持 signal？最他妈逗的是这个库的推荐写法：</p>
+<pre><code>import nsq
+r = nsq.Reader(message_handler=handler,
+        lookupd_http_addresses=['http://127.0.0.1:4161'],
+        topic='nsq_reader', channel='asdf', lookupd_poll_interval=15)
+nsq.run()
+</code></pre>
+<p>这个 <code>r</code> 莫名其妙的就能跑起来了。真是魔法。anyway，在Web API兼容这一坨是失败了，爆了一堆错，对付魔法的办法就是隔离，所以打算糊个脚本，通过多进程+PIPE来得到数据。</p>
+<p>糊的时候发现，<code>subprocess</code> 模块的 <code>.communicate()</code> 方法是 blocking的， 居然不支持 async/await，于是只能继续糊：</p>
+<pre><code>import subprocess, fcntl, asyncio
+p = subprocess.Popen(
+    cmd, bufsize=0, text=True, stdin=subprocess.PIPE,
+    stderr=subprocess.PIPE,  stdout=subprocess.PIPE, close_fds=True)
+fcntl.fcntl(p.stdout.fileno(), fcntl.F_SETFL, os.O_NONBLOCK)
+content = ''
+while p.poll() is None:
+    try:
+        # read() with O_NONBLOCK might gets None thus TypeError
+        content += (p.stdout.read(1024) or '')
+        buf = content.split('\n')
+        if len(buf) &lt; 2:
+            raise TypeError('Not enough')
+    except TypeError:
+        await asyncio.sleep(1)
+        yield None
+        continue
+    content = buf.pop(-1)
+    for x in buf:
+        yield x
+</code></pre>
+<p>也不是不能用，成功！正觉得自己又行了的时候，发现官方：</p>
+<p><a href="https://docs.python.org/3.8/library/asyncio-subprocess.html">https://docs.python.org/3.8/library/asyncio-subprocess.html</a></p>
+<p>啊这。白忙活。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-06-21T09:30:00+08:00">2024-06-21</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stdout-08"  rel="bookmark" >
               <h2 class="card-title">如何删除 C:\Windows\WinSxS 文件</h2>
             </a>
@@ -3756,49 +3816,6 @@ The default value specified in a DEFAULT clause can be a literal constant or an 
 <p>btw2 MySQL的JSON数据抽取 <code>-&gt;&gt;</code> 是返回真正的值，等价于TiDB里的 json_unquote(json_extract(t.json_field, '$.key1.key2'))</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-11-19T09:14:28+08:00">2021-11-19</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2021/stdout-016"  rel="bookmark" >
-              <h2 class="card-title">Chrome 指定域名解析，绕过 hosts</h2>
-            </a>
-            <p class="card-text"><p>看到 <a href="https://www.v2ex.com/t/813626">V站有人问</a>这个，随手一记</p>
-<p>可以参考<a href="https://chromium.googlesource.com/chromium/src/+/refs/heads/main/components/network_session_configurator/common/network_switch_list.h">源码里的注释文档</a></p>
-<h2>--host-resolver-rules=rules</h2>
-<p>Like <code>--host-rules</code> but these rules only apply to the host resolver.<br />
-A comma-separated list of rules that control how hostnames are mapped.<br />
-For example:<br />
-- <code>MAP * 127.0.0.1</code> Forces all hostnames to be mapped to <code>127.0.0.1</code><br />
-- <code>MAP *.google.com proxy</code> Forces all google.com subdomains to be resolved to <code>proxy</code>.<br />
-- <code>MAP test.com [::1]:77</code> Forces <code>test.com</code> to resolve to IPv6 loopback. Will also force the port of the resulting socket address to be 77.<br />
-- <code>MAP * baz, EXCLUDE www.google.com</code> Remaps everything to <code>baz</code>, except for <code>www.google.com</code>.</p>
-<p>These mappings apply to the endpoint host in a net request (the TCP connect and host resolver in a direct connection, and the CONNECT in an HTTP proxy connection, and the endpoint host in a SOCKS proxy connection).</p>
-<p>官方文档有语焉不详的提到过</p>
-<p>https://chromium.googlesource.com/chromium/src/+/refs/heads/main/net/dns/README.md</p>
-<blockquote>
-<p>Starting Chrome with --host-resolver-rules="MAP the.hostname.com [dead::beef]" where the.hostname.com is the hostname to allow resolving and dead::beef is the IPv6 address to resolve it to. net::MappedHostResolver acts at a level before IPv6 connectivity checks, and if a hostname is remapped to an IP literal, connectivity checks do not apply.</p>
-</blockquote>
-<p>还有很多 <a href="https://chromium.googlesource.com/chromium/src/+/HEAD/net/docs/proxy.md">proxy的参数</a></p>
-<h2>curl 的参数</h2>
-<p>也顺便贴一下。调试的时候用得上</p>
-<p>参数：</p>
-<ul>
-<li><code>-4</code>, <code>--ipv4</code></li>
-<li><code>-6</code>, <code>--ipv6</code></li>
-<li><code>--dns-interface &lt;interface&gt;</code></li>
-<li><code>--dns-ipv4-addr &lt;ip-address&gt;</code> Tell curl to bind to <code>&lt;ip-address&gt;</code> when making IPv4 DNS requests</li>
-<li><code>--dns-ipv6-addr &lt;ip-address&gt;</code> Tell curl to bind to <code>&lt;ip-address&gt;</code> when making IPv6 DNS requests</li>
-<li><code>--dns-servers &lt;ip-address,ip-address&gt;</code> Set the list of DNS servers to be used instead of the system default. The  list  of  IP  addresses should  be  separated  with commas. Port numbers may also optionally be given as <code>:&lt;port-number&gt;</code> after each IP address.</li>
-<li><code>--resolve &lt;host:port:address&gt;</code> Make the curl requests(s) use a specified address and prevent the otherwise normally resolved address to  be  used. Consider  it a sort of /etc/hosts alternative provided on the command line. The port number should be the number used for the specific protocol the host will be  used  for.  It  means  you  need  several entries if you want to provide address for the same host but different ports. This option can be used many times to add many host names to resolve. (Added in 7.21.3)</li>
-</ul>
-<p>最后一个很有用 😹</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-11-07T16:01:19+08:00">2021-11-07</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

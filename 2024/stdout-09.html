@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>吐槽pynsq，另外给subprocess糊了一个异步 – est の 输入输出</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入输出 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="吐槽pynsq，另外给subprocess糊了一个异步" />
+
+    <link rel="canonical" href="https://blog.est.im/2024/stdout-09" />
+    <meta property="og:url" content="https://blog.est.im/2024/stdout-09">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="吐槽pynsq，另外给subprocess糊了一个异步">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入输出
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">吐槽pynsq，另外给subprocess糊了一个异步</h2>
+    <p class="post-date">Posted <time datetime="2024-06-21T09:30:00+08:00">2024-06-21</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>起初是因为需要在 Web API 里消费一个消息队列(nsq)，给浏览器返回 <a href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource">EventSource</a> 做实时输出。但是没想到<a href="https://github.com/nsqio/pynsq/blob/master/nsq/__init__.py">官方库pynsq</a>居然写得这么渣：</p>
+<pre><code>def _handle_term_signal(sig_num, frame):
+    logging.getLogger(__name__).info(
+        'TERM Signal handler called with signal %r', sig_num)
+    tornado.ioloop.IOLoop.current().stop()
+
+def run():
+    """
+    Starts any instantiated :class:`nsq.Reader` or :class:`nsq.Writer`
+    """
+    signal.signal(signal.SIGTERM, _handle_term_signal)
+    signal.signal(signal.SIGINT, _handle_term_signal)
+    tornado.ioloop.IOLoop.current().start()
+</code></pre>
+<p>这都什么玩意儿？一个库何德何能也敢去乱劫持 signal？最他妈逗的是这个库的推荐写法：</p>
+<pre><code>import nsq
+r = nsq.Reader(message_handler=handler,
+        lookupd_http_addresses=['http://127.0.0.1:4161'],
+        topic='nsq_reader', channel='asdf', lookupd_poll_interval=15)
+nsq.run()
+</code></pre>
+<p>这个 <code>r</code> 莫名其妙的就能跑起来了。真是魔法。anyway，在Web API兼容这一坨是失败了，爆了一堆错，对付魔法的办法就是隔离，所以打算糊个脚本，通过多进程+PIPE来得到数据。</p>
+<p>糊的时候发现，<code>subprocess</code> 模块的 <code>.communicate()</code> 方法是 blocking的， 居然不支持 async/await，于是只能继续糊：</p>
+<pre><code>import subprocess, fcntl, asyncio
+p = subprocess.Popen(
+    cmd, bufsize=0, text=True, stdin=subprocess.PIPE,
+    stderr=subprocess.PIPE,  stdout=subprocess.PIPE, close_fds=True)
+fcntl.fcntl(p.stdout.fileno(), fcntl.F_SETFL, os.O_NONBLOCK)
+content = ''
+while p.poll() is None:
+    try:
+        # read() with O_NONBLOCK might gets None thus TypeError
+        content += (p.stdout.read(1024) or '')
+        buf = content.split('\n')
+        if len(buf) &lt; 2:
+            raise TypeError('Not enough')
+    except TypeError:
+        await asyncio.sleep(1)
+        yield None
+        continue
+    content = buf.pop(-1)
+    for x in buf:
+        yield x
+</code></pre>
+<p>也不是不能用，成功！正觉得自己又行了的时候，发现官方：</p>
+<p><a href="https://docs.python.org/3.8/library/asyncio-subprocess.html">https://docs.python.org/3.8/library/asyncio-subprocess.html</a></p>
+<p>啊这。白忙活。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2024/stdout-09';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+
+  </body>
+
+</html>
