@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Fri, 21 Jun 2024 09:30:00 +0800</lastBuildDate><item><title>吐槽pynsq，另外给subprocess糊了一个异步</title><link>https://blog.est.im/2024/stdout-09</link><description>&lt;h3&gt;pynsq太烂了&lt;/h3&gt;
+<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Fri, 21 Jun 2024 22:48:00 +0800</lastBuildDate><item><title>人声分离简单评测</title><link>https://blog.est.im/2024/stdout-10</link><description>&lt;p&gt;娃要去表演唱歌，老师要求提供MTV。。 视频是&lt;a href="https://www.bilibili.com/video/BV1Ty4y147Sj/"&gt;这个&lt;/a&gt;，需要去掉人声部分&lt;/p&gt;
+&lt;p&gt;先用 ffmpeg 提音轨 &lt;code&gt;ffmpeg -i v.mp4  -ac 1 1.mp3&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;微信小程序上的全是骗充值的，网上的服务：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;没用 https://www.conversion-tool.com/karaoke/&lt;/li&gt;
+&lt;li&gt;卡死 https://www.songpeel.com/song-to-karaoke&lt;/li&gt;
+&lt;li&gt;要安装 https://github.com/adefossez/demucs&lt;/li&gt;
+&lt;li&gt;要6G显存 https://github.com/Anjok07/ultimatevocalremovergui&lt;/li&gt;
+&lt;li&gt;效果很好！ https://tunebat.com/Vocal-Remover 推荐&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;看来人声分离，特别是童声，还是有点难。&lt;/p&gt;
+&lt;p&gt;最后把得到的 a.mp3 塞回去&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ffmpeg -i v.mp4 -i a.mp3 -c:v copy -map 0:v:0 -map 1:a:0 new.mp4&lt;/code&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 21 Jun 2024 22:48:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-06-21:/2024/stdout-10</guid><category>stdout</category></item><item><title>吐槽pynsq，另外给subprocess糊了一个异步</title><link>https://blog.est.im/2024/stdout-09</link><description>&lt;h3&gt;pynsq太烂了&lt;/h3&gt;
 &lt;p&gt;起初是因为需要在 Web API 里消费一个消息队列(nsq)，给浏览器返回 &lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource"&gt;EventSource&lt;/a&gt; 做实时输出。但是没想到&lt;a href="https://github.com/nsqio/pynsq/blob/master/nsq/__init__.py"&gt;官方库pynsq&lt;/a&gt;居然写得这么渣：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;def _handle_term_signal(sig_num, frame):
     logging.getLogger(__name__).info(
@@ -437,14 +449,4 @@ IP属地：陕西&lt;/p&gt;
 纵观幽王身死到平王东迁这段历史，其实就是申姜反周，然后各路诸侯借此摆脱了共主的约束。但共主在关中陨身后诸戎入关的历史，又让各路诸侯明白作为族群，也不能没有共主的存在。这是新趋势下，以西部申姜为代表的诸侯向天子夺权导致统治秩序挫败后，以晋、郑，乃至更遥远的，始终坐山观虎斗，隔岸观火，打算鹬蚌相争渔翁得利的齐鲁宋等关东大国，向天子要权的演变全过程。&lt;br /&gt;
 毕竟，西周的诸侯国，没有国家主权。而西周灭亡后，春秋的诸侯国，终于拥有了几乎完整的国家主权，虽然在法统上仍然尊奉周室名不符实的王权。西周灭亡的宏观意义，其实就是诸侯们趁你乱，不要你命，但要你放权。这个时候，各大加盟店比你总店的利润坐的都大，已经掌握了总店的全套技术和管理经验，虽然不想贸然换品牌，但真不想让总店再插手自己加盟店的事务和财务了。东周的建立，意味着，原本点状城邦诸侯发展为面状领土大国之后，从周王室那里要到了国家主权。&lt;br /&gt;
 夏商周发展到领土疆域型国家的阶段，各强国都不比共主地盘小、实力弱，但既要共主存在又不能让共主管事，就像日本后来让天皇长期成为教宗那样，是一个中央集权的大一统国家出现之前，邦国社会最后阶段的历史大趋势。无奈就是周人政治中，巫鬼文化被剔除的太干净，天子执政的世俗化王权传统深入人心，所以周朝诸侯无法让天子单纯的沦为教宗，只能限制其地盘实力、限制其治权。一直到战国变法浪潮拉开帷幕，这种贵族封建社会试图摆脱联合型中枢的历史趋势，才被集权型中枢的诞生所中止。单一制直控型央地关系才重新整合了奔向松散乃至列国建立王权，让华夏差点走向实质性分裂的上古社会。&lt;/p&gt;
-&lt;/blockquote&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 21 Feb 2024 18:29:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-02-21:/2024/stdin-04</guid><category>stdin</category></item><item><title>人的意识，预测器和 sora</title><link>https://blog.est.im/2024/stdin-03</link><description>&lt;p&gt;&lt;a href="(https://www.dedao.cn/share/course/article?id=a8QZdRM1OmLxVvG898JG69rgYPjqWp)"&gt;摘自&lt;/a&gt;  Lisa Feldman Barrett 的 《Seven and a Half Lessons About the Brain 认识大脑》。她是美国艺术与科学院，还有加拿大皇家学会的双院士。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;比如跑马拉松，在冲过终点的那一刻，觉得自己精疲力尽，恨不得站着都费劲。但是，有人曾经做过检测，发现即使在刚跑完马拉松，精疲力尽的人的身体里，依然储存着大量的能量。这也是，大脑根据预测做出的决定。这个预测就是，大脑在猜，万一你冲过马拉松终点之后，会不会遇到什么危险。比如终点线后面有只老虎等着你。因此，它必须得提前储备逃生的能量。这就是为什么说，大脑的本质是一个预测器官。而这些预测的目的，是为了帮我们更好地管理能量，确保生存。这个过程的专业术语叫，稳态应变。巴瑞特管它叫，管理身体预算。注意，是预算，也就是，基于预测，提前计算。&lt;br /&gt;
-换句话说，过去我们都觉得大脑的工作顺序是，先接受外界的信号，根据信号产生感觉，根据感觉做出思考。但实际上，真实的顺序是，你先接受外界的信号，但是，在你对这些信号产生感觉之前，大脑先做出预测，然后，根据预测让你产生感觉。最简单的例子就是，望梅止渴。你明明没吃到它，却觉得酸，这就是大脑在猜，你看到之后可能要吃，吃完之后会觉得酸。它就提前对你释放了这个信号。当然，这个预测也经常不准。比如，你突然觉得，有一首歌，你明明很久没听，但它就是在你的脑子里挥之不去。再比如，你走进一个房间，突然感觉莫名地焦虑。这都是大脑在根据预测做出反应。至于它做的是什么预测，不好意思，它不会告诉你。这一切都是本能反应，你根本感觉不到过程。就像一加一等于二，计算过程太快，以至于你都意识不到自己计算过。&lt;br /&gt;
-举个例子，你在特别渴的时候喝水，是不是感觉两口水下肚，立马就解渴了？这看起来好像很平常。但事实上，水需要20分钟，才能进入你的血液，它根本不可能在几秒内解渴。那么，你为什么感觉解渴？是大脑在意识到你喝水之后，做了一个预测，它觉得你既然喝了水，一会儿这些水就应该进入血液了。因此，它基于这个预测，提前给你的身体释放信号，让你觉得很解渴。&lt;br /&gt;
-换句话说，要想改变自己，你的重点不是改变思考方式，而是改变大脑对某件事的预测。怎么改变？我们都知道，预测是以过去的经验为基础的。你要是找一个从来没吃过青梅的人，望梅不一定能止渴。因此，要想改变预测机制，关键是改变经验。比如，以前你心情不好，就喜欢吃薯条。但是，你可以换个方法，心情不好的时候，改去跑步。第一次跑的时候，你可能会觉得很煎熬。但多跑几次，大脑就会形成新的反射回路。等你心情再不好的时候，跑步反而会让你高兴。再比如，加班的时候，感觉压力很大，情绪低落。你可以把这个过程再延长一点，每回都奖励自己，加班之后，做一件自己喜欢的事，比如打游戏、看电影、吃烤串。多试几次，再加班的时候，你可能就会感觉到一点兴奋。换句话说，我们的身体里有很多进化赋予的设定。坏消息是，这些设定可能有漏洞，有缺陷，可能是错的。但好消息是，人是一个奇妙的物种，对于每一个不好的本能，你一定能够找到另一个与之相反的本能来克制它。有句话说得好，成大事者，反本能。拿什么对抗本能？答案是，激发另一个本能。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;我觉得这个机制能解释很多生理和情绪的问题。准确的说是，人是活在预期里的。预期脆弱，人就脆弱；人觉得累，觉得困，不是身体不行了，而是脑子觉得预算不够，脑子觉得这点机会要不拉倒把，能折腾个der 。。。&lt;/p&gt;
-&lt;p&gt;然后今天 OpenAI 推出了 &lt;a href="https://openai.com/sora"&gt;sora&lt;/a&gt; 这玩意对影视、创意行业震撼就不说了，我觉得它可能真的是 AGI 的开端了。按照上面的理论，意识和智力不是说一个世界戳一下，从一个模型得到一个响应；而应该是一个模型随时随地都在对眼睛、感官的输入进行建模和预测，然后随时预测下一秒、5秒、10秒会发生什么，然后根据是不是真实发生了进行模型的正向激励，或者负向feedback。&lt;/p&gt;
-&lt;p&gt;大脑把视觉为主的感官输入，在想象里预演并作出价值判断，权衡利弊。人从小就是这样磕磕绊绊的去理解世界，和世界互动，改变世界的。sora 如果能在1-2秒内对将来发生的事快速预演一遍并作出利害判断，那么这样摸爬滚打1年后绝逼就是通用人工智能，吊打大多数稀里糊涂长大的人。人类的很多行为就是画面的预演，根本不是文字。文字是高级逻辑思辨，其实平时用的不多。&lt;/p&gt;
-&lt;p&gt;btw  sora 这名字不是「空」么。。。Sora Aoi——苍井そら!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 16 Feb 2024 20:23:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-02-16:/2024/stdin-03</guid><category>stdin</category></item></channel></rss>
+&lt;/blockquote&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 21 Feb 2024 18:29:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-02-21:/2024/stdin-04</guid><category>stdin</category></item></channel></rss>

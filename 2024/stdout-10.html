@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>人声分离简单评测 – est の 输入输出</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入输出 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="人声分离简单评测" />
+
+    <link rel="canonical" href="https://blog.est.im/2024/stdout-10" />
+    <meta property="og:url" content="https://blog.est.im/2024/stdout-10">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="人声分离简单评测">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入输出
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">人声分离简单评测</h2>
+    <p class="post-date">Posted <time datetime="2024-06-21T22:48:00+08:00">2024-06-21</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>娃要去表演唱歌，老师要求提供MTV。。 视频是<a href="https://www.bilibili.com/video/BV1Ty4y147Sj/">这个</a>，需要去掉人声部分</p>
+<p>先用 ffmpeg 提音轨 <code>ffmpeg -i v.mp4  -ac 1 1.mp3</code></p>
+<p>微信小程序上的全是骗充值的，网上的服务：</p>
+<ol>
+<li>没用 https://www.conversion-tool.com/karaoke/</li>
+<li>卡死 https://www.songpeel.com/song-to-karaoke</li>
+<li>要安装 https://github.com/adefossez/demucs</li>
+<li>要6G显存 https://github.com/Anjok07/ultimatevocalremovergui</li>
+<li>效果很好！ https://tunebat.com/Vocal-Remover 推荐</li>
+</ol>
+<p>看来人声分离，特别是童声，还是有点难。</p>
+<p>最后把得到的 a.mp3 塞回去</p>
+<p><code>ffmpeg -i v.mp4 -i a.mp3 -c:v copy -map 0:v:0 -map 1:a:0 new.mp4</code></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2024/stdout-10';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+
+  </body>
+
+</html>

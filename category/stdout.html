@@ -57,6 +57,32 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2024/stdout-10"  rel="bookmark" >
+              <h2 class="card-title">人声分离简单评测</h2>
+            </a>
+            <p class="card-text"><p>娃要去表演唱歌，老师要求提供MTV。。 视频是<a href="https://www.bilibili.com/video/BV1Ty4y147Sj/">这个</a>，需要去掉人声部分</p>
+<p>先用 ffmpeg 提音轨 <code>ffmpeg -i v.mp4  -ac 1 1.mp3</code></p>
+<p>微信小程序上的全是骗充值的，网上的服务：</p>
+<ol>
+<li>没用 https://www.conversion-tool.com/karaoke/</li>
+<li>卡死 https://www.songpeel.com/song-to-karaoke</li>
+<li>要安装 https://github.com/adefossez/demucs</li>
+<li>要6G显存 https://github.com/Anjok07/ultimatevocalremovergui</li>
+<li>效果很好！ https://tunebat.com/Vocal-Remover 推荐</li>
+</ol>
+<p>看来人声分离，特别是童声，还是有点难。</p>
+<p>最后把得到的 a.mp3 塞回去</p>
+<p><code>ffmpeg -i v.mp4 -i a.mp3 -c:v copy -map 0:v:0 -map 1:a:0 new.mp4</code></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-06-21T22:48:00+08:00">2024-06-21</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stdout-09"  rel="bookmark" >
               <h2 class="card-title">吐槽pynsq，另外给subprocess糊了一个异步</h2>
             </a>
@@ -3793,51 +3819,6 @@ Segmentation fault (core dumped)
 <p>btw2 发现一个很干净的启动页： <code>chrome-search://local-ntp/local-ntp.html</code> 或者直接在 <code>hosts</code> 里把 ntp.msn.com 干掉，有奇效。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-11-30T11:32:33+08:00">2021-11-30</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2021/stdout-019"  rel="bookmark" >
-              <h2 class="card-title">TiDB不支持JSON字段默认值</h2>
-            </a>
-            <p class="card-text"><p>继前面的<a href="/2021/stdout-011">日期不兼容</a>坑，又发现<a href="https://docs.pingcap.com/tidb/stable/data-type-default-values">一个</a></p>
-<blockquote>
-<p>The BLOB, TEXT, and JSON columns cannot be assigned a default value.</p>
-</blockquote>
-<p>虽然 <a href="https://dev.mysql.com/doc/refman/5.7/en/json.html">MySQL 5.7 也是这么说</a>的：</p>
-<blockquote>
-<p>A JSON column cannot have a non-NULL default value.</p>
-</blockquote>
-<p>但是 <a href="https://dev.mysql.com/doc/refman/8.0/en/data-type-defaults.html">MySQL 8.0.13 就支持指定默认值</a>了</p>
-<blockquote>
-<p>Prior to MySQL 8.0.13, a JSON column cannot have a non-NULL default value.<br />
-The default value specified in a DEFAULT clause can be a literal constant or an expression. With one exception, enclose expression default values within parentheses to distinguish them from literal constant default values. Examples:</p>
-</blockquote>
-<p>虽然语法很丑但是很实用啊。</p>
-<p>所以这种语句</p>
-<pre><code>  ALTER TABLE mytable MODIFY COLUMN my_json JSON DEFAULT (json_object());
-</code></pre>
-<p>在 TiDB 里就没法支持。这也带来一个问题，就是要 upsert 这个 字段的时候，写起来就很拧巴，以 <code>peewee</code> 这个ORM为例：</p>
-<pre><code>  MyTable.update({
-      'my_json' = fn.json_set(
-          fn.COALESCE(MyTable.my_json, Cast('{}', 'JSON')),
-          '%.some_key', 'some_value',
-  )})
-</code></pre>
-<p>必须用 COALESCE 预防默认值为 <code>NULL</code> 的情况。太麻烦了。</p>
-<p>btw 玩MySQL/TiDB的 JSON 有个坑的，那就是 json 的 <code>null</code> 是有值的，和 sql 的 <code>NULL</code> 是不同的。</p>
-<p>也就是说</p>
-<pre><code>  select json_extract('{}', '$.hey') IS NULL;
-  select json_extract('{"hey": null}', '$.hey') = Cast('null' as JSON);
-</code></pre>
-<p>要注意。</p>
-<p>btw2 MySQL的JSON数据抽取 <code>-&gt;&gt;</code> 是返回真正的值，等价于TiDB里的 json_unquote(json_extract(t.json_field, '$.key1.key2'))</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-11-19T09:14:28+08:00">2021-11-19</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
