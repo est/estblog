@@ -17,6 +17,7 @@
         do_sth()
         break&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;This can be done using &lt;code&gt;BackgroundTasks&lt;/code&gt; in FastAPI/Starlette.&lt;/p&gt;
+&lt;p&gt;In a way, the child-process hebaves like &lt;code&gt;nohup&lt;/code&gt; or screen/tmux, running in a detatched fashion.&lt;/p&gt;
 &lt;p&gt;If you hate this many lines of code, just &lt;code&gt;subprocess.run("blah.sh &amp;amp;", shell=True)&lt;/code&gt; and wrap your commands in &lt;code&gt;blah.sh&lt;/code&gt;&lt;/p&gt;
 &lt;h3&gt;Make &lt;code&gt;.communicate()&lt;/code&gt; async&lt;/h3&gt;
 &lt;p&gt;Sometimes I need to monitor and handle the stdout/stderr of a child-process, like route the outputs as an &lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource"&gt;EventSource&lt;/a&gt; response to the browser.&lt;/p&gt;

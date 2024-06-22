@@ -73,6 +73,7 @@
         do_sth()
         break</code></p>
 <p>This can be done using <code>BackgroundTasks</code> in FastAPI/Starlette.</p>
+<p>In a way, the child-process hebaves like <code>nohup</code> or screen/tmux, running in a detatched fashion.</p>
 <p>If you hate this many lines of code, just <code>subprocess.run("blah.sh &amp;", shell=True)</code> and wrap your commands in <code>blah.sh</code></p>
 <h3>Make <code>.communicate()</code> async</h3>
 <p>Sometimes I need to monitor and handle the stdout/stderr of a child-process, like route the outputs as an <a href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource">EventSource</a> response to the browser.</p>
