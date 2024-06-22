@@ -57,6 +57,63 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2024/stdout-11"  rel="bookmark" >
+              <h2 class="card-title">Making subprocess async friendly in Python</h2>
+            </a>
+            <p class="card-text"><p>It's been a while since i wrote something in English, mostly because there's nothing really interesting, <a href="https://blog.est.im/2024/stdout-09">until now</a>.</p>
+<p>Occasionally, when facing a long running task in Python, I would choose either a distrubuted tasks queue system, or for the convenience, just the <code>subprocess</code> module. It's built-in and well designed for grabbing outputs of a child process running for a short period of time.</p>
+<p>But what if the child-process takes a really, really long time? In my case it's an expensive query, or some CPU/GPU intensive task, which needs to be launched from a running Web framework, like FastAPI. </p>
+<h3>Fire and forget</h3>
+<p>if child-process's output, end state and the return code are irrelevant, a simple Popen would do</p>
+<p><code>subprocess.Popen(..., stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)</code></p>
+<p>The problem is, after the child-process finishes, it will hang as a zombie, because the parents refused to claim its exit status. To fix this, add an extra parameter in <code>Popen()</code> like <code>subprocess.Popen(..., start_new_session=True)</code></p>
+<p>And write a simple loop periodically check for <code>WNOHANG</code></p>
+<p><code>while 1:
+    try:
+        chpid, retcode, res = os.wait3(os.WNOHANG)
+    except ChildProcessError:
+        break
+    sleep(5)
+    if chpid == os.getpid():
+        do_sth()
+        break</code></p>
+<p>This can be done using <code>BackgroundTasks</code> in FastAPI/Starlette.</p>
+<p>If you hate this many lines of code, just <code>subprocess.run("blah.sh &amp;", shell=True)</code> and wrap your commands in <code>blah.sh</code></p>
+<h3>Make <code>.communicate()</code> async</h3>
+<p>Sometimes I need to monitor and handle the stdout/stderr of a child-process, like route the outputs as an <a href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource">EventSource</a> response to the browser.</p>
+<p>First I tried <code>.communicate()</code> it will block until the process quites.</p>
+<p>Then I tried <code>Popen.stdout.read()</code>, it will also block. Eventually I found a great hack from Stackoverlow like this:</p>
+<pre><code>p = subprocess.Popen(
+    cmd, bufsize=0, text=True, stdin=subprocess.PIPE,
+    stderr=subprocess.PIPE,  stdout=subprocess.PIPE, close_fds=True)
+fcntl.fcntl(p.stdout.fileno(), fcntl.F_SETFL, os.O_NONBLOCK)
+</code></pre>
+<p>Now <code>p.stdout.read(1024)</code> would return immediately, or with a <code>TypeError</code> bnecause internal messed up with <code>None</code> as non-blocking empty return.</p>
+<h3>Solved with <code>asyncio</code></h3>
+<p>I tried harder reading the official Python docs, turns out the most easy solution is already there:</p>
+<pre><code>proc = await asyncio.create_subprocess_exec(
+    sys.executable, '-c', code,
+    stdout=asyncio.subprocess.PIPE)
+
+# Read one line of output.
+data = await proc.stdout.readline()
+line = data.decode('ascii').rstrip()
+
+# Wait for the subprocess exit.
+await proc.wait()
+return line
+</code></pre>
+<p>I guess it's another lesson learned today.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-06-22T12:26:00+08:00">2024-06-22</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stdout-10"  rel="bookmark" >
               <h2 class="card-title">人声分离简单评测</h2>
             </a>
@@ -3794,33 +3851,6 @@ Segmentation fault (core dumped)
 <p>神仙打架，不听不听，和尚念经，果断 <code>sqlalchemy==1.3.24</code> 降级。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-12-01T17:41:32+08:00">2021-12-01</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2021/stdout-020"  rel="bookmark" >
-              <h2 class="card-title">Edge调教指南——如何设置本地PAC代理和首页天气</h2>
-            </a>
-            <p class="card-text"><p>之前一直用的chrome v70，为什么呢？</p>
-<p>第一是这个老版本允许 <code>--proxy-pac-url="file:///Users/me/1.pac</code> 这样设置，但是<a href="https://bugs.chromium.org/p/chromium/issues/detail?id=839566">Chromium项目的大爷们觉得</a>你本地的.pac不够安全，要网上的.pac才安全，所以一刀切给禁了。当然有热心人士觉得这没啥大不了的。不外乎装个插件就可以切PAC。但是chrome插件其实会有一个fingerprint。Extension一启用，隔壁老王都知道你开代理了。</p>
-<p>第二，也是最重要的原因，这是最后一个chrome版本支持 <code>about://net-internals</code> 在本地查看浏览器底层网络请求。现在无论是 Edge 还是 Chrome 都必须把 .json 文件从 https://netlog-viewer.appspot.com/ 加载才能看了。很尼玛保护了隐私有没有啊。</p>
-<p>但是坚持老版本，也付出了巨大的代价。很多新的 ES 语法不支持，比如说 Grafana 最新版 login 都进不去。这就尴尬了。只能被自愿升级了。</p>
-<p>既然升级是必选项，那么就换 Edge 试试。</p>
-<p>第一就是得解决这个本地 .pac 问题，其实从上面第二个工具里才能知道，PAC加载失败有个返回 <code>ERR_DISALLOWED_URL_SCHEME</code>。stackoverflow 上找到个奇技淫巧</p>
-<p><code>open "/Applications/Microsoft Edge.app" --args --proxy-pac-url='data:application/x-javascript-config;base64,'$(base64 -i /Users/me/2.pac)</code></p>
-<p>还能这样玩？双击666。</p>
-<p>第二个把该禁用的禁用了，首页只留一个搜索框一个天气。但是这天气就特么定位到坡县了。而且下拉框点不出来啊。F12打开 devtool 一看，我尼玛好家伙 <code>https://www.bing.com/api/v6/Places/AutoSuggest</code> 被 Bing China 的网管给一把梭302到 <code>https://cn.bing.com/api/v6/Places/AutoSuggest</code> 了。然后就特么 CORS 给拦截，js读取不到列表。。。</p>
-<p>最后怎么办？点那个天气图标，进入到 <code>https://www.msn.com/en-sg/weather/today/weather-today/we-city</code></p>
-<p>然后找那个地图，手动选择自己所在城市，设置为 Home 。等 cookie 写入生效了，打开edge新tab就ok了</p>
-<p>这年头上个网真鸡儿累。</p>
-<p>btw 设置M$账号同步的时候，发现账号所在国家可以选很多不是国家的地方，但是时区就不能随便选了。F12改了也没用。微软的后台开发做的过滤还挺细致的。</p>
-<p>btw2 发现一个很干净的启动页： <code>chrome-search://local-ntp/local-ntp.html</code> 或者直接在 <code>hosts</code> 里把 ntp.msn.com 干掉，有奇效。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-11-30T11:32:33+08:00">2021-11-30</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

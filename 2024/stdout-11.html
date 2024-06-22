@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Making subprocess async friendly in Python – est の 输入输出</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入输出 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Making subprocess async friendly in Python" />
+
+    <link rel="canonical" href="https://blog.est.im/2024/stdout-11" />
+    <meta property="og:url" content="https://blog.est.im/2024/stdout-11">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Making subprocess async friendly in Python">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入输出
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Making subprocess async friendly in Python</h2>
+    <p class="post-date">Posted <time datetime="2024-06-22T12:26:00+08:00">2024-06-22</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>It's been a while since i wrote something in English, mostly because there's nothing really interesting, <a href="https://blog.est.im/2024/stdout-09">until now</a>.</p>
+<p>Occasionally, when facing a long running task in Python, I would choose either a distrubuted tasks queue system, or for the convenience, just the <code>subprocess</code> module. It's built-in and well designed for grabbing outputs of a child process running for a short period of time.</p>
+<p>But what if the child-process takes a really, really long time? In my case it's an expensive query, or some CPU/GPU intensive task, which needs to be launched from a running Web framework, like FastAPI. </p>
+<h3>Fire and forget</h3>
+<p>if child-process's output, end state and the return code are irrelevant, a simple Popen would do</p>
+<p><code>subprocess.Popen(..., stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)</code></p>
+<p>The problem is, after the child-process finishes, it will hang as a zombie, because the parents refused to claim its exit status. To fix this, add an extra parameter in <code>Popen()</code> like <code>subprocess.Popen(..., start_new_session=True)</code></p>
+<p>And write a simple loop periodically check for <code>WNOHANG</code></p>
+<p><code>while 1:
+    try:
+        chpid, retcode, res = os.wait3(os.WNOHANG)
+    except ChildProcessError:
+        break
+    sleep(5)
+    if chpid == os.getpid():
+        do_sth()
+        break</code></p>
+<p>This can be done using <code>BackgroundTasks</code> in FastAPI/Starlette.</p>
+<p>If you hate this many lines of code, just <code>subprocess.run("blah.sh &amp;", shell=True)</code> and wrap your commands in <code>blah.sh</code></p>
+<h3>Make <code>.communicate()</code> async</h3>
+<p>Sometimes I need to monitor and handle the stdout/stderr of a child-process, like route the outputs as an <a href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource">EventSource</a> response to the browser.</p>
+<p>First I tried <code>.communicate()</code> it will block until the process quites.</p>
+<p>Then I tried <code>Popen.stdout.read()</code>, it will also block. Eventually I found a great hack from Stackoverlow like this:</p>
+<pre><code>p = subprocess.Popen(
+    cmd, bufsize=0, text=True, stdin=subprocess.PIPE,
+    stderr=subprocess.PIPE,  stdout=subprocess.PIPE, close_fds=True)
+fcntl.fcntl(p.stdout.fileno(), fcntl.F_SETFL, os.O_NONBLOCK)
+</code></pre>
+<p>Now <code>p.stdout.read(1024)</code> would return immediately, or with a <code>TypeError</code> bnecause internal messed up with <code>None</code> as non-blocking empty return.</p>
+<h3>Solved with <code>asyncio</code></h3>
+<p>I tried harder reading the official Python docs, turns out the most easy solution is already there:</p>
+<pre><code>proc = await asyncio.create_subprocess_exec(
+    sys.executable, '-c', code,
+    stdout=asyncio.subprocess.PIPE)
+
+# Read one line of output.
+data = await proc.stdout.readline()
+line = data.decode('ascii').rstrip()
+
+# Wait for the subprocess exit.
+await proc.wait()
+return line
+</code></pre>
+<p>I guess it's another lesson learned today.</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2024/stdout-11';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+
+  </body>
+
+</html>
