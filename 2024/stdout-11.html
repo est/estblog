@@ -58,7 +58,7 @@
   <p>It's been a while since i wrote something in English, mostly because there's nothing really interesting, <a href="https://blog.est.im/2024/stdout-09">until now</a>.</p>
 <p>Occasionally, when facing a long running task in Python, I would choose either a distrubuted tasks queue system, or for the convenience, just the <code>subprocess</code> module. It's built-in and well designed for grabbing outputs of a child process running for a short period of time.</p>
 <p>But what if the child-process takes a really, really long time? In my case it's an expensive query, or some CPU/GPU intensive task, which needs to be launched from a running Web framework, like FastAPI. </p>
-<h3>Fire and forget</h3>
+<h3>Popen() fire and forget</h3>
 <p>if child-process's output, end state and the return code are irrelevant, a simple Popen would do</p>
 <p><code>subprocess.Popen(..., stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)</code></p>
 <p>The problem is, after the child-process finishes, it will hang as a zombie, because the parents refused to claim its exit status. To fix this, add an extra parameter in <code>Popen()</code> like <code>subprocess.Popen(..., start_new_session=True)</code></p>
@@ -76,7 +76,7 @@
 <p>In a way, the child-process hebaves like <code>nohup</code> or screen/tmux, running in a detatched fashion.</p>
 <p>If you hate this many lines of code, just <code>subprocess.run("blah.sh &amp;", shell=True)</code> and wrap your commands in <code>blah.sh</code></p>
 <h3>Make <code>.communicate()</code> async</h3>
-<p>Sometimes I need to monitor and handle the stdout/stderr of a child-process, like route the outputs as an <a href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource">EventSource</a> response to the browser.</p>
+<p>Sometimes I need to monitor and handle the stdout/stderr of a child-process, like forward the outputs as an <a href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource">EventSource</a> response to the browser.</p>
 <p>First I tried <code>.communicate()</code> it will block until the process quites.</p>
 <p>Then I tried <code>Popen.stdout.read()</code>, it will also block. Eventually I found a great hack from Stackoverlow like this:</p>
 <pre><code>p = subprocess.Popen(
@@ -85,6 +85,8 @@
 fcntl.fcntl(p.stdout.fileno(), fcntl.F_SETFL, os.O_NONBLOCK)
 </code></pre>
 <p>Now <code>p.stdout.read(1024)</code> would return immediately, or with a <code>TypeError</code> bnecause internal messed up with <code>None</code> as non-blocking empty return.</p>
+<p>Wrap it with <code>try...except</code> inside a loop, it worked fine as expected.</p>
+<p>When the parent process crashes unexpectedly, the child-process is still working, to detect this, just check for <code>BrokenPipeError</code> carefully in child-process and gracefully shutdown.</p>
 <h3>Solved with <code>asyncio</code></h3>
 <p>I tried harder reading the official Python docs, turns out the most easy solution is already there:</p>
 <pre><code>proc = await asyncio.create_subprocess_exec(
@@ -99,7 +101,7 @@ line = data.decode('ascii').rstrip()
 await proc.wait()
 return line
 </code></pre>
-<p>I guess it's another lesson learned today.</p>
+<p>I guess another lesson learned today.</p>
 </article>
 
 <div class="comments">

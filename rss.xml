@@ -2,7 +2,7 @@
 <rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sat, 22 Jun 2024 12:26:00 +0800</lastBuildDate><item><title>Making subprocess async friendly in Python</title><link>https://blog.est.im/2024/stdout-11</link><description>&lt;p&gt;It's been a while since i wrote something in English, mostly because there's nothing really interesting, &lt;a href="https://blog.est.im/2024/stdout-09"&gt;until now&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Occasionally, when facing a long running task in Python, I would choose either a distrubuted tasks queue system, or for the convenience, just the &lt;code&gt;subprocess&lt;/code&gt; module. It's built-in and well designed for grabbing outputs of a child process running for a short period of time.&lt;/p&gt;
 &lt;p&gt;But what if the child-process takes a really, really long time? In my case it's an expensive query, or some CPU/GPU intensive task, which needs to be launched from a running Web framework, like FastAPI. &lt;/p&gt;
-&lt;h3&gt;Fire and forget&lt;/h3&gt;
+&lt;h3&gt;Popen() fire and forget&lt;/h3&gt;
 &lt;p&gt;if child-process's output, end state and the return code are irrelevant, a simple Popen would do&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;subprocess.Popen(..., stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;The problem is, after the child-process finishes, it will hang as a zombie, because the parents refused to claim its exit status. To fix this, add an extra parameter in &lt;code&gt;Popen()&lt;/code&gt; like &lt;code&gt;subprocess.Popen(..., start_new_session=True)&lt;/code&gt;&lt;/p&gt;
@@ -20,7 +20,7 @@
 &lt;p&gt;In a way, the child-process hebaves like &lt;code&gt;nohup&lt;/code&gt; or screen/tmux, running in a detatched fashion.&lt;/p&gt;
 &lt;p&gt;If you hate this many lines of code, just &lt;code&gt;subprocess.run("blah.sh &amp;amp;", shell=True)&lt;/code&gt; and wrap your commands in &lt;code&gt;blah.sh&lt;/code&gt;&lt;/p&gt;
 &lt;h3&gt;Make &lt;code&gt;.communicate()&lt;/code&gt; async&lt;/h3&gt;
-&lt;p&gt;Sometimes I need to monitor and handle the stdout/stderr of a child-process, like route the outputs as an &lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource"&gt;EventSource&lt;/a&gt; response to the browser.&lt;/p&gt;
+&lt;p&gt;Sometimes I need to monitor and handle the stdout/stderr of a child-process, like forward the outputs as an &lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource"&gt;EventSource&lt;/a&gt; response to the browser.&lt;/p&gt;
 &lt;p&gt;First I tried &lt;code&gt;.communicate()&lt;/code&gt; it will block until the process quites.&lt;/p&gt;
 &lt;p&gt;Then I tried &lt;code&gt;Popen.stdout.read()&lt;/code&gt;, it will also block. Eventually I found a great hack from Stackoverlow like this:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;p = subprocess.Popen(
@@ -29,6 +29,8 @@
 fcntl.fcntl(p.stdout.fileno(), fcntl.F_SETFL, os.O_NONBLOCK)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Now &lt;code&gt;p.stdout.read(1024)&lt;/code&gt; would return immediately, or with a &lt;code&gt;TypeError&lt;/code&gt; bnecause internal messed up with &lt;code&gt;None&lt;/code&gt; as non-blocking empty return.&lt;/p&gt;
+&lt;p&gt;Wrap it with &lt;code&gt;try...except&lt;/code&gt; inside a loop, it worked fine as expected.&lt;/p&gt;
+&lt;p&gt;When the parent process crashes unexpectedly, the child-process is still working, to detect this, just check for &lt;code&gt;BrokenPipeError&lt;/code&gt; carefully in child-process and gracefully shutdown.&lt;/p&gt;
 &lt;h3&gt;Solved with &lt;code&gt;asyncio&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;I tried harder reading the official Python docs, turns out the most easy solution is already there:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;proc = await asyncio.create_subprocess_exec(
@@ -43,7 +45,7 @@ line = data.decode('ascii').rstrip()
 await proc.wait()
 return line
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;I guess it's another lesson learned today.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 22 Jun 2024 12:26:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-06-22:/2024/stdout-11</guid><category>stdout</category></item><item><title>人声分离简单评测</title><link>https://blog.est.im/2024/stdout-10</link><description>&lt;p&gt;娃要去表演唱歌，老师要求提供MTV。。 视频是&lt;a href="https://www.bilibili.com/video/BV1Ty4y147Sj/"&gt;这个&lt;/a&gt;，需要去掉人声部分&lt;/p&gt;
+&lt;p&gt;I guess another lesson learned today.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 22 Jun 2024 12:26:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-06-22:/2024/stdout-11</guid><category>stdout</category></item><item><title>人声分离简单评测</title><link>https://blog.est.im/2024/stdout-10</link><description>&lt;p&gt;娃要去表演唱歌，老师要求提供MTV。。 视频是&lt;a href="https://www.bilibili.com/video/BV1Ty4y147Sj/"&gt;这个&lt;/a&gt;，需要去掉人声部分&lt;/p&gt;
 &lt;p&gt;先用 ffmpeg 提音轨 &lt;code&gt;ffmpeg -i v.mp4  -ac 1 1.mp3&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;微信小程序上的全是骗充值的，网上的服务：&lt;/p&gt;
 &lt;ol&gt;
