@@ -57,6 +57,38 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2024/stderr-04"  rel="bookmark" >
+              <h2 class="card-title">LLM, RAG 和 Groq</h2>
+            </a>
+            <p class="card-text"><p>最近跟朋友聊起LLM，RAG 究竟有没有用，能不能拿来做成产品或者服务。由于我对AI的了解也很肤浅，所以没太敢下结论。</p>
+<p>但是今天突然想起一个趣事，相传 账单·大门 院士有一句名言「640KB ought to be enough for anybody」</p>
+<p>这句话是不是他老人家说的不重要了，重要的是 IBM PC 的这个 <a href="https://en.wikipedia.org/wiki/Conventional_memory">640KB内存</a> 的梗是绕不过去了。</p>
+<p><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/IBM_PC_Memory_areas.svg/220px-IBM_PC_Memory_areas.svg.png" /></p>
+<p>后来发现 640KB 不够了怎么办？屎山上接着hack呗。于是发明了 EMM386 ，在<code>CONFIG.SYS</code> 里吟唱一句</p>
+<pre><code>DEVICE=C:\DOS\HIMEM.SYS
+</code></pre>
+<p>可以保平安。</p>
+<p>如果人人都能用 Gemini 1.5 Pro 那个 1M context tokens， 那么 RAG 技术也没啥用了吧。猜想能用 RAG 卖钱的，估计跟定制 <code>HIMEM.SYS</code> 和 <code>EMM386.EXE</code> 的市场一样。。。。。在 PC 普及的初期是一个神级，但是随着日本政府主导 VLSI产业+三星DRAM的崛起和价格战，一切都成了历史。</p>
+<hr />
+<p>又想起另外一件事：Groq</p>
+<p>也是啥都不懂，翻了些资料，发现比较有意思。CUDA vs Groq 可以看成DRAM vs SRAM。context window不足的问题：</p>
+<blockquote>
+<p>疯石头 2024-02-23 02-21： Context window到100K后，即使batch=1，GPT-3级别的大模型,KV-cache占显存的容量已经比weight要大了。实际部署时batch size至少得64才能用上tensor core。4-bit quant可以降到1/4，GQA group=8时可以再降1/8，不过还是比weight要大。sliding window不可取，遗忘问题会完全丢掉long context的优势。</p>
+</blockquote>
+<p>更详细的讲解：</p>
+<p>https://kipp.ly/transformer-inference-arithmetic/#kv-cache</p>
+<p><img alt="" src="https://kipp.ly/img/arithmetic_transformers/roofline.png" /></p>
+<p>在zhihu上翻到一些资料说，LLM推理主要成本不是矩阵计算，而是 memory access。可惜帖子找不到了。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-02-23T15:32:00+08:00">2024-02-23</time></p>
+<p>stderr</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stdin-04"  rel="bookmark" >
               <h2 class="card-title">[ZZ]西周灭亡的根本原因是什么？</h2>
             </a>
@@ -1550,37 +1582,6 @@ async def api_stream(req: Request):
 <p>苦逼撸业务的一天又开始了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2023-11-02T09:44:12+08:00">2023-11-02</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2023/stdout-11"  rel="bookmark" >
-              <h2 class="card-title">浏览器拉起钉钉客户端并跳转OA工单</h2>
-            </a>
-            <p class="card-text"><p>又是 corporate software engineering 吃屎的一天。用户在内部系统走流程，厂里用的是钉钉自带的OA工单审批。已经接入了API创建、完成工单</p>
-<p>问题在于发起工单之后，用户并没有感知，不知道工单去哪里了，流程就断了，向钉钉官方售后发起咨询，对方丢了一句：不支持。无语</p>
-<p>只能自己鼓捣。已知工单链接，在钉钉聊天窗口内部的最短的网址为：</p>
-<pre><code>  https://aflow.dingtalk.com/dingtalk/mobile/homepage.htm?corpid=...&amp;procInstId=...#approval
-</code></pre>
-<p>对方丢了一个 <a href="https://open.dingtalk.com/document/isvapp/webapp-unified-routing-protocol#title-kkq-kgx-lbq">dingtalk:// 跳转协议</a></p>
-<p>反复尝试，发现一个很有用：</p>
-<blockquote>
-<p>桌面端打开URL <br />
-<code>dingtalk://dingtalkclient/page/link</code> <br />
-侧边栏： <code>pc_slide=true</code> <br />
-大容器（类似工作台容器）<code>ddtab=true</code>   </p>
-</blockquote>
-<p>于是构造一个试试：</p>
-<pre><code>  dingtalk://dingtalkclient/page/link?url=https%3A%2F%2Faflow.dingtalk.com%2Fdingtalk%2Fpc%2Fquery%2Fpchomepage.htm%3Fcorpid%3D...%26procInstId%3D...%23%2Fapproval
-</code></pre>
-<p>然后果然ok了。</p>
-<p>钉钉给人的感觉就是各个部门 hack 强行揉合起来一个怪物。各种不完善、不一致的问题。有空写一下吐槽。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2023-10-18T14:57:00+08:00">2023-10-18</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
