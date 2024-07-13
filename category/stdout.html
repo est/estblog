@@ -57,6 +57,42 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2024/stdout-13"  rel="bookmark" >
+              <h2 class="card-title">Cappy in a Haystack locations</h2>
+            </a>
+            <p class="card-text"><p>For <a href="https://fallout.fandom.com/wiki/Cappy_in_a_Haystack">the mission</a> from the beloved Fallout 4 Nuka-World DLC</p>
+<p>coc DLC04KiddieKingdomFunHouse01; player.moveto 06015A94<br />
+coc NukaWorldWildWestExt02; player.moveto 06015A8A<br />
+coc DLC04BottlingPlant01; player.moveto 060445DF<br />
+coc DLC04BottlingPlant01; player.moveto 0604A812<br />
+coc DLC04GalacticZoneExt04; player.moveto 06015A8E<br />
+coc DLC04GalacticZoneExt04; player.moveto 0604AD3F<br />
+coc DLC04GalacticZoneExt08; player.moveto 06015A91<br />
+coc DLC04GalacticZoneExt08; player.moveto 0604AD40<br />
+coc DLC04KiddieKingdomFunHouse01; player.moveto 0604AD3D<br />
+coc DLC04WWMineCart01; player.moveto 06015A8B<br />
+coc DLC04WWMineCart01; player.moveto 0604AA39<br />
+coc KiddieKingdomExt06; player.moveto 06015A97<br />
+coc KiddieKingdomExt06; player.moveto 0604AD3E<br />
+coc NukaWorldNukaTownUSA06; player.moveto 0604A814<br />
+coc NukaWorldNukaTownUSA06; player.moveto 0604A813;<br />
+coc NukaWorldWildWestExt02; player.moveto 0604A815<br />
+coc SafariAdventure03; player.moveto 06015A9A <br />
+coc SafariAdventure03; player.moveto 0604AA3A<br />
+coc SafariAdventure07; player.moveto; 06015A9D<br />
+coc SafariAdventure07; player.moveto 06015A9D<br />
+coc SafariAdventure07; player.moveto 0604AA3B</p>
+<p>idk it just works lol.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-07-13T09:19:00+08:00">2024-07-13</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stdout-12"  rel="bookmark" >
               <h2 class="card-title">All Star Core locations in Fallout 4</h2>
             </a>
@@ -3832,33 +3868,6 @@ sudo chmod 000 GoogleSoftwareUpdate
 <p>但是现在都是 SPA 单页应用，都是先 200 返回 <code>index.html</code> 的内容，再由 javascript 的 router 去决定是否正常显示还是404 。所以返回 200 但是显示 404 就破坏了这个语义。如果要精确匹配SPA里的router如果不存在由服务器返回404，第一是搞 SSR，把前端那一坨代码跑在服务器端，第二种办法是 npm build 的时候输出一个可路由URL列表，然后部署的时候导入静态文件服务器更新。这个具体实现就留作homework由读者自行解决了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-12-08T07:38:38+08:00">2021-12-08</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2021/stdout-022"  rel="bookmark" >
-              <h2 class="card-title">人工构造Flask session模拟cookie登陆</h2>
-            </a>
-            <p class="card-text"><p>有没有好奇为什么 Flask 配置必须要求一个 <a href="https://flask.palletsprojects.com/en/latest/config/#SECRET_KEY">SECRET_KEY</a>，然后就可以在浏览器保存一个 session 状态读写数据。</p>
-<p>这里记一下它的底层实现，其实需要依赖的包是 <a href="https://itsdangerous.palletsprojects.com/">itsdangerous</a></p>
-<pre><code>  import hashlib
-  from itsdangerous import URLSafeTimedSerializer
-  URLSafeTimedSerializer(
-          'YOUR_SECRET_KEY',  # flask SECRET_KEY
-          'cookie-session',  # from flask.sessions.SecureCookieSessionInterface.salt
-          # serializer=TaggedJSONSerializer(),
-          signer_kwargs={'key_derivation': 'hmac', 'digest_method': hashlib.sha1}
-  ).dumps({
-      "your_key": "your_value"
-  })
-</code></pre>
-<p>别人如果拿到你的 <code>SECRET_KEY</code> 就可以伪造任意 session cookie 了</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-12-08T07:15:03+08:00">2021-12-08</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
