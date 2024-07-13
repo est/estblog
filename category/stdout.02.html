@@ -57,6 +57,55 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2021/stdout-021"  rel="bookmark" >
+              <h2 class="card-title">Python 3.X ctypes 和 greenlet size changed 坑三则</h2>
+            </a>
+            <p class="card-text"><h3>安装 setup.py 的时候 <code>No module named '_ctypes'</code> 报错</h3>
+<pre><code>  Traceback (most recent call last):
+    File &quot;&lt;string&gt;&quot;, line 1, in &lt;module&gt;
+    File &quot;/usr/local/python3/lib/python3.9/site-packages/setuptools/__init__.py&quot;, line 18, in &lt;module&gt;
+      from setuptools.dist import Distribution
+    File &quot;/usr/local/python3/lib/python3.9/site-packages/setuptools/dist.py&quot;, line 34, in &lt;module&gt;
+      from setuptools import windows_support
+    File &quot;/usr/local/python3/lib/python3.9/site-packages/setuptools/windows_support.py&quot;, line 2, in &lt;module&gt;
+      import ctypes
+    File &quot;/usr/local/python3/lib/python3.9/ctypes/__init__.py&quot;, line 8, in &lt;module&gt;
+      from _ctypes import Union, Structure, Array
+  ModuleNotFoundError: No module named '_ctypes'
+</code></pre>
+<p>解决办法是不要用 3.9。</p>
+<p>如果实在要用，则自己编译前需要加上 <code>yum install libffi-devel</code> 或者 <code>sudo apt-get install libffi-dev</code></p>
+<p>来自<a href="https://stackoverflow.com/a/48045929">SO</a></p>
+<h3><code>greenlet.greenlet size changed</code> 然后出错</h3>
+<pre><code>/usr/local/lib/python3.7/importlib/_bootstrap.py:219: RuntimeWarning: greenlet.greenlet size changed, may indicate binary incompatibility. Expected 144 from C header, got 152 from PyObject
+  return f(*args, **kwds)
+/usr/local/lib/python3.7/importlib/_bootstrap.py:219: RuntimeWarning: greenlet.greenlet size changed, may indicate binary incompatibility. Expected 144 from C header, got 152 from PyObject
+  return f(*args, **kwds)
+
+Segmentation fault (core dumped)
+</code></pre>
+<p>这个摘自<a href="https://github.com/gevent/gevent/issues/1260">官方 iseue</a></p>
+<blockquote>
+<p>On Python 3.7 and higher, gevent 20.9.0 is required to use (a standard build of) greenlet 0.4.17.</p>
+</blockquote>
+<p>解决办法：<code>pip install gevent==20.9.0 pip install greenlet==0.4.17</code></p>
+<h3>SQLAlchemy 1.4 大战 greenlet 0.4.17</h3>
+<p>见 <a href="https://docs.sqlalchemy.org/en/14/changelog/changelog_14.html#change-12b8eb8e600cc32590b51d0087552191">sqlalchemy changelog</a></p>
+<blockquote>
+<p>to accommodate for the handling of Python contextvars (introduced in Python 3.7) for greenlet versions greater than 0.4.17. Greenlet version 0.4.17 added automatic handling of contextvars in a backwards-incompatible way; we’ve coordinated with the greenlet authors to add a preferred API for this in versions subsequent to 0.4.17 which is now supported by SQLAlchemy’s greenlet integration. For greenlet versions prior to 0.4.17 no behavioral change is needed, version 0.4.17 itself is blocked from the dependencies.</p>
+</blockquote>
+<p>然后就直接在 <a href="https://github.com/sqlalchemy/sqlalchemy/blob/703ff387c13f083ed0982071963155d679c862ab/setup.cfg#L42">setup.cfg里</a> 给 <code>greenlet != 0.4.17</code>了。</p>
+<p>神仙打架，不听不听，和尚念经，果断 <code>sqlalchemy==1.3.24</code> 降级。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-12-01T17:41:32+08:00">2021-12-01</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2021/stdout-020"  rel="bookmark" >
               <h2 class="card-title">Edge调教指南——如何设置本地PAC代理和首页天气</h2>
             </a>
