@@ -57,6 +57,44 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2024/stdout-14"  rel="bookmark" >
+              <h2 class="card-title">Valid HTTP verbs</h2>
+            </a>
+            <p class="card-text"><p>从<a href="https://www.v2ex.com/t/1057881">这里</a> 想到，fetch/xhr 可以发起哪些 http verb 呢？</p>
+<p><code>python -m http.server</code> 随手测试了下，发现连 <code>!</code>，<code>$</code> 这种符号都可以作为 http verb，比如 <code>fetch('/asdf', {method:"$"})</code> 这样的请求是能发起的。于是去 chromium 搜了下 <code>"is not a valid HTTP method"</code> 相关的解析放在 <a href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/platform/network/http_parsers.cc;drc=fa1e0cf5238e2600039f60af6909aefbd4cf003c;l=404">blink/renderer/platform/network/http_parsers.cc</a></p>
+<pre><code>// See RFC 7230, Section 3.2.6.
+bool IsValidHTTPToken(const String&amp; characters) {
+  if (characters.empty())
+    return false;
+  for (unsigned i = 0; i &lt; characters.length(); ++i) {
+    UChar c = characters[i];
+    if (c &gt; 0x7F || !net::HttpUtil::IsTokenChar(c))
+      return false;
+  }
+  return true;
+}
+
+bool HttpUtil::IsTokenChar(char c) {
+  return !(c &gt;= 0x7F || c &lt;= 0x20 || c == '(' || c == ')' || c == '&lt;' ||
+           c == '&gt;' || c == '@' || c == ',' || c == ';' || c == ':' ||
+           c == '\\' || c == '"' || c == '/' || c == '[' || c == ']' ||
+           c == '?' || c == '=' || c == '{' || c == '}');
+}
+</code></pre>
+<p>原来如此，RFC 7230呀。于是把这些字符打出来：<code>' '.join(chr(x) for x in range(0x20, 0x7f))</code></p>
+<pre><code>! # $ % &amp; ' * + - . 0 1 2 3 4 5 6 7 8 9 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z ^ _ ` a b c d e f g h i j k l m n o p q r s t u v w x y z | ~
+</code></pre>
+<p>那还搞个屁的 RESTful 啊。直接用特殊符号一把梭。不过各种服务端框架可能不是很容易做兼容。哈哈。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-07-17T09:47:00+08:00">2024-07-17</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stdout-13"  rel="bookmark" >
               <h2 class="card-title">Cappy in a Haystack locations</h2>
             </a>
@@ -3835,42 +3873,6 @@ sudo chmod 000 GoogleSoftwareUpdate
 <p>然后 <code>tuna 1.log</code> ，会自动打开浏览器围观 <code>import</code> 耗时分布。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-12-22T14:00:28+08:00">2021-12-22</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2021/stdout-023"  rel="bookmark" >
-              <h2 class="card-title">FastAPI/Starlette支持静态文件支持SPA</h2>
-            </a>
-            <p class="card-text"><p>FastAPI 官方支持 <code>from fastapi.staticfiles import StaticFiles</code> 充当一个静态文件服务器</p>
-<p>其实实现是 starlette。这玩意可以在 <code>directory</code> 下放一个 <code>404.html</code>，恰好单页应用也需要用 <code>index.html</code> 充当所有 javascript 框架注册的 router</p>
-<p>只是有一个毛病，这货返回的 HTTP status code 是 404。用起来没啥大毛病，但是就是浏览器不会记录网址，导致没法匹配浏览历史快速找到之前访问过的页面。</p>
-<p>拿来改改继续用</p>
-<pre><code>  from starlette.staticfiles import StaticFiles, Scope, Headers, Response, FileResponse
-
-  class StaticFilesWithout404(StaticFiles):
-      async def get_response(self, path: str, scope: Scope) -&gt; Response:
-          r = await super().get_response(path, scope)
-          h = Headers(scope=scope)
-          full_path, stat_result = await self.lookup_path('404.html')
-          if isinstance(r, FileResponse) and r.path == full_path:
-              if 'text/html' in (h.get('accept') or ''):
-                  r.status_code = 200
-              else:
-                  return Response('', status_code=404)
-          return r
-
-  app.mount("/frontend", StaticFilesWithout404(directory="frontend", html=True), name="static")
-</code></pre>
-<p>这段代码大概是起到了类似 <a href="http://nginx.org/en/docs/http/ngx_http_core_module.html#try_files">nginx <code>try_files</code></a> 的作用。默认静态文件映射一个目录，但是如果找不到就按根目录的 index.html 输出。这里还判断了请求的 <code>accept</code> 头，如果是 xhr/Fetch 就会直接返回一个0字节长度无MIME的404。</p>
-<p>由此我想到了一个学究式的 leaky abstraction。众所周知，如果一个URL不存在，那么服务器应该返回404</p>
-<p>但是现在都是 SPA 单页应用，都是先 200 返回 <code>index.html</code> 的内容，再由 javascript 的 router 去决定是否正常显示还是404 。所以返回 200 但是显示 404 就破坏了这个语义。如果要精确匹配SPA里的router如果不存在由服务器返回404，第一是搞 SSR，把前端那一坨代码跑在服务器端，第二种办法是 npm build 的时候输出一个可路由URL列表，然后部署的时候导入静态文件服务器更新。这个具体实现就留作homework由读者自行解决了。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-12-08T07:38:38+08:00">2021-12-08</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

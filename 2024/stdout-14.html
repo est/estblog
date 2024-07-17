@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Valid HTTP verbs – est の 输入输出</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入输出 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Valid HTTP verbs" />
+
+    <link rel="canonical" href="https://blog.est.im/2024/stdout-14" />
+    <meta property="og:url" content="https://blog.est.im/2024/stdout-14">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Valid HTTP verbs">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入输出
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Valid HTTP verbs</h2>
+    <p class="post-date">Posted <time datetime="2024-07-17T09:47:00+08:00">2024-07-17</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>从<a href="https://www.v2ex.com/t/1057881">这里</a> 想到，fetch/xhr 可以发起哪些 http verb 呢？</p>
+<p><code>python -m http.server</code> 随手测试了下，发现连 <code>!</code>，<code>$</code> 这种符号都可以作为 http verb，比如 <code>fetch('/asdf', {method:"$"})</code> 这样的请求是能发起的。于是去 chromium 搜了下 <code>"is not a valid HTTP method"</code> 相关的解析放在 <a href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/platform/network/http_parsers.cc;drc=fa1e0cf5238e2600039f60af6909aefbd4cf003c;l=404">blink/renderer/platform/network/http_parsers.cc</a></p>
+<pre><code>// See RFC 7230, Section 3.2.6.
+bool IsValidHTTPToken(const String&amp; characters) {
+  if (characters.empty())
+    return false;
+  for (unsigned i = 0; i &lt; characters.length(); ++i) {
+    UChar c = characters[i];
+    if (c &gt; 0x7F || !net::HttpUtil::IsTokenChar(c))
+      return false;
+  }
+  return true;
+}
+
+bool HttpUtil::IsTokenChar(char c) {
+  return !(c &gt;= 0x7F || c &lt;= 0x20 || c == '(' || c == ')' || c == '&lt;' ||
+           c == '&gt;' || c == '@' || c == ',' || c == ';' || c == ':' ||
+           c == '\\' || c == '"' || c == '/' || c == '[' || c == ']' ||
+           c == '?' || c == '=' || c == '{' || c == '}');
+}
+</code></pre>
+<p>原来如此，RFC 7230呀。于是把这些字符打出来：<code>' '.join(chr(x) for x in range(0x20, 0x7f))</code></p>
+<pre><code>! # $ % &amp; ' * + - . 0 1 2 3 4 5 6 7 8 9 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z ^ _ ` a b c d e f g h i j k l m n o p q r s t u v w x y z | ~
+</code></pre>
+<p>那还搞个屁的 RESTful 啊。直接用特殊符号一把梭。不过各种服务端框架可能不是很容易做兼容。哈哈。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2024/stdout-14';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+
+  </body>
+
+</html>
