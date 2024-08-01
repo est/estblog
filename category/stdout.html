@@ -57,6 +57,54 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2024/stdout-15"  rel="bookmark" >
+              <h2 class="card-title">关于 cn.cyberIdentity.certification 的一些技术信息</h2>
+            </a>
+            <p class="card-text"><p>搜索该app名字可以得到 </p>
+<p><a href="https://apps.apple.com/cn/app/_/id1588080869">https://apps.apple.com/cn/app/_/id1588080869</a></p>
+<p>各大app市场都有隐私政策页，点击可以发现网址是：</p>
+<p>https://cdnrefresh.ctdidcii.cn/w1/WHClient_H5/pages/secret.html</p>
+<p>甚至有一个 apk 下载页面</p>
+<p>https://cdnrefresh.ctdidcii.cn/w1/WHClient_H5/Install/InstallGuide.html</p>
+<p>https://cdnrefresh.ctdidcii.cn/w1/version/cyberIdentity-android.apk</p>
+<p><code>whois ctdidcii.cn</code> 可以得到</p>
+<blockquote>
+<p>Registrant: XX部第一研究所<br />
+Registrant Contact Email: songjie@anicert.cn</p>
+</blockquote>
+<p>可以发现该公司官网</p>
+<blockquote>
+<p>有限公司（以下简称“ZDAX”）是<code>**部</code>第一研究所下属全资子公司。<br />
+<code>**部</code>第一研究所以国家“互联网+”可信身份认证平台（简称“CTID平台”）核心技术为依托，致力于为各级政府部门、互联网运营商、各行业应用提供权威、可信、安全、便捷的身份认证服务，并开展相关业务创新。在<code>**部</code>的直接领导下，<code>**办</code>、国家发改委、科技部等部委的大力支持下，<code>**部</code>第一研究所积极开展居民身份证网上应用研究，组织承建CTID平台，助力新时代社会治理现代化。<br />
+2017年10月，<code>**部</code>第一研究所成立ZDAX公司，并授权ZDAX为CTID平台唯一合法的运营服务商，为各行业提供权威、可信、安全、便捷的网络身份认证服务，为我国“互联网+行动战略”提供强有力的支撑保障。</p>
+</blockquote>
+<p>以及平台介绍说明</p>
+<p>https://www.anicert.cn/platform.html</p>
+<blockquote>
+<p>● 一次一码，超时失效<br />
+● 通过国密算法加密、签名防止数据泄露、篡改和伪造<br />
+根据相关行政许可设立的第三方签发、面向系统应用可作为司法采证使用的身份凭证，如电子认证服务提供者、CA机构等第三方签发的电子签名认证证书、eID等；</p>
+</blockquote>
+<p>得出一个结论，这玩意不<em>仅</em>是eID换皮那么简单。</p>
+<p>点开发展历程可以看到 </p>
+<blockquote>
+<p>2020.12 《<a href="https://www.anicert.cn/upload/2020/12/25/16088934002753h4n2m.pdf">基于可信数字身份的区块链应用服务白皮书</a>》正式发布</p>
+</blockquote>
+<p>上面提到的厦门公司，看上去是专门做 CDIT 运营的，搜了下官网是</p>
+<p>https://easyctid.cn/about</p>
+<p>其中有一张最重要的架构图</p>
+<p><img referrerpolicy="no-referrer" src="https://easyctid.cn/_nuxt/img/bg-3.c5fe831.png" /></p>
+<p>目前不知道这个 PID 是唯一的还是可变的。要实用还是得做类似微信那种 OpenID/UnionID 才行。因为技术对接SDK需要付费签协议才能拿到，细节就无从而知了。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-08-01T15:20:00+08:00">2024-08-01</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stdout-14"  rel="bookmark" >
               <h2 class="card-title">Valid HTTP verbs</h2>
             </a>
@@ -3855,24 +3903,6 @@ sudo chmod 000 GoogleSoftwareUpdate
 </ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-12-24T23:59:59+08:00">2021-12-24</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2021/stdout-025"  rel="bookmark" >
-              <h2 class="card-title">如何可视化跟踪分析 Python import 耗时</h2>
-            </a>
-            <p class="card-text"><p>首先在本地安装 <code>pip install tuna</code></p>
-<p>然后跑个分，需要 <code>CPython &gt;= 3.7</code>，输入</p>
-<p><code>PYTHONPROFILEIMPORTTIME=1 python3 myscript.py 2&gt;1.log</code></p>
-<p><img alt="tuna" src="https://camo.githubusercontent.com/d76ac242a42f9c394c1ae66da655173a51d9ed9c09107dd8d42b684c15aa2d05/68747470733a2f2f6e7363686c6f652e6769746875622e696f2f74756e612f666f6f2e706e67" /></p>
-<p>然后 <code>tuna 1.log</code> ，会自动打开浏览器围观 <code>import</code> 耗时分布。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-12-22T14:00:28+08:00">2021-12-22</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
