@@ -56,9 +56,9 @@
 
   
   <p>昨天大早上的6点就醒了，翻来覆去睡不着，就开始胡思乱想。忘记是什么缘起了，反正突然想到一个问题，博客这种静态站，又要输出html，又要输出rss。太冗余了。要不直接把内容存在RSS里。然后用js去<code>fetch()</code>。。。。</p>
-<p>等等，死去的记忆突然攻击我。RSS不就是XML，XML似乎有个加皮肤的技术。于是就更睡不着了，起床一查，我原来是 XSLT 转换成 HTML 然后就可以自由发挥了。</p>
+<p>等等，死去的记忆突然攻击我。RSS不就是XML，XML似乎有个加皮肤的技术。于是就更睡不着了，起床一查，原来是 XSLT 转换成 HTML 然后就可以自由发挥了。</p>
 <p>可行性没问题，准备找个前人的例子开抄。比如 <a href="https://natclark.com/tutorials/xslt-style-rss-feed/">2021年Nathan Clark的Styling an RSS Feed With XSLT</a>，<a href="https://darekkay.com/blog/rss-styling/">2023年Darek Kay的Style your RSS feed</a></p>
-<p>思路就很匹配，执行效果也不错。我想百尺竿头更进一步，把 XSL 给 inline 到 RSS 里。这下坑大了，折腾到现在才有个初步结果。直接贴成果：</p>
+<p>思路就很匹配，执行效果也不错。我想百尺竿头更进一步，把 XSL 给 inline 到 RSS 里，避免额外的加载，节省一次网络请求。吗，没想到这下麻烦大了，折腾到现在才有个初步结果。直接贴源码：</p>
 <pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
 &lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;#stylesheet&quot;?&gt;
 
@@ -82,10 +82,11 @@
 <p>好好的，加上 <code>xmlns</code> 就得写成：</p>
 <p><code>&lt;xsl:for-each select="/*[local-name() = 'urlset']/*[local-name() = 'url']"&gt;</code></p>
 <p>怪不得现在没人玩XML了。这破玩意没法直观的本地调试，还得靠各种第三方 validator，反人类啊。</p>
-<p>于是把根的 xmlns 直接改成 tag namespace。也就是 <code>xmlns:shit</code> 。反正你namespace冲突了关我什么事？而且说实话，<s>xmlns这玩意除了坑各种解析器不好写之外，并没有什么卵用。我以前写都是想办法去掉 xmlns 再解析。感觉这一块真的 over-engineering 了。</s> 好像有点明白 namespace 是干嘛的了。这玩意主要解决一个sb需求：允许多个XML合并到一个文件里。这不就得考虑如何分清楚tag谁是谁的。。。。并且标准已经挖好坑了，一个XML有且只有一个root。。你把别的 xml 合并进来，那的确不容易区分。还有这样写不会造成文件体积膨胀吗？真是xsl笑死了。</p>
-<p>接下来的问题就是如何生成一个规规矩矩的 html5 doctype。这块其实可以在<code>&lt;xsl:template&gt;</code>后面加上 </p>
+<p>于是把根的 xmlns 直接改成 tag namespace。也就是 <code>xmlns:shit</code> 。反正你namespace冲突了关我什么事？<s>而且说实话，xmlns这玩意除了坑各种解析器不好写之外，并没有什么卵用。我以前写都是想办法去掉 xmlns 再解析。感觉这一块真的 over-engineering 了。</s> 好像有点明白 namespace 是干嘛的了。这玩意主要解决一个sb需求：允许多个XML合并到一个文件里。这不就得考虑如何分清楚tag谁是谁的。。。。并且标准已经挖好坑了，一个XML有且只有一个root。。你把别的 tag 合并进来，那的确不容易区分。还有这样写不会造成文件体积膨胀吗？真是xsl笑死了。</p>
+<p>接下来的问题就是如何生成一个规规矩矩的 html5 doctype。搜了下 <code>doctype-system</code>就可以了。本来其实可以在<code>&lt;xsl:template&gt;</code>后面加上 </p>
 <p><code>&lt;xsl:text disable-output-escaping='yes'&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/xsl:text&gt;</code></p>
-<p>另外吐槽下 Chrome，默认把xml渲染成html了，在 devtool 里通过 <code>$x()</code> 无法直接调试xpath，还得靠别的第三方工具。(⊙﹏⊙) </p>
+<p>但实际只加这个是不行的。</p>
+<p>另外吐槽下 Chrome，默认的viewer把xml渲染成html了，在 devtool 里通过 <code>$x()</code> 无法直接调试xpath，还得靠别的第三方工具。(⊙﹏⊙) </p>
 <p>这可能就是XSL的核心问题了——没法方便直观的调试，挂了就给你白屏。有点react那种白屏的 ptsd 感觉了。</p>
 </article>
 
