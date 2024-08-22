@@ -83,7 +83,7 @@
 <p>好好的，加上 <code>xmlns</code> 就得写成：</p>
 <p><code>&lt;xsl:for-each select="/*[local-name() = 'urlset']/*[local-name() = 'url']"&gt;</code></p>
 <p>怪不得现在没人玩XML了。这破玩意没法直观的本地调试，还得靠各种第三方 validator，反人类啊。</p>
-<p>于是把根的 xmlns 直接改成 tag namespace。也就是 <code>xmlns:shit</code> 。反正你namespace冲突了关我什么事？而且说实话，xmlns这玩意除了坑各种解析器不好写之外，并没有什么卵用。我以前写都是想办法去掉 xmlns 再解析。感觉这一块真的 over-engineer 了。</p>
+<p>于是把根的 xmlns 直接改成 tag namespace。也就是 <code>xmlns:shit</code> 。反正你namespace冲突了关我什么事？而且说实话，<s>xmlns这玩意除了坑各种解析器不好写之外，并没有什么卵用。</s> 好像有点明白 namespace 是干嘛的了。这玩意主要解决一个sb需求：允许多个XML合并到一个文件里而且能分清楚tag谁是谁的。。。。主要是标准已经挖好坑了，一个XML有且只有一个root。。你把别的 xml 合并进来，那的确不容易区分哪个 tag 是谁的。但是这样写不会造成文件体积膨胀吗？</p>
 <p>其次就是如何生成一个规规矩矩的 html5 doctype。这块其实可以在<code>&lt;xsl:template&gt;</code>后面加上 </p>
 <p><code>&lt;xsl:text disable-output-escaping='yes'&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/xsl:text&gt;</code></p>
 <p>另外吐槽下 Chrome，默认把xml渲染成html了，在 devtool 里通过 <code>$x()</code> 无法直接调试，还得靠别的 xpath 工具。(⊙﹏⊙) </p>

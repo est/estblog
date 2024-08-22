@@ -27,7 +27,7 @@
 &lt;p&gt;好好的，加上 &lt;code&gt;xmlns&lt;/code&gt; 就得写成：&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;&amp;lt;xsl:for-each select="/*[local-name() = 'urlset']/*[local-name() = 'url']"&amp;gt;&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;怪不得现在没人玩XML了。这破玩意没法直观的本地调试，还得靠各种第三方 validator，反人类啊。&lt;/p&gt;
-&lt;p&gt;于是把根的 xmlns 直接改成 tag namespace。也就是 &lt;code&gt;xmlns:shit&lt;/code&gt; 。反正你namespace冲突了关我什么事？而且说实话，xmlns这玩意除了坑各种解析器不好写之外，并没有什么卵用。我以前写都是想办法去掉 xmlns 再解析。感觉这一块真的 over-engineer 了。&lt;/p&gt;
+&lt;p&gt;于是把根的 xmlns 直接改成 tag namespace。也就是 &lt;code&gt;xmlns:shit&lt;/code&gt; 。反正你namespace冲突了关我什么事？而且说实话，&lt;s&gt;xmlns这玩意除了坑各种解析器不好写之外，并没有什么卵用。&lt;/s&gt; 好像有点明白 namespace 是干嘛的了。这玩意主要解决一个sb需求：允许多个XML合并到一个文件里而且能分清楚tag谁是谁的。。。。主要是标准已经挖好坑了，一个XML有且只有一个root。。你把别的 xml 合并进来，那的确不容易区分哪个 tag 是谁的。但是这样写不会造成文件体积膨胀吗？&lt;/p&gt;
 &lt;p&gt;其次就是如何生成一个规规矩矩的 html5 doctype。这块其实可以在&lt;code&gt;&amp;lt;xsl:template&amp;gt;&lt;/code&gt;后面加上 &lt;/p&gt;
 &lt;p&gt;&lt;code&gt;&amp;lt;xsl:text disable-output-escaping='yes'&amp;gt;&amp;amp;lt;!DOCTYPE html&amp;amp;gt;&amp;lt;/xsl:text&amp;gt;&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;另外吐槽下 Chrome，默认把xml渲染成html了，在 devtool 里通过 &lt;code&gt;$x()&lt;/code&gt; 无法直接调试，还得靠别的 xpath 工具。(⊙﹏⊙) &lt;/p&gt;
