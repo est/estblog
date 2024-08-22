@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>2024年玩xml真是笑死了（xsl） – est の 输入输出</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入输出 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="2024年玩xml真是笑死了（xsl）" />
+
+    <link rel="canonical" href="https://blog.est.im/2024/stdout-16" />
+    <meta property="og:url" content="https://blog.est.im/2024/stdout-16">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="2024年玩xml真是笑死了（xsl）">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入输出
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">2024年玩xml真是笑死了（xsl）</h2>
+    <p class="post-date">Posted <time datetime="2024-08-22T23:09:00+08:00">2024-08-22</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>昨天大早上的就尿涨醒了，拉完6点后就翻来覆去睡不着，就开始胡思乱想。</p>
+<p>忘记是什么缘起了，反正突然想到一个问题，博客这种静态站，又要输出html，又要输出rss。太冗余了。要不直接把内容存在RSS里。然后用js去<code>fetch</code>。。。。</p>
+<p>等等，死去的记忆突然攻击我。RSS不就是XML，XML似乎有个加美化的技术。于是就更睡不着了，起床一查，我原来是 XSLT 转换成 HTML 然后就可以自由发挥了。</p>
+<p>可行性没问题，准备找个前人的例子开抄。比如 <a href="https://natclark.com/tutorials/xslt-style-rss-feed/">2021年Nathan Clark的Styling an RSS Feed With XSLT</a>，<a href="https://darekkay.com/blog/rss-styling/">2023年Darek Kay的Style your RSS feed</a></p>
+<p>思路就很匹配，执行效果也不错。我想百尺竿头更进一步，把 XSL 给 inline 到 RSS 里。这下坑大了，折腾到现在才有个初步结果。直接贴成果：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;#stylesheet&quot;?&gt;
+
+&lt;some_xml_root xmlns:shit=&quot;http://xxx&quot;&gt;
+
+&lt;xsl:stylesheet xml:id=&quot;stylesheet&quot; version=&quot;3.0&quot; xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;&gt;
+&lt;xsl:output method=&quot;html&quot; doctype-system=&quot;about:legacy-compat&quot; version=&quot;5.0&quot; encoding=&quot;UTF-8&quot; indent=&quot;yes&quot; /&gt;
+&lt;xsl:template match=&quot;/&quot;&gt;
+  &lt;html&gt;
+    ...
+  &lt;/html&gt;
+
+&lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;
+
+&lt;/some_xml_root&gt;
+</code></pre>
+<p>这里的 inline 方法，<a href="https://www.w3.org/TR/xslt-30/#embedded"> <code>&lt;xml-stylesheet href="#xxx" /&gt;</code></a> 是官方推荐的。但是要起效果，一定注意 <code>type="text/xsl"</code> 别抄成网上的 <code>application/xslt+xml</code> 了</p>
+<p>主要浪费时间的坑点主要在根的 <code>xmlns</code> 上。这玩意把 xpath 给搞挂了。比如 sitemap你写</p>
+<p><code>&lt;xsl:for-each select="/urlset/url"&gt;</code></p>
+<p>好好的，加上 <code>xmlns</code> 就得写成：</p>
+<p><code>&lt;xsl:for-each select="/*[local-name() = 'urlset']/*[local-name() = 'url']"&gt;</code></p>
+<p>怪不得现在没人玩XML了。这破玩意没法直观的本地调试，还得靠各种第三方 validator，反人类啊。</p>
+<p>于是把根的 xmlns 直接改成 tag namespace。也就是 <code>xmlns:shit</code> 。反正你namespace冲突了关我什么事？而且说实话，xmlns这玩意除了坑各种解析器不好写之外，并没有什么卵用。我以前写都是想办法去掉 xmlns 再解析。感觉这一块真的 over-engineer 了。</p>
+<p>其次就是如何生成一个规规矩矩的 html5 doctype。这块其实可以在<code>&lt;xsl:template&gt;</code>后面加上 </p>
+<p><code>&lt;xsl:text disable-output-escaping='yes'&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/xsl:text&gt;</code></p>
+<p>另外吐槽下 Chrome，默认把xml渲染成html了，在 devtool 里通过 <code>$x()</code> 无法直接调试，还得靠别的 xpath 工具。(⊙﹏⊙) </p>
+<p>XSL的问题也一样。没法方便直观的调试，挂了就给你白屏。有点react那种白屏的 ptsd 感觉了。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2024/stdout-16';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+
+  </body>
+
+</html>

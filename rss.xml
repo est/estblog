@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 13 Aug 2024 16:16:00 +0800</lastBuildDate><item><title>大清卷王 和 骑士</title><link>https://blog.est.im/2024/stdin-12</link><description>&lt;p&gt;看到个推：&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Thu, 22 Aug 2024 23:09:00 +0800</lastBuildDate><item><title>2024年玩xml真是笑死了（xsl）</title><link>https://blog.est.im/2024/stdout-16</link><description>&lt;p&gt;昨天大早上的就尿涨醒了，拉完6点后就翻来覆去睡不着，就开始胡思乱想。&lt;/p&gt;
+&lt;p&gt;忘记是什么缘起了，反正突然想到一个问题，博客这种静态站，又要输出html，又要输出rss。太冗余了。要不直接把内容存在RSS里。然后用js去&lt;code&gt;fetch&lt;/code&gt;。。。。&lt;/p&gt;
+&lt;p&gt;等等，死去的记忆突然攻击我。RSS不就是XML，XML似乎有个加美化的技术。于是就更睡不着了，起床一查，我原来是 XSLT 转换成 HTML 然后就可以自由发挥了。&lt;/p&gt;
+&lt;p&gt;可行性没问题，准备找个前人的例子开抄。比如 &lt;a href="https://natclark.com/tutorials/xslt-style-rss-feed/"&gt;2021年Nathan Clark的Styling an RSS Feed With XSLT&lt;/a&gt;，&lt;a href="https://darekkay.com/blog/rss-styling/"&gt;2023年Darek Kay的Style your RSS feed&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;思路就很匹配，执行效果也不错。我想百尺竿头更进一步，把 XSL 给 inline 到 RSS 里。这下坑大了，折腾到现在才有个初步结果。直接贴成果：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
+&amp;lt;?xml-stylesheet type=&amp;quot;text/xsl&amp;quot; href=&amp;quot;#stylesheet&amp;quot;?&amp;gt;
+
+&amp;lt;some_xml_root xmlns:shit=&amp;quot;http://xxx&amp;quot;&amp;gt;
+
+&amp;lt;xsl:stylesheet xml:id=&amp;quot;stylesheet&amp;quot; version=&amp;quot;3.0&amp;quot; xmlns:xsl=&amp;quot;http://www.w3.org/1999/XSL/Transform&amp;quot;&amp;gt;
+&amp;lt;xsl:output method=&amp;quot;html&amp;quot; doctype-system=&amp;quot;about:legacy-compat&amp;quot; version=&amp;quot;5.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot; indent=&amp;quot;yes&amp;quot; /&amp;gt;
+&amp;lt;xsl:template match=&amp;quot;/&amp;quot;&amp;gt;
+  &amp;lt;html&amp;gt;
+    ...
+  &amp;lt;/html&amp;gt;
+
+&amp;lt;/xsl:template&amp;gt;
+&amp;lt;/xsl:stylesheet&amp;gt;
+
+&amp;lt;/some_xml_root&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这里的 inline 方法，&lt;a href="https://www.w3.org/TR/xslt-30/#embedded"&gt; &lt;code&gt;&amp;lt;xml-stylesheet href="#xxx" /&amp;gt;&lt;/code&gt;&lt;/a&gt; 是官方推荐的。但是要起效果，一定注意 &lt;code&gt;type="text/xsl"&lt;/code&gt; 别抄成网上的 &lt;code&gt;application/xslt+xml&lt;/code&gt; 了&lt;/p&gt;
+&lt;p&gt;主要浪费时间的坑点主要在根的 &lt;code&gt;xmlns&lt;/code&gt; 上。这玩意把 xpath 给搞挂了。比如 sitemap你写&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;&amp;lt;xsl:for-each select="/urlset/url"&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;好好的，加上 &lt;code&gt;xmlns&lt;/code&gt; 就得写成：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;&amp;lt;xsl:for-each select="/*[local-name() = 'urlset']/*[local-name() = 'url']"&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;怪不得现在没人玩XML了。这破玩意没法直观的本地调试，还得靠各种第三方 validator，反人类啊。&lt;/p&gt;
+&lt;p&gt;于是把根的 xmlns 直接改成 tag namespace。也就是 &lt;code&gt;xmlns:shit&lt;/code&gt; 。反正你namespace冲突了关我什么事？而且说实话，xmlns这玩意除了坑各种解析器不好写之外，并没有什么卵用。我以前写都是想办法去掉 xmlns 再解析。感觉这一块真的 over-engineer 了。&lt;/p&gt;
+&lt;p&gt;其次就是如何生成一个规规矩矩的 html5 doctype。这块其实可以在&lt;code&gt;&amp;lt;xsl:template&amp;gt;&lt;/code&gt;后面加上 &lt;/p&gt;
+&lt;p&gt;&lt;code&gt;&amp;lt;xsl:text disable-output-escaping='yes'&amp;gt;&amp;amp;lt;!DOCTYPE html&amp;amp;gt;&amp;lt;/xsl:text&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;另外吐槽下 Chrome，默认把xml渲染成html了，在 devtool 里通过 &lt;code&gt;$x()&lt;/code&gt; 无法直接调试，还得靠别的 xpath 工具。(⊙﹏⊙) &lt;/p&gt;
+&lt;p&gt;XSL的问题也一样。没法方便直观的调试，挂了就给你白屏。有点react那种白屏的 ptsd 感觉了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 22 Aug 2024 23:09:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-08-22:/2024/stdout-16</guid><category>stdout</category></item><item><title>大清卷王 和 骑士</title><link>https://blog.est.im/2024/stdin-12</link><description>&lt;p&gt;看到个推：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;蕨代霜蛟 &lt;a href="https://x.com/ferntrino/status/1823188040317341731"&gt;@ferntrino 10:41 AM · Aug 13, 2024&lt;/a&gt;&lt;br /&gt;
 杭州抗议骑手事件本身就不参与讨论了，难受的是自己的。但有一个细节真的非常黑色素幽默，那就是名单列表顶上的字段。系统命名时还真随手就把骑手的ID命名为Knight ID。&lt;br /&gt;
@@ -502,27 +534,4 @@ Win+R 敲入：&lt;br /&gt;
 &lt;p&gt;既然都可以自定义设计人体四肢了，干脆全部身体结构推倒重构吧。人全身上下全改造了，保留啥呢？保留一个头作为意识留下吧。&lt;/p&gt;
 &lt;p&gt;所以未来的人类可能是：女性就不要怀孕受累了，人工授精+人造子宫，生出来一个基础款的肉体。社会教育给与起步款的灵魂之后，这个「幼体」就得去搜集改造自己的营养和原材料，然后时机成熟之后，做一个「虫蛹」然后把自己封印起来重新改造。改造完之后就「变态」为高级形态  b（￣▽￣）d　&lt;/p&gt;
 &lt;p&gt;这一套机制最大的问题就是，改造人不能自我复制。如果基因改造有突破，能自定义编辑，那么很多人可能会选预设一套3D打印机，人生下来就真的可以外观类似毛毛虫，到处爬行去自动拾取有机物、无机物矿物质，然后疯狂积累原材料到足够改造自己的身体之后，找一个安全的地方造蛹，然后打印身体。最后破蛹而出参与生殖都斗争和扩大领地，然后继续繁衍。。233333&lt;/p&gt;
-&lt;p&gt;胡思乱想的。如有冒犯，梦境全责！&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 26 Mar 2024 08:49:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-03-26:/2024/stderr-05</guid><category>stderr</category></item><item><title>快速入睡的技巧和原理</title><link>https://blog.est.im/2024/stdout-05</link><description>&lt;p&gt;随着年龄的增长，加上工作和生活的恶习，睡眠越来越不好。很多时候躺在床上明明已经非常困了，但是大脑一不小心陷入胡思乱想，然后越想越睡不着。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="" src="/images/2024/stdout-05-01.jpg" /&gt;&lt;/p&gt;
-&lt;p&gt;很多人说把大脑放空就能睡着了，我也试过，放空是不可能的，大脑时时刻刻总得琢磨点什么；既然要琢磨点什么，那我们能否找一部分最容易睡着的来琢磨？这几年我倒琢磨出一个非常行之有效的方法用来入睡：&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;停止理性推演！强行带入感性的、放松、舒服的回忆体验占据大脑活动&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;具体展开，首先我这里对睡不着的「胡思乱想」作了一个二元分类：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;一种是「理性」，逻辑推演：工作上的任务如何完成，生活中的矛盾如何化解，职业和家庭面对的困难，身边人群的压力，社会环境如何改进，民族国家的命运如何？电车会是能源革命吗？巴以冲突俄乌战争如何化解？等等，这类胡思乱想基本模式是「因果」：如果我做到A，那么B就会发生；如果我避免C，那么D这个糟糕的结果就能挽回。这类事，千万不要躺在床上想，否则越想越气。&lt;/li&gt;
-&lt;li&gt;另一种思绪我们称之为感性，温暖的阳光下微风吹过皮肤，恋人的手轻轻搂着你的腰，碧蓝的海平面上星星点点的船帆，你躺在椅子上无忧无虑的闭上眼睛享受这一切，只要把自己带入这种你亲身经历过的让你舒服，放松的体会中，假想你现在正在亲身经历这种愉快的事，那么你很快就能入睡。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;或许，有人会说我命苦啊～没那么多享受可以回味。我之前也是这样，总觉得过得很匆匆没这么留下的美好回忆，有一次下班路过郊外，看到天边块落山的太阳，光线没那么刺眼，橙红色的余晖给白云描了个边，倒影在一处水塘里，没有了中午那么热的暴晒，微风刮过岸边那些稀稀拉拉的花朵和绿树。感受到美的瞬间迫使我立刻停下脚步，找个草坪坐下欣赏并且仔细观察，深怕错过任何一个细节，我当时决定把这个时刻深深记录在脑海里并反复加深印象，以备将来再也遇不到了。后来这个「场景」的确帮助我度过了很多个艰难的夜晚。&lt;/p&gt;
-&lt;p&gt;要训练这个区分能力没有想象那么难，但需要长期的刻意练习，大脑胡思乱想的时候很容易不自觉陷入「理性」部分，要想睡觉，就得避免。不要尝试去思考「why」。时刻对当前的大脑活动行为进行「鉴定」和归类。对事物分析、解释和总结类的事，躺着就不要去想；一旦躺下，就多回忆和假象一些「体会」和「感受」。需要额外注意，情感的大类里，有一种叫做「害怕」和「忧虑」的东西，也要特意避免，&lt;a href="https://blog.est.im/201905/stdin-004"&gt;Zizek说过 “The only emotion that doesn't deceive is anxiety”&lt;/a&gt;，焦虑是惟一不骗人的情感，这句话的意思是，焦虑的本质是理性和归因分析，而不是情感，所以它很「真」而且很「重」。入睡这种事就不要当「真」啦，想点轻松愉快的骗骗自己做个美梦不好么。&lt;/p&gt;
-&lt;p&gt;对思绪的简单的二元分类并非我独创，&lt;a href="https://blog.est.im/2022/stdin-13"&gt;Popper的第三世界&lt;/a&gt; 和 &lt;a href="https://blog.est.im/2023/stderr-06"&gt;《思考快与慢》里 I、II型系统&lt;/a&gt;都有类似的阐述。这个入睡方法是我无意中实践出来的，可能是早年无聊特别喜欢对思辨本身进行思辨，二分模式归类，睡不着是因为大脑老是琢磨事，我无聊得琢磨起琢磨本身（meta-琢磨？），于是逐渐琢磨出一个辅助入睡规律。&lt;/p&gt;
-&lt;p&gt;今天刚好看到另一个研究：&lt;a href="https://www.dedao.cn/share/course/article?id=R2Mo65zY4QZ3VnmYBYKqEdNAa98jGB"&gt;德国蒂宾根大学发现，合理利用睡眠，可以提升一个人的决策能力&lt;/a&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;研究过程是，招募一群8到11岁的孩子，给他们看一组很吓人的照片，比如凶猛的动物之类。当时，几乎所有的孩子都被吓到了。之后，把这些孩子分成两组，第一组让他们回去睡一觉。第二组，让他们通宵玩游戏。&lt;br /&gt;
-第二天，再给这些孩子看这些可怕的照片。结果发现，睡觉组的孩子，可以相对平静地观看照片。他们显得没那么害怕了。而通宵游戏组的孩子，被惊吓程度，跟前一天几乎没有区别。&lt;br /&gt;
-研究人员认为，这就是睡眠的作用。睡眠就像一个过滤器。当我们面对一件事时，大脑的逻辑系统和情感系统，会同时运转。比如，看到一条毒蛇。你既会产生逻辑上的识别，记住这条蛇的基本特征。同时，你也会产生情感层面的反应，也就是害怕。&lt;br /&gt;
-而睡眠的作用，就在于，过滤掉其中情感的部分，保留逻辑的部分。因此，睡觉的孩子再看到蛇时，他们就不会那么害怕，只会记得，这条蛇昨天见过。而通宵组的孩子，这个害怕的感觉还在，他们再看到蛇时，还会很害怕。&lt;br /&gt;
-这也是为什么，很多人晚上一上秤，发现自己胖了，发誓第二天早上要起来跑步。但第二天却起不来。这就是因为，你立flag时的激情，被睡眠给过滤掉了。这也是为什么有人说，睡前千万不要立flag。&lt;br /&gt;
-把这个结论再延伸一步，研究人员认为，假如你做一件事时，在很大程度上受到情绪干扰，那么你最好先去睡一会儿。这能帮助你更好地集中注意力。&lt;br /&gt;
-比如，要不要创业？不创业，觉得有点虚度青春。创业，又有点患得患失。这就是受情绪干扰太多。按照这个研究，你就应该先去睡一觉。让你的情绪脑先冷却下来，睡醒之后，再用你的逻辑脑仔细想想。&lt;br /&gt;
-其实，这个研究可以用一句话概括，不就是，一日之计在于晨吗？也就是，把需要动用逻辑思考，需要计算，需要做计划的事情，尽量放在一觉睡醒之后。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;所以睡觉就睡觉，别想那么多。自然就能睡得着了。本文也用来回答V站提问&lt;a href="https://v2ex.com/t/1023202"&gt;《如何在睡觉的时候不胡思乱想》&lt;/a&gt; 。 转载请注明来自est的博客 &lt;a href="https://blog.est.im/2024/stdout-05"&gt;https://blog.est.im/2024/stdout-05&lt;/a&gt; ，如果觉得对你有用，给我留一句评论是再好不过的了 😊 &lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 13 Mar 2024 13:25:11 +0800</pubDate><guid isPermaLink="false">tag:None,2024-03-13:/2024/stdout-05</guid><category>stdout</category></item></channel></rss>
+&lt;p&gt;胡思乱想的。如有冒犯，梦境全责！&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 26 Mar 2024 08:49:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-03-26:/2024/stderr-05</guid><category>stderr</category></item></channel></rss>
