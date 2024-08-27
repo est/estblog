@@ -57,6 +57,41 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2021/stdout-027"  rel="bookmark" >
+              <h2 class="card-title">Chrome 阉割指南</h2>
+            </a>
+            <p class="card-text"><p>不折腾不舒服。继之前 <a href="/2021/stdout-020">Edge调教</a> 之后记录一下 Chrome V70怎么阉割。</p>
+<p>下载：</p>
+<p><a href="https://dl.google.com/edgedl/release2/chrome/ALiXMYM2w8-h_70.0.3538.77/70.0.3538.77_chrome_installer.exe">win 32</a> | <a href="https://dl.google.com/edgedl/release2/chrome/AJ7ozxk4OLvN_70.0.3538.77/70.0.3538.77_chrome_installer.exe">win 64</a> | <a href="https://redirector.gvt1.com/release2/chrome/AIJolai8dEil_70.0.3538.67/GoogleChrome-70.0.3538.67.dmg">Mac</a></p>
+<p>上面的链接已经年久失修了，对比了一下获取最新版本的脚本发现 Google 已经不提供老链接了。</p>
+<pre><code>curl -vsk 'https://tools.google.com/service/update2' -HContent-Type:text/xml --data-binary &quot;&lt;?xml version='1.0' encoding='UTF-8'?&gt;
+&lt;request protocol='3.0' sessionid='{est-blog}' installsource='ondemandcheckforupdate' dedup='cr'&gt;
+&lt;os platform='mac' version='66.6.6666.66' arch='x64'/&gt;
+&lt;app appid='com.google.Chrome' ap='' version='' nextversion='' lang='' brand='GGLS' client=''&gt;&lt;updatecheck/&gt;&lt;/app&gt;
+&lt;/request&gt;&quot;
+</code></pre>
+<p>安装完毕之后</p>
+<pre><code>cd '/Applications/Google Chrome.app/Contents'
+touch Frameworks
+sudo chown root:wheel Frameworks
+sudo chmod 000 Frameworks
+
+cd ~/Library/Google
+rm -rf GoogleSoftwareUpdate
+touch GoogleSoftwareUpdate
+sudo chown root:wheel GoogleSoftwareUpdate
+sudo chmod 000 GoogleSoftwareUpdate
+</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-12-28T23:00:05+08:00">2021-12-28</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2021/stdout-026"  rel="bookmark" >
               <h2 class="card-title">认识「洋节」</h2>
             </a>

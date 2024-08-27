@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Thu, 22 Aug 2024 23:09:00 +0800</lastBuildDate><item><title>2024年玩xml真是笑死了（xsl）</title><link>https://blog.est.im/2024/stdout-16</link><description>&lt;p&gt;昨天大早上的6点就醒了，翻来覆去睡不着，就开始胡思乱想。忘记是什么缘起了，反正突然想到一个问题，博客这种静态站，又要输出html，又要输出rss。太冗余了。要不直接把内容存在RSS里。然后用js去&lt;code&gt;fetch()&lt;/code&gt;。。。。&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入输出</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 27 Aug 2024 11:06:00 +0800</lastBuildDate><item><title>php是最好的……serverless</title><link>https://blog.est.im/2024/stdout-17</link><description>&lt;p&gt;php是不是最好的语言先不说，但是如果从 serverless 的角度看php：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;语法简单，功能丰富，10分钟就能学会&lt;/li&gt;
+&lt;li&gt;通过 FTP 之类的标准工具部署，而不是脑残的命令行&lt;/li&gt;
+&lt;li&gt;不用管理麻烦的服务器。基于非常成熟的 php-fpm 去做 scaling。也有大量巨型网站验证过这一方案&lt;/li&gt;
+&lt;li&gt;虽然不是 docker，但是 &lt;code&gt;vhost&lt;/code&gt; 够用了。而且要容器化 &lt;code&gt;vhost&lt;/code&gt; 也很容易&lt;/li&gt;
+&lt;li&gt;让人梦寐以求的“热更新”技术&lt;/li&gt;
+&lt;li&gt;超级便宜的月租。（还记得 dreamhost 吗？）&lt;/li&gt;
+&lt;li&gt;不会吊死在一颗树（vendor lock-in）上。全球遍地的厂商都支持&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;你就说好不好吧。同时&lt;a href="https://news.ycombinator.com/item?id=41358020#41364190"&gt;评论在 Hacker News&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 27 Aug 2024 11:06:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-08-27:/2024/stdout-17</guid><category>stdout</category></item><item><title>2024年玩xml真是笑死了（xsl）</title><link>https://blog.est.im/2024/stdout-16</link><description>&lt;p&gt;昨天大早上的6点就醒了，翻来覆去睡不着，就开始胡思乱想。忘记是什么缘起了，反正突然想到一个问题，博客这种静态站，又要输出html，又要输出rss。太冗余了。要不直接把内容存在RSS里。然后用js去&lt;code&gt;fetch()&lt;/code&gt;。。。。&lt;/p&gt;
 &lt;p&gt;等等，死去的记忆突然攻击我。RSS不就是XML，XML似乎有个加皮肤的技术。于是就更睡不着了，起床一查，原来是 XSLT 转换成 HTML 然后就可以自由发挥了。&lt;/p&gt;
 &lt;p&gt;可行性没问题，准备找个前人的例子开抄。比如 &lt;a href="https://natclark.com/tutorials/xslt-style-rss-feed/"&gt;2021年Nathan Clark的Styling an RSS Feed With XSLT&lt;/a&gt;，&lt;a href="https://darekkay.com/blog/rss-styling/"&gt;2023年Darek Kay的Style your RSS feed&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;思路就很匹配，执行效果也不错。我想百尺竿头更进一步，把 XSL 给 inline 到 RSS 里，避免额外的加载，节省一次网络请求。吗，没想到这下麻烦大了，折腾到现在才有个初步结果。直接贴源码：&lt;/p&gt;
@@ -526,12 +536,4 @@ Win+R 敲入：&lt;br /&gt;
 &lt;p&gt;所以你们今天看到的，是我们完全推倒，2022年初全部重做的。那个时候又在疫情期间，压力巨大。在最难的一段时间里是，我跟设计团队每天早晨8点钟一个小时的视频会，每天啊，everyday，周六周日都是。所以每一个细节我都参与过&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;雷军为啥能把一个三层镀银的前挡讲得那么生动？因为他可能真的参与了这个设计和决策。娓娓道来侃侃而谈就像他自己的孩子一样。所以能讲出来让人听上去很自然、有吸引力的故事。整个发布会就不是那种背后想卖你东西那种拉扯和算计，而是跟小区里阿姨们聊自家娃一样充满了八卦的话题性。&lt;/p&gt;
-&lt;p&gt;写到这里，我一直都在尽量避免一个词——营销。很多人觉得这就是一场米系的闹剧和大型新能源 ev 发布买热榜事件，因为我觉得雷军这样的show不仅仅是想让你掏30w 让他这个亿万富翁变得更富有这么简单。正如小区里阿姨们聊娃不是为了把娃卖给你一样的道理。演讲和情绪感染可能是在未来 AI 时代里愈加重要的一种能力，而雷军为代表的「开发者」背景出身的人站在舞台上展现出那种独特的魅力，非常值得学习和品味。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 31 Mar 2024 01:14:44 +0800</pubDate><guid isPermaLink="false">tag:None,2024-03-31:/2024/stderr-06</guid><category>stderr</category></item><item><title>梦见未来人类</title><link>https://blog.est.im/2024/stderr-05</link><description>&lt;p&gt;昨天半夜做了一个奇怪的梦，梦见一个毛毛虫在墙角制作自己的关节，一根棍子，中间一个关节，可以对折，看似还是金属或者塑料材质，完工了把关节拧一下，就给自己装上了。。。太过于惊悚于是就醒了。&lt;/p&gt;
-&lt;p&gt;起床开始琢磨，可能是睡前刷B站，看到一个人才UP主 &lt;a href="https://space.bilibili.com/15892313"&gt;知名相声演员BBBBB大王&lt;/a&gt; 刷了她不少视频。她南京人东北上大学，父母来自四川，被催婚和生娃问题搞得很崩，在英国和韩国奔波，视频风格别具一格。关于韩国那种不婚、人口负增长、内卷的视频特别多，比较有趣，看了不少。总体意思说，韩国的女性有自己的经济地位后，就不结婚生娃了。不用看男人成见就自在活着多好。&lt;/p&gt;
-&lt;p&gt;我感觉BB说得相当有道理。但是人口没了之后，未来的人类怎么办呢？这可能是潜意识留下的一个疑问然后就睡着了。&lt;/p&gt;
-&lt;p&gt;越想越觉得，这个奇怪的梦说不定就是潜意识的答案。未来人类说不定很有可能走虫族路线。首先按照现在的剧本，人类对自己身体和外表越来越不满意，对美的追求，个性的改造越来越多。自然界谁的改造最彻底呢？虫蛹的蜕变。谁不想从一只毛毛虫变成有翅膀到处飞的蝴蝶呀。说不定未来能制造出合成材料，给每人安装一对翅膀？&lt;/p&gt;
-&lt;p&gt;但是成人动刀子改造背部结构，后加翅膀问题太多，说不定臂力不足大多数人人飞不起来，飞行也需要巨大的呼吸器官改造成本否则供能太弱，飞不太久。最好的办法就是从胚胎开始重新设计肢体结构。BB的有一部说自己XS的身材居然淘宝买S都觉得小了。明明她自己都只剩下bone了。说起来，成虫就直接没有脂肪，直接bone就暴露在外边吧？大家都一样的流线型bone，不存在身材歧视。&lt;/p&gt;
-&lt;p&gt;既然都可以自定义设计人体四肢了，干脆全部身体结构推倒重构吧。人全身上下全改造了，保留啥呢？保留一个头作为意识留下吧。&lt;/p&gt;
-&lt;p&gt;所以未来的人类可能是：女性就不要怀孕受累了，人工授精+人造子宫，生出来一个基础款的肉体。社会教育给与起步款的灵魂之后，这个「幼体」就得去搜集改造自己的营养和原材料，然后时机成熟之后，做一个「虫蛹」然后把自己封印起来重新改造。改造完之后就「变态」为高级形态  b（￣▽￣）d　&lt;/p&gt;
-&lt;p&gt;这一套机制最大的问题就是，改造人不能自我复制。如果基因改造有突破，能自定义编辑，那么很多人可能会选预设一套3D打印机，人生下来就真的可以外观类似毛毛虫，到处爬行去自动拾取有机物、无机物矿物质，然后疯狂积累原材料到足够改造自己的身体之后，找一个安全的地方造蛹，然后打印身体。最后破蛹而出参与生殖都斗争和扩大领地，然后继续繁衍。。233333&lt;/p&gt;
-&lt;p&gt;胡思乱想的。如有冒犯，梦境全责！&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 26 Mar 2024 08:49:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-03-26:/2024/stderr-05</guid><category>stderr</category></item></channel></rss>
+&lt;p&gt;写到这里，我一直都在尽量避免一个词——营销。很多人觉得这就是一场米系的闹剧和大型新能源 ev 发布买热榜事件，因为我觉得雷军这样的show不仅仅是想让你掏30w 让他这个亿万富翁变得更富有这么简单。正如小区里阿姨们聊娃不是为了把娃卖给你一样的道理。演讲和情绪感染可能是在未来 AI 时代里愈加重要的一种能力，而雷军为代表的「开发者」背景出身的人站在舞台上展现出那种独特的魅力，非常值得学习和品味。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 31 Mar 2024 01:14:44 +0800</pubDate><guid isPermaLink="false">tag:None,2024-03-31:/2024/stderr-06</guid><category>stderr</category></item></channel></rss>
