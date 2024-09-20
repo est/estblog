@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>pydbg和Paimei - hook openssl ssl_read() – est の 输入 输出和出入</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="pydbg和Paimei - hook openssl ssl_read()" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/644352" />
+    <meta property="og:url" content="https://blog.est.im/archives/644352">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="pydbg和Paimei - hook openssl ssl_read()">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link active">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">pydbg和Paimei - hook openssl ssl_read()</h2>
+    <p class="post-date">Posted <time datetime="2009-12-14T14:53:35+08:00">2009-12-14</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>最近需要分析一些SSL流量，无非三条途径：2种已知中间人解密方法，wireshark抓证书然后解密，和hook dll三种方法。个人无故偏好最后一种。。。。</p>
+<p>网上找了些软件，一个是别人写好的现成黑客工具<a href="http://www.bindshell.net/tools/echomirage">Echo Mirage</a></p>
+<p><img src="http://www.bindshell.net/tools/echomirage/screenshots/Screenshot01.png"></p>
+<p><img src="http://www.bindshell.net/tools/echomirage/screenshots/Screenshot04.png"></p>
+<p>支持Winsock, Winsock SSL, OpenSSL三种hook。但是这个dll inject老是挂掉，不爽。。。。</p>
+<p>又发现了一个PyDbg。。。这个工具是附属于 pedram.openrce.org 的一个名叫 <a href="http://pedram.openrce.org/code/paimei/">PaiMei</a> 的子项目中</p>
+<p>当然这个 Paimei 就是《<a href="http://www.douban.com/subject/1291584/">Kill Bill 2</a>》里面最后被毒死那个所谓功夫很牛逼的 <a href="http://www.imdb.com/character/ch0001814/">白眉 师傅</a>。。。。</p>
+<p><img src="http://pedram.openrce.org/PaiMei/logos/paimei-1-cutout.jpg"></p>
+<p><img src="http://pedram.openrce.org/PaiMei/logos/paimei-6.jpg"></p>
+<p>Paimei <a href="http://pedram.openrce.org/code/paimei/">首页</a> | <a href="http://pedram.openrce.org/PaiMei/docs/">文档</a> | <a href="http://www.openrce.org/downloads/details/208/PaiMei">下载</a> | <a href="http://code.google.com/p/paimei/">源码</a></p>
+<blockquote>
+<p>PaiMei is a reverse engineering framework consisting of multiple extensible components. The goal of the framework is to reduce the time from "idea" to prototype to a matter of minutes, instead of days. PaiMei is written entirely in Python and exposes at the highest level a debugger, a graph based binary abstraction and a set of utilities for accomplishing various repetitive tasks. The framework can essentially be thought of as a reverse engineer's swiss army knife and has already been proven effective for a wide range of both static and dynamic tasks such as: fuzzer assistance, code coverage tracking, data flow tracking and more.</p>
+</blockquote>
+<p>用pydbg来截获ssl还是很简单的。。。这个<a href="http://www.openrce.org/forums/posts/566">帖子</a>里有现成代码</p>
+<pre>
+import sys
+import utils
+from pydbg import *
+pktc = 0<br>
+def SSL_read_hook (dbg, args, ret):
+    global pktc
+    pkt = dbg.read_process_memory(args[1], args[2])
+    f.write("[%d] Packet:\n" % pktc)
+    f.write(dbg.hex_dump(dbg.read_process_memory(args[1], args[2])))
+    f.write('\n')
+    pktc = pktc + 1<br>
+try:
+    pid = int(sys.argv[1])
+except:
+    print "Usage: %s PID" % sys.argv[0]
+    sys.exit(-1)<br>
+filename = "ssldump_" + str(pid) + ".txt"
+f = open(filename, 'w')<br>
+dbg = pydbg()
+dbg.attach(pid)<br>
+addrSSL_read = dbg.func_resolve_debuggee("SSLEAY32", "SSL_read")
+if not addrSSL_read:
+    print "Couldn't resolve SSL_read"
+    sys.exit(-1)<br>
+hooks = utils.hook_container()
+print "Hooking SSL_read(0x%x)" % addrSSL_read
+hooks.add(dbg, addrSSL_read, 3, None, SSL_read_hook)<br>
+print "Function hooked, logging to: %s" % filename
+dbg.run()
+f.close()
+</pre>
+<p>pydbg这个依赖库不需要完全下载paimei，只需要svn checkout/export下面几个python module就可以了：</p>
+<pre>
+http://paimei.googlecode.com/svn/trunk/pgraph
+http://paimei.googlecode.com/svn/trunk/pida
+http://paimei.googlecode.com/svn/trunk/pydbg
+http://paimei.googlecode.com/svn/trunk/utils
+</pre>
+<p>注意paimei是比较古老的项目了，现在似乎没人管了。所以这个代码里有个<a href="http://code.google.com/p/paimei/issues/detail?id=3">bug</a>，会出错</p>
+<p><code>TypeError: can't set attributes of built-in/extension type '_ctypes.Structure'</code></p>
+<p>解决方法是打开 <code>pydbg\my_ctypes.py</code></p>
+<p>在 <code>c_type = (Structure ..</code>. 这一行上面加一行：</p>
+<pre>
+class Structure(Structure):
+    pass
+</pre>
+<p>就OK了。</p>
+<p>当然hook出来有很多0x00的空值。这个手工处理掉就行了。</p>
+<p>现在又开始纠结带gzip/bz2解压功能的ssl分析工具了。。。。。很多时候还是只有自己DIY。。。。</p>
+<p>参考 <a href="http://hi.baidu.com/kkqq_/blog/item/70e15f420c2eb8199213c6db.html">1</a>，<a href="http://www.icylife.net/yunshu/show.php?id=468">2</a>，<a href="http://www.icylife.net/yunshu/show.php?id=540">3</a></p>
+<p>btw, 最近出了一款号称用p2p，基于QtWebkit的OOXX浏览器。我去看了下，就是一个ssl代理</p>
+<pre>
+$ openssl s_client -connect ps?????.dreamhostps.com:443
+GET http://twitter.com/ HTTP/1.1
+HOST: twitter.com
+</pre>
+<p>呵呵。。。。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/644352';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+
+  </body>
+
+</html>

@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>est の 输入输出 - archive category</title>
+    <title>est の 输入 输出和出入 - archive category</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入输出 RSS Feed" />
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="This blog is rated 🔞, viewer discretion is advised" />
 
     <meta property="og:url" content="https://blog.est.im">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="est の 输入输出">
+    <meta property="og:title" content="est の 输入 输出和出入">
     <meta property="og:description" content="This blog is rated 🔞, viewer discretion is advised">
 
     <link rel="stylesheet" href="/theme/css/normalize.min.css" />
@@ -28,7 +28,7 @@
   <body class="list-body">
 <nav class="nav-bar side-padding">
   <h1 class="nav-header"><a href="/" class="nav-text">
-    est の 输入输出
+    est の 输入 输出和出入
   </a></h1>
   <div class="hamburger-menu">
     <button>
@@ -50,7 +50,7 @@
 </nav>    <main class="card-container side-gutter">
       <header class="list-header">
         <p class="list-header-subtext">This blog is rated 🔞, viewer discretion is advised</p>
-        <!-- <h1 class="list-header-title">est の 输入输出</h1> -->
+        <!-- <h1 class="list-header-title">est の 输入 输出和出入</h1> -->
       </header>
 
 
@@ -184,32 +184,6 @@
 <p>最后，让我们端起手中的热翔，为这片奇葩的土地翻开新的一页，干了它！</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-12-03T01:14:00+08:00">2012-12-03</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/post/37078448806"  rel="bookmark" >
-              <h2 class="card-title">如何用假象传播真话</h2>
-            </a>
-            <p class="card-text"><p>先看这个视频</p>
-<p><a href="http://news.cntv.cn/program/xinwenzhoukan/20120630/109536.shtml">http://news.cntv.cn/program/xinwenzhoukan/20120630/109536.shtml</a></p>
-<p>觉得这种骑车的够危险了吧。</p>
-<p>再看这个视频</p>
-<p><a href="http://www.56.com/u21/v_Nzc0NDQyMzQ.html">http://www.56.com/u21/v_Nzc0NDQyMzQ.html</a></p>
-<p>觉得这人是不是很傻比，为死飞辩护？</p>
-<p>而为什么死飞玩家会这么愤怒呢？</p>
-<blockquote>
-<p>某ccav记者，到成都，接触死飞玩家，说要帮助他们发扬死飞文化，请玩家们帮助拍摄一个短篇。  <br />
-按照记者的要求，死飞玩家们进行了表演，并且按照记者要求拍摄了一段在公路上车流里穿梭的视频。  <br />
-结果，节目播出后，是抨击死飞玩家不守交通规则的内容。    </p>
-</blockquote>
-<p>来自d版1091974贴。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2012-12-02T20:30:00+08:00">2012-12-02</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
@@ -1456,6 +1430,60 @@ Rateless codes are also known by different names, e.g. fountain (LT) codes, rapt
 <p><a href="http://news.ycombinator.com/item?id=4526710">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2012-09-18T00:38:14+08:00">2012-09-18</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/post/31769215479"  rel="bookmark" >
+              <h2 class="card-title">Python良民证算法rev 2</h2>
+            </a>
+            <p class="card-text"><p>以前发过一个<a href="http://initiative.yo2.cn/archives/635924">良民证算法</a></p>
+<p>现在发现了一个碉堡的新办法：</p>
+<pre><code>  get_id = lambda s: s + '1X864209753'[int(s, 13) % 11]
+</code></pre>
+<p>来自newsmth的python版：</p>
+<pre><code>  发信人: Andor (珍惜), 信区: Python
+  标  题: Re: Python的良民证算法，有没有更简单的写法？
+  发信站: 水木社区 (Fri Sep 14 15:13:05 2012), 站内
+
+  get_id = lambda s: s + '1X864209753'[int(s, 13) % 11]
+  【 在 zxn0 (est) 的大作中提到: 】
+  : &gt;&gt;&gt; get_id = lambda s: s+'10X98765432'[reduce(int.__add__, map(lambda 
+  : a,b:int(a)*(ord(b)-64), s[0:17], 'GIJEHDBAFCGIJEHDB' )) % 11]
+  : &gt;&gt;&gt; get_id('34052419800101001')
+  : '34052419800101001X'
+  : 大家看哪里还能精简字符不？
+
+
+
+
+  发信人: Fermat (Fermat), 信区: Python
+  标  题: Re: Python的良民证算法，有没有更简单的写法？
+  发信站: 水木社区 (Mon Sep 17 01:41:42 2012), 站内
+
+  既然 int(s, 13) 这么漂亮的都出来了，又何必把那么好记的 "10X98765432" 弄成一个 magic number 呢
+
+  get_id = lambda s: s + '10X98765432'[(int(s, 13)*13) % 11]
+
+  或者在有32位整数限制的地方使用类似的
+  get_id = lambda s: s + '10X98765432'[((int(s, 13)%11)*13)%11]
+
+
+  对于有算法洁癖的，下面的可能会好些
+
+  from itertools import chain
+  get_id = lambda s: s + '10X98765432'[reduce(lambda acc, x:
+      (acc*13 + int(x)) % 11, chain(s, "0"), 0)]
+
+  因为可以把输入字符串当成个无限流，且程序只占用少量固定的空间，也不需要语言对很大的整型有支持。虽然对这个程序没啥意义。
+</code></pre>
+<p>关于良民证，python普通版描述在<a href="http://www.keakon.net/2009/03/07/%E7%94%A8Python%E8%AE%A1%E7%AE%97%E8%BA%AB%E4%BB%BD%E8%AF%81%E6%A0%A1%E9%AA%8C%E7%A0%81">这里</a>，前六位的来自官方 <a href="http://www.stats.gov.cn/tjbz/index.htm">县及县以上行政区划代码</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2012-09-17T21:38:00+08:00">2012-09-17</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

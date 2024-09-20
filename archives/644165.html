@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>IE9的脚本引擎改进 – est の 输入 输出和出入</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="IE9的脚本引擎改进" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/644165" />
+    <meta property="og:url" content="https://blog.est.im/archives/644165">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="IE9的脚本引擎改进">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link active">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">IE9的脚本引擎改进</h2>
+    <p class="post-date">Posted <time datetime="2009-12-05T15:14:17+08:00">2009-12-05</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>关注<a href="http://blogs.msdn.com/ie/archive/2009/11/18/an-early-look-at-ie9-for-developers.aspx">IE9的技术改进</a>。用了<a href="http://msdn.microsoft.com/en-us/library/dd370990(VS.85).aspx">Direct2D</a>和<a href="http://msdn.microsoft.com/en-us/library/dd368038(VS.85).aspx">DirectWrite</a>。前者其实和Direc3D没多少关系，Direct2D是Windows 7里引入的一个代替GDI的技术，基于Direct3D绘图，也就是GPU运算。后者是Cleartype的替代，估计也是基于Direct3D的。这样IE9就是跑在GPU上了。那么说明现在浏览器费电就不仅仅是CPU了，GPU也很耗电发热的。</p>
+<p>由于是Win7的技术，所以如果IE9要跑在XP上就必须做痛苦的backport了。否则<strong>IE9将无法支持Windows XP、2003、2000等系统</strong>。而且Direct2D只安装在Win7和Server 2008 R2上。<a href="http://blogs.msdn.com/directx/archive/2009/09/10/windows-7-transition-pack-for-windows-vista.aspx">Vista和 Server 2008需要安装Platform Update</a>。而安装Platform Update之前又需要安装SP2。。。。</p>
+<p>GPU硬件也有要求。Direct2D需要Direct3D 10，Direct3D 10需要显卡硬件支持（就是支持Crysis那个显卡），但是可以在Direct3D 9 的显卡上通过 10on9 来模拟。XP没有Direct 3D 10，估计Direct2D的程序会failback到GDI。只有Vista以上的Windows才能支持Direct2D</p>
+<p>微软的Silverlight已经把.NET核心给backport了一次，这次又要backport新的图形系统。真是折腾啊。哈哈。说不定显卡不支持DX10就没法跑呢。。。囧。。。。</p>
+<p>认真学习了一下，<a href="http://channel9.msdn.com/posts/Charles/IE-9-First-look-at-the-new-JS-Engine/">Channel 9的视频</a>，讲Javascript脚本引擎的改进：</p>
+<p>开始提到JScript is no longer，说明微软正式放弃JScript了。。。。。。</p>
+<p>Intimidation的motivator作为双显示器桌面</p>
+<p><img src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/12/14.jpg"></p>
+<p>JScript引擎开发人员的hotmail，大家快来人肉：</p>
+<p><img src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/12/22.jpg"></p>
+<p>微软员工居然也用Gmail，不知道会不会被开除</p>
+<p><img src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/12/3.jpg"></p>
+<p>IE9的新引擎跑Gmail还是很流畅的</p>
+<p><img src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/12/4.jpg"></p>
+<p>IE9的JScript引擎性能主要测试指标依然是<a href="http://www2.webkit.org/perf/sunspider-0.9/sunspider.html">Webkit.org的SunSpider</a></p>
+<p><img src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/12/5.jpg"></p>
+<p>COM是过去JScript的core data structure，也是interoperate的主要部分，看起来过于big不够轻量级。现在这个新model叫object pattern，是array of slot, each slot holds a property。Javascript就是store properties and reveal properties。还提到<a href="http://en.wikipedia.org/wiki/Type_polymorphism">Polymorphism</a> ???ing（没听清楚）。In a nutshell，新的engine会generate native code，优化途径就是提供两种执行渠道：fast path和slow path，大部分可预测的计算都会走fast path。最后还有一些library的改进。特别是RegExp。提到了了PRCE和Python。。</p>
+<p>hardest part of Javascript: 评价说javascript是great mix of really use features with dark corners. 最影响performance的是arguments array。例如f.arguments。这个会影响call stack的效率</p>
+<p>Sunspider的结果跑出来了：<br>
+IE9 Build41 986.4ms<br>
+<img src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/12/6.jpg"><br>
+Firefox 3.6 beta1 480.8ms<br>
+<img src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/12/8.jpg"><br>
+Chrome 4.0 beta 437.2ms<br>
+<img src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/12/9.jpg"></p>
+<p>Javascript的效率对于Web浏览用户体验很重要，但是不是最突出的因素。对浏览速度而言，Javascript性能大概只影响1/3。DOM解析效率、渲染都是浪费时间的因素。一些重型Javascript应用才对JS引擎要求比较高</p>
+<p>有些网站探测到IE会使用VBScript。</p>
+<p>看来IE9还不是最终杀手。微软如果老是追赶别人的话，是没法引领时代潮流的。Google超过Yahoo并不是因为Google的搜索结果和Yahoo一样好，而是好<strong>很多倍</strong>。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = 'archives/644165';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+
+  </body>
+
+</html>
