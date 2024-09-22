@@ -57,6 +57,27 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2024/stdout-18"  rel="bookmark" >
+              <h2 class="card-title">Edge找回丢失的右上角Copilot侧边栏图标</h2>
+            </a>
+            <p class="card-text"><p>右上角图标和侧边栏的官方截图：</p>
+<p><img referrerpolicy="no-referrer" src="https://blogs.windows.com/wp-content/uploads/prod/sites/33/2023/12/devtools-copilot-in-edge-1.png" /></p>
+<p>如果不小心关掉了，找回办法：</p>
+<ol>
+<li>打开 <code>edge://settings/sidebar/appSettings?hubApp=cd4688a9-e888-48ea-ad81-76193d56b1be</code></li>
+<li><code>F12</code> 或者 <code>Opt+Cmd+I</code>，找到第一个“Show Copilot”开关，把它改成关闭。</li>
+<li>如果第二步不会搞，输入 <code>document.querySelector('input[aria-label="Show Copilot"]').removeAttribute('disabled')</code> 可破</li>
+</ol></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-09-22T21:49:00+08:00">2024-09-22</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stdout-17"  rel="bookmark" >
               <h2 class="card-title">php是最好的……serverless</h2>
             </a>
@@ -3858,52 +3879,6 @@ c._client.session.request = functools.partial(c._client.session.request, timeout
 <p><code>partial</code> 这个神奇的魔法可以设置一个默认参数。其它地方传入了别的timeout也可以自行覆盖，无缝兼容。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-01-11T12:00:56+08:00">2022-01-11</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2021/stdout-028"  rel="bookmark" >
-              <h2 class="card-title">Microsoft 官网的 403 错误</h2>
-            </a>
-            <p class="card-text"><pre><code>$ curl -H &quot;User-Agent: User-Agent: Mozilla/5&quot; -kvs 'http://www.microsoft.com'
-*   Trying 118.123.102.107...
-* TCP_NODELAY set
-* Connected to www.microsoft.com (118.123.102.107) port 80 (#0)
-&gt; GET / HTTP/1.1
-&gt; Host: www.microsoft.com
-&gt; Accept: */*
-&gt; User-Agent: User-Agent: Mozilla/5
-&gt;
-&lt; HTTP/1.1 403 Forbidden
-&lt; Server: GHost
-&lt; Content-Length: 306
-&lt; Content-Type: text/html
-&lt; Mime-Version: 1.0
-&lt; Expires: Wed, 29 Dec 2021 14:42:28 GMT
-&lt; Cache-Control: max-age=0, no-cache
-&lt; Pragma: no-cache
-&lt; Date: Wed, 29 Dec 2021 14:42:28 GMT
-&lt; Connection: keep-alive
-&lt;
-&lt;HTML&gt;&lt;HEAD&gt;
-&lt;TITLE&gt;Access Denied&lt;/TITLE&gt;
-&lt;/HEAD&gt;&lt;BODY&gt;
-&lt;H1&gt;Access Denied&lt;/H1&gt;
-
-You don't have permission to access &quot;http&amp;#58;&amp;#47;&amp;#47;mscom&amp;#46;errorpage&amp;#46;failover&amp;#46;com&amp;#47;403&amp;#47;403&amp;#46;htm&amp;#63;&quot; on this server.&lt;P&gt;
-Reference&amp;#32;&amp;#35;18&amp;#46;1c697b76&amp;#46;1640788948&amp;#46;3b971c1f
-&lt;/BODY&gt;
-&lt;/HTML&gt;
-* Connection #0 to host www.microsoft.com left intact
-* Closing connection 0
-</code></pre>
-<p>不知道为何会指向  <code>http://mscom.errorpage.failover.com</code> 这域名也不是微软的。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-12-29T22:42:14+08:00">2021-12-29</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
