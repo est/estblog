@@ -67,7 +67,9 @@
 <li>打开 <code>edge://settings/sidebar/appSettings?hubApp=cd4688a9-e888-48ea-ad81-76193d56b1be</code></li>
 <li><code>F12</code> 或者 <code>Opt+Cmd+I</code>，找到第一个“Show Copilot”开关，把它改成关闭。</li>
 <li>如果第二步不会搞，输入 <code>document.querySelector('input[aria-label="Show Copilot"]').removeAttribute('disabled')</code> 可破</li>
-</ol></p>
+</ol>
+<p>为什么会有这个问题，因为政策的原因，Microsoft Copilot 不能在简中使用，于是右上角的按钮点一下会消失；但是开发或者集成测试的为了省事儿，就直接给隐藏掉，导致侧边栏无法点开</p>
+<p>这串 hubApp 的id如何找到呢？新建一个浏览器profile，这个时候 Copilot 是有图标的。不要去点，去设置里翻 <code>edge://settings/sidebar</code> 就能看到 Copilot 的选项。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-09-22T21:49:00+08:00">2024-09-22</time></p>
 <p>stdout</p>            </div>
