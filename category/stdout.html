@@ -57,6 +57,34 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2024/stdout-19"  rel="bookmark" >
+              <h2 class="card-title">javascript 节拍器</h2>
+            </a>
+            <p class="card-text"><p>因为娃的节奏感糊成一坨了。加上码农特有的穷B气质，想去找个节拍器app；结果各大市场都是各种广告，怕给娃用不正经；</p>
+<p>又找了很多公众号版的，小程序版的，网页版的，普遍都是广告满天飞。失望之余，想起来上次<a href="https://blog.est.im/2022/stdout-10">JS播放DTMF</a>对 WebAudio 有点感觉，要不这次自己干脆再手搓一个。</p>
+<p><a href="https://news.ycombinator.com/item?id=20935492">调研</a>了一圈发现这玩意没那么容易，主要就是javascript在浏览器里 <code>setInterval</code> 是有时间抖动（jitter）的，不能保证节奏精确。如何才能做到精准采样打节拍呢？WebAudio！</p>
+<p>搜了一圈发现一位叫 <a href="https://grantjam.es/creating-a-simple-metronome-using-javascript-and-the-web-audio-api/">Grant James 已经写好</a>放在 <a href="https://github.com/grantjames/metronome">github</a> 了。那还等什么直接拿来～～呃等等，有如下需要：</p>
+<ol>
+<li>无广告</li>
+<li>去掉 .js .css 依赖，单文件更快</li>
+<li>精简不必要的代码结构，用来魔改</li>
+</ol>
+<p>改完之后发现两个坑也跟着一起修补了：</p>
+<ol>
+<li>用 <code>wakeLock</code> 防止手机上使用息屏</li>
+<li>突破固定的4拍子，加上可以增减的节拍控制</li>
+</ol>
+<p>最后就放在 <a href="https://lab.est.im/metronome/">https://lab.est.im/metronome/</a> 这里了。有需要的拿去用。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-09-26T22:52:00+08:00">2024-09-26</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stdout-18"  rel="bookmark" >
               <h2 class="card-title">Edge找回丢失的右上角Copilot侧边栏图标</h2>
             </a>
@@ -3860,27 +3888,6 @@ git push
 <p>最后一个感触，大家都顾着去看2500年前楚国人和当今院士的笑话了，却很少有人正面分析一下问题。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-01-19T23:15:24+08:00">2022-01-19</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2022/stdout-01"  rel="bookmark" >
-              <h2 class="card-title">python-phoenixdb 设置读取超时</h2>
-            </a>
-            <p class="card-text"><p>PhoenixDB 居然是基于 requests + pb2 做的传输层协议。连接的是 queryserver 的 http 接口</p>
-<p>看 <a href="https://git-wip-us.apache.org/repos/asf?p=phoenix-queryserver.git;a=blob;f=python-phoenixdb/phoenixdb/avatica/client.py">avatica/client.py 源码</a> 可以得知这玩意默认是不支持设置read timeout的。强行hack一个：</p>
-<pre><code>import phoenixdb
-import functools
-c = phoenixdb.connect('http://localhost:8765/', autocommit=True, auth=&quot;SPNEGO&quot;)
-c._client.session.request = functools.partial(c._client.session.request, timeout=2)
-</code></pre>
-<p><code>partial</code> 这个神奇的魔法可以设置一个默认参数。其它地方传入了别的timeout也可以自行覆盖，无缝兼容。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2022-01-11T12:00:56+08:00">2022-01-11</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
