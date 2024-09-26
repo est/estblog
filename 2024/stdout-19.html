@@ -55,21 +55,21 @@
   </header>
 
   
-  <p>因为娃的节奏感糊成一坨了。加上码农特有的穷B气质，想去找个节拍器app；结果各大市场都是各种广告，怕给娃用不正经；</p>
-<p>又找了很多公众号版的，小程序版的，网页版的，普遍都是广告满天飞。失望之余，想起来上次<a href="https://blog.est.im/2022/stdout-10">JS播放DTMF</a>对 WebAudio 有点感觉，要不这次自己干脆再手搓一个。</p>
-<p><a href="https://news.ycombinator.com/item?id=20935492">调研</a>了一圈发现这玩意没那么容易，主要就是javascript在浏览器里 <code>setInterval</code> 是有时间抖动（jitter）的，不能保证节奏精确。如何才能做到精准采样打节拍呢？WebAudio！</p>
-<p>搜了一圈发现一位叫 <a href="https://grantjam.es/creating-a-simple-metronome-using-javascript-and-the-web-audio-api/">Grant James 已经写好</a>放在 <a href="https://github.com/grantjames/metronome">github</a> 了。那还等什么直接拿来～～呃等等，有如下需要：</p>
+  <p>娃学琴，节奏感糊成一坨了。老师让抖腿打节拍，显然不work。码农特有的穷B气质让我舍不得买个实体的；去找个节拍器app，结果各大市场都是各种广告，怕给娃用不正经；甚至找了很多公众号版的，小程序版的，网页版的，普遍都是各种跳转诱导点击。</p>
+<p>失望之余，想起来上次<a href="https://blog.est.im/2022/stdout-10">JS播放DTMF</a>对 WebAudio 有点感觉，要不这次自己干脆再手搓一个。<a href="https://news.ycombinator.com/item?id=20935492">调研</a>了一圈发现这玩意没那么容易，主要就是javascript在浏览器里 <code>setInterval</code> 是有时间抖动（jitter）的，不能保证节奏精确。如何才能做到精准采样打节拍呢？连续精心编排 WebAudio 时间轴！</p>
+<p>搜了一圈发现一位叫 <a href="https://grantjam.es/creating-a-simple-metronome-using-javascript-and-the-web-audio-api/">Grant James 已经写好</a>放在 <a href="https://github.com/grantjames/metronome">github</a> 了。那还等什么直接拿来～～针对性的改进了：</p>
 <ol>
 <li>无广告</li>
 <li>去掉 .js .css 依赖，单文件更快</li>
-<li>精简不必要的代码结构，用来魔改</li>
+<li>精简不必要的代码结构，方便以后魔改</li>
 </ol>
-<p>改完之后发现两个坑也跟着一起修补了：</p>
+<p>改完之后发现 ~~两个~~ 三个坑也跟着一起修补了：</p>
 <ol>
 <li>用 <code>wakeLock</code> 防止手机上使用息屏</li>
 <li>突破固定的4拍子，加上可以增减的节拍控制</li>
+<li>增减按钮可以按到小于 0</li>
 </ol>
-<p>最后就放在 <a href="https://lab.est.im/metronome/">https://lab.est.im/metronome/</a> 这里了。有需要的拿去用。</p>
+<p>最后成果就放在 <a href="https://lab.est.im/metronome/">https://lab.est.im/metronome/</a> 这里了。有需要的拿去用。协议 <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg"></a></p>
 </article>
 
 <div class="comments">
