@@ -58,7 +58,9 @@
   <p>I always hate compiling and building. It's an error-prone path filled with riddles and unknowns.</p>
 <p><code>mosh</code> is a great tool replacing <code>ssh</code> in many cases, Sadly it does not provide an <code>arm64</code> binary download or installer for M1/M2/M3 MacBooks. Moreover I dont like XCode and protected <code>/usr/bin</code> shit so I prefer isolated envs like <code>miniconda3</code>.</p>
 <p>For such a detoure but anyway, following the <a href="https://github.com/mobile-shell/mosh/wiki/Build-Instructions">official mobile-shell build wiki</a>, type these commands:</p>
-<pre><code class="language-sh">conda install autoconf automake libprotobuf pkg-config tmux`
+<pre><code class="language-sh">conda install autoconf automake libprotobuf pkg-config tmux
+# use libncursesw 6.5 since  6.4 is buggy, rpath and dyld not load LC_RPATH shit
+conda install conda-forge::ncurses
 git clone --depth=1 https://github.com/mobile-shell/mosh.git`
 cd mosh
 
