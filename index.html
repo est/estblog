@@ -61,13 +61,15 @@
               <h2 class="card-title">Install mosh for macOS arm64 with Miniconda3</h2>
             </a>
             <p class="card-text"><p>I always hate compiling and building. It's an error-prone path filled with riddles and unknowns.</p>
-<p><code>mosh</code> is a great tool replacing <code>ssh</code> in many cases, Sadly it does not provide a <code>arm64</code> binary download or installer for M1/M2/M3 MacBooks. Moreover I dont like XCode and protected <code>/usr/bin</code> and shit so I prefer isolated envs like <code>miniconda3</code>, so it took a bit detoure but anyway, following the <a href="https://github.com/mobile-shell/mosh/wiki/Build-Instructions">official mobile-shell build wiki</a>, type these commands:</p>
-<pre><code class="language-sh">conda install autoconf automake libprotobuf pkg-config`
+<p><code>mosh</code> is a great tool replacing <code>ssh</code> in many cases, Sadly it does not provide an <code>arm64</code> binary download or installer for M1/M2/M3 MacBooks. Moreover I dont like XCode and protected <code>/usr/bin</code> shit so I prefer isolated envs like <code>miniconda3</code>.</p>
+<p>For such a detoure but anyway, following the <a href="https://github.com/mobile-shell/mosh/wiki/Build-Instructions">official mobile-shell build wiki</a>, type these commands:</p>
+<pre><code class="language-sh">conda install autoconf automake libprotobuf pkg-config tmux`
 git clone --depth=1 https://github.com/mobile-shell/mosh.git`
 cd mosh
 
 ./autogen.sh
-./configure --prefix $(conda info --base)
+./configure --prefix $CONDA_PREFIX
+make check
 make
 make install
 </code></pre>

@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sat, 28 Sep 2024 10:05:00 +0800</lastBuildDate><item><title>Install mosh for macOS arm64 with Miniconda3</title><link>https://blog.est.im/2024/stdout-20</link><description>&lt;p&gt;I always hate compiling and building. It's an error-prone path filled with riddles and unknowns.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;mosh&lt;/code&gt; is a great tool replacing &lt;code&gt;ssh&lt;/code&gt; in many cases, Sadly it does not provide a &lt;code&gt;arm64&lt;/code&gt; binary download or installer for M1/M2/M3 MacBooks. Moreover I dont like XCode and protected &lt;code&gt;/usr/bin&lt;/code&gt; and shit so I prefer isolated envs like &lt;code&gt;miniconda3&lt;/code&gt;, so it took a bit detoure but anyway, following the &lt;a href="https://github.com/mobile-shell/mosh/wiki/Build-Instructions"&gt;official mobile-shell build wiki&lt;/a&gt;, type these commands:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh"&gt;conda install autoconf automake libprotobuf pkg-config`
+&lt;p&gt;&lt;code&gt;mosh&lt;/code&gt; is a great tool replacing &lt;code&gt;ssh&lt;/code&gt; in many cases, Sadly it does not provide an &lt;code&gt;arm64&lt;/code&gt; binary download or installer for M1/M2/M3 MacBooks. Moreover I dont like XCode and protected &lt;code&gt;/usr/bin&lt;/code&gt; shit so I prefer isolated envs like &lt;code&gt;miniconda3&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;For such a detoure but anyway, following the &lt;a href="https://github.com/mobile-shell/mosh/wiki/Build-Instructions"&gt;official mobile-shell build wiki&lt;/a&gt;, type these commands:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh"&gt;conda install autoconf automake libprotobuf pkg-config tmux`
 git clone --depth=1 https://github.com/mobile-shell/mosh.git`
 cd mosh
 
 ./autogen.sh
-./configure --prefix $(conda info --base)
+./configure --prefix $CONDA_PREFIX
+make check
 make
 make install
 &lt;/code&gt;&lt;/pre&gt;
