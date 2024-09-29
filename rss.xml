@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sat, 28 Sep 2024 13:44:59 +0800</lastBuildDate><item><title>Install mosh for macOS arm64 with Miniconda3</title><link>https://blog.est.im/2024/stdout-20</link><description>&lt;p&gt;I always hate compiling and building. It's an error-prone path filled with riddles and unknowns.&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sun, 29 Sep 2024 14:02:09 +0800</lastBuildDate><item><title>Install mosh for macOS arm64 with Miniconda3</title><link>https://blog.est.im/2024/stdout-20</link><description>&lt;p&gt;I always hate compiling and building. It's an error-prone path filled with riddles and unknowns.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;mosh&lt;/code&gt; is a great tool replacing &lt;code&gt;ssh&lt;/code&gt; in many cases, sadly it does not provide an &lt;code&gt;arm64&lt;/code&gt; binary download or installer for M1/M2/M3 MacBooks. Moreover I dont like XCode and protected &lt;code&gt;/usr/bin&lt;/code&gt; shit so I prefer isolated envs like &lt;code&gt;miniconda3&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Anyway, for such a detour, following the &lt;a href="https://github.com/mobile-shell/mosh/wiki/Build-Instructions"&gt;official mobile-shell build wiki&lt;/a&gt;, type these commands:&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-sh"&gt;conda install autoconf automake libprotobuf pkg-config tmux
@@ -15,20 +15,26 @@ make
 make install
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;And it's done. All thanks to authors for open source project and butter-smooth build scripts.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 28 Sep 2024 10:05:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-09-28:/2024/stdout-20</guid><category>stdout</category></item><item><title>javascript 节拍器</title><link>https://blog.est.im/2024/stdout-19</link><description>&lt;p&gt;娃学琴，节奏感糊成一坨了。老师让抖腿打节拍，显然不work。码农特有的穷B气质让我舍不得买个实体的；去找个节拍器app，结果各大市场都是各种广告，怕给娃用不正经；甚至找了很多公众号版的，小程序版的，网页版的，普遍都是各种跳转诱导点击。&lt;/p&gt;
-&lt;p&gt;失望之余，想起来上次&lt;a href="https://blog.est.im/2022/stdout-10"&gt;JS播放DTMF&lt;/a&gt;对 WebAudio 有点感觉，要不这次自己干脆再手搓一个。&lt;a href="https://news.ycombinator.com/item?id=20935492"&gt;调研&lt;/a&gt;了一圈发现这玩意没那么容易，主要就是javascript在浏览器里 &lt;code&gt;setInterval&lt;/code&gt; 是有时间抖动（jitter）的，不能保证节奏精确。如何才能做到精准采样打节拍呢？连续精心编排 WebAudio 时间轴！&lt;/p&gt;
+&lt;p&gt;失望之余，想起来上次&lt;a href="https://blog.est.im/2022/stdout-10"&gt;JS播放DTMF&lt;/a&gt;对 WebAudio 有点感觉，要不这次自己干脆再手搓一个。&lt;a href="https://news.ycombinator.com/item?id=20935492"&gt;调研&lt;/a&gt;了一圈发现这玩意没那么容易，主要就是javascript在浏览器里 &lt;code&gt;setInterval&lt;/code&gt; 是有时间抖动（jitter）的，不能保证节奏精确。如何才能做到精准采样打节拍呢？连续精心编排 AudioContext 时间轴！&lt;/p&gt;
 &lt;p&gt;搜了一圈发现一位叫 &lt;a href="https://grantjam.es/creating-a-simple-metronome-using-javascript-and-the-web-audio-api/"&gt;Grant James 已经写好&lt;/a&gt;放在 &lt;a href="https://github.com/grantjames/metronome"&gt;github&lt;/a&gt; 了。那还等什么直接拿来～～针对性的改进了：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;无广告&lt;/li&gt;
 &lt;li&gt;去掉 .js .css 依赖，单文件更快&lt;/li&gt;
 &lt;li&gt;精简不必要的代码结构，方便以后魔改&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;改完之后发现 ~~两个~~ 三个坑也跟着一起修补了：&lt;/p&gt;
+&lt;p&gt;改完之后发现两三个坑也跟着一起修补了：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;用 &lt;code&gt;wakeLock&lt;/code&gt; 防止手机上使用息屏&lt;/li&gt;
 &lt;li&gt;突破固定的4拍子，加上可以增减的节拍控制&lt;/li&gt;
-&lt;li&gt;增减按钮可以按到小于 0&lt;/li&gt;
+&lt;li&gt;增减按钮禁止调到小于 0&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;最后成果就放在 &lt;a href="https://lab.est.im/metronome/"&gt;https://lab.est.im/metronome/&lt;/a&gt; 这里了。有需要的拿去用。协议 &lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="license noopener noreferrer" style="display:inline-flex;"&gt;CC BY-NC 4.0&lt;img style="height:1em!important;margin:auto 2px auto 2px;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"&gt;&lt;img style="height:1em!important;margin:auto 2px auto 2px;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg"&gt;&lt;img style="height:1em!important;margin:auto 2px auto 2px;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg"&gt;&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 26 Sep 2024 22:52:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-09-26:/2024/stdout-19</guid><category>stdout</category></item><item><title>Edge找回丢失的右上角Copilot侧边栏图标</title><link>https://blog.est.im/2024/stdout-18</link><description>&lt;p&gt;右上角图标和侧边栏的官方截图：&lt;/p&gt;
+&lt;p&gt;最后成果就放在 &lt;a href="https://lab.est.im/metronome/"&gt;https://lab.est.im/metronome/&lt;/a&gt; 这里了。有需要的拿去用。协议 &lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="license noopener noreferrer" style="display:inline-flex;"&gt;CC BY-NC 4.0&lt;img style="height:1em!important;margin:auto 2px auto 2px;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"&gt;&lt;img style="height:1em!important;margin:auto 2px auto 2px;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg"&gt;&lt;img style="height:1em!important;margin:auto 2px auto 2px;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;20240929更新：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;支持了长按按钮一直增加减少bpm&lt;/li&gt;
+&lt;li&gt;禁止长按出现菜单&lt;/li&gt;
+&lt;li&gt;禁止双击缩放&lt;/li&gt;
+&lt;/ol&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 26 Sep 2024 22:52:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-09-26:/2024/stdout-19</guid><category>stdout</category></item><item><title>Edge找回丢失的右上角Copilot侧边栏图标</title><link>https://blog.est.im/2024/stdout-18</link><description>&lt;p&gt;右上角图标和侧边栏的官方截图：&lt;/p&gt;
 &lt;p&gt;&lt;img referrerpolicy="no-referrer" src="https://blogs.windows.com/wp-content/uploads/prod/sites/33/2023/12/devtools-copilot-in-edge-1.png" /&gt;&lt;/p&gt;
 &lt;p&gt;如果不小心关掉了，找回办法：&lt;/p&gt;
 &lt;ol&gt;
