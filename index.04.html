@@ -57,6 +57,30 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2023/stdin-10"  rel="bookmark" >
+              <h2 class="card-title">为啥Linux下病毒比较少</h2>
+            </a>
+            <p class="card-text"><p><img alt="" src="/images/2023/stdin-10-01.webp" /></p>
+<blockquote>
+<p>最近下载了一个Linux的病毒，把它解包了。<br />
+尝试用root身份运行，发现啥也没有。<br />
+Google了俩小时，发现这病毒没解包到 /usr/local/bin 而是解压到了 malware 用户没有写入权限的 /usr/bin，于是病毒创建不了进程文件。<br />
+从某个中文论坛里找到了修改过的 .configure 和 .make 文件，重新编译重新运行了一下。<br />
+病毒说它需要 cmalw-lib-2.0，结果发现这玩意是 CentOS 里的，Ubuntu 里没有。Google 了好几个小时找到了从源码构建 .deb 包的方法。<br />
+这病毒总算开始跑了，然后打出来几行日志，吐了个 core dump 就 crash 了。翻了一个小时日志发现这病毒假定自己跑在 ext4 文件系统上然后调用了 ext4 的加密 API。但是在 btrfs 里这个 API 已经弃用了，内核发现了这个问题然后把这个分区变成只读的了。<br />
+打开源文件，grep 搜索出病毒里的 BTC 钱包地址然后出于同情给它打了 $5。</p>
+</blockquote>
+<p>哈哈虽然现在linux病毒也多，但是这个也太搞笑了 <a href="https://t.me/rvalue_daily/4255">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2023-08-22T15:04:30+08:00">2023-08-22</time></p>
+<p>stdin</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2023/stdin-09"  rel="bookmark" >
               <h2 class="card-title">北京，为什么会没有大家说的那么繁华？</h2>
             </a>
@@ -1951,39 +1975,6 @@ user3043964493022: i 100% agree! i see it also at the preschool level... we are 
 <p>总之，未来的世界是什么样的，我充满了不安和好奇</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2023-02-08T17:44:37+08:00">2023-02-08</time></p>
-<p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2023/stderr-03"  rel="bookmark" >
-              <h2 class="card-title">为什么不太看好 Nostr/ActivityPub</h2>
-            </a>
-            <p class="card-text"><p>肤浅地记录一下为啥不太看好 Mastodon/nostr 等 <strong>fediverse</strong>。</p>
-<h2>Scalability:</h2>
-<p>对于千万活跃用户来说，如何展示时间线是个很古老的问题，<a href="http://highscalability.com/blog/2013/7/8/the-architecture-twitter-uses-to-deal-with-150m-active-users.html">highscalability</a> 和 <a href="https://www.cnblogs.com/sunli/archive/2010/08/24/twitter_feeds_push_pull.html">微博</a> 都有关于 push/pull 模式的讨论。简单的说：</p>
-<ol>
-<li>读多写少</li>
-<li>大V的巨型分发量压力</li>
-<li>热点读的 materialization 太慢</li>
-</ol>
-<p>一般的解决方案是 fanout-write。也就是如果大V发一条微博，那么他所有 follower 的专用timeline 队列都会被写入一条微博id</p>
-<p>这个问题放在 fediverse 会更加复杂。目前我了解的情况是，没有专门解决这个问题。如果哪天真有个用户量巨大的网络形成了，同步全量数据都超过百兆带宽，那么其他普通 vps 上的节点也就几乎无法同步全量数据了。所以需要部分同步，那么如何联机设计就会变得很复杂，每个节点都是选择性的同步一些用户的一些时间内的消息，就会产生上面 twitter 和 weibo 的问题。这两家公司内部db 和 es 内网查询都不能很好解决，我不太相信在公网做同步能更容易解决。</p>
-<p>基于这个判断，我觉得这些网络都不可能做大，因为这个技术问题（据我所知）还没解决；社交网络的「六度分隔理论」，是建立在 <a href="https://www.zdnet.com/article/six-degrees-of-separation-and-super-nodes/">「supernode」也就是超级大V</a>基础上的。所以如果这个技术问题没解决，fediverse 发展到天花板，人缘必定是很疏散的。无法形成 twitter/weibo 那种排山倒海的全行业舆论压力。</p>
-<h2>客户端太丑</h2>
-<p>这个是个主观判断。signal 和 matrix 都是因为客户端太丑，所以不如 telegram 好用。</p>
-<h2>言论压制</h2>
-<p>题外话1：我觉得 censorship 翻译成「审查」不太对。审查明明是 review 或者 moderation 。</p>
-<p>目前逃离 twitter/weibo 最大的动机就是平台删帖，但是 fediverse 这个问题其实并没有解决，而是把责任下方给各个提供方了。提供方可以决定是否删帖怎么删以什么标准删。而靠 hobby 热情支撑的 fediverse 服务我觉得不是长久之计。站方的财政比较正向，才比较健康。所以要完全自由就一个人建一个站。。这样其实从系统设计角度来说效率太低。摄像你 follow 了100个人，每次冷更新 timeline 就得至少发起100个请求。</p>
-<p>题外话2：我觉得 mastodon 的双 <code>@</code> 太难看了。 <code>@est@mastodon.social</code> 为啥不去掉第一个 <code>@</code> 变成 <code>est@mastodon.social</code> 呢？有人说这样容易被不懂技术的识别成 email 。啊，还有这种好事？设想如果 mastodon 支持一下 SMTP 其实很不错呢。</p>
-<h2>静态建站</h2>
-<p>据我所知，ActivityPub 基础交互都需要 HTTP <code>POST</code>。我特别希望有一个 fediverse 协议能设计成比如 github pages 就能托管。站方时不时更新一个 比如旧时代的 <code>feed.rss</code> 之类的文件就完成发布，每次更新的时候ping(HTTP GET)一个网址表示有更新让爬虫来取一下。这样的轮询简单粗暴，推广成本最低，不需要复杂的 RoR 或者 nodejs 搭建技能。</p>
-<p>如果站点流量实在太大，需要长连接同步，可以采用 <a href="https://devdocs.io/dom/eventsource"><code>EventSource</code></a> 之类的单向流就行。使之基于 serverless/lambda 服务比如cloudflare worker就能跑，不要搞得太复杂。nostr 的 websocket 就麻烦得多。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2023-02-01T23:39:13+08:00">2023-02-01</time></p>
 <p>stderr</p>            </div>
           </article>
         </div>

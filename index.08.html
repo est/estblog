@@ -57,6 +57,33 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2021/stdout-020"  rel="bookmark" >
+              <h2 class="card-title">Edge调教指南——如何设置本地PAC代理和首页天气</h2>
+            </a>
+            <p class="card-text"><p>之前一直用的chrome v70，为什么呢？</p>
+<p>第一是这个老版本允许 <code>--proxy-pac-url="file:///Users/me/1.pac</code> 这样设置，但是<a href="https://bugs.chromium.org/p/chromium/issues/detail?id=839566">Chromium项目的大爷们觉得</a>你本地的.pac不够安全，要网上的.pac才安全，所以一刀切给禁了。当然有热心人士觉得这没啥大不了的。不外乎装个插件就可以切PAC。但是chrome插件其实会有一个fingerprint。Extension一启用，隔壁老王都知道你开代理了。</p>
+<p>第二，也是最重要的原因，这是最后一个chrome版本支持 <code>about://net-internals</code> 在本地查看浏览器底层网络请求。现在无论是 Edge 还是 Chrome 都必须把 .json 文件从 https://netlog-viewer.appspot.com/ 加载才能看了。很尼玛保护了隐私有没有啊。</p>
+<p>但是坚持老版本，也付出了巨大的代价。很多新的 ES 语法不支持，比如说 Grafana 最新版 login 都进不去。这就尴尬了。只能被自愿升级了。</p>
+<p>既然升级是必选项，那么就换 Edge 试试。</p>
+<p>第一就是得解决这个本地 .pac 问题，其实从上面第二个工具里才能知道，PAC加载失败有个返回 <code>ERR_DISALLOWED_URL_SCHEME</code>。stackoverflow 上找到个奇技淫巧</p>
+<p><code>open "/Applications/Microsoft Edge.app" --args --proxy-pac-url='data:application/x-javascript-config;base64,'$(base64 -i /Users/me/2.pac)</code></p>
+<p>还能这样玩？双击666。</p>
+<p>第二个把该禁用的禁用了，首页只留一个搜索框一个天气。但是这天气就特么定位到坡县了。而且下拉框点不出来啊。F12打开 devtool 一看，我尼玛好家伙 <code>https://www.bing.com/api/v6/Places/AutoSuggest</code> 被 Bing China 的网管给一把梭302到 <code>https://cn.bing.com/api/v6/Places/AutoSuggest</code> 了。然后就特么 CORS 给拦截，js读取不到列表。。。</p>
+<p>最后怎么办？点那个天气图标，进入到 <code>https://www.msn.com/en-sg/weather/today/weather-today/we-city</code></p>
+<p>然后找那个地图，手动选择自己所在城市，设置为 Home 。等 cookie 写入生效了，打开edge新tab就ok了</p>
+<p>这年头上个网真鸡儿累。</p>
+<p>btw 设置M$账号同步的时候，发现账号所在国家可以选很多不是国家的地方，但是时区就不能随便选了。F12改了也没用。微软的后台开发做的过滤还挺细致的。</p>
+<p>btw2 发现一个很干净的启动页： <code>chrome-search://local-ntp/local-ntp.html</code> 或者直接在 <code>hosts</code> 里把 ntp.msn.com 干掉，有奇效。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-11-30T11:32:33+08:00">2021-11-30</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2021/stdin-015"  rel="bookmark" >
               <h2 class="card-title">烧脑两题：蚂蚁和橡皮筋，30万公里的电路</h2>
             </a>
@@ -3791,50 +3818,6 @@ A: 蚂蚁队长第一次下命令是想让蚂蚁们离开，自己吃了这点�
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-08-29T00:07:35+08:00">2021-08-29</time></p>
 <p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2021/stdout-010"  rel="bookmark" >
-              <h2 class="card-title">shell script to graceful restart gunicorn with source code reloading</h2>
-            </a>
-            <p class="card-text"><p>I always thought restart <a href="https://gunicorn.org/">gnicorn</a> is as easy as <code>kill -HUP &lt;pid&gt;</code>, but there are two pitfalls:</p>
-<p>First of all the code might be loaded in master process then fork'ed into workers, so the <code>HUP</code> signal won't reload the source code, only gunicorn config is updated.</p>
-<p>Then there might be some bugs and your new code won't boot correctly, the worker will quit and drags down the master process along with it.</p>
-<p>I discovered a new trick from github issues that can spawn new worker first, check if new code loads correctly then restart the whole rack.</p>
-<p>According to <a href="https://docs.gunicorn.org/en/latest/signals.html#upgrading-to-a-new-binary-on-the-fly">the docs</a> you need to send several signals and blah blah, the author tried to explain in great detail of how it works rather than providing a simple option to do so.</p>
-<p>So I wrote a shell script to do that instead.</p>
-<pre><code>  #!/bin/bash
-
-  oldpid=$(&lt;./deploy/gunicorn.pid)
-  # forget the old kill -HUP 
-  kill -USR2 $oldpid
-  sleep 1
-  timeout=5
-  while [[ $timeout -gt 0 ]]; do
-    newpid=$(&lt;./deploy/gunicorn.pid.2) &amp;&amp; kill -0 $newpid
-    if [[ $? -eq 0 ]]; then
-      break
-    else
-      sleep 0.5
-      (( timeout-- ))
-    fi
-  done;
-
-  # shutdown old
-  echo "success. newpid=$newpid"
-  kill -WINCH $oldpid
-  sleep 1
-  kill -TERM $oldpid
-</code></pre>
-<p>The script will check for new master pid to be alive then kill the old master in a maximium timeout of 5 seconds.</p>
-<p>It works perfectly to replace the simple <code>HUP</code> signal as intended.</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-08-21T00:53:20+08:00">2021-08-21</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 
