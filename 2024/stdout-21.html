@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>“分封制” 代替RBAC权限管理模型 – est の 输入 输出和出入</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="“分封制” 代替RBAC权限管理模型" />
+
+    <link rel="canonical" href="https://blog.est.im/2024/stdout-21" />
+    <meta property="og:url" content="https://blog.est.im/2024/stdout-21">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="“分封制” 代替RBAC权限管理模型">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">“分封制” 代替RBAC权限管理模型</h2>
+    <p class="post-date">Posted <time datetime="2024-10-17T15:21:00+08:00">2024-10-17</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>作为开发狗，手上堆的系统和任务多了，开权限就变成了一件麻烦的事。</p>
+<p>一开始做一个功能X，给甲用，就做一个简单的权限关联表：<code>功能key</code>，<code>人员id</code>就完事大吉</p>
+<p>后来人员调整流动，换人换得勤快，得考虑一个功能给一个团队使用，于是引入 RBAC，基于角色的鉴权控制。说到底就是个三元组 <code>功能key</code>，<code>角色</code>，<code>成员id</code>。</p>
+<p>我也一度迷信这样的设计。用了这么久还是麻烦了。在一个正常官僚程度的大中型组织里，压根没人知道自己角色是啥。</p>
+<p>你说他是管理人员吧，他也就管一部分；你说他负责这事吧，也就负责一阵。该给他放到哪个角色呢？</p>
+<p>如果做一个自动化角色申请审批流程，他会跑来问你，该申请哪个角色啊？</p>
+<p>所以问题又回到了原点。因此我琢磨出来一套具有大汉封建主义特色的，「分封制」权限控制体系。</p>
+<ul>
+<li>系统超管：普天之下，莫非王土；率土之宾，莫非王臣。拥有系统一切权限。但是不负责，不执行，不搞具体管理。超管只干一件事：分封</li>
+<li>如何分封：把「事」交给一个信得过的领主（serf）。领主对一块业务全权负责。但代价得自己把封地采邑打下来。具体在系统层面，系统所有权限、功能都直接开放，所谓 zero-trust。但是你得从零开始搭建和配置。一旦你配置好、跑起来，这快权限和功能就是你独有的。（owner）</li>
+<li>线上既有的业务权限，那也是有人配置管理和主导，你只能从别那里抢夺，或者过继。</li>
+<li>领主可以给自己封臣划分部分管理权限</li>
+<li>如果一个领主挂了，超管指定一个接盘的领主</li>
+</ul>
+<p>感觉这样开发和超管就可以不用每天处理谁负责哪个功能的麻烦事了。哈哈哈</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2024/stdout-21';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+
+  </body>
+
+</html>

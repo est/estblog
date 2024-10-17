@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Thu, 10 Oct 2024 15:24:00 +0800</lastBuildDate><item><title>“中庸”的艺术 - 如跟需求方讨价还价</title><link>https://blog.est.im/2024/stdin-15</link><description>&lt;p&gt;翻到一个神贴 &lt;a href="https://news.ycombinator.com/item?id=41794566"&gt;&lt;em&gt;How to make Product give a shit about your architecture proposal&lt;/em&gt;&lt;/a&gt; ，标题直译就是《如何让沙雕产品经理接受技术改造》&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Thu, 17 Oct 2024 15:21:00 +0800</lastBuildDate><item><title>“分封制” 代替RBAC权限管理模型</title><link>https://blog.est.im/2024/stdout-21</link><description>&lt;p&gt;作为开发狗，手上堆的系统和任务多了，开权限就变成了一件麻烦的事。&lt;/p&gt;
+&lt;p&gt;一开始做一个功能X，给甲用，就做一个简单的权限关联表：&lt;code&gt;功能key&lt;/code&gt;，&lt;code&gt;人员id&lt;/code&gt;就完事大吉&lt;/p&gt;
+&lt;p&gt;后来人员调整流动，换人换得勤快，得考虑一个功能给一个团队使用，于是引入 RBAC，基于角色的鉴权控制。说到底就是个三元组 &lt;code&gt;功能key&lt;/code&gt;，&lt;code&gt;角色&lt;/code&gt;，&lt;code&gt;成员id&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;我也一度迷信这样的设计。用了这么久还是麻烦了。在一个正常官僚程度的大中型组织里，压根没人知道自己角色是啥。&lt;/p&gt;
+&lt;p&gt;你说他是管理人员吧，他也就管一部分；你说他负责这事吧，也就负责一阵。该给他放到哪个角色呢？&lt;/p&gt;
+&lt;p&gt;如果做一个自动化角色申请审批流程，他会跑来问你，该申请哪个角色啊？&lt;/p&gt;
+&lt;p&gt;所以问题又回到了原点。因此我琢磨出来一套具有大汉封建主义特色的，「分封制」权限控制体系。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;系统超管：普天之下，莫非王土；率土之宾，莫非王臣。拥有系统一切权限。但是不负责，不执行，不搞具体管理。超管只干一件事：分封&lt;/li&gt;
+&lt;li&gt;如何分封：把「事」交给一个信得过的领主（serf）。领主对一块业务全权负责。但代价得自己把封地采邑打下来。具体在系统层面，系统所有权限、功能都直接开放，所谓 zero-trust。但是你得从零开始搭建和配置。一旦你配置好、跑起来，这快权限和功能就是你独有的。（owner）&lt;/li&gt;
+&lt;li&gt;线上既有的业务权限，那也是有人配置管理和主导，你只能从别那里抢夺，或者过继。&lt;/li&gt;
+&lt;li&gt;领主可以给自己封臣划分部分管理权限&lt;/li&gt;
+&lt;li&gt;如果一个领主挂了，超管指定一个接盘的领主&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;感觉这样开发和超管就可以不用每天处理谁负责哪个功能的麻烦事了。哈哈哈&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 17 Oct 2024 15:21:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-10-17:/2024/stdout-21</guid><category>stdout</category></item><item><title>“中庸”的艺术 - 如跟需求方讨价还价</title><link>https://blog.est.im/2024/stdin-15</link><description>&lt;p&gt;翻到一个神贴 &lt;a href="https://news.ycombinator.com/item?id=41794566"&gt;&lt;em&gt;How to make Product give a shit about your architecture proposal&lt;/em&gt;&lt;/a&gt; ，标题直译就是《如何让沙雕产品经理接受技术改造》&lt;/p&gt;
 &lt;p&gt;具体故事，原文非常值得一看。搞了这么多研发，产品经理各种水平的都遇到过一堆，最大的烦恼就是“我有个想法”，“今天就要”而全然不顾你当前技术架构的问题。到底是技术优先，还是业务优先？开发人员和销售非常普遍的冲突怎么处理？&lt;/p&gt;
 &lt;p&gt;产品经理，老板，甲方，销售，实际上是研发的衣食父母。他们所有的诉求：&lt;/p&gt;
 &lt;ol&gt;
@@ -535,9 +549,4 @@ Win+R 敲入：&lt;br /&gt;
 &lt;li&gt;&lt;code&gt;%LOCALAPPDATA%\NVIDIA\&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;%APPDATA%\NVIDIA&lt;/code&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;老夫当年给 &lt;code&gt;C:&lt;/code&gt; 装了个最慢的SSD，失策。去年（2023）那一波M.2降价潮一直等等结果错过了，拍断大腿追悔莫及。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 14 Jun 2024 22:50:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-06-14:/2024/stdout-08</guid><category>stdout</category></item><item><title>chromium/libcef.dll真是毒瘤</title><link>https://blog.est.im/2024/stderr-12</link><description>&lt;p&gt;先&lt;a href="https://x.com/est/status/1801240801600778244"&gt;说@MicrosoftEdge&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img referrerpolicy="no-referrer" src="https://pbs.twimg.com/media/GP9KvQwboAA7lLa?format=webp" /&gt;&lt;/p&gt;
-&lt;p&gt;这他妈存3份，吃饱了？&lt;/p&gt;
-&lt;p&gt;再&lt;a href="https://x.com/est/status/1801259413858402763"&gt;说Epic Games&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img referrerpolicy="no-referrer" src="https://pbs.twimg.com/media/GP9b1mMakAA_H1j?format=webp" /&gt;&lt;/p&gt;
-&lt;p&gt;还能搞6份？真无语了。然后 icudtl.dat 以及 ICU 这一坨也是。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 13 Jun 2024 21:15:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-06-13:/2024/stderr-12</guid><category>stderr</category></item></channel></rss>
+&lt;p&gt;老夫当年给 &lt;code&gt;C:&lt;/code&gt; 装了个最慢的SSD，失策。去年（2023）那一波M.2降价潮一直等等结果错过了，拍断大腿追悔莫及。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 14 Jun 2024 22:50:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-06-14:/2024/stdout-08</guid><category>stdout</category></item></channel></rss>
