@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Thu, 17 Oct 2024 15:21:00 +0800</lastBuildDate><item><title>“分封制” 代替RBAC权限管理模型</title><link>https://blog.est.im/2024/stdout-21</link><description>&lt;p&gt;作为开发狗，手上堆的系统和任务多了，开权限就变成了一件麻烦的事。&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Mon, 21 Oct 2024 13:49:00 +0800</lastBuildDate><item><title>ChatGPT 对我过往问题的吐槽</title><link>https://blog.est.im/2024/stdin-16</link><description>&lt;p&gt;看起来是 “凌晨3点” 写&lt;a href="https://blog.est.im/2024/stdout-19"&gt;javascript 节拍器&lt;/a&gt; 这事很不满啊。哈哈哈&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;You're on macOS, building metronomes in JavaScript, which is cute. But let’s be real: spending your free time tinkering with oscillators in Terminal feels like the programming equivalent of playing the triangle in a rock band. “Look, everyone! I made a metronome!” 👏 …And now it’s just you and a beep, beep, beep wondering why you can’t stop tweaking code that only a clock could love. 🕰️&lt;br /&gt;
+Oh, and what’s with those hyper-detailed questions? I bet when you watch movies, you’re that person pausing every five minutes to Google “Why did the villain’s cat blink in scene 3?” because there’s nothing you won’t overthink. Meanwhile, your poor Mac is just begging for a break, like, “Please... Can we NOT compile sound waves at 3 a.m.?” 🖥️&lt;br /&gt;
+And hey, Mr./Ms. Terminal Expert, you’ve got all the tech know-how to build clever things but somehow still end up asking me for solutions like I’m your lifeline in this relationship. Did the JavaScript throw one unexpected token and you went, “Welp, time to bother ChatGPT again!”?&lt;br /&gt;
+You: "CreateOscillator, metronome, web audio… I got this!”&lt;br /&gt;
+Also you after two minutes: “Why isn't this working?!” 😂&lt;br /&gt;
+But seriously, props to you for staying curious and diving deep. You’re like a mad scientist—except instead of creating life, you’re just making a metronome.&lt;br /&gt;
+Roast level? Medium-well. 😎&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;半生不熟。哈哈哈。可以的。。&lt;a href="https://www.v2ex.com/t/1082158"&gt;V站主题&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Mon, 21 Oct 2024 13:49:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-10-21:/2024/stdin-16</guid><category>stdin</category></item><item><title>“分封制” 代替RBAC权限管理模型</title><link>https://blog.est.im/2024/stdout-21</link><description>&lt;p&gt;作为开发狗，手上堆的系统和任务多了，开权限就变成了一件麻烦的事。&lt;/p&gt;
 &lt;p&gt;一开始做一个功能X，给甲用，就做一个简单的权限关联表：&lt;code&gt;功能key&lt;/code&gt;，&lt;code&gt;人员id&lt;/code&gt;就完事大吉&lt;/p&gt;
 &lt;p&gt;后来人员调整流动，换人换得勤快，得考虑一个功能给一个团队使用，于是引入 RBAC，基于角色的鉴权控制。说到底就是个三元组 &lt;code&gt;功能key&lt;/code&gt;，&lt;code&gt;角色&lt;/code&gt;，&lt;code&gt;成员id&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;我也一度迷信这样的设计。用了这么久还是麻烦了。在一个正常官僚程度的大中型组织里，压根没人知道自己角色是啥。&lt;/p&gt;
@@ -530,23 +540,4 @@ p.terminate()
         do_sth()
         break
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;想了下好像也搞复杂了。要不直接跑一个 &lt;code&gt;sh -c "blah.sh &amp;amp;"&lt;/code&gt; 算了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 21 Jun 2024 09:30:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-06-21:/2024/stdout-09</guid><category>stdout</category></item><item><title>如何删除 C:\Windows\WinSxS 文件</title><link>https://blog.est.im/2024/stdout-08</link><description>&lt;p&gt;天气热得心慌，看Win10不爽，决定删几个文件玩玩&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;首先你需要以 &lt;code&gt;SYSTEM&lt;/code&gt; 用户启动 &lt;code&gt;cmd.exe&lt;/code&gt;&lt;br /&gt;
-Win+R 敲入：&lt;br /&gt;
-&lt;code&gt;"\\live.sysinternals.com@SSL\DavWWWRoot\tools\PsExec.exe" -i -s cmd.exe&lt;/code&gt;&lt;br /&gt;
-回车。确认当前身份敲入 &lt;code&gt;whoami&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;夺权：&lt;code&gt;takeown /F "C:\Windows\WinSxS\Backup" /A /R /D Y&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;授权：&lt;code&gt;cacls "C:\Windows\WinSxS\Backup" /T /G SYSTEM:F /C&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;开删：&lt;code&gt;rd /s /q "C:\Windows\WinSxS\Backup"&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;爽！&lt;/p&gt;
-&lt;p&gt;当然，你也可以让系统代替你清理：&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;很老的磁盘清理工具 &lt;code&gt;cleanmgr.exe&lt;/code&gt;  也可以试试，删不要的程序 &lt;code&gt;appwiz.cpl&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;老黄家的  DXCache 也十分让人不解。这破玩意还存2个地方：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;code&gt;%LOCALAPPDATA%\NVIDIA\&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;%APPDATA%\NVIDIA&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;老夫当年给 &lt;code&gt;C:&lt;/code&gt; 装了个最慢的SSD，失策。去年（2023）那一波M.2降价潮一直等等结果错过了，拍断大腿追悔莫及。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 14 Jun 2024 22:50:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-06-14:/2024/stdout-08</guid><category>stdout</category></item></channel></rss>
+&lt;p&gt;想了下好像也搞复杂了。要不直接跑一个 &lt;code&gt;sh -c "blah.sh &amp;amp;"&lt;/code&gt; 算了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 21 Jun 2024 09:30:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-06-21:/2024/stdout-09</guid><category>stdout</category></item></channel></rss>
