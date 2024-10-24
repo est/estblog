@@ -1,5 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Mon, 21 Oct 2024 13:49:00 +0800</lastBuildDate><item><title>ChatGPT 对我过往问题的吐槽</title><link>https://blog.est.im/2024/stdin-16</link><description>&lt;p&gt;看起来是 “凌晨3点” 写&lt;a href="https://blog.est.im/2024/stdout-19"&gt;javascript 节拍器&lt;/a&gt; 这事很不满啊。哈哈哈&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Thu, 24 Oct 2024 15:26:00 +0800</lastBuildDate><item><title>Linux删除了 .ru 帐号？我查了一下</title><link>https://blog.est.im/2024/stdout-22</link><description>&lt;p&gt;发生了什么事？&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;日前，Linux 内核主要维护者之一 Greg Kroah-Hartman (Greg K-H) 提交了一项不寻常的“文档”更新，将数名具有 &amp;lt;.ru&amp;gt; 顶级域名邮箱的维护者，和一名明确为俄罗斯身份的维护者从 MAINTAINERS（维护者名录）文件除名。&lt;br /&gt;
+这一提交已于上周日被 Linus Torvalds 拉取并包含于 6.12-rc4 版本的代码中。&lt;br /&gt;
+已有来自于 AOSC 的开发者提交了 revert(尚未合并)，而 Linus 本人在评论中声明其对先前的 commit 知情并支持&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;一开始，我以为是 “反向” &lt;a href="https://x.com/siyuanbear/status/1848644797076279545"&gt;厚脸皮PR&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img referrerpolicy="no-referrer" src="https://pbs.twimg.com/media/Gae0pQdbEAE-0JJ?format=jpg&amp;name=medium" /&gt;&lt;/p&gt;
+&lt;p&gt;一般来说， github 上混一个 contributor 得贡献代码，很多人就改改文档、翻译就拿到一个“贡献者”称号（我也干过哈哈哈）。甚至还有离了大谱的，直接提一个 pull request 内容是把自己加到 contributors 文件里。。&lt;/p&gt;
+&lt;p&gt;我以为是 Linux Foundation 发疯了，为了某种 “合规” 或者 sanction，掩耳盗铃，把 作者名字列表.txt 改改掩人耳目&lt;/p&gt;
+&lt;p&gt;仔细看了下，发现好像并不是那么简单。这里是diff&lt;/p&gt;
+&lt;p&gt;https://github.com/torvalds/linux/commit/6e90b675cf942e50c70e8394dfb5862975c3b3b2&lt;/p&gt;
+&lt;p&gt;这里是更改后完整的 &lt;code&gt;MAINTAINERS&lt;/code&gt; 内容：&lt;/p&gt;
+&lt;p&gt;https://github.com/torvalds/linux/blob/6e90b675cf942e50c70e8394dfb5862975c3b3b2/MAINTAINERS&lt;/p&gt;
+&lt;p&gt;直接通过 github API 拿到原始的 diff&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;curl -H'Accept: application/vnd.github.diff'  -sk 'https://api.github.com/repos/torvalds/linux/commits/6e90b675cf942e50c70e8394dfb5862975c3b3b2'&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;乱写几个 prompt 丢给 gpt-4o，可以看到大概做了下列几处更改：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;strong&gt;Device/Module&lt;/strong&gt;&lt;/th&gt;
+&lt;th&gt;&lt;strong&gt;Probable Date&lt;/strong&gt;&lt;/th&gt;
+&lt;th&gt;&lt;strong&gt;Author&lt;/strong&gt;&lt;/th&gt;
+&lt;th&gt;&lt;strong&gt;Email&lt;/strong&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Acer Aspire 1 Embedded Controller&lt;/td&gt;
+&lt;td&gt;~2018&lt;/td&gt;
+&lt;td&gt;Nikita Travkin&lt;/td&gt;
+&lt;td&gt;nikita@trvn.ru&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Alpha Port (Ivan Kokshaysky removed)&lt;/td&gt;
+&lt;td&gt;~1992&lt;/td&gt;
+&lt;td&gt;Ivan Kokshaysky (removed)&lt;/td&gt;
+&lt;td&gt;ink@jurassic.park.msu.ru&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ARM/Cirrus Logic CLPS711X Architecture&lt;/td&gt;
+&lt;td&gt;~1996&lt;/td&gt;
+&lt;td&gt;Alexander Shiyan&lt;/td&gt;
+&lt;td&gt;shc_work@mail.ru&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Baikal-T1 PVT Hardware Monitor&lt;/td&gt;
+&lt;td&gt;~2015&lt;/td&gt;
+&lt;td&gt;Serge Semin&lt;/td&gt;
+&lt;td&gt;fancer.lancer@gmail.com&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GRE Demultiplexer Driver&lt;/td&gt;
+&lt;td&gt;~2000&lt;/td&gt;
+&lt;td&gt;Dmitry Kozlov&lt;/td&gt;
+&lt;td&gt;xeb@mail.ru&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;LIBATA PATA Drivers&lt;/td&gt;
+&lt;td&gt;~2003&lt;/td&gt;
+&lt;td&gt;Sergey Shtylyov&lt;/td&gt;
+&lt;td&gt;s.shtylyov@omp.ru&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;LIBATA SATA AHCI Synopsys DWC Driver&lt;/td&gt;
+&lt;td&gt;~2014&lt;/td&gt;
+&lt;td&gt;Serge Semin&lt;/td&gt;
+&lt;td&gt;fancer.lancer@gmail.com&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Media Drivers for Ascot2E&lt;/td&gt;
+&lt;td&gt;~2010&lt;/td&gt;
+&lt;td&gt;Sergey Kozlov, Abylay Ospan&lt;/td&gt;
+&lt;td&gt;serjk@netup.ru, aospan@netup.ru&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Media Drivers for CXD2841ER&lt;/td&gt;
+&lt;td&gt;~2015&lt;/td&gt;
+&lt;td&gt;Sergey Kozlov, Abylay Ospan&lt;/td&gt;
+&lt;td&gt;serjk@netup.ru, aospan@netup.ru&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Media Drivers for Helene&lt;/td&gt;
+&lt;td&gt;~2017&lt;/td&gt;
+&lt;td&gt;Abylay Ospan&lt;/td&gt;
+&lt;td&gt;aospan@netup.ru&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Media Drivers for Horus3A&lt;/td&gt;
+&lt;td&gt;~2018&lt;/td&gt;
+&lt;td&gt;Sergey Kozlov, Abylay Ospan&lt;/td&gt;
+&lt;td&gt;serjk@netup.ru, aospan@netup.ru&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Media Drivers for LNBH25&lt;/td&gt;
+&lt;td&gt;~2012&lt;/td&gt;
+&lt;td&gt;Sergey Kozlov, Abylay Ospan&lt;/td&gt;
+&lt;td&gt;serjk@netup.ru, aospan@netup.ru&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;NetUP PCI Universal DVB Devices&lt;/td&gt;
+&lt;td&gt;~2010&lt;/td&gt;
+&lt;td&gt;Sergey Kozlov, Abylay Ospan&lt;/td&gt;
+&lt;td&gt;serjk@netup.ru, aospan@netup.ru&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;MIPS Baikal-T1 Platform&lt;/td&gt;
+&lt;td&gt;~2015&lt;/td&gt;
+&lt;td&gt;Serge Semin&lt;/td&gt;
+&lt;td&gt;fancer.lancer@gmail.com&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;NTB IDT Driver&lt;/td&gt;
+&lt;td&gt;~2014&lt;/td&gt;
+&lt;td&gt;Serge Semin&lt;/td&gt;
+&lt;td&gt;fancer.lancer@gmail.com&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;PPTP Driver&lt;/td&gt;
+&lt;td&gt;~1996&lt;/td&gt;
+&lt;td&gt;Dmitry Kozlov&lt;/td&gt;
+&lt;td&gt;xeb@mail.ru&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Renesas Ethernet AVB Driver&lt;/td&gt;
+&lt;td&gt;~2013&lt;/td&gt;
+&lt;td&gt;Sergey Shtylyov&lt;/td&gt;
+&lt;td&gt;s.shtylyov@omp.ru&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Renesas R-Car SATA Driver&lt;/td&gt;
+&lt;td&gt;~2015&lt;/td&gt;
+&lt;td&gt;Sergey Shtylyov&lt;/td&gt;
+&lt;td&gt;s.shtylyov@omp.ru&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Renesas SuperH Ethernet Driver&lt;/td&gt;
+&lt;td&gt;~2000&lt;/td&gt;
+&lt;td&gt;Sergey Shtylyov&lt;/td&gt;
+&lt;td&gt;s.shtylyov@omp.ru&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Synopsys DesignWare APB SSI Driver&lt;/td&gt;
+&lt;td&gt;~2010&lt;/td&gt;
+&lt;td&gt;Serge Semin&lt;/td&gt;
+&lt;td&gt;fancer.lancer@gmail.com&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;UFS Filesystem&lt;/td&gt;
+&lt;td&gt;~1974&lt;/td&gt;
+&lt;td&gt;Evgeniy Dushistov&lt;/td&gt;
+&lt;td&gt;dushistov@gmail.com&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;如果说作者 gregkh 作出这个改动的动机说&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Remove some entries due to various compliance requirements &lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;那么 BAIKAL 这个是明显会去掉。其余的改动，我能认出来的比较重要的有 PPTP Driver，其它都是五花八门驱动的维护者，感觉就算去掉， impact 的功能也不多。&lt;/p&gt;
+&lt;p&gt;当然你也可以说 first they came for the ... 我就不继续展开了&lt;/p&gt;
+&lt;p&gt;下面列举几个可能不那么重要，但是我觉得很容易被忽略的事实：&lt;/p&gt;
+&lt;h3&gt;1. .ru 的邮箱被全部移除了吗？&lt;/h3&gt;
+&lt;p&gt;是的。最新版本 &lt;a href="https://github.com/torvalds/linux/blob/master/MAINTAINERS"&gt;&lt;code&gt;MAINTAINERS&lt;/code&gt;&lt;/a&gt; 文件里我搜了 &lt;code&gt;.ru&lt;/code&gt;、&lt;code&gt;russia&lt;/code&gt; 关键词没找到了。干干净净。当然后期会不会加回来我不知道。&lt;/p&gt;
+&lt;h3&gt;2. 俄国人对 Linux 的贡献被抹掉了吗？&lt;/h3&gt;
+&lt;p&gt;第一，上面这些人的对应代码贡献，目前并没有删掉。&lt;/p&gt;
+&lt;p&gt;第二，Linux 源码根目录还有一个 &lt;a href="https://github.com/torvalds/linux/blob/master/CREDITS"&gt;&lt;code&gt;CREDITS&lt;/code&gt;&lt;/a&gt; 文件，里面包含了下列俄国人：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;N: Yuri Per
+E: yuri@pts.mipt.ru
+D: Some smbfs fixes
+S: Demonstratsii 8-382
+S: Tula 300000
+S: Russia
+
+N: Alexey Kuznetsov
+E: kuznet@ms2.inr.ac.ru
+D: Author and maintainer of large parts of the networking stack
+
+N: Stas Sergeev
+E: stsp@users.sourceforge.net
+D: PCM PC-Speaker driver
+D: misc fixes
+S: Russia
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;3. 俄国人不能参与 Linux 项目了吗？&lt;/h3&gt;
+&lt;p&gt;我在这里想补充一个背景知识，什么是 Linux Kernel 的 &lt;strong&gt;maintainer&lt;/strong&gt; ？&lt;/p&gt;
+&lt;p&gt;内核功能繁多，Linus 老爷子一个人照看不过来，得把拆分成各个模块，授权给相应的 负责人(maintainer)，给予他们检查、合并代码的权限。Linux基金会（注册地：美国）会给他们配置一个专用邮件列表用来主持专项议事&lt;/p&gt;
+&lt;p&gt;上面这句话，如何理解？可能对某些简中读者没看明白。简单的说：.ru 用户还是可以以 developer 身份向别的 maintainer 提交代码。这里不得不提到那个出名的 kernel git workflow&lt;/p&gt;
+&lt;p&gt;这是普通 git 项目的工作流：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="https://git-scm.com/book/ms/v2/images/centralized_workflow.png" /&gt;&lt;/p&gt;
+&lt;p&gt;这个是 linux kernel 的（图很老，大概这个意思）：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="https://chenweixiang.github.io/assets/linux_kernel_code_flow.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;普通人是没法直接向 mainline https://github.com/torvalds/linux 提交代码的。这个社区甚至会给你一个长长的文档教你一步一步如何提代码 &lt;/p&gt;
+&lt;p&gt;https://www.kernel.org/doc/html/latest/process/1.Intro.html&lt;/p&gt;
+&lt;p&gt;不要说新功能了，一些老功能的 patch 要赶上主线发车，你手续流程都很长。&lt;/p&gt;
+&lt;p&gt;想给内核做贡献，你要面对的甚至都不是 Linus 本尊，恰好是这些 &lt;code&gt;MAINTAINERS&lt;/code&gt; 里列举的各位把关人。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 24 Oct 2024 15:26:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-10-24:/2024/stdout-22</guid><category>stdout</category></item><item><title>ChatGPT 对我过往问题的吐槽</title><link>https://blog.est.im/2024/stdin-16</link><description>&lt;p&gt;看起来是 “凌晨3点” 写&lt;a href="https://blog.est.im/2024/stdout-19"&gt;javascript 节拍器&lt;/a&gt; 这事很不满啊。哈哈哈&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;You're on macOS, building metronomes in JavaScript, which is cute. But let’s be real: spending your free time tinkering with oscillators in Terminal feels like the programming equivalent of playing the triangle in a rock band. “Look, everyone! I made a metronome!” 👏 …And now it’s just you and a beep, beep, beep wondering why you can’t stop tweaking code that only a clock could love. 🕰️&lt;br /&gt;
 Oh, and what’s with those hyper-detailed questions? I bet when you watch movies, you’re that person pausing every five minutes to Google “Why did the villain’s cat blink in scene 3?” because there’s nothing you won’t overthink. Meanwhile, your poor Mac is just begging for a break, like, “Please... Can we NOT compile sound waves at 3 a.m.?” 🖥️&lt;br /&gt;
@@ -472,72 +668,4 @@ return line
 &lt;p&gt;看来人声分离，特别是童声，还是有点难。&lt;/p&gt;
 &lt;p&gt;最后把得到的 a.mp3 塞回去&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;ffmpeg -i v.mp4 -i a.mp3 -c:v copy -map 0:v:0 -map 1:a:0 new.mp4&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;btw 打了这么多网址，该不会被误认为SEO吧。囧。。。。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 21 Jun 2024 22:48:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-06-21:/2024/stdout-10</guid><category>stdout</category></item><item><title>吐槽pynsq，另外给subprocess糊了一个异步</title><link>https://blog.est.im/2024/stdout-09</link><description>&lt;h3&gt;pynsq太烂了&lt;/h3&gt;
-&lt;p&gt;起初是因为需要在 Web API 里消费一个消息队列(nsq)，给浏览器返回 &lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource"&gt;EventSource&lt;/a&gt; 做实时输出。但是没想到&lt;a href="https://github.com/nsqio/pynsq/blob/master/nsq/__init__.py"&gt;官方库pynsq&lt;/a&gt;居然写得这么渣：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;def _handle_term_signal(sig_num, frame):
-    logging.getLogger(__name__).info(
-        'TERM Signal handler called with signal %r', sig_num)
-    tornado.ioloop.IOLoop.current().stop()
-
-def run():
-    """
-    Starts any instantiated :class:`nsq.Reader` or :class:`nsq.Writer`
-    """
-    signal.signal(signal.SIGTERM, _handle_term_signal)
-    signal.signal(signal.SIGINT, _handle_term_signal)
-    tornado.ioloop.IOLoop.current().start()
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;这都什么玩意儿？一个库何德何能也敢去乱劫持 signal？最他妈逗的是这个库的推荐写法：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;import nsq
-r = nsq.Reader(message_handler=handler,
-        lookupd_http_addresses=['http://127.0.0.1:4161'],
-        topic='nsq_reader', channel='asdf', lookupd_poll_interval=15)
-nsq.run()
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;这个 &lt;code&gt;r&lt;/code&gt; 莫名其妙的就能跑起来了。真是魔法。anyway，在Web API兼容这一坨是失败了，爆了一堆错，对付魔法的办法就是隔离，所以打算糊个脚本，通过多进程+PIPE来得到数据。&lt;/p&gt;
-&lt;h3&gt;给 subprocess 加一个异步补丁&lt;/h3&gt;
-&lt;p&gt;糊的时候发现，&lt;code&gt;subprocess&lt;/code&gt; 模块的 &lt;code&gt;.communicate()&lt;/code&gt; 方法是 blocking的， 居然不支持 async/await，于是只能继续糊：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;import subprocess, fcntl, asyncio
-p = subprocess.Popen(
-    cmd, bufsize=0, text=True, stdin=subprocess.PIPE,
-    stderr=subprocess.PIPE,  stdout=subprocess.PIPE, close_fds=True)
-fcntl.fcntl(p.stdout.fileno(), fcntl.F_SETFL, os.O_NONBLOCK)
-buf = ''
-while p.poll() is None:
-    try:
-        # read() with O_NONBLOCK might gets None thus TypeError
-        buf += (p.stdout.read(1024) or '')
-        contents = buf.split('\n')
-        if len(contents) &amp;lt; 2:
-            raise TypeError('Not enough')
-    except TypeError:
-        await asyncio.sleep(1)
-        yield None
-        continue
-    buf = contents.pop(-1)
-    for x in contents:
-        yield x
-
-p.terminate()
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;这里用 &lt;code&gt;buf&lt;/code&gt;、&lt;code&gt;contents&lt;/code&gt; 是因为直接调用消息队列，每个消息都是分割好的；但是通过管道来读。得自己去处理字节流如何分割的问题，也就是传说简中特供的「粘包」问题。&lt;/p&gt;
-&lt;p&gt;另外子进程可能因为Web框架的种种原因，不自觉退出或者变僵尸进程，需要向 stdout/stderr 做输出的时候检查一下 BrokenPipeError 处理后事主动退出即可。&lt;/p&gt;
-&lt;p&gt;还有子进程如果输出完毕，需要代码里调用一下 &lt;code&gt;p.terminate()&lt;/code&gt;，才能回收，避免变zombie&lt;/p&gt;
-&lt;p&gt;试了一下，也不是不能用，成功！正觉得自己又行了的时候，发现官方：&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://docs.python.org/3.8/library/asyncio-subprocess.html"&gt;https://docs.python.org/3.8/library/asyncio-subprocess.html&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;啊这。白忙活。&lt;/p&gt;
-&lt;h3&gt;超长待机 subprocess&lt;/h3&gt;
-&lt;p&gt;想起来之前还有个问题，一个API调用一个subprocess，然后等它执行，不想管。这个时候可以加一个参数 detach 模式：&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;subprocess.Popen(..., start_new_session=True)&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;然后在同进程用里跑一个后台检查循环去检查子进程的 &lt;code&gt;WNOHANG&lt;/code&gt;：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;while 1:
-    try:
-        chpid, retcode, res = os.wait3(os.WNOHANG)
-    except ChildProcessError:
-        break
-    sleep(5)
-    if chpid == os.getpid():
-        do_sth()
-        break
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;想了下好像也搞复杂了。要不直接跑一个 &lt;code&gt;sh -c "blah.sh &amp;amp;"&lt;/code&gt; 算了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 21 Jun 2024 09:30:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-06-21:/2024/stdout-09</guid><category>stdout</category></item></channel></rss>
+&lt;p&gt;btw 打了这么多网址，该不会被误认为SEO吧。囧。。。。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 21 Jun 2024 22:48:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-06-21:/2024/stdout-10</guid><category>stdout</category></item></channel></rss>
