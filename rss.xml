@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Fri, 01 Nov 2024 00:15:00 +0800</lastBuildDate><item><title>白嫖百度网盘“单次转存数”500限制</title><link>https://blog.est.im/2024/stdout-23</link><description>&lt;p&gt;找了个资源，点击保存，居然提示充SVIP。本来找资源就白嫖，让我充钱？&lt;/p&gt;
-&lt;p&gt;打开F12研究了一会儿，发现可以搞。&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Fri, 01 Nov 2024 00:15:00 +0800</lastBuildDate><item><title>白嫖百度网盘“单次转存数”500限制</title><link>https://blog.est.im/2024/stdout-23</link><description>&lt;p&gt;找了个资源，点击保存，居然提示充SVIP。看了下免费用户每次最多保存500份文件。本来找资源就白嫖，让我充钱？&lt;/p&gt;
+&lt;p&gt;研究了一会儿，发现可以搞。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;首先你去你网盘里建立个目录 &lt;code&gt;0000-0500&lt;/code&gt;，准备存文件。这么起名字是因为你在自己网盘里多选也是最多选500个，所以每次存一个目录用来对照数量&lt;/li&gt;
-&lt;li&gt;分享链接里文件列表是惰性加载，所以请用鼠标滚到底部，然后点击「名称」排序。这样方便对比有没有漏掉&lt;/li&gt;
-&lt;li&gt;F12打开 console 并粘贴。如果这一步看不懂建议直接放弃&lt;br /&gt;
+&lt;li&gt;分享链接里文件列表默认只展示前100条，是惰性加载，所以请用鼠标一直反复向下滚，务必拉到底，然后点击「名称」排序。这样方便对比有没有漏掉&lt;/li&gt;
+&lt;li&gt;F12打开 console 并粘贴下面的js。如果这一步看不懂建议直接放弃  &lt;br /&gt;
     Array.prototype.slice.apply(document.querySelectorAll(&lt;br /&gt;
       '.share-list dd.open-enable&amp;gt;span'&lt;br /&gt;
     ), [0, 500]).forEach((x)=&amp;gt;x.click())&lt;br /&gt;
-这样就点击了前500个文件，保存。&lt;/li&gt;
-&lt;li&gt;再次执行上一段代码，取消点击前500个文件。&lt;/li&gt;
+这样就等效点击了前500个文件。点击保存。&lt;/li&gt;
+&lt;li&gt;等全部存好，再次执行上一段代码，取消点击前500个文件。&lt;/li&gt;
 &lt;li&gt;去你的网盘里新建个目录 &lt;code&gt;0500-1000&lt;/code&gt; ，用来保存下一批&lt;/li&gt;
 &lt;li&gt;把上面代码里的 &lt;code&gt;[0,500]&lt;/code&gt; 改成 &lt;code&gt;[500,1000]&lt;/code&gt; 然后再执行一遍，保存到刚才创建的目录里。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;如此反复。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 01 Nov 2024 00:15:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-11-01:/2024/stdout-23</guid><category>stdout</category></item><item><title>Linux删除了 .ru 帐号？我查了一下</title><link>https://blog.est.im/2024/stdout-22</link><description>&lt;p&gt;&lt;a href="https://www.zhihu.com/question/1783342926"&gt;发生了什么事&lt;/a&gt;？&lt;/p&gt;
+&lt;li&gt;如果有更多的文件，在执行一遍 &lt;code&gt;[500,1000]&lt;/code&gt; 这一批，取消点击；然后改成 &lt;code&gt;[1000,1500]&lt;/code&gt; 如此反复。&lt;/li&gt;
+&lt;/ol&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 01 Nov 2024 00:15:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-11-01:/2024/stdout-23</guid><category>stdout</category></item><item><title>Linux删除了 .ru 帐号？我查了一下</title><link>https://blog.est.im/2024/stdout-22</link><description>&lt;p&gt;&lt;a href="https://www.zhihu.com/question/1783342926"&gt;发生了什么事&lt;/a&gt;？&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;日前，Linux 内核主要维护者之一 Greg Kroah-Hartman (Greg K-H) 提交了一项不寻常的“文档”更新，将数名具有 &amp;lt;.ru&amp;gt; 顶级域名邮箱的维护者，和一名明确为俄罗斯身份的维护者从 MAINTAINERS（维护者名录）文件除名。&lt;br /&gt;
 这一提交已于上周日被 Linus Torvalds 拉取并包含于 6.12-rc4 版本的代码中。&lt;br /&gt;
