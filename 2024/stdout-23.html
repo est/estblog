@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>白嫖百度网盘“单次转存数”500限制 – est の 输入 输出和出入</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="白嫖百度网盘“单次转存数”500限制" />
+
+    <link rel="canonical" href="https://blog.est.im/2024/stdout-23" />
+    <meta property="og:url" content="https://blog.est.im/2024/stdout-23">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="白嫖百度网盘“单次转存数”500限制">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">白嫖百度网盘“单次转存数”500限制</h2>
+    <p class="post-date">Posted <time datetime="2024-11-01T00:15:00+08:00">2024-11-01</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>找了个资源，点击保存，居然提示充SVIP。本来找资源就白嫖，让我充钱？</p>
+<p>打开F12研究了一会儿，发现可以搞。</p>
+<ol>
+<li>首先你去你网盘里建立个目录 <code>0000-0500</code>，准备存文件。这么起名字是因为你在自己网盘里多选也是最多选500个，所以每次存一个目录用来对照数量</li>
+<li>分享链接里文件列表是惰性加载，所以请用鼠标滚到底部，然后点击「名称」排序。这样方便对比有没有漏掉</li>
+<li>F12打开 console 并粘贴。如果这一步看不懂建议直接放弃<br />
+    Array.prototype.slice.apply(document.querySelectorAll(<br />
+      '.share-list dd.open-enable&gt;span'<br />
+    ), [0, 500]).forEach((x)=&gt;x.click())<br />
+这样就点击了前500个文件，保存。</li>
+<li>再次执行上一段代码，取消点击前500个文件。</li>
+<li>去你的网盘里新建个目录 <code>0500-1000</code> ，用来保存下一批</li>
+<li>把上面代码里的 <code>[0,500]</code> 改成 <code>[500,1000]</code> 然后再执行一遍，保存到刚才创建的目录里。</li>
+</ol>
+<p>如此反复。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2024/stdout-23';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+
+  </body>
+
+</html>

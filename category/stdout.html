@@ -57,6 +57,34 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2024/stdout-23"  rel="bookmark" >
+              <h2 class="card-title">白嫖百度网盘“单次转存数”500限制</h2>
+            </a>
+            <p class="card-text"><p>找了个资源，点击保存，居然提示充SVIP。本来找资源就白嫖，让我充钱？</p>
+<p>打开F12研究了一会儿，发现可以搞。</p>
+<ol>
+<li>首先你去你网盘里建立个目录 <code>0000-0500</code>，准备存文件。这么起名字是因为你在自己网盘里多选也是最多选500个，所以每次存一个目录用来对照数量</li>
+<li>分享链接里文件列表是惰性加载，所以请用鼠标滚到底部，然后点击「名称」排序。这样方便对比有没有漏掉</li>
+<li>F12打开 console 并粘贴。如果这一步看不懂建议直接放弃<br />
+    Array.prototype.slice.apply(document.querySelectorAll(<br />
+      '.share-list dd.open-enable&gt;span'<br />
+    ), [0, 500]).forEach((x)=&gt;x.click())<br />
+这样就点击了前500个文件，保存。</li>
+<li>再次执行上一段代码，取消点击前500个文件。</li>
+<li>去你的网盘里新建个目录 <code>0500-1000</code> ，用来保存下一批</li>
+<li>把上面代码里的 <code>[0,500]</code> 改成 <code>[500,1000]</code> 然后再执行一遍，保存到刚才创建的目录里。</li>
+</ol>
+<p>如此反复。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-11-01T00:15:00+08:00">2024-11-01</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stdout-22"  rel="bookmark" >
               <h2 class="card-title">Linux删除了 .ru 帐号？我查了一下</h2>
             </a>
@@ -376,11 +404,15 @@ make install
         <div class="card blog-card">
           <article class="card-body">
             <a href="/2024/stdout-19"  rel="bookmark" >
-              <h2 class="card-title">javascript 节拍器</h2>
+              <h2 class="card-title">精准 javascript 节拍器</h2>
             </a>
             <p class="card-text"><p>娃学琴，节奏感糊成一坨了。老师让抖腿打节拍，显然不work。码农特有的穷B气质让我舍不得买个实体的；去找个节拍器app，结果各大市场都是各种广告，怕给娃用不正经；甚至找了很多公众号版的，小程序版的，网页版的，普遍都是各种跳转诱导点击。</p>
-<p>失望之余，想起来上次<a href="https://blog.est.im/2022/stdout-10">JS播放DTMF</a>对 WebAudio 有点感觉，要不这次自己干脆再手搓一个。<a href="https://news.ycombinator.com/item?id=20935492">调研</a>了一圈发现这玩意没那么容易，主要就是javascript在浏览器里 <code>setInterval</code> 是有时间抖动（jitter）的，不能保证节奏精确。如何才能做到精准采样打节拍呢？连续精心编排 AudioContext 时间轴！</p>
-<p>搜了一圈发现一位叫 <a href="https://grantjam.es/creating-a-simple-metronome-using-javascript-and-the-web-audio-api/">Grant James 已经写好</a>放在 <a href="https://github.com/grantjames/metronome">github</a> 了。那还等什么直接拿来～～针对性的改进了：</p>
+<p>失望之余，想起来上次<a href="https://blog.est.im/2022/stdout-10">JS播放DTMF</a>对 WebAudio 有点感觉，要不这次自己干脆再手搓一个。<a href="https://news.ycombinator.com/item?id=20935492">调研</a>了一圈发现这玩意没那么容易，主要就是javascript在浏览器里 <code>setInterval</code> 是有时间抖动（jitter）的，不能保证节奏精确。下面的图<a href="https://meowni.ca/posts/metronomes/">来自 Monica Dinculescu</a></p>
+<p><img alt="" src="https://meowni.ca/images/metronomes/2.png" /></p>
+<p>即便采用了 <code>requestAnimationFrame</code> 也不行</p>
+<p><img alt="" src="https://meowni.ca/images/metronomes/3.png" /></p>
+<p>因为js的执行无论如何trick，本质都是在只有一个主线程的单线程。如何才能做到精准采样打节拍呢？连续精心编排 AudioContext 时间轴！因为音频播放是系统调度跟js无关</p>
+<p>搜了一圈发现一位叫 <a href="https://grantjam.es/creating-a-simple-metronome-using-javascript-and-the-web-audio-api/">Grant James 已经写好</a>放在 <a href="https://github.com/grantjames/metronome">github</a> 了。那还等什么直接拿来～～针对性下列需求改了一番</p>
 <ol>
 <li>无广告</li>
 <li>去掉 .js .css 依赖，单文件更快</li>
@@ -395,7 +427,7 @@ make install
 <p>最后成果就放在 <a href="https://lab.est.im/metronome/">https://lab.est.im/metronome/</a> 这里了。有需要的拿去用。协议 <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="license noopener noreferrer" style="display:inline-flex;">CC BY-NC 4.0<img style="height:1em!important;margin:auto 2px auto 2px;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"><img style="height:1em!important;margin:auto 2px auto 2px;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg"><img style="height:1em!important;margin:auto 2px auto 2px;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg"></a></p>
 <p>20240929更新：</p>
 <ol>
-<li>支持了长按按钮一直增加减少bpm</li>
+<li>支持了长按按钮一直增加减少 bpm</li>
 <li>禁止长按出现菜单</li>
 <li>禁止双击缩放</li>
 </ol></p>
@@ -4056,33 +4088,6 @@ git push
 <p>所以这说明了啥？</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-05-06T12:03:50+08:00">2022-05-06</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2022/stdout-05"  rel="bookmark" >
-              <h2 class="card-title">Add UTF-8 BOM header to Flask-Admin export</h2>
-            </a>
-            <p class="card-text"><p>A simple trick to add additional bytes prepending Flask's <code>stream_with_context</code></p>
-<pre><code>  from flask_admin.contrib.sqla import ModelView
-  from itertools import chain
-
-  class MyAdminView(ModelView):
-      can_export = True
-      column_export_list = ['field1', 'field2']
-
-      def _export_csv(self, return_url):
-          r = super(MyAdminView, self)._export_csv(return_url)
-          r.response = chain((b'\xef\xbb\xbf',), r.response)
-          return r
-</code></pre>
-<p>I am still using Python2 and Flask-admin shit. It's a shame but anyway.</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2022-04-14T15:47:17+08:00">2022-04-14</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

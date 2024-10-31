@@ -57,6 +57,33 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2022/stdout-05"  rel="bookmark" >
+              <h2 class="card-title">Add UTF-8 BOM header to Flask-Admin export</h2>
+            </a>
+            <p class="card-text"><p>A simple trick to add additional bytes prepending Flask's <code>stream_with_context</code></p>
+<pre><code>  from flask_admin.contrib.sqla import ModelView
+  from itertools import chain
+
+  class MyAdminView(ModelView):
+      can_export = True
+      column_export_list = ['field1', 'field2']
+
+      def _export_csv(self, return_url):
+          r = super(MyAdminView, self)._export_csv(return_url)
+          r.response = chain((b'\xef\xbb\xbf',), r.response)
+          return r
+</code></pre>
+<p>I am still using Python2 and Flask-admin shit. It's a shame but anyway.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2022-04-14T15:47:17+08:00">2022-04-14</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2022/stdout-04"  rel="bookmark" >
               <h2 class="card-title">牛津树/Good English/典范英语里的宗教私货</h2>
             </a>

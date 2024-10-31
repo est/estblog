@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>javascript 节拍器 – est の 输入 输出和出入</title>
+    <title>精准 javascript 节拍器 – est の 输入 输出和出入</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="javascript 节拍器" />
+    <meta name="description" content="精准 javascript 节拍器" />
 
     <link rel="canonical" href="https://blog.est.im/2024/stdout-19" />
     <meta property="og:url" content="https://blog.est.im/2024/stdout-19">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="javascript 节拍器">
+    <meta property="og:title" content="精准 javascript 节拍器">
 
     <link rel="stylesheet" href="/theme/css/normalize.min.css" />
     <link rel="stylesheet" href="/theme/css/style.css" />
@@ -50,14 +50,18 @@
 </nav>    <main class="content side-text-padding">
 <article class="post">
   <header class="post-header">
-    <h2 class="post-title">javascript 节拍器</h2>
+    <h2 class="post-title">精准 javascript 节拍器</h2>
     <p class="post-date">Posted <time datetime="2024-09-26T22:52:00+08:00">2024-09-26</time> | <span>stdout</span></p>
   </header>
 
   
   <p>娃学琴，节奏感糊成一坨了。老师让抖腿打节拍，显然不work。码农特有的穷B气质让我舍不得买个实体的；去找个节拍器app，结果各大市场都是各种广告，怕给娃用不正经；甚至找了很多公众号版的，小程序版的，网页版的，普遍都是各种跳转诱导点击。</p>
-<p>失望之余，想起来上次<a href="https://blog.est.im/2022/stdout-10">JS播放DTMF</a>对 WebAudio 有点感觉，要不这次自己干脆再手搓一个。<a href="https://news.ycombinator.com/item?id=20935492">调研</a>了一圈发现这玩意没那么容易，主要就是javascript在浏览器里 <code>setInterval</code> 是有时间抖动（jitter）的，不能保证节奏精确。如何才能做到精准采样打节拍呢？连续精心编排 AudioContext 时间轴！</p>
-<p>搜了一圈发现一位叫 <a href="https://grantjam.es/creating-a-simple-metronome-using-javascript-and-the-web-audio-api/">Grant James 已经写好</a>放在 <a href="https://github.com/grantjames/metronome">github</a> 了。那还等什么直接拿来～～针对性的改进了：</p>
+<p>失望之余，想起来上次<a href="https://blog.est.im/2022/stdout-10">JS播放DTMF</a>对 WebAudio 有点感觉，要不这次自己干脆再手搓一个。<a href="https://news.ycombinator.com/item?id=20935492">调研</a>了一圈发现这玩意没那么容易，主要就是javascript在浏览器里 <code>setInterval</code> 是有时间抖动（jitter）的，不能保证节奏精确。下面的图<a href="https://meowni.ca/posts/metronomes/">来自 Monica Dinculescu</a></p>
+<p><img alt="" src="https://meowni.ca/images/metronomes/2.png" /></p>
+<p>即便采用了 <code>requestAnimationFrame</code> 也不行</p>
+<p><img alt="" src="https://meowni.ca/images/metronomes/3.png" /></p>
+<p>因为js的执行无论如何trick，本质都是在只有一个主线程的单线程。如何才能做到精准采样打节拍呢？连续精心编排 AudioContext 时间轴！因为音频播放是系统调度跟js无关</p>
+<p>搜了一圈发现一位叫 <a href="https://grantjam.es/creating-a-simple-metronome-using-javascript-and-the-web-audio-api/">Grant James 已经写好</a>放在 <a href="https://github.com/grantjames/metronome">github</a> 了。那还等什么直接拿来～～针对性下列需求改了一番</p>
 <ol>
 <li>无广告</li>
 <li>去掉 .js .css 依赖，单文件更快</li>
@@ -72,7 +76,7 @@
 <p>最后成果就放在 <a href="https://lab.est.im/metronome/">https://lab.est.im/metronome/</a> 这里了。有需要的拿去用。协议 <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="license noopener noreferrer" style="display:inline-flex;">CC BY-NC 4.0<img style="height:1em!important;margin:auto 2px auto 2px;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"><img style="height:1em!important;margin:auto 2px auto 2px;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg"><img style="height:1em!important;margin:auto 2px auto 2px;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg"></a></p>
 <p>20240929更新：</p>
 <ol>
-<li>支持了长按按钮一直增加减少bpm</li>
+<li>支持了长按按钮一直增加减少 bpm</li>
 <li>禁止长按出现菜单</li>
 <li>禁止双击缩放</li>
 </ol>

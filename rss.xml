@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Thu, 24 Oct 2024 15:26:00 +0800</lastBuildDate><item><title>Linux删除了 .ru 帐号？我查了一下</title><link>https://blog.est.im/2024/stdout-22</link><description>&lt;p&gt;&lt;a href="https://www.zhihu.com/question/1783342926"&gt;发生了什么事&lt;/a&gt;？&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Fri, 01 Nov 2024 00:15:00 +0800</lastBuildDate><item><title>白嫖百度网盘“单次转存数”500限制</title><link>https://blog.est.im/2024/stdout-23</link><description>&lt;p&gt;找了个资源，点击保存，居然提示充SVIP。本来找资源就白嫖，让我充钱？&lt;/p&gt;
+&lt;p&gt;打开F12研究了一会儿，发现可以搞。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;首先你去你网盘里建立个目录 &lt;code&gt;0000-0500&lt;/code&gt;，准备存文件。这么起名字是因为你在自己网盘里多选也是最多选500个，所以每次存一个目录用来对照数量&lt;/li&gt;
+&lt;li&gt;分享链接里文件列表是惰性加载，所以请用鼠标滚到底部，然后点击「名称」排序。这样方便对比有没有漏掉&lt;/li&gt;
+&lt;li&gt;F12打开 console 并粘贴。如果这一步看不懂建议直接放弃&lt;br /&gt;
+    Array.prototype.slice.apply(document.querySelectorAll(&lt;br /&gt;
+      '.share-list dd.open-enable&amp;gt;span'&lt;br /&gt;
+    ), [0, 500]).forEach((x)=&amp;gt;x.click())&lt;br /&gt;
+这样就点击了前500个文件，保存。&lt;/li&gt;
+&lt;li&gt;再次执行上一段代码，取消点击前500个文件。&lt;/li&gt;
+&lt;li&gt;去你的网盘里新建个目录 &lt;code&gt;0500-1000&lt;/code&gt; ，用来保存下一批&lt;/li&gt;
+&lt;li&gt;把上面代码里的 &lt;code&gt;[0,500]&lt;/code&gt; 改成 &lt;code&gt;[500,1000]&lt;/code&gt; 然后再执行一遍，保存到刚才创建的目录里。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;如此反复。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 01 Nov 2024 00:15:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-11-01:/2024/stdout-23</guid><category>stdout</category></item><item><title>Linux删除了 .ru 帐号？我查了一下</title><link>https://blog.est.im/2024/stdout-22</link><description>&lt;p&gt;&lt;a href="https://www.zhihu.com/question/1783342926"&gt;发生了什么事&lt;/a&gt;？&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;日前，Linux 内核主要维护者之一 Greg Kroah-Hartman (Greg K-H) 提交了一项不寻常的“文档”更新，将数名具有 &amp;lt;.ru&amp;gt; 顶级域名邮箱的维护者，和一名明确为俄罗斯身份的维护者从 MAINTAINERS（维护者名录）文件除名。&lt;br /&gt;
 这一提交已于上周日被 Linus Torvalds 拉取并包含于 6.12-rc4 版本的代码中。&lt;br /&gt;
@@ -314,9 +328,13 @@ make check
 make
 make install
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;And it's done. All thanks to authors for open source project and butter-smooth build scripts.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 28 Sep 2024 10:05:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-09-28:/2024/stdout-20</guid><category>stdout</category></item><item><title>javascript 节拍器</title><link>https://blog.est.im/2024/stdout-19</link><description>&lt;p&gt;娃学琴，节奏感糊成一坨了。老师让抖腿打节拍，显然不work。码农特有的穷B气质让我舍不得买个实体的；去找个节拍器app，结果各大市场都是各种广告，怕给娃用不正经；甚至找了很多公众号版的，小程序版的，网页版的，普遍都是各种跳转诱导点击。&lt;/p&gt;
-&lt;p&gt;失望之余，想起来上次&lt;a href="https://blog.est.im/2022/stdout-10"&gt;JS播放DTMF&lt;/a&gt;对 WebAudio 有点感觉，要不这次自己干脆再手搓一个。&lt;a href="https://news.ycombinator.com/item?id=20935492"&gt;调研&lt;/a&gt;了一圈发现这玩意没那么容易，主要就是javascript在浏览器里 &lt;code&gt;setInterval&lt;/code&gt; 是有时间抖动（jitter）的，不能保证节奏精确。如何才能做到精准采样打节拍呢？连续精心编排 AudioContext 时间轴！&lt;/p&gt;
-&lt;p&gt;搜了一圈发现一位叫 &lt;a href="https://grantjam.es/creating-a-simple-metronome-using-javascript-and-the-web-audio-api/"&gt;Grant James 已经写好&lt;/a&gt;放在 &lt;a href="https://github.com/grantjames/metronome"&gt;github&lt;/a&gt; 了。那还等什么直接拿来～～针对性的改进了：&lt;/p&gt;
+&lt;p&gt;And it's done. All thanks to authors for open source project and butter-smooth build scripts.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 28 Sep 2024 10:05:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-09-28:/2024/stdout-20</guid><category>stdout</category></item><item><title>精准 javascript 节拍器</title><link>https://blog.est.im/2024/stdout-19</link><description>&lt;p&gt;娃学琴，节奏感糊成一坨了。老师让抖腿打节拍，显然不work。码农特有的穷B气质让我舍不得买个实体的；去找个节拍器app，结果各大市场都是各种广告，怕给娃用不正经；甚至找了很多公众号版的，小程序版的，网页版的，普遍都是各种跳转诱导点击。&lt;/p&gt;
+&lt;p&gt;失望之余，想起来上次&lt;a href="https://blog.est.im/2022/stdout-10"&gt;JS播放DTMF&lt;/a&gt;对 WebAudio 有点感觉，要不这次自己干脆再手搓一个。&lt;a href="https://news.ycombinator.com/item?id=20935492"&gt;调研&lt;/a&gt;了一圈发现这玩意没那么容易，主要就是javascript在浏览器里 &lt;code&gt;setInterval&lt;/code&gt; 是有时间抖动（jitter）的，不能保证节奏精确。下面的图&lt;a href="https://meowni.ca/posts/metronomes/"&gt;来自 Monica Dinculescu&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="https://meowni.ca/images/metronomes/2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;即便采用了 &lt;code&gt;requestAnimationFrame&lt;/code&gt; 也不行&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="https://meowni.ca/images/metronomes/3.png" /&gt;&lt;/p&gt;
+&lt;p&gt;因为js的执行无论如何trick，本质都是在只有一个主线程的单线程。如何才能做到精准采样打节拍呢？连续精心编排 AudioContext 时间轴！因为音频播放是系统调度跟js无关&lt;/p&gt;
+&lt;p&gt;搜了一圈发现一位叫 &lt;a href="https://grantjam.es/creating-a-simple-metronome-using-javascript-and-the-web-audio-api/"&gt;Grant James 已经写好&lt;/a&gt;放在 &lt;a href="https://github.com/grantjames/metronome"&gt;github&lt;/a&gt; 了。那还等什么直接拿来～～针对性下列需求改了一番&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;无广告&lt;/li&gt;
 &lt;li&gt;去掉 .js .css 依赖，单文件更快&lt;/li&gt;
@@ -331,7 +349,7 @@ make install
 &lt;p&gt;最后成果就放在 &lt;a href="https://lab.est.im/metronome/"&gt;https://lab.est.im/metronome/&lt;/a&gt; 这里了。有需要的拿去用。协议 &lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="license noopener noreferrer" style="display:inline-flex;"&gt;CC BY-NC 4.0&lt;img style="height:1em!important;margin:auto 2px auto 2px;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"&gt;&lt;img style="height:1em!important;margin:auto 2px auto 2px;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg"&gt;&lt;img style="height:1em!important;margin:auto 2px auto 2px;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;20240929更新：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;支持了长按按钮一直增加减少bpm&lt;/li&gt;
+&lt;li&gt;支持了长按按钮一直增加减少 bpm&lt;/li&gt;
 &lt;li&gt;禁止长按出现菜单&lt;/li&gt;
 &lt;li&gt;禁止双击缩放&lt;/li&gt;
 &lt;/ol&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 26 Sep 2024 22:52:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-09-26:/2024/stdout-19</guid><category>stdout</category></item><item><title>Edge找回丢失的右上角Copilot侧边栏图标</title><link>https://blog.est.im/2024/stdout-18</link><description>&lt;p&gt;右上角图标和侧边栏的官方截图：&lt;/p&gt;
@@ -705,18 +723,4 @@ line = data.decode('ascii').rstrip()
 await proc.wait()
 return line
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;I guess another lesson learned today.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 22 Jun 2024 12:26:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-06-22:/2024/stdout-11</guid><category>stdout</category></item><item><title>人声分离简单评测</title><link>https://blog.est.im/2024/stdout-10</link><description>&lt;p&gt;娃要去表演唱歌，老师要求提供MTV。。 视频是&lt;a href="https://www.bilibili.com/video/BV1Ty4y147Sj/"&gt;这个&lt;/a&gt;，需要去掉人声部分&lt;/p&gt;
-&lt;p&gt;先用 ffmpeg 提音轨 &lt;code&gt;ffmpeg -i v.mp4  -ac 1 1.mp3&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;微信小程序上的全是骗充值的，网上的服务：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;没卵用 https://vocalremover.org/ 名气很大，搜出来第一就这个&lt;/li&gt;
-&lt;li&gt;没用 https://www.conversion-tool.com/karaoke/&lt;/li&gt;
-&lt;li&gt;卡死 https://www.songpeel.com/song-to-karaoke&lt;/li&gt;
-&lt;li&gt;要安装 https://github.com/adefossez/demucs&lt;/li&gt;
-&lt;li&gt;要6G显存 https://github.com/Anjok07/ultimatevocalremovergui&lt;/li&gt;
-&lt;li&gt;效果很好！ https://tunebat.com/Vocal-Remover 推荐&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;看来人声分离，特别是童声，还是有点难。&lt;/p&gt;
-&lt;p&gt;最后把得到的 a.mp3 塞回去&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;ffmpeg -i v.mp4 -i a.mp3 -c:v copy -map 0:v:0 -map 1:a:0 new.mp4&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;btw 打了这么多网址，该不会被误认为SEO吧。囧。。。。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 21 Jun 2024 22:48:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-06-21:/2024/stdout-10</guid><category>stdout</category></item></channel></rss>
+&lt;p&gt;I guess another lesson learned today.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 22 Jun 2024 12:26:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-06-22:/2024/stdout-11</guid><category>stdout</category></item></channel></rss>
