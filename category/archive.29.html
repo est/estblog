@@ -800,92 +800,6 @@ trackback:ping="http://franticindustries.com/blog/2007/01/28/google-is-the-new-h
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/cnblogs/622506"  rel="bookmark" >
-              <h2 class="card-title">[导入]Alt+Shift+PrintScreen</h2>
-            </a>
-            <p class="card-text"><p>这不是XP/Vista的彩蛋，这是XP/VIsta的功能，高对比度，呵呵</p>
-<p>有什么用呢？</p>
-<p>比如说，图书馆的公用电脑，只有一个 书籍查阅软件 的界面，把explorer屏蔽了，但是</p>
-<p>1. 打开输入法，点帮助，然后C:\windows\explorer.exe，经典的输入法漏洞啊</p>
-<p>2. 按5次shift，然后随便找个帮助什么的，就可以打开C:了</p>
-<p>3. 按Win+U，放大镜，关于，有个&ldquo;访问Microsoft网站&rdquo;的链接</p>
-<p>4. 就是现在的了，Shift+Alt+PrtSc，呵呵</p>
-<p>一般的软件绝对想不到，要封这么多系统默认快捷键，汗。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/cnblogs/622500"  rel="bookmark" >
-              <h2 class="card-title">VBS创建eml mht文件</h2>
-            </a>
-            <p class="card-text"><p><a href="http://www.goldb.org/goldblog/2007/01/10/VBScriptCreatingAMicrosoftWebArchiveMhtFileProgramatically.aspx">http://www.goldb.org/goldblog/2007/01/10/VBScriptCreatingAMicrosoftWebArchiveMhtFileProgramatically.aspx</a></p>
-<p>&nbsp;</p>
-<p>Here is a little VBScript for generating a Microsoft Web Archive (*.mht) file.&nbsp; Web archives are a convenient way to pack a bunch of web files (HTML/CSS/JavaScript) into a single file that is viewable in your browser.&nbsp; The downside is MHT files are only viewable in MS Internet Explorer (lame).<br/>
-<br/>
-Normally you would create an MHT by using the &quot;Save As...&quot; option in IE.&nbsp; This script allows you to create one programatically.<br/>
-<br/>
-Sample Usage:<br/>
-<br/>
-for a remote html file:<br/>
-</p>
-<p><span style="FONT-SIZE: 11px; COLOR: black; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">&gt;cscript mht_converter.vbs http://www.example.com/temp/foo.html foo.mht</span></p>
-<p><br/>
-for a local html file:<br/>
-</p>
-<p><span style="FONT-SIZE: 11px; COLOR: black; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">&gt;cscript mht_converter.vbs file:/temp/foo.html foo.mht</span></p>
-<p><br/>
-<br/>
-... And now the code:<br/>
-<br/>
-<br/>
-</p>
-<hr width="100%" size="2"/>
-<p><br/>
-</p>
-<p><span style="FONT-SIZE: 11px; COLOR: black; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent"><span style="FONT-SIZE: 11px; COLOR: green; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">'mht_converter.vbs</span><br/>
-<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Const</span> adSaveCreateNotExist <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 1<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Const</span> adSaveCreateOverWrite <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 2<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Const</span> adTypeBinary <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 1<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Const</span> adTypeText <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 2<br/>
-<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Set</span> args <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> WScript.Arguments<br/>
-<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">if</span> args.<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Count</span> <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 0 <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">then</span><br/>
-WScript.Echo <span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;Usage: [CScript | WScript] mht_converter.vbs &lt;html file&gt; &lt;mht filename&gt;&quot;</span><br/>
-WScript.Quit 1<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">end</span> <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">if</span><br/>
-<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Set</span> objMessage <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">CreateObject</span>(<span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;CDO.Message&quot;</span>)<br/>
-objMessage.CreateMHTMLBody args.<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Item</span>(0)<br/>
-SaveToFile objMessage, args.<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Item</span>(1)<br/>
-<br/>
-<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Sub</span> SaveToFile(Msg, Fn)<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Dim</span> Strm, Dsk<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Set</span> Strm <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">CreateObject</span>(<span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;ADODB.Stream&quot;</span>)<br/>
-Strm.Type <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> adTypeText<br/>
-Strm.Charset <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> <span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;US-ASCII&quot;</span><br/>
-Strm.Open<br/>
-<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Set</span> Dsk <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> Msg.DataSource<br/>
-Dsk.SaveToObject Strm, <span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;_Stream&quot;</span><br/>
-Strm.SaveToFile Fn, adSaveCreateOverWrite<br/></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/cnblogs/622501"  rel="bookmark" >
               <h2 class="card-title">让Google评价你的密码的安全性</h2>
             </a>
@@ -1045,6 +959,92 @@ Prototype here: <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/cnblogs/622506"  rel="bookmark" >
+              <h2 class="card-title">[导入]Alt+Shift+PrintScreen</h2>
+            </a>
+            <p class="card-text"><p>这不是XP/Vista的彩蛋，这是XP/VIsta的功能，高对比度，呵呵</p>
+<p>有什么用呢？</p>
+<p>比如说，图书馆的公用电脑，只有一个 书籍查阅软件 的界面，把explorer屏蔽了，但是</p>
+<p>1. 打开输入法，点帮助，然后C:\windows\explorer.exe，经典的输入法漏洞啊</p>
+<p>2. 按5次shift，然后随便找个帮助什么的，就可以打开C:了</p>
+<p>3. 按Win+U，放大镜，关于，有个&ldquo;访问Microsoft网站&rdquo;的链接</p>
+<p>4. 就是现在的了，Shift+Alt+PrtSc，呵呵</p>
+<p>一般的软件绝对想不到，要封这么多系统默认快捷键，汗。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/622500"  rel="bookmark" >
+              <h2 class="card-title">VBS创建eml mht文件</h2>
+            </a>
+            <p class="card-text"><p><a href="http://www.goldb.org/goldblog/2007/01/10/VBScriptCreatingAMicrosoftWebArchiveMhtFileProgramatically.aspx">http://www.goldb.org/goldblog/2007/01/10/VBScriptCreatingAMicrosoftWebArchiveMhtFileProgramatically.aspx</a></p>
+<p>&nbsp;</p>
+<p>Here is a little VBScript for generating a Microsoft Web Archive (*.mht) file.&nbsp; Web archives are a convenient way to pack a bunch of web files (HTML/CSS/JavaScript) into a single file that is viewable in your browser.&nbsp; The downside is MHT files are only viewable in MS Internet Explorer (lame).<br/>
+<br/>
+Normally you would create an MHT by using the &quot;Save As...&quot; option in IE.&nbsp; This script allows you to create one programatically.<br/>
+<br/>
+Sample Usage:<br/>
+<br/>
+for a remote html file:<br/>
+</p>
+<p><span style="FONT-SIZE: 11px; COLOR: black; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">&gt;cscript mht_converter.vbs http://www.example.com/temp/foo.html foo.mht</span></p>
+<p><br/>
+for a local html file:<br/>
+</p>
+<p><span style="FONT-SIZE: 11px; COLOR: black; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">&gt;cscript mht_converter.vbs file:/temp/foo.html foo.mht</span></p>
+<p><br/>
+<br/>
+... And now the code:<br/>
+<br/>
+<br/>
+</p>
+<hr width="100%" size="2"/>
+<p><br/>
+</p>
+<p><span style="FONT-SIZE: 11px; COLOR: black; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent"><span style="FONT-SIZE: 11px; COLOR: green; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">'mht_converter.vbs</span><br/>
+<br/>
+<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Const</span> adSaveCreateNotExist <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 1<br/>
+<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Const</span> adSaveCreateOverWrite <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 2<br/>
+<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Const</span> adTypeBinary <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 1<br/>
+<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Const</span> adTypeText <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 2<br/>
+<br/>
+<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Set</span> args <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> WScript.Arguments<br/>
+<br/>
+<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">if</span> args.<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Count</span> <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> 0 <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">then</span><br/>
+WScript.Echo <span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;Usage: [CScript | WScript] mht_converter.vbs &lt;html file&gt; &lt;mht filename&gt;&quot;</span><br/>
+WScript.Quit 1<br/>
+<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">end</span> <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">if</span><br/>
+<br/>
+<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Set</span> objMessage <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">CreateObject</span>(<span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;CDO.Message&quot;</span>)<br/>
+objMessage.CreateMHTMLBody args.<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Item</span>(0)<br/>
+SaveToFile objMessage, args.<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Item</span>(1)<br/>
+<br/>
+<br/>
+<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Sub</span> SaveToFile(Msg, Fn)<br/>
+<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Dim</span> Strm, Dsk<br/>
+<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Set</span> Strm <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">CreateObject</span>(<span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;ADODB.Stream&quot;</span>)<br/>
+Strm.Type <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> adTypeText<br/>
+Strm.Charset <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> <span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;US-ASCII&quot;</span><br/>
+Strm.Open<br/>
+<span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Set</span> Dsk <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> Msg.DataSource<br/>
+Dsk.SaveToObject Strm, <span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;_Stream&quot;</span><br/>
+Strm.SaveToFile Fn, adSaveCreateOverWrite<br/></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/nu/13367"  rel="bookmark" >
               <h2 class="card-title">[原创]批处理屏幕截图</h2>
             </a>
@@ -1123,6 +1123,20 @@ The server encountered a temporary error and could not complete your request.
 <p><img src ="http://dormforce.net/Blog/electronixtar/aggbug/13360.aspx" width = "1" height = "1" /></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-01-10T08:10:00+08:00">2007-01-10</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13357"  rel="bookmark" >
+              <h2 class="card-title">Web没前途的</h2>
+            </a>
+            <p class="card-text"><p>今天很是生气，哎，1000多字的blog，点了个 保存 ，结果给弹一个框框说&ldquo;.Text Application Error：OutOfMemeory Exception&rdquo;，真TMD的烂啊，偶写blog的心情一下子就&hellip;&hellip;说到技术层面上，Web程序好看，制作简单，但是结构超级复杂和麻烦。如果blog是个C/S结构，或者B/S的blog系统支持xmlhttp后台提交的话&hellip;&hellip;就不会有这种后果了&hellip;&hellip;&hellip;&hellip;呜呜呜呜，Web程序&hellip;&hellip;是 不可靠 和 低效率的，你看做一个 DOM 拖动的 div 就要写那么多代码，或者用那么多的类啊，真的很累。现在Web 2.0被Google炒得很热，但是这些其实很很泡沫的，什么WebOS也是极其SB和夸张的。我始终认为，电脑软件，用户至上，不要把什么开源啊面向对象啊弄到用户层去。心情不好乱说几句，呵呵</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-10T07:06:00+08:00">2007-01-10</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
@@ -1899,20 +1913,6 @@ NUM LOCK 5妙种：切换键<br/>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/nu/13357"  rel="bookmark" >
-              <h2 class="card-title">Web没前途的</h2>
-            </a>
-            <p class="card-text"><p>今天很是生气，哎，1000多字的blog，点了个 保存 ，结果给弹一个框框说&ldquo;.Text Application Error：OutOfMemeory Exception&rdquo;，真TMD的烂啊，偶写blog的心情一下子就&hellip;&hellip;说到技术层面上，Web程序好看，制作简单，但是结构超级复杂和麻烦。如果blog是个C/S结构，或者B/S的blog系统支持xmlhttp后台提交的话&hellip;&hellip;就不会有这种后果了&hellip;&hellip;&hellip;&hellip;呜呜呜呜，Web程序&hellip;&hellip;是 不可靠 和 低效率的，你看做一个 DOM 拖动的 div 就要写那么多代码，或者用那么多的类啊，真的很累。现在Web 2.0被Google炒得很热，但是这些其实很很泡沫的，什么WebOS也是极其SB和夸张的。我始终认为，电脑软件，用户至上，不要把什么开源啊面向对象啊弄到用户层去。心情不好乱说几句，呵呵</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-01-10T07:06:00+08:00">2007-01-10</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/nu/13355"  rel="bookmark" >
               <h2 class="card-title">Alt+Shift+PrintScreen</h2>
             </a>
@@ -2225,196 +2225,6 @@ ZIP压缩文件夹.ZFSendToTarget<br/>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/cnblogs/600410"  rel="bookmark" >
-              <h2 class="card-title">WinNT Namespace 与 ext3 结构</h2>
-            </a>
-            <p class="card-text"><p>Linux的 ext3 文件系统结构是 一个 / 根，然后衍生出整个PC的文件、设备、一切。 其实呢，WinNT 也是这样设计的，只是没有暴露给用户罢了。说白了， C:\ D:\ 等只是一个符号连接。如图：用了反汇编高手WQXNETQIQI推荐的工具，Sysinternals 的大作：WinObj</p>
-<p><img alt="" src="http://dormforce.net/Blog/Attachment/610"/></p>
-<p>&nbsp;在 cmd 命令行里，我们可以通过<br/>
-tree \\?\CdRom0<br/>
-来查看机器上第一个光驱的 目录结构，也可以通过<br/>
-type \\?\GLOBALROOT\Device\CdRom0\autorun.inf<br/>
-来读取 第一个光驱根目录下 autorun.ini 的内容。</p>
-<p>是不是和 Linux 的 cat /media/cdrom 有点相似呢？</p>
-<p>再看看一个WinNT NTFS的的命令：<br/>
-C:\&gt;mountvol<br/>
-创建、删除或列出卷装载点。<br/>
-MOUNTVOL [drive:]path VolumeName<br/>
-MOUNTVOL [drive:]path /D<br/>
-MOUNTVOL [drive:]path /L</p>
-<p>&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a0-85e1-11db-9bf6-806d6172696f}\<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C:\<br/>
-&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a1-85e1-11db-9bf6-806d6172696f}\<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; D:\<br/>
-&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a2-85e1-11db-9bf6-806d6172696f}\<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; E:\<br/>
-&nbsp;&nbsp;&nbsp; \\?\Volume{aa4a8921-f599-11da-9600-806d6172696f}\<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; F:\<br/>
-&nbsp;&nbsp;&nbsp; \\?\Volume{b2938600-f565-11da-a449-806d6172696f}\<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; G:\<br/>
-&nbsp;&nbsp;&nbsp; \\?\Volume{aa4a8920-f599-11da-9600-806d6172696f}\<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A:\</p>
-<p>输入 <br/>
-C:\&gt;dir \\?\Volume{d1dd98a0-85e1-11db-9bf6-806d6172696f}\Windows<br/>
-就相当于<br/>
-dir %WinDir% 了。</p>
-<p>输入<br/>
-type \\?\GLOBALROOT\Device\HardDiskVolume1\boot.ini<br/>
-就相当于<br/>
-type C:\Boot.ini</p>
-<p>看来Windows 也有一个类似于 ext3 的文件系统啊。加上 Windows Shell Namespace，应该比 ext3 丰富了吧。</p>
-<p>粗略的估计，用命令行可以查看一些Win32的 NamedPipe 和 内存、TCP 连接的情况。由于本人才疏学浅，不知道从哪里入手，不过总体感觉是：Windows&nbsp; 到底还是MS几亿美金打造的OS，还是有其深刻内涵的。从这点看来，Linux又显得原始了点。</p>
-<p>[内有附件]</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/cnblogs/600413"  rel="bookmark" >
-              <h2 class="card-title">[原创]XP关机对话框的变灰dHTML特效</h2>
-            </a>
-            <p class="card-text"><p>&lt;!-- This element has the filter applied. --&gt;<br/>
-<br/>
-&lt;DIV ID=&quot;oTrans&quot; STYLE=&quot;position:absolute; top:0px; left:0px; width:100%; height:100%;<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; background-image=url(file:///C:/WINDOWS/Web/Wallpaper/Bliss.bmp);<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; filter:progid:DXImageTransform.Microsoft.Fade(duration=2);&quot;&gt;<br/>
-&lt;BUTTON onclick=&quot;fnToggle()&quot;&gt;Logout&lt;/BUTTON&gt;<br/>
-<br/>
-&lt;DIV ID=&quot;oTrans1&quot; STYLE=&quot;position:absolute; top:0px; left:0px; width:100%; height:100%; visibility:hidden;<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; background-image=url(file:///C:/WINDOWS/Web/Wallpaper/Bliss.bmp);<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);&quot;&gt;<br/>
-&lt;BUTTON onclick=&quot;fnToggle()&quot;&gt;Cancel&lt;/BUTTON&gt;<br/>
-&lt;/DIV&gt;<br/>
-<br/>
-&lt;/DIV&gt;<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-&lt;SCRIPT&gt;<br/>
-var bTranState = 0;<br/>
-<br/>
-<br/>
-function fnToggle()<br/>
-{<br/>
-&nbsp; &nbsp; oTrans.filters[0].Apply();<br/>
-&nbsp; &nbsp; <br/>
-&nbsp; &nbsp; if (bTranState==0)<br/>
-&nbsp; &nbsp; {<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; bTranState = 1;<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; oTrans1.style.visibility=&quot;visible&quot;;<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; }<br/>
-&nbsp; &nbsp; else<br/>
-&nbsp; &nbsp; {<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; oTrans.filters[0].stop();<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; bTranState = 0;<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; oTrans1.style.visibility=&quot;hidden&quot;;<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; }<br/>
-<br/>
-&nbsp; &nbsp; oTrans.filters[0].Play();<br/>
-}<br/>
-<br/>
-&lt;/SCRIPT&gt;<br/>
-</p>
-<p>&nbsp;</p>
-<p>初次写 js 特效，有点不精简，呵呵。</p>
-<p>最开始是做一个 div ，直接用 fade 和 baseimage 两个虑境，但是由于某些原因，fade虑境被省略了，于是做两个 img 呵呵。</p>
-<p>我最开始是发布在51js上的，搜索了下，网上已经有人乱转代码了。国内软件行业就这种抄过去抄过来的混乱。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/cnblogs/600411"  rel="bookmark" >
-              <h2 class="card-title">vbs 调用 Win32 API</h2>
-            </a>
-            <p class="card-text"><p>Option Explicit<br/>
-Dim UserWrap <br/>
-Set UserWrap = CreateObject(&quot;DynamicWrapper&quot;)</p>
-<p>' Call MessageBoxA(), first register the API function<br/>
-UserWrap.Register &quot;USER32.DLL&quot;, &quot;MessageBoxA&quot;, &quot;I=HsSu&quot;, _<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;f=s&quot;, &quot;R=l&quot;<br/>
-' now call the function<br/>
-UserWrap.MessageBoxA Null, &quot;MessageBox (ANSI)&quot;, _<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;From DynaWrap Object&quot;, 3</p>
-<p>&nbsp;Readme.txt</p>
-<p>This is the dynacall.dll that I described as &quot;bringing back the Declare<br/>
-statement&quot;&nbsp; in VBScript. Basically it will allow you to call functions<br/>
-in other dlls...like any of the win32 api functions. This will be my<br/>
-only distribution.</p>
-<p>Many thanks to Ton Plooy and Jeff Stong who wrote the code and published<br/>
-it in WDJ. And more thanks to William Epp for getting it to work with my<br/>
-sample script ccupd.vbs using the GETPROFILESTRING function. However I<br/>
-have another function in the sample that still doesn't work<br/>
-GETPROFILESECTION. This is a work in progress but I think it is a handy<br/>
-little feature. Hopefully by this distributions it will get where it<br/>
-needs to be. Clarence and Ian have offered to post it on their sites so<br/>
-further updates can be had at either WSH site. (anyone else call this<br/>
-thing woosh? Hopefully it will perform this way).</p>
-<p>Basically you declare functions and other DLLS like this:</p>
-<p>'&nbsp;&nbsp; Create the wrapper object for dynamic DLL function calling<br/>
-Dim UserWrap <br/>
-Set UserWrap = CreateObject(&quot;DynamicWrapper&quot;)<br/>
-'&nbsp;&nbsp; GetProcAddress for GetPrivateProfileStringA()<br/>
-UserWrap.Register &quot;kernel32.DLL&quot;, &quot;GetPrivateProfileString&quot;, &quot;i=ssssls&quot;,<br/>
-&quot;f=s&quot;, &quot;r=l&quot;</p>
-<p><br/>
-The input parameters are:</p>
-<p>i=describes the number and data type of the functions parameters</p>
-<p>f=type of call _stdcall or _cdecl. So it can work with both MS C++ and<br/>
-Borland C++. Default to _stdcall. If that doesn't work use _cdecl. If<br/>
-that doesn't work good luck!</p>
-<p>r=return data type.</p>
-<p><br/>
-Data types are:</p>
-<p>const ARGTYPEINFO ArgInfo[] = <br/>
-{<br/>
-{'a', sizeof(IDispatch*),&nbsp;&nbsp;&nbsp; VT_DISPATCH}, // a&nbsp;&nbsp; IDispatch*<br/>
-{'c', sizeof(unsigned char), VT_I4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // c&nbsp;&nbsp; signed char&nbsp; <br/>
-{'d', sizeof(double),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_R8},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // d&nbsp;&nbsp; 8 byte real <br/>
-{'f', sizeof(float),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_R4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // f&nbsp;&nbsp; 4 byte real <br/>
-{'k', sizeof(IUnknown*),&nbsp;&nbsp;&nbsp;&nbsp; VT_UNKNOWN},&nbsp; // k&nbsp;&nbsp; IUnknown* <br/>
-{'h', sizeof(long),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_I4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // h&nbsp;&nbsp; HANDLE <br/>
-{'l', sizeof(long),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_I4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // l&nbsp;&nbsp; long <br/>
-{'p', sizeof(void*),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_PTR},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // p&nbsp;&nbsp; pointer <br/>
-{'s', sizeof(BSTR),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_LPSTR},&nbsp;&nbsp;&nbsp; // s&nbsp;&nbsp; string <br/>
-{'t', sizeof(short),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_I2},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // t&nbsp;&nbsp; short <br/>
-{'u', sizeof(UINT),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_UINT},&nbsp;&nbsp;&nbsp;&nbsp; // u&nbsp;&nbsp; unsigned int <br/>
-{'w', sizeof(BSTR),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_LPWSTR},&nbsp;&nbsp; // w&nbsp;&nbsp; wide string <br/>
-}</p>
-<p>William Epp added anr 'r' for VT_BYREF (pass by reference)but is for<br/>
-strings only. This made the GETPROFILESTRING function to work. But it<br/>
-didn't work for the GETPROFILESECTION. If anyone gets it to work please<br/>
-let me know.</p>
-<p><br/>
-Attachments:</p>
-<p>stong.zip - original download from WDJ<br/>
-DynaWrap.zip - the modified code, the DLL with modifications.<br/>
-feature.htm - the feature article for this code by Jeff Stong. Only<br/>
-thing I could find on WDJ. I couldn't find Ton's article.</p>
-<p><a href="http://cwashington.netreach.net/site/downloads.html">http://cwashington.netreach.net/site/downloads.html</a></p>
-<p><a href="http://www.mvps.org/scripting/">http://www.mvps.org/scripting/</a></p>
-<p>[内有附件]</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/cnblogs/600409"  rel="bookmark" >
               <h2 class="card-title">[原]JavaScript 获得 Google PageRank</h2>
             </a>
@@ -2628,6 +2438,220 @@ thing I could find on WDJ. I couldn't find Ton's article.</p>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/cnblogs/600414"  rel="bookmark" >
+              <h2 class="card-title">CSS Filter: Light</h2>
+            </a>
+            <p class="card-text"><p>Added light FX to the picture on the left</p>
+<p>code:</p>
+<p>&nbsp;</p>
+<p>&lt;img<br/>
+style=&quot;filter:light();&quot;<br/>
+id=&quot;mypic&quot;<br/>
+src=&quot;C:\windows\web\wallpaper\bliss.bmp&quot;<br/>
+onload=&quot;javascript:this.filters.light.addCone(this.width/2,this.height/2,100,this.width/2,this.height/2,255,255,255,100,30)&quot;<br/>
+onmousemove=&quot;javascript:this.filters.light.moveLight(0,event.offsetX,event.offsetY,200,1)&quot; <br/>
+/&gt;</p>
+<p>&nbsp;</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/600413"  rel="bookmark" >
+              <h2 class="card-title">[原创]XP关机对话框的变灰dHTML特效</h2>
+            </a>
+            <p class="card-text"><p>&lt;!-- This element has the filter applied. --&gt;<br/>
+<br/>
+&lt;DIV ID=&quot;oTrans&quot; STYLE=&quot;position:absolute; top:0px; left:0px; width:100%; height:100%;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; background-image=url(file:///C:/WINDOWS/Web/Wallpaper/Bliss.bmp);<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; filter:progid:DXImageTransform.Microsoft.Fade(duration=2);&quot;&gt;<br/>
+&lt;BUTTON onclick=&quot;fnToggle()&quot;&gt;Logout&lt;/BUTTON&gt;<br/>
+<br/>
+&lt;DIV ID=&quot;oTrans1&quot; STYLE=&quot;position:absolute; top:0px; left:0px; width:100%; height:100%; visibility:hidden;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; background-image=url(file:///C:/WINDOWS/Web/Wallpaper/Bliss.bmp);<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);&quot;&gt;<br/>
+&lt;BUTTON onclick=&quot;fnToggle()&quot;&gt;Cancel&lt;/BUTTON&gt;<br/>
+&lt;/DIV&gt;<br/>
+<br/>
+&lt;/DIV&gt;<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+&lt;SCRIPT&gt;<br/>
+var bTranState = 0;<br/>
+<br/>
+<br/>
+function fnToggle()<br/>
+{<br/>
+&nbsp; &nbsp; oTrans.filters[0].Apply();<br/>
+&nbsp; &nbsp; <br/>
+&nbsp; &nbsp; if (bTranState==0)<br/>
+&nbsp; &nbsp; {<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; bTranState = 1;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; oTrans1.style.visibility=&quot;visible&quot;;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; }<br/>
+&nbsp; &nbsp; else<br/>
+&nbsp; &nbsp; {<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; oTrans.filters[0].stop();<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; bTranState = 0;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; oTrans1.style.visibility=&quot;hidden&quot;;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; }<br/>
+<br/>
+&nbsp; &nbsp; oTrans.filters[0].Play();<br/>
+}<br/>
+<br/>
+&lt;/SCRIPT&gt;<br/>
+</p>
+<p>&nbsp;</p>
+<p>初次写 js 特效，有点不精简，呵呵。</p>
+<p>最开始是做一个 div ，直接用 fade 和 baseimage 两个虑境，但是由于某些原因，fade虑境被省略了，于是做两个 img 呵呵。</p>
+<p>我最开始是发布在51js上的，搜索了下，网上已经有人乱转代码了。国内软件行业就这种抄过去抄过来的混乱。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/600410"  rel="bookmark" >
+              <h2 class="card-title">WinNT Namespace 与 ext3 结构</h2>
+            </a>
+            <p class="card-text"><p>Linux的 ext3 文件系统结构是 一个 / 根，然后衍生出整个PC的文件、设备、一切。 其实呢，WinNT 也是这样设计的，只是没有暴露给用户罢了。说白了， C:\ D:\ 等只是一个符号连接。如图：用了反汇编高手WQXNETQIQI推荐的工具，Sysinternals 的大作：WinObj</p>
+<p><img alt="" src="http://dormforce.net/Blog/Attachment/610"/></p>
+<p>&nbsp;在 cmd 命令行里，我们可以通过<br/>
+tree \\?\CdRom0<br/>
+来查看机器上第一个光驱的 目录结构，也可以通过<br/>
+type \\?\GLOBALROOT\Device\CdRom0\autorun.inf<br/>
+来读取 第一个光驱根目录下 autorun.ini 的内容。</p>
+<p>是不是和 Linux 的 cat /media/cdrom 有点相似呢？</p>
+<p>再看看一个WinNT NTFS的的命令：<br/>
+C:\&gt;mountvol<br/>
+创建、删除或列出卷装载点。<br/>
+MOUNTVOL [drive:]path VolumeName<br/>
+MOUNTVOL [drive:]path /D<br/>
+MOUNTVOL [drive:]path /L</p>
+<p>&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a0-85e1-11db-9bf6-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a1-85e1-11db-9bf6-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; D:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a2-85e1-11db-9bf6-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; E:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{aa4a8921-f599-11da-9600-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; F:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{b2938600-f565-11da-a449-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; G:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{aa4a8920-f599-11da-9600-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A:\</p>
+<p>输入 <br/>
+C:\&gt;dir \\?\Volume{d1dd98a0-85e1-11db-9bf6-806d6172696f}\Windows<br/>
+就相当于<br/>
+dir %WinDir% 了。</p>
+<p>输入<br/>
+type \\?\GLOBALROOT\Device\HardDiskVolume1\boot.ini<br/>
+就相当于<br/>
+type C:\Boot.ini</p>
+<p>看来Windows 也有一个类似于 ext3 的文件系统啊。加上 Windows Shell Namespace，应该比 ext3 丰富了吧。</p>
+<p>粗略的估计，用命令行可以查看一些Win32的 NamedPipe 和 内存、TCP 连接的情况。由于本人才疏学浅，不知道从哪里入手，不过总体感觉是：Windows&nbsp; 到底还是MS几亿美金打造的OS，还是有其深刻内涵的。从这点看来，Linux又显得原始了点。</p>
+<p>[内有附件]</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/600411"  rel="bookmark" >
+              <h2 class="card-title">vbs 调用 Win32 API</h2>
+            </a>
+            <p class="card-text"><p>Option Explicit<br/>
+Dim UserWrap <br/>
+Set UserWrap = CreateObject(&quot;DynamicWrapper&quot;)</p>
+<p>' Call MessageBoxA(), first register the API function<br/>
+UserWrap.Register &quot;USER32.DLL&quot;, &quot;MessageBoxA&quot;, &quot;I=HsSu&quot;, _<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;f=s&quot;, &quot;R=l&quot;<br/>
+' now call the function<br/>
+UserWrap.MessageBoxA Null, &quot;MessageBox (ANSI)&quot;, _<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;From DynaWrap Object&quot;, 3</p>
+<p>&nbsp;Readme.txt</p>
+<p>This is the dynacall.dll that I described as &quot;bringing back the Declare<br/>
+statement&quot;&nbsp; in VBScript. Basically it will allow you to call functions<br/>
+in other dlls...like any of the win32 api functions. This will be my<br/>
+only distribution.</p>
+<p>Many thanks to Ton Plooy and Jeff Stong who wrote the code and published<br/>
+it in WDJ. And more thanks to William Epp for getting it to work with my<br/>
+sample script ccupd.vbs using the GETPROFILESTRING function. However I<br/>
+have another function in the sample that still doesn't work<br/>
+GETPROFILESECTION. This is a work in progress but I think it is a handy<br/>
+little feature. Hopefully by this distributions it will get where it<br/>
+needs to be. Clarence and Ian have offered to post it on their sites so<br/>
+further updates can be had at either WSH site. (anyone else call this<br/>
+thing woosh? Hopefully it will perform this way).</p>
+<p>Basically you declare functions and other DLLS like this:</p>
+<p>'&nbsp;&nbsp; Create the wrapper object for dynamic DLL function calling<br/>
+Dim UserWrap <br/>
+Set UserWrap = CreateObject(&quot;DynamicWrapper&quot;)<br/>
+'&nbsp;&nbsp; GetProcAddress for GetPrivateProfileStringA()<br/>
+UserWrap.Register &quot;kernel32.DLL&quot;, &quot;GetPrivateProfileString&quot;, &quot;i=ssssls&quot;,<br/>
+&quot;f=s&quot;, &quot;r=l&quot;</p>
+<p><br/>
+The input parameters are:</p>
+<p>i=describes the number and data type of the functions parameters</p>
+<p>f=type of call _stdcall or _cdecl. So it can work with both MS C++ and<br/>
+Borland C++. Default to _stdcall. If that doesn't work use _cdecl. If<br/>
+that doesn't work good luck!</p>
+<p>r=return data type.</p>
+<p><br/>
+Data types are:</p>
+<p>const ARGTYPEINFO ArgInfo[] = <br/>
+{<br/>
+{'a', sizeof(IDispatch*),&nbsp;&nbsp;&nbsp; VT_DISPATCH}, // a&nbsp;&nbsp; IDispatch*<br/>
+{'c', sizeof(unsigned char), VT_I4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // c&nbsp;&nbsp; signed char&nbsp; <br/>
+{'d', sizeof(double),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_R8},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // d&nbsp;&nbsp; 8 byte real <br/>
+{'f', sizeof(float),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_R4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // f&nbsp;&nbsp; 4 byte real <br/>
+{'k', sizeof(IUnknown*),&nbsp;&nbsp;&nbsp;&nbsp; VT_UNKNOWN},&nbsp; // k&nbsp;&nbsp; IUnknown* <br/>
+{'h', sizeof(long),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_I4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // h&nbsp;&nbsp; HANDLE <br/>
+{'l', sizeof(long),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_I4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // l&nbsp;&nbsp; long <br/>
+{'p', sizeof(void*),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_PTR},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // p&nbsp;&nbsp; pointer <br/>
+{'s', sizeof(BSTR),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_LPSTR},&nbsp;&nbsp;&nbsp; // s&nbsp;&nbsp; string <br/>
+{'t', sizeof(short),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_I2},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // t&nbsp;&nbsp; short <br/>
+{'u', sizeof(UINT),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_UINT},&nbsp;&nbsp;&nbsp;&nbsp; // u&nbsp;&nbsp; unsigned int <br/>
+{'w', sizeof(BSTR),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_LPWSTR},&nbsp;&nbsp; // w&nbsp;&nbsp; wide string <br/>
+}</p>
+<p>William Epp added anr 'r' for VT_BYREF (pass by reference)but is for<br/>
+strings only. This made the GETPROFILESTRING function to work. But it<br/>
+didn't work for the GETPROFILESECTION. If anyone gets it to work please<br/>
+let me know.</p>
+<p><br/>
+Attachments:</p>
+<p>stong.zip - original download from WDJ<br/>
+DynaWrap.zip - the modified code, the DLL with modifications.<br/>
+feature.htm - the feature article for this code by Jeff Stong. Only<br/>
+thing I could find on WDJ. I couldn't find Ton's article.</p>
+<p><a href="http://cwashington.netreach.net/site/downloads.html">http://cwashington.netreach.net/site/downloads.html</a></p>
+<p><a href="http://www.mvps.org/scripting/">http://www.mvps.org/scripting/</a></p>
+<p>[内有附件]</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/cnblogs/600412"  rel="bookmark" >
               <h2 class="card-title">[原创]dHTML特效 alpha虑境之柔和边缘效果</h2>
             </a>
@@ -2714,30 +2738,6 @@ asdasd&lt;br /&gt;<br/>
 asdasd&lt;br /&gt;<br/>
 &lt;/marquee&gt;<br/>
 </p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/cnblogs/600414"  rel="bookmark" >
-              <h2 class="card-title">CSS Filter: Light</h2>
-            </a>
-            <p class="card-text"><p>Added light FX to the picture on the left</p>
-<p>code:</p>
-<p>&nbsp;</p>
-<p>&lt;img<br/>
-style=&quot;filter:light();&quot;<br/>
-id=&quot;mypic&quot;<br/>
-src=&quot;C:\windows\web\wallpaper\bliss.bmp&quot;<br/>
-onload=&quot;javascript:this.filters.light.addCone(this.width/2,this.height/2,100,this.width/2,this.height/2,255,255,255,100,30)&quot;<br/>
-onmousemove=&quot;javascript:this.filters.light.moveLight(0,event.offsetX,event.offsetY,200,1)&quot; <br/>
-/&gt;</p>
-<p>&nbsp;</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
 <p>archive</p>            </div>
