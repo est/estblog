@@ -57,6 +57,30 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2024/stdout-03"  rel="bookmark" >
+              <h2 class="card-title">穷人的supervisor OOM killer</h2>
+            </a>
+            <p class="card-text"><p>厂里的docker上跑了个supervisord，用来把挂掉的进程拉起来。最近的问题不是进程挂掉，而是内存泄漏</p>
+<p>跑着跑着内存爆了，然后宿主机OOM随机杀掉一个进程，结果占用内存最大的那个还活着，正常的进程反而gg，该漏的继续漏，然后反复OOM。想看下哪里漏了，<code>--cap-add=SYS_PTRACE</code> 也不给加，OOM策略也不给调，思来想去只能自己做防水补漏了。做起来也简单，supervisor再跑一套bash脚本即可：</p>
+<pre><code>while true; do
+  p=`ps --no-headers  -xo rss,pid --sort=-rss | awk '{
+    if($1 &gt; 1000000){ print $2 }
+  }'`
+  kill $p 2&gt;/dev/null || echo "everything fine";
+  sleep 60;
+done;
+</code></pre>
+<p><code>1000000</code> 代表1G 内存。 <code>sleep 60</code> 表示 每60秒检查一次。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-02-27T16:48:00+08:00">2024-02-27</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stdin-05"  rel="bookmark" >
               <h2 class="card-title">Windows 任务管理器(taskmgr.exe) 作者讲趣闻</h2>
             </a>
@@ -1438,34 +1462,6 @@ Windows version: 10.0.19045.3570
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2023-11-09T15:50:11+08:00">2023-11-09</time></p>
 <p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2023/stderr-15"  rel="bookmark" >
-              <h2 class="card-title">跟孩子掰扯活着的意义</h2>
-            </a>
-            <p class="card-text"><p>今天趁着11·11买了个 GZ104 黄轴键盘，感觉之前随便买的青轴的好了很多，于是手痒想打字。哈哈</p>
-<h2>人的意义 是什么</h2>
-<p>娃今天吃饭的时候突然问了我一个问题：「人活着的意义是什么呀」，很不凑巧我也闲来无事琢磨过这事，但是想要在孩子面前把这事说清楚可能没那么容易。</p>
-<p>于是我换了个思路，我问他，如果你是一个动物，你觉得意义是什么？他没回答，我又问，如果你是一块石头，石头会考虑自己的意义嘛？</p>
-<p>孩子也没回答。最后我说，人活着的意义呀，可能很多人也不知道，但是有一点可以确定，正因为你有一个聪明的小脑袋，才会去思考「什么是意义」这样的问题</p>
-<h2>国家是什么</h2>
-<p>他又问到，为什么世界上有那么多国家呢，为什么联合国不是一个国家。怎么样才能统一全世界成为一个国家。</p>
-<p>我的回答又把刚才的套路重复了一遍。如果你是一只动物，你会觉得自己属于某个国家吗？娃想了下，可能不会吧。我看到碗里的饭说，如果你是一粒大米，你会觉得自己有国家吗，孩子也不说话。最后我说，国家有很多个定义，但是正是因为人有了大脑，有了想象力，才会产生国家这个概念。所谓国家，就是一个想象的共同体。</p>
-<h2>反思</h2>
-<p>这可能是我会记录的最无聊的两件事。因为我真的想拿着键盘痛快的打一打字哈哈。</p>
-<p>或许我的回答都不是最好的，现在想起来真的有很多改进之处。比如没能鼓励孩子进一步对这个问题进行探索。</p>
-<p>蹲茅坑的时候想了一下，我们小时候哪里会思考这些问题呀。小时候都在为了作业发愁，心思都花在了怎么玩上面。现在的孩子能思考这些问题说明生活条件比较好了。人在穷的时候，物质匮乏的时候是不会去思考存在的意义的，都忙着奔波生活去了。生存都照顾不过来，如何去顾及意义呢。</p>
-<p>生命或许最大的意义就是生存。仅仅丰衣足食之后，才有闲心来考虑一下奋斗折腾这么大半辈子，究竟是图了个啥。</p>
-<h1>后记</h1>
-<p>本文完成于 2023-11-05 22:39:59。  </p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2023-11-05T22:26:35+08:00">2023-11-05</time></p>
-<p>stderr</p>            </div>
           </article>
         </div>
 
