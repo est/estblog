@@ -10,7 +10,29 @@
 &lt;p&gt;但是这个说法，我觉得还需要进一步推敲。所谓供应链、原材料优势，其实归根结底就是上游产业优势。上游产业的成本构成呢？也是吃人的红利，然后转变为生产效率和成本优势。&lt;/p&gt;
 &lt;p&gt;汽车产业为啥被 off-shore 了，因为在金融行业看来，干实业的就是利润的material supply。没啥技术含量，赚钱的上限就在哪里。欧美大学里就没几个本地人读械制造专业。人都没有，更不要说人才了。&lt;/p&gt;
 &lt;p&gt;中国“制造”这个概念也很有意思，比如Apple喜欢说得很直白，这就是 assemble。但是你design 就不是assemble了？要硬拉扯，加州的工作，无非是把各种创意和工业设计拼凑到一起的功夫？在办公室打键盘，和在电子厂打螺丝，除了&lt;a href="https://blog.est.im/2024/stderr-14"&gt;一个软一个硬&lt;/a&gt;，前者 manufacture 的是点子，后者是实物。&lt;/p&gt;
-&lt;p&gt;所以归根结底还是人矿优势。超负荷压榨。现在国内也没几个人读机械制造了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 24 Nov 2024 06:35:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-11-24:/2024/stdin-18</guid><category>stdin</category></item><item><title>强行入睡方法 v2.0</title><link>https://blog.est.im/2024/stderr-15</link><description>&lt;p&gt;书接上回《&lt;a href="https://blog.est.im/2024/stdout-05"&gt;快速入睡的技巧和原理&lt;/a&gt;》&lt;/p&gt;
+&lt;p&gt;所以归根结底还是人矿优势。超负荷压榨。现在国内也没几个人读机械制造了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 24 Nov 2024 06:35:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-11-24:/2024/stdin-18</guid><category>stdin</category></item><item><title>ATProto之言论 自由和触达的分离</title><link>https://blog.est.im/2024/stderr-16</link><description>&lt;p&gt;今天&lt;a href="https://news.ycombinator.com/item?id=42215932"&gt;刷到&lt;/a&gt;个好玩的。先说下背景：&lt;/p&gt;
+&lt;p&gt;2019年，Twitter 前CEO Jack Dorsey &lt;code&gt;@jack&lt;/code&gt; 当时内部推动的一个项目叫 &lt;a href="https://bsky.social"&gt;Bluesky&lt;/a&gt;，后来成立独立公司独立运营。其核心卖点是一个叫 AT协议 (Authenticated Transfer Protocol，有趣的是 AT 也是 &lt;code&gt;@&lt;/code&gt; 这个符号的称呼) ，基于这个协议搭建的分布式社交网络。官服和app上线叫  https://bsky.app 。&lt;/p&gt;
+&lt;p&gt;2022年10月，世界首富 Elon Musk $440亿刀买下Twitter，2024年推波助澜，在11月成功助力懂王 &lt;code&gt;@realDonaldTrump&lt;/code&gt; 重夺总统宝座， 特别多X.com的“自由派”认为是天塌了，于是纷纷出逃。所以 bsky 用户增长迅猛，有超过 mastodon、Threads和nostr的趋势。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;- mastodon 的问题是，RoR又慢又重，站长们带不动
+- threads 主要是反派从良，大家还是怕犹太人老板惦记
+- nostr 币圈味太冲
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;如果你玩过X，就知道上面的黄推、币圈电诈、民间政客特别多，如何在一个无法集中管理的网络里去掉杂音，保留有意思的内容，很具有挑战的。ATProto提出了一个概念叫做  &lt;a href="https://atproto.com/guides/overview#speech-reach-and-moderation"&gt;Speech and Reach&lt;/a&gt;。我理解，它把言论自由和言论可处达性分开。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Atproto's model is that speech and reach should be two separate layers, built to work with each other. The “speech” layer should remain permissive, distributing authority and designed to ensure everyone has a voice. The “reach” layer lives on top, built for flexibility and designed to scale.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;说实话，当时我看到个设定觉得合理，但是不知道有啥用，直到今天我看到了Django（Python Web框架）的作者 Simon Willison &lt;code&gt;@simonw&lt;/code&gt; 分享的&lt;a href="https://bsky.app/profile/simonwillison.net/post/3lbkdkz6eh22l"&gt;一个有意思的玩法&lt;/a&gt;——挂人。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;I am utterly delighted by this subversive use of the Bluesky label feature, where you can subscribe to a custom app that then adds visible labels to profiles&lt;br /&gt;
+This one shows you which posh expensive private school British public figures attended, plus their current fees&lt;br /&gt;
+https://bsky.app/profile/daddys.cash&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;是的你没看错，就是挂人。这个 daddys.cash （读作：爹滴点现金）账号的作用是，把 bsky.app 上正米字旗🇬🇧大V，上过私校作为“标签”放到账号信息栏。英国的私校是个圈子，非常抱团，在证界和商界非常具有影响力，这可太“同窗传承吾辈责”了。在评论区，你甚至还能看到有账号专注把正星条旗🇺🇸大V背后的政党派别和选举献金标出来。英美的内政和外交是有偏向性的维护这群人的世界观和利益。&lt;/p&gt;
+&lt;p&gt;为什么说这个功能是挂人？ 这玩意极大降低了饭圈和小鬼们拿来给人贴标签的门槛，而且传播性极快。假如在一个平行世界里，bsky在国内上线，就现在的形式，很快华为和小米形成两个阵营互相敌对对喷。&lt;/p&gt;
+&lt;p&gt;但如果你抛开网络论战，带入线下社交，这个功能可能会带来一个意想不到的效果——IRL的社会压力回来了。能在网络上肆无忌惮的彪悍发言，会考虑到今后被人 label 怎么办？实际上大多数人当着其他人的面说话还是很矜持的，得考虑个场合和面子。深怕别人背地里议论着你什么。这他人指指点点，不正好就是“贴标签”。&lt;/p&gt;
+&lt;p&gt;传播上来说，如果你影响力超大，你说话就得委婉，考虑万一被人贴上不好的标签的后果。所以一开始atproto这个拆分 speech 和 reach 的设计就挺有意思。要么你口无遮拦嗓门小，要么你谨言慎行上热搜。发言是自由的，但是传播成什么样可不是你说了算。&lt;/p&gt;
+&lt;p&gt;这个机制当然也有很多问题，比如如果你是小人，你可以换各种马甲来诋毁和三人成虎。怎么办呢？实名制？social credit？&lt;/p&gt;
+&lt;p&gt;总之，这是一个有意思的设计。比X现在那套黑盒子封号，灵活的 community notes 更创新。&lt;code&gt;@jack&lt;/code&gt; 这一波看来是真的懂这行搞出来的新玩意。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 23 Nov 2024 17:22:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-11-23:/2024/stderr-16</guid><category>stderr</category></item><item><title>强行入睡方法 v2.0</title><link>https://blog.est.im/2024/stderr-15</link><description>&lt;p&gt;书接上回《&lt;a href="https://blog.est.im/2024/stdout-05"&gt;快速入睡的技巧和原理&lt;/a&gt;》&lt;/p&gt;
 &lt;p&gt;前几天跟朋友聊天，有一个想法萌生在脑海里：&lt;/p&gt;
 &lt;p&gt;因果论是人类发明和掌握语言之后的一个副产品&lt;/p&gt;
 &lt;p&gt;什么是因果？一个东西变动，导致另一个东西变动。但是大千世界哪里来的所谓「一个」东西？&lt;/p&gt;
@@ -637,28 +659,4 @@ Registrant Contact Email: songjie@anicert.cn&lt;/p&gt;
 &lt;p&gt;https://easyctid.cn/about&lt;/p&gt;
 &lt;p&gt;其中有一张最重要的架构图&lt;/p&gt;
 &lt;p&gt;&lt;img referrerpolicy="no-referrer" src="https://easyctid.cn/_nuxt/img/bg-3.c5fe831.png" /&gt;&lt;/p&gt;
-&lt;p&gt;目前不知道这个 PID 是唯一的还是可变的。要实用还是得做类似微信那种 OpenID/UnionID 才行。因为技术对接SDK需要付费签协议才能拿到，细节就无从而知了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 01 Aug 2024 15:20:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-08-01:/2024/stdout-15</guid><category>stdout</category></item><item><title>Valid HTTP verbs</title><link>https://blog.est.im/2024/stdout-14</link><description>&lt;p&gt;从&lt;a href="https://www.v2ex.com/t/1057881"&gt;这里&lt;/a&gt; 想到，fetch/xhr 可以发起哪些 http verb 呢？&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;python -m http.server&lt;/code&gt; 随手测试了下，发现连 &lt;code&gt;!&lt;/code&gt;，&lt;code&gt;$&lt;/code&gt; 这种符号都可以作为 http verb，比如 &lt;code&gt;fetch('/asdf', {method:"$"})&lt;/code&gt; 这样的请求是能发起的。于是去 chromium 搜了下 &lt;code&gt;"is not a valid HTTP method"&lt;/code&gt; 相关的解析放在 &lt;a href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/platform/network/http_parsers.cc;drc=fa1e0cf5238e2600039f60af6909aefbd4cf003c;l=404"&gt;blink/renderer/platform/network/http_parsers.cc&lt;/a&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;// See RFC 7230, Section 3.2.6.
-bool IsValidHTTPToken(const String&amp;amp; characters) {
-  if (characters.empty())
-    return false;
-  for (unsigned i = 0; i &amp;lt; characters.length(); ++i) {
-    UChar c = characters[i];
-    if (c &amp;gt; 0x7F || !net::HttpUtil::IsTokenChar(c))
-      return false;
-  }
-  return true;
-}
-
-bool HttpUtil::IsTokenChar(char c) {
-  return !(c &amp;gt;= 0x7F || c &amp;lt;= 0x20 || c == '(' || c == ')' || c == '&amp;lt;' ||
-           c == '&amp;gt;' || c == '@' || c == ',' || c == ';' || c == ':' ||
-           c == '\\' || c == '"' || c == '/' || c == '[' || c == ']' ||
-           c == '?' || c == '=' || c == '{' || c == '}');
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;原来如此，RFC 7230呀。于是把这些字符打出来：&lt;code&gt;' '.join(chr(x) for x in range(0x20, 0x7f))&lt;/code&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;! # $ % &amp;amp; ' * + - . 0 1 2 3 4 5 6 7 8 9 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z ^ _ ` a b c d e f g h i j k l m n o p q r s t u v w x y z | ~
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;那还搞个屁的 RESTful 啊。直接用特殊符号一把梭。不过各种服务端框架可能不是很容易做兼容。哈哈。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 17 Jul 2024 09:47:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-07-17:/2024/stdout-14</guid><category>stdout</category></item></channel></rss>
+&lt;p&gt;目前不知道这个 PID 是唯一的还是可变的。要实用还是得做类似微信那种 OpenID/UnionID 才行。因为技术对接SDK需要付费签协议才能拿到，细节就无从而知了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 01 Aug 2024 15:20:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-08-01:/2024/stdout-15</guid><category>stdout</category></item></channel></rss>
