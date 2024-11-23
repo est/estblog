@@ -76,7 +76,12 @@ https://bsky.app/profile/daddys.cash</p>
 <p>是的你没看错，就是挂人。这个 daddys.cash （读作：爹滴点现金）账号的作用是，把 bsky.app 上正米字旗🇬🇧大V，上过私校的作为“标签”放到账号信息栏。甚至还包含私校的学费，时刻提醒你阶级差距。英国的私校是个圈子，非常抱团，在证界和商界非常具有影响力，这可太“同窗传承吾辈责”了。在评论区，你甚至还能看到有账号专注把正星条旗🇺🇸大V背后的政党派别和选举献金标出来。英美的内政和外交是有偏向性的维护这群人的世界观和利益。</p>
 <p>为什么说这个功能是挂人？如果推广开了，这玩意极大降低了饭圈和小鬼们拿来给人贴标签的门槛，而且传播性极快。假如在一个平行世界里，bsky在国内上线，就现在的形式，很快🐒和🌸会形成两个阵营互相敌对对喷。</p>
 <p>但如果你抛开网络论战，带入线下社交，这个功能可能会带来一个意想不到的效果——IRL的社会压力回来了。能在网络上肆无忌惮的彪悍发言，会考虑到今后被人 label 怎么办？实际上大多数人当着其他人的面说话还是很矜持的，得考虑个场合和面子。深怕别人背地里议论着你什么。这他人指指点点，不正好就是“贴标签”。</p>
-<p>传播上来说，如果你影响力超大，你说话就得委婉，考虑万一被人贴上不好的标签的后果。所以一开始atproto这个拆分 speech 和 reach 的设计就挺有意思。要么你口无遮拦嗓门小，你谨言慎行上热搜，发言是自由的，但是传播成什么样可不是你说了算。</p>
+<p>ATProto 的实现<a href="https://news.ycombinator.com/item?id=39684027">细节</a>：</p>
+<blockquote>
+<p>It's broadly a system for publishing metadata on posts called "Labels". Application clients specify which labeling services they want to use in request headers. Those labels get attached to the responses, where they can then be interpreted by client.<br />
+This is an open system. Clients can choose which labelers they use, and while the Bluesky client hardcodes the Bluesky moderation another client can choose a different primary Labeler. Users can then add their community labelers, which I describe below. We aim to do the majority of our moderation at that layer. There are also "infrastructure takedowns" for illegal content and network abuse, which we execute at the services layer (ie the relay).</p>
+</blockquote>
+<p>技术上来说，一个内容顶真不顶，你自己可以选择 Label 供应商；传播上来说，如果你影响力超大，你说话就得委婉，考虑万一被人贴上不好的标签的后果。所以一开始atproto这个拆分 speech 和 reach 的设计就挺有意思。要么你口无遮拦嗓门小，你谨言慎行上热搜，发言是自由的，但是传播成什么样可不是你说了算。</p>
 <p>这个机制当然也有很多问题，比如如果你是小人，你可以换各种马甲来诋毁和三人成虎。怎么办呢？实名制？social credit？</p>
 <p>总之，这是一个有意思的设计。比X现在那套黑盒子封号，灵活的 community notes 更创新。<code>@jack</code> 这一波看来是真的懂这行搞出来的新玩意。</p>
 </article>
