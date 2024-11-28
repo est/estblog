@@ -57,6 +57,39 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2024/stdout-24"  rel="bookmark" >
+              <h2 class="card-title">ss命令抓linux下偶发端口访问</h2>
+            </a>
+            <p class="card-text"><p>Linux服务器一直有个TCP连上来发数据，跑到对应的机器上发现连接已经断了，对应的进程也退出了。估计是某种定时任务。</p>
+<p>排查代码无果，只能通过命令行来监控。这里直接上<code>ss</code>命令</p>
+<pre><code>  while true; do pid=$(ss -tanpe state established 'dst 10.11.22.33:4455'  | awk 'match($0,/pid=([0-9]+)/,a){print a[1]}'); [[ -n $pid ]] &amp;&amp; tr '\0' ' ' &lt;/proc/$pid/cmdline ; sleep 0.2; done;
+</code></pre>
+<p>解释下：</p>
+<ol>
+<li><code>while true; do ...; sleep 0.2; done;</code>每0.2s反复刷新执行指定命令。</li>
+<li><code>ss -tanpe state established 'dst 10.11.22.33:4455'</code><br />
+ - <code>-t</code> 选项表示显示 TCP 连接。<br />
+ - <code>-a</code> 显示所有连接。<br />
+ - <code>-n</code> 不解析主机名、端口。<br />
+ - <code>-p</code> 显示进程信息。<br />
+ - <code>-e</code> 显示额外的详细信息。<br />
+ - <code>state established</code> TCP已连接<br />
+ - <code>dst 10.11.22.33:4455</code> 过滤TCP目标地址+端口</li>
+<li><code>awk 'match($0,/pid=([0-9]+)/,a){print a[1]}'</code> 提取出 pid</li>
+<li><code>[[ -n $pid ]] &amp;&amp; tr '\0' ' ' &lt;/proc/$pid/cmdline</code>  从procfs读取该进程启动时的命令和参数。且把空字符 <code>\0</code>替换为空格</li>
+</ol>
+<p>综合起来：不断地查询目标 IP 地址和端口的网络连接，找到与之相关的进程 ID，并显示该进程的命令行。每隔 0.2 秒刷新一次，持续监控这个连接对应的进程。</p>
+<p>如果chatgpt能根据这个描述自动写出这个命令就好了。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-11-28T09:45:00+08:00">2024-11-28</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stdout-23"  rel="bookmark" >
               <h2 class="card-title">白嫖百度网盘“单次转存数”500限制</h2>
             </a>
@@ -4060,34 +4093,6 @@ git push
 </ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-07-19T19:06:49+08:00">2022-07-19</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2022/stdout-06"  rel="bookmark" >
-              <h2 class="card-title">袁亚湘院士数学不错，但是历史不行</h2>
-            </a>
-            <p class="card-text"><p>网上看到一个院士的段子 <a href="https://m.weibo.cn/detail/4764029988111490">1</a> <a href="https://m.weibo.cn/detail/4763768209540706">2</a></p>
-<p>搜了下，2020年3月14日，在中国工业与应用数学学会举办的网络科普活动中，中国科学院院士袁亚湘带来题为“数学漫谈”的主题报告</p>
-<p><a href="https://mp.weixin.qq.com/s/JllGeuveomjFDFg3C5r9FQ">https://mp.weixin.qq.com/s/JllGeuveomjFDFg3C5r9FQ</a></p>
-<blockquote>
-<p>关于π有很多神奇的故事。因为时间关系，我今天就讲其中的一个。不知道在座的观众有没有看过一个美剧叫做《疑犯追踪》。在第2季11集中，Harold Finch说过在π里面能够找到任意数列。当然这个东西数学家并没有证明，但是很多数学家认为可能是真的。<br />
-我试了试，我挑了我们建党的日子19210701，出现在π的第44,842,733位。如果输入去中华人民共和国成立之日，也就是19491001的话，就要往后很多，要到82,267,377位。开个玩笑，π都说明了要先有共产党才有新中国。<br />
-一个网友要求我要查一下1314，大家看到1314到3902位就找到了。所以各位观众，1314（一生一世）不是那么难啊。但是如果1314前面加个520（我爱你）的话，那就难多了。如果你要找5201314，那就要查到200多万位。所以同学们一定要记住啊，实际上爱情还是很艰难的。</p>
-</blockquote>
-<p>这段话数学上来说是没问题的，但是院士可能没注意历史，建党的真正时间是一大正式召开的时间，<a href="http://www.xinhuanet.com/politics/2020-06/23/c_1126148992.htm">1921年的7月23日</a></p>
-<p>那么我们把两个时间再去看一下在 Pi 里的位置：</p>
-<p><a href="https://www.angio.net/pi/">https://www.angio.net/pi/</a></p>
-<pre><code>  The string 19491001 occurs at position 82267377
-  The string 19210723 occurs at position 101114100
-</code></pre>
-<p>所以这说明了啥？</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2022-05-06T12:03:50+08:00">2022-05-06</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ss命令抓linux下偶发端口访问 – est の 输入 输出和出入</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="ss命令抓linux下偶发端口访问" />
+
+    <link rel="canonical" href="https://blog.est.im/2024/stdout-24" />
+    <meta property="og:url" content="https://blog.est.im/2024/stdout-24">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="ss命令抓linux下偶发端口访问">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">ss命令抓linux下偶发端口访问</h2>
+    <p class="post-date">Posted <time datetime="2024-11-28T09:45:00+08:00">2024-11-28</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>Linux服务器一直有个TCP连上来发数据，跑到对应的机器上发现连接已经断了，对应的进程也退出了。估计是某种定时任务。</p>
+<p>排查代码无果，只能通过命令行来监控。这里直接上<code>ss</code>命令</p>
+<pre><code>  while true; do pid=$(ss -tanpe state established 'dst 10.11.22.33:4455'  | awk 'match($0,/pid=([0-9]+)/,a){print a[1]}'); [[ -n $pid ]] &amp;&amp; tr '\0' ' ' &lt;/proc/$pid/cmdline ; sleep 0.2; done;
+</code></pre>
+<p>解释下：</p>
+<ol>
+<li><code>while true; do ...; sleep 0.2; done;</code>每0.2s反复刷新执行指定命令。</li>
+<li><code>ss -tanpe state established 'dst 10.11.22.33:4455'</code><br />
+ - <code>-t</code> 选项表示显示 TCP 连接。<br />
+ - <code>-a</code> 显示所有连接。<br />
+ - <code>-n</code> 不解析主机名、端口。<br />
+ - <code>-p</code> 显示进程信息。<br />
+ - <code>-e</code> 显示额外的详细信息。<br />
+ - <code>state established</code> TCP已连接<br />
+ - <code>dst 10.11.22.33:4455</code> 过滤TCP目标地址+端口</li>
+<li><code>awk 'match($0,/pid=([0-9]+)/,a){print a[1]}'</code> 提取出 pid</li>
+<li><code>[[ -n $pid ]] &amp;&amp; tr '\0' ' ' &lt;/proc/$pid/cmdline</code>  从procfs读取该进程启动时的命令和参数。且把空字符 <code>\0</code>替换为空格</li>
+</ol>
+<p>综合起来：不断地查询目标 IP 地址和端口的网络连接，找到与之相关的进程 ID，并显示该进程的命令行。每隔 0.2 秒刷新一次，持续监控这个连接对应的进程。</p>
+<p>如果chatgpt能根据这个描述自动写出这个命令就好了。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2024/stdout-24';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+
+  </body>
+
+</html>
