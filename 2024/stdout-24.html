@@ -74,7 +74,9 @@
 <li><code>[[ -n $pid ]] &amp;&amp; tr '\0' ' ' &lt;/proc/$pid/cmdline</code>  从procfs读取该进程启动时的命令和参数。且把空字符 <code>\0</code>替换为空格</li>
 </ol>
 <p>综合起来：不断地查询目标 IP 地址和端口的网络连接，找到与之相关的进程 ID，并显示该进程的命令行。每隔 0.2 秒刷新一次，持续监控这个连接对应的进程。</p>
-<p>如果chatgpt能根据这个描述自动写出这个命令就好了。</p>
+<p>跑了一阵子，发现 $pid 可能有多行。囧，只能用双层 <code>while</code> 了：</p>
+<pre><code>  while true; do ss -tanp state established 'dport = 2333' | awk 'match($0,/pid=([0-9]+)/,m){print m[1]}' | while read -r pid; do echo $(date '+%F %T') $pid $(readlink -f /proc/$pid/cwd) $(tr '\0' ' ' &lt;/proc/$pid/cmdline); done ;  done;
+</code></pre>
 </article>
 
 <div class="comments">
