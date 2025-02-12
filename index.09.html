@@ -57,6 +57,23 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2021/stdin-013"  rel="bookmark" >
+              <h2 class="card-title">PCR testing site under the fireworks from Disney castle</h2>
+            </a>
+            <p class="card-text"><p>One of the most astonishing views from end of the year.</p>
+<video src="/images/2021/stdin-013-1.mp4" controls preload="metadata"></video>
+
+<p>From the evening of <a href="https://m.weibo.cn/detail/4698502573853047">31th Oct, Shanghai Disneyland</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-11-08T22:28:06+08:00">2021-11-08</time></p>
+<p>stdin</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2021/stdout-016"  rel="bookmark" >
               <h2 class="card-title">Chrome 指定域名解析，绕过 hosts</h2>
             </a>
@@ -3824,41 +3841,6 @@ A: 蚂蚁队长第一次下命令是想让蚂蚁们离开，自己吃了这点�
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-07-06T23:13:17+08:00">2021-07-06</time></p>
 <p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2021/stdout-009"  rel="bookmark" >
-              <h2 class="card-title">macOS 设置 TCP 握手连接超时，提升浏览器在糟糕网络下的访问体验</h2>
-            </a>
-            <p class="card-text"><p>多年的疑惑今天居然被偶然解开了。</p>
-<p>由于墙内糟糕的网络环境，而且ISP甚至wifi内还有墙中墙，所以很多域名是打不开的。</p>
-<p>每次看浏览器在傻乎乎的转菊花，就觉得浪费时间。</p>
-<pre><code>  sudo sysctl  net.inet.tcp.keepinit=3000
-</code></pre>
-<p>这一条指令可以直接设置 macOS 的 TCP Keepalive 心跳包初始化时间设置为3000毫秒。</p>
-<p><code>net.inet.tcp.keepinit</code>默认值是 75000 ，单位是毫秒。注意 Linux 下没这设置，而且单位是 秒</p>
-<p>这句话学究式的解释可以通过 <code>man 4 tcp</code> 得到，摘录几条：</p>
-<blockquote>
-<p>TCP_CONNECTIONTIMEOUT  The TCP_CONNECTIONTIMEOUT option allows to specify the timeout, in seconds, for new, non established TCP connections. This option can be useful for both active and passive TCP connections. The default value is specified by the MIB variable net.inet.tcp.keepinit.<br />
-tcp.keepinit Timeout, in milliseconds, for new, non-established TCP connections.</p>
-</blockquote>
-<p>换句话说，就是 TCP 第一个 syn 包最多给3秒等待。超过3秒就拉倒，直接报 <code>ERR_CONNECTION_TIMED_OUT</code> 完事。</p>
-<p>我觉得，如果一个域名和TCP端口3秒钟内无法完成握手，就别执着了。你再干等75秒也不可能连上。这个值只会影响初始连接的超时，一旦连上了怎么idle都不影响，所以不会影响游戏的tcp或者websocket的长连接。也不影响udp。</p>
-<p>2021-07-06 补充：</p>
-<p>重启保持有效：</p>
-<pre><code>  echo net.inet.tcp.keepinit=3000 | sudo tee -a /etc/sysctl.conf
-</code></pre>
-<p>2021-09-21 补充：</p>
-<p>新版macOS 把 /etc/sysctl.conf 这文件给换位置了。应该是</p>
-<pre><code>  "/Users/Shared/Relocated Items/Configuration/private/etc/sysctl.conf"
-</code></pre></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-07-02T15:51:19+08:00">2021-07-02</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 
