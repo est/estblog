@@ -57,12 +57,13 @@
   
   <p><a href="https://blog.est.im/post/48751778838">2013年</a>的时候喷过ITU这个国际电话号码，前缀是变长的问题</p>
 <p>今天遇到问题，需要按国际区号初步分析归属地和供应商，<a href="https://stackoverflow.com/questions/2113908/">stackoverflow</a>和AI给的都很渣，写了个正则：</p>
-<pre><code>  re.compile(r"""\+
-      (1  # north america
-      |(?:  # 3 digits
-          21|22|23|24|25|26|29|35|37|38|42|
-          50|59|67|68|69|80|85|87|88|96|97|99)\d
-      |[2-9]\d)  # two digits
+<pre><code>re.compile(r"""\+
+    (1  # north america
+    |(?:  # 3 digits
+        21|22|23|24|25|26|29|35|37|38|42|
+        50|59|67|68|69|80|85|87|88|96|97|99)\d
+    |[2-9]\d)  # two digits
+""", re.VERBOSE)
 </code></pre>
 <p><code>+1</code> 开头的是北美，然后依次寻找3位的，再匹配2位的。</p>
 <p><code>+7</code> 本来是苏联的，现在给 哈萨克斯坦 和 俄罗斯 了，就当成两位的判定吧。</p>
