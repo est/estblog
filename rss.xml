@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Wed, 12 Feb 2025 16:06:00 +0800</lastBuildDate><item><title>面向老外最容易理解的“春节”定义，以及其它</title><link>https://blog.est.im/2025/stdout-01</link><description>&lt;h3&gt;用英语把 春节 讲明白&lt;/h3&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 25 Feb 2025 11:38:00 +0800</lastBuildDate><item><title>正则获得国际电话前缀</title><link>https://blog.est.im/2025/stdout-02</link><description>&lt;p&gt;&lt;a href="https://blog.est.im/post/48751778838"&gt;2013年&lt;/a&gt;的时候喷过ITU这个国际电话号码，前缀是变长的问题&lt;/p&gt;
+&lt;p&gt;今天遇到需要提取国家前缀然的问题，写了个正则，用来初步分析归属地和供应商。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  re.compile(r"""
+      (1  # north america
+      |(?:  # 3 digits
+          21|22|23|24|25|26|29|35|37|38|42|
+          50|59|67|68|69|80|85|87|88|96|97|99)\d
+      |[2-9]\d)  # two digits
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;+1&lt;/code&gt; 开头的是北美，然后依次寻找3位的，再匹配2位的。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;+7&lt;/code&gt; 本来是苏联的，现在给 哈萨克斯坦 和 俄罗斯 了，就当成两位的判定吧。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 25 Feb 2025 11:38:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-02-25:/2025/stdout-02</guid><category>stdout</category></item><item><title>面向老外最容易理解的“春节”定义，以及其它</title><link>https://blog.est.im/2025/stdout-01</link><description>&lt;h3&gt;用英语把 春节 讲明白&lt;/h3&gt;
 &lt;p&gt;最近小红书 #tiktokrefugee 以及所谓的“中美对账”很火，然后又吵到 Chinese new year, 和 lunar new year 怎么叫，案例说闲来无事，我想搞明白究竟春节是怎么定的？&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;最接近立春之朔日（月缺之日）为正月初一&lt;/p&gt;
@@ -76,7 +86,7 @@ Yes! January 29, 2025, falls on Lunar New Year’s Eve, which is the day before 
 &lt;p&gt;他的理论是，全世界绝大部分的人，都是挣钱能凑合过日子就行了。work to live。那种不要命挣钱，live to work的文化只有儒家有。美国出发点不一样，全世界那种少数天生喜欢拼命挣钱的人，都受不了当地懒散和松弛，润美去干大事挣大钱了。&lt;/p&gt;
 &lt;p&gt;言之有理啊。以前欧洲那种日子过不下去敢去一个陌生的未知的新大陆打拼的，都不是等闲之辈。所以一代传一代搞出来这么一个打拼的文化。&lt;/p&gt;
 &lt;hr /&gt;
-&lt;p&gt;今日份的胡思乱想就到这了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 12 Feb 2025 16:06:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-02-12:/2025/stdout-01</guid><category>stderr</category></item><item><title>纸吸管“环保”的说法是一个4年级小学生发明的</title><link>https://blog.est.im/2025/stdin-03</link><description>&lt;p&gt;之前看到elon吹捧川普取消纸吸管是&lt;a href="https://x.com/elonmusk/status/1887886625318818292"&gt;最伟大总统&lt;/a&gt;，一大早看到&lt;a href="https://x.com/paulg/status/1888203276811632935"&gt;pg转的&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;今日份的胡思乱想就到这了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 12 Feb 2025 16:06:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-02-12:/2025/stdout-01</guid><category>stdout</category></item><item><title>纸吸管“环保”的说法是一个4年级小学生发明的</title><link>https://blog.est.im/2025/stdin-03</link><description>&lt;p&gt;之前看到elon吹捧川普取消纸吸管是&lt;a href="https://x.com/elonmusk/status/1887886625318818292"&gt;最伟大总统&lt;/a&gt;，一大早看到&lt;a href="https://x.com/paulg/status/1888203276811632935"&gt;pg转的&lt;/a&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;As a curious fourth grader who had just started an environmental project to discourage restaurants from providing straws by default, Cress decided to look online to find out how many straws are used each day in the United States. Not being able to find any statistics, he called straw manufacturers directly and estimated the 500 million figure based on numbers they provided him.&lt;/p&gt;
 &lt;p&gt;In February of 2011, Milo Cress (then nine years old) founded the Be Straw Free Campaign project to work together with members of the straw industry, restaurants and other businesses, schools, environmental groups, and concerned citizens to reduce the use and waste of disposable plastic straws.&lt;/p&gt;
@@ -650,13 +660,4 @@ make install
 &lt;li&gt;支持了长按按钮一直增加减少 bpm&lt;/li&gt;
 &lt;li&gt;禁止长按出现菜单&lt;/li&gt;
 &lt;li&gt;禁止双击缩放&lt;/li&gt;
-&lt;/ol&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 26 Sep 2024 22:52:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-09-26:/2024/stdout-19</guid><category>stdout</category></item><item><title>Edge找回丢失的右上角Copilot侧边栏图标</title><link>https://blog.est.im/2024/stdout-18</link><description>&lt;p&gt;右上角图标和侧边栏的官方截图：&lt;/p&gt;
-&lt;p&gt;&lt;img referrerpolicy="no-referrer" src="https://blogs.windows.com/wp-content/uploads/prod/sites/33/2023/12/devtools-copilot-in-edge-1.png" /&gt;&lt;/p&gt;
-&lt;p&gt;如果不小心关掉了，找回办法：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;打开 &lt;code&gt;edge://settings/sidebar/appSettings?hubApp=cd4688a9-e888-48ea-ad81-76193d56b1be&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;F12&lt;/code&gt; 或者 &lt;code&gt;Opt+Cmd+I&lt;/code&gt;，找到第一个“Show Copilot”开关，把它改成关闭。&lt;/li&gt;
-&lt;li&gt;如果第二步不会搞，输入 &lt;code&gt;document.querySelector('input[aria-label="Show Copilot"]').removeAttribute('disabled')&lt;/code&gt; 可破&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;为什么会有这个问题，因为政策的原因，Microsoft Copilot 不能在简中使用，于是右上角的按钮点一下会消失；但是开发或者集成测试的为了省事儿，就直接给隐藏掉，导致侧边栏无法点开&lt;/p&gt;
-&lt;p&gt;这串 hubApp 的id如何找到呢？新建一个浏览器profile，这个时候 Copilot 是有图标的。不要去点，去设置里翻 &lt;code&gt;edge://settings/sidebar&lt;/code&gt; 就能看到 Copilot 的选项。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 22 Sep 2024 21:49:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-09-22:/2024/stdout-18</guid><category>stdout</category></item></channel></rss>
+&lt;/ol&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 26 Sep 2024 22:52:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-09-26:/2024/stdout-19</guid><category>stdout</category></item></channel></rss>

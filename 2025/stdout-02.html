@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>正则获得国际电话前缀 – est の 输入 输出和出入</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="正则获得国际电话前缀" />
+
+    <link rel="canonical" href="https://blog.est.im/2025/stdout-02" />
+    <meta property="og:url" content="https://blog.est.im/2025/stdout-02">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="正则获得国际电话前缀">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">正则获得国际电话前缀</h2>
+    <p class="post-date">Posted <time datetime="2025-02-25T11:38:00+08:00">2025-02-25</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p><a href="https://blog.est.im/post/48751778838">2013年</a>的时候喷过ITU这个国际电话号码，前缀是变长的问题</p>
+<p>今天遇到需要提取国家前缀然的问题，写了个正则，用来初步分析归属地和供应商。</p>
+<pre><code>  re.compile(r"""
+      (1  # north america
+      |(?:  # 3 digits
+          21|22|23|24|25|26|29|35|37|38|42|
+          50|59|67|68|69|80|85|87|88|96|97|99)\d
+      |[2-9]\d)  # two digits
+</code></pre>
+<p><code>+1</code> 开头的是北美，然后依次寻找3位的，再匹配2位的。</p>
+<p><code>+7</code> 本来是苏联的，现在给 哈萨克斯坦 和 俄罗斯 了，就当成两位的判定吧。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2025/stdout-02';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+
+  </body>
+
+</html>

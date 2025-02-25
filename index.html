@@ -57,6 +57,30 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2025/stdout-02"  rel="bookmark" >
+              <h2 class="card-title">正则获得国际电话前缀</h2>
+            </a>
+            <p class="card-text"><p><a href="https://blog.est.im/post/48751778838">2013年</a>的时候喷过ITU这个国际电话号码，前缀是变长的问题</p>
+<p>今天遇到需要提取国家前缀然的问题，写了个正则，用来初步分析归属地和供应商。</p>
+<pre><code>  re.compile(r"""
+      (1  # north america
+      |(?:  # 3 digits
+          21|22|23|24|25|26|29|35|37|38|42|
+          50|59|67|68|69|80|85|87|88|96|97|99)\d
+      |[2-9]\d)  # two digits
+</code></pre>
+<p><code>+1</code> 开头的是北美，然后依次寻找3位的，再匹配2位的。</p>
+<p><code>+7</code> 本来是苏联的，现在给 哈萨克斯坦 和 俄罗斯 了，就当成两位的判定吧。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2025-02-25T11:38:00+08:00">2025-02-25</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2025/stdout-01"  rel="bookmark" >
               <h2 class="card-title">面向老外最容易理解的“春节”定义，以及其它</h2>
             </a>
@@ -140,7 +164,7 @@ Yes! January 29, 2025, falls on Lunar New Year’s Eve, which is the day before 
 <p>今日份的胡思乱想就到这了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2025-02-12T16:06:00+08:00">2025-02-12</time></p>
-<p>stderr</p>            </div>
+<p>stdout</p>            </div>
           </article>
         </div>
 
@@ -966,29 +990,6 @@ make install
 </ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-09-26T22:52:00+08:00">2024-09-26</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2024/stdout-18"  rel="bookmark" >
-              <h2 class="card-title">Edge找回丢失的右上角Copilot侧边栏图标</h2>
-            </a>
-            <p class="card-text"><p>右上角图标和侧边栏的官方截图：</p>
-<p><img referrerpolicy="no-referrer" src="https://blogs.windows.com/wp-content/uploads/prod/sites/33/2023/12/devtools-copilot-in-edge-1.png" /></p>
-<p>如果不小心关掉了，找回办法：</p>
-<ol>
-<li>打开 <code>edge://settings/sidebar/appSettings?hubApp=cd4688a9-e888-48ea-ad81-76193d56b1be</code></li>
-<li><code>F12</code> 或者 <code>Opt+Cmd+I</code>，找到第一个“Show Copilot”开关，把它改成关闭。</li>
-<li>如果第二步不会搞，输入 <code>document.querySelector('input[aria-label="Show Copilot"]').removeAttribute('disabled')</code> 可破</li>
-</ol>
-<p>为什么会有这个问题，因为政策的原因，Microsoft Copilot 不能在简中使用，于是右上角的按钮点一下会消失；但是开发或者集成测试的为了省事儿，就直接给隐藏掉，导致侧边栏无法点开</p>
-<p>这串 hubApp 的id如何找到呢？新建一个浏览器profile，这个时候 Copilot 是有图标的。不要去点，去设置里翻 <code>edge://settings/sidebar</code> 就能看到 Copilot 的选项。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-09-22T21:49:00+08:00">2024-09-22</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
