@@ -61,8 +61,8 @@
               <h2 class="card-title">正则获得国际电话前缀</h2>
             </a>
             <p class="card-text"><p><a href="https://blog.est.im/post/48751778838">2013年</a>的时候喷过ITU这个国际电话号码，前缀是变长的问题</p>
-<p>今天遇到需要提取国家前缀然的问题，写了个正则，用来初步分析归属地和供应商。</p>
-<pre><code>  re.compile(r"""
+<p>今天遇到问题，需要按国际区号初步分析归属地和供应商，<a href="https://stackoverflow.com/questions/2113908/">stackoverflow</a>和AI给的都很渣，写了个正则：</p>
+<pre><code>  re.compile(r"""\+
       (1  # north america
       |(?:  # 3 digits
           21|22|23|24|25|26|29|35|37|38|42|

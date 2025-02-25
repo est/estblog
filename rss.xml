@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 25 Feb 2025 11:38:00 +0800</lastBuildDate><item><title>正则获得国际电话前缀</title><link>https://blog.est.im/2025/stdout-02</link><description>&lt;p&gt;&lt;a href="https://blog.est.im/post/48751778838"&gt;2013年&lt;/a&gt;的时候喷过ITU这个国际电话号码，前缀是变长的问题&lt;/p&gt;
-&lt;p&gt;今天遇到需要提取国家前缀然的问题，写了个正则，用来初步分析归属地和供应商。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;  re.compile(r"""
+&lt;p&gt;今天遇到问题，需要按国际区号初步分析归属地和供应商，&lt;a href="https://stackoverflow.com/questions/2113908/"&gt;stackoverflow&lt;/a&gt;和AI给的都很渣，写了个正则：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  re.compile(r"""\+
       (1  # north america
       |(?:  # 3 digits
           21|22|23|24|25|26|29|35|37|38|42|
