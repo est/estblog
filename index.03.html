@@ -57,6 +57,34 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2024/stdout-07"  rel="bookmark" >
+              <h2 class="card-title">从 Leanote 迁移到 Obsidian</h2>
+            </a>
+            <p class="card-text"><p>差不多积累了<a href="https://www.v2ex.com/t/133479">10年</a>的笔记，因为软件开发商跑路去做 2B 了，这玩意也没人维护了。换 Obsidian</p>
+<p>Leanote 不支持导出 <code>.md</code> 但是它自己的格式就是 json，转换一下很简单。</p>
+<ol>
+<li>把一个目录下的笔记批量导出为 Leanote 格式，比如导出到 <code>/tmp/folder1</code></li>
+<li>执行Python代码<br />
+<code>import json
+    dir = '/tmp/folder1'
+    for n in os.listdir(dir):
+    if not n.endswith('.leanote'): continue
+    with open(f"{dir}{n.replace('.leanote', '.md')}", "w") as f2, open(dir+n) as f1:
+        f2.write(json.load(f1)['notes'][0]['content'])
+    os.remove(dir+n)</code></li>
+<li>你会发现该目录下的 <code>.leanote</code> 都变成了 <code>.md</code>。拖拽到 Obsidian 即可</li>
+</ol>
+<p>希望对搜到这篇文章的人有所帮助。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-06-10T22:21:00+08:00">2024-06-10</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stderr-10"  rel="bookmark" >
               <h2 class="card-title">挑简历看麻了，就业市场太卷了</h2>
             </a>
@@ -699,47 +727,6 @@ IP属地：陕西</p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-02-11T22:52:00+08:00">2024-02-11</time></p>
 <p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2024/stdout-01"  rel="bookmark" >
-              <h2 class="card-title">FastAPI/Starlette 长连接感知断开</h2>
-            </a>
-            <p class="card-text"><p>之前写过如何 <a href="/2023/stdout-12">在服务器重启的时候感知长连接</a>，最近发现折腾复杂了。</p>
-<p><a href="https://github.com/encode/starlette/discussions/1776">https://github.com/encode/starlette/discussions/1776</a></p>
-<p>测试代码： </p>
-<pre><code>import asyncio
-
-async def async_streamer():
-    try:
-        while True:
-            yield b&quot;--boundary\r\nContent-Type: text/plain\r\nContent-Length: 1\r\n\r\n1\r\n&quot;
-            await asyncio.sleep(0)
-    except asyncio.CancelledError:
-        print(&quot;caught cancelled error&quot;)
-
-app = Starlette(routes=[
-    Route('/async', async_endpoint),
-])
-</code></pre>
-<p>跑起来： <code>uvicorn stream:app</code></p>
-<p>这段代码粗一看没啥大不了的，但是神奇的地方在于，如果去掉 <code>try ... except asyncio.CancelledError</code> ，代码也能正常跑</p>
-<pre><code>
-async def async_streamer():
-    while True:
-        yield b&quot;--boundary\r\nContent-Type: text/plain\r\nContent-Length: 1\r\n\r\n1\r\n&quot;
-        await asyncio.sleep(0)
-</code></pre>
-<p>而且不会报错！最蛋痛的是，这玩意因为是个 <code>while True</code>，如果你里面有打开的数据库连接，是不会中断的，也不会回收的。因为这个 coroutine 没有继续 <code>async for</code> 来消费，就一直挂在进程里当僵尸了！</p>
-<p>加上 <code>try ... except asyncio.CancelledError</code>，能捕获出错，也能处理善后了。</p>
-<p>真是神奇啊。不知道是 uvicorn 的特性，还是 ASGI 都这样。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-01-18T14:44:12+08:00">2024-01-18</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 
