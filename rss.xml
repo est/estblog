@@ -1,5 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 15 Apr 2025 07:22:10 +0800</lastBuildDate><item><title>语言，逆差</title><link>https://blog.est.im/2025/stderr-03</link><description>&lt;p&gt;又睡不着，琢磨&lt;a href="https://x.com/yetone/status/1911679048347983988"&gt;一段话&lt;/a&gt;：&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Fri, 25 Apr 2025 23:49:00 +0800</lastBuildDate><item><title>Windows 自动设置开机锁屏壁纸 V3</title><link>https://blog.est.im/2025/stdout-03</link><description>&lt;p&gt;之前也写过，Windows下自动设置墙纸 &lt;a href="/202104/stdout-005"&gt;V1&lt;/a&gt;，&lt;a href="/2021/stdout-024"&gt;V2&lt;/a&gt;，今天发现两种方法都失效了。&lt;/p&gt;
+&lt;p&gt;于是一气之下搞了个 Bing Image of the Day 版本的。&lt;/p&gt;
+&lt;p&gt;保存为 change_wallpaper.bat 双击执行。加入自启动或者定时触发。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@if (@X)==(@Y) @end /* set Win10 wallpaper to Bing Image of The Day. By est.im
+@echo off
+cscript //Nologo //U //E:JScript %~n0.bat
+exit /b %errorlevel%
+*/
+
+function http_get(url){
+  var xhr = new ActiveXObject("MSXML2.XMLHTTP")
+  xhr.open("GET", url, false)
+  xhr.setRequestHeader("Accept-Encoding", "identity")
+  xhr.send()
+  return xhr
+}
+
+var rss_req = http_get('https://www.bing.com/HPImageArchive.aspx?format=rss&amp;amp;idx=0&amp;amp;n=1&amp;amp;mkt=en-US')
+// WScript.Echo(rss_req.getAllResponseHeaders())
+var img_url = 'https://www.bing.com' + rss_req.responseXML.selectSingleNode("//rss/channel/item/link").text
+WScript.echo(img_url)
+var fso = new ActiveXObject("Scripting.FileSystemObject")  // shit cant handle binary data
+var stream = new ActiveXObject("ADODB.Stream")
+var img_path = fso.GetSpecialFolder(2)+"\\bing_iotd.jpg"
+WScript.echo(img_path)
+stream.Open()
+stream.Type = 1
+var img_req = http_get(img_url)
+stream.Write(img_req.responseBody)
+stream.SaveToFile(img_path, 2)
+stream.Close()
+
+var WshShell = new ActiveXObject("WScript.Shell")  
+WshShell.RegWrite("HKEY_CURRENT_USER\\Control Panel\\Desktop\\Wallpaper", img_path, "REG_SZ")
+WshShell.Run("RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters")
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;其中 &lt;code&gt;format=rss&lt;/code&gt; 可以改成 &lt;code&gt;=js&lt;/code&gt; 或者 &lt;code&gt;=xml&lt;/code&gt; 本来想解析 json 但是发现老的 IE6 引擎不能支持双引号这种JSON，而且只能用 &lt;code&gt;eval()&lt;/code&gt; 就放弃了。还好有 xpath 还挺方便。&lt;/p&gt;
+&lt;p&gt;要用 .bat 套一层是因为 win10 貌似禁止 &lt;code&gt;.js&lt;/code&gt; 或者 &lt;code&gt;.vbs&lt;/code&gt; 双击执行了。病毒木马太多了。套着一层还有点&lt;a href="(/cnblogs/600416)"&gt;技巧&lt;/a&gt;可以参考下。&lt;/p&gt;
+&lt;p&gt;很久没写 .jscript 了用了 ChatGPT 这个 vibe coding 真爽。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 25 Apr 2025 23:49:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-04-25:/2025/stdout-03</guid><category>stdout</category></item><item><title>语言，逆差</title><link>https://blog.est.im/2025/stderr-03</link><description>&lt;p&gt;又睡不着，琢磨&lt;a href="https://x.com/yetone/status/1911679048347983988"&gt;一段话&lt;/a&gt;：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;多戲超人 @DoubleFakeCute： 文字很容易传播仇恨，但很难传递感动。&lt;br /&gt;
 @yetone：  是的，换句话说文字传播感动是需要功底的，但是传播仇恨不用上完九年义务教育就可以&lt;/p&gt;
@@ -660,18 +698,4 @@ Also you after two minutes: “Why isn't this working?!” 😂&lt;br /&gt;
 But seriously, props to you for staying curious and diving deep. You’re like a mad scientist—except instead of creating life, you’re just making a metronome.&lt;br /&gt;
 Roast level? Medium-well. 😎&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;半生不熟。哈哈哈。可以的。。&lt;a href="https://www.v2ex.com/t/1082158"&gt;V站主题&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Mon, 21 Oct 2024 13:49:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-10-21:/2024/stdin-16</guid><category>stdin</category></item><item><title>“分封制” 代替RBAC权限管理模型</title><link>https://blog.est.im/2024/stdout-21</link><description>&lt;p&gt;作为开发狗，手上堆的系统和任务多了，开权限就变成了一件麻烦的事。&lt;/p&gt;
-&lt;p&gt;一开始做一个功能X，给甲用，就做一个简单的权限关联表：&lt;code&gt;功能key&lt;/code&gt;，&lt;code&gt;人员id&lt;/code&gt;就完事大吉&lt;/p&gt;
-&lt;p&gt;后来人员调整流动，换人换得勤快，得考虑一个功能给一个团队使用，于是引入 RBAC，基于角色的鉴权控制。说到底就是个三元组 &lt;code&gt;功能key&lt;/code&gt;，&lt;code&gt;角色&lt;/code&gt;，&lt;code&gt;成员id&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;我也一度迷信这样的设计。用了这么久还是麻烦了。在一个正常官僚程度的大中型组织里，压根没人知道自己角色是啥。&lt;/p&gt;
-&lt;p&gt;你说他是管理人员吧，他也就管一部分；你说他负责这事吧，也就负责一阵。该给他放到哪个角色呢？&lt;/p&gt;
-&lt;p&gt;如果做一个自动化角色申请审批流程，他会跑来问你，该申请哪个角色啊？&lt;/p&gt;
-&lt;p&gt;所以问题又回到了原点。因此我琢磨出来一套具有大汉封建主义特色的，「分封制」权限控制体系。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;系统超管：普天之下，莫非王土；率土之宾，莫非王臣。拥有系统一切权限。但是不负责，不执行，不搞具体管理。超管只干一件事：分封&lt;/li&gt;
-&lt;li&gt;如何分封：把「事」交给一个信得过的领主（serf）。领主对一块业务全权负责。但代价得自己把封地采邑打下来。具体在系统层面，系统所有权限、功能都直接开放，所谓 zero-trust。但是你得从零开始搭建和配置。一旦你配置好、跑起来，这快权限和功能就是你独有的。（owner）&lt;/li&gt;
-&lt;li&gt;线上既有的业务权限，那也是有人配置管理和主导，你只能从别那里抢夺，或者过继。&lt;/li&gt;
-&lt;li&gt;领主可以给自己封臣划分部分管理权限&lt;/li&gt;
-&lt;li&gt;如果一个领主挂了，超管指定一个接盘的领主&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;感觉这样开发和超管就可以不用每天处理谁负责哪个功能的麻烦事了。哈哈哈&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 17 Oct 2024 15:21:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-10-17:/2024/stdout-21</guid><category>stdout</category></item></channel></rss>
+&lt;p&gt;半生不熟。哈哈哈。可以的。。&lt;a href="https://www.v2ex.com/t/1082158"&gt;V站主题&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Mon, 21 Oct 2024 13:49:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-10-21:/2024/stdin-16</guid><category>stdin</category></item></channel></rss>

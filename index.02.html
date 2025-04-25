@@ -57,6 +57,34 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2024/stdout-21"  rel="bookmark" >
+              <h2 class="card-title">“分封制” 代替RBAC权限管理模型</h2>
+            </a>
+            <p class="card-text"><p>作为开发狗，手上堆的系统和任务多了，开权限就变成了一件麻烦的事。</p>
+<p>一开始做一个功能X，给甲用，就做一个简单的权限关联表：<code>功能key</code>，<code>人员id</code>就完事大吉</p>
+<p>后来人员调整流动，换人换得勤快，得考虑一个功能给一个团队使用，于是引入 RBAC，基于角色的鉴权控制。说到底就是个三元组 <code>功能key</code>，<code>角色</code>，<code>成员id</code>。</p>
+<p>我也一度迷信这样的设计。用了这么久还是麻烦了。在一个正常官僚程度的大中型组织里，压根没人知道自己角色是啥。</p>
+<p>你说他是管理人员吧，他也就管一部分；你说他负责这事吧，也就负责一阵。该给他放到哪个角色呢？</p>
+<p>如果做一个自动化角色申请审批流程，他会跑来问你，该申请哪个角色啊？</p>
+<p>所以问题又回到了原点。因此我琢磨出来一套具有大汉封建主义特色的，「分封制」权限控制体系。</p>
+<ul>
+<li>系统超管：普天之下，莫非王土；率土之宾，莫非王臣。拥有系统一切权限。但是不负责，不执行，不搞具体管理。超管只干一件事：分封</li>
+<li>如何分封：把「事」交给一个信得过的领主（serf）。领主对一块业务全权负责。但代价得自己把封地采邑打下来。具体在系统层面，系统所有权限、功能都直接开放，所谓 zero-trust。但是你得从零开始搭建和配置。一旦你配置好、跑起来，这快权限和功能就是你独有的。（owner）</li>
+<li>线上既有的业务权限，那也是有人配置管理和主导，你只能从别那里抢夺，或者过继。</li>
+<li>领主可以给自己封臣划分部分管理权限</li>
+<li>如果一个领主挂了，超管指定一个接盘的领主</li>
+</ul>
+<p>感觉这样开发和超管就可以不用每天处理谁负责哪个功能的麻烦事了。哈哈哈</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-10-17T15:21:00+08:00">2024-10-17</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stdin-15"  rel="bookmark" >
               <h2 class="card-title">“中庸”的艺术 - 如跟需求方讨价还价</h2>
             </a>
@@ -856,25 +884,6 @@ Win+R 敲入：<br />
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-06-14T22:50:00+08:00">2024-06-14</time></p>
 <p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2024/stderr-12"  rel="bookmark" >
-              <h2 class="card-title">chromium/libcef.dll真是毒瘤</h2>
-            </a>
-            <p class="card-text"><p>先<a href="https://x.com/est/status/1801240801600778244">说@MicrosoftEdge</a></p>
-<p><img referrerpolicy="no-referrer" src="https://pbs.twimg.com/media/GP9KvQwboAA7lLa?format=webp" /></p>
-<p>这他妈存3份，吃饱了？</p>
-<p>再<a href="https://x.com/est/status/1801259413858402763">说Epic Games</a></p>
-<p><img referrerpolicy="no-referrer" src="https://pbs.twimg.com/media/GP9b1mMakAA_H1j?format=webp" /></p>
-<p>还能搞6份？真无语了。然后 icudtl.dat 以及 ICU 这一坨也是。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-06-13T21:15:00+08:00">2024-06-13</time></p>
-<p>stderr</p>            </div>
           </article>
         </div>
 

@@ -57,6 +57,58 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2025/stdout-03"  rel="bookmark" >
+              <h2 class="card-title">Windows 自动设置开机锁屏壁纸 V3</h2>
+            </a>
+            <p class="card-text"><p>之前也写过，Windows下自动设置墙纸 <a href="/202104/stdout-005">V1</a>，<a href="/2021/stdout-024">V2</a>，今天发现两种方法都失效了。</p>
+<p>于是一气之下搞了个 Bing Image of the Day 版本的。</p>
+<p>保存为 change_wallpaper.bat 双击执行。加入自启动或者定时触发。</p>
+<pre><code>@if (@X)==(@Y) @end /* set Win10 wallpaper to Bing Image of The Day. By est.im
+@echo off
+cscript //Nologo //U //E:JScript %~n0.bat
+exit /b %errorlevel%
+*/
+
+function http_get(url){
+  var xhr = new ActiveXObject("MSXML2.XMLHTTP")
+  xhr.open("GET", url, false)
+  xhr.setRequestHeader("Accept-Encoding", "identity")
+  xhr.send()
+  return xhr
+}
+
+var rss_req = http_get('https://www.bing.com/HPImageArchive.aspx?format=rss&amp;idx=0&amp;n=1&amp;mkt=en-US')
+// WScript.Echo(rss_req.getAllResponseHeaders())
+var img_url = 'https://www.bing.com' + rss_req.responseXML.selectSingleNode("//rss/channel/item/link").text
+WScript.echo(img_url)
+var fso = new ActiveXObject("Scripting.FileSystemObject")  // shit cant handle binary data
+var stream = new ActiveXObject("ADODB.Stream")
+var img_path = fso.GetSpecialFolder(2)+"\\bing_iotd.jpg"
+WScript.echo(img_path)
+stream.Open()
+stream.Type = 1
+var img_req = http_get(img_url)
+stream.Write(img_req.responseBody)
+stream.SaveToFile(img_path, 2)
+stream.Close()
+
+var WshShell = new ActiveXObject("WScript.Shell")  
+WshShell.RegWrite("HKEY_CURRENT_USER\\Control Panel\\Desktop\\Wallpaper", img_path, "REG_SZ")
+WshShell.Run("RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters")
+</code></pre>
+<p>其中 <code>format=rss</code> 可以改成 <code>=js</code> 或者 <code>=xml</code> 本来想解析 json 但是发现老的 IE6 引擎不能支持双引号这种JSON，而且只能用 <code>eval()</code> 就放弃了。还好有 xpath 还挺方便。</p>
+<p>要用 .bat 套一层是因为 win10 貌似禁止 <code>.js</code> 或者 <code>.vbs</code> 双击执行了。病毒木马太多了。套着一层还有点<a href="(/cnblogs/600416)">技巧</a>可以参考下。</p>
+<p>很久没写 .jscript 了用了 ChatGPT 这个 vibe coding 真爽。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2025-04-25T23:49:00+08:00">2025-04-25</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2025/stdout-02"  rel="bookmark" >
               <h2 class="card-title">正则获得国际电话前缀</h2>
             </a>
@@ -4067,75 +4119,6 @@ for f in os.listdir(p):
 <p>有点很好奇为啥chrome不支持 .mp4 封装。偏袒自家的 webm ？</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-11-18T18:50:05+08:00">2022-11-18</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2022/stdout-10"  rel="bookmark" >
-              <h2 class="card-title">JS播放 DTMF</h2>
-            </a>
-            <p class="card-text"><p>玩 WebRTC 的时候发现它居然内置<a href="https://hacks.mozilla.org/2015/11/webrtc-sending-dtmf-in-firefox/">支持了 DTMF 拨号音</a>。</p>
-<p>这里就简单科普一下，DTMF 就是手机电话拨号音，数字按键按下去嘟嘟嘟响那个。具体就2个频率调谐：</p>
-<table>
-<thead>
-<tr>
-<th>DTMF</th>
-<th>1209Hz</th>
-<th>1336Hz</th>
-<th>1477Hz</th>
-<th>1633Hz</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>697Hz</td>
-<td>1</td>
-<td>2</td>
-<td>3</td>
-<td>A</td>
-</tr>
-<tr>
-<td>770Hz</td>
-<td>4</td>
-<td>5</td>
-<td>6</td>
-<td>B</td>
-</tr>
-<tr>
-<td>852Hz</td>
-<td>7</td>
-<td>8</td>
-<td>9</td>
-<td>C</td>
-</tr>
-<tr>
-<td>941Hz</td>
-<td>*</td>
-<td>0</td>
-<td>#</td>
-<td>D</td>
-</tr>
-</tbody>
-</table>
-<p>于是兴趣来了想做一个 demo 玩玩，写了半天调试不通，报错</p>
-<blockquote>
-<p>VM987:1 Uncaught DOMException: Failed to execute 'insertDTMF' on 'RTCDTMFSender': The 'canInsertDTMF' attribute is false: this sender cannot send DTMF.</p>
-</blockquote>
-<p>仔细研究了下<a href="https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Using_DTMF">这玩意</a>，原来 WebRTC 不直接传音频，而是发一个控制信号，由接收方播放出音频，所以你需要本地创建一个真实的双工 RTC 并打开麦克风权限，才能播放DTMF音频。</p>
-<blockquote>
-<p>WebRTC doesn't send DTMF codes as audio data. Instead, they're sent out-of-band, as RTP payloads. Note, however, that although it's possible to send DTMF using WebRTC, there is currently no way to detect or receive incoming DTMF. WebRTC currently ignores these payloads;</p>
-</blockquote>
-<p>这样就走远了。于是又手痒用 <code>AudioContext()</code> 糊了一个。一共不到1000字节。</p>
-<p><a href="https://lab.est.im/dtmf">https://lab.est.im/dtmf</a> <a href="https://github.com/est/snippets/blob/master/dtmf/index.html">源码</a></p>
-<p>嗯。就挺简单的。特别是那个 oscillator有个 <code>.stop(0.2)</code> 参数可以避免 <code>setTimeout</code> 的麻烦。网上很多教程整复杂了。</p>
-<p>btw 把一些老脚本挂在 lab 域名下。<br />
-btw2 把 RSS 改成全文输出了。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2022-10-30T19:20:49+08:00">2022-10-30</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Windows 自动设置开机锁屏壁纸 V3 – est の 输入 输出和出入</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Windows 自动设置开机锁屏壁纸 V3" />
+
+    <link rel="canonical" href="https://blog.est.im/2025/stdout-03" />
+    <meta property="og:url" content="https://blog.est.im/2025/stdout-03">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Windows 自动设置开机锁屏壁纸 V3">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Windows 自动设置开机锁屏壁纸 V3</h2>
+    <p class="post-date">Posted <time datetime="2025-04-25T23:49:00+08:00">2025-04-25</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>之前也写过，Windows下自动设置墙纸 <a href="/202104/stdout-005">V1</a>，<a href="/2021/stdout-024">V2</a>，今天发现两种方法都失效了。</p>
+<p>于是一气之下搞了个 Bing Image of the Day 版本的。</p>
+<p>保存为 change_wallpaper.bat 双击执行。加入自启动或者定时触发。</p>
+<pre><code>@if (@X)==(@Y) @end /* set Win10 wallpaper to Bing Image of The Day. By est.im
+@echo off
+cscript //Nologo //U //E:JScript %~n0.bat
+exit /b %errorlevel%
+*/
+
+function http_get(url){
+  var xhr = new ActiveXObject("MSXML2.XMLHTTP")
+  xhr.open("GET", url, false)
+  xhr.setRequestHeader("Accept-Encoding", "identity")
+  xhr.send()
+  return xhr
+}
+
+var rss_req = http_get('https://www.bing.com/HPImageArchive.aspx?format=rss&amp;idx=0&amp;n=1&amp;mkt=en-US')
+// WScript.Echo(rss_req.getAllResponseHeaders())
+var img_url = 'https://www.bing.com' + rss_req.responseXML.selectSingleNode("//rss/channel/item/link").text
+WScript.echo(img_url)
+var fso = new ActiveXObject("Scripting.FileSystemObject")  // shit cant handle binary data
+var stream = new ActiveXObject("ADODB.Stream")
+var img_path = fso.GetSpecialFolder(2)+"\\bing_iotd.jpg"
+WScript.echo(img_path)
+stream.Open()
+stream.Type = 1
+var img_req = http_get(img_url)
+stream.Write(img_req.responseBody)
+stream.SaveToFile(img_path, 2)
+stream.Close()
+
+var WshShell = new ActiveXObject("WScript.Shell")  
+WshShell.RegWrite("HKEY_CURRENT_USER\\Control Panel\\Desktop\\Wallpaper", img_path, "REG_SZ")
+WshShell.Run("RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters")
+</code></pre>
+<p>其中 <code>format=rss</code> 可以改成 <code>=js</code> 或者 <code>=xml</code> 本来想解析 json 但是发现老的 IE6 引擎不能支持双引号这种JSON，而且只能用 <code>eval()</code> 就放弃了。还好有 xpath 还挺方便。</p>
+<p>要用 .bat 套一层是因为 win10 貌似禁止 <code>.js</code> 或者 <code>.vbs</code> 双击执行了。病毒木马太多了。套着一层还有点<a href="(/cnblogs/600416)">技巧</a>可以参考下。</p>
+<p>很久没写 .jscript 了用了 ChatGPT 这个 vibe coding 真爽。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2025/stdout-03';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+
+  </body>
+
+</html>
