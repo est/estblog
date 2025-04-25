@@ -60,7 +60,7 @@
 <p>保存为 change_wallpaper.bat 双击执行。加入自启动或者定时触发。</p>
 <pre><code>@if (@X)==(@Y) @end /* set Win10 wallpaper to Bing Image of The Day. By est.im
 @echo off
-cscript //Nologo //U //E:JScript %~n0.bat
+cscript //Nologo //U //E:JScript "%~F0"
 exit /b %errorlevel%
 */
 
@@ -92,7 +92,7 @@ WshShell.RegWrite("HKEY_CURRENT_USER\\Control Panel\\Desktop\\Wallpaper", img_pa
 WshShell.Run("RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters")
 </code></pre>
 <p>其中 <code>format=rss</code> 可以改成 <code>=js</code> 或者 <code>=xml</code> 本来想解析 json 但是发现老的 IE6 引擎不能支持双引号这种JSON，而且只能用 <code>eval()</code> 就放弃了。还好有 xpath 还挺方便。</p>
-<p>要用 .bat 套一层是因为 win10 貌似禁止 <code>.js</code> 或者 <code>.vbs</code> 双击执行了。病毒木马太多了。套着一层还有点<a href="(/cnblogs/600416)">技巧</a>可以参考下。</p>
+<p>要用 .bat 套一层是因为 win10 貌似禁止 <code>.js</code> 或者 <code>.vbs</code> 双击执行了。病毒木马太多了。这种一份源码同时被两种语言解析还有点<a href="/cnblogs/600416">技巧</a>可以参考下。</p>
 <p>很久没写 .jscript 了用了 ChatGPT 这个 vibe coding 真爽。</p>
 </article>
 

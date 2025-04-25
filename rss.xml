@@ -4,7 +4,7 @@
 &lt;p&gt;保存为 change_wallpaper.bat 双击执行。加入自启动或者定时触发。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;@if (@X)==(@Y) @end /* set Win10 wallpaper to Bing Image of The Day. By est.im
 @echo off
-cscript //Nologo //U //E:JScript %~n0.bat
+cscript //Nologo //U //E:JScript "%~F0"
 exit /b %errorlevel%
 */
 
@@ -36,7 +36,7 @@ WshShell.RegWrite("HKEY_CURRENT_USER\\Control Panel\\Desktop\\Wallpaper", img_pa
 WshShell.Run("RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters")
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;其中 &lt;code&gt;format=rss&lt;/code&gt; 可以改成 &lt;code&gt;=js&lt;/code&gt; 或者 &lt;code&gt;=xml&lt;/code&gt; 本来想解析 json 但是发现老的 IE6 引擎不能支持双引号这种JSON，而且只能用 &lt;code&gt;eval()&lt;/code&gt; 就放弃了。还好有 xpath 还挺方便。&lt;/p&gt;
-&lt;p&gt;要用 .bat 套一层是因为 win10 貌似禁止 &lt;code&gt;.js&lt;/code&gt; 或者 &lt;code&gt;.vbs&lt;/code&gt; 双击执行了。病毒木马太多了。套着一层还有点&lt;a href="(/cnblogs/600416)"&gt;技巧&lt;/a&gt;可以参考下。&lt;/p&gt;
+&lt;p&gt;要用 .bat 套一层是因为 win10 貌似禁止 &lt;code&gt;.js&lt;/code&gt; 或者 &lt;code&gt;.vbs&lt;/code&gt; 双击执行了。病毒木马太多了。这种一份源码同时被两种语言解析还有点&lt;a href="/cnblogs/600416"&gt;技巧&lt;/a&gt;可以参考下。&lt;/p&gt;
 &lt;p&gt;很久没写 .jscript 了用了 ChatGPT 这个 vibe coding 真爽。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 25 Apr 2025 23:49:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-04-25:/2025/stdout-03</guid><category>stdout</category></item><item><title>语言，逆差</title><link>https://blog.est.im/2025/stderr-03</link><description>&lt;p&gt;又睡不着，琢磨&lt;a href="https://x.com/yetone/status/1911679048347983988"&gt;一段话&lt;/a&gt;：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;多戲超人 @DoubleFakeCute： 文字很容易传播仇恨，但很难传递感动。&lt;br /&gt;
