@@ -57,6 +57,88 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2024/stdout-09"  rel="bookmark" >
+              <h2 class="card-title">吐槽pynsq，另外给subprocess糊了一个异步</h2>
+            </a>
+            <p class="card-text"><h3>pynsq太烂了</h3>
+<p>起初是因为需要在 Web API 里消费一个消息队列(nsq)，给浏览器返回 <a href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource">EventSource</a> 做实时输出。但是没想到<a href="https://github.com/nsqio/pynsq/blob/master/nsq/__init__.py">官方库pynsq</a>居然写得这么渣：</p>
+<pre><code>def _handle_term_signal(sig_num, frame):
+    logging.getLogger(__name__).info(
+        'TERM Signal handler called with signal %r', sig_num)
+    tornado.ioloop.IOLoop.current().stop()
+
+def run():
+    """
+    Starts any instantiated :class:`nsq.Reader` or :class:`nsq.Writer`
+    """
+    signal.signal(signal.SIGTERM, _handle_term_signal)
+    signal.signal(signal.SIGINT, _handle_term_signal)
+    tornado.ioloop.IOLoop.current().start()
+</code></pre>
+<p>这都什么玩意儿？一个库何德何能也敢去乱劫持 signal？最他妈逗的是这个库的推荐写法：</p>
+<pre><code>import nsq
+r = nsq.Reader(message_handler=handler,
+        lookupd_http_addresses=['http://127.0.0.1:4161'],
+        topic='nsq_reader', channel='asdf', lookupd_poll_interval=15)
+nsq.run()
+</code></pre>
+<p>这个 <code>r</code> 莫名其妙的就能跑起来了。真是魔法。anyway，在Web API兼容这一坨是失败了，爆了一堆错，对付魔法的办法就是隔离，所以打算糊个脚本，通过多进程+PIPE来得到数据。</p>
+<h3>给 subprocess 加一个异步补丁</h3>
+<p>糊的时候发现，<code>subprocess</code> 模块的 <code>.communicate()</code> 方法是 blocking的， 居然不支持 async/await，于是只能继续糊：</p>
+<pre><code>import subprocess, fcntl, asyncio
+p = subprocess.Popen(
+    cmd, bufsize=0, text=True, stdin=subprocess.PIPE,
+    stderr=subprocess.PIPE,  stdout=subprocess.PIPE, close_fds=True)
+fcntl.fcntl(p.stdout.fileno(), fcntl.F_SETFL, os.O_NONBLOCK)
+buf = ''
+while p.poll() is None:
+    try:
+        # read() with O_NONBLOCK might gets None thus TypeError
+        buf += (p.stdout.read(1024) or '')
+        contents = buf.split('\n')
+        if len(contents) &lt; 2:
+            raise TypeError('Not enough')
+    except TypeError:
+        await asyncio.sleep(1)
+        yield None
+        continue
+    buf = contents.pop(-1)
+    for x in contents:
+        yield x
+
+p.terminate()
+</code></pre>
+<p>这里用 <code>buf</code>、<code>contents</code> 是因为直接调用消息队列，每个消息都是分割好的；但是通过管道来读。得自己去处理字节流如何分割的问题，也就是传说简中特供的「粘包」问题。</p>
+<p>另外子进程可能因为Web框架的种种原因，不自觉退出或者变僵尸进程，需要向 stdout/stderr 做输出的时候检查一下 BrokenPipeError 处理后事主动退出即可。</p>
+<p>还有子进程如果输出完毕，需要代码里调用一下 <code>p.terminate()</code>，才能回收，避免变zombie</p>
+<p>试了一下，也不是不能用，成功！正觉得自己又行了的时候，发现官方：</p>
+<p><a href="https://docs.python.org/3.8/library/asyncio-subprocess.html">https://docs.python.org/3.8/library/asyncio-subprocess.html</a></p>
+<p>啊这。白忙活。</p>
+<h3>超长待机 subprocess</h3>
+<p>想起来之前还有个问题，一个API调用一个subprocess，然后等它执行，不想管。这个时候可以加一个参数 detach 模式：</p>
+<p><code>subprocess.Popen(..., start_new_session=True)</code></p>
+<p>然后在同进程用里跑一个后台检查循环去检查子进程的 <code>WNOHANG</code>：</p>
+<pre><code>while 1:
+    try:
+        chpid, retcode, res = os.wait3(os.WNOHANG)
+    except ChildProcessError:
+        break
+    sleep(5)
+    if chpid == os.getpid():
+        do_sth()
+        break
+</code></pre>
+<p>想了下好像也搞复杂了。要不直接跑一个 <code>sh -c "blah.sh &amp;"</code> 算了。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-06-21T09:30:00+08:00">2024-06-21</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stdout-08"  rel="bookmark" >
               <h2 class="card-title">如何删除 C:\Windows\WinSxS 文件</h2>
             </a>
@@ -695,28 +777,6 @@ IP属地：陕西</p>
 <p>btw  sora 这名字不是「空」么。。。Sora Aoi——苍井そら!</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-02-16T20:23:00+08:00">2024-02-16</time></p>
-<p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2024/stdin-02"  rel="bookmark" >
-              <h2 class="card-title">为啥开车加塞、插队的特别多</h2>
-            </a>
-            <p class="card-text"><p>前几天<a href="https://www.v2ex.com/t/1015409">水了个帖子</a>：</p>
-<blockquote>
-<p>加塞的本质是道路通行效率低下，加塞是果，不是因。现实中，很多地方转弯车道的设置就是和实际车流量脱节、不合理的。本身应该用在优化交通的资金，都用来安装抓拍摄像头了。道路规划部门没有动力和压力去推动改良。更糟糕的是，道路规划和交通管理往往是 2 个部门，一个挖坑一个踩坑，踢皮球屡见不鲜。</p>
-</blockquote>
-<p>当时这只是我的猜测。今晚无意中刷到一个B站视频《<a href="https://www.bilibili.com/video/BV1fC41147ck/">2024年，中国城市不会修直路</a>》</p>
-<p>视频比较长，简单概括就是：如果你是直行车依次通过多个红绿灯路口，如果需要不断变道躲开左转道、右转道和变道，那么道路就是失败的设计。</p>
-<p>然后评论有人去问了真正做道路设计的老哥：</p>
-<p><img referrerpolicy="no-referrer" src="https://album.biliimg.com/bfs/new_dyn/d83c91502828fdb6006aeba72c970e5210916201.jpg" /></p>
-<p>hmm，谁设计道路，谁就应该背这个道路的车流量通畅指标。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-02-15T01:02:00+08:00">2024-02-15</time></p>
 <p>stdin</p>            </div>
           </article>
         </div>

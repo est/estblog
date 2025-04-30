@@ -57,6 +57,33 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2021/stdout-022"  rel="bookmark" >
+              <h2 class="card-title">人工构造Flask session模拟cookie登陆</h2>
+            </a>
+            <p class="card-text"><p>有没有好奇为什么 Flask 配置必须要求一个 <a href="https://flask.palletsprojects.com/en/latest/config/#SECRET_KEY">SECRET_KEY</a>，然后就可以在浏览器保存一个 session 状态读写数据。</p>
+<p>这里记一下它的底层实现，其实需要依赖的包是 <a href="https://itsdangerous.palletsprojects.com/">itsdangerous</a></p>
+<pre><code>  import hashlib
+  from itsdangerous import URLSafeTimedSerializer
+  URLSafeTimedSerializer(
+          'YOUR_SECRET_KEY',  # flask SECRET_KEY
+          'cookie-session',  # from flask.sessions.SecureCookieSessionInterface.salt
+          # serializer=TaggedJSONSerializer(),
+          signer_kwargs={'key_derivation': 'hmac', 'digest_method': hashlib.sha1}
+  ).dumps({
+      "your_key": "your_value"
+  })
+</code></pre>
+<p>别人如果拿到你的 <code>SECRET_KEY</code> 就可以伪造任意 session cookie 了</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-12-08T07:15:03+08:00">2021-12-08</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2021/stdin-016"  rel="bookmark" >
               <h2 class="card-title">苏35的UI汉化</h2>
             </a>
@@ -1504,30 +1531,6 @@ A: 蚂蚁队长第一次下命令是想让蚂蚁们离开，自己吃了这点�
 <p>转载完毕。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-09-18T18:30:14+08:00">2021-09-18</time></p>
-<p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2021/stdin-008"  rel="bookmark" >
-              <h2 class="card-title">Steam China要拜拜了</h2>
-            </a>
-            <p class="card-text"><p>出自一个<a href="https://www.zhihu.com/question/398634825/answer/2116167003">被删的zhihu回答</a>，<a href="http://web.archive.org/web/20210915085925/https://www.zhihu.com/question/398634825/answer/2116167003">存档</a></p>
-<blockquote>
-<p>在我被裁员前，我是坚定的乐观派。每天和同事们一起处理中国区和steam China的客服案件，尽我所能帮助国内玩家。</p>
-<p>然而，九月初的一天，我休着周末的假。一个电话告诉我被裁员了。</p>
-<p>steam国区所有，这里的所有就是哪怕你转了港区和阿根廷，或者其他地区，steam China也查得到，也能拿到你的信息，因为太明显，太简单了，只是抓不抓封不封的问题。所有的国内玩家都被steam切割了。被彻底卖给完美世界了。至于完美世界上边是谁，会有什么后果，哪怕身在海外我也不敢揣测，不敢说。以后想好好玩steam，只能肉身翻墙了。</p>
-<p>第一张是纪念我于2021年6月7号经手了88888个客服案件：<br />
-第二张是公司聊一个trending issue，这个是纪念我写了报告，然后Valve马上给了回复：</p>
-</blockquote>
-<p>图片我转存一下 <a href="/images/2021/stdin-008-1.jpg">1</a>, <a href="/images/2021/stdin-008-2.jpg">2</a></p>
-<p>谨纪念自2009-02-06以来俺在 Steam 上度过的快乐时光，6336h小时玩过92/229款游戏</p>
-<p><a href="https://steamdb.info/calculator/76561198005996380/?cc=us">https://steamdb.info/calculator/76561198005996380/?cc=us</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-09-16T15:29:47+08:00">2021-09-16</time></p>
 <p>stdin</p>            </div>
           </article>
         </div>

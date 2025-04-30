@@ -57,6 +57,28 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2025/stdin-05"  rel="bookmark" >
+              <h2 class="card-title">听 彭罗斯 吹了90分钟波函数的坍塌</h2>
+            </a>
+            <p class="card-text"><p><a href="https://www.youtube.com/watch?v=sGm505TFMbU">https://www.youtube.com/watch?v=sGm505TFMbU</a></p>
+<p>Roger Penrose:  I don't believe it is consciousness that collapses the wave function, instead it's the collapse of the wave functions that produces consciousness</p>
+<p>这句话很美妙啊。一下子把唯物和唯心给联系起来了。</p>
+<p>我一直觉得，人的意识，就是因果律的推演。这个推演明显是一个离散的，有清晰步骤的，quantized 的和决定论的。</p>
+<p>人的潜意识和直觉可能是概率的。</p>
+<p>看完这个 90分钟的访谈，我大概明白为啥 量子力学 和 神棍 经常联系在一起了。一切都源于这个薛定谔方程 和 “观察者”</p>
+<p>观察者不是一个真实存在的定义。你甚至无法严格定义 观察。欧美神棍一般喜欢往三位一体，意识，灵性上面靠。感觉物理世界是混沌的，一下子有了光，状态就坍缩了。哈哈哈。</p>
+<p>国内的话 遇事不决，量子力学。民科重灾区。甚至还有量子佛学这种离谱的。</p>
+<p>他还写了一本书，Fashion , Faith and Fantacy，fashion就是弦论，faith 就是量子力学。fantacy是宇宙膨胀理论。哈！</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2025-04-30T16:31:00+08:00">2025-04-30</time></p>
+<p>stdin</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2025/stdin-04"  rel="bookmark" >
               <h2 class="card-title">光 的本质是什么？</h2>
             </a>
@@ -810,267 +832,6 @@ According to Scott, Steinmetz listened to the generator and scribbled computatio
 </ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-11-01T00:15:00+08:00">2024-11-01</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2024/stdout-22"  rel="bookmark" >
-              <h2 class="card-title">Linux删除了 .ru 帐号？我查了一下</h2>
-            </a>
-            <p class="card-text"><p><a href="https://www.zhihu.com/question/1783342926">发生了什么事</a>？</p>
-<blockquote>
-<p>日前，Linux 内核主要维护者之一 Greg Kroah-Hartman (Greg K-H) 提交了一项不寻常的“文档”更新，将数名具有 &lt;.ru&gt; 顶级域名邮箱的维护者，和一名明确为俄罗斯身份的维护者从 MAINTAINERS（维护者名录）文件除名。<br />
-这一提交已于上周日被 Linus Torvalds 拉取并包含于 6.12-rc4 版本的代码中。<br />
-已有来自于 AOSC 的开发者提交了 revert(尚未合并)，而 Linus 本人在评论中声明其对先前的 commit 知情并支持</p>
-</blockquote>
-<p>一开始，我以为是 “反向” <a href="https://x.com/siyuanbear/status/1848644797076279545">厚脸皮PR</a></p>
-<p><img referrerpolicy="no-referrer" src="https://pbs.twimg.com/media/Gae0pQdbEAE-0JJ?format=jpg&name=medium" /></p>
-<p>一般来说， github 上混一个 contributor 得贡献代码，很多人就改改文档、翻译就拿到一个“贡献者”称号（我也干过哈哈哈）。甚至还有离了大谱的，直接提一个 pull request 内容是把自己加到 contributors 文件里。。</p>
-<p>我以为是 Linux Foundation 发疯了，为了某种 “合规” 或者 sanction，掩耳盗铃，把 作者名字列表.txt 改改掩人耳目</p>
-<p>仔细看了下，发现好像并不是那么简单。这里是diff</p>
-<p><a href="https://github.com/torvalds/linux/commit/6e90b675cf942e50c70e8394dfb5862975c3b3b2">https://github.com/torvalds/linux/commit/6e90b675cf942e50c70e8394dfb5862975c3b3b2</a></p>
-<p>这里是更改后完整的 <code>MAINTAINERS</code> 内容：</p>
-<p><a href="https://github.com/torvalds/linux/blob/6e90b675cf942e50c70e8394dfb5862975c3b3b2/MAINTAINERS">https://github.com/torvalds/linux/blob/6e90b675cf942e50c70e8394dfb5862975c3b3b2/MAINTAINERS</a></p>
-<p>直接通过 github API 拿到原始的 diff</p>
-<p><code>curl -H'Accept: application/vnd.github.diff'  -sk 'https://api.github.com/repos/torvalds/linux/commits/6e90b675cf942e50c70e8394dfb5862975c3b3b2'</code></p>
-<p>乱写几个 prompt 丢给 gpt-4o，可以看到大概做了下列几处更改：</p>
-<table>
-<thead>
-<tr>
-<th><strong>Device/Module</strong></th>
-<th><strong>Probable Date</strong></th>
-<th><strong>Author</strong></th>
-<th><strong>Email</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Acer Aspire 1 Embedded Controller</td>
-<td>~2018</td>
-<td>Nikita Travkin</td>
-<td>nikita@trvn.ru</td>
-</tr>
-<tr>
-<td>Alpha Port (Ivan Kokshaysky removed)</td>
-<td>~1992</td>
-<td>Ivan Kokshaysky (removed)</td>
-<td>ink@jurassic.park.msu.ru</td>
-</tr>
-<tr>
-<td>ARM/Cirrus Logic CLPS711X Architecture</td>
-<td>~1996</td>
-<td>Alexander Shiyan</td>
-<td>shc_work@mail.ru</td>
-</tr>
-<tr>
-<td>Baikal-T1 PVT Hardware Monitor</td>
-<td>~2015</td>
-<td>Serge Semin</td>
-<td>fancer.lancer@gmail.com</td>
-</tr>
-<tr>
-<td>GRE Demultiplexer Driver</td>
-<td>~2000</td>
-<td>Dmitry Kozlov</td>
-<td>xeb@mail.ru</td>
-</tr>
-<tr>
-<td>LIBATA PATA Drivers</td>
-<td>~2003</td>
-<td>Sergey Shtylyov</td>
-<td>s.shtylyov@omp.ru</td>
-</tr>
-<tr>
-<td>LIBATA SATA AHCI Synopsys DWC Driver</td>
-<td>~2014</td>
-<td>Serge Semin</td>
-<td>fancer.lancer@gmail.com</td>
-</tr>
-<tr>
-<td>Media Drivers for Ascot2E</td>
-<td>~2010</td>
-<td>Sergey Kozlov, Abylay Ospan</td>
-<td>serjk@netup.ru, aospan@netup.ru</td>
-</tr>
-<tr>
-<td>Media Drivers for CXD2841ER</td>
-<td>~2015</td>
-<td>Sergey Kozlov, Abylay Ospan</td>
-<td>serjk@netup.ru, aospan@netup.ru</td>
-</tr>
-<tr>
-<td>Media Drivers for Helene</td>
-<td>~2017</td>
-<td>Abylay Ospan</td>
-<td>aospan@netup.ru</td>
-</tr>
-<tr>
-<td>Media Drivers for Horus3A</td>
-<td>~2018</td>
-<td>Sergey Kozlov, Abylay Ospan</td>
-<td>serjk@netup.ru, aospan@netup.ru</td>
-</tr>
-<tr>
-<td>Media Drivers for LNBH25</td>
-<td>~2012</td>
-<td>Sergey Kozlov, Abylay Ospan</td>
-<td>serjk@netup.ru, aospan@netup.ru</td>
-</tr>
-<tr>
-<td>NetUP PCI Universal DVB Devices</td>
-<td>~2010</td>
-<td>Sergey Kozlov, Abylay Ospan</td>
-<td>serjk@netup.ru, aospan@netup.ru</td>
-</tr>
-<tr>
-<td>MIPS Baikal-T1 Platform</td>
-<td>~2015</td>
-<td>Serge Semin</td>
-<td>fancer.lancer@gmail.com</td>
-</tr>
-<tr>
-<td>NTB IDT Driver</td>
-<td>~2014</td>
-<td>Serge Semin</td>
-<td>fancer.lancer@gmail.com</td>
-</tr>
-<tr>
-<td>PPTP Driver</td>
-<td>~1996</td>
-<td>Dmitry Kozlov</td>
-<td>xeb@mail.ru</td>
-</tr>
-<tr>
-<td>Renesas Ethernet AVB Driver</td>
-<td>~2013</td>
-<td>Sergey Shtylyov</td>
-<td>s.shtylyov@omp.ru</td>
-</tr>
-<tr>
-<td>Renesas R-Car SATA Driver</td>
-<td>~2015</td>
-<td>Sergey Shtylyov</td>
-<td>s.shtylyov@omp.ru</td>
-</tr>
-<tr>
-<td>Renesas SuperH Ethernet Driver</td>
-<td>~2000</td>
-<td>Sergey Shtylyov</td>
-<td>s.shtylyov@omp.ru</td>
-</tr>
-<tr>
-<td>Synopsys DesignWare APB SSI Driver</td>
-<td>~2010</td>
-<td>Serge Semin</td>
-<td>fancer.lancer@gmail.com</td>
-</tr>
-<tr>
-<td>UFS Filesystem</td>
-<td>~1974</td>
-<td>Evgeniy Dushistov</td>
-<td>dushistov@gmail.com</td>
-</tr>
-</tbody>
-</table>
-<p>如果说作者 @gregkh 作出这个改动的动机说</p>
-<blockquote>
-<p>Remove some entries due to various compliance requirements </p>
-</blockquote>
-<p>那么 BAIKAL 这个是明显会去掉。其余的改动，我能认出来的比较重要的有 PPTP Driver，其它都是五花八门驱动的维护者，感觉就算去掉， impact 的功能也不多。</p>
-<p>当然你也可以说 first they came for the ... 我就不继续展开了</p>
-<p>下面列举几个可能不那么重要，但是我觉得很容易被忽略的事实：</p>
-<h3>一、 .ru 的邮箱被全部移除了吗？</h3>
-<p>是的。最新版本 <a href="https://github.com/torvalds/linux/blob/master/MAINTAINERS"><code>MAINTAINERS</code></a> 文件里我搜了 <code>.ru</code>、<code>russia</code> 关键词没找到了。干干净净。当然后期会不会加回来我不知道。</p>
-<h3>二、 俄国人对 Linux 的贡献被抹掉了吗？</h3>
-<p>第一，上面这些人的对应代码贡献，目前并没有删掉。</p>
-<p>第二，Linux 源码根目录还有一个 <a href="https://github.com/torvalds/linux/blob/master/CREDITS"><code>CREDITS</code></a> 文件，里面包含了下列俄国人：</p>
-<pre><code>N: Yuri Per
-E: yuri@pts.mipt.ru
-D: Some smbfs fixes
-S: Demonstratsii 8-382
-S: Tula 300000
-S: Russia
-
-N: Alexey Kuznetsov
-E: kuznet@ms2.inr.ac.ru
-D: Author and maintainer of large parts of the networking stack
-
-N: Stas Sergeev
-E: stsp@users.sourceforge.net
-D: PCM PC-Speaker driver
-D: misc fixes
-S: Russia
-
-</code></pre>
-<h3>三、 俄国人不能参与 Linux 项目了吗？</h3>
-<p>我在这里想补充一个背景知识，什么是 Linux Kernel 的 <strong>maintainer</strong> ？</p>
-<p>内核功能繁多，Linus 老爷子一个人照看不过来，得把拆分成各个模块，授权给相应的 负责人(maintainer)，给予他们检查、合并代码的权限。Linux基金会（注册地：美国）会给他们配置一个专用邮件列表用来主持专项议事</p>
-<p>上面这句话，如何理解？可能对某些简中读者没看明白。简单的说：.ru 用户还是可以以 developer 身份向别的 maintainer 提交代码。这里不得不提到那个出名的 kernel git workflow</p>
-<p>这是普通 git 项目的工作流：</p>
-<p><img alt="" src="https://git-scm.com/book/ms/v2/images/centralized_workflow.png" /></p>
-<p>这个是 linux kernel 的（图很老，大概这个意思）：</p>
-<p><img alt="" src="https://chenweixiang.github.io/assets/linux_kernel_code_flow.jpg" /></p>
-<p>普通人是没法直接向 mainline <a href="https://github.com/torvalds/linux">https://github.com/torvalds/linux</a>  提交代码的。这个社区甚至会给你一个<a href="https://www.kernel.org/doc/html/latest/process/1.Intro.html">长长的文档</a>教你一步一步如何提代码 </p>
-<p>不要说新功能了，一些老功能的 patch 要赶上主线发车窗口，你手续流程都很长。</p>
-<p>想给内核做贡献，你要面对的甚至都不是 Linus 本尊，恰好是这些 <code>MAINTAINERS</code> 里列举的各位把关人。世界上绝大部分的人对 Linux 内核做贡献都是这样。 maintainer 是极少数，他们可以直接向 Linus 提改动。</p>
-<p>Linus 自己也说了，他是芬兰人，意思就是说他不想看到俄国人。啊这。能理解，不提倡！</p>
-<h3>四、maintainer 名单变化多吗？</h3>
-<p>从提交历史来看，</p>
-<p><a href="https://github.com/torvalds/linux/commits/master/MAINTAINERS">https://github.com/torvalds/linux/commits/master/MAINTAINERS</a></p>
-<p>人员进进出出很频繁。但是 @gregkh 这种在 <code>char-misc</code> 里搭车进去，的确偷偷摸摸。</p>
-<h3>五、 .cn 会被波及吗？</h3>
-<p>这个问题我无法回答，但是可以列一下现在有的：</p>
-<ol>
-<li>一大堆 LOONGARCH 龙芯的驱动和各种模块</li>
-<li>海光 HYGON 驱动</li>
-<li>简中翻译 Alex Shi <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#101;&#120;&#115;&#64;&#107;&#101;&#114;&#110;&#101;&#108;&#46;&#111;&#114;&#103;">&#97;&#108;&#101;&#120;&#115;&#64;&#107;&#101;&#114;&#110;&#101;&#108;&#46;&#111;&#114;&#103;</a> Yanteng Si <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#105;&#121;&#97;&#110;&#116;&#101;&#110;&#103;&#64;&#108;&#111;&#111;&#110;&#103;&#115;&#111;&#110;&#46;&#99;&#110;">&#115;&#105;&#121;&#97;&#110;&#116;&#101;&#110;&#103;&#64;&#108;&#111;&#111;&#110;&#103;&#115;&#111;&#110;&#46;&#99;&#110;</a></li>
-<li>繁体翻译 Hu Haowen <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#50;&#48;&#50;&#51;&#48;&#48;&#50;&#48;&#56;&#57;&#64;&#108;&#105;&#110;&#107;&#46;&#116;&#121;&#117;&#116;&#46;&#101;&#100;&#117;&#46;&#99;&#110;">&#50;&#48;&#50;&#51;&#48;&#48;&#50;&#48;&#56;&#57;&#64;&#108;&#105;&#110;&#107;&#46;&#116;&#121;&#117;&#116;&#46;&#101;&#100;&#117;&#46;&#99;&#110;</a> https://github.com/srcres258/linux-doc 太原理工的人才！</li>
-<li>RADOS BLOCK DEVICE (RBD) Ilya Dryomov <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#100;&#114;&#121;&#111;&#109;&#111;&#118;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#105;&#100;&#114;&#121;&#111;&#109;&#111;&#118;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a> Dongsheng Yang <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#111;&#110;&#103;&#115;&#104;&#101;&#110;&#103;&#46;&#121;&#97;&#110;&#103;&#64;&#101;&#97;&#115;&#121;&#115;&#116;&#97;&#99;&#107;&#46;&#99;&#110;">&#100;&#111;&#110;&#103;&#115;&#104;&#101;&#110;&#103;&#46;&#121;&#97;&#110;&#103;&#64;&#101;&#97;&#115;&#121;&#115;&#116;&#97;&#99;&#107;&#46;&#99;&#110;</a> ceph-devel@vger.kernel.org</li>
-<li>一大堆 @huawei.com @linux.alibaba.com的各种驱动和模块</li>
-<li>可能有别的<a href="https://blog.est.im/201906/stdout-003">大陆+港澳台公司</a>邮箱我漏掉了。懒得看了。</li>
-</ol>
-<p>在 <code>CREDITS</code> 里鸣谢的：</p>
-<pre><code>N: Chih-Jen Chang
-E: chihjenc@scf.usc.edu
-E: chihjen@iis.sinica.edu.tw
-D: IGMP(Internet Group Management Protocol) version 2
-S: 3F, 65 Tajen street
-S: Tamsui town, Taipei county,
-S: Taiwan 251
-S: Republic of China
-
-N: Li Yang
-E: leoli@freescale.com
-D: Freescale Highspeed USB device driver
-D: Freescale QE SoC support and Ethernet driver
-S: B-1206 Jingmao Guojigongyu
-S: 16 Baliqiao Nanjie, Beijing 101100
-S: People's Repulic of China
-
-N: Tsu-Sheng Tsao
-E: tsusheng@scf.usc.edu
-D: IGMP(Internet Group Management Protocol) version 2
-S: 2F 14 ALY 31 LN 166 SEC 1 SHIH-PEI RD
-S: Taipei
-S: Taiwan 112
-S: Republic of China
-S: 24335 Delta Drive
-S: Diamond Bar, California 91765
-S: USA
-
-</code></pre>
-<h3>六、结束语</h3>
-<p>总的来说 Linux内核项目，包括不限于很多别的社区项目，还是英雄主义色彩很重的，这样的个人主义既可以说出“nVidia fuck you”，也完全有可能在某一天把主语丝滑切成 “Russia”。这压根就是同一个硬币的同一面（甚至都不是另一面）</p>
-<p>在国际地缘政治热火朝天、段视频AI诵读、<a href="https://blog.est.im/2022/stderr-02">情绪控制终端</a>满天飞的今天，讨论这些重要吗？有用吗？</p>
-<p>回答：不重要，没用</p>
-<p>但是对我个人而言，或许有那么一丢丢重要，有一丁点用。</p>
-<p>希望对你也有点用。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-10-24T15:26:00+08:00">2024-10-24</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
