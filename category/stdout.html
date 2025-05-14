@@ -57,6 +57,86 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2025/stdout-04"  rel="bookmark" >
+              <h2 class="card-title">A single Python function for both async/sync</h2>
+            </a>
+            <p class="card-text"><p>Scenario: I often need to write Python functions like:</p>
+<ul>
+<li>take some parameters and format them</li>
+<li>call an API with the formatted parameters</li>
+<li>parse the result and return chosen values</li>
+</ul>
+<p>In today's <code>asyncio</code> world, troubles arise because async/await are "infectious", In practice this function is splitted - like in Python stdlib, where a vanilla <code>method</code> and its async counterpart <code>amethod</code> often come in pairs. . Package authors scramble to provide sync transport and another async transport. I discovered this ugly fact while reading the source code of<code>redis-py</code>, <code>httpx</code> and <code>elasticsearch-py</code>.  Duplicate and lookalike code was always written twice. All it takes is some random async IOs in one place and your code would be forced to change forever.</p>
+<p>Is there a way to write the function in one place, but callable both with async and without?</p>
+<p>I pondered this question for ages, and today I stumbled upon something interesting:</p>
+<pre><code class="language-python">
+  def s1():
+    return asyncio.sleep(1)
+
+  async def s2():
+    return await async.sleep(1)
+</code></pre>
+<p>There's virtually no difference when calling <code>await s1()</code> and <code>await s2()</code></p>
+<p>I vaguely remembered how Python’s coroutines were designed, and after some tinkering, I came up with this snippet:</p>
+<pre><code class="language-python">
+import asyncio, types
+
+
+def aa(f):
+    &quot;&quot;&quot;
+    make a function both awaitable and sync
+    idk how to property name this. maybe anti-asyncio (aa)?
+    &quot;&quot;&quot;
+    def wrapper(func, *args, **kwargs):
+        if asyncio.iscoroutinefunction(func):
+            return types.coroutine(f)(func, *args, **kwargs)
+        else:
+            g = f(func, *args, **kwargs)
+            try:
+                while True:
+                    next(g)
+            except StopIteration as ex:
+                return ex.value
+    return wrapper
+
+
+@aa
+def my_func(func, *args, **kwargs):
+    # write your code here
+    if asyncio.iscoroutinefunction(func):
+        # just replace `await` with `yield from` for async calls
+        v = yield from func(*args, **kwargs)
+    else:
+        v = func(*args, **kwargs)
+    # some other code here
+    return v
+
+
+import httpx
+
+# async
+async def main():
+    print(await my_func(httpx.AsyncClient(timeout=3).get, 'https://est.im/'))
+asyncio.run(main())
+
+
+# sync
+print(my_func(httpx.get, 'https://est.im'))
+
+</code></pre>
+<p>The above shows a single piece of code, injectable with a sync/async call, allows for customizable  pre- and post-processing logic, and returns the result with clean syntax.</p>
+<p>The only mental tax: inside <code>my_func</code>, you have to replace all <code>await</code> keyword with <code>yield from</code>.</p>
+<p>It works for my scenario and I’ve yet to find a simpler solution.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2025-05-14T14:35:00+08:00">2025-05-14</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2025/stdout-03"  rel="bookmark" >
               <h2 class="card-title">Windows 自动设置开机锁屏壁纸 V3</h2>
             </a>
@@ -4093,32 +4173,6 @@ for f in os.listdir(p):
 <p>放一个 demo 在这里：<a href="https://lab.est.im/grayscale_animation">https://lab.est.im/grayscale_animation</a> 点一下可以再变一次</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-11-30T18:02:18+08:00">2022-11-30</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2022/stdout-11"  rel="bookmark" >
-              <h2 class="card-title">8行javascript录制屏幕</h2>
-            </a>
-            <p class="card-text"><p>看到个骚操作，玩了一下，写了个 bookmarklet</p>
-<pre><code class="language-javascript">navigator.mediaDevices.getDisplayMedia({video:true}).then(function(stream){
-  const mr=new MediaRecorder(stream,{mimeType:&quot;video/webm;codecs=h264,opus&quot;});
-  mr.ondataavailable=function(ev){
-    const a=document.createElement('a');a.href=URL.createObjectURL(ev.data);
-    a.download ='screen_capture.webm';a.click();
-  }; // will be called when .stop() with ev.data as a Blob
-  mr.start();
-})
-</code></pre>
-<p>这段代码也是很多WebRTC共享白板的实现原理。看起来也很简单，而且不需要额外的权限确认。</p>
-<p>如果不需要另存为一个名字，则可以直接 <code>location.assign()</code> 又节约几个字。不知道还有没有办法继续节约代码量？</p>
-<p>有点很好奇为啥chrome不支持 .mp4 封装。偏袒自家的 webm ？</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2022-11-18T18:50:05+08:00">2022-11-18</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

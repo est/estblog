@@ -1,5 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Wed, 30 Apr 2025 16:31:00 +0800</lastBuildDate><item><title>听 彭罗斯 吹了90分钟波函数的坍塌</title><link>https://blog.est.im/2025/stdin-05</link><description>&lt;p&gt;&lt;a href="https://www.youtube.com/watch?v=sGm505TFMbU"&gt;https://www.youtube.com/watch?v=sGm505TFMbU&lt;/a&gt;&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Wed, 14 May 2025 14:35:00 +0800</lastBuildDate><item><title>A single Python function for both async/sync</title><link>https://blog.est.im/2025/stdout-04</link><description>&lt;p&gt;Scenario: I often need to write Python functions like:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;take some parameters and format them&lt;/li&gt;
+&lt;li&gt;call an API with the formatted parameters&lt;/li&gt;
+&lt;li&gt;parse the result and return chosen values&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In today's &lt;code&gt;asyncio&lt;/code&gt; world, troubles arise because async/await are "infectious", In practice this function is splitted - like in Python stdlib, where a vanilla &lt;code&gt;method&lt;/code&gt; and its async counterpart &lt;code&gt;amethod&lt;/code&gt; often come in pairs. . Package authors scramble to provide sync transport and another async transport. I discovered this ugly fact while reading the source code of&lt;code&gt;redis-py&lt;/code&gt;, &lt;code&gt;httpx&lt;/code&gt; and &lt;code&gt;elasticsearch-py&lt;/code&gt;.  Duplicate and lookalike code was always written twice. All it takes is some random async IOs in one place and your code would be forced to change forever.&lt;/p&gt;
+&lt;p&gt;Is there a way to write the function in one place, but callable both with async and without?&lt;/p&gt;
+&lt;p&gt;I pondered this question for ages, and today I stumbled upon something interesting:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;
+  def s1():
+    return asyncio.sleep(1)
+
+  async def s2():
+    return await async.sleep(1)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;There's virtually no difference when calling &lt;code&gt;await s1()&lt;/code&gt; and &lt;code&gt;await s2()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;I vaguely remembered how Python’s coroutines were designed, and after some tinkering, I came up with this snippet:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;
+import asyncio, types
+
+
+def aa(f):
+    &amp;quot;&amp;quot;&amp;quot;
+    make a function both awaitable and sync
+    idk how to property name this. maybe anti-asyncio (aa)?
+    &amp;quot;&amp;quot;&amp;quot;
+    def wrapper(func, *args, **kwargs):
+        if asyncio.iscoroutinefunction(func):
+            return types.coroutine(f)(func, *args, **kwargs)
+        else:
+            g = f(func, *args, **kwargs)
+            try:
+                while True:
+                    next(g)
+            except StopIteration as ex:
+                return ex.value
+    return wrapper
+
+
+@aa
+def my_func(func, *args, **kwargs):
+    # write your code here
+    if asyncio.iscoroutinefunction(func):
+        # just replace `await` with `yield from` for async calls
+        v = yield from func(*args, **kwargs)
+    else:
+        v = func(*args, **kwargs)
+    # some other code here
+    return v
+
+
+import httpx
+
+# async
+async def main():
+    print(await my_func(httpx.AsyncClient(timeout=3).get, 'https://est.im/'))
+asyncio.run(main())
+
+
+# sync
+print(my_func(httpx.get, 'https://est.im'))
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The above shows a single piece of code, injectable with a sync/async call, allows for customizable  pre- and post-processing logic, and returns the result with clean syntax.&lt;/p&gt;
+&lt;p&gt;The only mental tax: inside &lt;code&gt;my_func&lt;/code&gt;, you have to replace all &lt;code&gt;await&lt;/code&gt; keyword with &lt;code&gt;yield from&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;It works for my scenario and I’ve yet to find a simpler solution.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 14 May 2025 14:35:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-05-14:/2025/stdout-04</guid><category>stdout</category></item><item><title>听 彭罗斯 吹了90分钟波函数的坍塌</title><link>https://blog.est.im/2025/stdin-05</link><description>&lt;p&gt;&lt;a href="https://www.youtube.com/watch?v=sGm505TFMbU"&gt;https://www.youtube.com/watch?v=sGm505TFMbU&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Roger Penrose:  I don't believe it is consciousness that collapses the wave function, instead it's the collapse of the wave functions that produces consciousness&lt;/p&gt;
 &lt;p&gt;这句话很美妙啊。一下子把唯物和唯心给联系起来了。&lt;/p&gt;
 &lt;p&gt;我一直觉得，人的意识，就是因果律的推演。这个推演明显是一个离散的，有清晰步骤的，quantized 的和决定论的。&lt;/p&gt;
@@ -488,18 +554,4 @@ According to Scott, Steinmetz listened to the generator and scribbled computatio
 &lt;li&gt;物理上，如果是一个特定品牌的机械键盘、特定品种的猴子，那么不要说敲一部白话文小说了，敲一个完整的句子概率都是 0 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;为啥敢这么说？因为物理时空从根本上说，归根结底不是连续的，这个「根本」就是普朗克长度。气体、液体只能吸收特定 eV 的能量，高了低了都不行。比如氧气、N₂就只吸紫外线，透过可见光；氯气吸收蓝光，所以看起来就是黄绿色；一氧化二氢和二氧化碳吃红外线所以容易搞出温室效应。晶体吃高于间隙的「能带」，金属通吃。从这个意义上来说，由生理能量触发神经控制肌肉做出脸滚键盘不是真随机，而是一定边界下可预测的长序列。&lt;/p&gt;
-&lt;p&gt;总结一下，最值钱的脑力劳动无法随机积累达到。今日份的胡思乱想就到这了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 06 Nov 2024 06:51:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-11-06:/2024/stderr-14</guid><category>stderr</category></item><item><title>白嫖百度网盘“单次转存数”500限制</title><link>https://blog.est.im/2024/stdout-23</link><description>&lt;p&gt;找了个资源，点击保存，居然提示充SVIP。看了下免费用户每次最多保存500份文件。本来找资源就白嫖，让我充钱？&lt;/p&gt;
-&lt;p&gt;研究了一会儿，发现可以搞。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;首先你去你网盘里建立个目录 &lt;code&gt;0000-0500&lt;/code&gt;，准备存文件。这么起名字是因为你在自己网盘里多选也是最多选500个，所以每次存一个目录用来对照数量&lt;/li&gt;
-&lt;li&gt;分享链接里文件列表默认只展示前100条，是惰性加载，所以请用鼠标一直反复向下滚，务必拉到底，然后点击「名称」排序。这样方便对比有没有漏掉&lt;/li&gt;
-&lt;li&gt;F12打开 console 并粘贴下面的js。如果这一步看不懂建议直接放弃  &lt;br /&gt;
-    Array.prototype.slice.apply(document.querySelectorAll(&lt;br /&gt;
-      '.share-list dd.open-enable&amp;gt;span'&lt;br /&gt;
-    ), [0, 500]).forEach((x)=&amp;gt;x.click())&lt;br /&gt;
-这样就等效点击了前500个文件。点击保存。&lt;/li&gt;
-&lt;li&gt;等全部存好，再次执行上一段代码，取消点击前500个文件。&lt;/li&gt;
-&lt;li&gt;去你的网盘里新建个目录 &lt;code&gt;0500-1000&lt;/code&gt; ，用来保存下一批&lt;/li&gt;
-&lt;li&gt;把上面代码里的 &lt;code&gt;[0,500]&lt;/code&gt; 改成 &lt;code&gt;[500,1000]&lt;/code&gt; 然后再执行一遍，保存到刚才创建的目录里。&lt;/li&gt;
-&lt;li&gt;如果有更多的文件，在执行一遍 &lt;code&gt;[500,1000]&lt;/code&gt; 这一批，取消点击；然后改成 &lt;code&gt;[1000,1500]&lt;/code&gt; 如此反复。&lt;/li&gt;
-&lt;/ol&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 01 Nov 2024 00:15:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-11-01:/2024/stdout-23</guid><category>stdout</category></item></channel></rss>
+&lt;p&gt;总结一下，最值钱的脑力劳动无法随机积累达到。今日份的胡思乱想就到这了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 06 Nov 2024 06:51:00 +0800</pubDate><guid isPermaLink="false">tag:None,2024-11-06:/2024/stderr-14</guid><category>stderr</category></item></channel></rss>
