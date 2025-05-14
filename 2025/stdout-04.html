@@ -56,12 +56,13 @@
 
   
   <p>Scenario: I often need to write Python functions like:</p>
-<ul>
+<ol>
 <li>take some parameters and format them</li>
 <li>call an API with the formatted parameters</li>
 <li>parse the result and return chosen values</li>
-</ul>
-<p>In today's <code>asyncio</code> world, troubles arise because async/await are "infectious", In practice this function is splitted - like in Python stdlib, where a vanilla <code>method</code> and its async counterpart <code>amethod</code> often come in pairs. . Package authors scramble to provide sync transport and another async transport. I discovered this ugly fact while reading the source code of<code>redis-py</code>, <code>httpx</code> and <code>elasticsearch-py</code>.  Duplicate and lookalike code was always written twice. All it takes is some random async IOs in one place and your code would be forced to change forever.</p>
+</ol>
+<p>There's a huge problem in step #2.</p>
+<p>In today's Python world, troubles arise because async/await are "infectious", In practice this function is splitted - like in Python stdlib, where a vanilla <code>method</code> and its async counterpart <code>amethod</code> often come in pairs. Package authors scramble to provide sync transport and another async transport. I discovered this ugly fact while reading the source code of<code>redis-py</code>, <code>httpx</code> and <code>elasticsearch-py</code>.  Duplicate and lookalike code was always written twice. All it takes is some random async IOs in one place and your code would be forced to change forever.</p>
 <p>Is there a way to write the function in one place, but callable both with async and without?</p>
 <p>I pondered this question for ages, and today I stumbled upon something interesting:</p>
 <pre><code class="language-python">
@@ -97,14 +98,14 @@ def aa(f):
 
 @aa
 def my_func(func, *args, **kwargs):
-    # write your code here
+    # prepare args, kwargs here
     if asyncio.iscoroutinefunction(func):
         # just replace `await` with `yield from` for async calls
-        v = yield from func(*args, **kwargs)
+        result = yield from func(*args, **kwargs)
     else:
-        v = func(*args, **kwargs)
-    # some other code here
-    return v
+        result = func(*args, **kwargs)
+    # handle the result here
+    return result
 
 
 import httpx

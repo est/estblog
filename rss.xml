@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Wed, 14 May 2025 14:35:00 +0800</lastBuildDate><item><title>A single Python function for both async/sync</title><link>https://blog.est.im/2025/stdout-04</link><description>&lt;p&gt;Scenario: I often need to write Python functions like:&lt;/p&gt;
-&lt;ul&gt;
+&lt;ol&gt;
 &lt;li&gt;take some parameters and format them&lt;/li&gt;
 &lt;li&gt;call an API with the formatted parameters&lt;/li&gt;
 &lt;li&gt;parse the result and return chosen values&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;In today's &lt;code&gt;asyncio&lt;/code&gt; world, troubles arise because async/await are "infectious", In practice this function is splitted - like in Python stdlib, where a vanilla &lt;code&gt;method&lt;/code&gt; and its async counterpart &lt;code&gt;amethod&lt;/code&gt; often come in pairs. . Package authors scramble to provide sync transport and another async transport. I discovered this ugly fact while reading the source code of&lt;code&gt;redis-py&lt;/code&gt;, &lt;code&gt;httpx&lt;/code&gt; and &lt;code&gt;elasticsearch-py&lt;/code&gt;.  Duplicate and lookalike code was always written twice. All it takes is some random async IOs in one place and your code would be forced to change forever.&lt;/p&gt;
+&lt;/ol&gt;
+&lt;p&gt;There's a huge problem in step #2.&lt;/p&gt;
+&lt;p&gt;In today's Python world, troubles arise because async/await are "infectious", In practice this function is splitted - like in Python stdlib, where a vanilla &lt;code&gt;method&lt;/code&gt; and its async counterpart &lt;code&gt;amethod&lt;/code&gt; often come in pairs. Package authors scramble to provide sync transport and another async transport. I discovered this ugly fact while reading the source code of&lt;code&gt;redis-py&lt;/code&gt;, &lt;code&gt;httpx&lt;/code&gt; and &lt;code&gt;elasticsearch-py&lt;/code&gt;.  Duplicate and lookalike code was always written twice. All it takes is some random async IOs in one place and your code would be forced to change forever.&lt;/p&gt;
 &lt;p&gt;Is there a way to write the function in one place, but callable both with async and without?&lt;/p&gt;
 &lt;p&gt;I pondered this question for ages, and today I stumbled upon something interesting:&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-python"&gt;
@@ -41,14 +42,14 @@ def aa(f):
 
 @aa
 def my_func(func, *args, **kwargs):
-    # write your code here
+    # prepare args, kwargs here
     if asyncio.iscoroutinefunction(func):
         # just replace `await` with `yield from` for async calls
-        v = yield from func(*args, **kwargs)
+        result = yield from func(*args, **kwargs)
     else:
-        v = func(*args, **kwargs)
-    # some other code here
-    return v
+        result = func(*args, **kwargs)
+    # handle the result here
+    return result
 
 
 import httpx
