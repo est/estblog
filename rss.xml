@@ -24,7 +24,7 @@ import asyncio, types
 
 def aa(f):
     &amp;quot;&amp;quot;&amp;quot;
-    make a function both awaitable and sync
+    decorator to make a function both awaitable and sync
     idk how to property name this. maybe anti-asyncio (aa)?
     &amp;quot;&amp;quot;&amp;quot;
     def wrapper(func, *args, **kwargs):
@@ -32,6 +32,7 @@ def aa(f):
             return types.coroutine(f)(func, *args, **kwargs)
         else:
             g = f(func, *args, **kwargs)
+            # any better way to write this?
             try:
                 while True:
                     next(g)
@@ -56,15 +57,17 @@ import httpx
 
 # async
 async def main():
+    # works the same as `await httpx.AsyncClient(timeout=3).get('https://est.im')`
     print(await my_func(httpx.AsyncClient(timeout=3).get, 'https://est.im/'))
 asyncio.run(main())
 
 
 # sync
 print(my_func(httpx.get, 'https://est.im'))
+# works the same as httpx.get('https://est.im')
 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The above shows a single piece of code, injectable with a sync/async call, allows for customizable  pre- and post-processing logic, and returns the result with clean syntax.&lt;/p&gt;
+&lt;p&gt;The above shows a single function called &lt;code&gt;my_func&lt;/code&gt;, dependency injection of an HTTP &lt;code&gt;get&lt;/code&gt;  call of either sync/async, allows for customizable  pre- and post-processing logic, and returns the result with clean syntax.&lt;/p&gt;
 &lt;p&gt;The only mental tax: inside &lt;code&gt;my_func&lt;/code&gt;, you have to replace all &lt;code&gt;await&lt;/code&gt; keyword with &lt;code&gt;yield from&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;It works for my scenario and I’ve yet to find a simpler solution.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 14 May 2025 14:35:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-05-14:/2025/stdout-04</guid><category>stdout</category></item><item><title>听 彭罗斯 吹了90分钟波函数的坍塌</title><link>https://blog.est.im/2025/stdin-05</link><description>&lt;p&gt;&lt;a href="https://www.youtube.com/watch?v=sGm505TFMbU"&gt;https://www.youtube.com/watch?v=sGm505TFMbU&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Roger Penrose:  I don't believe it is consciousness that collapses the wave function, instead it's the collapse of the wave functions that produces consciousness&lt;/p&gt;

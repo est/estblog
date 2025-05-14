@@ -86,7 +86,7 @@ import asyncio, types
 
 def aa(f):
     &quot;&quot;&quot;
-    make a function both awaitable and sync
+    decorator to make a function both awaitable and sync
     idk how to property name this. maybe anti-asyncio (aa)?
     &quot;&quot;&quot;
     def wrapper(func, *args, **kwargs):
@@ -94,6 +94,7 @@ def aa(f):
             return types.coroutine(f)(func, *args, **kwargs)
         else:
             g = f(func, *args, **kwargs)
+            # any better way to write this?
             try:
                 while True:
                     next(g)
@@ -118,15 +119,17 @@ import httpx
 
 # async
 async def main():
+    # works the same as `await httpx.AsyncClient(timeout=3).get('https://est.im')`
     print(await my_func(httpx.AsyncClient(timeout=3).get, 'https://est.im/'))
 asyncio.run(main())
 
 
 # sync
 print(my_func(httpx.get, 'https://est.im'))
+# works the same as httpx.get('https://est.im')
 
 </code></pre>
-<p>The above shows a single piece of code, injectable with a sync/async call, allows for customizable  pre- and post-processing logic, and returns the result with clean syntax.</p>
+<p>The above shows a single function called <code>my_func</code>, dependency injection of an HTTP <code>get</code>  call of either sync/async, allows for customizable  pre- and post-processing logic, and returns the result with clean syntax.</p>
 <p>The only mental tax: inside <code>my_func</code>, you have to replace all <code>await</code> keyword with <code>yield from</code>.</p>
 <p>It works for my scenario and I’ve yet to find a simpler solution.</p></p>
             <div class="card-subtext muted-text">
