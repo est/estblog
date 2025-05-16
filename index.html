@@ -127,9 +127,10 @@ print(my_func(httpx.get, 'https://est.im'))
 
 </code></pre>
 <p>The above shows a single function called <code>my_func</code>, dependency injection of an HTTP <code>get</code>  call of either sync/async, allows for customizable  pre- and post-processing logic, and returns the result with clean syntax.</p>
-<p>~~ The only mental tax: inside <code>my_func</code>, you have to replace all <code>await</code> keyword with <code>yield from</code>. ~~</p>
+<p><strike>The only mental tax: inside <code>my_func</code>, you have to replace all <code>await</code> keyword with `yield from.</strike></p>
 <p>Update 2025-05-16: The only mental tax: add a <code>yield from</code> prefix for every <code>func</code>calls for IO or API, either sync or async.</p>
-<p>It solves all problems for my scenario and I’ve yet to find a simpler solution. If you have a good name for the <code>@aa</code> decorator please comment!</p></p>
+<p>It solves all problems for my scenario and I’ve yet to find a simpler solution. If you have a good name for the <code>@aa</code> decorator please comment!</p>
+<p>A sidenote, I am not sure if this method affects async schedulers and blocks something maybe? Like the <code>while True</code> might be a new kind of GIL. Also i haven't looked at problems with contextvars.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2025-05-14T14:35:00+08:00">2025-05-14</time></p>
 <p>stdout</p>            </div>
