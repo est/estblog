@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Wed, 14 May 2025 14:35:00 +0800</lastBuildDate><item><title>A single Python function for both async/sync</title><link>https://blog.est.im/2025/stdout-04</link><description>&lt;p&gt;Scenario: I often need to write Python functions like:&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Fri, 16 May 2025 02:55:48 +0800</lastBuildDate><item><title>A single Python function for both async/sync</title><link>https://blog.est.im/2025/stdout-04</link><description>&lt;p&gt;Scenario: I often need to write Python functions like:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;take some parameters and format them&lt;/li&gt;
 &lt;li&gt;call an API with the formatted parameters&lt;/li&gt;
@@ -19,23 +19,23 @@
 &lt;p&gt;There's virtually no difference when calling &lt;code&gt;await s1()&lt;/code&gt; and &lt;code&gt;await s2()&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;I vaguely remembered how Python’s coroutines were designed, and after some tinkering, I came up with this snippet:&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-python"&gt;
-import asyncio, types
-
+import asyncio, types, functools
 
 def aa(f):
     &amp;quot;&amp;quot;&amp;quot;
-    decorator to make a function both awaitable and sync
-    idk how to property name this. maybe anti-asyncio (aa)?
+    make a function both awaitable and sync
+    idk how to property name this. anti-asyncio (aa) maybe?
     &amp;quot;&amp;quot;&amp;quot;
+    @functools.wraps(f)
     def wrapper(func, *args, **kwargs):
         if asyncio.iscoroutinefunction(func):
             return types.coroutine(f)(func, *args, **kwargs)
         else:
-            g = f(func, *args, **kwargs)
-            # any better way to write this?
+            async def afunc(*a, **kw):
+                return func(*a, **kw)
+            g = types.coroutine(f)(afunc, *args, **kwargs)
             try:
-                while True:
-                    next(g)
+                while True: next(g)
             except StopIteration as ex:
                 return ex.value
     return wrapper
@@ -44,11 +44,8 @@ def aa(f):
 @aa
 def my_func(func, *args, **kwargs):
     # prepare args, kwargs here
-    if asyncio.iscoroutinefunction(func):
-        # just replace `await` with `yield from` for async calls
-        result = yield from func(*args, **kwargs)
-    else:
-        result = func(*args, **kwargs)
+    # add a prefix `yield from` everywhere, for either sync/async
+    result = yield from func(*args, **kwargs)
     # handle the result here
     return result
 
@@ -57,7 +54,7 @@ import httpx
 
 # async
 async def main():
-    # works the same as `await httpx.AsyncClient(timeout=3).get('https://est.im')`
+    # the same as `await httpx.AsyncClient(timeout=3).get('https://est.im')`
     print(await my_func(httpx.AsyncClient(timeout=3).get, 'https://est.im/'))
 asyncio.run(main())
 
@@ -68,8 +65,9 @@ print(my_func(httpx.get, 'https://est.im'))
 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The above shows a single function called &lt;code&gt;my_func&lt;/code&gt;, dependency injection of an HTTP &lt;code&gt;get&lt;/code&gt;  call of either sync/async, allows for customizable  pre- and post-processing logic, and returns the result with clean syntax.&lt;/p&gt;
-&lt;p&gt;The only mental tax: inside &lt;code&gt;my_func&lt;/code&gt;, you have to replace all &lt;code&gt;await&lt;/code&gt; keyword with &lt;code&gt;yield from&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;It works for my scenario and I’ve yet to find a simpler solution.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 14 May 2025 14:35:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-05-14:/2025/stdout-04</guid><category>stdout</category></item><item><title>听 彭罗斯 吹了90分钟波函数的坍塌</title><link>https://blog.est.im/2025/stdin-05</link><description>&lt;p&gt;&lt;a href="https://www.youtube.com/watch?v=sGm505TFMbU"&gt;https://www.youtube.com/watch?v=sGm505TFMbU&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;~~ The only mental tax: inside &lt;code&gt;my_func&lt;/code&gt;, you have to replace all &lt;code&gt;await&lt;/code&gt; keyword with &lt;code&gt;yield from&lt;/code&gt;. ~~&lt;/p&gt;
+&lt;p&gt;Update 2025-05-16: The only mental tax: add a &lt;code&gt;yield from&lt;/code&gt; prefix for every &lt;code&gt;func&lt;/code&gt;calls for IO or API, either sync or async.&lt;/p&gt;
+&lt;p&gt;It solves all problems for my scenario and I’ve yet to find a simpler solution. If you have a good name for the &lt;code&gt;@aa&lt;/code&gt; decorator please comment!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 14 May 2025 14:35:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-05-14:/2025/stdout-04</guid><category>stdout</category></item><item><title>听 彭罗斯 吹了90分钟波函数的坍塌</title><link>https://blog.est.im/2025/stdin-05</link><description>&lt;p&gt;&lt;a href="https://www.youtube.com/watch?v=sGm505TFMbU"&gt;https://www.youtube.com/watch?v=sGm505TFMbU&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Roger Penrose:  I don't believe it is consciousness that collapses the wave function, instead it's the collapse of the wave functions that produces consciousness&lt;/p&gt;
 &lt;p&gt;这句话很美妙啊。一下子把唯物和唯心给联系起来了。&lt;/p&gt;
 &lt;p&gt;我一直觉得，人的意识，就是因果律的推演。这个推演明显是一个离散的，有清晰步骤的，quantized 的和决定论的。&lt;/p&gt;

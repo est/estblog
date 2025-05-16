@@ -81,23 +81,23 @@
 <p>There's virtually no difference when calling <code>await s1()</code> and <code>await s2()</code></p>
 <p>I vaguely remembered how Python’s coroutines were designed, and after some tinkering, I came up with this snippet:</p>
 <pre><code class="language-python">
-import asyncio, types
-
+import asyncio, types, functools
 
 def aa(f):
     &quot;&quot;&quot;
-    decorator to make a function both awaitable and sync
-    idk how to property name this. maybe anti-asyncio (aa)?
+    make a function both awaitable and sync
+    idk how to property name this. anti-asyncio (aa) maybe?
     &quot;&quot;&quot;
+    @functools.wraps(f)
     def wrapper(func, *args, **kwargs):
         if asyncio.iscoroutinefunction(func):
             return types.coroutine(f)(func, *args, **kwargs)
         else:
-            g = f(func, *args, **kwargs)
-            # any better way to write this?
+            async def afunc(*a, **kw):
+                return func(*a, **kw)
+            g = types.coroutine(f)(afunc, *args, **kwargs)
             try:
-                while True:
-                    next(g)
+                while True: next(g)
             except StopIteration as ex:
                 return ex.value
     return wrapper
@@ -106,11 +106,8 @@ def aa(f):
 @aa
 def my_func(func, *args, **kwargs):
     # prepare args, kwargs here
-    if asyncio.iscoroutinefunction(func):
-        # just replace `await` with `yield from` for async calls
-        result = yield from func(*args, **kwargs)
-    else:
-        result = func(*args, **kwargs)
+    # add a prefix `yield from` everywhere, for either sync/async
+    result = yield from func(*args, **kwargs)
     # handle the result here
     return result
 
@@ -119,7 +116,7 @@ import httpx
 
 # async
 async def main():
-    # works the same as `await httpx.AsyncClient(timeout=3).get('https://est.im')`
+    # the same as `await httpx.AsyncClient(timeout=3).get('https://est.im')`
     print(await my_func(httpx.AsyncClient(timeout=3).get, 'https://est.im/'))
 asyncio.run(main())
 
@@ -130,8 +127,9 @@ print(my_func(httpx.get, 'https://est.im'))
 
 </code></pre>
 <p>The above shows a single function called <code>my_func</code>, dependency injection of an HTTP <code>get</code>  call of either sync/async, allows for customizable  pre- and post-processing logic, and returns the result with clean syntax.</p>
-<p>The only mental tax: inside <code>my_func</code>, you have to replace all <code>await</code> keyword with <code>yield from</code>.</p>
-<p>It works for my scenario and I’ve yet to find a simpler solution.</p></p>
+<p>~~ The only mental tax: inside <code>my_func</code>, you have to replace all <code>await</code> keyword with <code>yield from</code>. ~~</p>
+<p>Update 2025-05-16: The only mental tax: add a <code>yield from</code> prefix for every <code>func</code>calls for IO or API, either sync or async.</p>
+<p>It solves all problems for my scenario and I’ve yet to find a simpler solution. If you have a good name for the <code>@aa</code> decorator please comment!</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2025-05-14T14:35:00+08:00">2025-05-14</time></p>
 <p>stdout</p>            </div>
