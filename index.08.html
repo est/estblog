@@ -58,6 +58,37 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2022/stdin-06"  rel="bookmark" >
+              <h2 class="card-title">Kubelka-Munk 颜料混色理论以及mixbox源码</h2>
+            </a>
+            <p class="card-text"><iframe src="//player.bilibili.com/player.html?bvid=BV1Tr4y1e7vN" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="100%" height="500px"> </iframe>
+
+<p>论文发表在 SIGGRAPH Asia 2021 <a href="https://scrtwpns.com/mixbox/">https://scrtwpns.com/mixbox/</a></p>
+<p>传统的 RGB 平均值混色 vs mixbox 混色</p>
+<p><img alt="" src="/images/2022/stdin-06-01.jpg" /></p>
+<p>原因是光学混色取平均值没问题，很多色彩混出来就是中间的灰色，但是颜料不一样，它是个非线性的。</p>
+<p><img alt="" src="/images/2022/stdin-06-05.webp" /></p>
+<p>这个非线性的混色，有个精妙的数学公式</p>
+<p><img alt="" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8c647992703f69158db62e71cd553ae8db049c35" /></p>
+<p>Mixbox 有源码：<a href="https://github.com/scrtwpns/pigment-mixing">https://github.com/scrtwpns/pigment-mixing</a>，本来以为是实现了这个公式，结果它妈的是一个 10MB 的 .cpp 文件。。。直接传入3个参数 <code>(RGB1, RGB2, ratio)</code> 它给你返回一个 <code>RGB</code> 。。。。</p>
+<p>好奇这10MB 的向量矩阵怎么来的，就看了下作者讲原理。</p>
+<p>这玩意理论 Kubelka-Munk 已经一个世纪前被研究透了，软件里不大规模铺开使用是因为绝大部分图像编辑软件都是R G B 三通道。这个颜料混色需要考虑折射和散射，按照 Haase &amp; Meyer 的模拟理论需要每一个像素都用 72 个通道去模拟 K-S 两个特征值</p>
+<p><img alt="" src="/images/2022/stdin-06-02.webp" /></p>
+<p>麻烦。这 mixbox 作者就用了4通道去模拟。</p>
+<p><img alt="" src="/images/2022/stdin-06-03.webp" /></p>
+<p>而且通过巧妙的选择4基色解决了 Kubelka-Munk 色彩空间和 RGB 空间相互转换有溢出的问题。</p>
+<p><img alt="" src="/images/2022/stdin-06-04.webp" /></p>
+<p>这源码可以研究用，商用需要授权。在 Rebelle 5 Pro 软件里集成了</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2022-04-21T23:08:57+08:00">2022-04-21</time></p>
+<p>stdin</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2022/stdout-05"  rel="bookmark" >
               <h2 class="card-title">Add UTF-8 BOM header to Flask-Admin export</h2>
             </a>
@@ -726,31 +757,6 @@ sudo chmod 000 GoogleSoftwareUpdate
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-12-22T14:00:28+08:00">2021-12-22</time></p>
 <p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2021/stdout-024"  rel="bookmark" >
-              <h2 class="card-title">4句话自动换win10壁纸</h2>
-            </a>
-            <p class="card-text"><ol>
-<li>获取当前用户 <code>sid</code>。cmd下设变量如此复杂。而且 <code>|</code> 的转义字符居然是 <code>^|</code></li>
-<li>读取 LogonUI 的自动壁纸。<code>reg query</code>输出极其不友好。需要 tokens=3</li>
-<li>设置为当前桌面。</li>
-<li>刷新。这个属于按运气成功。真正刷新的需要调用 dll 。算了</li>
-</ol>
-<pre><code>for /f %%g in ('wmic useraccount where name^=&quot;%USERNAME%&quot; get sid ^| findstr ^S\-d*') do set USERSID=%%g
-For /f &quot;tokens=3&quot; %%k IN ('reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Creative\%USERSID%  /s /v  landscapeImage /t REG_SZ ^| findstr /ri &quot;REG_SZ&quot;') do set img_path=%%k
-reg add &quot;HKEY_CURRENT_USER\Control Panel\Desktop&quot; /v Wallpaper /t REG_SZ /d %img_path% /f
-RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters 
-</code></pre>
-<p><a href="/202104/stdout-005">之前的方法</a>搞复杂了</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-12-08T21:39:36+08:00">2021-12-08</time></p>
-<p>stderr</p>            </div>
           </article>
         </div>
 
