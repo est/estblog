@@ -70,9 +70,9 @@
 <h3>feature list</h3>
 <ol>
 <li>把任意 github repo 渲染成微博</li>
-<li>如果 commit message 以冒号结尾，而且恰好也在本次提交了图片文件 那么会尝试去加载位于 static 下面的图片作为附件渲染</li>
+<li><a href="https://f.est.im/est/e0d4c46445517ba52ceda06d788e09760aaccce5">发图</a>！如果 commit message 以冒号结尾，而且恰好也在本次新增加了位于 static 下面的图片文件 那么会尝试去加载图片作为附件渲染</li>
 <li>用 OAuth app 实现发推。浏览器记录 access_token 到 cookie，理论上可用 8个小时。过期重登</li>
-<li>可以选取其他任意repo拉取 commit history 渲染成微博时间线</li>
+<li>给任意 github repo 发推的原理是，通过REST API新增一条 commit 。</li>
 </ol>
 <h3>记录一些坑</h3>
 <ol>
@@ -97,6 +97,7 @@
 <li>cloudflare的 <code>Response.redirect('/')</code> 直接挂掉。原来是 3xx 跳转不允许相对路径。</li>
 </ol>
 <p>由于习惯古法写web，一个html包含了 css js 。无二次加载，无第三方依赖库。除了不能写死的全部写死 🤣</p>
+<p>接下来准备用类似的思路实现网站评论系统，代替现在的 disqus ，虽然它是免费的，但是广告太多了。</p>
 </article>
 
 <div class="comments">

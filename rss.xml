@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sun, 17 Aug 2025 15:14:33 +0800</lastBuildDate><item><title>gitweets：拿 git 历史当微博发推</title><link>https://blog.est.im/2025/stdout-05</link><description>&lt;p&gt;twitter 近几年争议不断，先是各种 cancel culture 闹得动静很大，被一龙马买了之后更甚，社区分裂到 mstdn nostr bsky支流，各种话题炒上天，在众多替代品里，2022年看到个&lt;a href="https://twitter.com/bcrypt/status/1588416861552582657"&gt;最别具一格&lt;/a&gt;的：&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sun, 17 Aug 2025 15:27:56 +0800</lastBuildDate><item><title>gitweets：拿 git 历史当微博发推</title><link>https://blog.est.im/2025/stdout-05</link><description>&lt;p&gt;twitter 近几年争议不断，先是各种 cancel culture 闹得动静很大，被一龙马买了之后更甚，社区分裂到 mstdn nostr bsky支流，各种话题炒上天，在众多替代品里，2022年看到个&lt;a href="https://twitter.com/bcrypt/status/1588416861552582657"&gt;最别具一格&lt;/a&gt;的：&lt;/p&gt;
 &lt;p&gt;拿 git 当微博使&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;发推： &lt;code&gt;git commit --allow-empty&lt;/code&gt;&lt;/li&gt;
@@ -13,9 +13,9 @@
 &lt;h3&gt;feature list&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;把任意 github repo 渲染成微博&lt;/li&gt;
-&lt;li&gt;如果 commit message 以冒号结尾，而且恰好也在本次提交了图片文件 那么会尝试去加载位于 static 下面的图片作为附件渲染&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://f.est.im/est/e0d4c46445517ba52ceda06d788e09760aaccce5"&gt;发图&lt;/a&gt;！如果 commit message 以冒号结尾，而且恰好也在本次新增加了位于 static 下面的图片文件 那么会尝试去加载图片作为附件渲染&lt;/li&gt;
 &lt;li&gt;用 OAuth app 实现发推。浏览器记录 access_token 到 cookie，理论上可用 8个小时。过期重登&lt;/li&gt;
-&lt;li&gt;可以选取其他任意repo拉取 commit history 渲染成微博时间线&lt;/li&gt;
+&lt;li&gt;给任意 github repo 发推的原理是，通过REST API新增一条 commit 。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3&gt;记录一些坑&lt;/h3&gt;
 &lt;ol&gt;
@@ -39,7 +39,8 @@
 &lt;li&gt;Github 虽然返回了 &lt;code&gt;Access-Control-Allow-Origin: *&lt;/code&gt;，但是现代浏览器他妈的不认这个 &lt;code&gt;*&lt;/code&gt; 。所以在浏览器只能匿名调用 &lt;code&gt;GET&lt;/code&gt; ，如果 &lt;code&gt;POST&lt;/code&gt;， &lt;code&gt;PATCH&lt;/code&gt; 带了 &lt;code&gt;credentials: "include"&lt;/code&gt; 直接拒绝。网站必须显式指定允许哪个具体的 origin &lt;/li&gt;
 &lt;li&gt;cloudflare的 &lt;code&gt;Response.redirect('/')&lt;/code&gt; 直接挂掉。原来是 3xx 跳转不允许相对路径。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;由于习惯古法写web，一个html包含了 css js 。无二次加载，无第三方依赖库。除了不能写死的全部写死 🤣&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 17 Aug 2025 00:00:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-08-17:/2025/stdout-05</guid><category>stdout</category></item><item><title>敬语和咒语</title><link>https://blog.est.im/2025/stderr-04</link><description>&lt;p&gt;因为旅游瞎逛，才了解有这样一种东西：&lt;/p&gt;
+&lt;p&gt;由于习惯古法写web，一个html包含了 css js 。无二次加载，无第三方依赖库。除了不能写死的全部写死 🤣&lt;/p&gt;
+&lt;p&gt;接下来准备用类似的思路实现网站评论系统，代替现在的 disqus ，虽然它是免费的，但是广告太多了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 17 Aug 2025 00:00:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-08-17:/2025/stdout-05</guid><category>stdout</category></item><item><title>敬语和咒语</title><link>https://blog.est.im/2025/stderr-04</link><description>&lt;p&gt;因为旅游瞎逛，才了解有这样一种东西：&lt;/p&gt;
 &lt;p&gt;&lt;img referrerpolicy="no-referrer" src="http://5b0988e595225.cdn.sohucs.com/images/20180918/c5160e176d4a482cbc50887cccd214bc.jpeg" /&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;字库塔又叫“惜字宫”、“敬字亭”、“惜字塔”、“焚字炉”等，它是收存和焚烧字纸的专用设施，沿自古人有“敬惜字纸”之风，“惜字得福”之说。而在我国传统文化中有一种独特习俗——“惜字如金”，“敬天惜字”。&lt;br /&gt;
