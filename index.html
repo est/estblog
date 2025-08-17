@@ -59,9 +59,9 @@
         <div class="card blog-card">
           <article class="card-body">
             <a href="/2025/stdout-05"  rel="bookmark" >
-              <h2 class="card-title">gitweets：拿 git 历史当微博发推</h2>
+              <h2 class="card-title">gitweets：单html实现独立微博，拿git历史当feed流发推</h2>
             </a>
-            <p class="card-text"><p>twitter 近几年争议不断，先是各种 cancel culture 闹得动静很大，被一龙马买了之后更甚，社区分裂到 mstdn nostr bsky支流，各种话题炒上天，在众多替代品里，2022年看到个<a href="https://twitter.com/bcrypt/status/1588416861552582657">最别具一格</a>的：</p>
+            <p class="card-text"><p>twitter争议不断持续多年，先是各种 cancel culture 闹得动静很大，被一龙马买了之后更甚，社区分裂到 mstdn nostr bsky支流，各种话题炒上天，在众多替代品里，2022年看到个<a href="https://twitter.com/bcrypt/status/1588416861552582657">最别具一格</a>的：</p>
 <p>拿 git 当微博使</p>
 <ul>
 <li>发推： <code>git commit --allow-empty</code></li>
@@ -69,15 +69,15 @@
 <li>转发： <code>git cherry-pick &lt;their "tweet"&gt;</code></li>
 </ul>
 <p>脑洞大开。而且git基于merkle tree的，p2p 历史不可篡改，有web3那味了。</p>
-<p>之前也饶有兴趣，挖了个坑准备搓个web界面。但是限于涣散的注意力，以及对css这种抽象排版玩不转，一直拖沓没做好。</p>
+<p>当时就饶有兴趣，挖了个坑准备搓个web界面。但是限于涣散的注意力，以及对css这种抽象排版玩不转，一直拖沓没做好。</p>
 <p>周末心血来潮，外带 AI 工具加持，进展神速。目前已经基本可用。</p>
 <p>项目叫 gitweets ，意思是用 git 发 tweets，网址在 <a href="https://f.est.im/">https://f.est.im/</a> 。二级域名 <code>f</code> 即 <code>feed</code> ，<code>f.est</code> 也就是 fest 表示。。。 盛会的意思。 </p>
 <h3>feature list</h3>
 <ol>
 <li>把任意 github repo 渲染成微博</li>
+<li>给任意 github repo 发推。其原理是，通过REST API新增一条 commit 。</li>
 <li><a href="https://f.est.im/est/e0d4c46445517ba52ceda06d788e09760aaccce5">发图</a>！如果 commit message 以冒号结尾，而且恰好也在本次新增加了位于 static 下面的图片文件 那么会尝试去加载图片作为附件渲染</li>
-<li>用 OAuth app 实现发推。浏览器记录 access_token 到 cookie，理论上可用 8个小时。过期重登</li>
-<li>给任意 github repo 发推的原理是，通过REST API新增一条 commit 。</li>
+<li>写 commit 基于 OAuth app 实现。浏览器记录 access_token 到 cookie，理论上可用 8个小时。过期重登</li>
 </ol>
 <h3>记录一些坑</h3>
 <ol>
@@ -101,10 +101,10 @@
 <li>Github 虽然返回了 <code>Access-Control-Allow-Origin: *</code>，但是现代浏览器他妈的不认这个 <code>*</code> 。所以在浏览器只能匿名调用 <code>GET</code> ，如果 <code>POST</code>， <code>PATCH</code> 带了 <code>credentials: "include"</code> 直接拒绝。网站必须显式指定允许哪个具体的 origin </li>
 <li>cloudflare的 <code>Response.redirect('/')</code> 直接挂掉。原来是 3xx 跳转不允许相对路径。</li>
 </ol>
-<p>由于习惯古法写web，一个html包含了 css js 。无二次加载，无第三方依赖库。除了不能写死的全部写死 🤣</p>
+<p>由于习惯，古法写web，一个html包含了 css js 。无二次加载，无第三方依赖库。除了不能写死的全部写死 🤣。无需build。</p>
 <p>接下来准备用类似的思路实现网站评论系统，代替现在的 disqus ，虽然它是免费的，但是广告太多了。</p>
 <p>可能有人要问：why ？闲的蛋痛？</p>
-<p>我想，第一的确蛋痛，because we can。第二是不想在平台，处处受人限制。第三也是最重要的，self-host。所有数据资料都在一个repo打包带走，备份什么的很方便。比如以前wordpress受众多功能全，但是后来大家都 hexo 之类的静态blog了。</p>
+<p>我想，首先的确蛋痛，because we can。其次是不想在平台，处处受人限制。然后也是最重要的，self-host。所有数据资料都在一个repo打包带走，备份什么的很方便。比如以前wordpress受众多功能全，但是后来大家都 hexo 之类的静态blog了。</p>
 <p>我心目中 gitweets 就是“静态”微博的一种。虽然它现在还是依赖 github API。等有空了可以试试生成纯静态页面。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2025-08-17T00:00:00+08:00">2025-08-17</time></p>
