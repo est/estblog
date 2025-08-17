@@ -78,6 +78,7 @@
 <li>给任意 github repo 发推。其原理是，通过REST API新增一条 commit 。</li>
 <li><a href="https://f.est.im/est/e0d4c46445517ba52ceda06d788e09760aaccce5">发图</a>！如果 commit message 以冒号结尾，而且恰好也在本次新增加了位于 static 下面的图片文件 那么会尝试去加载图片作为附件渲染</li>
 <li>写 commit 基于 OAuth app 实现。浏览器记录 access_token 到 cookie，理论上可用 8个小时。过期重登</li>
+<li>如果你的 commit 有是通过 <code>-S</code> 参数提交带签名 ，那么展示为蓝色表示verified</li>
 </ol>
 <h3>记录一些坑</h3>
 <ol>
@@ -101,12 +102,20 @@
 <li>Github 虽然返回了 <code>Access-Control-Allow-Origin: *</code>，但是现代浏览器他妈的不认这个 <code>*</code> 。所以在浏览器只能匿名调用 <code>GET</code> ，如果 <code>POST</code>， <code>PATCH</code> 带了 <code>credentials: "include"</code> 直接拒绝。网站必须显式指定允许哪个具体的 origin </li>
 <li>cloudflare的 <code>Response.redirect('/')</code> 直接挂掉。原来是 3xx 跳转不允许相对路径。</li>
 </ol>
+<h3>why？</h3>
 <p>由于习惯，古法写web，一个html包含了 css js 。无二次加载，无第三方依赖库。除了不能写死的全部写死 🤣。无需build。</p>
 <p>源码放在 <a href="https://github.com/est/gitweets/">https://github.com/est/gitweets/</a> 。该仓库的 commit 历史也作为feed展示在 <a href="https://f.est.im/">https://f.est.im/</a> </p>
 <p>接下来准备用类似的思路实现网站评论系统，代替现在的 disqus ，虽然它是免费的，但是广告太多了。</p>
 <p>可能有人要问：why ？闲的蛋痛？</p>
 <p>我想，首先的确蛋痛，because we can。其次是不想在平台，处处受人限制。然后也是最重要的，self-host。所有数据资料都在一个repo打包带走，备份什么的很方便。比如以前wordpress受众多功能全，但是后来大家都 hexo 之类的静态blog了。</p>
-<p>我心目中 gitweets 就是“静态”微博的一种。虽然它现在还是依赖 github API。等有空了可以试试生成纯静态页面。</p></p>
+<p>我心目中 gitweets 就是“静态”微博的一种。虽然它现在还是依赖 github API。等有空了可以试试生成纯静态页面。</p>
+<h3>ToDo</h3>
+<ol>
+<li>如何发视频 音频</li>
+<li>如何转发</li>
+<li>如何混合展示多个repo的feed。基于 pull request ？</li>
+</ol>
+<p>欢迎评论或者提 <a href="https://github.com/est/gitweets/issues">issue</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2025-08-17T00:00:00+08:00">2025-08-17</time></p>
 <p>stdout</p>            </div>
