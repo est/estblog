@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sun, 17 Aug 2025 15:52:26 +0800</lastBuildDate><item><title>gitweets：单html实现独立微博，拿git历史当feed流发推</title><link>https://blog.est.im/2025/stdout-05</link><description>&lt;p&gt;twitter争议不断持续多年，先是各种 cancel culture 闹得动静很大，被一龙马买了之后更甚，社区分裂到 mstdn nostr bsky支流，各种话题炒上天，在众多替代品里，2022年看到个&lt;a href="https://twitter.com/bcrypt/status/1588416861552582657"&gt;最别具一格&lt;/a&gt;的：&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sun, 17 Aug 2025 15:54:07 +0800</lastBuildDate><item><title>gitweets：单html实现独立微博，拿git历史当feed流发推</title><link>https://blog.est.im/2025/stdout-05</link><description>&lt;p&gt;twitter争议不断持续多年，先是各种 cancel culture 闹得动静很大，被一龙马买了之后更甚，社区分裂到 mstdn nostr bsky支流，各种话题炒上天，在众多替代品里，2022年看到个&lt;a href="https://twitter.com/bcrypt/status/1588416861552582657"&gt;最别具一格&lt;/a&gt;的：&lt;/p&gt;
 &lt;p&gt;拿 git 当微博使&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;发推： &lt;code&gt;git commit --allow-empty&lt;/code&gt;&lt;/li&gt;
@@ -40,6 +40,7 @@
 &lt;li&gt;cloudflare的 &lt;code&gt;Response.redirect('/')&lt;/code&gt; 直接挂掉。原来是 3xx 跳转不允许相对路径。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;由于习惯，古法写web，一个html包含了 css js 。无二次加载，无第三方依赖库。除了不能写死的全部写死 🤣。无需build。&lt;/p&gt;
+&lt;p&gt;源码放在 &lt;a href="https://github.com/est/gitweets/"&gt;https://github.com/est/gitweets/&lt;/a&gt; 。该仓库的 commit 历史也作为feed展示在 &lt;a href="https://f.est.im/"&gt;https://f.est.im/&lt;/a&gt; &lt;/p&gt;
 &lt;p&gt;接下来准备用类似的思路实现网站评论系统，代替现在的 disqus ，虽然它是免费的，但是广告太多了。&lt;/p&gt;
 &lt;p&gt;可能有人要问：why ？闲的蛋痛？&lt;/p&gt;
 &lt;p&gt;我想，首先的确蛋痛，because we can。其次是不想在平台，处处受人限制。然后也是最重要的，self-host。所有数据资料都在一个repo打包带走，备份什么的很方便。比如以前wordpress受众多功能全，但是后来大家都 hexo 之类的静态blog了。&lt;/p&gt;
