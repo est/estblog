@@ -58,6 +58,47 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2022/stdout-12"  rel="bookmark" >
+              <h2 class="card-title">Web Animation实现页面逐渐变灰</h2>
+            </a>
+            <p class="card-text"><p>在2006年我开始网上留下印记的时候，写了一个 dHTML 特效模拟<a href="https://blog.est.im/cnblogs/600413">XP关机对话框变灰</a>， 那个时候大行其道的还是IE6，用的还是微软特有的 <code>filter:progid:DXImageTransform.Microsoft.Fade</code> 叠加两个<code>&lt;div&gt;</code>实现。</p>
+<p>今天（2022-11-30）恰好长者去逝，学习一下最新的css姿势再实现一次。本来想用 CSS Animation+Filter实现，还是比较麻烦。比如我参考的例子是<a href="https://levelup.gitconnected.com/recreating-the-red-dead-redemption-2-tintype-loading-screen-effect-in-css-10ca87d5b9de">模仿 Red Dead Redemption 2</a> 照片效果css</p>
+<pre><code>  #invert{
+    filter: invert(1.0) grayscale(1.0);
+  }
+  #photo{
+    animation: blur 5s infinite alternate;
+  }
+  @keyframes blur{
+    from{
+      filter: blur(3px);
+      opacity: 0;
+    }
+    to{
+      filter: blur(0px);
+      opacity: 1;
+    }
+  }
+</code></pre>
+<p>这个方式有个问题就是需要单独设置一个 <code>&lt;script&gt;</code> 元素。后来经过 <a href="https://twitter.com/yuanchuan23">@yuanchuan23</a> 的指点发现可以通过 Web Animation 更简单的实现：</p>
+<pre><code>  document.body.animate([
+    {filter: 'brightness(none) grayscale(0%)'},
+    {filter: 'brightness(10) grayscale(10%)', offset: 0.2},
+    {filter: 'brightness(1) grayscale(100%)'}
+  ], {duration: 2000, fill: 'forwards'})
+</code></pre>
+<p>这样写比 css 方便多了。加一个类似照相机闪光灯过曝的效果。其中 <code>fill: 'forwards'</code> 可以让变灰之后停下来。</p>
+<p>放一个 demo 在这里：<a href="https://lab.est.im/grayscale_animation">https://lab.est.im/grayscale_animation</a> 点一下可以再变一次</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2022-11-30T18:02:18+08:00">2022-11-30</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2022/stdout-11"  rel="bookmark" >
               <h2 class="card-title">8行javascript录制屏幕</h2>
             </a>
@@ -2095,49 +2136,6 @@ A: 我又不是保安。。。。哲学三大问题是：终极存在是什么�
 <p>From <a href="https://www.seattletimes.com/opinion/what-will-it-be-boeing-great-airplanes-that-generate-cash-flow-or-great-cash-flow-period/">Seattle Times</a> via <a href="https://news.ycombinator.com/item?id=20365770">HN</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2019-07-06T05:42:42+08:00">2019-07-06</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/201906/stdout-003"  rel="bookmark" >
-              <h2 class="card-title">Open Source projects Chinese companies and individuals contributed to</h2>
-            </a>
-            <p class="card-text"><p>Chinese companies have very little presence online and many people may believe that Chinese are reluctant to engage in open source projects.</p>
-<p>Last year, <a href="https://twitter.com/mjasay/status/960563592683667456">@filmaj</a> used the GitHub REST API to pull public profile information from all 2,060,011 GitHub users who were active in 2017 (10+ commits to public projects) yields this ranking of the top-30 corporate open source contributors, the result is like </p>
-<p><img alt="" src="/images/2019/DVSbEP1U0AA6E83.jpeg" /></p>
-<p>So Alibaba ranked at #9 and Tencent ranked at #12. Not bad.</p>
-<p>I also did some research, Reposted from <a href="https://news.ycombinator.com/item?id=20271898">my comment on Hacker News</a>, the following is the list of open source projects which has Chinese companies as active supportors.</p>
-<ul>
-<li><a href="https://www.fsf.org/patrons">Free software Foundation patrons</a></li>
-<li><a href="https://www.linuxfoundation.org/membership/members/">Linux Foundation</a>. If you frequent Kernel lists you can find many Chinese contributors (from Redhat, Huawei, etc.)</li>
-<li><a href="https://www.eclipse.org/membership/exploreMembership.php#allmembers">Eclipse Foundation</a></li>
-<li><a href="https://www.apache.org/foundation/thanks">Apache Foundation</a>, and many Apache projects like <a href="https://blogs.apache.org/foundation/entry/the-apache-software-foundation-announces52">Apache Dubbo</a></li>
-<li>OpenSSL <a href="https://www.openssl.org/support/acks.html">exceptional support</a>. Smartisian is a mobile phone vendor which donates their release event tickets to OpenSSL back when the HEARTBLEED security bug was a great threat.</li>
-<li><a href="https://ceph.com/foundation/">Ceph Foundation</a></li>
-<li><a href="https://www.opencontainers.org/about/members">OpenContainers Initiative</a></li>
-<li><a href="https://www.cncf.io/about/members/">CNCF members</a></li>
-<li><a href="https://www.openstack.org/foundation/companies/">OpenStack foundation</a></li>
-<li><a href="https://xenproject.org/about-us/project-members/">Xen members</a></li>
-<li><a href="https://riscv.org/membership/">RISC-V Foundation</a></li>
-<li><a href="https://openpowerfoundation.org/membership/current-members/">OpenPOWER members</a></li>
-</ul>
-<p>Notable Open Source projects started by Chinese:</p>
-<ul>
-<li><a href="https://github.com/vuejs/vue">vuejs</a>, popular javascript framework comparable to ReactJS.</li>
-<li><a href="https://github.com/openresty/openresty">OpenResty</a>, full-fledged scriptable nginx with LuaJIT2</li>
-<li><a href="http://www.linuxvirtualserver.org/">LVS: The Linux Virtual Server Project</a></li>
-<li><a href="https://github.com/pingcap/tidb">TiDB, TiKV</a>: Distributed Transactional Database with MySQL-compatible protocol.</li>
-<li><a href="https://echarts.apache.org">ECharts: A powerful, interactive charting and visualization library for browser</a></li>
-<li><a href="https://d7y.io/">Dragonfly</a>: P2P Container Image Distribution</li>
-<li><a href="https://github.com/goharbor/harbor">Harbor: Container Image Storage</a></li>
-</ul>
-<p>This list is incomplete, I hope one day there will be a Chinese company out reach even more open source communities <a href="https://community.redhat.com/software/">like Redhat</a>. If I have some projects missing please leave a comment!</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2019-06-25T21:35:40+08:00">2019-06-25</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

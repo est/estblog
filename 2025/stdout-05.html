@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>gitweets：拿 git 历史当微博发是什么体验 – est の 输入 输出和出入</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+      <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="gitweets：拿 git 历史当微博发是什么体验" />
+
+    <link rel="canonical" href="https://blog.est.im/2025/stdout-05" />
+    <meta property="og:url" content="https://blog.est.im/2025/stdout-05">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="gitweets：拿 git 历史当微博发是什么体验">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">gitweets：拿 git 历史当微博发是什么体验</h2>
+    <p class="post-date">Posted <time datetime="2025-08-17T00:00:00+08:00">2025-08-17</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>twitter 上各种 cancel culture 闹得动静很大，被一龙马买了之后更甚， mstdn nostr bsky 炒得火热，很多年前看到个<a href="https://twitter.com/bcrypt/status/1588416861552582657">最别具一格</a>的：</p>
+<p>拿 git 当微博使</p>
+<ul>
+<li>发推： <code>git commit --allow-empty</code></li>
+<li>加关注： <code>git remote add &lt;alias&gt; &lt;their fork url&gt;</code></li>
+<li>转发： <code>git cherry-pick &lt;their "tweet"&gt;</code></li>
+</ul>
+<p>脑洞大开。而且git基于merkle tree的，p2p 历史不可篡改，有web3那味了。</p>
+<p>我之前也饶有兴趣，挖了个坑准备搓个web界面。但是限于涣散的注意力，以及对css这种抽象排版不懂，一直拖沓没做好。</p>
+<p>周末心血来潮，用了下 AI 工具来代劳，进展神速。目前已经基本可用。网址在 https://f.est.im/ 。其中 <code>f</code> 表示 <code>feed</code> ，<code>f.est</code> 也就是 fest 表示。。。 盛会的意思。 </p>
+<p>feature list</p>
+<ol>
+<li>把任意 github repo 渲染成微博</li>
+<li>如果 commit message 以冒号结尾，而且恰好也在本次提交了图片文件 那么会尝试去加载位于 static 下面的图片作为附件渲染</li>
+<li>用 OAuth app 实现发推</li>
+</ol>
+<p>记录一些坑吧：</p>
+<ol>
+<li>OAuth app vs Github App。前者是代客做事；后者是独立主体单独账号，行为类人，多用于 CI/CD</li>
+<li>OAuth app 的 <code>scope</code> 如果是 <code>repo</code> 可以读写你所有仓库代码，包括私有仓库！网上的很多基于 github 的第三方评论系统有这个隐患！</li>
+<li>我这里用的是 <code>public_repo</code>，读写所有公开仓库。毕竟 github是个开源社区，你git都公开了，所以要安全一些。</li>
+<li>最好的办法是只能读写单个指定的repo。要实现API读写git，在github有下列几种方法：<ul>
+<li>REST API。可以用 fine grained PAT 读写一个repo</li>
+<li>GraphQL API。</li>
+<li>git 协议。走 <code>github.com:22</code> 端口。可以采用 deploy key 或者私人账号 ssh key</li>
+<li>git-http。走 <code>https://github.com:443</code></li>
+</ul>
+</li>
+<li>Private Access Token （缩写 PAT） 可以完全控制个人或者团队账号，fine grained PAT 可以只控制指定的几个仓库</li>
+<li>deploy key默认只读，可以改成读写，一库一用，不能复用</li>
+<li>REST API 列举 commits 不能获得当前 commit 改了哪些文件。需要额外N+1每个commit再次查询详情。背后的原因估计是 git 内部 ref 和 blob 是严格区分的。估计分开存的数据库表</li>
+<li>网站是跑在赛博菩萨 cloudflare worker 上的。这种所谓“serverless”平台很强大了。功能几乎很齐全了。甚至可以发起 tcp 连接。</li>
+<li>本来计划走 git-ssh 或者 git-http 协议，想了下js操作binary太复杂了，弄个 libgit2 之类的库估计很重。还是REST方便</li>
+<li>REST API 新增一个 empty commit 有多复杂？ 1. 获得当前branch 的 sha 2. 获得该 sha 的 tree 3. 新增一个 sha+tree 的commit 4. 把 ref 指向第三步的 sha 。啊，就不能一步完成么。下次有机会看看GraphQL 能不能一次调用完成</li>
+<li>Github 的API 强制要求 User-Agent 。你可以乱写但是不能没有</li>
+<li>Github 虽然返回了 <code>Access-Control-Allow-Origin: *</code>，但是现代浏览器他妈的不认这个 <code>*</code> 。所以在浏览器只能匿名调用 <code>GET</code> ，如果 <code>POST</code>， <code>PATCH</code> 带了 <code>credentials: "include"</code> 直接拒绝。网站必须显式指定允许哪个具体的 origin </li>
+</ol>
+<p>由于习惯古法写web，一个html包含了 css js 。无二次加载，无第三方依赖库。除了不能写死的全部写死 🤣</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'estblog';
+    var disqus_identifier = '2025/stdout-05';
+    var disqus_url = location.href;
+    (function() {
+    var dsq = document.createElement('script'); 
+
+    dsq.type = 'text/javascript';
+    dsq.defer = true;
+    dsq.src = '//estblog.disqus.com/embed.js';
+    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>    </main>
+
+  </body>
+
+</html>
