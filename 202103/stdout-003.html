@@ -95,24 +95,7 @@
 2. 实测这种在业务代码实现的「软」反向代理性能堪忧。上游4s左右的整个页面加载时间，反向代理之后就变成了 120s 左右。盲猜是 <code>StreamingResponse</code> 是一个字节一个字节去遍历迭代器？实测并不是。主要的锅还是 <code>Requests</code> 的 <code>.raw</code> 是按照 <code>chunked</code> 一段一段返回的。最好还是准备个 4KB 的 buffer，提高性能。解决方案是把  <code>r.raw</code> 改成 <code>r.raw.stream(4096000)</code> 性能一下就高了。注意这里不要用官方文档提供的 <code>.iter_contents()</code> 或者 <code>.iter_lines()</code> 这两者又会自作聪明的去解析文本编码或者换行符，降低了性能。</p>
 </article>
 
-<div class="comments">
-  <h2>Comments</h2>
-  <div id="disqus_thread"></div>
-  <script type="text/javascript">
-    var disqus_shortname = 'estblog';
-    var disqus_identifier = '202103/stdout-003';
-    var disqus_url = location.href;
-    (function() {
-    var dsq = document.createElement('script'); 
-
-    dsq.type = 'text/javascript';
-    dsq.defer = true;
-    dsq.src = '//estblog.disqus.com/embed.js';
-    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
-    })();
-  </script>
-  <noscript>Please enable JavaScript to view the comments.</noscript>
-</div>    </main>
+    </main>
 
   </body>
 

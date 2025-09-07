@@ -81,24 +81,7 @@
 <p>但是现在都是 SPA 单页应用，都是先 200 返回 <code>index.html</code> 的内容，再由 javascript 的 router 去决定是否正常显示还是404 。所以返回 200 但是显示 404 就破坏了这个语义。如果要精确匹配SPA里的router如果不存在由服务器返回404，第一是搞 SSR，把前端那一坨代码跑在服务器端，第二种办法是 npm build 的时候输出一个可路由URL列表，然后部署的时候导入静态文件服务器更新。这个具体实现就留作homework由读者自行解决了。</p>
 </article>
 
-<div class="comments">
-  <h2>Comments</h2>
-  <div id="disqus_thread"></div>
-  <script type="text/javascript">
-    var disqus_shortname = 'estblog';
-    var disqus_identifier = '2021/stdout-023';
-    var disqus_url = location.href;
-    (function() {
-    var dsq = document.createElement('script'); 
-
-    dsq.type = 'text/javascript';
-    dsq.defer = true;
-    dsq.src = '//estblog.disqus.com/embed.js';
-    (document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0]).appendChild(dsq);
-    })();
-  </script>
-  <noscript>Please enable JavaScript to view the comments.</noscript>
-</div>    </main>
+    </main>
 
   </body>
 
