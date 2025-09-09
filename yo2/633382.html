@@ -5,7 +5,7 @@
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-      <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
     <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -61,7 +61,78 @@
 <p><a href="http://www.baidu.com/baidu?word=%BB%A6%C9%EE%D6%B8%CA%FD%CD%B3%D2%BB%B8%C4%C3%FB%CE%AA%D4%C2%BE%AD%D6%B8%CA%FD">Baidu结果</a> | <a href="http://www.google.com/search?hl=en&amp;q=%E6%B2%AA%E6%B7%B1%E6%8C%87%E6%95%B0%E7%BB%9F%E4%B8%80%E6%94%B9%E5%90%8D%E4%B8%BA%E6%9C%88%E7%BB%8F%E6%8C%87%E6%95%B0">Google结果</a></p>
 </article>
 
-    </main>
+<div class="comments">
+  <h2>Comments</h2><div id="req4cmt_thread">
+    <form action="https://c.est.im/" method="post" onsubmit="newComment();">
+    <input type="hidden" name="name" value="guest">
+    <input type="hidden" name="email" value="dont@spam.me">
+    <textarea name="content" placeholder="name <email@example.com> https://your-web-site.com&#10;&#10;The above header line will be loosely parsed as contact info&#10;首行输入 称呼 &lt;邮箱&gt; 网址，再换行留言"></textarea>
+    <input type="submit" value="Go">
+    </form>
+    <br/>
+    <dl>
+    </dl>
+  </div>
+  <script type="text/javascript" defer><!--
+    async function newComment() {
+      this.event.preventDefault()
+      const r = await fetch("https://c.est.im/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams(new FormData(this.target))
+      });
+      this.event.submitter.value = '⚠️✅'[r.status == 200 ]
+      return false;
+    }
+    function ne(tag, attr={}){
+      const e=document.createElement(tag)
+      if(attr.$){
+        e.textContent = attr.$
+        delete attr.$
+      }
+      Object.entries(attr).forEach(([k,v])=>e.setAttribute(k,v))
+      return e
+    }
+    const nt = document.createTextNode.bind(document)
+    function load_comments(){
+      // add hidden inputs
+      const submit = req4cmt_thread.querySelector('form input[type="submit"]')
+      'name email link'.split(' ').forEach(k=>{
+        submit.insertAdjacentElement('beforebegin', ne('input', {name: `x-${k}`, placeholder: k}));
+        submit.insertAdjacentText('beforebegin', ' ');
+      })
+
+      // load from github via CF
+      const page_url = new URL(location.href)
+      const api = `https://c.est.im/${page_url.hostname.replace('127.0.0.1', 'blog.est.im')}${page_url.pathname}.jsonl`
+      fetch(api).then(x=>x.text()).then(body => {
+        body.split(/\r?\n/).forEach(line=>{
+          let data;
+          try{
+            data = JSON.parse(line)
+          } catch(e){
+            return
+          }
+          const dt = ne('dt')
+          dt.appendChild(ne('small', {$: new Date(data.at).toLocaleString('en-CA',{hour12: false}).replace(',', '')}))
+          dt.appendChild(nt(' '))
+          if (data.link){
+            dt.appendChild(ne('a', {href: data.link, $: data.name}))
+          } else {
+            dt.appendChild(b = ne('b', {$: data.name}))
+          }
+          req4cmt_thread.appendChild(dt)
+          const dd = ne('dd', {$: data.content})
+          req4cmt_thread.appendChild(dd)
+        })
+      })
+    }
+    document.addEventListener("DOMContentLoaded", load_comments)
+  --></script>
+</div>    </main>
+
 
   </body>
 

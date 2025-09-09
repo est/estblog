@@ -5,7 +5,7 @@
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-      <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
     <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -81,7 +81,78 @@
 <p>【水浒】 歼十大踏步赶将出来。那个F5迳奔去报了IDF。IDF见说，吃了一惊，踢翻了副油箱，丢去格斗弹，便钻将来。歼十却好迎着，正在大阔路上撞见。IDF虽然长大，近因酒色所迷，淘虚了发动机，先自吃了那一惊；奔将来，那势头不曾停住；怎地及得歼十虎一般似健的战机，又有心来算他！IDF见了歼十，心里先欺他地生，只顾赶将入来。 说时迟，那时快；歼十先把两个霹雳5去IDF脸上虚影一影，忽地转身便走。IDF大怒，抢将来，被武松一霹雳9返身180度打来，正中IDF小腹上，双翼按了，便落将下去。歼十一踅，踅将过来，那只右翼下的霹雳10早射起，直飞在IDF额角上，踢着正中，望后便倒。歼十追入一步，踏住机腹，提起这醋钵儿大小的双23机炮，望IDF头上便打。原来说过的打IDF扑手，先把霹雳5虚影一影便转身，却先返身射霹雳9；打中了便转过身来，再飞起霹雳10；这一招有名，唤做“玉环步，鸳鸯脚”。——这是歼十平生的真才实学，非同小可！打得 IDF在地下叫饶。</p>
 </article>
 
-    </main>
+<div class="comments">
+  <h2>Comments</h2><div id="req4cmt_thread">
+    <form action="https://c.est.im/" method="post" onsubmit="newComment();">
+    <input type="hidden" name="name" value="guest">
+    <input type="hidden" name="email" value="dont@spam.me">
+    <textarea name="content" placeholder="name <email@example.com> https://your-web-site.com&#10;&#10;The above header line will be loosely parsed as contact info&#10;首行输入 称呼 &lt;邮箱&gt; 网址，再换行留言"></textarea>
+    <input type="submit" value="Go">
+    </form>
+    <br/>
+    <dl>
+    </dl>
+  </div>
+  <script type="text/javascript" defer><!--
+    async function newComment() {
+      this.event.preventDefault()
+      const r = await fetch("https://c.est.im/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams(new FormData(this.target))
+      });
+      this.event.submitter.value = '⚠️✅'[r.status == 200 ]
+      return false;
+    }
+    function ne(tag, attr={}){
+      const e=document.createElement(tag)
+      if(attr.$){
+        e.textContent = attr.$
+        delete attr.$
+      }
+      Object.entries(attr).forEach(([k,v])=>e.setAttribute(k,v))
+      return e
+    }
+    const nt = document.createTextNode.bind(document)
+    function load_comments(){
+      // add hidden inputs
+      const submit = req4cmt_thread.querySelector('form input[type="submit"]')
+      'name email link'.split(' ').forEach(k=>{
+        submit.insertAdjacentElement('beforebegin', ne('input', {name: `x-${k}`, placeholder: k}));
+        submit.insertAdjacentText('beforebegin', ' ');
+      })
+
+      // load from github via CF
+      const page_url = new URL(location.href)
+      const api = `https://c.est.im/${page_url.hostname.replace('127.0.0.1', 'blog.est.im')}${page_url.pathname}.jsonl`
+      fetch(api).then(x=>x.text()).then(body => {
+        body.split(/\r?\n/).forEach(line=>{
+          let data;
+          try{
+            data = JSON.parse(line)
+          } catch(e){
+            return
+          }
+          const dt = ne('dt')
+          dt.appendChild(ne('small', {$: new Date(data.at).toLocaleString('en-CA',{hour12: false}).replace(',', '')}))
+          dt.appendChild(nt(' '))
+          if (data.link){
+            dt.appendChild(ne('a', {href: data.link, $: data.name}))
+          } else {
+            dt.appendChild(b = ne('b', {$: data.name}))
+          }
+          req4cmt_thread.appendChild(dt)
+          const dd = ne('dd', {$: data.content})
+          req4cmt_thread.appendChild(dd)
+        })
+      })
+    }
+    document.addEventListener("DOMContentLoaded", load_comments)
+  --></script>
+</div>    </main>
+
 
   </body>
 

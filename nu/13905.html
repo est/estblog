@@ -5,7 +5,7 @@
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-      <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
     <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -63,7 +63,78 @@
 <p>PlanetLab is a global research network that supports the development of new network services. Since the beginning of 2003, more than 1,000 researchers at top academic institutions and industrial research labs have used PlanetLab to develop new technologies for distributed storage, network mapping, peer-to-peer systems, distributed hash tables, and query processing. <p>PlanetLab currently consists of 760 nodes at 379 sites.  <p><img alt="PlanetLab node distribution" src="http://www.planet-lab.org/generated/World50.png"> <p>它是一个全球性的研究网络，用于新型网络服务的开发。自从2003年起，超过1,000过来自顶级学术机构和业界实验室在PlanetLab上开发了新技术包括：分布式存储、网络印射、P2P系统、DHT（分布式哈希表）和查询处理。PlanetLab目前有760个节点和379个站点。</p> <p>&nbsp;</p> <h3><img height="72" alt="CoDeeN" src="http://codeen.cs.princeton.edu/codeen_title.gif" width="259"></h3> <p>A Content Distribution Network for PlanetLab</p> <p>&nbsp;</p> <p><font color="#ff8040"><strong>C</strong></font>o<font color="#ff8000"><strong>D</strong></font>ee<strong><font color="#ff8000">N</font></strong> 包含下列服务： <ul> <li>Co<font color="#ff8000">Blitz</font>, a scalable Web-based <a href="http://codeen.cs.princeton.edu/coblitz/">distribution service</a> for large files.<br>这个服务主要用来传输大文件。<a href="http://coblitz.planet-lab.org/pub/fedora/linux/core/">FedoraCore5/6 就是用 CoBlitz 来发布的。</a>类似这个服务的使用方法很简单，在网址前面加上 http://coblitz.codeen.org:3125/ 就行了。例如我要下载 Nero Linux：<br><a href="http://ftp6.usw.nero.com/software/NeroLINUX/nerolinux-2.1.0.4b-x86.deb">http://ftp6.usw.nero.com/software/NeroLINUX/nerolinux-2.1.0.4b-x86.deb</a><br>使用CoBlitz的网址就是：<br><a href="http://coblitz.codeen.org:3125/ftp6.usw.nero.com/software/NeroLINUX/nerolinux-2.1.0.4b-x86.deb">http://coblitz.codeen.org:3125/ftp6.usw.nero.com/software/NeroLINUX/nerolinux-2.1.0.4b-x86.deb</a><br>我用迅雷下载NeroLinux几乎一直是 0% 不动，用CoBlitz一会儿就下载完了，速度在2KB～50KB之间（教育网）。<br>可以到CoBlitz 上去查看&nbsp;<a href="http://coblitz.planet-lab.org/pub/fedora/linux/core/">Fedora Core 各个发行版本</a>。 <li>Co<font color="#ff8000">Deploy</font>, an efficient <a href="http://codeen.cs.princeton.edu/codeploy/">synchronization tool</a> for PlanetLab slices.<br>这个是用来在PlanetLab的切片主机之间同步的工具 <li>Co<font color="#ff8000">DNS</font>, a fast and reliable <a href="http://codeen.cs.princeton.edu/codns/">name lookup</a> service.<br>传说中的P2P的DNS服务。可以在编程里调用，也可以很方便的用telnet获得：<br></li> <p>telnet localhost 4119<br>Trying 127.0.0.1...<br>Connected to localhost.<br>Escape character is '^]'.<br>www.princeton.edu&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;- domain name<br>128.112.128.15&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;- IP address<br>Connection closed by foreign host. <p>也可以下载使用Linux/MacOS版本：<a href="http://codeen.cs.princeton.edu/codns/codns-0.51.src.tar.gz">CoDNS 0.52</a> <li>Co<font color="#ff8000">Top</font>, a command-line <a href="http://codeen.cs.princeton.edu/cotop/">activity monitoring</a> tool for PlanetLab.<br>PlanetLab的监控工具 <li>Co<font color="#ff8000">Mon</font>, a Web-based <a href="http://comon.cs.princeton.edu/">general node/slice monitor</a> that monitors most PlanetLab nodes.<br>PlanetLab节点的Web版监控工具 <li>Co<font color="#ff8000">Test</font>, a login <a href="http://codeen.cs.princeton.edu/cotest/">debugging tool</a> that tries to be human-friendly.<br>登陆的友好调试器 <li>Co<font color="#ff8000">Viz</font>, a <a href="http://codeen.cs.princeton.edu/coviz/">visualization tool</a> graphically displaying PlanetLab activity.<br>可视化的PlanetLab活动显示。</li></ul> <p>当然最著名的就是 CoDeeN 代理啦，用来听<a href="http://www.pandora.com/">Pandora</a>和看<a href="http://www.youtube.com">Youtube</a>一点都不卡，呵呵。代理列表可以看<a href="http://dormforce.net/Blog/electronixtar/archive/2007/03/10/13793.aspx">CoDeeN的教育网代理，2007.3.9.UECTC.ProxyHunter验证</a></p> <p>附：首批加入Planetlab的25所国内大学<br>北京大学 北京航空航天大学 北京邮电大学 重庆大学<br>东北大学 大连理工大学 东南大学 <font color="#ff8000">电子科技大学</font><br>复旦大学 哈尔滨工业大学 华南理工大学 华中科技大学<br>吉林大学 兰州大学 清华大学 山东大学<br>上海交通大学 天津大学 同济大学 西安交通大学<br>厦门大学 中国科学技术大学 浙江大学 中南大学 郑州大学</p><img src ="http://dormforce.net/Blog/electronixtar/aggbug/13905.aspx" width = "1" height = "1" />
 </article>
 
-    </main>
+<div class="comments">
+  <h2>Comments</h2><div id="req4cmt_thread">
+    <form action="https://c.est.im/" method="post" onsubmit="newComment();">
+    <input type="hidden" name="name" value="guest">
+    <input type="hidden" name="email" value="dont@spam.me">
+    <textarea name="content" placeholder="name <email@example.com> https://your-web-site.com&#10;&#10;The above header line will be loosely parsed as contact info&#10;首行输入 称呼 &lt;邮箱&gt; 网址，再换行留言"></textarea>
+    <input type="submit" value="Go">
+    </form>
+    <br/>
+    <dl>
+    </dl>
+  </div>
+  <script type="text/javascript" defer><!--
+    async function newComment() {
+      this.event.preventDefault()
+      const r = await fetch("https://c.est.im/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams(new FormData(this.target))
+      });
+      this.event.submitter.value = '⚠️✅'[r.status == 200 ]
+      return false;
+    }
+    function ne(tag, attr={}){
+      const e=document.createElement(tag)
+      if(attr.$){
+        e.textContent = attr.$
+        delete attr.$
+      }
+      Object.entries(attr).forEach(([k,v])=>e.setAttribute(k,v))
+      return e
+    }
+    const nt = document.createTextNode.bind(document)
+    function load_comments(){
+      // add hidden inputs
+      const submit = req4cmt_thread.querySelector('form input[type="submit"]')
+      'name email link'.split(' ').forEach(k=>{
+        submit.insertAdjacentElement('beforebegin', ne('input', {name: `x-${k}`, placeholder: k}));
+        submit.insertAdjacentText('beforebegin', ' ');
+      })
+
+      // load from github via CF
+      const page_url = new URL(location.href)
+      const api = `https://c.est.im/${page_url.hostname.replace('127.0.0.1', 'blog.est.im')}${page_url.pathname}.jsonl`
+      fetch(api).then(x=>x.text()).then(body => {
+        body.split(/\r?\n/).forEach(line=>{
+          let data;
+          try{
+            data = JSON.parse(line)
+          } catch(e){
+            return
+          }
+          const dt = ne('dt')
+          dt.appendChild(ne('small', {$: new Date(data.at).toLocaleString('en-CA',{hour12: false}).replace(',', '')}))
+          dt.appendChild(nt(' '))
+          if (data.link){
+            dt.appendChild(ne('a', {href: data.link, $: data.name}))
+          } else {
+            dt.appendChild(b = ne('b', {$: data.name}))
+          }
+          req4cmt_thread.appendChild(dt)
+          const dd = ne('dd', {$: data.content})
+          req4cmt_thread.appendChild(dd)
+        })
+      })
+    }
+    document.addEventListener("DOMContentLoaded", load_comments)
+  --></script>
+</div>    </main>
+
 
   </body>
 
