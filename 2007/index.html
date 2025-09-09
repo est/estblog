@@ -153,15 +153,15 @@
     <dt>2007-01-29</dt>
     <dd><a href="/nu/13605">Google代替了http://</a></dd>
     <dt>2007-01-17</dt>
-    <dd><a href="/cnblogs/622501">让Google评价你的密码的安全性</a></dd>
+    <dd><a href="/cnblogs/622499">[原]一个极其BT的批处理：任务栏系统托盘汽泡提示</a></dd>
     <dt>2007-01-17</dt>
     <dd><a href="/cnblogs/622500">VBS创建eml mht文件</a></dd>
     <dt>2007-01-17</dt>
+    <dd><a href="/cnblogs/622506">[导入]Alt+Shift+PrintScreen</a></dd>
+    <dt>2007-01-17</dt>
     <dd><a href="/cnblogs/622498">在Windows下安装Ubuntu！注意，是直接在Win32下安装</a></dd>
     <dt>2007-01-17</dt>
-    <dd><a href="/cnblogs/622499">[原]一个极其BT的批处理：任务栏系统托盘汽泡提示</a></dd>
-    <dt>2007-01-17</dt>
-    <dd><a href="/cnblogs/622506">[导入]Alt+Shift+PrintScreen</a></dd>
+    <dd><a href="/cnblogs/622501">让Google评价你的密码的安全性</a></dd>
     <dt>2007-01-11</dt>
     <dd><a href="/nu/13367">[原创]批处理屏幕截图</a></dd>
     <dt>2007-01-10</dt>
@@ -189,9 +189,9 @@
 <div class="comments">
   <h2>Comments</h2><div id="req4cmt_thread">
     <form action="https://c.est.im/" method="post" onsubmit="newComment();">
-    <input type="hidden" name="name" value="guest">
-    <input type="hidden" name="email" value="dont@spam.me">
-    <textarea name="content" placeholder="name <email@example.com> https://your-web-site.com&#10;&#10;The above header line will be loosely parsed as contact info&#10;首行输入 称呼 &lt;邮箱&gt; 网址，再换行留言"></textarea>
+    <input type="hidden" name="name" placeholder="guest">
+    <input type="hidden" name="email" placeholder="dont@spam.me">
+    <textarea name="content"></textarea>
     <input type="submit" value="Go">
     </form>
     <br/>
@@ -200,15 +200,22 @@
   </div>
   <script type="text/javascript" defer><!--
     async function newComment() {
-      this.event.preventDefault()
-      const r = await fetch("https://c.est.im/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams(new FormData(this.target))
-      });
-      this.event.submitter.value = '⚠️✅'[r.status == 200 ]
+      evt = this.event
+      evt.preventDefault()
+      let r
+      try {
+        r = await fetch("https://c.est.im/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: new URLSearchParams(new FormData(evt.target))
+        })
+        evt.submitter.value = '⚠️✅'[r.status == 200 ]
+      } catch (e) {
+        console.log(e)
+        evt.submitter.value = '❌'
+      }
       return false;
     }
     function ne(tag, attr={}){
