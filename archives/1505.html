@@ -191,8 +191,8 @@ z   window[&quot;atob&quot;](&quot;et&quot;)[0]
       evt.preventDefault()
       let req
       try {
-        req = await fetch("https://c.est.im/", {
-          method: "POST",
+        req = await fetch(`https://c.est.im/${location.hostname}${location.pathname}`, {
+          method: "POST", referrerPolicy: "unsafe-url",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
           },
@@ -211,7 +211,7 @@ z   window[&quot;atob&quot;](&quot;et&quot;)[0]
       const is_ok = req.status == 200 && !rsp.error
       evt.submitter.value = is_ok ? '✅' : '⚠️'
       if (is_ok){
-        location.assign()
+        location.assign(location.href)
       }
       return false;
     }

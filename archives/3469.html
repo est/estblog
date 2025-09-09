@@ -120,8 +120,8 @@ M=Math;Q=M.random;J=[];U=16;T=M.sin;E=M.sqrt;for(O=k=0;x=z=j=i=k&lt;200;)with(M[
       evt.preventDefault()
       let req
       try {
-        req = await fetch("https://c.est.im/", {
-          method: "POST",
+        req = await fetch(`https://c.est.im/${location.hostname}${location.pathname}`, {
+          method: "POST", referrerPolicy: "unsafe-url",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
           },
@@ -140,7 +140,7 @@ M=Math;Q=M.random;J=[];U=16;T=M.sin;E=M.sqrt;for(O=k=0;x=z=j=i=k&lt;200;)with(M[
       const is_ok = req.status == 200 && !rsp.error
       evt.submitter.value = is_ok ? '✅' : '⚠️'
       if (is_ok){
-        location.assign()
+        location.assign(location.href)
       }
       return false;
     }

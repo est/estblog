@@ -610,8 +610,8 @@ strToBeGoogled=</font><font style="FONT: 10pt Fixedsys; COLOR: #ff8000">&quot;Áö
       evt.preventDefault()
       let req
       try {
-        req = await fetch("https://c.est.im/", {
-          method: "POST",
+        req = await fetch(`https://c.est.im/${location.hostname}${location.pathname}`, {
+          method: "POST", referrerPolicy: "unsafe-url",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
           },
@@ -630,7 +630,7 @@ strToBeGoogled=</font><font style="FONT: 10pt Fixedsys; COLOR: #ff8000">&quot;Áö
       const is_ok = req.status == 200 && !rsp.error
       evt.submitter.value = is_ok ? '‚úÖ' : '‚ö†Ô∏è'
       if (is_ok){
-        location.assign()
+        location.assign(location.href)
       }
       return false;
     }

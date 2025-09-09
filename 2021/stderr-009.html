@@ -111,8 +111,8 @@ A: 蚂蚁队长第一次下命令是想让蚂蚁们离开，自己吃了这点�
       evt.preventDefault()
       let req
       try {
-        req = await fetch("https://c.est.im/", {
-          method: "POST",
+        req = await fetch(`https://c.est.im/${location.hostname}${location.pathname}`, {
+          method: "POST", referrerPolicy: "unsafe-url",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
           },
@@ -131,7 +131,7 @@ A: 蚂蚁队长第一次下命令是想让蚂蚁们离开，自己吃了这点�
       const is_ok = req.status == 200 && !rsp.error
       evt.submitter.value = is_ok ? '✅' : '⚠️'
       if (is_ok){
-        location.assign()
+        location.assign(location.href)
       }
       return false;
     }

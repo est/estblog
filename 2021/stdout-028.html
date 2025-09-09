@@ -109,8 +109,8 @@ Reference&amp;#32;&amp;#35;18&amp;#46;1c697b76&amp;#46;1640788948&amp;#46;3b971c
       evt.preventDefault()
       let req
       try {
-        req = await fetch("https://c.est.im/", {
-          method: "POST",
+        req = await fetch(`https://c.est.im/${location.hostname}${location.pathname}`, {
+          method: "POST", referrerPolicy: "unsafe-url",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
           },
@@ -129,7 +129,7 @@ Reference&amp;#32;&amp;#35;18&amp;#46;1c697b76&amp;#46;1640788948&amp;#46;3b971c
       const is_ok = req.status == 200 && !rsp.error
       evt.submitter.value = is_ok ? '✅' : '⚠️'
       if (is_ok){
-        location.assign()
+        location.assign(location.href)
       }
       return false;
     }

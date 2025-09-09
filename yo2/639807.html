@@ -117,8 +117,8 @@ Amir蒙眼在半场投球进了，中了500万美元。。。。至少他是这�
       evt.preventDefault()
       let req
       try {
-        req = await fetch("https://c.est.im/", {
-          method: "POST",
+        req = await fetch(`https://c.est.im/${location.hostname}${location.pathname}`, {
+          method: "POST", referrerPolicy: "unsafe-url",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
           },
@@ -137,7 +137,7 @@ Amir蒙眼在半场投球进了，中了500万美元。。。。至少他是这�
       const is_ok = req.status == 200 && !rsp.error
       evt.submitter.value = is_ok ? '✅' : '⚠️'
       if (is_ok){
-        location.assign()
+        location.assign(location.href)
       }
       return false;
     }

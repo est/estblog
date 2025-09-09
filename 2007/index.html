@@ -153,13 +153,13 @@
     <dt>2007-01-29</dt>
     <dd><a href="/nu/13605">Google代替了http://</a></dd>
     <dt>2007-01-17</dt>
-    <dd><a href="/cnblogs/622499">[原]一个极其BT的批处理：任务栏系统托盘汽泡提示</a></dd>
-    <dt>2007-01-17</dt>
-    <dd><a href="/cnblogs/622498">在Windows下安装Ubuntu！注意，是直接在Win32下安装</a></dd>
-    <dt>2007-01-17</dt>
     <dd><a href="/cnblogs/622501">让Google评价你的密码的安全性</a></dd>
     <dt>2007-01-17</dt>
     <dd><a href="/cnblogs/622506">[导入]Alt+Shift+PrintScreen</a></dd>
+    <dt>2007-01-17</dt>
+    <dd><a href="/cnblogs/622499">[原]一个极其BT的批处理：任务栏系统托盘汽泡提示</a></dd>
+    <dt>2007-01-17</dt>
+    <dd><a href="/cnblogs/622498">在Windows下安装Ubuntu！注意，是直接在Win32下安装</a></dd>
     <dt>2007-01-17</dt>
     <dd><a href="/cnblogs/622500">VBS创建eml mht文件</a></dd>
     <dt>2007-01-11</dt>
@@ -204,8 +204,8 @@
       evt.preventDefault()
       let req
       try {
-        req = await fetch("https://c.est.im/", {
-          method: "POST",
+        req = await fetch(`https://c.est.im/${location.hostname}${location.pathname}`, {
+          method: "POST", referrerPolicy: "unsafe-url",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
           },
@@ -224,7 +224,7 @@
       const is_ok = req.status == 200 && !rsp.error
       evt.submitter.value = is_ok ? '✅' : '⚠️'
       if (is_ok){
-        location.assign()
+        location.assign(location.href)
       }
       return false;
     }
