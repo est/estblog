@@ -58,6 +58,109 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/644352"  rel="bookmark" >
+              <h2 class="card-title">pydbg和Paimei - hook openssl ssl_read()</h2>
+            </a>
+            <p class="card-text"><p>最近需要分析一些SSL流量，无非三条途径：2种已知中间人解密方法，wireshark抓证书然后解密，和hook dll三种方法。个人无故偏好最后一种。。。。</p>
+<p>网上找了些软件，一个是别人写好的现成黑客工具<a href="http://www.bindshell.net/tools/echomirage">Echo Mirage</a></p>
+<p><img src="http://www.bindshell.net/tools/echomirage/screenshots/Screenshot01.png"></p>
+<p><img src="http://www.bindshell.net/tools/echomirage/screenshots/Screenshot04.png"></p>
+<p>支持Winsock, Winsock SSL, OpenSSL三种hook。但是这个dll inject老是挂掉，不爽。。。。</p>
+<p>又发现了一个PyDbg。。。这个工具是附属于 pedram.openrce.org 的一个名叫 <a href="http://pedram.openrce.org/code/paimei/">PaiMei</a> 的子项目中</p>
+<p>当然这个 Paimei 就是《<a href="http://www.douban.com/subject/1291584/">Kill Bill 2</a>》里面最后被毒死那个所谓功夫很牛逼的 <a href="http://www.imdb.com/character/ch0001814/">白眉 师傅</a>。。。。</p>
+<p><img src="http://pedram.openrce.org/PaiMei/logos/paimei-1-cutout.jpg"></p>
+<p><img src="http://pedram.openrce.org/PaiMei/logos/paimei-6.jpg"></p>
+<p>Paimei <a href="http://pedram.openrce.org/code/paimei/">首页</a> | <a href="http://pedram.openrce.org/PaiMei/docs/">文档</a> | <a href="http://www.openrce.org/downloads/details/208/PaiMei">下载</a> | <a href="http://code.google.com/p/paimei/">源码</a></p>
+<blockquote>
+<p>PaiMei is a reverse engineering framework consisting of multiple extensible components. The goal of the framework is to reduce the time from "idea" to prototype to a matter of minutes, instead of days. PaiMei is written entirely in Python and exposes at the highest level a debugger, a graph based binary abstraction and a set of utilities for accomplishing various repetitive tasks. The framework can essentially be thought of as a reverse engineer's swiss army knife and has already been proven effective for a wide range of both static and dynamic tasks such as: fuzzer assistance, code coverage tracking, data flow tracking and more.</p>
+</blockquote>
+<p>用pydbg来截获ssl还是很简单的。。。这个<a href="http://www.openrce.org/forums/posts/566">帖子</a>里有现成代码</p>
+<pre>
+import sys
+import utils
+from pydbg import *
+pktc = 0<br>
+def SSL_read_hook (dbg, args, ret):
+    global pktc
+    pkt = dbg.read_process_memory(args[1], args[2])
+    f.write("[%d] Packet:\n" % pktc)
+    f.write(dbg.hex_dump(dbg.read_process_memory(args[1], args[2])))
+    f.write('\n')
+    pktc = pktc + 1<br>
+try:
+    pid = int(sys.argv[1])
+except:
+    print "Usage: %s PID" % sys.argv[0]
+    sys.exit(-1)<br>
+filename = "ssldump_" + str(pid) + ".txt"
+f = open(filename, 'w')<br>
+dbg = pydbg()
+dbg.attach(pid)<br>
+addrSSL_read = dbg.func_resolve_debuggee("SSLEAY32", "SSL_read")
+if not addrSSL_read:
+    print "Couldn't resolve SSL_read"
+    sys.exit(-1)<br>
+hooks = utils.hook_container()
+print "Hooking SSL_read(0x%x)" % addrSSL_read
+hooks.add(dbg, addrSSL_read, 3, None, SSL_read_hook)<br>
+print "Function hooked, logging to: %s" % filename
+dbg.run()
+f.close()
+</pre>
+<p>pydbg这个依赖库不需要完全下载paimei，只需要svn checkout/export下面几个python module就可以了：</p>
+<pre>
+http://paimei.googlecode.com/svn/trunk/pgraph
+http://paimei.googlecode.com/svn/trunk/pida
+http://paimei.googlecode.com/svn/trunk/pydbg
+http://paimei.googlecode.com/svn/trunk/utils
+</pre>
+<p>注意paimei是比较古老的项目了，现在似乎没人管了。所以这个代码里有个<a href="http://code.google.com/p/paimei/issues/detail?id=3">bug</a>，会出错</p>
+<p><code>TypeError: can't set attributes of built-in/extension type '_ctypes.Structure'</code></p>
+<p>解决方法是打开 <code>pydbg\my_ctypes.py</code></p>
+<p>在 <code>c_type = (Structure ..</code>. 这一行上面加一行：</p>
+<pre>
+class Structure(Structure):
+    pass
+</pre>
+<p>就OK了。</p>
+<p>当然hook出来有很多0x00的空值。这个手工处理掉就行了。</p>
+<p>现在又开始纠结带gzip/bz2解压功能的ssl分析工具了。。。。。很多时候还是只有自己DIY。。。。</p>
+<p>参考 <a href="http://hi.baidu.com/kkqq_/blog/item/70e15f420c2eb8199213c6db.html">1</a>，<a href="http://www.icylife.net/yunshu/show.php?id=468">2</a>，<a href="http://www.icylife.net/yunshu/show.php?id=540">3</a></p>
+<p>btw, 最近出了一款号称用p2p，基于QtWebkit的OOXX浏览器。我去看了下，就是一个ssl代理</p>
+<pre>
+$ openssl s_client -connect ps?????.dreamhostps.com:443
+GET http://twitter.com/ HTTP/1.1
+HOST: twitter.com
+</pre>
+<p>呵呵。。。。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-12-14T14:53:35+08:00">2009-12-14</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/644345"  rel="bookmark" >
+              <h2 class="card-title">皮肤也是感官</h2>
+            </a>
+            <p class="card-text"><p>Albany Medical College, the University of Liverpool and Cambridge University的研究人员在December 15的学术期刊 <em>Pain</em> 上发了一篇paper：<a href="http://www.sciencedaily.com/releases/2009/12/091208083524.htm">血管和汗腺有一套独立的秘密感官系统</a>。</p>
+<p>古中国和印度对这方面有不少经验主义成果了。所谓的第六感官么。。。呵呵。。。</p>
+<p>说到中医 vs 西医这个吵架话题，我觉得中医是一种 proto-医学，也就是原始形态，谈不上多么科学，但是至少也是个原始粗糙经验宝库。现代西方医学的原始形态不见得比现在的中医高明到哪里去。还不都是这一条路从愚昧到清晰走过来的。现在搞不清楚的原理，不代表以后也搞不清楚；现在不能证明的，不代表以后不能证明；现在是伪科学，不代表以后不能被科学重新证明。科学史上盖棺定论、永不翻案，最后又被推翻的事情多去了。历史上最近一次这种潮流就是五四运动，以为自己有本事把老祖宗的东西洗刷一次是一件多么光彩多么叛逆多么出风头多么牛逼的事情，结果绕了一大圈回来发现当年的很多观点太狭隘太短视太2了。方舟子那种老匹夫那种否定观点肯定是有偏见的。</p>
+<p>但是江湖中医骗子这个是要绝对打到和鄙视的。现在好多人心目中的中医其实就受这些影响而留下不好印象的。</p>
+<p><a href="http://www.reddit.com/r/science/comments/ae3wn/hidden_sensory_system_discovered_in_our_skin/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-12-13T18:42:14+08:00">2009-12-13</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/644342"  rel="bookmark" >
               <h2 class="card-title">Digital camouflage</h2>
             </a>
@@ -1102,74 +1205,6 @@ Chrome 4.0 beta 437.2ms<br>
 <p><a href="http://www.reddit.com/r/software/comments/aaifo/wow_tried_to_go_to_newzleechcom_again_today_and/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2009-12-03T18:53:44+08:00">2009-12-03</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/644138"  rel="bookmark" >
-              <h2 class="card-title">可以选择波长的的星空观测网站</h2>
-            </a>
-            <p class="card-text"><p>肉眼看星空只能看到可见光。如果想看X-Ray、Hydrogen α、Far-IR、Microwave、Radio波长的星空图案的话用下面这个网站：</p>
-<p><a href="http://www.chromoscope.net/">http://www.chromoscope.net/</a></p>
-<p><a href="http://www.reddit.com/r/space/comments/aaqg3/chromoscope_new_site_that_lets_you_browse_the_sky/">via</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2009-12-03T18:04:45+08:00">2009-12-03</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/644136"  rel="bookmark" >
-              <h2 class="card-title">另一个未披露的Google提供的DNS：4.3.2.1</h2>
-            </a>
-            <p class="card-text"><p><a href="http://googlecode.blogspot.com/2009/12/introducing-google-public-dns-new-dns.html">Google提供了公共递归DNS服务器</a>，全世界都知道了吧？</p>
-<p><code>8.8.8.8<br>
-8.8.4.4<br></code></p>
-<p>买的以前DoD的IP段。恩～～～差一点就可以劫持8.7.198.45所有流量了。。。可惜啊。。。</p>
-<p>支持DNSSec。非常好。。。。。</p>
-<p>免费归免费，但是还是<a href="http://code.google.com/speed/public-dns/privacy.html">会log不少信息</a>的。。</p>
-<p>Google旗下服务能根据CDN智能解析。。。很好～～～～比OpenDNS那个废品HTTP劫持再跳转好多了。而且不会劫持NXDOMAIN和SERVFAIL：</p>
-<blockquote>
-<p>Google Public DNS complies with the DNS standards and gives the user the exact response his or her computer expects without performing any blocking, filtering, or redirection that may hamper a user's browsing experience.</p>
-</blockquote>
-<p>其他CDN会<strong>尽量</strong>做到智能解析，因为Google全球都有数据中心。。。</p>
-<blockquote>
-<p>Google Public DNS is hosted in data centers worldwide, and uses anycast routing to send users to the geographically closest data center.<br>
-Note, however, that because nameservers geolocate according to the resolver's IP address rather than the user's, Google Public DNS has the same limitations as other open DNS services: that is, the server to which a user is referred might be farther away than one to which a local DNS provider would have referred. This <strong>could cause a slower browsing experience for certain sites</strong>.</p>
-</blockquote>
-<p>这里提一下，<a href="http://news.ycombinator.com/item?id=975093">HN上有人人披露了一个新IP</a>：4.3.2.1</p>
-<pre>
-$ whois 4.3.2.1
-Level 3 Communications, Inc. LVLT-ORG-4-8 (NET-4-0-0-0-1)
-                                  4.0.0.0 - 4.255.255.255
-Google Incorporated LVLT-GOOGL-1-4-3-2 (NET-4-3-2-0-1)
-                                  4.3.2.0 - 4.3.2.255<br>
-$ nslookup g.cn 4.3.2.1
-Server:  any-in-0201.1e100.net
-Address:  4.3.2.1<br>
-Non-authoritative answer:
-Name:    g.cn
-Addresses:  203.208.39.104, 203.208.39.99
-</pre>
-<p>如果那两个被OOXX了就用这个吧。。。。</p>
-<p>问了下大牛，貌似这个prefetch和BIND的缓存不同就是TTL过期之后，再服务器update一次，而不是清空缓存。提高一点效率吧。。。但是遇到Fast Flux估计Google就SB了。</p>
-<p>Google这次破天荒的提供了电话服务。很令人震惊。。。</p>
-<blockquote>
-<p>Google Public DNS telephone support<br>
-* 877-590-4367 in the U.S.<br>
-* 770-200-1201 outside the U.S</p>
-</blockquote>
-<p><a href="http://news.ycombinator.com/item?id=974824">有人试了下</a>，自动问答。FT！</p>
-<p>还就就是终于知道 4.2.2.1 - 4.2.2.6 那个DNS是属于<a href="http://www.level3.com/">Level 3 Communications</a>的。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2009-12-03T17:26:59+08:00">2009-12-03</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

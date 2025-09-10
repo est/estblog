@@ -58,6 +58,41 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/yo2/644560"  rel="bookmark" >
+              <h2 class="card-title">爷玩的是山寨。。。航天飞机。。。</h2>
+            </a>
+            <p class="card-text"><p>Top Gear山寨了一个航天飞机～～～～～囧。。。</p>
+<p><object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/p38V9y808dY&amp;hl=en_US&amp;fs=1&amp;">
+<param name="allowFullScreen" value="true">
+<param name="allowscriptaccess" value="always">
+<embed src="http://www.youtube.com/v/p38V9y808dY&amp;hl=en_US&amp;fs=1&amp;" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></object></p>
+<p>国内<a href="http://you.video.sina.com.cn/b/16143453-1506839937.html">视频</a>，不过却组装过程。。。。</p>
+<p><a href="http://www.reddit.com/r/WTF/comments/aihp3/dude_launches_gigantic_110_scale_saturn_v_rocket/c0hqflv">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-12-26T01:34:03+08:00">2009-12-26</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/yo2/644558"  rel="bookmark" >
+              <h2 class="card-title">There are basically two types of human beings [PIC]</h2>
+            </a>
+            <p class="card-text"><p><img src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/12/striphandlerashx.gif"></p>
+<p><a href="http://www.wulffmorgenthaler.com/strip.aspx?id=eb3159f7-dd74-4e56-a50b-78959a4c83c4">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-12-26T00:39:12+08:00">2009-12-26</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/yo2/644557"  rel="bookmark" >
               <h2 class="card-title">第一个向西欧传播世俗观念和科学的其实是MSL</h2>
             </a>
@@ -1126,109 +1161,6 @@ Ejaculations last about 5 seconds, so that means I can upload at 332TB/s. I am s
 <p><a href="http://www.informationisbeautiful.net/2009/four-infographic-morsels-3/">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2009-12-14T15:22:16+08:00">2009-12-14</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/644352"  rel="bookmark" >
-              <h2 class="card-title">pydbg和Paimei - hook openssl ssl_read()</h2>
-            </a>
-            <p class="card-text"><p>最近需要分析一些SSL流量，无非三条途径：2种已知中间人解密方法，wireshark抓证书然后解密，和hook dll三种方法。个人无故偏好最后一种。。。。</p>
-<p>网上找了些软件，一个是别人写好的现成黑客工具<a href="http://www.bindshell.net/tools/echomirage">Echo Mirage</a></p>
-<p><img src="http://www.bindshell.net/tools/echomirage/screenshots/Screenshot01.png"></p>
-<p><img src="http://www.bindshell.net/tools/echomirage/screenshots/Screenshot04.png"></p>
-<p>支持Winsock, Winsock SSL, OpenSSL三种hook。但是这个dll inject老是挂掉，不爽。。。。</p>
-<p>又发现了一个PyDbg。。。这个工具是附属于 pedram.openrce.org 的一个名叫 <a href="http://pedram.openrce.org/code/paimei/">PaiMei</a> 的子项目中</p>
-<p>当然这个 Paimei 就是《<a href="http://www.douban.com/subject/1291584/">Kill Bill 2</a>》里面最后被毒死那个所谓功夫很牛逼的 <a href="http://www.imdb.com/character/ch0001814/">白眉 师傅</a>。。。。</p>
-<p><img src="http://pedram.openrce.org/PaiMei/logos/paimei-1-cutout.jpg"></p>
-<p><img src="http://pedram.openrce.org/PaiMei/logos/paimei-6.jpg"></p>
-<p>Paimei <a href="http://pedram.openrce.org/code/paimei/">首页</a> | <a href="http://pedram.openrce.org/PaiMei/docs/">文档</a> | <a href="http://www.openrce.org/downloads/details/208/PaiMei">下载</a> | <a href="http://code.google.com/p/paimei/">源码</a></p>
-<blockquote>
-<p>PaiMei is a reverse engineering framework consisting of multiple extensible components. The goal of the framework is to reduce the time from "idea" to prototype to a matter of minutes, instead of days. PaiMei is written entirely in Python and exposes at the highest level a debugger, a graph based binary abstraction and a set of utilities for accomplishing various repetitive tasks. The framework can essentially be thought of as a reverse engineer's swiss army knife and has already been proven effective for a wide range of both static and dynamic tasks such as: fuzzer assistance, code coverage tracking, data flow tracking and more.</p>
-</blockquote>
-<p>用pydbg来截获ssl还是很简单的。。。这个<a href="http://www.openrce.org/forums/posts/566">帖子</a>里有现成代码</p>
-<pre>
-import sys
-import utils
-from pydbg import *
-pktc = 0<br>
-def SSL_read_hook (dbg, args, ret):
-    global pktc
-    pkt = dbg.read_process_memory(args[1], args[2])
-    f.write("[%d] Packet:\n" % pktc)
-    f.write(dbg.hex_dump(dbg.read_process_memory(args[1], args[2])))
-    f.write('\n')
-    pktc = pktc + 1<br>
-try:
-    pid = int(sys.argv[1])
-except:
-    print "Usage: %s PID" % sys.argv[0]
-    sys.exit(-1)<br>
-filename = "ssldump_" + str(pid) + ".txt"
-f = open(filename, 'w')<br>
-dbg = pydbg()
-dbg.attach(pid)<br>
-addrSSL_read = dbg.func_resolve_debuggee("SSLEAY32", "SSL_read")
-if not addrSSL_read:
-    print "Couldn't resolve SSL_read"
-    sys.exit(-1)<br>
-hooks = utils.hook_container()
-print "Hooking SSL_read(0x%x)" % addrSSL_read
-hooks.add(dbg, addrSSL_read, 3, None, SSL_read_hook)<br>
-print "Function hooked, logging to: %s" % filename
-dbg.run()
-f.close()
-</pre>
-<p>pydbg这个依赖库不需要完全下载paimei，只需要svn checkout/export下面几个python module就可以了：</p>
-<pre>
-http://paimei.googlecode.com/svn/trunk/pgraph
-http://paimei.googlecode.com/svn/trunk/pida
-http://paimei.googlecode.com/svn/trunk/pydbg
-http://paimei.googlecode.com/svn/trunk/utils
-</pre>
-<p>注意paimei是比较古老的项目了，现在似乎没人管了。所以这个代码里有个<a href="http://code.google.com/p/paimei/issues/detail?id=3">bug</a>，会出错</p>
-<p><code>TypeError: can't set attributes of built-in/extension type '_ctypes.Structure'</code></p>
-<p>解决方法是打开 <code>pydbg\my_ctypes.py</code></p>
-<p>在 <code>c_type = (Structure ..</code>. 这一行上面加一行：</p>
-<pre>
-class Structure(Structure):
-    pass
-</pre>
-<p>就OK了。</p>
-<p>当然hook出来有很多0x00的空值。这个手工处理掉就行了。</p>
-<p>现在又开始纠结带gzip/bz2解压功能的ssl分析工具了。。。。。很多时候还是只有自己DIY。。。。</p>
-<p>参考 <a href="http://hi.baidu.com/kkqq_/blog/item/70e15f420c2eb8199213c6db.html">1</a>，<a href="http://www.icylife.net/yunshu/show.php?id=468">2</a>，<a href="http://www.icylife.net/yunshu/show.php?id=540">3</a></p>
-<p>btw, 最近出了一款号称用p2p，基于QtWebkit的OOXX浏览器。我去看了下，就是一个ssl代理</p>
-<pre>
-$ openssl s_client -connect ps?????.dreamhostps.com:443
-GET http://twitter.com/ HTTP/1.1
-HOST: twitter.com
-</pre>
-<p>呵呵。。。。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2009-12-14T14:53:35+08:00">2009-12-14</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/644345"  rel="bookmark" >
-              <h2 class="card-title">皮肤也是感官</h2>
-            </a>
-            <p class="card-text"><p>Albany Medical College, the University of Liverpool and Cambridge University的研究人员在December 15的学术期刊 <em>Pain</em> 上发了一篇paper：<a href="http://www.sciencedaily.com/releases/2009/12/091208083524.htm">血管和汗腺有一套独立的秘密感官系统</a>。</p>
-<p>古中国和印度对这方面有不少经验主义成果了。所谓的第六感官么。。。呵呵。。。</p>
-<p>说到中医 vs 西医这个吵架话题，我觉得中医是一种 proto-医学，也就是原始形态，谈不上多么科学，但是至少也是个原始粗糙经验宝库。现代西方医学的原始形态不见得比现在的中医高明到哪里去。还不都是这一条路从愚昧到清晰走过来的。现在搞不清楚的原理，不代表以后也搞不清楚；现在不能证明的，不代表以后不能证明；现在是伪科学，不代表以后不能被科学重新证明。科学史上盖棺定论、永不翻案，最后又被推翻的事情多去了。历史上最近一次这种潮流就是五四运动，以为自己有本事把老祖宗的东西洗刷一次是一件多么光彩多么叛逆多么出风头多么牛逼的事情，结果绕了一大圈回来发现当年的很多观点太狭隘太短视太2了。方舟子那种老匹夫那种否定观点肯定是有偏见的。</p>
-<p>但是江湖中医骗子这个是要绝对打到和鄙视的。现在好多人心目中的中医其实就受这些影响而留下不好印象的。</p>
-<p><a href="http://www.reddit.com/r/science/comments/ae3wn/hidden_sensory_system_discovered_in_our_skin/">via</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2009-12-13T18:42:14+08:00">2009-12-13</time></p>
 <p>archive</p>            </div>
           </article>
         </div>

@@ -58,6 +58,74 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/644138"  rel="bookmark" >
+              <h2 class="card-title">可以选择波长的的星空观测网站</h2>
+            </a>
+            <p class="card-text"><p>肉眼看星空只能看到可见光。如果想看X-Ray、Hydrogen α、Far-IR、Microwave、Radio波长的星空图案的话用下面这个网站：</p>
+<p><a href="http://www.chromoscope.net/">http://www.chromoscope.net/</a></p>
+<p><a href="http://www.reddit.com/r/space/comments/aaqg3/chromoscope_new_site_that_lets_you_browse_the_sky/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-12-03T18:04:45+08:00">2009-12-03</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/644136"  rel="bookmark" >
+              <h2 class="card-title">另一个未披露的Google提供的DNS：4.3.2.1</h2>
+            </a>
+            <p class="card-text"><p><a href="http://googlecode.blogspot.com/2009/12/introducing-google-public-dns-new-dns.html">Google提供了公共递归DNS服务器</a>，全世界都知道了吧？</p>
+<p><code>8.8.8.8<br>
+8.8.4.4<br></code></p>
+<p>买的以前DoD的IP段。恩～～～差一点就可以劫持8.7.198.45所有流量了。。。可惜啊。。。</p>
+<p>支持DNSSec。非常好。。。。。</p>
+<p>免费归免费，但是还是<a href="http://code.google.com/speed/public-dns/privacy.html">会log不少信息</a>的。。</p>
+<p>Google旗下服务能根据CDN智能解析。。。很好～～～～比OpenDNS那个废品HTTP劫持再跳转好多了。而且不会劫持NXDOMAIN和SERVFAIL：</p>
+<blockquote>
+<p>Google Public DNS complies with the DNS standards and gives the user the exact response his or her computer expects without performing any blocking, filtering, or redirection that may hamper a user's browsing experience.</p>
+</blockquote>
+<p>其他CDN会<strong>尽量</strong>做到智能解析，因为Google全球都有数据中心。。。</p>
+<blockquote>
+<p>Google Public DNS is hosted in data centers worldwide, and uses anycast routing to send users to the geographically closest data center.<br>
+Note, however, that because nameservers geolocate according to the resolver's IP address rather than the user's, Google Public DNS has the same limitations as other open DNS services: that is, the server to which a user is referred might be farther away than one to which a local DNS provider would have referred. This <strong>could cause a slower browsing experience for certain sites</strong>.</p>
+</blockquote>
+<p>这里提一下，<a href="http://news.ycombinator.com/item?id=975093">HN上有人人披露了一个新IP</a>：4.3.2.1</p>
+<pre>
+$ whois 4.3.2.1
+Level 3 Communications, Inc. LVLT-ORG-4-8 (NET-4-0-0-0-1)
+                                  4.0.0.0 - 4.255.255.255
+Google Incorporated LVLT-GOOGL-1-4-3-2 (NET-4-3-2-0-1)
+                                  4.3.2.0 - 4.3.2.255<br>
+$ nslookup g.cn 4.3.2.1
+Server:  any-in-0201.1e100.net
+Address:  4.3.2.1<br>
+Non-authoritative answer:
+Name:    g.cn
+Addresses:  203.208.39.104, 203.208.39.99
+</pre>
+<p>如果那两个被OOXX了就用这个吧。。。。</p>
+<p>问了下大牛，貌似这个prefetch和BIND的缓存不同就是TTL过期之后，再服务器update一次，而不是清空缓存。提高一点效率吧。。。但是遇到Fast Flux估计Google就SB了。</p>
+<p>Google这次破天荒的提供了电话服务。很令人震惊。。。</p>
+<blockquote>
+<p>Google Public DNS telephone support<br>
+* 877-590-4367 in the U.S.<br>
+* 770-200-1201 outside the U.S</p>
+</blockquote>
+<p><a href="http://news.ycombinator.com/item?id=974824">有人试了下</a>，自动问答。FT！</p>
+<p>还就就是终于知道 4.2.2.1 - 4.2.2.6 那个DNS是属于<a href="http://www.level3.com/">Level 3 Communications</a>的。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-12-03T17:26:59+08:00">2009-12-03</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/yo2/641142"  rel="bookmark" >
               <h2 class="card-title">费曼：火车能保持在铁轨上并不是因为车轮的轮缘</h2>
             </a>
@@ -2650,45 +2718,6 @@ people inside the white house are talking to other very smart people in camp 1 a
 <p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/TI-89.jpg/200px-TI-89.jpg"></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2009-03-05T20:19:39+08:00">2009-03-05</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/yo2/637556"  rel="bookmark" >
-              <h2 class="card-title">Signs - A simple short film about communication</h2>
-            </a>
-            <p class="card-text"><p><object width="480" height="295"><param name="movie" value="http://www.youtube.com/v/uy0HNWto0UY&amp;hl=en&amp;fs=1">
-<param name="allowFullScreen" value="true">
-<param name="allowscriptaccess" value="always">
-<embed src="http://www.youtube.com/v/uy0HNWto0UY&amp;hl=en&amp;fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="295"></object></p>
-<p>ps Youtube<strong>又</strong>被水产了，卧槽泥马。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2009-03-04T22:49:53+08:00">2009-03-04</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/yo2/637551"  rel="bookmark" >
-              <h2 class="card-title">听说ayu把全国四六级成绩给dump出来了</h2>
-            </a>
-            <p class="card-text"><p>看到一则新闻 <a href="http://www.cnbeta.com/articles/78523.htm">大学英语四、六级成绩数据分析报告（山寨统计版）</a></p>
-<p>这个就比较震精了。cnBeta上那么多评论的，的没一个提到隐私问题？</p>
-<p>首先est我非常支持ayu的山寨，因为我抵制任何形式的考试，厌恶99sushe。但是教育部46级办公室这帮傻逼把查分包给私人网站做，然后被人批量dump出数据，包括姓名、学校、省份和分数，这个算不算隐私泄漏？算不算重大公众责任事故？算不算恶性施政失误和政府无作为行为？</p>
-<p>话说四六级考试，只要求考生填写诚信档案，你他妈的教育部诚信不？学生的分数和个人信息作为一种产业拿来卖钱？</p>
-<p>况且得知一个人的学校和四级成绩，几乎可以估算这个人真是什么水平和社会周边信息了，是一个很好的社工和人肉入口</p>
-<p>还好老子四六级几年前就考过了。当时查分是cet.tom.com查的</p>
-<p>如果这个事情在民主法制国家发生，直接可以把教育部全部告破产，四六级办公司人全体下课并且social credit惩罚。如果这个事情发生在毛年代，这帮人绝对被批斗成残废。</p>
-<p>WAKE UP SHEEPLE!</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2009-03-04T22:33:17+08:00">2009-03-04</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
