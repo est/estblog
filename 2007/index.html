@@ -153,23 +153,23 @@
     <dt>2007-01-29</dt>
     <dd><a href="/nu/13605">Google代替了http://</a></dd>
     <dt>2007-01-17</dt>
-    <dd><a href="/cnblogs/622501">让Google评价你的密码的安全性</a></dd>
+    <dd><a href="/cnblogs/622500">VBS创建eml mht文件</a></dd>
     <dt>2007-01-17</dt>
     <dd><a href="/cnblogs/622506">[导入]Alt+Shift+PrintScreen</a></dd>
     <dt>2007-01-17</dt>
     <dd><a href="/cnblogs/622499">[原]一个极其BT的批处理：任务栏系统托盘汽泡提示</a></dd>
     <dt>2007-01-17</dt>
-    <dd><a href="/cnblogs/622498">在Windows下安装Ubuntu！注意，是直接在Win32下安装</a></dd>
+    <dd><a href="/cnblogs/622501">让Google评价你的密码的安全性</a></dd>
     <dt>2007-01-17</dt>
-    <dd><a href="/cnblogs/622500">VBS创建eml mht文件</a></dd>
+    <dd><a href="/cnblogs/622498">在Windows下安装Ubuntu！注意，是直接在Win32下安装</a></dd>
     <dt>2007-01-11</dt>
     <dd><a href="/nu/13367">[原创]批处理屏幕截图</a></dd>
     <dt>2007-01-10</dt>
     <dd><a href="/nu/13360">Google也出错啦</a></dd>
     <dt>2007-01-10</dt>
-    <dd><a href="/nu/13357">Web没前途的</a></dd>
-    <dt>2007-01-10</dt>
     <dd><a href="/nu/13358">看看老外搜集的Windows快捷键大全（2007-1-10更新）</a></dd>
+    <dt>2007-01-10</dt>
+    <dd><a href="/nu/13357">Web没前途的</a></dd>
     <dt>2007-01-10</dt>
     <dd><a href="/nu/13355">Alt+Shift+PrintScreen</a></dd>
     <dt>2007-01-07</dt>
@@ -187,92 +187,8 @@
 </dl>
 
 <div class="comments">
-  <h2>Comments</h2><div id="req4cmt_thread">
-    <form action="https://c.est.im/" method="post" onsubmit="newComment();">
-    <input type="hidden" name="name" placeholder="guest">
-    <input type="hidden" name="email" placeholder="dont@spam.me">
-    <textarea name="content"></textarea>
-    <input type="submit" value="Go">
-    </form>
-    <br/>
-    <dl>
-    </dl>
-  </div>
-  <script type="text/javascript" defer><!--
-    async function newComment() {
-      evt = this.event
-      evt.preventDefault()
-      let req
-      try {
-        req = await fetch(`https://c.est.im/${location.hostname}${location.pathname}`, {
-          method: "POST", referrerPolicy: "unsafe-url",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: new URLSearchParams(new FormData(evt.target))
-        })
-      } catch (e) {
-        console.log(e)
-        evt.submitter.value = '❌'
-      }
-      let rsp
-      try {
-        rsp = await r.json()
-      } catch (e) {
-        rsp = {}
-      }
-      const is_ok = req.status == 200 && !rsp.error
-      evt.submitter.value = is_ok ? '✅' : '⚠️'
-      if (is_ok){
-        location.assign(location.href)
-      }
-      return false;
-    }
-    function ne(tag, attr={}){
-      const e=document.createElement(tag)
-      if(attr.$){
-        e.textContent = attr.$
-        delete attr.$
-      }
-      Object.entries(attr).forEach(([k,v])=>e.setAttribute(k,v))
-      return e
-    }
-    const nt = document.createTextNode.bind(document)
-    function load_comments(){
-      // add hidden inputs
-      const submit = req4cmt_thread.querySelector('form input[type="submit"]')
-      'name email link'.split(' ').forEach(k=>{
-        submit.insertAdjacentElement('beforebegin', ne('input', {name: `x-${k}`, placeholder: k}));
-        submit.insertAdjacentText('beforebegin', ' ');
-      })
-
-      // load from github via CF
-      const page_url = new URL(location.href)
-      const api = `https://c.est.im/${page_url.hostname}${page_url.pathname}.jsonl`
-      fetch(api).then(x=>x.text()).then(body => {
-        body.split(/\r?\n/).forEach(line=>{
-          let data;
-          try{
-            data = JSON.parse(line)
-          } catch(e){
-            return
-          }
-          const dt = ne('dt')
-          dt.appendChild(ne('small', {$: new Date(data.at).toLocaleString('en-CA',{hour12: false}).replace(',', '')}))
-          dt.appendChild(nt(' '))
-          if (data.link){
-            dt.appendChild(ne('a', {href: data.link, $: data.name}))
-          } else {
-            dt.appendChild(b = ne('b', {$: data.name}))
-          }
-          req4cmt_thread.appendChild(dt)
-          const dd = ne('dd', {$: data.content})
-          req4cmt_thread.appendChild(dd)
-        })
-      })
-    }
-    document.addEventListener("DOMContentLoaded", load_comments)
-  --></script>
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
 </div>    </main>
 
 
