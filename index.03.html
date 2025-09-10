@@ -58,6 +58,44 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2024/stdout-14"  rel="bookmark" >
+              <h2 class="card-title">Valid HTTP verbs</h2>
+            </a>
+            <p class="card-text"><p>从<a href="https://www.v2ex.com/t/1057881">这里</a> 想到，fetch/xhr 可以发起哪些 http verb 呢？</p>
+<p><code>python -m http.server</code> 随手测试了下，发现连 <code>!</code>，<code>$</code> 这种符号都可以作为 http verb，比如 <code>fetch('/asdf', {method:"$"})</code> 这样的请求是能发起的。于是去 chromium 搜了下 <code>"is not a valid HTTP method"</code> 相关的解析放在 <a href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/platform/network/http_parsers.cc;drc=fa1e0cf5238e2600039f60af6909aefbd4cf003c;l=404">blink/renderer/platform/network/http_parsers.cc</a></p>
+<pre><code>// See RFC 7230, Section 3.2.6.
+bool IsValidHTTPToken(const String&amp; characters) {
+  if (characters.empty())
+    return false;
+  for (unsigned i = 0; i &lt; characters.length(); ++i) {
+    UChar c = characters[i];
+    if (c &gt; 0x7F || !net::HttpUtil::IsTokenChar(c))
+      return false;
+  }
+  return true;
+}
+
+bool HttpUtil::IsTokenChar(char c) {
+  return !(c &gt;= 0x7F || c &lt;= 0x20 || c == '(' || c == ')' || c == '&lt;' ||
+           c == '&gt;' || c == '@' || c == ',' || c == ';' || c == ':' ||
+           c == '\\' || c == '"' || c == '/' || c == '[' || c == ']' ||
+           c == '?' || c == '=' || c == '{' || c == '}');
+}
+</code></pre>
+<p>原来如此，RFC 7230呀。于是把这些字符打出来：<code>' '.join(chr(x) for x in range(0x20, 0x7f))</code></p>
+<pre><code>! # $ % &amp; ' * + - . 0 1 2 3 4 5 6 7 8 9 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z ^ _ ` a b c d e f g h i j k l m n o p q r s t u v w x y z | ~
+</code></pre>
+<p>那还搞个屁的 RESTful 啊。直接用特殊符号一把梭。不过各种服务端框架可能不是很容易做兼容。哈哈。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-07-17T09:47:00+08:00">2024-07-17</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stdout-13"  rel="bookmark" >
               <h2 class="card-title">Cappy in a Haystack locations</h2>
             </a>
@@ -774,47 +812,6 @@ ValueError: day is out of range for month
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-03-01T13:57:00+08:00">2024-03-01</time></p>
 <p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2024/stdin-06"  rel="bookmark" >
-              <h2 class="card-title">小米14Ultra的「陶瓷」风波</h2>
-            </a>
-            <p class="card-text"><p>zhihu给我推了个讨论  <a href="https://www.zhihu.com/question/646354999">小米14Ultra 的龙晶陶瓷究竟是不是陶瓷？</a> 各种讨论都吵上天了。。</p>
-<p><img referrerpolicy="no-referrer" src="https://pic1.zhimg.com/v2-10a46c1f7dd4993834478bf2f31ba0a0_b.jpeg"></p>
-<p>有个评论挺神：</p>
-<blockquote>
-<p>归璨  2024-02-29 10:10 你去超市找店员要袋盐，回家发现里面装的贝壳粉。你去找他，他说碳酸钙就是盐。说的没毛病，但是人有毛病</p>
-<p>囿困不会困：<br />
-首先我要纠正一个观点，陶瓷玻璃和透明陶瓷不是一个东西。陶瓷玻璃是指通过往玻璃内掺入氧化锆氧化铝等晶体，以改变玻璃物理特性，这种做法，在玻璃内部是晶相跟玻璃相共存。而透明陶瓷是纯粹的多晶体。我个人对于这项技术的判断是小米用的陶瓷强化玻璃类似小米10ultra上出现过的工艺，不管是真机触感还是实际硬度都偏向陶瓷强化玻璃。有意思的是这次小米14ultra的后盖供应商没有看到我们非常熟悉的潮州三环而是由蓝思科技提供。潮州三环是目前全国最大的特种陶瓷供应商处于行业垄断地位，之前的小米mix华为p40Pro+，mate60rs以及小米13的陶瓷版本，都是由潮州三环提供的氧化锆陶瓷后盖。而说到蓝思科技就更有趣了，巧了，蓝思科技正好是苹果超瓷晶面板的供应商，对于苹果的超瓷晶玻璃，其实是有比较详细的技术分析的，明确确定属于陶瓷强化玻璃，在蓝思科技的财报中提到过他拥有独家专利的双晶体置换工艺。苹果的超瓷晶面板是蓝思科技在由美国康宁提供的硅铝酸盐玻璃的基础上，通过氧化锆和氧化铝晶体置换生产的，具体制备流程还处在保密阶段，目前论文并没有公开。对了，正巧，氧化锆陶瓷密度在5.9-6.2之间，硅铝酸盐玻璃只有3.2左右，差不多正好和发布会减重50%数据对上了。当然至于具体要给他下一个定性那肯定还是要搬到实验室上电镜，但是就算如此，我在国标中似乎也没有翻到相关的规定，我能查到的跟陶瓷有关的国标，不管是关于瓷砖的还是关于食品容器的，都没有提到对其要求的晶相占比。而以上对于陶瓷和玻璃的定性，事实上都只是在材料学领域对它的定义而已，并没有所谓的国家法律做支撑。如果有朋友翻到对玻璃制品和陶瓷制品明确划分的国标法规，那么也希望有人可以分享一下。</p>
-<p>衫の青衫：<br />
-大概从玻璃到陶瓷有四种。普通玻璃，微晶玻璃，透明陶瓷，普通陶瓷。这四种材料之间分界还是比较明显的。<br />
-首先，普通玻璃，非晶体，易碎。<br />
-微晶玻璃，非晶原料经由高温高压受控晶化，最终产品里结晶相和玻璃相都有，比例不定。<br />
-透明陶瓷，高纯度结晶体经由高温高压过后生成的几乎没有微气孔的陶瓷<br />
-普通陶瓷，不用过多解释了。<br />
-客观来说，微晶玻璃确实可以算是一种陶瓷，玻璃陶瓷就是同一个东西的另外一个名字。材料学上一般认为有明显的晶体结构就可以算是陶瓷了。所以说包括苹果在内，超瓷晶面板，昆仑玻璃，龙晶玻璃这些所谓“玻璃”，确实可以说是陶瓷。实际上，超瓷晶面板的英文原名，就叫做“陶瓷前护板”。<br />
-但有两件事一样是很重要的。<br />
-第一，玻璃陶瓷和透明陶瓷有本质区别。虽然最终的产品都有很高比例的结晶相，但是玻璃陶瓷的结晶相是后天形成的，但是透明陶瓷的原料就是结晶体。这回很大程度上影响最终产品的性状。也是基于此，14u后盖的材质应该大概率就是玻璃陶瓷。如果有人说这是透明陶瓷，请纠正一下。<br />
-第二也是最重要的，消费者需要的从来都不是“陶瓷”两个字，而是传统意义上陶瓷带来的高硬度和温润的手感。这才是最本质的需求。很明显，龙晶陶瓷在这两个方面都是没有做到的。这样为了陶瓷而陶瓷的营销行为是非常下头而且不负责任的。<br />
-最后附加上小米龙晶陶瓷的一些数据：龙晶陶瓷的结晶相含量在90%以上，玻璃相的比例不超过10%，这部分玻璃相主要用于化学强化中的离子交换。</p>
-<p>土遁丶酸化压裂之术<br />
-这是2020年的，苹果在今年iPhone 12全系列上都使用了“Ceramic Shield超瓷晶面板”，即屏幕表面的特殊玻璃，不再是以前的康宁大猩猩玻璃了，而是一种新的工艺技术，并在发布会上进行了着重介绍，这种新技术仍然来自康宁公司，得益于硬度比大多数金属还要高的纳米级瓷晶体的引入，使得iPhone 12系列手机的屏幕硬度大幅提升，配合平面圆角航空铝中框，整体的耐摔程度达到了上代产品的4倍，网友们直呼可以用来砸核桃了。</p>
-<p>小驼233<br />
-苹果官网切成英文，苹果原文就叫Ceramic Shield，直译就是陶瓷面板，只不过中文翻译叫超瓷晶</p>
-</blockquote>
-<p>所以吵来吵去，原来核心矛盾是中英互译导致的问题。Ceramic Shield 里的 Ceramic 一词可以有2层意思，一种是本意「陶瓷的」，另一层意思是「陶瓷风味的」、「陶瓷般的」。这个 -ic 形容词后缀就很传神。甚至你要较真，只要把一坨泥放到窑里烧了一轮加固了，都可以算「ceramic」。词典里是这么讲的：</p>
-<blockquote>
-<p>made of clay and permanently hardened by heat</p>
-</blockquote>
-<p>搞了半天，这不是材料学问题，而是 sematics 语义问题。哈哈哈。大厂的ppt造概念和kpi高手们，你们骗中层、骗高管、骗下属可以，别把自己骗了。搞得一地鸡毛还得法务和公关来给你们擦屁股。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-02-29T17:51:00+08:00">2024-02-29</time></p>
-<p>stdin</p>            </div>
           </article>
         </div>
 

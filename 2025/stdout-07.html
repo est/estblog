@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>disqus已卸载，手搓了套blog评论系统 - req4cmt – est の 输入 输出和出入</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="disqus已卸载，手搓了套blog评论系统 - req4cmt" />
+
+    <link rel="canonical" href="https://blog.est.im/2025/stdout-07" />
+    <meta property="og:url" content="https://blog.est.im/2025/stdout-07">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="disqus已卸载，手搓了套blog评论系统 - req4cmt">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">disqus已卸载，手搓了套blog评论系统 - req4cmt</h2>
+    <p class="post-date">Posted <time datetime="2025-09-10T22:38:00+08:00">2025-09-10</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>一直用 disqus 主要是觉得方便（懒）。但是自从被墙了就很不方便了。加上近期开始强制插入广告，就更讨厌了</p>
+<p>想找个替代品，很多基于 github 的，在 issue 盖楼，我觉得不方便备份，希望是能直接写入 repo的。这样一个 git clone 就搬家了。更不用说几乎都是基于 OAuth 的 github 登录实际上能拿到你所有 <code>repo</code> 的 scope，也就是能读写你所有公开（甚至私有）仓库内容。我一般都不点</p>
+<p>于是决定手搓一个。</p>
+<p>首先考虑的就是如何把内容写入 git repo。这个在做 <a href="https://blog.est.im/2025/stdout-05">gitweets</a> 已经调研尝试过了。</p>
+<p>本着在 cloudflare worker 白嫖的心态，这种 serverless 的环境肯定不允许装 git 命令行或者 libgit 这种 .so，所以考虑 pure python 的 <a href="https://github.com/jelmer/dulwich">dulwich</a>。折腾了一下 python binding 发现CF居然是个WASM转译。那还不如js。还好nodejs生态也很丰富，有个纯js的实现 <a href="https://isomorphic-git.org/">isomorphic-git</a> 。</p>
+<p>然后手搓了一下发现需要个 memfs 在内存里模拟文件IO。</p>
+<p>其次是如何读取内容，评论列表以 <code>域名/路径.jsonl</code> 格式保存为纯文本，一行一条评论JSON，方便diff。将来可以做成 pull request 当成 moderation</p>
+<p>本来想通过 git-http 来读文件，发现太慢了。干脆走捷径直接反代 <code>https://raw.githubusercontent.com/</code> 就行。本来也不用反代，一是这个域名被DNS屏蔽，二是加一个该死的CORS头才能跨域。</p>
+<p>跑通之后接着就模仿disqus实现页面一段.js嵌入，渲染表单，展示评论列表等等，我的 js/css 实在捉急就搓了套最基础的。</p>
+<p>能用就行！</p>
+<p>防止spam这方面也没多想，看很多人说做 hidden input 就能拦住绝大部分，那就先这样跑着。除了评论框这个 <code>textarea</code> 甚至名字都是选填</p>
+<p>尽可能做兼容，让在没有 .js 的情况下也能提交表单。当然得在嵌入页面的时候弄 <code>&lt;noscript&gt;</code></p>
+<p>该项目严重依赖 cloudflare 和 github 两位赛博菩萨的免费额度，所以请求过多会被控频。实在不行弄个KV队列之类的。但是我这博客这么冷清，多虑了？</p>
+<p>最后，把 disqus 老的评论都导出来了。毕竟是多年的回忆。</p>
+<p>项目放在 <a href="https://github.com/est/req4cmt">https://github.com/est/req4cmt</a> 欢迎点评。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

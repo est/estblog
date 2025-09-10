@@ -58,6 +58,48 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2024/stderr-16"  rel="bookmark" >
+              <h2 class="card-title">ATProto之言论 自由和触达的分离</h2>
+            </a>
+            <p class="card-text"><p>今天<a href="https://news.ycombinator.com/item?id=42215932">刷到</a>个好玩的。先说下背景：</p>
+<p>2019年，时任Twitter CEO 的 Jack Dorsey <code>@jack</code> 当时内部<a href="https://twitter.com/jack/status/1204766078468911106">资助</a> 五个去中心化的社交媒体项目，其中之一叫 <a href="https://bsky.social">Bluesky</a>，<a href="https://twitter.com/jack/status/1427315839666118662">后来</a>由Jay Graber成立独立公司独立运营。其核心卖点是一个叫 AT协议 (Authenticated Transfer Protocol，有趣的是 AT 也是 <code>@</code> 这个符号的称呼) ，基于这个协议搭建的分布式社交网络。官服和app上线叫  https://bsky.app 。</p>
+<p>2022年10月，世界首富 Elon Musk $440亿刀买下Twitter，2024年大选推波助澜，在11月成功助力懂王 <code>@realDonaldTrump</code> 重夺总统宝座， 特别多X.com的“自由派”认为是天塌了，于是纷纷出逃。所以 bsky 用户增长迅猛，有超过 mastodon、Threads和nostr的趋势。</p>
+<ul>
+<li>mastodon 的问题是，RoR又慢又重，站长们带不动</li>
+<li>threads 主要是反派从良，大家还是怕犹太人老板惦记</li>
+<li>nostr 币圈味太冲</li>
+</ul>
+<p>看过X的就知道上面的黄推、币圈电诈、民间政客特别多，如何在一个无法集中管理的网络里去掉杂音，保留有意思的内容，很具有挑战的。ATProto提出了一个概念叫做  <a href="https://atproto.com/guides/overview#speech-reach-and-moderation">Speech and Reach</a>。我理解，它把言论自由和言论可触达性分开。你说啥话没人管，但是你的话谁能听见是另一回事。</p>
+<blockquote>
+<p>Atproto's model is that speech and reach should be two separate layers, built to work with each other. The “speech” layer should remain permissive, distributing authority and designed to ensure everyone has a voice. The “reach” layer lives on top, built for flexibility and designed to scale.</p>
+</blockquote>
+<p>说实话，当时我看到个设定觉得合理，但是不知道有啥用，直到今天我看到了Django（Python Web框架）的作者 Simon Willison <code>@simonw</code> 分享的<a href="https://bsky.app/profile/simonwillison.net/post/3lbkdkz6eh22l">一个有意思的玩法</a>——挂人。</p>
+<blockquote>
+<p>I am utterly delighted by this subversive use of the Bluesky label feature, where you can subscribe to a custom app that then adds visible labels to profiles<br />
+This one shows you which posh expensive private school British public figures attended, plus their current fees<br />
+https://bsky.app/profile/daddys.cash</p>
+</blockquote>
+<p>是的你没看错，就是挂人。这个 daddys.cash （读作：爹滴点现金）账号的作用是，把 bsky.app 上正米字旗🇬🇧大V，上过私校的作为“标签”放到账号信息栏。甚至还包含私校的学费，时刻提醒你阶级差距。英国的私校是个圈子，非常抱团，在证界和商界非常具有影响力，这可太“同窗传承吾辈责”了。在评论区，你甚至还能看到有账号专注把正星条旗🇺🇸大V背后的政党派别和选举献金标出来。英美的内政和外交是有偏向性的维护这群人的世界观和利益。</p>
+<p>为什么说这个功能是挂人？如果推广开了，这玩意极大降低了饭圈和小鬼们拿来给人贴标签的门槛，而且传播性极快。假如在一个平行世界里，bsky在国内上线，就现在的形式，很快🐒和🌸会形成两个阵营互相敌对对喷。</p>
+<p>但如果你抛开网络论战，带入线下社交，这个功能可能会带来一个意想不到的效果——IRL的社会压力回来了。能在网络上肆无忌惮的彪悍发言，会考虑到今后被人 label 怎么办？实际上大多数人当着其他人的面说话还是很矜持的，得考虑个场合和面子。深怕别人背地里议论着你什么。这他人指指点点，不正好就是“贴标签”。</p>
+<p>ATProto 的实现<a href="https://news.ycombinator.com/item?id=39684027">细节</a>：</p>
+<blockquote>
+<p>It's broadly a system for publishing metadata on posts called "Labels". Application clients specify which labeling services they want to use in request headers. Those labels get attached to the responses, where they can then be interpreted by client.<br />
+This is an open system. Clients can choose which labelers they use, and while the Bluesky client hardcodes the Bluesky moderation another client can choose a different primary Labeler. Users can then add their community labelers, which I describe below. We aim to do the majority of our moderation at that layer. There are also "infrastructure takedowns" for illegal content and network abuse, which we execute at the services layer (ie the relay).</p>
+</blockquote>
+<p>技术上来说，一个内容顶真不顶，你自己可以选择 Label 供应商；传播上来说，如果你影响力超大，你说话就得委婉，考虑万一被人贴上不好的标签的后果。所以一开始atproto这个拆分 speech 和 reach 的设计就挺有意思。要么你口无遮拦嗓门小，你谨言慎行上热搜，发言是自由的，但是传播成什么样可不是你说了算。</p>
+<p>这个机制当然也有很多问题，比如如果你是小人，你可以换各种马甲来诋毁和三人成虎。怎么办呢？实名制？social credit？</p>
+<p>总之，这是一个有意思的设计。比X现在那套黑盒子封号，灵活的 community notes 更创新。<code>@jack</code> 这一波看来是真的懂这行搞出来的新玩意。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-11-23T17:22:00+08:00">2024-11-23</time></p>
+<p>stderr</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stdin-18"  rel="bookmark" >
               <h2 class="card-title">供应链 "supplier" 的迷思</h2>
             </a>
@@ -954,44 +996,6 @@ Registrant Contact Email: songjie@anicert.cn</p>
 <p>目前不知道这个 PID 是唯一的还是可变的。要实用还是得做类似微信那种 OpenID/UnionID 才行。因为技术对接SDK需要付费签协议才能拿到，细节就无从而知了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-08-01T15:20:00+08:00">2024-08-01</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2024/stdout-14"  rel="bookmark" >
-              <h2 class="card-title">Valid HTTP verbs</h2>
-            </a>
-            <p class="card-text"><p>从<a href="https://www.v2ex.com/t/1057881">这里</a> 想到，fetch/xhr 可以发起哪些 http verb 呢？</p>
-<p><code>python -m http.server</code> 随手测试了下，发现连 <code>!</code>，<code>$</code> 这种符号都可以作为 http verb，比如 <code>fetch('/asdf', {method:"$"})</code> 这样的请求是能发起的。于是去 chromium 搜了下 <code>"is not a valid HTTP method"</code> 相关的解析放在 <a href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/platform/network/http_parsers.cc;drc=fa1e0cf5238e2600039f60af6909aefbd4cf003c;l=404">blink/renderer/platform/network/http_parsers.cc</a></p>
-<pre><code>// See RFC 7230, Section 3.2.6.
-bool IsValidHTTPToken(const String&amp; characters) {
-  if (characters.empty())
-    return false;
-  for (unsigned i = 0; i &lt; characters.length(); ++i) {
-    UChar c = characters[i];
-    if (c &gt; 0x7F || !net::HttpUtil::IsTokenChar(c))
-      return false;
-  }
-  return true;
-}
-
-bool HttpUtil::IsTokenChar(char c) {
-  return !(c &gt;= 0x7F || c &lt;= 0x20 || c == '(' || c == ')' || c == '&lt;' ||
-           c == '&gt;' || c == '@' || c == ',' || c == ';' || c == ':' ||
-           c == '\\' || c == '"' || c == '/' || c == '[' || c == ']' ||
-           c == '?' || c == '=' || c == '{' || c == '}');
-}
-</code></pre>
-<p>原来如此，RFC 7230呀。于是把这些字符打出来：<code>' '.join(chr(x) for x in range(0x20, 0x7f))</code></p>
-<pre><code>! # $ % &amp; ' * + - . 0 1 2 3 4 5 6 7 8 9 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z ^ _ ` a b c d e f g h i j k l m n o p q r s t u v w x y z | ~
-</code></pre>
-<p>那还搞个屁的 RESTful 啊。直接用特殊符号一把梭。不过各种服务端框架可能不是很容易做兼容。哈哈。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-07-17T09:47:00+08:00">2024-07-17</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

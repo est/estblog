@@ -58,6 +58,44 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/201908/stdout-005"  rel="bookmark" >
+              <h2 class="card-title">Fix Paladins stuck at Completing Login</h2>
+            </a>
+            <p class="card-text"><p><a href="https://store.steampowered.com/app/444090/Paladins/">Paladins</a> is one of the F2P games on Steam. It's called 枪火游侠 in Chinese market with Tencent as its Partner operator.</p>
+<p>To play it on Steam:</p>
+<ol>
+<li>Add any game to cart</li>
+<li>Modify region to US on the checkout page</li>
+<li>Type the following script into browser's DevTool<br />
+<code>jQuery.post('//store.steampowered.com/checkout/addfreelicense', {
+        action: 'add_to_cart',
+        sessionid: g_sessionID,
+        subid:94404})</code></li>
+<li>Go to <a href="https://store.steampowered.com/account/licenses/">https://store.steampowered.com/account/licenses/</a> and see if Paladins were added to your account</li>
+<li>To install the game, run <code>steam://install/444090</code> in Win+R</li>
+</ol>
+<p>However it appears to be stuck on "Completing Login" screen from time to time.</p>
+<p>To fix it, run <code>cmd</code> with Administrator provilege type these commands:</p>
+<pre><code>  ipconfig /flushdns
+  netsh winsock reset category
+  netsh int ip reset reset.log
+</code></pre>
+<p>Then go to <code>Steam\steamapps\common\Paladins\Binaries\EasyAntiCheat</code>, run <code>EasyAntiCheat_Setup.exe</code> as Administrator and repair Paladins.</p>
+<p>And restart the PC. </p>
+<p>Now try play again. 80% of the case the issue will go away.</p>
+<p>If it still doesn't work, and you are still stuck at the "Completing Login", try hit the "Settings" button during login, then hit Esc to close the settings window, the login screen will display a message saying "Player is offline", and a "Reconnect" button magically appears. Now hit the button exactly once! I captured the in/out packets to TCP port 9000 and found that you after you click the "Reconnect" button, the Paladins client will retry negociating login process. Don't hit it too many times. </p>
+<p>Once you see "Loading Vendors" you are 99% through this, just be patient and you will load to main menus.</p>
+<p>Hope this helps.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2019-08-21T20:43:54+08:00">2019-08-21</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/201907/stdout-004"  rel="bookmark" >
               <h2 class="card-title">公司文化的三种类型</h2>
             </a>
