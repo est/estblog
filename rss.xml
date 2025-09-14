@@ -17,6 +17,17 @@
 &lt;p&gt;保存到本地 1.xhtml，双击浏览器打开。谁能想到这也行？xml entity 还可以这样玩？&lt;/p&gt;
 &lt;p&gt;只要MIME为 &lt;code&gt;application/xhtml+xml&lt;/code&gt; 就可以把HTML5当XML渲染。&lt;/p&gt;
 &lt;p&gt;部署了个在线demo： &lt;a href="https://lab.est.im/svg-text/entity.xhtml"&gt;https://lab.est.im/svg-text/entity.xhtml&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;不敢相信自己眼睛，确认下是HTML5:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;document.compatMode&lt;/code&gt; 返回 &lt;code&gt;CSS1Compat&lt;/code&gt; 没问题&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ocument.doctype&lt;/code&gt; 返回 &lt;code&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/code&gt; 没毛病&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果是老的兼容模式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;document.compatMode&lt;/code&gt; 为 &lt;code&gt;BackCompat&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;document.doctype.publicId&lt;/code&gt; 为 &lt;code&gt;-//W3C//DTD HTML 4.01//EN&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;document.doctype.systemId&lt;/code&gt; 为 &lt;code&gt;http://www.w3.org/TR/html4/strict.dtd&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;思路打开了。哈哈&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Mon, 15 Sep 2025 00:12:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-09-15:/2025/stdout-08</guid><category>stdout</category></item><item><title>disqus已卸载，手搓了套blog评论系统 - req4cmt</title><link>https://blog.est.im/2025/stdout-07</link><description>&lt;p&gt;一直用 disqus 主要是觉得方便（懒）。但是自从被墙了就很不方便了。加上近期开始强制插入广告，就更讨厌了&lt;/p&gt;
 &lt;p&gt;想找个替代品，很多基于 github 的，在 issue 盖楼，我觉得不方便备份，希望是能直接写入 repo的。这样一个 git clone 就搬家了。更不用说几乎都是基于 OAuth 的 github 登录实际上能拿到你所有 &lt;code&gt;repo&lt;/code&gt; 的 scope，也就是能读写你所有公开（甚至私有）仓库内容。我一般都不点&lt;/p&gt;
 &lt;p&gt;于是决定手搓一个。&lt;/p&gt;

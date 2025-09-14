@@ -79,6 +79,17 @@
 <p>保存到本地 1.xhtml，双击浏览器打开。谁能想到这也行？xml entity 还可以这样玩？</p>
 <p>只要MIME为 <code>application/xhtml+xml</code> 就可以把HTML5当XML渲染。</p>
 <p>部署了个在线demo： <a href="https://lab.est.im/svg-text/entity.xhtml">https://lab.est.im/svg-text/entity.xhtml</a></p>
+<p>不敢相信自己眼睛，确认下是HTML5:</p>
+<ul>
+<li><code>document.compatMode</code> 返回 <code>CSS1Compat</code> 没问题</li>
+<li><code>ocument.doctype</code> 返回 <code>&lt;!DOCTYPE html&gt;</code> 没毛病</li>
+</ul>
+<p>如果是老的兼容模式：</p>
+<ul>
+<li><code>document.compatMode</code> 为 <code>BackCompat</code></li>
+<li><code>document.doctype.publicId</code> 为 <code>-//W3C//DTD HTML 4.01//EN</code></li>
+<li><code>document.doctype.systemId</code> 为 <code>http://www.w3.org/TR/html4/strict.dtd</code></li>
+</ul>
 <p>思路打开了。哈哈</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2025-09-15T00:12:00+08:00">2025-09-15</time></p>
