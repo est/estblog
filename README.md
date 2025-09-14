@@ -19,4 +19,4 @@ The repo contains [blog of est](https://blog.est.im/). This static site is gener
 - [X] ~~SEO ping~~（已废弃）
 - [X] ~~提供分类页面~~ 不分类了
 - [X] ~~安装 disqus~~
-- [ ] ~~用CF [comment-worker](https://github.com/zanechua/comment-worker) 代替disqus
+- [X] ~~用CF [comment-worker](https://github.com/zanechua/comment-worker) 代替disqus
