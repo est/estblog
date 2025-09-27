@@ -58,6 +58,178 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2025/stdin-09"  rel="bookmark" >
+              <h2 class="card-title">CBOR 和 MsgPack 是一回事</h2>
+            </a>
+            <p class="card-text"><p>翻旧账的时候无意中<a href="https://news.ycombinator.com/item?id=42664005">发现</a>的。MessagePack的实现者 mdhb 说：</p>
+<blockquote>
+<p>Disclaimer: I wrote and maintain a MessagePack implementation.<br />
+CBOR is MessagePack. The story is that Carsten Bormann wanted to create an IETF standardized MP version, the creators asked him not to (after he acted in pretty bad faith), he forked off a version, added some very ill-advised tweaks, named it after himself, and submitted it anyway.<br />
+I wrote this up years ago (https://news.ycombinator.com/item?id=14072598), and since then the only thing they've addressed is undefined behavior when a decoder encounters an unknown simple value.</p>
+</blockquote>
+<p><a href="https://news.ycombinator.com/item?id=43229259">以及</a>：</p>
+<blockquote>
+<p>There's no reason an MP implementation has to be slower than a CBOR implementation. If a given library wanted to be very fast it could be. If anything, the fact that CBOR more or less requires you to allocate should put a ceiling on how fast it can really be. Or, put another way, benchmarks of dynamic language implementations of a serialization format aren't a high signal indication of its speed ceiling. If you use a dynamic language and speed is a concern to this degree, you'd write an adapter yourself, probably building on one of the low level implementations.<br />
+That said, people are usually disappointed by MP's speed over JSON. A lot of engineering hours have gone into making JSON fast, to the point where I don't think it ever made sense to choose MP over it for speed reasons (there are other good reasons). Other posters here have pointed out that your metrics are usually dominated by something else.<br />
+But finally, CBOR is fine! The implementations are good and it's widely used. Users of CBOR and MP alike will probably have very similar experiences unless you have a niche use case (on an embedded device that can't allocate, you really need bignums, etc).</p>
+</blockquote>
+<p>看它又翻了一堆旧帐。。hmmmm</p>
+<details><summary>展开</summary>
+
+> (CBOR introduced) a neat [type|length] encoding instead of just [type], which > applies to all types - integers, floats, strings, maps, etc.
+Not really. For example there's no 11-bit integer type. In fact, CBOR is more-or-less identical to MP in this regard: there are a set number of (we'll use CBOR parlance here) tags, each of which indicates the length of succeeding binary data.
+
+If you're just saying "length follows type", then this is in fact exactly how MP works. If you have 30 bytes of raw data, you use the bin 8 tag (0xc4), write 0x1e for the length, and then memcpy your data into your buffer.
+
+---
+
+I'd like to discuss CBOR's design, which I think is very poorly thought out.
+
+---
+
+CBOR is broken because of indefinite-length data types. A CBOR implementation has to accept an infinite stream of data. Besides being impossible, this is unacceptable for pretty much any application. It's also poorly specified; Section 3.1 reads:
+
+    In a streaming application, a data stream may be composed of a sequence of
+    CBOR data items concatenated back-to-back.  In such an environment, the
+    decoder immediately begins decoding a new data item if data is found after
+    the end of a previous data item.
+"Immediately" is troubling here, in fact, the section goes on:
+    Note that some applications and protocols will not want to use
+    indefinite-length encoding.  Using indefinite-length encoding allows an
+    encoder to not need to marshal all the data for counting, but it requires a
+    decoder to allocate increasing amounts of memory while waiting for the end
+    of the item.  This might be fine for some applications but not others.
+I really don't know what to do here. The data format requires your application to allocate indefinitely, and the spec even says "this might be bad for you". Come on.
+---
+
+CBOR's tags are pretty much MP v5's Extension types, but the spec makes them more confusing. Here's an excerpt:
+
+    Decoders do not need to understand tags, and thus tags may be of little 
+    value in applications where the implementation decoding that stream know
+    the semantic meaning of each item in the data flow.  Their primary purpose
+    in this specification is to define common data types such as dates.
+So far, so good. CBOR then goes on to define more than a dozen tags:
+- Standard date/time string
+
+- Epoch-based date/time
+
+- Positive bignum
+
+- Negative bignum
+
+- Decimal fraction
+
+- Bigfloat
+
+- Expected conversion to base64url encoding
+
+- Expected conversion to base64 encoding
+
+- Expected conversion to base16 encoding
+
+- Encoded CBOR data item
+
+- URI
+
+- base64url
+
+- base64
+
+- Regular expression
+
+- MIME message
+
+- Self-describe CBOR
+
+Besides being over-engineered ("Expected conversion to X"? "MIME message"?!), this puts pressure on implementations to support these extension types. The reason MP doesn't do this is that, for example, BigNum support isn't free and you don't want to tie your binary format to it. CBOR's spec says implementations are free to not convert these (at least, that's how I interpret "Decoders do not need to understand tags"), but it creates a schism: most dynamic languages include BigNum support (Ruby, Python, etc.), but at least C and C++ don't. This creates pressure on C/C++ implementations to pull in a lot of extra baggage, something the MP authors specifically and thoughtfully avoided.
+
+Even worse, tags are undefined behavior in CBOR. Section 3.5 reads:
+
+    A decoder that comes across a tag (Section 2.4) that it does not recognize,
+    such as a tag that was added to the IANA registry after the decoder was
+    deployed or a tag that the decoder chose not to implement, might issue a
+    warning, might stop processing altogether, might handle the error and
+    present the unknown tag value together with the contained data item to the
+    application (as is expected of generic decoders), might ignore the tag and
+    simply present the contained data item only to the application, or take
+    some other type of action.
+"some other type of action" is deeply worrying. Even more deeply worrying is that this applies to anything at all in CBOR:
+    A decoder that comes across a simple value (Section 2.3) that it does not
+    recognize, such as a value that was added to the IANA registry after the
+    decoder was deployed or a value that the decoder chose not to implement,
+    might issue a warning, might stop processing altogether, might handle the
+    error by making the unknown value available to the application as such (as
+    is expected of generic decoders), or take some other type of action.
+I choose not to implement `int`. I decide instead to fill up your home folder. I'm a compliant CBOR implementation.
+---
+
+Canonical CBOR is a bad idea, as outlined by ludocode elsewhere. Generally speaking, canonicalization is application-specific and attempts to codify it end up being nonsensical, overwrought, or incomplete. And hey look, CBOR's is nonsensical AND incomplete: it punts on floats and tags.
+
+---
+
+There is no technical justification for CBOR. I know some places require standards, and that could've been solved by working with Sadayuki. I'm legitimately at a loss.
+
+---
+
+I know you're not into the "drama" part, but I think it's beneficial to get into it a little. Feel free to ignore; it's why I put it down here.
+
+I'm not gonna characterize things. I'll just list links. I feel like that's the most fair way to do things.
+
+https://github.com/msgpack/msgpack/issues/13
+
+https://github.com/msgpack/msgpack/issues/121
+
+https://github.com/msgpack/msgpack/issues/129
+
+https://tools.ietf.org/html/draft-bormann-apparea-bpack-01
+
+https://tools.ietf.org/html/rfc7049
+
+http://www6.ietf.org/mail-archive/web/apps-discuss/current/m...
+
+http://www6.ietf.org/mail-archive/web/apps-discuss/current/m...
+
+http://www6.ietf.org/mail-archive/web/apps-discuss/current/m...
+
+http://www6.ietf.org/mail-archive/web/apps-discuss/current/m...
+
+http://www6.ietf.org/mail-archive/web/apps-discuss/current/m...
+
+http://www6.ietf.org/mail-archive/web/apps-discuss/current/m...
+
+It's also worth pointing out that CBOR's RFC is incorrect and unfair in its description of MP. Heres's Section E.2.:
+
+    MessagePack has been essentially stable since it was first published around
+    2011; it has not yet had a transition.  The evolution of MessagePack is
+    impeded by an imperative to maintain complete backwards compatibility with
+    existing stored data, while only few bytecodes are still available for
+    extension.  Repeated requests over the years from the MessagePack user
+    community to separate out binary and text strings in the encoding recently
+    have led to an extension proposal that would leave MessagePack's "raw" data
+    ambiguous between its usages for binary and text data.  The extension
+    mechanism for MessagePack remains unclear.
+MP v5 specifies separate types for string data and raw binary data. MP v5 is backwards-compatible with v4; in fact the v5 standard says implementations should provide a v4 compatibility mode. Nothing about the separate types for string and raw data is ambiguous; they're as separate as any other variable-length type. MP v5 includes a clear and simple extension mechanism:
+    MessagePack allows applications to define application-specific types using
+    the Extension type.  Extension type consists of an integer and byte array
+    where the integer represents a kind of type and the byte array represents
+    data.  Applications can assign 0 - 127 to store application-specific type
+    information.  MessagePack reserves -1 - -128 for future extension to add
+    predefined types which will be described in separated documents.
+
+</details>
+
+<p>好吧。</p>
+<p>最近在看 <a href="https://atproto.com/specs/data-model">ATProto</a> 发现它既可以 CBOR 也可以 JSON </p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2025-09-27T20:01:00+08:00">2025-09-27</time></p>
+<p>stdin</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2025/stdin-08"  rel="bookmark" >
               <h2 class="card-title">大集团，小组织和原子个体</h2>
             </a>
@@ -2056,25 +2228,6 @@ One of the best examples of “Mission-to-Metrics” alignment comes from a frie
 <p>这源码可以研究用，商用需要授权。在 Rebelle 5 Pro 软件里集成了</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-04-21T23:08:57+08:00">2022-04-21</time></p>
-<p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2022/stdin-05"  rel="bookmark" >
-              <h2 class="card-title">美国的粮食产量也是大跃进之后才起飞的</h2>
-            </a>
-            <p class="card-text"><p>标题党一把。大跃进时期之后</p>
-<p><img alt="" src="/images/2022/stdin-05-01.jpg" /></p>
-<iframe width="100%" height="380px" src="https://www.youtube.com/embed/R9pxFgJwxFE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-<p>这片子看完就一个感觉，Mississippi 真是黄金水道啊。和长江一样。</p>
-<p><a href="https://news.ycombinator.com/item?id=30924847">via</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2022-04-07T14:13:57+08:00">2022-04-07</time></p>
 <p>stdin</p>            </div>
           </article>
         </div>
