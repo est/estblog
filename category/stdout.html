@@ -58,6 +58,32 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2025/stdout-09"  rel="bookmark" >
+              <h2 class="card-title">Fix WestData SN550/SN570 SSD slow read problem</h2>
+            </a>
+            <p class="card-text"><p>I had a painful slow game load experience during the past few days. In the beginning, I tried everything I can to tweak the Win10 system, cleanup the PC box, but the disk IO was always pegging at 2MB/s to 5MB/s at taskmgr.exe.</p>
+<p>The real culprit? The WD ssd I bought some years ago. Turns out if the data was old enough, the firmware had real trouble recognizing the volatile bits and throttles the throughput.</p>
+<p>The fix? read the file again and write them back. Since my disk is almost full (another reason here), a inline replace would be prefered.</p>
+<p>I spent next few hours vibe coding an HTML5 utility</p>
+<p><a href="https://lab.est.im/ssd-warmup/">https://lab.est.im/ssd-warmup/</a></p>
+<p>The code works as intended, however the File System API in Javascript writes a .crswap file instead of the original. <br />
+It's a <a href="https://issues.chromium.org/issues/40777458">Chromium thing</a> thus makes the JS method completely useless.</p>
+<p>I wrote a Python version instead.</p>
+<p><a href="https://github.com/est/snippets/blob/master/ssd-warmup/ssd_warmup.py">https://github.com/est/snippets/blob/master/ssd-warmup/ssd_warmup.py</a></p>
+<p>The AI wrote code using <code>os.path.walk</code> and I changed it with <code>pathlib.Path</code>, which was more pleasant with its <code>rglob</code> method.</p>
+<p>You can try it:</p>
+<p><code>python ssd_warmup.py /path/to/fix/</code></p>
+<p>The lesson learned: Don't buy Sandick or WestData. At least the low-end ones.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2025-10-09T10:30:00+08:00">2025-10-09</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2025/stdout-08"  rel="bookmark" >
               <h2 class="card-title">xHTML5</h2>
             </a>
@@ -4191,31 +4217,6 @@ for f in os.listdir(p):
 <p>问题是，VR/AR 并不是手机的下一代。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2023-03-28T21:49:11+08:00">2023-03-28</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2023/stdout-03"  rel="bookmark" >
-              <h2 class="card-title">Play Cities:Skylines on Windows/MacOS without Paradox Launcher</h2>
-            </a>
-            <p class="card-text"><p>Haven't played Cities: Skylines for ages, so I re-installed it on Steam, after some updates there's this new Paradox Launcher which serves no purpose but wasting time. So I decided to remove it, googled some <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=1976349559">guide</a> and unfortunately it contains too many steps and some error occured while following it. Here's the simpler &amp; correct step of what I did instead.</p>
-<p>After the game is downloaded, open the Steam library, find the game, right click, choose <code>Properties...</code></p>
-<p><img alt="" src="/images/2023/stdout-03-01.webp" /></p>
-<p>Next for the <code>Launch Options</code>, type</p>
-<h3>on Windows</h3>
-<pre><code>cmd /c start cities.exe %command%
-</code></pre>
-<h3>on MacOS</h3>
-<pre><code>/Users/$USER/Library/Application\ Support/Steam/steamapps/common/Cities_Skylines/Cities.app/Contents/MacOS/Cities %command%
-</code></pre>
-<p>Make sure you replace <code>$USER</code> with your username</p>
-<p>Then the game works like good o' times, straight to the menu.</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2023-01-30T22:13:49+08:00">2023-01-30</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

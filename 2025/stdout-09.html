@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fix WestData SN550/SN570 SSD slow read problem – est の 输入 输出和出入</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Fix WestData SN550/SN570 SSD slow read problem" />
+
+    <link rel="canonical" href="https://blog.est.im/2025/stdout-09" />
+    <meta property="og:url" content="https://blog.est.im/2025/stdout-09">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Fix WestData SN550/SN570 SSD slow read problem">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Fix WestData SN550/SN570 SSD slow read problem</h2>
+    <p class="post-date">Posted <time datetime="2025-10-09T10:30:00+08:00">2025-10-09</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>I had a painful slow game load experience during the past few days. In the beginning, I tried everything I can to tweak the Win10 system, cleanup the PC box, but the disk IO was always pegging at 2MB/s to 5MB/s at taskmgr.exe.</p>
+<p>The real culprit? The WD ssd I bought some years ago. Turns out if the data was old enough, the firmware had real trouble recognizing the volatile bits and throttles the throughput.</p>
+<p>The fix? read the file again and write them back. Since my disk is almost full (another reason here), a inline replace would be prefered.</p>
+<p>I spent next few hours vibe coding an HTML5 utility</p>
+<p><a href="https://lab.est.im/ssd-warmup/">https://lab.est.im/ssd-warmup/</a></p>
+<p>The code works as intended, however the File System API in Javascript writes a .crswap file instead of the original. <br />
+It's a <a href="https://issues.chromium.org/issues/40777458">Chromium thing</a> thus makes the JS method completely useless.</p>
+<p>I wrote a Python version instead.</p>
+<p><a href="https://github.com/est/snippets/blob/master/ssd-warmup/ssd_warmup.py">https://github.com/est/snippets/blob/master/ssd-warmup/ssd_warmup.py</a></p>
+<p>The AI wrote code using <code>os.path.walk</code> and I changed it with <code>pathlib.Path</code>, which was more pleasant with its <code>rglob</code> method.</p>
+<p>You can try it:</p>
+<p><code>python ssd_warmup.py /path/to/fix/</code></p>
+<p>The lesson learned: Don't buy Sandick or WestData. At least the low-end ones.</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

@@ -58,6 +58,36 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2022/stdout-13"  rel="bookmark" >
+              <h2 class="card-title">Jira里JQL实现查找上一个「工作日」的任务</h2>
+            </a>
+            <p class="card-text"><p>厂里终于开始用笨拙的Jira了。总体用下来跟 Teambition 相比各有各的笨处。。。</p>
+<p>默认的 board 过滤器有点不好用。本着为了stand-up meeting和周报快速检索上一个工作日和当周干了什么，找到一个 filter 写法：</p>
+<h3>JQL过滤上一个工作日干了啥：</h3>
+<pre><code>(updatedDate &lt; endofweek("-8d") AND updatedDate &gt; startofday("-3d")) OR updatedDate &gt; startofday("-1d")
+</code></pre>
+<p>这里不是简单的查昨天干了啥。比如周一需要看周五干了啥。所以有个 <code>-8d</code> 并 <code>-3d</code> 的神奇操作。具体的逻辑自己琢磨</p>
+<h3>过滤本周干了啥</h3>
+<pre><code>updatedDate &gt;= startOfWeek(0)
+</code></pre>
+<p>Jira这种资本主义软件是没法适配我们社会主义法定节假日的设定。所以遇到非双休放假还是判断起来比较蛋痛。</p>
+<p>其实我比较反感每天早上开站会。我比较推荐每天下班前最后10分钟开会。好处有：</p>
+<ol>
+<li>当天干了什么记得很清楚。明天需要干什么也很显然。</li>
+<li>如果谁拖堂，谁就承担对不起大家不能准时下班的道德压力</li>
+<li>如果都开会了你事情都还没做完，要么你事情安排得太多，要么你完成能力不足，要么你时间安排有问题。</li>
+</ol>
+<p>之前在两个公司这样执行过。结果被大老板强行改到早上开会了。无语。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2022-12-12T14:51:50+08:00">2022-12-12</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2022/stdin-20"  rel="bookmark" >
               <h2 class="card-title">跟ChatGPT玩 20q 游戏</h2>
             </a>
@@ -917,33 +947,6 @@ Corporate Memphis</p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-09-13T22:05:19+08:00">2022-09-13</time></p>
 <p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2022/stderr-08"  rel="bookmark" >
-              <h2 class="card-title">Taiwan Question</h2>
-            </a>
-            <p class="card-text"><p>今天看娃的英语资料的时候，发现材料说什么什么  Taiwan question。当时就觉得奇怪，台湾什么时候变成一个题目了？</p>
-<p>突然想起来，这好像是「台湾问题」的蹩脚翻译。</p>
-<p>网上搜了一圈，发现大部分这个词汇都出自简中和官方媒体。哎。</p>
-<p><img alt="" src="/images/2022/stderr-08-01.webp" /></p>
-<p>其中居然有一个 Hoover Institution 也用了这个词汇？好奇点了进去，作者是 Edward N. Luttwak 是个老外，然后第一段：</p>
-<blockquote>
-<p>Dividing the Taiwan question––does or should, and, if so, does America currently possess the wherewithal to help Taiwan successfully repel a Chinese attack</p>
-</blockquote>
-<p>好吧，别人真的是在说 how to help taiwan 这个 question。</p>
-<p>还有发现一个问题是，「一个中国原则」在中文的表述是 one-China principle，但是美方的描述是</p>
-<blockquote>
-<p>the United States acknowledges that Chinese on either side of the Taiwan Strait maintain there is but one China and that Taiwan is a part of China</p>
-</blockquote>
-<p>这句话其实玩笑开的很大，美方只是 acknowledge 「知晓」有这回事，但是它并没有说支持或者反对这件事，甚至保留了去挑战甚至推翻这个事的权力。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2022-08-30T19:37:15+08:00">2022-08-30</time></p>
-<p>stderr</p>            </div>
           </article>
         </div>
 

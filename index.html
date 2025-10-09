@@ -58,6 +58,32 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2025/stdout-09"  rel="bookmark" >
+              <h2 class="card-title">Fix WestData SN550/SN570 SSD slow read problem</h2>
+            </a>
+            <p class="card-text"><p>I had a painful slow game load experience during the past few days. In the beginning, I tried everything I can to tweak the Win10 system, cleanup the PC box, but the disk IO was always pegging at 2MB/s to 5MB/s at taskmgr.exe.</p>
+<p>The real culprit? The WD ssd I bought some years ago. Turns out if the data was old enough, the firmware had real trouble recognizing the volatile bits and throttles the throughput.</p>
+<p>The fix? read the file again and write them back. Since my disk is almost full (another reason here), a inline replace would be prefered.</p>
+<p>I spent next few hours vibe coding an HTML5 utility</p>
+<p><a href="https://lab.est.im/ssd-warmup/">https://lab.est.im/ssd-warmup/</a></p>
+<p>The code works as intended, however the File System API in Javascript writes a .crswap file instead of the original. <br />
+It's a <a href="https://issues.chromium.org/issues/40777458">Chromium thing</a> thus makes the JS method completely useless.</p>
+<p>I wrote a Python version instead.</p>
+<p><a href="https://github.com/est/snippets/blob/master/ssd-warmup/ssd_warmup.py">https://github.com/est/snippets/blob/master/ssd-warmup/ssd_warmup.py</a></p>
+<p>The AI wrote code using <code>os.path.walk</code> and I changed it with <code>pathlib.Path</code>, which was more pleasant with its <code>rglob</code> method.</p>
+<p>You can try it:</p>
+<p><code>python ssd_warmup.py /path/to/fix/</code></p>
+<p>The lesson learned: Don't buy Sandick or WestData. At least the low-end ones.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2025-10-09T10:30:00+08:00">2025-10-09</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2025/stdin-09"  rel="bookmark" >
               <h2 class="card-title">CBOR 和 MsgPack 是一回事</h2>
             </a>
@@ -914,29 +940,6 @@ Yes! January 29, 2025, falls on Lunar New Year’s Eve, which is the day before 
 <p>这个可视化的<a href="https://annas-archive.org/blog/all-isbns.html">发起者是 Anna’s Archive</a>，优胜者获奖 $10,000，截止日期2025-01-31，旨在收集整理全人类有ISBN编号的书籍。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2025-02-01T22:30:49+08:00">2025-02-01</time></p>
-<p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2025/stdin-01"  rel="bookmark" >
-              <h2 class="card-title">从红宝书到小红书：woke的演变历史</h2>
-            </a>
-            <p class="card-text"><p>最近tiktok ban闹得沸沸扬扬，甚至有大批“洋难民”<a href="https://new.reddit.com/r/tiktok/comments/1i0o9xn/">纷纷涌入小红书</a> ，把 "RedNote" 冲上了appstore 排行榜第一名。</p>
-<p>无独有偶，<a href="https://x.com/paulg/status/1878762411697840489">看到</a> Paul Graham 一篇大作 《<a href="https://paulgraham.com/woke.html">The Origins of Wokeness</a>》，不愧是YC创始人，文笔流程优雅。开头就暴击。所谓 woke ，在维多利亚时代就是基督教义，在苏俄就是马列教义，woke 的本质是“社会公正”，老一的英语称为 prig。每个社会都有部份 prigs 人群，但是woke大行其道，pg分析，当前属于“第三次冲击”。第二波在80s年代政治正确达到顶峰90s消停。</p>
-<p>那么第一波呢？第一波其实就是60s左翼学生运动。我晕，这不正是伯克利举着红宝书嗑LSD唱摇滚的年代么。pg说当年是教授纵容学生追求“新思潮”，但是学生一穷二白闹了也就完了。80s是pg自己上大学的时期，60s的大学生刚好进入教职岗位，开始引导自己的学生继续搞 political correctness，也就是举报性骚扰，要求男女平权这些；新世纪以来，特别是2020s，这些当年的左翼青年主导院长和校长等关键岗位了，所以闹得更欢了，从学界蔓延到媒体，到政界，到一发不可收拾。</p>
-<p>搞 PC 最大的用处不在平权，而在于 faculty members encouraging students to attack other faculty members，作者说和 Mao 一毛一样 哈哈哈哈笑死。青年本来就愤，拿事搞人这就是天性啊。所以在第三波浪潮里就是各种 cancel culture。到后面的 BLM, metoo 等愈演愈烈。</p>
-<p>最后作者提出了什么解决方案呢？他说 </p>
-<blockquote>
-<p>I'm not a Christian, but I can see that many Christian principles are good ones</p>
-</blockquote>
-<p>我表示？只能说尊重但是不认同吧。看完这篇巨作最大的感受就是，墙内各种对平权热嘲冷讽，美国老美的平权运动居然起源60年代左翼运动。这他妈倒反天罡了等于是。</p>
-<p>想起最近小红书刷出巨多洋人，不知道是推荐算法sb了，监管不到位洋信息“倒灌”了，还是都是抠脚大汉的矩阵号发力了，但是我对“赛博移民”有一个简单的理解，yt，ig 这些洋平台对 tiktok 难民来说就是“建制派”，不 hip，况且头部的power user已经铁板一块没法突破了；Twitter更烂因为Musk是烂中烂。老中的“第三方”平台，无论是 tiktok 还是 Rednote 都是一种无可奈何的逃避。捧起小红书的这帮洋人，恰如他们爷爷奶奶辈在60年代面对当地当局各种问题，捧起红宝书一样，是一种寄托。这下中西合流，家人们谁懂啊洋人虾头男，一个买断X一个入主白宫了。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2025-01-14T23:36:23+08:00">2025-01-14</time></p>
 <p>stdin</p>            </div>
           </article>
         </div>
