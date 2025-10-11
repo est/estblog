@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>gzip 炸弹检测 – est の 输入 输出和出入</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="gzip 炸弹检测" />
+
+    <link rel="canonical" href="https://blog.est.im/2025/stdout-10" />
+    <meta property="og:url" content="https://blog.est.im/2025/stdout-10">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="gzip 炸弹检测">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">gzip 炸弹检测</h2>
+    <p class="post-date">Posted <time datetime="2025-10-11T15:23:00+08:00">2025-10-11</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>国内很多人说<a href="https://zhuanlan.zhihu.com/p/502265250">两句话就能检测 gzip 炸弹</a>，我翻了一下大概是这样</p>
+<pre><code class="language-python">import gzip
+import io
+import requests
+resp = requests.get(url, stream=True)
+
+decompressed = resp.raw.read()
+with gzip.open(io.BytesIO(decompressed), 'rb') as g:
+    g.seek(0, 2)
+    origin_size = g.tell()
+    print(origin_size)
+</code></pre>
+<p>跟 <code>gzip -l xxx.gz</code> 类似，原理是gzip格式在尾部8字节保存了 <code>[CRC32][ISIZE]</code>，其中 ISIZE = uncompressed_length % 2³²</p>
+<p>要反制这个检测很easy嘛，直接返回 <code>Content-Encoding: deflate</code> 不就行了？</p>
+<p>况且，我搜了下，ISIZE是可以改的。。。所以更好的办法是：</p>
+<pre><code class="language-python">import zlib
+
+MAX_OUTPUT = 50 * 1024 * 1024  # 50 MB cap
+
+def safe_decompress_gzip_stream(compressed_iterable):
+    # compressed_iterable yields bytes chunks from incoming request body
+    d = zlib.decompressobj(16 + zlib.MAX_WBITS)  # 16+ for gzip wrapper
+    total_out = 0
+    for chunk in compressed_iterable:
+        out = d.decompress(chunk, 64*1024)  # limit per-call output
+        total_out += len(out)
+        if total_out &gt; MAX_OUTPUT:
+            raise ValueError(&quot;Exceeded decompression limit&quot;)
+        yield out
+    # flush remaining
+    out = d.flush()
+    total_out += len(out)
+    if total_out &gt; MAX_OUTPUT:
+        raise ValueError(&quot;Exceeded decompression limit&quot;)
+    if out:
+        yield out
+</code></pre>
+<p>终归来说，gzip炸的都是内存。我在想，能不能利用LZ77反复横跳，做一个CPU炸弹呢？</p>
+<p>比如解压个半天，发现结果是个 1KB 的小文件？压缩率高达 114514%  ？</p>
+<p>ChatGPT 居然拒绝回答了。但是指了个路：</p>
+<blockquote>
+<p>Many tiny dynamic-Huffman blocks so the decoder rebuilds trees repeatedly (parsing overhead per block).<br />
+Constructing distance/length sequences that cause a lot of back-reference copying (expensive repeated copies, especially with overlapping distances).<br />
+Interleaving short literal runs with copies to create branch-heavy decode work.<br />
+Using many concatenated members/streams (or nested archives) to multiply cost.</p>
+</blockquote>
+<p>OpenAI 真猥琐啊。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

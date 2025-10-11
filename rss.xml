@@ -1,5 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Thu, 09 Oct 2025 14:49:00 +0800</lastBuildDate><item><title>OKR 🔪 了 Google Reader</title><link>https://blog.est.im/2025/stderr-05</link><description>&lt;p&gt;最近又刷到 &lt;a href="https://news.ycombinator.com/item?id=45517134"&gt;RSS的一些讨论&lt;/a&gt;，然后又说起 Google Reader 这个陈年往事。&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sat, 11 Oct 2025 15:23:00 +0800</lastBuildDate><item><title>gzip 炸弹检测</title><link>https://blog.est.im/2025/stdout-10</link><description>&lt;p&gt;国内很多人说&lt;a href="https://zhuanlan.zhihu.com/p/502265250"&gt;两句话就能检测 gzip 炸弹&lt;/a&gt;，我翻了一下大概是这样&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;import gzip
+import io
+import requests
+resp = requests.get(url, stream=True)
+
+decompressed = resp.raw.read()
+with gzip.open(io.BytesIO(decompressed), 'rb') as g:
+    g.seek(0, 2)
+    origin_size = g.tell()
+    print(origin_size)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;跟 &lt;code&gt;gzip -l xxx.gz&lt;/code&gt; 类似，原理是gzip格式在尾部8字节保存了 &lt;code&gt;[CRC32][ISIZE]&lt;/code&gt;，其中 ISIZE = uncompressed_length % 2³²&lt;/p&gt;
+&lt;p&gt;要反制这个检测很easy嘛，直接返回 &lt;code&gt;Content-Encoding: deflate&lt;/code&gt; 不就行了？&lt;/p&gt;
+&lt;p&gt;况且，我搜了下，ISIZE是可以改的。。。所以更好的办法是：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;import zlib
+
+MAX_OUTPUT = 50 * 1024 * 1024  # 50 MB cap
+
+def safe_decompress_gzip_stream(compressed_iterable):
+    # compressed_iterable yields bytes chunks from incoming request body
+    d = zlib.decompressobj(16 + zlib.MAX_WBITS)  # 16+ for gzip wrapper
+    total_out = 0
+    for chunk in compressed_iterable:
+        out = d.decompress(chunk, 64*1024)  # limit per-call output
+        total_out += len(out)
+        if total_out &amp;gt; MAX_OUTPUT:
+            raise ValueError(&amp;quot;Exceeded decompression limit&amp;quot;)
+        yield out
+    # flush remaining
+    out = d.flush()
+    total_out += len(out)
+    if total_out &amp;gt; MAX_OUTPUT:
+        raise ValueError(&amp;quot;Exceeded decompression limit&amp;quot;)
+    if out:
+        yield out
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;终归来说，gzip炸的都是内存。我在想，能不能利用LZ77反复横跳，做一个CPU炸弹呢？&lt;/p&gt;
+&lt;p&gt;比如解压个半天，发现结果是个 1KB 的小文件？压缩率高达 114514%  ？&lt;/p&gt;
+&lt;p&gt;ChatGPT 居然拒绝回答了。但是指了个路：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Many tiny dynamic-Huffman blocks so the decoder rebuilds trees repeatedly (parsing overhead per block).&lt;br /&gt;
+Constructing distance/length sequences that cause a lot of back-reference copying (expensive repeated copies, especially with overlapping distances).&lt;br /&gt;
+Interleaving short literal runs with copies to create branch-heavy decode work.&lt;br /&gt;
+Using many concatenated members/streams (or nested archives) to multiply cost.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;OpenAI 真猥琐啊。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 11 Oct 2025 15:23:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-10-11:/2025/stdout-10</guid><category>stdout</category></item><item><title>OKR 🔪 了 Google Reader</title><link>https://blog.est.im/2025/stderr-05</link><description>&lt;p&gt;最近又刷到 &lt;a href="https://news.ycombinator.com/item?id=45517134"&gt;RSS的一些讨论&lt;/a&gt;，然后又说起 Google Reader 这个陈年往事。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://blog.est.im/post/45326795197"&gt;Google Reader是谁杀死的&lt;/a&gt;呢？准确的说是个三哥 Vic Gundotra。默许这件事的是女高管 Marissa Mayer。（Mayer 后来去 Yahoo 当了CEO，干得最牛逼的事儿就是收购了 Tumblr，后来还有更抽象的从 teen 手上买了一套 Summly）&lt;/p&gt;
 &lt;p&gt;Mayer这名字让我想起之前看有本讲netflix的书提到过，是OKR推崇者。所以杀死Google Reader的凶器是 不是OKR或者launch culture呢？&lt;/p&gt;
 &lt;p&gt;我决定探究一下 OKR 的由来。这玩意的鼓吹群体，最后都指向 Intel出身的风投 John Doerr，他写了一本书叫 《Measure What Matters》，书其实不用看了，直接去他家官网，3分钟就能了解OKR的核心理念：&lt;/p&gt;
@@ -646,9 +692,4 @@ Yes! January 29, 2025, falls on Lunar New Year’s Eve, which is the day before 
 &lt;p&gt;他的理论是，全世界绝大部分的人，都是挣钱能凑合过日子就行了。work to live。那种不要命挣钱，live to work的文化只有儒家有。美国出发点不一样，全世界那种少数天生喜欢拼命挣钱的人，都受不了当地懒散和松弛，润美去干大事挣大钱了。&lt;/p&gt;
 &lt;p&gt;言之有理啊。以前欧洲那种日子过不下去敢去一个陌生的未知的新大陆打拼的，都不是等闲之辈。所以一代传一代搞出来这么一个打拼的文化。&lt;/p&gt;
 &lt;hr /&gt;
-&lt;p&gt;今日份的胡思乱想就到这了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 12 Feb 2025 16:06:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-02-12:/2025/stdout-01</guid><category>stdout</category></item><item><title>纸吸管“环保”的说法是一个4年级小学生发明的</title><link>https://blog.est.im/2025/stdin-03</link><description>&lt;p&gt;之前看到elon吹捧川普取消纸吸管是&lt;a href="https://x.com/elonmusk/status/1887886625318818292"&gt;最伟大总统&lt;/a&gt;，一大早看到&lt;a href="https://x.com/paulg/status/1888203276811632935"&gt;pg转的&lt;/a&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;As a curious fourth grader who had just started an environmental project to discourage restaurants from providing straws by default, Cress decided to look online to find out how many straws are used each day in the United States. Not being able to find any statistics, he called straw manufacturers directly and estimated the 500 million figure based on numbers they provided him.&lt;/p&gt;
-&lt;p&gt;In February of 2011, Milo Cress (then nine years old) founded the Be Straw Free Campaign project to work together with members of the straw industry, restaurants and other businesses, schools, environmental groups, and concerned citizens to reduce the use and waste of disposable plastic straws.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;这个是&lt;a href="https://www.npr.org/2018/07/22/631254978/one-childs-outsized-influence-on-the-debate-over-plastic-waste"&gt;npr报道的&lt;/a&gt;，还是比较权威的。很多饮料是塑料杯子，然后吸管给你搞成纸质；或者纸质吸管外面用塑料包一层。只能说欧美搞这些也挺草台班子的。想起之前那个how dare you小学生，感觉是这个风气。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 09 Feb 2025 10:51:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-02-09:/2025/stdin-03</guid><category>stdin</category></item></channel></rss>
+&lt;p&gt;今日份的胡思乱想就到这了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 12 Feb 2025 16:06:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-02-12:/2025/stdout-01</guid><category>stdout</category></item></channel></rss>
