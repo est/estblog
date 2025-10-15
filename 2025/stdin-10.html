@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hinton 一句话总结了教育的本质 – est の 输入 输出和出入</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Hinton 一句话总结了教育的本质" />
+
+    <link rel="canonical" href="https://blog.est.im/2025/stdin-10" />
+    <meta property="og:url" content="https://blog.est.im/2025/stdin-10">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Hinton 一句话总结了教育的本质">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link active">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Hinton 一句话总结了教育的本质</h2>
+    <p class="post-date">Posted <time datetime="2025-10-15T21:25:00+08:00">2025-10-15</time> | <span>stdin</span></p>
+  </header>
+
+  
+  <p>回家路上听了个 1小时30分的 podcast ，采访 Hinton 的： </p>
+<p><img alt="" src="https://i.ytimg.com/vi/giT0ytynSqg/hqdefault.jpg" /></p>
+<p><a href="https://www.youtube.com/watch?v=giT0ytynSqg">Godfather of AI: They Keep Silencing Me But I’m Trying to Warn Them!</a></p>
+<p>有些亮点，通过这个该死的 transcript API  www.youtube.com/youtubei/v1/get_transcript 把JSON搞了下来，然后通过这个恶心的脚本解析成 <a href="/files/2025/stdin-10-01.txt">全文</a> 文本：</p>
+<p><code>with open('stdin-10-01.txt','w') as f: f.write('\n'.join([t['text'] for x in a['actions'][0]['updateEngagementPanelAction']['content']['transcriptRenderer']['content']['transcriptSearchPanelRenderer']['body']['transcriptSegmentListRenderer']['initialSegments'] if (v := x.get('transcriptSegmentRenderer')) for t in v['snippet']['runs']]))</code></p>
+<p>他提到 “AI的危险” 分为两个层面</p>
+<ul>
+<li>有人拿AI来干坏事，比如诈骗，做武器，做病毒等</li>
+<li>AI本身作为 superintelligence 把人类比下去了</li>
+</ul>
+<p>他说这个 超级智能 是他在Google工作10年间发现的，Google曾经一度尝试制造“模拟电路”代替数字电路来更加逼真拟合人脑，但是他发现 数字 AI更具有竞争力。因为同样的算法和权重，你换一套硬件，也能复现它的能力。你换一个时间、换一个国家，也能差不多复制这个能力。数字化带来一个很恐怖的能力就是低成本迁移学习。一个模型吃掉另一个模型，近乎等于把权重拷贝过来然后求平均一下。要强化某一方面能力，就针对那部分权重做SFT。</p>
+<p>数字模型的这一特点直接秒杀了人类。人类就算科技再发达，你能不能把另一个脑袋劈开，看看它神经元怎么连接的，然后复制到自己的大脑里呢？</p>
+<blockquote>
+<p>When you and I transfer information, we're limited to the amount of information in a sentence. And the amount of information in a sentence is maybe a 100 bits. It's very little information. We're lucky if we're transferring like 10 bits a second.<br />
+These things are transferring trillions of bits a second. So, they're billions of times better than us at sharing information. And that's because they're digital. And you can have two bits of hardware using the connection strengths in exactly the same way.<br />
+We're analog and you can't do that. Your brain's different from my brain. And if I could see the connection strengths between all your neurons, it wouldn't do me any good because my neurons work slightly differently and they're connected up slightly differently. So when you die, all your knowledge dies with you. </p>
+</blockquote>
+<p>他进而得到一个推论，因为模型和模型之间相互学习，相互蒸馏没，那就是数字AI几乎是永生的。。。。</p>
+<p>我尼玛。。。这。。。洞大开啊。</p>
+<p>他接着又说，为啥 superintelligence 肯定比人类更聪明，他举的例子是，在 gpt4 不能联网的时候，他问， 增肥堆(compost heap)和原子弹有啥相似之处？</p>
+<p>答案我就不贴了。有兴趣的可以看原视频 59:00 或者 Ctr+F 我摘的原文。但是注意力结构天生就可以把各种事物的相似之处，转换成类似的 analogy，这样才能压缩信息，才能计算。AI 学习的材料比人类多得多，肯定懂得更多，交叉学科最能创新，所以AI肯定特别能创新</p>
+<p>这个访谈又说到 Ilya 在做的 super alignment ，超级对齐，我倒是觉得吧，做模型安全只是一个幌子，Ilya 多半是发现了 AI很容易胡诌“you are absolutely right”，但是如果人类知识本来就是自相矛盾的怎么办？它这个 align 的恐怕不是AI，而是从 metaphysics 对全人类智慧进行归一、一致性的梳理。类似集合论，公理系统和希尔伯特那种地基类的工作。这样的AI训练出来恐怕非常无敌。如果拿来反人类岂不是更可怕？从法统和道统上碳基已死，硅基当立了。。人类怕不是减碳把自己给减没了。2333</p>
+<p>回到标题，教育的本质是什么？</p>
+<p>教育可以从很多人文，历史，社会等太多方面分析，甚至我见过最天方夜谭的理由是，孩子接受教育是因为工业革命之后，双亲被迫投入全职劳动，不得不设立k12公共教育来集体训练孩子。哈哈哈</p>
+<p>Hinton 自称唯物主义(materialism)者，给了我一个晴天霹雳，所谓的教育，就是属于不同肉体长得完全不同的大脑，通过10bit/s 的带宽同步数据 😂</p>
+<p>一切都豁然开朗了。那种 “醍醐灌顶” 是不是就是高压缩 .7z 给你当头棒喝？</p>
+<p>从唯物的角度来说，谁能高带宽不丢包把数据同步好，谁就是最好的教育。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>
