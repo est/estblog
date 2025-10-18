@@ -58,6 +58,44 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2024/stdout-19"  rel="bookmark" >
+              <h2 class="card-title">精准 javascript 节拍器</h2>
+            </a>
+            <p class="card-text"><p>娃学琴，节奏感糊成一坨了。老师让抖腿打节拍，显然不work。码农特有的穷B气质让我舍不得买个实体的；去找个节拍器app，结果各大市场都是各种广告，怕给娃用不正经；甚至找了很多公众号版的，小程序版的，网页版的，普遍都是各种跳转诱导点击。</p>
+<p>失望之余，想起来上次<a href="https://blog.est.im/2022/stdout-10">JS播放DTMF</a>对 WebAudio 有点感觉，要不这次自己干脆再手搓一个。<a href="https://news.ycombinator.com/item?id=20935492">调研</a>了一圈发现这玩意没那么容易，主要就是javascript在浏览器里 <code>setInterval</code> 是有时间抖动（jitter）的，不能保证节奏精确。下面的图<a href="https://meowni.ca/posts/metronomes/">来自 Monica Dinculescu</a></p>
+<p><img alt="" src="https://meowni.ca/images/metronomes/2.png" /></p>
+<p>即便采用了 <code>requestAnimationFrame</code> 也不行</p>
+<p><img alt="" src="https://meowni.ca/images/metronomes/3.png" /></p>
+<p>因为js的执行无论如何trick，本质都是在只有一个主线程的单线程。如何才能做到精准采样打节拍呢？连续精心编排 AudioContext 时间轴！因为音频播放是系统调度跟js无关</p>
+<p>搜了一圈发现一位叫 <a href="https://grantjam.es/creating-a-simple-metronome-using-javascript-and-the-web-audio-api/">Grant James 已经写好</a>放在 <a href="https://github.com/grantjames/metronome">github</a> 了。那还等什么直接拿来～～针对性下列需求改了一番</p>
+<ol>
+<li>无广告</li>
+<li>去掉 .js .css 依赖，单文件更快</li>
+<li>精简不必要的代码结构，方便以后魔改</li>
+</ol>
+<p>改完之后发现两三个坑也跟着一起修补了：</p>
+<ol>
+<li>用 <code>wakeLock</code> 防止手机上使用息屏</li>
+<li>突破固定的4拍子，加上可以增减的节拍控制</li>
+<li>增减按钮禁止调到小于 0</li>
+</ol>
+<p>最后成果就放在 <a href="https://lab.est.im/metronome/">https://lab.est.im/metronome/</a> 这里了。有需要的拿去用。协议 <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="license noopener noreferrer" style="display:inline-flex;">CC BY-NC 4.0<img style="height:1em!important;margin:auto 2px auto 2px;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"><img style="height:1em!important;margin:auto 2px auto 2px;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg"><img style="height:1em!important;margin:auto 2px auto 2px;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg"></a></p>
+<p>20240929更新：</p>
+<ol>
+<li>支持了长按按钮一直增加减少 bpm</li>
+<li>禁止长按出现菜单</li>
+<li>禁止双击缩放</li>
+</ol></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-09-26T22:52:00+08:00">2024-09-26</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stdout-18"  rel="bookmark" >
               <h2 class="card-title">Edge找回丢失的右上角Copilot侧边栏图标</h2>
             </a>
@@ -830,57 +868,6 @@ Win+R 敲入：<br />
 <p>除了上面的「量化」筛选决策的想法，还有然后对很多候选人其实很惋惜，也想跟对方反馈一下。但是又很懒。我想招聘平台应该提供一个付费功能，请筛选者指点一下问题所在，至少让别人知道哪里碰壁了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-06-06T14:35:00+08:00">2024-06-06</time></p>
-<p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2024/stderr-09"  rel="bookmark" >
-              <h2 class="card-title">正在加速崩塌的是「中文」，不是互联网</h2>
-            </a>
-            <p class="card-text"><p>看到一个说法《<a href="https://chinadigitaltimes.net/chinese/708143.html">何加盐｜中文互联网正在加速崩塌</a>》，文章说</p>
-<blockquote>
-<p>几乎所有在那个年代曾经红火过的中文网站，如网易、搜狐、校园BBS、西祠胡同、凯迪猫眼、天涯论坛、校内网（人人网）、新浪博客、百度贴吧、以及大量的个人网站等，在一定年份之前的信息都已经完全消失不见了，甚至大部分网站是所有年份的信息都消失了。唯一例外的是新浪网，还能找到一些十几年前的信息，但也是极少数的寥寥几条，其他99.9999%以上的内容，全都消失了。<br />
-为什么会出现这种情况呢？我猜想，主要原因可能是两个：一是经济原因。网站的存在，需要服务器、需要带宽、需要机房、需要人员运维……二是监管原因。</p>
-</blockquote>
-<p>无独有偶，刷到<a href="https://x.com/howie_serious/status/1793470505875632138">一个帖子</a>：</p>
-<blockquote>
-<p><a href="https://weibo.com/1497035431/NevUys55V">2023-8-14 11:00</a>梁博：Common Crawl中文数据提取出来了，做了去黄等处理，发现简体中文压缩数据只有6TB，解压后30TB左右，繁体压缩数据6TB。中文数据到2019年冲到一个最大值，之后就回落了，不知道2020年具体发生了什么事情。。中文网页数据还是有点凋零。是不是有些网站不维护了？<a href="https://wx1.sinaimg.cn/large/593af2a7gy1hgw36sb3x9j214u0ewk4n.jpg">图</a><br />
-<img referrerpolicy="no-referrer" src="https://pbs.twimg.com/media/GOOnTzIW0AALDF7?format=jpg&name=large" /></p>
-<p>更大的问题是所谓科技巨头们自建高墙，把用户和内容视为自家资源，不支持互联网链接，公然且无耻地未被互联网开放互联的精神。你在 twitter 里面可以引用，加任意链接，信息自由流动。在微信、抖音、小红书里面试试？</p>
-</blockquote>
-<p>twitter，或者说 𝕏，也开始建墙了。比如 nitter.net 就不允许使用了。walled garden 我觉得算一个因素但不是绝对因素，比如十几年前CCF和DRL这类封闭式论坛还是经常有人转帖出来，好的帖子转就完事了。依我看来，中文互联网的崩溃有两个因素，以及一个结果</p>
-<h3>1. 长截图的崛起。</h3>
-<p>HN有一个神评论，说hyper-text transfer protocol名不副实，信息传递都是通过screenshots transfer。这玩意配合手机那个破屏幕简直绝了。这不仅是国内的问题，国外ig (instagram，ins)、𝕏上的文字截图不要太多。这个东西一方面缺点就是无法根据屏幕重排版，看起来别扭，但是也有诸多好处：</p>
-<ol>
-<li>保留了原始的文字和图片。富文本转帖一直是一个世纪难题，你去用js+html做一个rich text editor带附件上传的就知道多蛋痛了。还不如 .png 甚至 .jpg 一把梭</li>
-<li>防止了文本传播中的添油加醋篡改。甚至图片都包浆了，都还是那个样。</li>
-<li>最后，而已是最重要的一点，OCR技术不能 100% 准确率拦截长截图里的敏感词，很多截图 - 再截屏的二次传播使得md5, similarity-hash 都无法有效对抗热点事件的长截图传播。</li>
-</ol>
-<p>总体来说，长截图是移动互联网的原生信息载体，文本不是。</p>
-<h3>2. 音视频的统治</h3>
-<p>回到正题，中文互联网 的确崩溃了，但是崩溃的是中「文」这一 <strong>文本</strong> 为主的形式。看看长短视频、直播网站的流量，即便墙和审核机制都挡不住国内外沙雕meme的传播。汉「语」互联网正在蓬勃发展。我举个例子。在过去带宽承载不起大流量音视频的年代，如果一个明星遇到绯闻需要澄清，那么肯定精心会写一篇媒体稿发出来，登报或者接受采访。最近的比如 <a href="https://www.zhihu.com/question/656601416">汪峰承认与森林北恋情</a> ，女主Senlinbei0707选择直接拍<a href="https://www.douyin.com/video/7371455027996593427">douyin声明</a> 。服化道、背景音乐、肢体语言、镜头这些，代替了纸和笔，输入法和文字段落组织</p>
-<p>掌握和驯服文字成本极高，文字的消亡，语言和表演取而代之，是市井乡土阶级的崛起，搭建了一个跨越空间的超级熟人社会。但是唯一能跨越时间的可能只有高度信息浓缩的文字。然而，<a href="https://blog.est.im/2023/stdout-02">文字对于大多数普通人是无益的</a>，文字的发明本来就是精英阶级用来和上天鬼神对话的工具，人与人之间的沟通，口语和动作就够了。</p>
-<h3>问题的关键：搜索引擎</h3>
-<p>“互联网正在加速崩塌”这一说法，很多例子就是XXX搜不到了。有没有可能，问题不出在资料，而是搜索工具？</p>
-<p>搜索引擎在90、00年代是个稀罕货，那个时候SSD还没普及，信息检索是个高精尖的专业领域，但是随着 Lucene、Solr、ElasticSearch这一类免费的开源软件的普及，极大降低了自建搜索的门槛。</p>
-<p>搜索不用集中了，内容网站都是自带搜索，还自带推荐系统，把ranking的问题也一起解决了。SEO和内容农场早就把公共、集中的搜索引擎干得生活不能自理了。ChatGPT这样的怪物出来之后，你还指望能搜到啥有效、真实的信息？</p>
-<p>随着搜索引擎的没落，新的巨大缺口也在形成，比如刚才 森林北的视频，我们可以问以下几个问题：</p>
-<ol>
-<li>她的口红色号是什么？</li>
-<li>这片子的BGM是什么？</li>
-<li>她自己列举了多少家公司或机构，她分别属于什么职位？</li>
-</ol>
-<p>这些都是需要去端到端 infer 的。也是一个技术创业的点子和机会。以后存的信息都是向量，token会取代文本。</p>
-<h3>aftermath</h3>
-<p>感觉说了这么多，无非在纠结「文本」或者「文字」这一概念本身。但是我觉得钻这个牛角尖是非常有趣的。</p>
-<p>文本实际上就是人脑活动的压缩，对信息的概括。这是transformer架构和语言模型对我的一个巨大启发。这个有损压缩，丢掉的是什么呢？情绪和环境上下文，也就是亲切感。如今的音视频把这一最古老的人类群居基石——聊天拉回现实，放入口袋里那一小块屏幕中，怪不得雷军、周鸿祎这样的老人都出来当网红了。人一辈子可以通过读文字了解很多知识，但是「邓巴数」这个东西，决定了你一辈子的注意力只有150人。</p>
-<p>人们对互联网的期待显然可以分为两种：一种是客观的，工具性质的，严肃话题研究。这就是过去USENET和UGC的宝藏所在；另一种，人们是为了瞬间的快乐，长时间的归属感，去找认同的。这个时候，互联网提供了多彩的屁股位置选项。过去，没人知道互联网上对方是不是一条狗，现在，没人在乎你是不是沃尔玛购物袋，但是这并不妨碍网上武装直升机们为这事吵得不亦乐乎。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-05-23T15:16:00+08:00">2024-05-23</time></p>
 <p>stderr</p>            </div>
           </article>
         </div>

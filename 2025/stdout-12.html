@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>搓了个在线词典（半成品） – est の 输入 输出和出入</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="搓了个在线词典（半成品）" />
+
+    <link rel="canonical" href="https://blog.est.im/2025/stdout-12" />
+    <meta property="og:url" content="https://blog.est.im/2025/stdout-12">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="搓了个在线词典（半成品）">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">搓了个在线词典（半成品）</h2>
+    <p class="post-date">Posted <time datetime="2025-11-18T21:47:00+08:00">2025-11-18</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>看到网上很多人都在用AI干大活儿了，我也开始搓了，vibe coding对我这种人菜瘾大的人很友好，自己懒得写就交给AI写。</p>
+<p><a href="https://github.com/est/def.est.im/commits/master/?until=2013-02-01">13年前</a>就有一个想法，做一个在线词典。那个时候还打算白嫖 RedHat 免费的OpenShift。</p>
+<p>为什么要做在线词典呢？当时是眼红 Google Dictionary 觉得它什么都好。但就是需要翻墙，而且有一定几率查不出来，所以想做个镜像把它常用词都拉下来存起来。</p>
+<p>当然这个想法无可争议的烂尾了。</p>
+<p>一直到2023年，ChatGPT出来之后，发现大语言模型这玩意外语天才啊，用来写词典再好不过了。</p>
+<p>说起来，英语的 Dictionary 实际出现时间很晚，比《永乐大典》都晚了它妈的至少200多年，因为英语作为一个拼音语言书写统一（正字法）都是很近代的时候才被行政力量推行的。英语在大部分时间里都是被日耳曼蛮子和高卢蛮子看不起的一个小岛口音。</p>
+<p>英语词典的发明，是作为乡绅和学者随手一查拿来装逼的，并不是给初学者、外语学习者、特别是中文背景的ESL学生设计的</p>
+<p>词典被当成「语法翻译法」的核心工具，其根本原因是印欧语系的语法、词源都能找到共通的联系。而这一套工具本来是贵族用来训练自己的继承子女去学习古希腊语和拉丁语用的。</p>
+<p>当讲汉话写中文背景的家长、老师给娃讲英语的时候，就会遇到各种困难或者犯各种啼笑皆非的笑话。</p>
+<p>所以想起来通过 ChatGPT 和类似技术做一套「英语」。当时我列举的愿景有：</p>
+<ul>
+<li>这个词语用得多不多，是不是很偏门、冷门还是常用词、热词、必背词、高频词</li>
+<li>最典型的场景下，具体放在句子的哪个地方</li>
+<li>什么时候出现的这个词语，最早什么意思，又因为什么渊源演变成了现在的别的意思</li>
+<li>是不是用这个词汇是骂人的、得罪某个群体的，是否需要忌讳</li>
+<li>完整列举出所有 conjugation 和 declension 并且阐述和说明，突出的就是一个屈折语的诘屈聱牙。</li>
+<li>不拘泥于单个「词」，固定搭配组合也直接当成单词收录用于记忆。</li>
+</ul>
+<p>特别是第五点，过去的词典因为印刷和编辑成本很少这样做，现在电子产品完全有能力生成和遍历所有排列组合。</p>
+<p>突破「词典」的固有形态，做一个「英语」的说明书</p>
+<p>开始搓这个词典，我也看了下其他在线词典的问题：</p>
+<ul>
+<li>Oxford English Dictionary 收费。滚</li>
+<li>merriam-webster 用高级词汇解释简单词汇。需要thesaurus和dictionary合并到一个界面</li>
+<li>cambridge 可以，就是排版字体略乱</li>
+<li>collins 最适合</li>
+<li>onelook 需要点两下</li>
+<li>websters1913 最美。适合凭感觉学习。抛开一切语法和构词造句，纯粹体会词义之妙以及如何运用</li>
+<li>wordreference 最简单明了。比如 inspire [sb] == awaken [sb]'s creative ideas 比一个 [T] (transitive) 符号更容易理解得多</li>
+</ul>
+<p>搓的时候也陆陆续续解决了一些始料未及的问题：</p>
+<ol>
+<li>LLM中转站选哪家？openrouter 其实贵和卡</li>
+<li>很多LLM中转站连 CORS 问题都懒得处理。每次请求其实都要 preflight 一下。你明明加一个 Access-Control-Allow-Origin 就解决大问题</li>
+</ol>
+<p>本来想一个静态页面 .html 放在 Github Pages 万事，结果搓了一套mini后端。</p>
+<p>最后成果放在 <a href="https://def.est.im/">https://def.est.im/</a> 。还有很多待完善。当前版本我满意的就是在单独的释义下面放了 同义词 反义词，比混在一起方便清晰得多。</p>
+<p>以前纸质的词典把大段意思混杂在一起排版，各种缩写代码人看了都头大，Web时代就应该有更清晰的排版。（虽然我现在的排版也很欠缺）</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>
