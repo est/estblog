@@ -58,6 +58,27 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2025/stdout-11"  rel="bookmark" >
+              <h2 class="card-title">再也不愁 favicon 了，直接 inline SVG</h2>
+            </a>
+            <p class="card-text"><p>每次在一个网页里， F12 或 Cmd+Opt+I 最痛苦的是什么？</p>
+<blockquote>
+<p>/favicon.ico:1   GET favicon.ico 404 (Not Found)</p>
+</blockquote>
+<p>简直逼死强迫症～前段时间折腾SVG，觉得用 xml 写一组 favicon.svg 或许不错。今天撸AI它丫的直接给我个最粗暴简单的：</p>
+<pre><code class="language-html">&lt;link rel=&quot;icon&quot; id=&quot;icon&quot; href=&quot;data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'&gt;&lt;text y='8' font-size='8'&gt;🤣&lt;/text&gt;&lt;/svg&gt;&quot;&gt;
+</code></pre>
+<p>直接用 emoji 作为 favicon。我贴这个版本应该是全网最精简最易读的，挑战有没有大神能进一步缩短这个 favicon 写法。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2025-10-18T21:35:00+08:00">2025-10-18</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2025/stdout-10"  rel="bookmark" >
               <h2 class="card-title">gzip 炸弹检测</h2>
             </a>
@@ -4217,35 +4238,6 @@ for f in os.listdir(p):
 <p>我问她这样做是故意的还是不小心的，她说故意不小心的。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2023-05-13T06:11:28+08:00">2023-05-13</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2023/stdout-04"  rel="bookmark" >
-              <h2 class="card-title">当前版本gpt的根本弱点</h2>
-            </a>
-            <p class="card-text"><p>下面的东西仅限当前，不是不可以解决的。</p>
-<ol>
-<li>gpt系列数学能力不行，是因为它把每一个数字当成一个整体在背加法表、乘法表。没理解到十进制的精髓</li>
-</ol>
-<p><img alt="" src="/images/2023/stdout-04-01.webp" /></p>
-<p>上图来自<a href="https://arxiv.org/abs/2005.14165">2020年 GPT-3 论文</a> 22页。主要还是因为 BPE 太糙。 </p>
-<ol start="2">
-<li>
-<p>gpt-4能通过一些文字材料和描述感知到每个字母大概长什么样，甚至知道一些简单汉字的结构，但是确切的书写结构它是不知道的。<br />
-所以要避免你的想法被 gpt 感知学会，得考虑每个字的偏旁部首作文章，而且你的变形得很少见。估计这个技巧在将来被AI监视的生活里会被用得上。</p>
-</li>
-<li>
-<p>还有一些语音漂移它知道概念但是因为没发音器官所以不能直接感知。但这也不是不能解决，只要语料够大也能摸到规律。相比英语等拼音文字而言，汉字这类表意但是又有同音的文字应该是文本类 AI 的普遍弱点。</p>
-</li>
-</ol>
-<p>如果你要秘密表达一些观点，可以通过描述发音、形状或者动作但是不直接写出来让对方领会。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2023-03-31T15:07:02+08:00">2023-03-31</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

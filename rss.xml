@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Wed, 15 Oct 2025 21:25:00 +0800</lastBuildDate><item><title>Hinton 一句话总结了教育的本质</title><link>https://blog.est.im/2025/stdin-10</link><description>&lt;p&gt;回家路上听了个 1小时30分的 podcast ，采访 Hinton 的： &lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sat, 18 Oct 2025 21:35:00 +0800</lastBuildDate><item><title>再也不愁 favicon 了，直接 inline SVG</title><link>https://blog.est.im/2025/stdout-11</link><description>&lt;p&gt;每次在一个网页里， F12 或 Cmd+Opt+I 最痛苦的是什么？&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;/favicon.ico:1   GET favicon.ico 404 (Not Found)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;简直逼死强迫症～前段时间折腾SVG，觉得用 xml 写一组 favicon.svg 或许不错。今天撸AI它丫的直接给我个最粗暴简单的：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-html"&gt;&amp;lt;link rel=&amp;quot;icon&amp;quot; id=&amp;quot;icon&amp;quot; href=&amp;quot;data:image/svg+xml,&amp;lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'&amp;gt;&amp;lt;text y='8' font-size='8'&amp;gt;🤣&amp;lt;/text&amp;gt;&amp;lt;/svg&amp;gt;&amp;quot;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;直接用 emoji 作为 favicon。我贴这个版本应该是全网最精简最易读的，挑战有没有大神能进一步缩短这个 favicon 写法。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 18 Oct 2025 21:35:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-10-18:/2025/stdout-11</guid><category>stdout</category></item><item><title>Hinton 一句话总结了教育的本质</title><link>https://blog.est.im/2025/stdin-10</link><description>&lt;p&gt;回家路上听了个 1小时30分的 podcast ，采访 Hinton 的： &lt;/p&gt;
 &lt;p&gt;&lt;img alt="" src="https://i.ytimg.com/vi/giT0ytynSqg/hqdefault.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://www.youtube.com/watch?v=giT0ytynSqg"&gt;Godfather of AI: They Keep Silencing Me But I’m Trying to Warn Them!&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;有些亮点，通过这个该死的 transcript API  www.youtube.com/youtubei/v1/get_transcript 把JSON搞了下来，然后通过这个恶心的脚本解析成 &lt;a href="/files/2025/stdin-10-01.txt"&gt;全文&lt;/a&gt; 文本：&lt;/p&gt;
@@ -630,15 +637,4 @@ WshShell.Run("RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters")
 &lt;p&gt;都在说阶级固化，我倒反而觉得，只要车子在缓慢走，那么大部分人不会太焦虑；如果车子完全不动，那么大家心态就很崩溃，感觉窗外路边一棵草都比人过得好。所谓的流动性，不是说你一定要超过多少人，而是说如果看到别的车道走的快，有机会能够跳过去。&lt;/p&gt;
 &lt;p&gt;比堵车更痛苦的，是好死不死，前面刚好有个傻逼，空出很长很长一段距离，隔壁的车一辆接一辆插入，你却无可奈何，隔靴搔痒。就像你看别人都发财了，你却无计可施，急死了。现实世界，人和人对于有限岗位的竞争，所谓长幼功序排资论辈，莫过如此。&lt;/p&gt;
 &lt;p&gt;但是从另一个角度想来，人多的时候机会也多。你的市场也更大，人少了，这个市场也会减少。&lt;/p&gt;
-&lt;p&gt;孩子的培养和性格，跟车子一样。在长期竞争里是多维度的。比如谁牵引力大，起步快，谁就能很快的抓住一些短期的利益。但是长途路上是否开着舒服，它需要看底盘的平衡和座椅的舒适。遇到车少的蓝海，这个时候就看你爆发的巅峰技能，谁极速高谁能更快到达终点。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Mon, 24 Mar 2025 09:40:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-03-24:/2025/stderr-01</guid><category>stderr</category></item><item><title>正则获得国际电话前缀</title><link>https://blog.est.im/2025/stdout-02</link><description>&lt;p&gt;&lt;a href="https://blog.est.im/post/48751778838"&gt;2013年&lt;/a&gt;的时候喷过ITU这个国际电话号码，前缀是变长的问题&lt;/p&gt;
-&lt;p&gt;今天遇到问题，需要按国际区号初步分析归属地和供应商，&lt;a href="https://stackoverflow.com/questions/2113908/"&gt;stackoverflow&lt;/a&gt;和AI给的都很渣，写了个正则：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;re.compile(r"""\+
-    (1  # north america
-    |(?:  # 3 digits
-        21|22|23|24|25|26|29|35|37|38|42|
-        50|59|67|68|69|80|85|87|88|96|97|99)\d
-    |[2-9]\d)  # two digits
-""", re.VERBOSE)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;+1&lt;/code&gt; 开头的是北美，然后依次寻找3位的，再匹配2位的。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;+7&lt;/code&gt; 本来是苏联的，现在给 哈萨克斯坦 和 俄罗斯 了，就当成两位的判定吧。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 25 Feb 2025 11:38:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-02-25:/2025/stdout-02</guid><category>stdout</category></item></channel></rss>
+&lt;p&gt;孩子的培养和性格，跟车子一样。在长期竞争里是多维度的。比如谁牵引力大，起步快，谁就能很快的抓住一些短期的利益。但是长途路上是否开着舒服，它需要看底盘的平衡和座椅的舒适。遇到车少的蓝海，这个时候就看你爆发的巅峰技能，谁极速高谁能更快到达终点。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Mon, 24 Mar 2025 09:40:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-03-24:/2025/stderr-01</guid><category>stderr</category></item></channel></rss>
