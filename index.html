@@ -117,14 +117,18 @@
 <p>/favicon.ico:1   GET favicon.ico 404 (Not Found)</p>
 </blockquote>
 <p>简直逼死强迫症～前段时间折腾SVG，觉得用 xml 写一组 favicon.svg 或许不错。今天撸AI它丫的直接给我个最粗暴简单的：</p>
-<pre><code class="language-html">&lt;link rel=&quot;icon&quot; id=&quot;icon&quot; href=&quot;data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'&gt;&lt;text y='7' font-size='8'&gt;🤣&lt;/text&gt;&lt;/svg&gt;&quot;&gt;
+<pre><code class="language-html">&lt;link rel=&quot;icon&quot; href=&quot;data:image/svg+xml,&lt;svg xmlns='http://w3.org/2000/svg' viewBox='0 0 19 19'&gt;&lt;text y=16&gt;🤣&lt;/text&gt;&lt;/svg&gt;&quot;&gt;
 </code></pre>
 <p>预览一下这个SVG：</p>
 <div style="display:block;width:128px;height:128px">
-  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'><text y='7' font-size='8'>🤣</text></svg>
+  <svg xmlns='http://w3.org/2000/svg' viewBox='0 0 19 19'><text y=16>🤣</text></svg>
 </div>
 
-<p>y=7 是因为该死的拉丁字母显示有个 baseline 问题。随便调整下懒得管了。</p>
+<p>精简的地方：<br />
+1. www.w3.org 去掉 www<br />
+2. y=16去掉引号<br />
+3. viewBox 为19而 y=16 是因为该死的拉丁字母显示有个 baseline 问题。随便调整下懒得管了。<br />
+4. 节约了 font-size="16" 因为 默认就16px</p>
 <p>直接用 emoji 作为 favicon。我贴这个版本应该是全网最精简最易读的，挑战有没有大神能进一步缩短这个 favicon 写法。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2025-10-18T21:35:00+08:00">2025-10-18</time></p>
