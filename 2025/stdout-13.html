@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SPA+SSR 前后端混合渲染的 “Hydration” 问题 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="SPA+SSR 前后端混合渲染的 “Hydration” 问题" />
+
+    <link rel="canonical" href="https://blog.est.im/2025/stdout-13" />
+    <meta property="og:url" content="https://blog.est.im/2025/stdout-13">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="SPA+SSR 前后端混合渲染的 “Hydration” 问题">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">SPA+SSR 前后端混合渲染的 “Hydration” 问题</h2>
+    <p class="post-date">Posted <time datetime="2025-10-22T21:21:00+08:00">2025-10-22</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>作为一个后端仔，这几天小搓了下页面，发现javascript工程化的一个大坑</p>
+<p>以这个vue官方教程为例：</p>
+<pre><code class="language-javascript">const items = ref([{ message: 'Foo' }, { message: 'Bar' }])
+</code></pre>
+<pre><code class="language-html">&lt;ul&gt;
+  &lt;li v-for=&quot;item in items&quot;&gt;
+    {{ item.message }}
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>看上去人畜无害很容易</p>
+<p>但是加上 SSR 就复杂了。比如这个 TodoMVC 已经在服务端输出两条了</p>
+<pre><code class="language-html">&lt;ul&gt;
+  &lt;li&gt;A&lt;/li&gt;
+  &lt;li&gt;B&lt;/li&gt;
+  &lt;li v-for=&quot;item in items&quot;&gt;
+    {{ item.message }}
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>现在如果 <code>items</code> 更新需要重绘<code>，怎么让</code>v-for<code>知道前面两个</code><li>` 的存在呢？</p>
+<p>假如这个问题你能解决，浏览器端OK，那么服务端怎么写呢？</p>
+<pre><code class="language-html">&lt;ul&gt;
+  {% for item in [&quot;A&quot;, &quot;B&quot;] %}
+  &lt;li&gt;{{ item }}&lt;/li&gt;
+  {% endfor %}
+  &lt;li v-for=&quot;item in items&quot;&gt;
+    {{ item.message }}
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>这样？</p>
+<p>是不是觉得太丑了，最好把两个逻辑合并呢？</p>
+<p>这就是我理解的 hydration 问题。上面只是一个简单例子，复杂的SSR，理论上应该可以精确渲染到页面特定路由的特定状态的精确那一帧。</p>
+<p>要达到这个目的，目前普遍做法是在服务端多一个 编译(compile) 过程，其核心无非是在服务器内存里山寨一个 DOM 的层级结构。</p>
+<p>感觉应该有更好的做法，但是我没找到。现有的 Vue Vite React Next 都有解，但是我觉得都太重了。在一个 .html 里写几条 directive 修修改改就能把这事儿搞定的办法，目前看来几乎不可能。</p>
+<p>毁灭吧。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>
