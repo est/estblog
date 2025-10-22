@@ -56,7 +56,8 @@
   </header>
 
   
-  <p>作为一个后端仔，这几天小搓了下页面，发现javascript工程化的一个大坑</p>
+  <p>标题里的 "hydration" 应该来自 React 里 <code>hydrateRoot</code> 这个对象，其本意是如果说服务端模板输出的 html 是静态的，<code>noscript</code>的，干瘪的，那么 js 的引入就可以让页面变得 “湿润”，“充水”，“流动”，“顺滑” 起来。国内Web社区把这玩意翻译成 “水合”。</p>
+<p>作为一个后端仔，这几天小搓了下页面，发现javascript工程化的一个大坑，说说我对 “hydration” 的理解。</p>
 <p>以这个vue官方教程为例：</p>
 <pre><code class="language-javascript">const items = ref([{ message: 'Foo' }, { message: 'Bar' }])
 </code></pre>
@@ -87,12 +88,11 @@
   &lt;/li&gt;
 &lt;/ul&gt;
 </code></pre>
-<p>这样？</p>
-<p>是不是觉得太丑了，最好把两个逻辑合并呢？</p>
+<p>这样？是不是觉得太丑了，最好把两个逻辑合并呢？</p>
 <p>这就是我理解的 hydration 问题。上面只是一个简单例子，复杂的SSR，理论上应该可以精确渲染到页面特定路由的特定状态的精确那一帧。</p>
 <p>要达到这个目的，目前普遍做法是在服务端多一个 编译(compile) 过程，其核心无非是在服务器内存里山寨一个 DOM 的层级结构。</p>
 <p>感觉应该有更好的做法，但是我没找到。现有的 Vue Vite React Next 都有解，但是我觉得都太重了。在一个 .html 里写几条 directive 修修改改就能把这事儿搞定的办法，目前看来几乎不可能。</p>
-<p>毁灭吧。</p>
+<p>累了，毁灭吧。</p>
 </article>
 
 <div class="comments">

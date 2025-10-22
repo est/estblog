@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Wed, 22 Oct 2025 21:21:00 +0800</lastBuildDate><item><title>SPA+SSR 前后端混合渲染的 “Hydration” 问题</title><link>https://blog.est.im/2025/stdout-13</link><description>&lt;p&gt;作为一个后端仔，这几天小搓了下页面，发现javascript工程化的一个大坑&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Wed, 22 Oct 2025 21:21:00 +0800</lastBuildDate><item><title>SPA+SSR 前后端混合渲染的 “Hydration” 问题</title><link>https://blog.est.im/2025/stdout-13</link><description>&lt;p&gt;标题里的 "hydration" 应该来自 React 里 &lt;code&gt;hydrateRoot&lt;/code&gt; 这个对象，其本意是如果说服务端模板输出的 html 是静态的，&lt;code&gt;noscript&lt;/code&gt;的，干瘪的，那么 js 的引入就可以让页面变得 “湿润”，“充水”，“流动”，“顺滑” 起来。国内Web社区把这玩意翻译成 “水合”。&lt;/p&gt;
+&lt;p&gt;作为一个后端仔，这几天小搓了下页面，发现javascript工程化的一个大坑，说说我对 “hydration” 的理解。&lt;/p&gt;
 &lt;p&gt;以这个vue官方教程为例：&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-javascript"&gt;const items = ref([{ message: 'Foo' }, { message: 'Bar' }])
 &lt;/code&gt;&lt;/pre&gt;
@@ -30,12 +31,11 @@
   &amp;lt;/li&amp;gt;
 &amp;lt;/ul&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;这样？&lt;/p&gt;
-&lt;p&gt;是不是觉得太丑了，最好把两个逻辑合并呢？&lt;/p&gt;
+&lt;p&gt;这样？是不是觉得太丑了，最好把两个逻辑合并呢？&lt;/p&gt;
 &lt;p&gt;这就是我理解的 hydration 问题。上面只是一个简单例子，复杂的SSR，理论上应该可以精确渲染到页面特定路由的特定状态的精确那一帧。&lt;/p&gt;
 &lt;p&gt;要达到这个目的，目前普遍做法是在服务端多一个 编译(compile) 过程，其核心无非是在服务器内存里山寨一个 DOM 的层级结构。&lt;/p&gt;
 &lt;p&gt;感觉应该有更好的做法，但是我没找到。现有的 Vue Vite React Next 都有解，但是我觉得都太重了。在一个 .html 里写几条 directive 修修改改就能把这事儿搞定的办法，目前看来几乎不可能。&lt;/p&gt;
-&lt;p&gt;毁灭吧。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 22 Oct 2025 21:21:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-10-22:/2025/stdout-13</guid><category>stdout</category></item><item><title>搓了个在线词典（半成品）</title><link>https://blog.est.im/2025/stdout-12</link><description>&lt;p&gt;看到网上很多人都在用AI干大活儿了，我也开始搓了，vibe coding对我这种人菜瘾大的人很友好，自己懒得写就交给AI写。&lt;/p&gt;
+&lt;p&gt;累了，毁灭吧。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 22 Oct 2025 21:21:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-10-22:/2025/stdout-13</guid><category>stdout</category></item><item><title>搓了个在线词典（半成品）</title><link>https://blog.est.im/2025/stdout-12</link><description>&lt;p&gt;看到网上很多人都在用AI干大活儿了，我也开始搓了，vibe coding对我这种人菜瘾大的人很友好，自己懒得写就交给AI写。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/est/def.est.im/commits/master/?until=2013-02-01"&gt;13年前&lt;/a&gt;就有一个想法，做一个在线词典。那个时候还打算白嫖 RedHat 免费的OpenShift。&lt;/p&gt;
 &lt;p&gt;为什么要做在线词典呢？当时是眼红 Google Dictionary 觉得它什么都好。但就是需要翻墙，而且有一定几率查不出来，所以想做个镜像把它常用词都拉下来存起来。&lt;/p&gt;
 &lt;p&gt;当然这个想法无可争议的烂尾了。&lt;/p&gt;
