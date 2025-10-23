@@ -58,6 +58,147 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2025/stdout-14"  rel="bookmark" >
+              <h2 class="card-title">做了个英语词典，分析了一通无聊的数据</h2>
+            </a>
+            <p class="card-text"><p>问你几个问题，我国小学 中学 高中 大学 一共要掌握多少英语词汇量？</p>
+<p>我这有个准确的答案：</p>
+<ul>
+<li>中小学：1541个</li>
+<li>高中：3578个</li>
+<li>大学：4687个</li>
+<li>CET4：5308个</li>
+<li>CET6：6525个</li>
+<li>专4：8220个</li>
+</ul>
+<p>怎么来的？我前几天<a href="https://blog.est.im/2025/stdout-12">写了个英语词典</a>，为了节约token费用，直接把这8k+个词汇的解释给缓存了。</p>
+<p><a href="https://github.com/est/dict_json">https://github.com/est/dict_json</a></p>
+<p>可以拿来做很多比较有趣的事。比如我把每个词汇的不同含义都分别罗列出来了近义词、反义词。哪些词汇这个近反义列表的最高频出现呢？结果可能出乎你的意料：</p>
+<ol>
+<li><a href="https://def.est.im/calm">calm</a>: 93</li>
+<li><a href="https://def.est.im/release">release</a>: 82</li>
+<li><a href="https://def.est.im/support">support</a>: 76</li>
+<li><a href="https://def.est.im/clear">clear</a>: 75</li>
+<li><a href="https://def.est.im/separate">separate</a>: 72</li>
+<li><a href="https://def.est.im/dull">dull</a>: 65</li>
+<li><a href="https://def.est.im/secure">secure</a>: 62</li>
+<li><a href="https://def.est.im/praise">praise</a>: 60</li>
+<li><a href="https://def.est.im/decline">decline</a>: 60</li>
+<li><a href="https://def.est.im/yield">yield</a>: 60</li>
+<li><a href="https://def.est.im/standard">standard</a>: 59</li>
+<li><a href="https://def.est.im/neglect">neglect</a>: 55</li>
+<li><a href="https://def.est.im/direct">direct</a>: 53</li>
+<li><a href="https://def.est.im/fail">fail</a>: 53</li>
+<li><a href="https://def.est.im/minor">minor</a>: 52</li>
+<li><a href="https://def.est.im/present">present</a>: 52</li>
+</ol>
+<p>居然有93个词的近反义包含 calm？我看看都有哪些</p>
+<blockquote>
+<p>furious,stir,unrest,riot,irritation,easy,circus,fury,gentle,tense,fanatic,<br />
+firework,pacific,relaxation,excite,wind,fiery,rough,tranquil,wild,clamor,<br />
+arouse,violent,annoy,terrify,frantic,clamour,craze,ANGER,windy,disturb,<br />
+rouse,impatient,irritate,fume,frighten,settle,dramatic,still,startle,<br />
+scare,placid,restless,serene,trouble,nervous,worry,disconcert,worried,<br />
+reassure,steady,fireworks,crisis,mad,uproar,provoke,soothe,peace,<br />
+fearful,peaceful,busy,turbulent,anxiety,rage,chaos,at rest,incense,<br />
+anxious,cool,eruption,ferment,temperate,desperate,compose,hysterical,<br />
+breathless,indignant,frenzy,madden,OVERWHELM,fuss,hysteric,tension,<br />
+quiet,angry,uneasy,tumult,disturbance,flare,drama,silence,panic,UPSET</p>
+</blockquote>
+<p>好家伙，这么多。</p>
+<p>release 呢？</p>
+<blockquote>
+<p>absolve,album,bail,bind,bottle,bridle,cage,capture,clamp,clasp,classify,<br />
+cling,close,clutch,collar,confine,confinement,confiscate,constrain,contain,<br />
+control,corner,curb,dam,deploy,detain,discharge,dismiss,drop,edition,eject,<br />
+emancipate,emission,emit,encircle,enclose,engulf,enslave,excuse,exempt,free,<br />
+freedom,grab,grasp,grip,harbor,harness,hold,hook,imprison,issue,jail,kidnap,<br />
+launch,let down,let out,liberate,liberation,loose,oblige,outlet,output,press,<br />
+publish,rein,relax,repression,reserve,restrain,retention,seize,subdue,<br />
+submerge,suppress,therapy,touch,trap,unlock,untie,vent,version,withhold</p>
+</blockquote>
+<p>其他的杂七杂八看了一通，让AI依次总结了一下：</p>
+<ul>
+<li>calm: 人的情绪、情感状态或某种社会/自然状态</li>
+<li>release：“释放”与“束缚”这一对核心对立概念。收、放</li>
+<li>support：“支持/维护/帮助”和“反对/破坏/撤销支持”，并大量使用了建筑和身体的隐喻。</li>
+<li>clear：“清晰与模糊”、“阻碍与畅通”。明暗之争</li>
+<li>separate： “连接与分离”、“结合与分开” </li>
+<li>dull： “有趣与无趣”、“生动与乏味”</li>
+<li>secure：“安全与危险”、“固定与松动”</li>
+</ul>
+<p>如果说一门语言在特定局部词汇的精密和丰富程度代表了这一种文化对该局部的重视程度，那么这就是现代英语一种奇妙的展开。</p>
+<p>这一组词汇有一种 从0到1，从鸿蒙到盘古开天辟地，生万物的美。</p>
+<p>人的情绪的刻画是至高，内心的平静 calm 是原始状态；</p>
+<p>有了收放，就有了吐纳，有了呼吸，也就有了支持和破坏优劣之分；</p>
+<p>也有有了明暗之争，也就有了连接和分离；</p>
+<p>也就产生了无趣和安全感。</p>
+<p>用AI的话说：“从内在情感到外部关系，再到最终认知与状态”的完整心智与行为模型。</p>
+<table>
+<thead>
+<tr>
+<th>组别</th>
+<th>核心对立概念</th>
+<th>逻辑层面</th>
+<th>演绎关系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第一组</td>
+<td>愤怒 vs. 平静</td>
+<td>内在情感</td>
+<td>起点：原始动力</td>
+</tr>
+<tr>
+<td>第二组</td>
+<td>束缚 vs. 释放</td>
+<td>个体行动</td>
+<td>对情感的回应</td>
+</tr>
+<tr>
+<td>第三组</td>
+<td>支持 vs. 反对</td>
+<td>社会互动</td>
+<td>在关系中的实践</td>
+</tr>
+<tr>
+<td>第四组</td>
+<td>清晰 vs. 模糊</td>
+<td>认知判断</td>
+<td>对互动的理解</td>
+</tr>
+<tr>
+<td>第五组</td>
+<td>安全 vs. 危险</td>
+<td>最终状态</td>
+<td>所有行动的目标</td>
+</tr>
+</tbody>
+</table>
+<p>好。下面问题来了，我并没有给出接下来的词汇 praise，但是AI给猜出来了：</p>
+<blockquote>
+<p>这一组词汇将围绕 “有意义 vs. 无意义”、“重要 vs. 琐碎”、“真实 vs. 虚假” 展开。它是对所有行动和认知的终极评判。</p>
+</blockquote>
+<p>上面那个表，可以扩展到 社会评价：赞扬 vs. 谴责</p>
+<p>接下来AI推测是哪个词呢？</p>
+<blockquote>
+<p>推测七（高可能性）：自尊与自我概念。这一组将围绕 “自豪 vs. 羞耻”、“自信 vs. 自卑”、“尊严 vs. 屈辱” 展开。这是外部评价在个体内心内化的结果。<br />
+情绪与感受的广度。这一组将超越第一组“愤怒vs平静”的单一情绪维度，扩展到 “喜悦 vs. 悲伤”、“爱 vs. 恐惧”、“希望 vs. 绝望” 等更广阔的情感光谱。</p>
+</blockquote>
+<p>哇，这个众多的意义汇集到一个概念——decline</p>
+<p>接下来的开枝散叶我就不展开了。词汇的意义面变得愈发琐碎和平凡。</p>
+<p>是一场美妙的语言之旅。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2025-10-23T21:11:00+08:00">2025-10-23</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2025/stdout-13"  rel="bookmark" >
               <h2 class="card-title">SPA+SSR 前后端混合渲染的 “Hydration” 问题</h2>
             </a>
@@ -957,34 +1098,6 @@ WshShell.Run("RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters")
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2025-04-25T23:49:00+08:00">2025-04-25</time></p>
 <p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2025/stderr-03"  rel="bookmark" >
-              <h2 class="card-title">语言，逆差</h2>
-            </a>
-            <p class="card-text"><p>又睡不着，琢磨<a href="https://x.com/yetone/status/1911679048347983988">一段话</a>：</p>
-<blockquote>
-<p>多戲超人 @DoubleFakeCute： 文字很容易传播仇恨，但很难传递感动。<br />
-@yetone：  是的，换句话说文字传播感动是需要功底的，但是传播仇恨不用上完九年义务教育就可以</p>
-</blockquote>
-<p>这句话背后揭示了一个道理：表达愤怒、抱怨、不满，似乎是语言最原始、最本能的用途。人类还未掌握完整的语法与修辞，就已学会了哭泣。</p>
-<p>新生婴儿落地的第一声啼哭，正是一种天赋的语言——一种对环境提出抗议的表达。哲学家维特根斯坦说过：“语言的边界就是世界的边界。”在生命伊始，我们的语言边界，即是对苦痛的感知；我们最早学会的，是如何说“我不喜欢”。</p>
-<p>相较之下，笑，是后天习得的，是在社会化过程中逐渐学会的回应。但当笑成为一种礼貌、成为一种职场的面具，它也就褪去了它的真实。于是我们在笑中疏离，在沉默中彼此冷漠，脸上浮现的，是长久训练出的 poker face，那张扑克脸仿佛是一种文明社会强加的伪装。</p>
-<p>最近 realDonaldTrump 把🇨🇳进口关税从10%，20%，54%，104% 一路干到154%。 仿佛数字本身也在喊叫。一个长期生活在中国的美国人 <a href="https://www.bilibili.com/video/BV1LCdRYtE57/">王渊源John</a> 打趣地说 trump 的支持者之所以对“涨关税”拍手叫好，是因为“trade deficit”（贸易逆差）这个词在英语里带有天然的负面含义——“deficit”意味着赤字、亏空，仿佛国家正在负债累累。而在中文语境中，“逆差”这个词更像是一种经济现象，而非道德沦丧，无需过度反应。</p>
-<p>这让我想起另一个语言误会的悲剧——美国的“war on drugs”（禁毒战争）之所以久攻不下，很大程度上，也可能是败在语言上。在英语中，“drug”一词含义，既可以指药品（medicine），也可以指毒品（narcotics）。这导致在大众语感中，毒品并没有一种“邪恶之物”的鲜明面孔。相比之下，中文中“毒品”与“药品”泾渭分明，一个是治病，一个是害命，“吸毒”这个词本身就带着罪与恶的意味。而英文中的“drug overdose”，只不过是一场“药物使用过度”的中性描述，仿佛只是剂量出了问题，而非价值观的崩塌。</p>
-<p>语言之毒，在于其无形；它不像刀剑那样可见、可防，而是悄无声息地改变我们的感知。孔子曾说：“巧言令色，鲜矣仁。”。庄子又言：“言者所以在意，得意而忘言。”。语言虽巧，往往意在蛊惑；修辞的闪光点，也可能是陷阱的倒影。语言的本质是媒介，而非终点。</p>
-<p>古代巫师、祭司、先知，其实都是语言的炼金术士。他们并非真正能预见未来，而是能以一字一句为符咒，将人的心智引向他们想要的方向。如《盗梦空间》中，那个悠悠旋转的陀螺，不断将人困于梦与醒之间，真假难辨。</p>
-<p>语言即现实的建构者，它能唤醒你，也能奴役你。它是文明的基石，也是误解的温床。传播仇恨，只需几句粗陋的标语；而传递感动，却如雕刻光影，需要时间、技艺与赤诚。</p>
-<hr />
-<p>15:12 根据ChatGPT润色了文章。太他妈吊了。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2025-04-15T05:54:00+08:00">2025-04-15</time></p>
-<p>stderr</p>            </div>
           </article>
         </div>
 
