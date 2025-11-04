@@ -58,6 +58,267 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2024/stdout-22"  rel="bookmark" >
+              <h2 class="card-title">Linux删除了 .ru 帐号？我查了一下</h2>
+            </a>
+            <p class="card-text"><p><a href="https://www.zhihu.com/question/1783342926">发生了什么事</a>？</p>
+<blockquote>
+<p>日前，Linux 内核主要维护者之一 Greg Kroah-Hartman (Greg K-H) 提交了一项不寻常的“文档”更新，将数名具有 &lt;.ru&gt; 顶级域名邮箱的维护者，和一名明确为俄罗斯身份的维护者从 MAINTAINERS（维护者名录）文件除名。<br />
+这一提交已于上周日被 Linus Torvalds 拉取并包含于 6.12-rc4 版本的代码中。<br />
+已有来自于 AOSC 的开发者提交了 revert(尚未合并)，而 Linus 本人在评论中声明其对先前的 commit 知情并支持</p>
+</blockquote>
+<p>一开始，我以为是 “反向” <a href="https://x.com/siyuanbear/status/1848644797076279545">厚脸皮PR</a></p>
+<p><img referrerpolicy="no-referrer" src="https://pbs.twimg.com/media/Gae0pQdbEAE-0JJ?format=jpg&name=medium" /></p>
+<p>一般来说， github 上混一个 contributor 得贡献代码，很多人就改改文档、翻译就拿到一个“贡献者”称号（我也干过哈哈哈）。甚至还有离了大谱的，直接提一个 pull request 内容是把自己加到 contributors 文件里。。</p>
+<p>我以为是 Linux Foundation 发疯了，为了某种 “合规” 或者 sanction，掩耳盗铃，把 作者名字列表.txt 改改掩人耳目</p>
+<p>仔细看了下，发现好像并不是那么简单。这里是diff</p>
+<p><a href="https://github.com/torvalds/linux/commit/6e90b675cf942e50c70e8394dfb5862975c3b3b2">https://github.com/torvalds/linux/commit/6e90b675cf942e50c70e8394dfb5862975c3b3b2</a></p>
+<p>这里是更改后完整的 <code>MAINTAINERS</code> 内容：</p>
+<p><a href="https://github.com/torvalds/linux/blob/6e90b675cf942e50c70e8394dfb5862975c3b3b2/MAINTAINERS">https://github.com/torvalds/linux/blob/6e90b675cf942e50c70e8394dfb5862975c3b3b2/MAINTAINERS</a></p>
+<p>直接通过 github API 拿到原始的 diff</p>
+<p><code>curl -H'Accept: application/vnd.github.diff'  -sk 'https://api.github.com/repos/torvalds/linux/commits/6e90b675cf942e50c70e8394dfb5862975c3b3b2'</code></p>
+<p>乱写几个 prompt 丢给 gpt-4o，可以看到大概做了下列几处更改：</p>
+<table>
+<thead>
+<tr>
+<th><strong>Device/Module</strong></th>
+<th><strong>Probable Date</strong></th>
+<th><strong>Author</strong></th>
+<th><strong>Email</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Acer Aspire 1 Embedded Controller</td>
+<td>~2018</td>
+<td>Nikita Travkin</td>
+<td>nikita@trvn.ru</td>
+</tr>
+<tr>
+<td>Alpha Port (Ivan Kokshaysky removed)</td>
+<td>~1992</td>
+<td>Ivan Kokshaysky (removed)</td>
+<td>ink@jurassic.park.msu.ru</td>
+</tr>
+<tr>
+<td>ARM/Cirrus Logic CLPS711X Architecture</td>
+<td>~1996</td>
+<td>Alexander Shiyan</td>
+<td>shc_work@mail.ru</td>
+</tr>
+<tr>
+<td>Baikal-T1 PVT Hardware Monitor</td>
+<td>~2015</td>
+<td>Serge Semin</td>
+<td>fancer.lancer@gmail.com</td>
+</tr>
+<tr>
+<td>GRE Demultiplexer Driver</td>
+<td>~2000</td>
+<td>Dmitry Kozlov</td>
+<td>xeb@mail.ru</td>
+</tr>
+<tr>
+<td>LIBATA PATA Drivers</td>
+<td>~2003</td>
+<td>Sergey Shtylyov</td>
+<td>s.shtylyov@omp.ru</td>
+</tr>
+<tr>
+<td>LIBATA SATA AHCI Synopsys DWC Driver</td>
+<td>~2014</td>
+<td>Serge Semin</td>
+<td>fancer.lancer@gmail.com</td>
+</tr>
+<tr>
+<td>Media Drivers for Ascot2E</td>
+<td>~2010</td>
+<td>Sergey Kozlov, Abylay Ospan</td>
+<td>serjk@netup.ru, aospan@netup.ru</td>
+</tr>
+<tr>
+<td>Media Drivers for CXD2841ER</td>
+<td>~2015</td>
+<td>Sergey Kozlov, Abylay Ospan</td>
+<td>serjk@netup.ru, aospan@netup.ru</td>
+</tr>
+<tr>
+<td>Media Drivers for Helene</td>
+<td>~2017</td>
+<td>Abylay Ospan</td>
+<td>aospan@netup.ru</td>
+</tr>
+<tr>
+<td>Media Drivers for Horus3A</td>
+<td>~2018</td>
+<td>Sergey Kozlov, Abylay Ospan</td>
+<td>serjk@netup.ru, aospan@netup.ru</td>
+</tr>
+<tr>
+<td>Media Drivers for LNBH25</td>
+<td>~2012</td>
+<td>Sergey Kozlov, Abylay Ospan</td>
+<td>serjk@netup.ru, aospan@netup.ru</td>
+</tr>
+<tr>
+<td>NetUP PCI Universal DVB Devices</td>
+<td>~2010</td>
+<td>Sergey Kozlov, Abylay Ospan</td>
+<td>serjk@netup.ru, aospan@netup.ru</td>
+</tr>
+<tr>
+<td>MIPS Baikal-T1 Platform</td>
+<td>~2015</td>
+<td>Serge Semin</td>
+<td>fancer.lancer@gmail.com</td>
+</tr>
+<tr>
+<td>NTB IDT Driver</td>
+<td>~2014</td>
+<td>Serge Semin</td>
+<td>fancer.lancer@gmail.com</td>
+</tr>
+<tr>
+<td>PPTP Driver</td>
+<td>~1996</td>
+<td>Dmitry Kozlov</td>
+<td>xeb@mail.ru</td>
+</tr>
+<tr>
+<td>Renesas Ethernet AVB Driver</td>
+<td>~2013</td>
+<td>Sergey Shtylyov</td>
+<td>s.shtylyov@omp.ru</td>
+</tr>
+<tr>
+<td>Renesas R-Car SATA Driver</td>
+<td>~2015</td>
+<td>Sergey Shtylyov</td>
+<td>s.shtylyov@omp.ru</td>
+</tr>
+<tr>
+<td>Renesas SuperH Ethernet Driver</td>
+<td>~2000</td>
+<td>Sergey Shtylyov</td>
+<td>s.shtylyov@omp.ru</td>
+</tr>
+<tr>
+<td>Synopsys DesignWare APB SSI Driver</td>
+<td>~2010</td>
+<td>Serge Semin</td>
+<td>fancer.lancer@gmail.com</td>
+</tr>
+<tr>
+<td>UFS Filesystem</td>
+<td>~1974</td>
+<td>Evgeniy Dushistov</td>
+<td>dushistov@gmail.com</td>
+</tr>
+</tbody>
+</table>
+<p>如果说作者 @gregkh 作出这个改动的动机说</p>
+<blockquote>
+<p>Remove some entries due to various compliance requirements </p>
+</blockquote>
+<p>那么 BAIKAL 这个是明显会去掉。其余的改动，我能认出来的比较重要的有 PPTP Driver，其它都是五花八门驱动的维护者，感觉就算去掉， impact 的功能也不多。</p>
+<p>当然你也可以说 first they came for the ... 我就不继续展开了</p>
+<p>下面列举几个可能不那么重要，但是我觉得很容易被忽略的事实：</p>
+<h3>一、 .ru 的邮箱被全部移除了吗？</h3>
+<p>是的。最新版本 <a href="https://github.com/torvalds/linux/blob/master/MAINTAINERS"><code>MAINTAINERS</code></a> 文件里我搜了 <code>.ru</code>、<code>russia</code> 关键词没找到了。干干净净。当然后期会不会加回来我不知道。</p>
+<h3>二、 俄国人对 Linux 的贡献被抹掉了吗？</h3>
+<p>第一，上面这些人的对应代码贡献，目前并没有删掉。</p>
+<p>第二，Linux 源码根目录还有一个 <a href="https://github.com/torvalds/linux/blob/master/CREDITS"><code>CREDITS</code></a> 文件，里面包含了下列俄国人：</p>
+<pre><code>N: Yuri Per
+E: yuri@pts.mipt.ru
+D: Some smbfs fixes
+S: Demonstratsii 8-382
+S: Tula 300000
+S: Russia
+
+N: Alexey Kuznetsov
+E: kuznet@ms2.inr.ac.ru
+D: Author and maintainer of large parts of the networking stack
+
+N: Stas Sergeev
+E: stsp@users.sourceforge.net
+D: PCM PC-Speaker driver
+D: misc fixes
+S: Russia
+
+</code></pre>
+<h3>三、 俄国人不能参与 Linux 项目了吗？</h3>
+<p>我在这里想补充一个背景知识，什么是 Linux Kernel 的 <strong>maintainer</strong> ？</p>
+<p>内核功能繁多，Linus 老爷子一个人照看不过来，得把拆分成各个模块，授权给相应的 负责人(maintainer)，给予他们检查、合并代码的权限。Linux基金会（注册地：美国）会给他们配置一个专用邮件列表用来主持专项议事</p>
+<p>上面这句话，如何理解？可能对某些简中读者没看明白。简单的说：.ru 用户还是可以以 developer 身份向别的 maintainer 提交代码。这里不得不提到那个出名的 kernel git workflow</p>
+<p>这是普通 git 项目的工作流：</p>
+<p><img alt="" src="https://git-scm.com/book/ms/v2/images/centralized_workflow.png" /></p>
+<p>这个是 linux kernel 的（图很老，大概这个意思）：</p>
+<p><img alt="" src="https://chenweixiang.github.io/assets/linux_kernel_code_flow.jpg" /></p>
+<p>普通人是没法直接向 mainline <a href="https://github.com/torvalds/linux">https://github.com/torvalds/linux</a>  提交代码的。这个社区甚至会给你一个<a href="https://www.kernel.org/doc/html/latest/process/1.Intro.html">长长的文档</a>教你一步一步如何提代码 </p>
+<p>不要说新功能了，一些老功能的 patch 要赶上主线发车窗口，你手续流程都很长。</p>
+<p>想给内核做贡献，你要面对的甚至都不是 Linus 本尊，恰好是这些 <code>MAINTAINERS</code> 里列举的各位把关人。世界上绝大部分的人对 Linux 内核做贡献都是这样。 maintainer 是极少数，他们可以直接向 Linus 提改动。</p>
+<p>Linus 自己也说了，他是芬兰人，意思就是说他不想看到俄国人。啊这。能理解，不提倡！</p>
+<h3>四、maintainer 名单变化多吗？</h3>
+<p>从提交历史来看，</p>
+<p><a href="https://github.com/torvalds/linux/commits/master/MAINTAINERS">https://github.com/torvalds/linux/commits/master/MAINTAINERS</a></p>
+<p>人员进进出出很频繁。但是 @gregkh 这种在 <code>char-misc</code> 里搭车进去，的确偷偷摸摸。</p>
+<h3>五、 .cn 会被波及吗？</h3>
+<p>这个问题我无法回答，但是可以列一下现在有的：</p>
+<ol>
+<li>一大堆 LOONGARCH 龙芯的驱动和各种模块</li>
+<li>海光 HYGON 驱动</li>
+<li>简中翻译 Alex Shi <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#101;&#120;&#115;&#64;&#107;&#101;&#114;&#110;&#101;&#108;&#46;&#111;&#114;&#103;">&#97;&#108;&#101;&#120;&#115;&#64;&#107;&#101;&#114;&#110;&#101;&#108;&#46;&#111;&#114;&#103;</a> Yanteng Si <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#105;&#121;&#97;&#110;&#116;&#101;&#110;&#103;&#64;&#108;&#111;&#111;&#110;&#103;&#115;&#111;&#110;&#46;&#99;&#110;">&#115;&#105;&#121;&#97;&#110;&#116;&#101;&#110;&#103;&#64;&#108;&#111;&#111;&#110;&#103;&#115;&#111;&#110;&#46;&#99;&#110;</a></li>
+<li>繁体翻译 Hu Haowen <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#50;&#48;&#50;&#51;&#48;&#48;&#50;&#48;&#56;&#57;&#64;&#108;&#105;&#110;&#107;&#46;&#116;&#121;&#117;&#116;&#46;&#101;&#100;&#117;&#46;&#99;&#110;">&#50;&#48;&#50;&#51;&#48;&#48;&#50;&#48;&#56;&#57;&#64;&#108;&#105;&#110;&#107;&#46;&#116;&#121;&#117;&#116;&#46;&#101;&#100;&#117;&#46;&#99;&#110;</a> https://github.com/srcres258/linux-doc 太原理工的人才！</li>
+<li>RADOS BLOCK DEVICE (RBD) Ilya Dryomov <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#100;&#114;&#121;&#111;&#109;&#111;&#118;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#105;&#100;&#114;&#121;&#111;&#109;&#111;&#118;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a> Dongsheng Yang <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#111;&#110;&#103;&#115;&#104;&#101;&#110;&#103;&#46;&#121;&#97;&#110;&#103;&#64;&#101;&#97;&#115;&#121;&#115;&#116;&#97;&#99;&#107;&#46;&#99;&#110;">&#100;&#111;&#110;&#103;&#115;&#104;&#101;&#110;&#103;&#46;&#121;&#97;&#110;&#103;&#64;&#101;&#97;&#115;&#121;&#115;&#116;&#97;&#99;&#107;&#46;&#99;&#110;</a> ceph-devel@vger.kernel.org</li>
+<li>一大堆 @huawei.com @linux.alibaba.com的各种驱动和模块</li>
+<li>可能有别的<a href="https://blog.est.im/201906/stdout-003">大陆+港澳台公司</a>邮箱我漏掉了。懒得看了。</li>
+</ol>
+<p>在 <code>CREDITS</code> 里鸣谢的：</p>
+<pre><code>N: Chih-Jen Chang
+E: chihjenc@scf.usc.edu
+E: chihjen@iis.sinica.edu.tw
+D: IGMP(Internet Group Management Protocol) version 2
+S: 3F, 65 Tajen street
+S: Tamsui town, Taipei county,
+S: Taiwan 251
+S: Republic of China
+
+N: Li Yang
+E: leoli@freescale.com
+D: Freescale Highspeed USB device driver
+D: Freescale QE SoC support and Ethernet driver
+S: B-1206 Jingmao Guojigongyu
+S: 16 Baliqiao Nanjie, Beijing 101100
+S: People's Repulic of China
+
+N: Tsu-Sheng Tsao
+E: tsusheng@scf.usc.edu
+D: IGMP(Internet Group Management Protocol) version 2
+S: 2F 14 ALY 31 LN 166 SEC 1 SHIH-PEI RD
+S: Taipei
+S: Taiwan 112
+S: Republic of China
+S: 24335 Delta Drive
+S: Diamond Bar, California 91765
+S: USA
+
+</code></pre>
+<h3>六、结束语</h3>
+<p>总的来说 Linux内核项目，包括不限于很多别的社区项目，还是英雄主义色彩很重的，这样的个人主义既可以说出“nVidia fuck you”，也完全有可能在某一天把主语丝滑切成 “Russia”。这压根就是同一个硬币的同一面（甚至都不是另一面）</p>
+<p>在国际地缘政治热火朝天、段视频AI诵读、<a href="https://blog.est.im/2022/stderr-02">情绪控制终端</a>满天飞的今天，讨论这些重要吗？有用吗？</p>
+<p>回答：不重要，没用</p>
+<p>但是对我个人而言，或许有那么一丢丢重要，有一丁点用。</p>
+<p>希望对你也有点用。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-10-24T15:26:00+08:00">2024-10-24</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stdin-16"  rel="bookmark" >
               <h2 class="card-title">ChatGPT 对我过往问题的吐槽</h2>
             </a>
@@ -793,88 +1054,6 @@ return line
 <p>btw 打了这么多网址，该不会被误认为SEO吧。囧。。。。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-06-21T22:48:00+08:00">2024-06-21</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2024/stdout-09"  rel="bookmark" >
-              <h2 class="card-title">吐槽pynsq，另外给subprocess糊了一个异步</h2>
-            </a>
-            <p class="card-text"><h3>pynsq太烂了</h3>
-<p>起初是因为需要在 Web API 里消费一个消息队列(nsq)，给浏览器返回 <a href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource">EventSource</a> 做实时输出。但是没想到<a href="https://github.com/nsqio/pynsq/blob/master/nsq/__init__.py">官方库pynsq</a>居然写得这么渣：</p>
-<pre><code>def _handle_term_signal(sig_num, frame):
-    logging.getLogger(__name__).info(
-        'TERM Signal handler called with signal %r', sig_num)
-    tornado.ioloop.IOLoop.current().stop()
-
-def run():
-    """
-    Starts any instantiated :class:`nsq.Reader` or :class:`nsq.Writer`
-    """
-    signal.signal(signal.SIGTERM, _handle_term_signal)
-    signal.signal(signal.SIGINT, _handle_term_signal)
-    tornado.ioloop.IOLoop.current().start()
-</code></pre>
-<p>这都什么玩意儿？一个库何德何能也敢去乱劫持 signal？最他妈逗的是这个库的推荐写法：</p>
-<pre><code>import nsq
-r = nsq.Reader(message_handler=handler,
-        lookupd_http_addresses=['http://127.0.0.1:4161'],
-        topic='nsq_reader', channel='asdf', lookupd_poll_interval=15)
-nsq.run()
-</code></pre>
-<p>这个 <code>r</code> 莫名其妙的就能跑起来了。真是魔法。anyway，在Web API兼容这一坨是失败了，爆了一堆错，对付魔法的办法就是隔离，所以打算糊个脚本，通过多进程+PIPE来得到数据。</p>
-<h3>给 subprocess 加一个异步补丁</h3>
-<p>糊的时候发现，<code>subprocess</code> 模块的 <code>.communicate()</code> 方法是 blocking的， 居然不支持 async/await，于是只能继续糊：</p>
-<pre><code>import subprocess, fcntl, asyncio
-p = subprocess.Popen(
-    cmd, bufsize=0, text=True, stdin=subprocess.PIPE,
-    stderr=subprocess.PIPE,  stdout=subprocess.PIPE, close_fds=True)
-fcntl.fcntl(p.stdout.fileno(), fcntl.F_SETFL, os.O_NONBLOCK)
-buf = ''
-while p.poll() is None:
-    try:
-        # read() with O_NONBLOCK might gets None thus TypeError
-        buf += (p.stdout.read(1024) or '')
-        contents = buf.split('\n')
-        if len(contents) &lt; 2:
-            raise TypeError('Not enough')
-    except TypeError:
-        await asyncio.sleep(1)
-        yield None
-        continue
-    buf = contents.pop(-1)
-    for x in contents:
-        yield x
-
-p.terminate()
-</code></pre>
-<p>这里用 <code>buf</code>、<code>contents</code> 是因为直接调用消息队列，每个消息都是分割好的；但是通过管道来读。得自己去处理字节流如何分割的问题，也就是传说简中特供的「粘包」问题。</p>
-<p>另外子进程可能因为Web框架的种种原因，不自觉退出或者变僵尸进程，需要向 stdout/stderr 做输出的时候检查一下 BrokenPipeError 处理后事主动退出即可。</p>
-<p>还有子进程如果输出完毕，需要代码里调用一下 <code>p.terminate()</code>，才能回收，避免变zombie</p>
-<p>试了一下，也不是不能用，成功！正觉得自己又行了的时候，发现官方：</p>
-<p><a href="https://docs.python.org/3.8/library/asyncio-subprocess.html">https://docs.python.org/3.8/library/asyncio-subprocess.html</a></p>
-<p>啊这。白忙活。</p>
-<h3>超长待机 subprocess</h3>
-<p>想起来之前还有个问题，一个API调用一个subprocess，然后等它执行，不想管。这个时候可以加一个参数 detach 模式：</p>
-<p><code>subprocess.Popen(..., start_new_session=True)</code></p>
-<p>然后在同进程用里跑一个后台检查循环去检查子进程的 <code>WNOHANG</code>：</p>
-<pre><code>while 1:
-    try:
-        chpid, retcode, res = os.wait3(os.WNOHANG)
-    except ChildProcessError:
-        break
-    sleep(5)
-    if chpid == os.getpid():
-        do_sth()
-        break
-</code></pre>
-<p>想了下好像也搞复杂了。要不直接跑一个 <code>sh -c "blah.sh &amp;"</code> 算了。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-06-21T09:30:00+08:00">2024-06-21</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
