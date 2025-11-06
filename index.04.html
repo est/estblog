@@ -58,6 +58,34 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2024/stdout-10"  rel="bookmark" >
+              <h2 class="card-title">人声分离简单评测</h2>
+            </a>
+            <p class="card-text"><p>娃要去表演唱歌，老师要求提供MTV。。 视频是<a href="https://www.bilibili.com/video/BV1Ty4y147Sj/">这个</a>，需要去掉人声部分</p>
+<p>先用 ffmpeg 提音轨 <code>ffmpeg -i v.mp4  -ac 1 1.mp3</code></p>
+<p>微信小程序上的全是骗充值的，网上的服务：</p>
+<ol>
+<li>没卵用 https://vocalremover.org/ 名气很大，搜出来第一就这个</li>
+<li>没用 https://www.conversion-tool.com/karaoke/</li>
+<li>卡死 https://www.songpeel.com/song-to-karaoke</li>
+<li>要安装 https://github.com/adefossez/demucs</li>
+<li>要6G显存 https://github.com/Anjok07/ultimatevocalremovergui</li>
+<li>效果很好！ https://tunebat.com/Vocal-Remover 推荐</li>
+</ol>
+<p>看来人声分离，特别是童声，还是有点难。</p>
+<p>最后把得到的 a.mp3 塞回去</p>
+<p><code>ffmpeg -i v.mp4 -i a.mp3 -c:v copy -map 0:v:0 -map 1:a:0 new.mp4</code></p>
+<p>btw 打了这么多网址，该不会被误认为SEO吧。囧。。。。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-06-21T22:48:00+08:00">2024-06-21</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stdout-09"  rel="bookmark" >
               <h2 class="card-title">吐槽pynsq，另外给subprocess糊了一个异步</h2>
             </a>
@@ -754,30 +782,6 @@ IP属地：陕西</p>
 </blockquote></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-02-21T18:29:00+08:00">2024-02-21</time></p>
-<p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2024/stdin-03"  rel="bookmark" >
-              <h2 class="card-title">人的意识，预测器和 sora</h2>
-            </a>
-            <p class="card-text"><p><a href="(https://www.dedao.cn/share/course/article?id=a8QZdRM1OmLxVvG898JG69rgYPjqWp)">摘自</a>  Lisa Feldman Barrett 的 《Seven and a Half Lessons About the Brain 认识大脑》。她是美国艺术与科学院，还有加拿大皇家学会的双院士。</p>
-<blockquote>
-<p>比如跑马拉松，在冲过终点的那一刻，觉得自己精疲力尽，恨不得站着都费劲。但是，有人曾经做过检测，发现即使在刚跑完马拉松，精疲力尽的人的身体里，依然储存着大量的能量。这也是，大脑根据预测做出的决定。这个预测就是，大脑在猜，万一你冲过马拉松终点之后，会不会遇到什么危险。比如终点线后面有只老虎等着你。因此，它必须得提前储备逃生的能量。这就是为什么说，大脑的本质是一个预测器官。而这些预测的目的，是为了帮我们更好地管理能量，确保生存。这个过程的专业术语叫，稳态应变。巴瑞特管它叫，管理身体预算。注意，是预算，也就是，基于预测，提前计算。<br />
-换句话说，过去我们都觉得大脑的工作顺序是，先接受外界的信号，根据信号产生感觉，根据感觉做出思考。但实际上，真实的顺序是，你先接受外界的信号，但是，在你对这些信号产生感觉之前，大脑先做出预测，然后，根据预测让你产生感觉。最简单的例子就是，望梅止渴。你明明没吃到它，却觉得酸，这就是大脑在猜，你看到之后可能要吃，吃完之后会觉得酸。它就提前对你释放了这个信号。当然，这个预测也经常不准。比如，你突然觉得，有一首歌，你明明很久没听，但它就是在你的脑子里挥之不去。再比如，你走进一个房间，突然感觉莫名地焦虑。这都是大脑在根据预测做出反应。至于它做的是什么预测，不好意思，它不会告诉你。这一切都是本能反应，你根本感觉不到过程。就像一加一等于二，计算过程太快，以至于你都意识不到自己计算过。<br />
-举个例子，你在特别渴的时候喝水，是不是感觉两口水下肚，立马就解渴了？这看起来好像很平常。但事实上，水需要20分钟，才能进入你的血液，它根本不可能在几秒内解渴。那么，你为什么感觉解渴？是大脑在意识到你喝水之后，做了一个预测，它觉得你既然喝了水，一会儿这些水就应该进入血液了。因此，它基于这个预测，提前给你的身体释放信号，让你觉得很解渴。<br />
-换句话说，要想改变自己，你的重点不是改变思考方式，而是改变大脑对某件事的预测。怎么改变？我们都知道，预测是以过去的经验为基础的。你要是找一个从来没吃过青梅的人，望梅不一定能止渴。因此，要想改变预测机制，关键是改变经验。比如，以前你心情不好，就喜欢吃薯条。但是，你可以换个方法，心情不好的时候，改去跑步。第一次跑的时候，你可能会觉得很煎熬。但多跑几次，大脑就会形成新的反射回路。等你心情再不好的时候，跑步反而会让你高兴。再比如，加班的时候，感觉压力很大，情绪低落。你可以把这个过程再延长一点，每回都奖励自己，加班之后，做一件自己喜欢的事，比如打游戏、看电影、吃烤串。多试几次，再加班的时候，你可能就会感觉到一点兴奋。换句话说，我们的身体里有很多进化赋予的设定。坏消息是，这些设定可能有漏洞，有缺陷，可能是错的。但好消息是，人是一个奇妙的物种，对于每一个不好的本能，你一定能够找到另一个与之相反的本能来克制它。有句话说得好，成大事者，反本能。拿什么对抗本能？答案是，激发另一个本能。</p>
-</blockquote>
-<p>我觉得这个机制能解释很多生理和情绪的问题。准确的说是，人是活在预期里的。预期脆弱，人就脆弱；人觉得累，觉得困，不是身体不行了，而是脑子觉得预算不够，脑子觉得这点机会要不拉倒把，能折腾个der 。。。</p>
-<p>然后今天 OpenAI 推出了 <a href="https://openai.com/sora">sora</a> 这玩意对影视、创意行业震撼就不说了，我觉得它可能真的是 AGI 的开端了。按照上面的理论，意识和智力不是说一个世界戳一下，从一个模型得到一个响应；而应该是一个模型随时随地都在对眼睛、感官的输入进行建模和预测，然后随时预测下一秒、5秒、10秒会发生什么，然后根据是不是真实发生了进行模型的正向激励，或者负向feedback。</p>
-<p>大脑把视觉为主的感官输入，在想象里预演并作出价值判断，权衡利弊。人从小就是这样磕磕绊绊的去理解世界，和世界互动，改变世界的。sora 如果能在1-2秒内对将来发生的事快速预演一遍并作出利害判断，那么这样摸爬滚打1年后绝逼就是通用人工智能，吊打大多数稀里糊涂长大的人。人类的很多行为就是画面的预演，根本不是文字。文字是高级逻辑思辨，其实平时用的不多。</p>
-<p>btw  sora 这名字不是「空」么。。。Sora Aoi——苍井そら!</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-02-16T20:23:00+08:00">2024-02-16</time></p>
 <p>stdin</p>            </div>
           </article>
         </div>

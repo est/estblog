@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 04 Nov 2025 10:46:00 +0800</lastBuildDate><item><title>gRPC Python, AsyncIO and multiprocess</title><link>https://blog.est.im/2025/stdout-15</link><description>&lt;p&gt;I am torn about writing this. AsyncIO in Python is always a mess, protobuf is another, gRPC is the worst of them all because of all that boilerplate code that does nothing but trouble.&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Thu, 06 Nov 2025 17:53:00 +0800</lastBuildDate><item><title>一个叛逆大爷的童年</title><link>https://blog.est.im/2025/stdin-11</link><description>&lt;p&gt;偶然刷到这么一个人的童年：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;十分讨厌传统文化&lt;/li&gt;
+&lt;li&gt;上小学喜欢看小说。比如 三国 西游 等。怕被老师抓？老四过来，用一本书盖住。&lt;/li&gt;
+&lt;li&gt;因为老师苛刻，打学生。所以10岁逃学，不敢回家；山谷里流浪三天，最后找到发现是兜圈子，离家大概才8里&lt;/li&gt;
+&lt;li&gt;13岁忤逆父母。&lt;details&gt;离家出走！  &lt;summary&gt;有一件事我记得特别清楚。在我大约１３岁的时候，我父亲请了许多客人到家里；我们两人当着他们的面争论起来。父亲当众骂我懒而无用。这一下激怒了我。我回骂了他，接着就离家出走。我母亲追着我想劝我回去。父亲也追上来，边骂边命令我回去。我跑到一个池塘边，并且威胁说如果他再走近一步，我就要跳进水里。在这种情况下，停止内战的要求和反要求都提出来了。我父亲坚持要我道歉并磕头认错。我同意如果他答应不打我，我可以跪一只腿磕头。战争就这样结束了。&lt;/summary&gt;&lt;/details&gt;&lt;/li&gt;
+&lt;li&gt;认为皇帝不是坏人，甚至不反对帝制，都是手下干坏事？&lt;/li&gt;
+&lt;li&gt;从小大量阅读，知道拿破仑、叶卡德琳娜女皇、彼得大帝、威灵顿、格拉斯顿、卢梭、孟德斯鸠和林肯&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;奇妙的经历，估计好多人感觉都有&lt;a href="http://www.mzdbl.cn/gushi/maozedongzishu/maozedongzishu-2.html"&gt;相似之处&lt;/a&gt;？ 🤣&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 06 Nov 2025 17:53:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-11-06:/2025/stdin-11</guid><category>stdin</category></item><item><title>gRPC Python, AsyncIO and multiprocess</title><link>https://blog.est.im/2025/stdout-15</link><description>&lt;p&gt;I am torn about writing this. AsyncIO in Python is always a mess, protobuf is another, gRPC is the worst of them all because of all that boilerplate code that does nothing but trouble.&lt;/p&gt;
 &lt;p&gt;The task I am facing is integrating a mesh API &lt;strong&gt;server&lt;/strong&gt; based on our internal codebase. &lt;/p&gt;
 &lt;h2&gt;non-gRPC options&lt;/h2&gt;
 &lt;p&gt;I mean, gRPC is just h2+protobuf, how hard could it be? Even &lt;a href="https://uwsgi-docs.readthedocs.io/en/latest/SPDY.html"&gt;uWSGI had h2&lt;/a&gt; from decades ago&lt;/p&gt;
@@ -822,73 +831,4 @@ But finally, CBOR is fine! The implementations are good and it's widely used. Us
 &lt;ul&gt;
 &lt;li&gt;棍子就是 JJ&lt;/li&gt;
 &lt;li&gt;碗就是 子宫&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 18 Jun 2025 13:55:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-06-18:/2025/stdin-06</guid><category>stdin</category></item><item><title>A single Python function for both async/sync</title><link>https://blog.est.im/2025/stdout-04</link><description>&lt;p&gt;Scenario: I often need to write Python functions like:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;take some parameters and format them&lt;/li&gt;
-&lt;li&gt;call an API with the formatted parameters&lt;/li&gt;
-&lt;li&gt;parse the result and return chosen values&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;There's a huge problem in step #2.&lt;/p&gt;
-&lt;p&gt;In today's Python world, troubles arise because async/await are "infectious", In practice this function is splitted - like in Python stdlib, where a vanilla &lt;code&gt;method&lt;/code&gt; and its async counterpart &lt;code&gt;amethod&lt;/code&gt; often come in pairs. Package authors scramble to provide sync transport and another async transport. I discovered this ugly fact while reading the source code of&lt;code&gt;redis-py&lt;/code&gt;, &lt;code&gt;httpx&lt;/code&gt; and &lt;code&gt;elasticsearch-py&lt;/code&gt;.  Duplicate and lookalike code was always written twice. All it takes is some random async IOs in one place and your code would be forced to change forever.&lt;/p&gt;
-&lt;p&gt;Is there a way to write the function in one place, but callable both with async and without?&lt;/p&gt;
-&lt;p&gt;I pondered this question for ages, and today I stumbled upon something interesting:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-python"&gt;
-  def s1():
-    return asyncio.sleep(1)
-
-  async def s2():
-    return await async.sleep(1)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;There's virtually no difference when calling &lt;code&gt;await s1()&lt;/code&gt; and &lt;code&gt;await s2()&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;I vaguely remembered how Python’s coroutines were designed, and after some tinkering, I came up with this snippet:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-python"&gt;
-import asyncio, types, functools
-
-def aa(f):
-    &amp;quot;&amp;quot;&amp;quot;
-    make a function both awaitable and sync
-    idk how to property name this. anti-asyncio (aa) maybe?
-    &amp;quot;&amp;quot;&amp;quot;
-    @functools.wraps(f)
-    def wrapper(func, *args, **kwargs):
-        if asyncio.iscoroutinefunction(func):
-            return types.coroutine(f)(func, *args, **kwargs)
-        else:
-            async def afunc(*a, **kw):
-                return func(*a, **kw)
-            g = types.coroutine(f)(afunc, *args, **kwargs)
-            try:
-                while True: next(g)
-            except StopIteration as ex:
-                return ex.value
-    return wrapper
-
-
-@aa
-def my_func(func, *args, **kwargs):
-    # prepare args, kwargs here
-    # add a prefix `yield from` everywhere, for either sync/async
-    result = yield from func(*args, **kwargs)
-    # handle the result here
-    return result
-
-
-import httpx
-
-# async
-async def main():
-    # the same as `await httpx.AsyncClient(timeout=3).get('https://est.im')`
-    print(await my_func(httpx.AsyncClient(timeout=3).get, 'https://est.im/'))
-asyncio.run(main())
-
-
-# sync
-print(my_func(httpx.get, 'https://est.im'))
-# works the same as httpx.get('https://est.im')
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The above shows a single function called &lt;code&gt;my_func&lt;/code&gt;, dependency injection of an HTTP &lt;code&gt;get&lt;/code&gt;  call of either sync/async, allows for customizable  pre- and post-processing logic, and returns the result with clean syntax.&lt;/p&gt;
-&lt;p&gt;&lt;strike&gt;The only mental tax: inside &lt;code&gt;my_func&lt;/code&gt;, you have to replace all &lt;code&gt;await&lt;/code&gt; keyword with `yield from.&lt;/strike&gt;&lt;/p&gt;
-&lt;p&gt;Update 2025-05-16: The only mental tax: add a &lt;code&gt;yield from&lt;/code&gt; prefix for every &lt;code&gt;func&lt;/code&gt;calls for IO or API, either sync or async.&lt;/p&gt;
-&lt;p&gt;It solves all problems for my scenario and I’ve yet to find a simpler solution. If you have a good name for the &lt;code&gt;@aa&lt;/code&gt; decorator please comment!&lt;/p&gt;
-&lt;p&gt;A sidenote, I am not sure if this method affects async schedulers and blocks something maybe? Like the &lt;code&gt;while True&lt;/code&gt; might be a new kind of GIL. Also i haven't looked at problems with contextvars.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 14 May 2025 14:35:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-05-14:/2025/stdout-04</guid><category>stdout</category></item></channel></rss>
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 18 Jun 2025 13:55:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-06-18:/2025/stdin-06</guid><category>stdin</category></item></channel></rss>

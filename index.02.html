@@ -58,6 +58,89 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2025/stdout-04"  rel="bookmark" >
+              <h2 class="card-title">A single Python function for both async/sync</h2>
+            </a>
+            <p class="card-text"><p>Scenario: I often need to write Python functions like:</p>
+<ol>
+<li>take some parameters and format them</li>
+<li>call an API with the formatted parameters</li>
+<li>parse the result and return chosen values</li>
+</ol>
+<p>There's a huge problem in step #2.</p>
+<p>In today's Python world, troubles arise because async/await are "infectious", In practice this function is splitted - like in Python stdlib, where a vanilla <code>method</code> and its async counterpart <code>amethod</code> often come in pairs. Package authors scramble to provide sync transport and another async transport. I discovered this ugly fact while reading the source code of<code>redis-py</code>, <code>httpx</code> and <code>elasticsearch-py</code>.  Duplicate and lookalike code was always written twice. All it takes is some random async IOs in one place and your code would be forced to change forever.</p>
+<p>Is there a way to write the function in one place, but callable both with async and without?</p>
+<p>I pondered this question for ages, and today I stumbled upon something interesting:</p>
+<pre><code class="language-python">
+  def s1():
+    return asyncio.sleep(1)
+
+  async def s2():
+    return await async.sleep(1)
+</code></pre>
+<p>There's virtually no difference when calling <code>await s1()</code> and <code>await s2()</code></p>
+<p>I vaguely remembered how Python’s coroutines were designed, and after some tinkering, I came up with this snippet:</p>
+<pre><code class="language-python">
+import asyncio, types, functools
+
+def aa(f):
+    &quot;&quot;&quot;
+    make a function both awaitable and sync
+    idk how to property name this. anti-asyncio (aa) maybe?
+    &quot;&quot;&quot;
+    @functools.wraps(f)
+    def wrapper(func, *args, **kwargs):
+        if asyncio.iscoroutinefunction(func):
+            return types.coroutine(f)(func, *args, **kwargs)
+        else:
+            async def afunc(*a, **kw):
+                return func(*a, **kw)
+            g = types.coroutine(f)(afunc, *args, **kwargs)
+            try:
+                while True: next(g)
+            except StopIteration as ex:
+                return ex.value
+    return wrapper
+
+
+@aa
+def my_func(func, *args, **kwargs):
+    # prepare args, kwargs here
+    # add a prefix `yield from` everywhere, for either sync/async
+    result = yield from func(*args, **kwargs)
+    # handle the result here
+    return result
+
+
+import httpx
+
+# async
+async def main():
+    # the same as `await httpx.AsyncClient(timeout=3).get('https://est.im')`
+    print(await my_func(httpx.AsyncClient(timeout=3).get, 'https://est.im/'))
+asyncio.run(main())
+
+
+# sync
+print(my_func(httpx.get, 'https://est.im'))
+# works the same as httpx.get('https://est.im')
+
+</code></pre>
+<p>The above shows a single function called <code>my_func</code>, dependency injection of an HTTP <code>get</code>  call of either sync/async, allows for customizable  pre- and post-processing logic, and returns the result with clean syntax.</p>
+<p><strike>The only mental tax: inside <code>my_func</code>, you have to replace all <code>await</code> keyword with `yield from.</strike></p>
+<p>Update 2025-05-16: The only mental tax: add a <code>yield from</code> prefix for every <code>func</code>calls for IO or API, either sync or async.</p>
+<p>It solves all problems for my scenario and I’ve yet to find a simpler solution. If you have a good name for the <code>@aa</code> decorator please comment!</p>
+<p>A sidenote, I am not sure if this method affects async schedulers and blocks something maybe? Like the <code>while True</code> might be a new kind of GIL. Also i haven't looked at problems with contextvars.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2025-05-14T14:35:00+08:00">2025-05-14</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2025/stdin-05"  rel="bookmark" >
               <h2 class="card-title">听 彭罗斯 吹了90分钟波函数的坍塌</h2>
             </a>
@@ -806,34 +889,6 @@ According to Scott, Steinmetz listened to the generator and scribbled computatio
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-11-06T06:51:00+08:00">2024-11-06</time></p>
 <p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2024/stdout-23"  rel="bookmark" >
-              <h2 class="card-title">白嫖百度网盘“单次转存数”500限制</h2>
-            </a>
-            <p class="card-text"><p>找了个资源，点击保存，居然提示充SVIP。看了下免费用户每次最多保存500份文件。本来找资源就白嫖，让我充钱？</p>
-<p>研究了一会儿，发现可以搞。</p>
-<ol>
-<li>首先你去你网盘里建立个目录 <code>0000-0500</code>，准备存文件。这么起名字是因为你在自己网盘里多选也是最多选500个，所以每次存一个目录用来对照数量</li>
-<li>分享链接里文件列表默认只展示前100条，是惰性加载，所以请用鼠标一直反复向下滚，务必拉到底，然后点击「名称」排序。这样方便对比有没有漏掉</li>
-<li>F12打开 console 并粘贴下面的js。如果这一步看不懂建议直接放弃  <br />
-    Array.prototype.slice.apply(document.querySelectorAll(<br />
-      '.share-list dd.open-enable&gt;span'<br />
-    ), [0, 500]).forEach((x)=&gt;x.click())<br />
-这样就等效点击了前500个文件。点击保存。</li>
-<li>等全部存好，再次执行上一段代码，取消点击前500个文件。</li>
-<li>去你的网盘里新建个目录 <code>0500-1000</code> ，用来保存下一批</li>
-<li>把上面代码里的 <code>[0,500]</code> 改成 <code>[500,1000]</code> 然后再执行一遍，保存到刚才创建的目录里。</li>
-<li>如果有更多的文件，在执行一遍 <code>[500,1000]</code> 这一批，取消点击；然后改成 <code>[1000,1500]</code> 如此反复。</li>
-</ol></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-11-01T00:15:00+08:00">2024-11-01</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 

@@ -58,6 +58,34 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2024/stdout-23"  rel="bookmark" >
+              <h2 class="card-title">白嫖百度网盘“单次转存数”500限制</h2>
+            </a>
+            <p class="card-text"><p>找了个资源，点击保存，居然提示充SVIP。看了下免费用户每次最多保存500份文件。本来找资源就白嫖，让我充钱？</p>
+<p>研究了一会儿，发现可以搞。</p>
+<ol>
+<li>首先你去你网盘里建立个目录 <code>0000-0500</code>，准备存文件。这么起名字是因为你在自己网盘里多选也是最多选500个，所以每次存一个目录用来对照数量</li>
+<li>分享链接里文件列表默认只展示前100条，是惰性加载，所以请用鼠标一直反复向下滚，务必拉到底，然后点击「名称」排序。这样方便对比有没有漏掉</li>
+<li>F12打开 console 并粘贴下面的js。如果这一步看不懂建议直接放弃  <br />
+    Array.prototype.slice.apply(document.querySelectorAll(<br />
+      '.share-list dd.open-enable&gt;span'<br />
+    ), [0, 500]).forEach((x)=&gt;x.click())<br />
+这样就等效点击了前500个文件。点击保存。</li>
+<li>等全部存好，再次执行上一段代码，取消点击前500个文件。</li>
+<li>去你的网盘里新建个目录 <code>0500-1000</code> ，用来保存下一批</li>
+<li>把上面代码里的 <code>[0,500]</code> 改成 <code>[500,1000]</code> 然后再执行一遍，保存到刚才创建的目录里。</li>
+<li>如果有更多的文件，在执行一遍 <code>[500,1000]</code> 这一批，取消点击；然后改成 <code>[1000,1500]</code> 如此反复。</li>
+</ol></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-11-01T00:15:00+08:00">2024-11-01</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stdout-22"  rel="bookmark" >
               <h2 class="card-title">Linux删除了 .ru 帐号？我查了一下</h2>
             </a>
@@ -1026,34 +1054,6 @@ return line
 <p>I guess another lesson learned today.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-06-22T12:26:00+08:00">2024-06-22</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2024/stdout-10"  rel="bookmark" >
-              <h2 class="card-title">人声分离简单评测</h2>
-            </a>
-            <p class="card-text"><p>娃要去表演唱歌，老师要求提供MTV。。 视频是<a href="https://www.bilibili.com/video/BV1Ty4y147Sj/">这个</a>，需要去掉人声部分</p>
-<p>先用 ffmpeg 提音轨 <code>ffmpeg -i v.mp4  -ac 1 1.mp3</code></p>
-<p>微信小程序上的全是骗充值的，网上的服务：</p>
-<ol>
-<li>没卵用 https://vocalremover.org/ 名气很大，搜出来第一就这个</li>
-<li>没用 https://www.conversion-tool.com/karaoke/</li>
-<li>卡死 https://www.songpeel.com/song-to-karaoke</li>
-<li>要安装 https://github.com/adefossez/demucs</li>
-<li>要6G显存 https://github.com/Anjok07/ultimatevocalremovergui</li>
-<li>效果很好！ https://tunebat.com/Vocal-Remover 推荐</li>
-</ol>
-<p>看来人声分离，特别是童声，还是有点难。</p>
-<p>最后把得到的 a.mp3 塞回去</p>
-<p><code>ffmpeg -i v.mp4 -i a.mp3 -c:v copy -map 0:v:0 -map 1:a:0 new.mp4</code></p>
-<p>btw 打了这么多网址，该不会被误认为SEO吧。囧。。。。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-06-21T22:48:00+08:00">2024-06-21</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
