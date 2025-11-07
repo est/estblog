@@ -1416,103 +1416,6 @@ trackback:ping="http://franticindustries.com/blog/2007/01/28/google-is-the-new-h
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/cnblogs/622506"  rel="bookmark" >
-              <h2 class="card-title">[导入]Alt+Shift+PrintScreen</h2>
-            </a>
-            <p class="card-text"><p>这不是XP/Vista的彩蛋，这是XP/VIsta的功能，高对比度，呵呵</p>
-<p>有什么用呢？</p>
-<p>比如说，图书馆的公用电脑，只有一个 书籍查阅软件 的界面，把explorer屏蔽了，但是</p>
-<p>1. 打开输入法，点帮助，然后C:\windows\explorer.exe，经典的输入法漏洞啊</p>
-<p>2. 按5次shift，然后随便找个帮助什么的，就可以打开C:了</p>
-<p>3. 按Win+U，放大镜，关于，有个&ldquo;访问Microsoft网站&rdquo;的链接</p>
-<p>4. 就是现在的了，Shift+Alt+PrtSc，呵呵</p>
-<p>一般的软件绝对想不到，要封这么多系统默认快捷键，汗。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/cnblogs/622499"  rel="bookmark" >
-              <h2 class="card-title">[原]一个极其BT的批处理：任务栏系统托盘汽泡提示</h2>
-            </a>
-            <p class="card-text"><p>这种极其超出p处理讨论范围的话题真的有点BT，而且很无聊，所以我的解决方案也很无聊，那就是调用无所不能的 C#，所以需要 .NET Framework 支持，看代码` <blockquote class="code"><b class="smalltxt"><font size="2">CODE:</font></b>&nbsp;&nbsp;<a class="smalltxt" onclick="copycode(findobj('code0'));" href="http://www.cn-dos.net/forum/viewthread.php?tid=26751&amp;pid=166694&amp;page=1###"><font color="#003366" size="2">[Copy to clipboard]</font></a> <hr color="#dde3ec" size="1"/></p>
-<div id="code0" style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">@echo off<br/>
-set &quot;dnfpath=C:\Windows\Microsoft.NET\Framework&quot;<br/>
-set &quot;est=DO_NOT_ZT_WITHOUT_PERMISSION&quot;<br/>
-for /f &quot;delims=&quot; %%v in ('dir /ad /b %dnfpath%\v?.*') do (<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;if exist &quot;%dnfpath%\%%v\csc.exe&quot; set &quot;cscpath=%dnfpath%\%%v\csc.exe&quot;<br/>
-)<br/>
-<br/>
-&lt; &quot;%~f0&quot; more +17 &gt; &quot;%temp%\estTrayTip.cs&quot;<br/>
-%cscpath% &quot;/out:%cd%\estTrayTip.exe&quot; &quot;%temp%\estTrayTip.cs&quot;<br/>
-estTrayTip.exe C:\Windows\System32\acwizard.ico 看什么看 没见过批处理啊？没见过任务栏的汽泡信息啊？见过了吧？见过了顶electronixtar的帖子。 2<br/>
-:exe的参数解释：estTrayTip.exe 图标路径　标题　内容　提示图标类型Error、Info、None、Warning，这里取2=Info。每个参数都必须正确填写<br/>
-&gt;nul ping 127.1 -n 1<br/>
-del estTrayTip.exe<br/>
-<br/>
-goto:eof<br/>
-<br/>
-:estTrayTip<br/>
-<br/>
-using System;<br/>
-using System.Windows.Forms;<br/>
-using System.Drawing;<br/>
-<br/>
-namespace estTrayTip<br/>
-{<br/>
-&nbsp; &nbsp; class Program<br/>
-&nbsp; &nbsp; {<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;static void Main(string[] args)<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;{<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;NotifyIcon estIcon = new NotifyIcon();<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;estIcon.Icon = new Icon(args[0]);<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;estIcon.Visible = true;<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;ToolTipIcon estToolTipIcon = new ToolTipIcon();<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;switch(args[3])<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;{<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;1&quot;: <br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.Error; break;<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;2&quot;:<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.Info; break;<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;3&quot;:<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.None; break;<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;4&quot;:<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.Warning; break;<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;}<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;estIcon.ShowBalloonTip(1,args[1],args[2],estToolTipIcon);<br/>
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;}<br/>
-&nbsp; &nbsp; }<br/>
-}</div></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/cnblogs/622501"  rel="bookmark" >
-              <h2 class="card-title">让Google评价你的密码的安全性</h2>
-            </a>
-            <p class="card-text"><p><a href="https://www.google.com/accounts/RatePassword?Passwd">https://www.google.com/accounts/RatePassword?Passwd</a>=你的密码</p>
-<p>数值越高越安全</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/cnblogs/622498"  rel="bookmark" >
               <h2 class="card-title">在Windows下安装Ubuntu！注意，是直接在Win32下安装</h2>
             </a>
@@ -1651,6 +1554,103 @@ Strm.Open<br/>
 <span style="FONT-SIZE: 11px; COLOR: blue; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">Set</span> Dsk <span style="FONT-SIZE: 11px; COLOR: red; FONT-FAMILY: Courier New; BACKGROUND-COLOR: transparent">=</span> Msg.DataSource<br/>
 Dsk.SaveToObject Strm, <span style="FONT-SIZE: 11px; COLOR: rgb(102,102,102); FONT-FAMILY: Courier New; BACKGROUND-COLOR: rgb(228,228,228)">&quot;_Stream&quot;</span><br/>
 Strm.SaveToFile Fn, adSaveCreateOverWrite<br/></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/622499"  rel="bookmark" >
+              <h2 class="card-title">[原]一个极其BT的批处理：任务栏系统托盘汽泡提示</h2>
+            </a>
+            <p class="card-text"><p>这种极其超出p处理讨论范围的话题真的有点BT，而且很无聊，所以我的解决方案也很无聊，那就是调用无所不能的 C#，所以需要 .NET Framework 支持，看代码` <blockquote class="code"><b class="smalltxt"><font size="2">CODE:</font></b>&nbsp;&nbsp;<a class="smalltxt" onclick="copycode(findobj('code0'));" href="http://www.cn-dos.net/forum/viewthread.php?tid=26751&amp;pid=166694&amp;page=1###"><font color="#003366" size="2">[Copy to clipboard]</font></a> <hr color="#dde3ec" size="1"/></p>
+<div id="code0" style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">@echo off<br/>
+set &quot;dnfpath=C:\Windows\Microsoft.NET\Framework&quot;<br/>
+set &quot;est=DO_NOT_ZT_WITHOUT_PERMISSION&quot;<br/>
+for /f &quot;delims=&quot; %%v in ('dir /ad /b %dnfpath%\v?.*') do (<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;if exist &quot;%dnfpath%\%%v\csc.exe&quot; set &quot;cscpath=%dnfpath%\%%v\csc.exe&quot;<br/>
+)<br/>
+<br/>
+&lt; &quot;%~f0&quot; more +17 &gt; &quot;%temp%\estTrayTip.cs&quot;<br/>
+%cscpath% &quot;/out:%cd%\estTrayTip.exe&quot; &quot;%temp%\estTrayTip.cs&quot;<br/>
+estTrayTip.exe C:\Windows\System32\acwizard.ico 看什么看 没见过批处理啊？没见过任务栏的汽泡信息啊？见过了吧？见过了顶electronixtar的帖子。 2<br/>
+:exe的参数解释：estTrayTip.exe 图标路径　标题　内容　提示图标类型Error、Info、None、Warning，这里取2=Info。每个参数都必须正确填写<br/>
+&gt;nul ping 127.1 -n 1<br/>
+del estTrayTip.exe<br/>
+<br/>
+goto:eof<br/>
+<br/>
+:estTrayTip<br/>
+<br/>
+using System;<br/>
+using System.Windows.Forms;<br/>
+using System.Drawing;<br/>
+<br/>
+namespace estTrayTip<br/>
+{<br/>
+&nbsp; &nbsp; class Program<br/>
+&nbsp; &nbsp; {<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;static void Main(string[] args)<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;{<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;NotifyIcon estIcon = new NotifyIcon();<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;estIcon.Icon = new Icon(args[0]);<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;estIcon.Visible = true;<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;ToolTipIcon estToolTipIcon = new ToolTipIcon();<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;switch(args[3])<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;{<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;1&quot;: <br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.Error; break;<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;2&quot;:<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.Info; break;<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;3&quot;:<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.None; break;<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; case &quot;4&quot;:<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;estToolTipIcon = ToolTipIcon.Warning; break;<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;}<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;estIcon.ShowBalloonTip(1,args[1],args[2],estToolTipIcon);<br/>
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;}<br/>
+&nbsp; &nbsp; }<br/>
+}</div></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/622506"  rel="bookmark" >
+              <h2 class="card-title">[导入]Alt+Shift+PrintScreen</h2>
+            </a>
+            <p class="card-text"><p>这不是XP/Vista的彩蛋，这是XP/VIsta的功能，高对比度，呵呵</p>
+<p>有什么用呢？</p>
+<p>比如说，图书馆的公用电脑，只有一个 书籍查阅软件 的界面，把explorer屏蔽了，但是</p>
+<p>1. 打开输入法，点帮助，然后C:\windows\explorer.exe，经典的输入法漏洞啊</p>
+<p>2. 按5次shift，然后随便找个帮助什么的，就可以打开C:了</p>
+<p>3. 按Win+U，放大镜，关于，有个&ldquo;访问Microsoft网站&rdquo;的链接</p>
+<p>4. 就是现在的了，Shift+Alt+PrtSc，呵呵</p>
+<p>一般的软件绝对想不到，要封这么多系统默认快捷键，汗。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/622501"  rel="bookmark" >
+              <h2 class="card-title">让Google评价你的密码的安全性</h2>
+            </a>
+            <p class="card-text"><p><a href="https://www.google.com/accounts/RatePassword?Passwd">https://www.google.com/accounts/RatePassword?Passwd</a>=你的密码</p>
+<p>数值越高越安全</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-01-17T03:48:00+08:00">2007-01-17</time></p>
 <p>archive</p>            </div>
@@ -2668,6 +2668,62 @@ subtest=Another Name </p>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/cnblogs/600416"  rel="bookmark" >
+              <h2 class="card-title">[原创]vbs/bat混合编程(2006-12-5修订版，支持参数传递)</h2>
+            </a>
+            <p class="card-text"><p>这个想法我思考了很久。<br/>
+<br/>
+巧妙利用 bat 和 vbs 的语法特征，让<font color="#ff0000">同一个</font>文件，被 cmd.exe 识别成批处理，让 wscrpt.exe 识别成 vbs，并且同时符合两者的语法，并且保证都没有错误，保证两者的高度兼容。经过一个通宵的努力，我实现了这种 bat/vbs 复合编程。<br/>
+<br/>
+<br/>
+一个 批处理&nbsp;&nbsp;.vbs 文件，在前面加一段代码（头），就变成了 .bat 批处理，注意，没有生成临时文件，不用修改任何原有代码。<br/>
+<br/>
+例子：保存下列代码为 test.bat，注意是批处理，但是这个批处理却成功的被 wsh 解析执行了！ </p>
+<blockquote class="code"><b class="smalltxt"><font size="2">CODE:</font></b>&nbsp;&nbsp;<a class="smalltxt" onclick="copycode(findobj('code0'));" href="http://www.cn-dos.net/forum/viewthread.php?tid=25333&amp;fpage=0&amp;highlight=&amp;page=1###"><font color="#003366" size="2">[Copy to clipboard]</font></a> <hr color="#dde3ec" size="1"/>
+<div id="code0" style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">:On Error Resume Next</div>
+<div style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">:Sub bat<br/>
+echo off &amp; cls<br/>
+echo Batching_codez_here_following_vbs_rules &amp; pause &gt;nul<br/>
+echo '&gt;nul &amp; start &quot;&quot; wscript //e:vbscript &quot;%~f0&quot; %*<br/>
+Exit Sub : End Sub</div>
+<div style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">MsgBox &quot;This is vbs&quot;<br/>
+for each i in wscript.arguments<br/>
+wscript.echo i<br/>
+next</div>
+<div style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">&nbsp;</div>
+</blockquote>
+<p>保存代码为 test.bat，可以看到 echo 出来的东西和 msgbox 出来的消息，呵呵<br/>
+<br/>
+以上代码只是一个示例，同时执行了 一段 批处理 和 vbs，没有生成临时文件。用了大量的 hack 技巧<br/>
+<br/>
+下面粗略解释下代码<br/>
+</p>
+<p>:On Error Resume Next </p>
+<p>cmd.exe 识别成一段注释<br/>
+wscript.exe 这样识别， : 在vbs语法里代表分行，然后 On Error Resume Next，也就是让WSH忽略一些错误</p>
+<p>echo '&gt;nul &amp; start &quot;&quot; wscript //e:vbscript &quot;%~f0&quot; %* <br/>
+<br/>
+cmd.exe 识别成：echo一个 '&nbsp; 到 空设备，也就是什么都不显示。&amp; 的意思是同时执行，那么同时执行了 start &quot;&quot; wscript //e:vbscript &quot;%~f0&quot; %*，也就是启动WSH，用VBS语法解析自身。<br/>
+<br/>
+这段代码的核心思想已经介绍完毕了。下面，为了让 批处理 以vbs调用其自身后，马上退出，我们需要 exit 或者 goto :eof，但是 goto call exit 在vbs又是一个关键词，所以我们只能用符合 vbs 语法的 exit sub，所以我们在第二句加一个<br/>
+:sub bat，作为注释 cmd.exe 跳过。然后在 6 句加一个 exit sub&nbsp;: end sub，让 批处理结束，exit 无论接什么参数都会使批处理退出的，同时又符合 vbs 的语法地借宿了一个 sub<br/>
+<br/>
+那个 echo off &amp; cls&nbsp;&nbsp;，批处理的意思就是相当于 @echo off ，但是 vbs 不认 @ 符号，所以改成 echo off &amp; cls ， vbs 可以解析为，调用一个叫 echo() 的函数，参数为 off &amp; cls ，也就是两个字符串 off 和 cls 相加 <br/>
+<br/>
+Well，接下来，你可以自由地在批处理中书写vbs脚本了，效率和真正的vbs一样高！<br/>
+<br/>
+这段代码的好处是：不用生成临时文件。其实用 echo 或者 more 或者 find 来生成临时vbs很浪费系统资源的，用我写的这段代码，就完全免去了这些麻烦。直接混合编程，以 start wscript -e:vbs &quot;%~f0&quot; 为界限，上面写 批处理，下面写 vbs，并行不悖！<br/>
+</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:52:00+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/cnblogs/600417"  rel="bookmark" >
               <h2 class="card-title">[原创]Windows的11种快捷方式（2006-12-21修订版）</h2>
             </a>
@@ -2785,298 +2841,6 @@ ZIP压缩文件夹.ZFSendToTarget<br/>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/cnblogs/600416"  rel="bookmark" >
-              <h2 class="card-title">[原创]vbs/bat混合编程(2006-12-5修订版，支持参数传递)</h2>
-            </a>
-            <p class="card-text"><p>这个想法我思考了很久。<br/>
-<br/>
-巧妙利用 bat 和 vbs 的语法特征，让<font color="#ff0000">同一个</font>文件，被 cmd.exe 识别成批处理，让 wscrpt.exe 识别成 vbs，并且同时符合两者的语法，并且保证都没有错误，保证两者的高度兼容。经过一个通宵的努力，我实现了这种 bat/vbs 复合编程。<br/>
-<br/>
-<br/>
-一个 批处理&nbsp;&nbsp;.vbs 文件，在前面加一段代码（头），就变成了 .bat 批处理，注意，没有生成临时文件，不用修改任何原有代码。<br/>
-<br/>
-例子：保存下列代码为 test.bat，注意是批处理，但是这个批处理却成功的被 wsh 解析执行了！ </p>
-<blockquote class="code"><b class="smalltxt"><font size="2">CODE:</font></b>&nbsp;&nbsp;<a class="smalltxt" onclick="copycode(findobj('code0'));" href="http://www.cn-dos.net/forum/viewthread.php?tid=25333&amp;fpage=0&amp;highlight=&amp;page=1###"><font color="#003366" size="2">[Copy to clipboard]</font></a> <hr color="#dde3ec" size="1"/>
-<div id="code0" style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">:On Error Resume Next</div>
-<div style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">:Sub bat<br/>
-echo off &amp; cls<br/>
-echo Batching_codez_here_following_vbs_rules &amp; pause &gt;nul<br/>
-echo '&gt;nul &amp; start &quot;&quot; wscript //e:vbscript &quot;%~f0&quot; %*<br/>
-Exit Sub : End Sub</div>
-<div style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">MsgBox &quot;This is vbs&quot;<br/>
-for each i in wscript.arguments<br/>
-wscript.echo i<br/>
-next</div>
-<div style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">&nbsp;</div>
-</blockquote>
-<p>保存代码为 test.bat，可以看到 echo 出来的东西和 msgbox 出来的消息，呵呵<br/>
-<br/>
-以上代码只是一个示例，同时执行了 一段 批处理 和 vbs，没有生成临时文件。用了大量的 hack 技巧<br/>
-<br/>
-下面粗略解释下代码<br/>
-</p>
-<p>:On Error Resume Next </p>
-<p>cmd.exe 识别成一段注释<br/>
-wscript.exe 这样识别， : 在vbs语法里代表分行，然后 On Error Resume Next，也就是让WSH忽略一些错误</p>
-<p>echo '&gt;nul &amp; start &quot;&quot; wscript //e:vbscript &quot;%~f0&quot; %* <br/>
-<br/>
-cmd.exe 识别成：echo一个 '&nbsp; 到 空设备，也就是什么都不显示。&amp; 的意思是同时执行，那么同时执行了 start &quot;&quot; wscript //e:vbscript &quot;%~f0&quot; %*，也就是启动WSH，用VBS语法解析自身。<br/>
-<br/>
-这段代码的核心思想已经介绍完毕了。下面，为了让 批处理 以vbs调用其自身后，马上退出，我们需要 exit 或者 goto :eof，但是 goto call exit 在vbs又是一个关键词，所以我们只能用符合 vbs 语法的 exit sub，所以我们在第二句加一个<br/>
-:sub bat，作为注释 cmd.exe 跳过。然后在 6 句加一个 exit sub&nbsp;: end sub，让 批处理结束，exit 无论接什么参数都会使批处理退出的，同时又符合 vbs 的语法地借宿了一个 sub<br/>
-<br/>
-那个 echo off &amp; cls&nbsp;&nbsp;，批处理的意思就是相当于 @echo off ，但是 vbs 不认 @ 符号，所以改成 echo off &amp; cls ， vbs 可以解析为，调用一个叫 echo() 的函数，参数为 off &amp; cls ，也就是两个字符串 off 和 cls 相加 <br/>
-<br/>
-Well，接下来，你可以自由地在批处理中书写vbs脚本了，效率和真正的vbs一样高！<br/>
-<br/>
-这段代码的好处是：不用生成临时文件。其实用 echo 或者 more 或者 find 来生成临时vbs很浪费系统资源的，用我写的这段代码，就完全免去了这些麻烦。直接混合编程，以 start wscript -e:vbs &quot;%~f0&quot; 为界限，上面写 批处理，下面写 vbs，并行不悖！<br/>
-</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2006-12-22T05:52:00+08:00">2006-12-22</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/cnblogs/600411"  rel="bookmark" >
-              <h2 class="card-title">vbs 调用 Win32 API</h2>
-            </a>
-            <p class="card-text"><p>Option Explicit<br/>
-Dim UserWrap <br/>
-Set UserWrap = CreateObject(&quot;DynamicWrapper&quot;)</p>
-<p>' Call MessageBoxA(), first register the API function<br/>
-UserWrap.Register &quot;USER32.DLL&quot;, &quot;MessageBoxA&quot;, &quot;I=HsSu&quot;, _<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;f=s&quot;, &quot;R=l&quot;<br/>
-' now call the function<br/>
-UserWrap.MessageBoxA Null, &quot;MessageBox (ANSI)&quot;, _<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;From DynaWrap Object&quot;, 3</p>
-<p>&nbsp;Readme.txt</p>
-<p>This is the dynacall.dll that I described as &quot;bringing back the Declare<br/>
-statement&quot;&nbsp; in VBScript. Basically it will allow you to call functions<br/>
-in other dlls...like any of the win32 api functions. This will be my<br/>
-only distribution.</p>
-<p>Many thanks to Ton Plooy and Jeff Stong who wrote the code and published<br/>
-it in WDJ. And more thanks to William Epp for getting it to work with my<br/>
-sample script ccupd.vbs using the GETPROFILESTRING function. However I<br/>
-have another function in the sample that still doesn't work<br/>
-GETPROFILESECTION. This is a work in progress but I think it is a handy<br/>
-little feature. Hopefully by this distributions it will get where it<br/>
-needs to be. Clarence and Ian have offered to post it on their sites so<br/>
-further updates can be had at either WSH site. (anyone else call this<br/>
-thing woosh? Hopefully it will perform this way).</p>
-<p>Basically you declare functions and other DLLS like this:</p>
-<p>'&nbsp;&nbsp; Create the wrapper object for dynamic DLL function calling<br/>
-Dim UserWrap <br/>
-Set UserWrap = CreateObject(&quot;DynamicWrapper&quot;)<br/>
-'&nbsp;&nbsp; GetProcAddress for GetPrivateProfileStringA()<br/>
-UserWrap.Register &quot;kernel32.DLL&quot;, &quot;GetPrivateProfileString&quot;, &quot;i=ssssls&quot;,<br/>
-&quot;f=s&quot;, &quot;r=l&quot;</p>
-<p><br/>
-The input parameters are:</p>
-<p>i=describes the number and data type of the functions parameters</p>
-<p>f=type of call _stdcall or _cdecl. So it can work with both MS C++ and<br/>
-Borland C++. Default to _stdcall. If that doesn't work use _cdecl. If<br/>
-that doesn't work good luck!</p>
-<p>r=return data type.</p>
-<p><br/>
-Data types are:</p>
-<p>const ARGTYPEINFO ArgInfo[] = <br/>
-{<br/>
-{'a', sizeof(IDispatch*),&nbsp;&nbsp;&nbsp; VT_DISPATCH}, // a&nbsp;&nbsp; IDispatch*<br/>
-{'c', sizeof(unsigned char), VT_I4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // c&nbsp;&nbsp; signed char&nbsp; <br/>
-{'d', sizeof(double),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_R8},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // d&nbsp;&nbsp; 8 byte real <br/>
-{'f', sizeof(float),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_R4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // f&nbsp;&nbsp; 4 byte real <br/>
-{'k', sizeof(IUnknown*),&nbsp;&nbsp;&nbsp;&nbsp; VT_UNKNOWN},&nbsp; // k&nbsp;&nbsp; IUnknown* <br/>
-{'h', sizeof(long),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_I4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // h&nbsp;&nbsp; HANDLE <br/>
-{'l', sizeof(long),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_I4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // l&nbsp;&nbsp; long <br/>
-{'p', sizeof(void*),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_PTR},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // p&nbsp;&nbsp; pointer <br/>
-{'s', sizeof(BSTR),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_LPSTR},&nbsp;&nbsp;&nbsp; // s&nbsp;&nbsp; string <br/>
-{'t', sizeof(short),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_I2},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // t&nbsp;&nbsp; short <br/>
-{'u', sizeof(UINT),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_UINT},&nbsp;&nbsp;&nbsp;&nbsp; // u&nbsp;&nbsp; unsigned int <br/>
-{'w', sizeof(BSTR),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_LPWSTR},&nbsp;&nbsp; // w&nbsp;&nbsp; wide string <br/>
-}</p>
-<p>William Epp added anr 'r' for VT_BYREF (pass by reference)but is for<br/>
-strings only. This made the GETPROFILESTRING function to work. But it<br/>
-didn't work for the GETPROFILESECTION. If anyone gets it to work please<br/>
-let me know.</p>
-<p><br/>
-Attachments:</p>
-<p>stong.zip - original download from WDJ<br/>
-DynaWrap.zip - the modified code, the DLL with modifications.<br/>
-feature.htm - the feature article for this code by Jeff Stong. Only<br/>
-thing I could find on WDJ. I couldn't find Ton's article.</p>
-<p><a href="http://cwashington.netreach.net/site/downloads.html">http://cwashington.netreach.net/site/downloads.html</a></p>
-<p><a href="http://www.mvps.org/scripting/">http://www.mvps.org/scripting/</a></p>
-<p>[内有附件]</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/cnblogs/600413"  rel="bookmark" >
-              <h2 class="card-title">[原创]XP关机对话框的变灰dHTML特效</h2>
-            </a>
-            <p class="card-text"><p>&lt;!-- This element has the filter applied. --&gt;<br/>
-<br/>
-&lt;DIV ID=&quot;oTrans&quot; STYLE=&quot;position:absolute; top:0px; left:0px; width:100%; height:100%;<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; background-image=url(file:///C:/WINDOWS/Web/Wallpaper/Bliss.bmp);<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; filter:progid:DXImageTransform.Microsoft.Fade(duration=2);&quot;&gt;<br/>
-&lt;BUTTON onclick=&quot;fnToggle()&quot;&gt;Logout&lt;/BUTTON&gt;<br/>
-<br/>
-&lt;DIV ID=&quot;oTrans1&quot; STYLE=&quot;position:absolute; top:0px; left:0px; width:100%; height:100%; visibility:hidden;<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; background-image=url(file:///C:/WINDOWS/Web/Wallpaper/Bliss.bmp);<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);&quot;&gt;<br/>
-&lt;BUTTON onclick=&quot;fnToggle()&quot;&gt;Cancel&lt;/BUTTON&gt;<br/>
-&lt;/DIV&gt;<br/>
-<br/>
-&lt;/DIV&gt;<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-&lt;SCRIPT&gt;<br/>
-var bTranState = 0;<br/>
-<br/>
-<br/>
-function fnToggle()<br/>
-{<br/>
-&nbsp; &nbsp; oTrans.filters[0].Apply();<br/>
-&nbsp; &nbsp; <br/>
-&nbsp; &nbsp; if (bTranState==0)<br/>
-&nbsp; &nbsp; {<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; bTranState = 1;<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; oTrans1.style.visibility=&quot;visible&quot;;<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; }<br/>
-&nbsp; &nbsp; else<br/>
-&nbsp; &nbsp; {<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; oTrans.filters[0].stop();<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; bTranState = 0;<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; oTrans1.style.visibility=&quot;hidden&quot;;<br/>
-&nbsp; &nbsp; &nbsp; &nbsp; }<br/>
-<br/>
-&nbsp; &nbsp; oTrans.filters[0].Play();<br/>
-}<br/>
-<br/>
-&lt;/SCRIPT&gt;<br/>
-</p>
-<p>&nbsp;</p>
-<p>初次写 js 特效，有点不精简，呵呵。</p>
-<p>最开始是做一个 div ，直接用 fade 和 baseimage 两个虑境，但是由于某些原因，fade虑境被省略了，于是做两个 img 呵呵。</p>
-<p>我最开始是发布在51js上的，搜索了下，网上已经有人乱转代码了。国内软件行业就这种抄过去抄过来的混乱。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/cnblogs/600412"  rel="bookmark" >
-              <h2 class="card-title">[原创]dHTML特效 alpha虑境之柔和边缘效果</h2>
-            </a>
-            <p class="card-text"><p><marquee onmouseover="this.stop()" style="OVERFLOW-Y: scroll; FILTER: alpha(Style=1,StartX=0,StartY=80,FinishX=0,FinishY=100)
-alpha(Style=1,StartX=0,StartY=20,FinishX=0,FinishY=0)" onmouseout="this.start()" direction="up" height="200">asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-asdasd<br/><br />
-</marquee></p>
-<p>&nbsp;</p>
-<p>&lt;marquee<br/>
-height=&quot;200px&quot;<br/>
-direction=&quot;up&quot;<br/>
-onmouseover=&quot;this.stop()&quot;<br/>
-onmouseout=&quot;this.start()&quot;<br/>
-style=&quot;<br/>
-overflow-y:scroll;<br/>
-filter:<br/>
-alpha(Style=1,StartX=0,StartY=80,FinishX=0,FinishY=100)<br/>
-alpha(Style=1,StartX=0,StartY=20,FinishX=0,FinishY=0)<br/>
-;<br/>
-&quot;&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-asdasd&lt;br /&gt;<br/>
-&lt;/marquee&gt;<br/>
-</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/cnblogs/600414"  rel="bookmark" >
               <h2 class="card-title">CSS Filter: Light</h2>
             </a>
@@ -3091,56 +2855,6 @@ onload=&quot;javascript:this.filters.light.addCone(this.width/2,this.height/2,10
 onmousemove=&quot;javascript:this.filters.light.moveLight(0,event.offsetX,event.offsetY,200,1)&quot; <br/>
 /&gt;</p>
 <p>&nbsp;</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/cnblogs/600410"  rel="bookmark" >
-              <h2 class="card-title">WinNT Namespace 与 ext3 结构</h2>
-            </a>
-            <p class="card-text"><p>Linux的 ext3 文件系统结构是 一个 / 根，然后衍生出整个PC的文件、设备、一切。 其实呢，WinNT 也是这样设计的，只是没有暴露给用户罢了。说白了， C:\ D:\ 等只是一个符号连接。如图：用了反汇编高手WQXNETQIQI推荐的工具，Sysinternals 的大作：WinObj</p>
-<p><img alt="" src="http://dormforce.net/Blog/Attachment/610"/></p>
-<p>&nbsp;在 cmd 命令行里，我们可以通过<br/>
-tree \\?\CdRom0<br/>
-来查看机器上第一个光驱的 目录结构，也可以通过<br/>
-type \\?\GLOBALROOT\Device\CdRom0\autorun.inf<br/>
-来读取 第一个光驱根目录下 autorun.ini 的内容。</p>
-<p>是不是和 Linux 的 cat /media/cdrom 有点相似呢？</p>
-<p>再看看一个WinNT NTFS的的命令：<br/>
-C:\&gt;mountvol<br/>
-创建、删除或列出卷装载点。<br/>
-MOUNTVOL [drive:]path VolumeName<br/>
-MOUNTVOL [drive:]path /D<br/>
-MOUNTVOL [drive:]path /L</p>
-<p>&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a0-85e1-11db-9bf6-806d6172696f}\<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C:\<br/>
-&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a1-85e1-11db-9bf6-806d6172696f}\<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; D:\<br/>
-&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a2-85e1-11db-9bf6-806d6172696f}\<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; E:\<br/>
-&nbsp;&nbsp;&nbsp; \\?\Volume{aa4a8921-f599-11da-9600-806d6172696f}\<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; F:\<br/>
-&nbsp;&nbsp;&nbsp; \\?\Volume{b2938600-f565-11da-a449-806d6172696f}\<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; G:\<br/>
-&nbsp;&nbsp;&nbsp; \\?\Volume{aa4a8920-f599-11da-9600-806d6172696f}\<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A:\</p>
-<p>输入 <br/>
-C:\&gt;dir \\?\Volume{d1dd98a0-85e1-11db-9bf6-806d6172696f}\Windows<br/>
-就相当于<br/>
-dir %WinDir% 了。</p>
-<p>输入<br/>
-type \\?\GLOBALROOT\Device\HardDiskVolume1\boot.ini<br/>
-就相当于<br/>
-type C:\Boot.ini</p>
-<p>看来Windows 也有一个类似于 ext3 的文件系统啊。加上 Windows Shell Namespace，应该比 ext3 丰富了吧。</p>
-<p>粗略的估计，用命令行可以查看一些Win32的 NamedPipe 和 内存、TCP 连接的情况。由于本人才疏学浅，不知道从哪里入手，不过总体感觉是：Windows&nbsp; 到底还是MS几亿美金打造的OS，还是有其深刻内涵的。从这点看来，Linux又显得原始了点。</p>
-<p>[内有附件]</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
 <p>archive</p>            </div>
@@ -3354,6 +3068,292 @@ type C:\Boot.ini</p>
 }<br/>
 &lt;/script&gt;</p>
 <p>其中ch效俭算法是参考网上ASP版的。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/600410"  rel="bookmark" >
+              <h2 class="card-title">WinNT Namespace 与 ext3 结构</h2>
+            </a>
+            <p class="card-text"><p>Linux的 ext3 文件系统结构是 一个 / 根，然后衍生出整个PC的文件、设备、一切。 其实呢，WinNT 也是这样设计的，只是没有暴露给用户罢了。说白了， C:\ D:\ 等只是一个符号连接。如图：用了反汇编高手WQXNETQIQI推荐的工具，Sysinternals 的大作：WinObj</p>
+<p><img alt="" src="http://dormforce.net/Blog/Attachment/610"/></p>
+<p>&nbsp;在 cmd 命令行里，我们可以通过<br/>
+tree \\?\CdRom0<br/>
+来查看机器上第一个光驱的 目录结构，也可以通过<br/>
+type \\?\GLOBALROOT\Device\CdRom0\autorun.inf<br/>
+来读取 第一个光驱根目录下 autorun.ini 的内容。</p>
+<p>是不是和 Linux 的 cat /media/cdrom 有点相似呢？</p>
+<p>再看看一个WinNT NTFS的的命令：<br/>
+C:\&gt;mountvol<br/>
+创建、删除或列出卷装载点。<br/>
+MOUNTVOL [drive:]path VolumeName<br/>
+MOUNTVOL [drive:]path /D<br/>
+MOUNTVOL [drive:]path /L</p>
+<p>&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a0-85e1-11db-9bf6-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a1-85e1-11db-9bf6-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; D:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a2-85e1-11db-9bf6-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; E:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{aa4a8921-f599-11da-9600-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; F:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{b2938600-f565-11da-a449-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; G:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{aa4a8920-f599-11da-9600-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A:\</p>
+<p>输入 <br/>
+C:\&gt;dir \\?\Volume{d1dd98a0-85e1-11db-9bf6-806d6172696f}\Windows<br/>
+就相当于<br/>
+dir %WinDir% 了。</p>
+<p>输入<br/>
+type \\?\GLOBALROOT\Device\HardDiskVolume1\boot.ini<br/>
+就相当于<br/>
+type C:\Boot.ini</p>
+<p>看来Windows 也有一个类似于 ext3 的文件系统啊。加上 Windows Shell Namespace，应该比 ext3 丰富了吧。</p>
+<p>粗略的估计，用命令行可以查看一些Win32的 NamedPipe 和 内存、TCP 连接的情况。由于本人才疏学浅，不知道从哪里入手，不过总体感觉是：Windows&nbsp; 到底还是MS几亿美金打造的OS，还是有其深刻内涵的。从这点看来，Linux又显得原始了点。</p>
+<p>[内有附件]</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/600412"  rel="bookmark" >
+              <h2 class="card-title">[原创]dHTML特效 alpha虑境之柔和边缘效果</h2>
+            </a>
+            <p class="card-text"><p><marquee onmouseover="this.stop()" style="OVERFLOW-Y: scroll; FILTER: alpha(Style=1,StartX=0,StartY=80,FinishX=0,FinishY=100)
+alpha(Style=1,StartX=0,StartY=20,FinishX=0,FinishY=0)" onmouseout="this.start()" direction="up" height="200">asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+</marquee></p>
+<p>&nbsp;</p>
+<p>&lt;marquee<br/>
+height=&quot;200px&quot;<br/>
+direction=&quot;up&quot;<br/>
+onmouseover=&quot;this.stop()&quot;<br/>
+onmouseout=&quot;this.start()&quot;<br/>
+style=&quot;<br/>
+overflow-y:scroll;<br/>
+filter:<br/>
+alpha(Style=1,StartX=0,StartY=80,FinishX=0,FinishY=100)<br/>
+alpha(Style=1,StartX=0,StartY=20,FinishX=0,FinishY=0)<br/>
+;<br/>
+&quot;&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+&lt;/marquee&gt;<br/>
+</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/600413"  rel="bookmark" >
+              <h2 class="card-title">[原创]XP关机对话框的变灰dHTML特效</h2>
+            </a>
+            <p class="card-text"><p>&lt;!-- This element has the filter applied. --&gt;<br/>
+<br/>
+&lt;DIV ID=&quot;oTrans&quot; STYLE=&quot;position:absolute; top:0px; left:0px; width:100%; height:100%;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; background-image=url(file:///C:/WINDOWS/Web/Wallpaper/Bliss.bmp);<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; filter:progid:DXImageTransform.Microsoft.Fade(duration=2);&quot;&gt;<br/>
+&lt;BUTTON onclick=&quot;fnToggle()&quot;&gt;Logout&lt;/BUTTON&gt;<br/>
+<br/>
+&lt;DIV ID=&quot;oTrans1&quot; STYLE=&quot;position:absolute; top:0px; left:0px; width:100%; height:100%; visibility:hidden;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; background-image=url(file:///C:/WINDOWS/Web/Wallpaper/Bliss.bmp);<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);&quot;&gt;<br/>
+&lt;BUTTON onclick=&quot;fnToggle()&quot;&gt;Cancel&lt;/BUTTON&gt;<br/>
+&lt;/DIV&gt;<br/>
+<br/>
+&lt;/DIV&gt;<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+&lt;SCRIPT&gt;<br/>
+var bTranState = 0;<br/>
+<br/>
+<br/>
+function fnToggle()<br/>
+{<br/>
+&nbsp; &nbsp; oTrans.filters[0].Apply();<br/>
+&nbsp; &nbsp; <br/>
+&nbsp; &nbsp; if (bTranState==0)<br/>
+&nbsp; &nbsp; {<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; bTranState = 1;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; oTrans1.style.visibility=&quot;visible&quot;;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; }<br/>
+&nbsp; &nbsp; else<br/>
+&nbsp; &nbsp; {<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; oTrans.filters[0].stop();<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; bTranState = 0;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; oTrans1.style.visibility=&quot;hidden&quot;;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; }<br/>
+<br/>
+&nbsp; &nbsp; oTrans.filters[0].Play();<br/>
+}<br/>
+<br/>
+&lt;/SCRIPT&gt;<br/>
+</p>
+<p>&nbsp;</p>
+<p>初次写 js 特效，有点不精简，呵呵。</p>
+<p>最开始是做一个 div ，直接用 fade 和 baseimage 两个虑境，但是由于某些原因，fade虑境被省略了，于是做两个 img 呵呵。</p>
+<p>我最开始是发布在51js上的，搜索了下，网上已经有人乱转代码了。国内软件行业就这种抄过去抄过来的混乱。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/600411"  rel="bookmark" >
+              <h2 class="card-title">vbs 调用 Win32 API</h2>
+            </a>
+            <p class="card-text"><p>Option Explicit<br/>
+Dim UserWrap <br/>
+Set UserWrap = CreateObject(&quot;DynamicWrapper&quot;)</p>
+<p>' Call MessageBoxA(), first register the API function<br/>
+UserWrap.Register &quot;USER32.DLL&quot;, &quot;MessageBoxA&quot;, &quot;I=HsSu&quot;, _<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;f=s&quot;, &quot;R=l&quot;<br/>
+' now call the function<br/>
+UserWrap.MessageBoxA Null, &quot;MessageBox (ANSI)&quot;, _<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;From DynaWrap Object&quot;, 3</p>
+<p>&nbsp;Readme.txt</p>
+<p>This is the dynacall.dll that I described as &quot;bringing back the Declare<br/>
+statement&quot;&nbsp; in VBScript. Basically it will allow you to call functions<br/>
+in other dlls...like any of the win32 api functions. This will be my<br/>
+only distribution.</p>
+<p>Many thanks to Ton Plooy and Jeff Stong who wrote the code and published<br/>
+it in WDJ. And more thanks to William Epp for getting it to work with my<br/>
+sample script ccupd.vbs using the GETPROFILESTRING function. However I<br/>
+have another function in the sample that still doesn't work<br/>
+GETPROFILESECTION. This is a work in progress but I think it is a handy<br/>
+little feature. Hopefully by this distributions it will get where it<br/>
+needs to be. Clarence and Ian have offered to post it on their sites so<br/>
+further updates can be had at either WSH site. (anyone else call this<br/>
+thing woosh? Hopefully it will perform this way).</p>
+<p>Basically you declare functions and other DLLS like this:</p>
+<p>'&nbsp;&nbsp; Create the wrapper object for dynamic DLL function calling<br/>
+Dim UserWrap <br/>
+Set UserWrap = CreateObject(&quot;DynamicWrapper&quot;)<br/>
+'&nbsp;&nbsp; GetProcAddress for GetPrivateProfileStringA()<br/>
+UserWrap.Register &quot;kernel32.DLL&quot;, &quot;GetPrivateProfileString&quot;, &quot;i=ssssls&quot;,<br/>
+&quot;f=s&quot;, &quot;r=l&quot;</p>
+<p><br/>
+The input parameters are:</p>
+<p>i=describes the number and data type of the functions parameters</p>
+<p>f=type of call _stdcall or _cdecl. So it can work with both MS C++ and<br/>
+Borland C++. Default to _stdcall. If that doesn't work use _cdecl. If<br/>
+that doesn't work good luck!</p>
+<p>r=return data type.</p>
+<p><br/>
+Data types are:</p>
+<p>const ARGTYPEINFO ArgInfo[] = <br/>
+{<br/>
+{'a', sizeof(IDispatch*),&nbsp;&nbsp;&nbsp; VT_DISPATCH}, // a&nbsp;&nbsp; IDispatch*<br/>
+{'c', sizeof(unsigned char), VT_I4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // c&nbsp;&nbsp; signed char&nbsp; <br/>
+{'d', sizeof(double),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_R8},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // d&nbsp;&nbsp; 8 byte real <br/>
+{'f', sizeof(float),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_R4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // f&nbsp;&nbsp; 4 byte real <br/>
+{'k', sizeof(IUnknown*),&nbsp;&nbsp;&nbsp;&nbsp; VT_UNKNOWN},&nbsp; // k&nbsp;&nbsp; IUnknown* <br/>
+{'h', sizeof(long),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_I4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // h&nbsp;&nbsp; HANDLE <br/>
+{'l', sizeof(long),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_I4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // l&nbsp;&nbsp; long <br/>
+{'p', sizeof(void*),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_PTR},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // p&nbsp;&nbsp; pointer <br/>
+{'s', sizeof(BSTR),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_LPSTR},&nbsp;&nbsp;&nbsp; // s&nbsp;&nbsp; string <br/>
+{'t', sizeof(short),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_I2},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // t&nbsp;&nbsp; short <br/>
+{'u', sizeof(UINT),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_UINT},&nbsp;&nbsp;&nbsp;&nbsp; // u&nbsp;&nbsp; unsigned int <br/>
+{'w', sizeof(BSTR),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_LPWSTR},&nbsp;&nbsp; // w&nbsp;&nbsp; wide string <br/>
+}</p>
+<p>William Epp added anr 'r' for VT_BYREF (pass by reference)but is for<br/>
+strings only. This made the GETPROFILESTRING function to work. But it<br/>
+didn't work for the GETPROFILESECTION. If anyone gets it to work please<br/>
+let me know.</p>
+<p><br/>
+Attachments:</p>
+<p>stong.zip - original download from WDJ<br/>
+DynaWrap.zip - the modified code, the DLL with modifications.<br/>
+feature.htm - the feature article for this code by Jeff Stong. Only<br/>
+thing I could find on WDJ. I couldn't find Ton's article.</p>
+<p><a href="http://cwashington.netreach.net/site/downloads.html">http://cwashington.netreach.net/site/downloads.html</a></p>
+<p><a href="http://www.mvps.org/scripting/">http://www.mvps.org/scripting/</a></p>
+<p>[内有附件]</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2006-12-22T05:50:00+08:00">2006-12-22</time></p>
 <p>archive</p>            </div>
