@@ -58,6 +58,43 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/202010/stdout-011"  rel="bookmark" >
+              <h2 class="card-title">nsq-py, pynsq, gnsq compared</h2>
+            </a>
+            <p class="card-text"><p><a href="https://nsq.io">nsq</a> is a lightweight message queue like Kafka/RabbitMQ/RocketMQ/RedisQueue/Celery.</p>
+<p>For python bindings there ware three libraries out there:</p>
+<ul>
+<li>pynsq: the official build, but requires <code>tornado</code></li>
+<li>gnsq: the gevent only consumer/publisher, might have race condition in state machine. Don't use.</li>
+<li>nsq-py: <code>select()</code> based, but compatible with gevent/tornado/threading+select.</li>
+</ul>
+<p>So far <code>nsq-py</code> looks reall promising because it's compatible with more options with concurrency, but when I used it with massive TCP connections to nsqd, <a href="https://github.com/gevent/gevent/issues/1348">gevent</a> threw "ValueError: filedescriptor out of range in select()" error.</p>
+<p>Upon further investigation, it was a select(2) limitation. The kernel will limit max tcp fileno 1024. </p>
+<p>See CPython <a href="https://github.com/python/cpython/blob/3317466061509c83dce257caab3661d52571cab1/Modules/selectmodule.c#L142">source of selectmodule.c</a>:</p>
+<pre><code>      if (!_PyIsSelectable_fd(v)) {
+          PyErr_SetString(PyExc_ValueError,
+                      "filedescriptor out of range in select()");
+          goto finally;
+      }
+</code></pre>
+<p>And <a href="https://github.com/python/cpython/blob/637a09b0d6e3ad4e34e0b5e0fc82f5afeae6f74b/Include/fileobject.h#L37"><code>_PyIsSelectable_fd</code> is defined</a> as </p>
+<pre><code>  #define _PyIsSelectable_fd(FD) ((unsigned int)(FD) &lt; (unsigned int)FD_SETSIZE)
+</code></pre>
+<p>And the const <code>FD_SETSIZE</code> is described at <a href="https://man7.org/linux/man-pages/man2/select.2.html">man page</a>:</p>
+<blockquote>
+<p>The Linux kernel imposes no fixed limit, but the glibc implementation makes fd_set a fixed- size type, with FD_SETSIZE defined as 1024, and the FD_*() macros operating according to that limit.  To monitor file descriptors greater than 1023, use poll(2) or epoll(7) instead.</p>
+</blockquote>
+<p>Lessons I learned today: don't use libraries based on <code>select.select()</code> if you have too many connections. Even with Gevent's monkey patch, <code>select()</code> wont block on each eventlet, but still it will not allow fileno greater or equal to 1024. Sad.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2020-10-30T15:35:45+08:00">2020-10-30</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/202010/stdout-010"  rel="bookmark" >
               <h2 class="card-title">人和动物有什么区别</h2>
             </a>

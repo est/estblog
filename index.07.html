@@ -58,6 +58,56 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2023/stdin-04"  rel="bookmark" >
+              <h2 class="card-title">关于发明的故事两则</h2>
+            </a>
+            <p class="card-text"><p><img alt="" src="/images/2023/stdin-04-01.jpg" /></p>
+<p>过去在非洲赞比西(Zambezi)河河边有许多鳄鱼，攻击到河边取水的人，结果不少人被鳄鱼吃掉。一个传教士李文斯顿(David Livingstone)路过，帮当地人想出一个好方法，在河边用木头建了一个栅栏，人在栅栏内定点取水，鳄鱼便无法伤害他们。</p>
+<p>这个故事出自道光一鸦年间，一个去非洲传教的苏格兰人自传《深入非洲三万里<br />
+·Biography of David Livingstone》，俞敏洪阐述这个故事说上千年来人们就这么打水没人想过去解决被鳄鱼吃掉的问题。而走出非洲的人类遇到了太多的挑战——不同季节的挑战、不同环境的挑战、不同族群的挑战，在一次次挑战中人类变得越来越机警和有创造力，越来越懂得利用工具和群体合作。</p>
+<p>不知道是Zambezi河边的土著真的这么蠢，还是俞敏洪发挥歪了？直到我看到了第二个故事：</p>
+<p>李商隐的那句诗：“何当共剪西窗烛，却话巴山夜雨时”。奇怪，剪烛是什么意思？你想，蜡烛燃烧得快，但是烛芯，就是那根中间的棉线，燃烧得慢，所以点蜡烛的时候长期不剪掉烛芯，就会导致火焰太大，浪费。所以，古人用蜡烛旁边还得配把剪子。这太麻烦了啊。那今天的蜡烛为啥不会出现这个问题呢？这个问题是直到1820年才解决的。法国人强巴歇列发明了三根棉线编成的烛芯，蜡烛烧的时候，自然就松开，末端正好翘到火焰的外侧，然后就被火烧掉了。就没有剪烛这个问题了。你看，就这么一个简单的技术，要等到19世纪初期，蒸汽机都发明了，才有机会解决。从这个例子，你看得出来，人类文明有多复杂，创新的发生有多偶然了。</p>
+<p>这个故事来自《罗胖60秒·2019年·056》，搜了下，这个叫 <a href="https://pubquizammo.wordpress.com/2009/04/23/7-the-candle-wick-is-probably-the-best-re-invention-of-the-19th-century/">braided wick</a>，但是具体是不是这法国人发明的我没查到。但是的确说是19世纪，灯芯才被改良。读完这篇对蜡烛这个古老的「发明」有了全新的认知。好神奇啊。比如为什么「香」是直接拿来燃烧，而蜡烛一定要有根棉线做的「灯芯」？蜡作为固体是没法直接燃烧的，蜡自己熔点低而且烧得慢，上面的石蜡融化后就会盖住下面的石蜡，隔绝空气，使下面的石蜡难以燃烧。解决办法是让石蜡液化、气化。灯芯起了一个capillary action毛细作用，蜡烛燃烧先把表面一层蜡融化，然后吸到焰心再充分燃烧。所谓 the wick is simply a delivery devise for the wax。如何控制燃烧速度不要太快导致黑烟，而不要太暗导致照明不够，听上去又是一个负反馈优化问题？</p>
+<p>感觉蜡烛其实也不简单。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2023-04-17T16:24:07+08:00">2023-04-17</time></p>
+<p>stdin</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/2023/stdout-04"  rel="bookmark" >
+              <h2 class="card-title">当前版本gpt的根本弱点</h2>
+            </a>
+            <p class="card-text"><p>下面的东西仅限当前，不是不可以解决的。</p>
+<ol>
+<li>gpt系列数学能力不行，是因为它把每一个数字当成一个整体在背加法表、乘法表。没理解到十进制的精髓</li>
+</ol>
+<p><img alt="" src="/images/2023/stdout-04-01.webp" /></p>
+<p>上图来自<a href="https://arxiv.org/abs/2005.14165">2020年 GPT-3 论文</a> 22页。主要还是因为 BPE 太糙。 </p>
+<ol start="2">
+<li>
+<p>gpt-4能通过一些文字材料和描述感知到每个字母大概长什么样，甚至知道一些简单汉字的结构，但是确切的书写结构它是不知道的。<br />
+所以要避免你的想法被 gpt 感知学会，得考虑每个字的偏旁部首作文章，而且你的变形得很少见。估计这个技巧在将来被AI监视的生活里会被用得上。</p>
+</li>
+<li>
+<p>还有一些语音漂移它知道概念但是因为没发音器官所以不能直接感知。但这也不是不能解决，只要语料够大也能摸到规律。相比英语等拼音文字而言，汉字这类表意但是又有同音的文字应该是文本类 AI 的普遍弱点。</p>
+</li>
+</ol>
+<p>如果你要秘密表达一些观点，可以通过描述发音、形状或者动作但是不直接写出来让对方领会。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2023-03-31T15:07:02+08:00">2023-03-31</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2023/stderr-08"  rel="bookmark" >
               <h2 class="card-title">Google 和 Facebook 为什么不行了</h2>
             </a>
@@ -754,63 +804,6 @@ A: yes!</p>
 <p>好像今年集体照都没拍，因为头哥闹别扭？</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-11-20T18:59:28+08:00">2022-11-20</time></p>
-<p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2022/stdout-11"  rel="bookmark" >
-              <h2 class="card-title">8行javascript录制屏幕</h2>
-            </a>
-            <p class="card-text"><p>看到个骚操作，玩了一下，写了个 bookmarklet</p>
-<pre><code class="language-javascript">navigator.mediaDevices.getDisplayMedia({video:true}).then(function(stream){
-  const mr=new MediaRecorder(stream,{mimeType:&quot;video/webm;codecs=h264,opus&quot;});
-  mr.ondataavailable=function(ev){
-    const a=document.createElement('a');a.href=URL.createObjectURL(ev.data);
-    a.download ='screen_capture.webm';a.click();
-  }; // will be called when .stop() with ev.data as a Blob
-  mr.start();
-})
-</code></pre>
-<p>这段代码也是很多WebRTC共享白板的实现原理。看起来也很简单，而且不需要额外的权限确认。</p>
-<p>如果不需要另存为一个名字，则可以直接 <code>location.assign()</code> 又节约几个字。不知道还有没有办法继续节约代码量？</p>
-<p>有点很好奇为啥chrome不支持 .mp4 封装。偏袒自家的 webm ？</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2022-11-18T18:50:05+08:00">2022-11-18</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2022/stdin-17"  rel="bookmark" >
-              <h2 class="card-title">橘生淮南为橘，橘生苏联为？</h2>
-            </a>
-            <p class="card-text"><blockquote>
-<p>在二十世纪上半叶，苏联柑橘专家(Citrology在当时是一个重要学科)在-30℃的低温下在<strong>户外</strong>种植（亚）热带植物，而且不使用玻璃或任何燃料辅助。<br />
-During the first half of the twentieth century, Soviet citrologists grew (sub)tropical plants in temperatures as low as minus 30 degrees Celsius – outdoors, and without the use of glass or any fossil fuel-powered assistance.<br />
-"渐进式抗冻" “Progressive cold-hardening”<br />
-进口的柑橘品种只在黑海沿岸几个孤立的地方存活，那里的小气候特别有利。为了使柑橘类水果更好地适应寒冷，苏联的柑橘学家采用了一种叫做 "渐进式抗冻"的方法。这使他们能够创造出适应当地生态条件的新品种，这种栽培策略最初是为杏树和葡萄开发的。<br />
-Imported citrus varieties only survived in a few isolated points along the Black Sea coast, which enjoyed a particularly favourable microclimate. To better prepare citrus fruits for cold, Soviet citrologists followed a method called “progressive cold-hardening”. It allowed them to create new varieties which were adapted to local ecological conditions, a cultivation strategy which had originally been developed for apricot trees and grapes.<br />
-该方法包括将珍贵的树木种子种植在其原始位置的更北边，然后等待它结出种子。然后将这些种子再向北种植，并反复重复这一过程，缓慢但稳定地将柑橘品种推向不太适宜的气候。利用这种方法，Rostov-on-Don(北纬47°N的一座城市，挨着亚速海)的杏树最终可以在北方650公里以外的Michurinsk(北纬52°N)种植，他们在那里开发了适应当地气候的杏树种子。另一方面，直接将Rostov 杏树的种子种植在Michurinsk证明是不成功的。<br />
-The method consists of planting a seed of a highly valued tree a bit further north of its original location, and then waiting for it to give seeds. Those seeds are then planted a bit further north, and with the process repeated further, slowly but steadily pushing the citrus variety towards less hospitable climates. Using this method, apricot trees from Rostov could eventually be grown in Mitchurinsk, 650 km further up north, where they developed apricot seeds that were adapted to the local climate. On the other hand, directly planting the seed of the Rostov apricot tree in Mitchurinsk proved unsuccessful.</p>
-</blockquote>
-<p>不要再吹儒家智慧了。无产阶级才是真的智慧。。。</p>
-<p>~~这故事唯一的毛病就是 Rostov 和 Michurinsk 这城市的位置似乎弄反了？反正纬度没太对劲。。。~~</p>
-<p>更新：原来是 Rostov-on-Don，不是 Rostov(北纬57°N的一座城市，莫斯科以北202km涅罗湖岸边)</p>
-<p><a href="https://news.ycombinator.com/item?id=33647875">via</a></p>
-<p>另外「橘生淮南为橘，生淮北为枳」这句话本身也是错的</p>
-<blockquote>
-<p>橘和枳原本就是两个根本不同的物种，在生物学特征中，橘与枳同属芸香科，虽枝、叶、果实形态相似，但枳比橘耐寒，可逾淮河而生。而橘喜温，逾淮河过了1月0℃等温线就会被冬天的霜雪冻死。所以，不是橘到淮北变成了枳，而是淮北只有枳而无橘。</p>
-</blockquote>
-<p><a href="https://www.zhihu.com/question/21005102">via</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2022-11-18T13:51:25+08:00">2022-11-18</time></p>
 <p>stdin</p>            </div>
           </article>
         </div>

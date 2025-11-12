@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>套 Cloudflare Warp 解决IP送中 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="套 Cloudflare Warp 解决IP送中" />
+
+    <link rel="canonical" href="https://blog.est.im/2025/stdout-16" />
+    <meta property="og:url" content="https://blog.est.im/2025/stdout-16">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="套 Cloudflare Warp 解决IP送中">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+
+      <li><a href="/category/archive" class="hamburger-menu-overlay-link">archive</a></li>
+      <li><a href="/category/stderr" class="hamburger-menu-overlay-link">stderr</a></li>
+      <li><a href="/category/stdin" class="hamburger-menu-overlay-link">stdin</a></li>
+      <li><a href="/category/stdout" class="hamburger-menu-overlay-link active">stdout</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">套 Cloudflare Warp 解决IP送中</h2>
+    <p class="post-date">Posted <time datetime="2025-10-12T17:36:00+08:00">2025-10-12</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <h2>缘起</h2>
+<p>网上很多套Cloudflare教程，但是大多数都是在前置作为反向代理，CF的IP如果不挑选，则喜提“减速乐” </p>
+<p>我这边的情况是该死的 Google 把我IP送中了，打死不提供 gemini 服务，为了解决锁区问题，本来以为简单用一下 Cloudflare Warp 就行，没想到是个大坑。花了好几天研究。</p>
+<p>核心问题是， <code>warp-cli connect</code> 之后就失联了，ssh 都连不上。</p>
+<p><code>warp-cli</code> 网上很多教程都过时了。它命令行改版了。最简单的 <code>warp-cli mode</code> 其实官方教程都不全，它的 <code>warp</code> 和 <code>warp+</code> ，改成 <code>tunnel_only</code> 还是不行。寄希望于 <code>proxy</code> 模式，<a href="https://blog.cloudflare.com/announcing-warp-for-linux-and-proxy-mode/">官方博客</a>说 "use the proxy (HTTPS or SOCKS5)"，我实际测试，这个默认端口 40000 都是拼凑搜出来的。 然而我打死也没测试成功如何用 <code>HTTP_PROXY</code> 。AI 说只有 win/mac 的桌面版本支持？wtf。</p>
+<h2>CF一键脚本</h2>
+<p>没有希望，看下别人怎么解决的，大神给出的解是 一键脚本。</p>
+<blockquote>
+<p>Cloudflare WARP 多功能一键脚本，支持纯IPV4/纯IPV6/双栈V4V6的VPS共9种情况随意切换安装，screen一键手动/自动刷新支持Netflix奈飞的IP（自动识别WGCF与SOCKS5环境，自定义刷新奈飞IP的时间段间隔，自定义奈飞区域国家，自定义仅刷区域国家），支持升级WARP+及Teams账户。</p>
+</blockquote>
+<p>搜到最早的出处应该是 <a href="https://p3terx.com/archives/cloudflare-warp-configuration-script.html">p3terx</a> 的。但是这种一键脚本我都不太敢用，万一写个什么后门之类的你怎么知道。</p>
+<p>大概读了下，会执行下面的脚本：</p>
+<ul>
+<li><code>curl -fsSL git.io/wgcf.sh</code></li>
+<li><code>curl -fsSL git.io/wireguard-go.sh</code></li>
+</ul>
+<p>git.io 是个第三方短链服务，可能会看人下菜碟？怕怕</p>
+<p>看了半天发现回到原点，核心原理还是<code>proxy</code>然后socks5。或者把 wireguard 配置提取出来自己配路由</p>
+<p>有没有什么不用第三方复杂配置，用官方的 <code>warp-cli</code> 但是保留几个tcp端口可用呢？</p>
+<h2>研究</h2>
+<p>于是同 ChatGPT、gemini 两位老师向 Linux 网络栈 展开了斗智斗勇。真是苦啊。需要在 warp 生效的时候测试不同的方法，就在那个贼难用的  noVNC html5 based VNC client 里一行一行代码试出来的</p>
+<p>得到了以下宝贵教训：</p>
+<ol>
+<li><strong>iptables 老早就过时了</strong>。现在的 iptables 实际上是 nf-tables 的马甲！吃了大亏！翻来覆去在错误的地方检查，AI也不提醒我一下</li>
+<li><strong><code>ip route</code> 路由也不是全部</strong>，其实还有 policy based routing 叫 <code>ip rule</code></li>
+</ol>
+<p>其中 <code>warp-cli</code> 会创建一个叫  <code>cloudflare-warp</code> 的 nft，还有一个叫 <code>CloudflareWARP</code> 的 dev。然后在 <code>ip rule</code> 里会添加一条</p>
+<p><code>32765:    not from all fwmark 0x100cf lookup 65743</code></p>
+<p>这里学到几个冷知识：</p>
+<ol>
+<li>前面的 32765 是优先级，越低越优先，命令行里可以写成 priority 32765 或者 pref 32765 一回事</li>
+<li>后面的 65743 是内核里的table，可以在 <code>/etc/iproute2/rt_tables</code> 定义一套alias</li>
+</ol>
+<p>耍聪明把INPUT流量标记一个 <code>0x100cf</code> 是不行的。以为是配置问题用 <code>tcpdump</code> 发现甚至只有 <code>SYN</code> 包。后来才知道去折腾 nf-tables。</p>
+<h2>如何给全局 warp 开一个端口</h2>
+<ol>
+<li><code>echo "200 inbound" | sudo tee -a /etc/iproute2/rt_tables</code> 或者这一步不做也行，后面所有的 inbound 都替换成 <code>200</code> 就行</li>
+<li><code>sudo ip route add default dev eth0 scope link table inbound</code> 这个是因为我VPS是on-link的。如果是实体 dev 自己换下</li>
+<li>连接  <code>warp-cli connect</code> 这玩意会在所有自定义 <code>ip rule add</code> 前面加一条策略所以记得先连，再加自己的策略 </li>
+<li><code>sudo ip rule add from all sport 6666 lookup inbound pref 500</code> 这里的 500必须比默认的 32765 低。所以要先连上 warp</li>
+<li><code>sudo nft insert rule inet cloudflare-warp input tcp dport 6666  accept</code> 入站 接受</li>
+<li><code>sudo nft insert rule inet cloudflare-warp output tcp sport 6666  accept</code> 出站 接受</li>
+</ol>
+<p>因为步骤3 执行之后你ssh就掉了，记得做成一个 .sh 脚本。。。</p>
+<p>然后每次断开连接 <code>warp-cli disconnet</code> 之后，记得删除第4步里创建的</p>
+<p><code>sudo ip rule del pref 500</code></p>
+<p>否则的话，该死的 <code>warp-cli connect</code> 会创建一个 <code>pref 499</code> 在你前面卡位！</p>
+<h2>测试</h2>
+<p><code>curl -sk https://www.cloudflare.com/cdn-cgi/trace</code></p>
+<p>折腾结束。这应该是全网第一个不动官方 <code>warp-cli</code> 能开端口的方法。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>
