@@ -58,74 +58,6 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/2025/stdout-05"  rel="bookmark" >
-              <h2 class="card-title">gitweets：单html实现独立微博，拿git历史当feed流发推</h2>
-            </a>
-            <p class="card-text"><p>twitter争议不断持续多年，先是各种 cancel culture 闹得动静很大，被一龙马买了之后更甚，社区分裂到 mstdn nostr bsky支流，各种话题炒上天，在众多替代品里，2022年看到个<a href="https://twitter.com/bcrypt/status/1588416861552582657">最别具一格</a>的：</p>
-<p>拿 git 当微博使</p>
-<ul>
-<li>发推： <code>git commit --allow-empty</code></li>
-<li>加关注： <code>git remote add &lt;alias&gt; &lt;their fork url&gt;</code></li>
-<li>转发： <code>git cherry-pick &lt;their "tweet"&gt;</code></li>
-</ul>
-<p>脑洞大开。而且git基于merkle tree的，p2p 历史不可篡改，有web3那味了。</p>
-<p>当时就饶有兴趣，挖了个坑准备搓个web界面。但是限于涣散的注意力，以及对css这种抽象排版玩不转，一直拖沓没做好。</p>
-<p>周末心血来潮，外带 AI 工具加持，进展神速。目前已经基本可用。</p>
-<p>项目叫 gitweets ，意思是用 git 发 tweets，网址在 <a href="https://f.est.im/">https://f.est.im/</a> 。二级域名 <code>f</code> 即 <code>feed</code> ，<code>f.est</code> 也就是 fest 表示。。。 盛会的意思。 </p>
-<h3>feature list</h3>
-<ol>
-<li>把任意 github repo 渲染成微博</li>
-<li>给任意 github repo 发推。其原理是，通过REST API新增一条 commit 。</li>
-<li><a href="https://f.est.im/est/e0d4c46445517ba52ceda06d788e09760aaccce5">发图</a>！如果 commit message 以冒号结尾，而且恰好也在本次新增加了位于 static 下面的图片文件 那么会尝试去加载图片作为附件渲染</li>
-<li>写 commit 基于 OAuth app 实现。浏览器记录 access_token 到 cookie，理论上可用 8个小时。过期重登</li>
-<li>如果你的 commit 有是通过 <code>-S</code> 参数提交带签名 ，那么展示为蓝色表示verified</li>
-</ol>
-<h3>记录一些坑</h3>
-<ol>
-<li>OAuth app vs Github App。前者是代客做事；后者是独立主体单独账号，类人行为，多用于 CI/CD</li>
-<li>OAuth app 的 <code>scope</code> 如果是 <code>repo</code> 可以读写你所有仓库代码，包括私有仓库！网上的很多基于 github 的第三方评论系统有这个隐患！</li>
-<li>我这里用的是 <code>public_repo</code>，读写所有公开仓库。毕竟 github是个开源社区，拿公开git来当feed使，要安全一些。</li>
-<li>更安全的办法是只能读写单个指定的repo。要实现API读写git，在github有下列几种方法：<ul>
-<li>REST API。可以用 fine grained PAT 读写一个repo</li>
-<li>GraphQL API。</li>
-<li>git 协议。走 <code>github.com:22</code> 端口。可以采用 deploy key 或者私人账号 ssh key</li>
-<li>git-http。走 <code>https://github.com:443</code></li>
-</ul>
-</li>
-<li>Private Access Token （缩写 PAT） 可以完全控制个人或者团队账号，fine grained PAT 可以只控制指定的几个仓库</li>
-<li>deploy key默认只读，可以改成读写，一库一用，不能复用</li>
-<li>REST API 列举 commits 不能获得当前 commit 改了哪些文件。需要额外N+1每个commit再次查询详情。背后的原因估计是 git 内部 ref 和 blob 是严格区分的。甚至可能是分开存的数据库表</li>
-<li>网站是跑在赛博菩萨 cloudflare worker 上的。这种所谓“serverless”平台很强大了。功能齐全没啥缺的。甚至可以发起 tcp 连接。</li>
-<li>本来计划走 git-ssh 或者 git-http 协议，想了下js操作binary太复杂了，弄个 libgit2 之类的库估计很重。还是REST方便</li>
-<li>REST API 新增一个 empty commit 有多复杂？ 1. 获得当前branch 的 sha 2. 获得该 sha 的 tree 3. 新增一个 sha+tree 的commit 4. 把 ref 指向第三步的 sha 。啊，就不能一步完成么。下次有机会看看GraphQL 能不能一次调用完成</li>
-<li>Github 的API 强制要求 User-Agent 。你可以乱写但是不能没有</li>
-<li>Github 虽然返回了 <code>Access-Control-Allow-Origin: *</code>，但是现代浏览器他妈的不认这个 <code>*</code> 。所以在浏览器只能匿名调用 <code>GET</code> ，如果 <code>POST</code>， <code>PATCH</code> 带了 <code>credentials: "include"</code> 直接拒绝。网站必须显式指定允许哪个具体的 origin </li>
-<li>cloudflare的 <code>Response.redirect('/')</code> 直接挂掉。原来是 3xx 跳转不允许相对路径。</li>
-</ol>
-<h3>why？</h3>
-<p>由于习惯，古法写web，一个html包含了 css js 。无二次加载，无第三方依赖库。除了不能写死的全部写死 🤣。无需build。</p>
-<p>源码放在 <a href="https://github.com/est/gitweets/">https://github.com/est/gitweets/</a> 。该仓库的 commit 历史也作为feed展示在 <a href="https://f.est.im/">https://f.est.im/</a> </p>
-<p>接下来准备用类似的思路实现网站评论系统，代替现在的 disqus ，虽然它是免费的，但是广告太多了。</p>
-<p>可能有人要问：why ？闲的蛋痛？</p>
-<p>我想，首先的确蛋痛，because we can。其次是不想在平台，处处受人限制。然后也是最重要的，self-host。所有数据资料都在一个repo打包带走，备份什么的很方便。比如以前wordpress受众多功能全，但是后来大家都 hexo 之类的静态blog了。</p>
-<p>我心目中 gitweets 就是“静态”微博的一种。虽然它现在还是依赖 github API。等有空了可以试试生成纯静态页面。</p>
-<h3>ToDo</h3>
-<ol>
-<li>如何发视频 音频</li>
-<li>如何转发</li>
-<li>如何混合展示多个repo的feed。基于 pull request ？</li>
-</ol>
-<p>欢迎评论或者提 <a href="https://github.com/est/gitweets/issues">issue</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2025-08-17T00:00:00+08:00">2025-08-17</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/2025/stderr-04"  rel="bookmark" >
               <h2 class="card-title">敬语和咒语</h2>
             </a>
@@ -967,6 +899,40 @@ This is an open system. Clients can choose which labelers they use, and while th
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-11-21T06:35:00+08:00">2024-11-21</time></p>
 <p>stdin</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/2024/stderr-15"  rel="bookmark" >
+              <h2 class="card-title">强行入睡方法 v2.0</h2>
+            </a>
+            <p class="card-text"><p>书接上回《<a href="https://blog.est.im/2024/stdout-05">快速入睡的技巧和原理</a>》</p>
+<p>前几天跟朋友聊天，有一个想法萌生在脑海里：</p>
+<p>因果论是人类发明和掌握语言之后的一个副产品</p>
+<p>什么是因果？一个东西变动，导致另一个东西变动。但是大千世界哪里来的所谓「一个」东西？</p>
+<p>其实都是一坨东西扭来扭去，然后另一坨东西晃来晃去。人的器官能感知的变化是连续光滑的</p>
+<p>但语言和时序是离散的。这就导致万千思绪，最后被压扁成两件事：好事和坏事。</p>
+<p>情绪和压力都是基于「事」这个东西上的。事之所以被称为、形成一件事，和语言环境密不可分。</p>
+<p>给东西起名字是最困难的，就像写代码给class起名字一样。</p>
+<p>但是一件「事」一旦有了名字，它就「成精」了。一件「事」它有自己的边界和形态，事能发起技能和施加影响，事有长处和弱点，有出生和死亡。「事」就是成年人在无数个夜晚思来想去，辗转难眠的心中之困。很多人被压垮就是一句话的事，被开导也可能因为一句精辟而准确的点拨。</p>
+<p>但从纯「唯物」的角度来说，事存在吗？不存在。它只是内心对外界pattern的一个把控和约定。把这个核心问题确定之后，我尝试了一种船新入睡方法：打破这个pattern。</p>
+<p>上一篇的方法，放下理性推理，这个其实有点难，而且有的时候就是烦恼多，无法彻底放下。这次 入睡 2.0 的要义更简单，反其道而行之，既然放不下各种想法，那么就多想，让你无暇顾及困难。具体的说</p>
+<ol>
+<li>舒服的躺下。一定控制呼吸节奏，慢下来，平稳下来</li>
+<li>类似 Marvel 电影那个片头，各种英雄集结pose和招牌动作，开始你的各种思考</li>
+<li>但是每一个思考不能按按常理出牌，要快速切换到另一个思考。比如你纠结美国队长，那么你要快速把队长的盾牌切换到冬兵；冬兵身后漫天大雪景色不错，你发现一只麋鹿，麋鹿唱起了圣诞歌谣在一件小屋里，小屋里有温暖的书籍你正在静静有味的阅读。阅读的文字怎么是天体物理课本看不懂，公式符号好复杂让我想起了初中课堂，课堂上前排女同学的长发看上去很好玩，突然下课领响了。。。。</li>
+<li>如果你发现我上面这一串胡言乱语就像梦境一样，恭喜你已经睡着了。。。。</li>
+</ol>
+<p>这里有个关键点就是一定要类似 flash card 那样快速翻牌，不要在一个点上纠缠。如果你发现推理不对，有地方有问题进行不下去，那你肯定睡不着。人这个老毛病就是去纠结 something is wrong。放弃挣扎和内耗，随时跑题，就像一个孩童一样，不要尝试去理解这个疯狂的世界，就应该天马行空的去不停的变换注意力。当你累了，自然就睡了。</p>
+<p>这个方法还有一点要注意，一定要去想「具象」的画面，而不是抽象的道理。最好你就是画面的主角，融入其中。比如你想象在看书，不要弄成电影镜头那样第三视角远远地看，你要想象这本书非常巨大， 从你脑门一直到你胸口那么大，镶嵌在你身体里，是你的一部分，你得摇头晃脑的去逐行扫描的观摩。书上的文字会随时飞起变成海浪把你吃掉淹没进入下一个场景。一定要身临其境，想象你身体每一个器官和毛孔都在被这个场景吞没。</p>
+<p>遇到可怕或者矛盾的地方，直接抛之脑后，揪住一个小点立刻切换全新场景！每一个场景不要停留太久，太久了你就会生疑心，怀疑这是不是假的？赶紧跑题，挑个别的。避免惊恐刺激的，选一个平滑的，不要太多注意力的，越舒服越放松的场景，越容易入睡。</p>
+<p>今日的疯狂梦呓就到这了。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-11-14T09:33:00+08:00">2024-11-14</time></p>
+<p>stderr</p>            </div>
           </article>
         </div>
 

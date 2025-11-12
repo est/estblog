@@ -58,62 +58,6 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/2024/stdout-12"  rel="bookmark" >
-              <h2 class="card-title">All Star Core locations in Fallout 4</h2>
-            </a>
-            <p class="card-text"><p>Arent nobody got time for this shit.</p>
-<p>Open FO4Edit, locate <code>604a053</code> and find all refs:</p>
-<pre><code>0601FAD1
-060255A7
-060255D2
-06025774
-060257F1
-06026C7B
-06026D23
-06026D70
-060278F7
-06027917
-0602791A
-06027A3C
-06027ACC
-06027C0D
-06027D5E
-06027E43
-06027E4C
-060319E1
-060319E2
-060327BA
-060327C4
-060327D0
-060327E2
-06034EC6
-06034F97
-06034FD4
-0603522E
-06037CA7
-060380CB
-0603816F
-</code></pre>
-<p>And for external star cores, locate <code>0601F0E5</code> and <code>0601F0E6</code> for more refs:</p>
-<pre><code>coc NWJunkyardExt; player.moveto 060319D6;
-coc NukaWorldWildWestExt03; player.moveto 06031995;
-coc DLC04BottlingPlant01; player.moveto 060319CE;
-coc DLC04Nukacade01; player.moveto 060319CF;
-coc DLC04GalacticZoneExt07; player.moveto 060319E1;
-coc NukaTownMarket01; player.moveto 06054CA8;
-</code></pre>
-<p>Just type <code>player.moveto</code> with the code above and you can grab all <a href="https://fallout.fandom.com/wiki/Star_core">star cores</a>, and return to console <code>player.moveto 0601E359</code>, so you get the Quantum X-01 power armor from Nuka-World DLC of Fallout 4.</p>
-<p>Also there's <code>coc TestCory01; 06044B4B;</code> for testing purposes.</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-07-13T06:31:00+08:00">2024-07-13</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/2024/stderr-13"  rel="bookmark" >
               <h2 class="card-title">育儿成本的两座大山</h2>
             </a>
@@ -802,6 +746,29 @@ done;
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-02-27T16:48:00+08:00">2024-02-27</time></p>
 <p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/2024/stdin-05"  rel="bookmark" >
+              <h2 class="card-title">Windows 任务管理器(taskmgr.exe) 作者讲趣闻</h2>
+            </a>
+            <p class="card-text"><p>下文出自 Windows 任务管理器(taskmgr.exe) 作者 <a href="https://x.com/davepl1968/status/1761846541453791535">Dave W Plummer</a></p>
+<blockquote>
+<p>Windows 任务管理器(taskmgr.exe)趣闻：“保持简洁”</p>
+<p>当你按下 <code>Ctrl</code>+<code>Shift</code>+<code>Esc</code> 时，<code>winlogon</code> 会启动 <code>taskmgr.exe</code>，并且它首先会寻找一个正在运行的进程实例，如果它通过了某些运行时检查，则激活该实例。这意味着激活任务管理器所需的时间，至少与读取exe文件的时间一样长，因此我想要保持它文件体积足够小。<br />
+故事是这样的，为了将整个东西保持在100KB以下（我记得它发布时是86KB），我无法负担得起链接CRT，但仍然想要使用C++。C++编译器假定CRT将被链接，以执行类似调用全局对象构造器之类的基本操作。因此，我最终做的是预先定义链接器需要从CRT中获取的部分，然后在运行时手动遍历链接器插入的用于初始化全局C ++对象表。基本上就算链接的时候，生成构造器列表，因为CRT不会调用它们，所以我手动调用它们。最终实现用上C++但不依赖运行时。<br />
+后来的我回顾起来为什么当时不直接链接到运行时dll，但我可能当时试图避免直接链接到除了<code>user32</code>和<code>gdi32</code>之外的任何东西。我想，任何其他DLL都可能会挂掉。所以我甚至不链接到<code>shell32</code>，每次需要调用shell函数时我都手动进行 <code>GetProcAddress</code>，并且我在单独的线程上执行它，以防它返回超时。<br />
+我对这些事情花了不少心思，但至少在早期版本中，当内存紧张时，我认为这样做是值得的！如果你喜欢这些随机的历史趣闻，请关注我获取更多信息！<br />
+<img referrerpolicy="no-referrer" src="https://pbs.twimg.com/media/GHNVu9daEAA9GJa?format=png&name=small" /></p>
+</blockquote>
+<p>这位爷也有个 <a href="https://www.youtube.com/@DavesGarage">YouTube 频道 Dave's Garage</a> 非常精彩！</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2024-02-26T11:48:00+08:00">2024-02-26</time></p>
+<p>stdin</p>            </div>
           </article>
         </div>
 

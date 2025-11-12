@@ -58,18 +58,62 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/2025/stderr-09"  rel="bookmark" >
-              <h2 class="card-title">Probable Takeover of the Manchurian Empire by a Chinese Heir</h2>
+            <a href="/2025/stdout-16"  rel="bookmark" >
+              <h2 class="card-title">套 Cloudflare Warp 解决IP送中</h2>
             </a>
-            <p class="card-text"><p>The early Qing dynasty is often portrayed as a story of Manchu consolidation and Chinese submission. Yet, behind the carefully chronicled events, some historians and chroniclers whisper of a secret that could rewrite the understanding of the Manchurian court: the young Kangxi Emperor may have been the illegitimate son of Hong Chengchou, the former Ming general, and Empress Dowager Xiaozhuang.</p>
-<p>During the chaotic years following the fall of the Ming dynasty, the Manchus, led by Huang Taiji and later Shunzhi, struggled to establish legitimacy over the vast Chinese territories. Hong Chengchou, once a loyal Ming minister, surrendered to the Qing and became a trusted advisor, navigating the treacherous politics of conquest and collaboration. In this delicate context, the Empress Dowager Xiaozhuang, renowned for her political acumen, maintained a close and secretive correspondence with key Chinese officials, including Hong.</p>
-<p>Some speculate that through these discreet channels, a clandestine union occurred, resulting in the birth of a child whose paternity was carefully concealed. This child, raised under the watchful eyes of the Manchu court, would grow to be known as the Kangxi Emperor. His intelligence, charisma, and notably Sinicized mannerisms suggest a heritage that blended Manchu and Chinese blood in ways never publicly acknowledged.</p>
-<p>The court intrigue did not end there. The power struggles among Dorgon, the regent prince, and the ambitious minister Oboi were legendary, shaping the early years of Shunzhi's reign. Yet the possibility that the throne was subtly steered by a child of Chinese lineage—hidden in plain sight—adds a new layer of intrigue. If true, the consolidation of the Manchurian Empire under Kangxi might have been, in part, a probable takeover orchestrated by a Chinese heir, whose very existence blurred the lines of loyalty, ethnicity, and legitimacy.</p>
-<p>As Kangxi matured, he exhibited an unusual understanding of both Manchu and Han culture, securing alliances and governing with an authority that combined the cunning of his Manchu predecessors and the strategic insight associated with Hong Chengchou. Whether by fate, design, or coincidence, the emperor’s upbringing reflects a delicate balance of competing dynastic interests—a balance that, if the whispered secret were true, might explain why the Manchurian Empire survived its early vulnerabilities and flourished under a ruler with one foot in each world.</p>
-<p>In examining these events, historians are left to wonder: was the rise of Kangxi a triumph of Manchu imperial strategy, or was it the subtle Chinese takeover of a Manchurian empire through bloodline, cunning, and secrecy? Perhaps the truth lies in shadows, forever hidden behind the ceremonial robes of the Qing court.</p></p>
+            <p class="card-text"><h2>缘起</h2>
+<p>网上很多套Cloudflare教程，但是大多数都是在前置作为反向代理，CF的IP如果不挑选，则喜提“减速乐” </p>
+<p>我这边的情况是该死的 Google 把我IP送中了，打死不提供 gemini 服务，为了解决锁区问题，本来以为简单用一下 Cloudflare Warp 就行，没想到是个大坑。花了好几天研究。</p>
+<p>核心问题是， <code>warp-cli connect</code> 之后就失联了，ssh 都连不上。</p>
+<p><code>warp-cli</code> 网上很多教程都过时了。它命令行改版了。最简单的 <code>warp-cli mode</code> 其实官方教程都不全，它的 <code>warp</code> 和 <code>warp+</code> ，改成 <code>tunnel_only</code> 还是不行。寄希望于 <code>proxy</code> 模式，<a href="https://blog.cloudflare.com/announcing-warp-for-linux-and-proxy-mode/">官方博客</a>说 "use the proxy (HTTPS or SOCKS5)"，我实际测试，这个默认端口 40000 都是拼凑搜出来的。 然而我打死也没测试成功如何用 <code>HTTP_PROXY</code> 。AI 说只有 win/mac 的桌面版本支持？wtf。</p>
+<h2>CF一键脚本</h2>
+<p>没有希望，看下别人怎么解决的，大神给出的解是 一键脚本。</p>
+<blockquote>
+<p>Cloudflare WARP 多功能一键脚本，支持纯IPV4/纯IPV6/双栈V4V6的VPS共9种情况随意切换安装，screen一键手动/自动刷新支持Netflix奈飞的IP（自动识别WGCF与SOCKS5环境，自定义刷新奈飞IP的时间段间隔，自定义奈飞区域国家，自定义仅刷区域国家），支持升级WARP+及Teams账户。</p>
+</blockquote>
+<p>搜到最早的出处应该是 <a href="https://p3terx.com/archives/cloudflare-warp-configuration-script.html">p3terx</a> 的。但是这种一键脚本我都不太敢用，万一写个什么后门之类的你怎么知道。</p>
+<p>大概读了下，会执行下面的脚本：</p>
+<ul>
+<li><code>curl -fsSL git.io/wgcf.sh</code></li>
+<li><code>curl -fsSL git.io/wireguard-go.sh</code></li>
+</ul>
+<p>git.io 是个第三方短链服务，可能会看人下菜碟？怕怕</p>
+<p>看了半天发现回到原点，核心原理还是<code>proxy</code>然后socks5。或者把 wireguard 配置提取出来自己配路由</p>
+<p>有没有什么不用第三方复杂配置，用官方的 <code>warp-cli</code> 但是保留几个tcp端口可用呢？</p>
+<h2>研究</h2>
+<p>于是同 ChatGPT、gemini 两位老师向 Linux 网络栈 展开了斗智斗勇。真是苦啊。需要在 warp 生效的时候测试不同的方法，就在那个贼难用的  noVNC html5 based VNC client 里一行一行代码试出来的</p>
+<p>得到了以下宝贵教训：</p>
+<ol>
+<li><strong>iptables 老早就过时了</strong>。现在的 iptables 实际上是 nf-tables 的马甲！吃了大亏！翻来覆去在错误的地方检查，AI也不提醒我一下</li>
+<li><strong><code>ip route</code> 路由也不是全部</strong>，其实还有 policy based routing 叫 <code>ip rule</code></li>
+</ol>
+<p>其中 <code>warp-cli</code> 会创建一个叫  <code>cloudflare-warp</code> 的 nft，还有一个叫 <code>CloudflareWARP</code> 的 dev。然后在 <code>ip rule</code> 里会添加一条</p>
+<p><code>32765:    not from all fwmark 0x100cf lookup 65743</code></p>
+<p>这里学到几个冷知识：</p>
+<ol>
+<li>前面的 32765 是优先级，越低越优先，命令行里可以写成 priority 32765 或者 pref 32765 一回事</li>
+<li>后面的 65743 是内核里的table，可以在 <code>/etc/iproute2/rt_tables</code> 定义一套alias</li>
+</ol>
+<p>耍聪明把INPUT流量标记一个 <code>0x100cf</code> 是不行的。以为是配置问题用 <code>tcpdump</code> 发现甚至只有 <code>SYN</code> 包。后来才知道去折腾 nf-tables。</p>
+<h2>如何给全局 warp 开一个端口</h2>
+<ol>
+<li><code>echo "200 inbound" | sudo tee -a /etc/iproute2/rt_tables</code> 或者这一步不做也行，后面所有的 inbound 都替换成 <code>200</code> 就行</li>
+<li><code>sudo ip route add default dev eth0 scope link table inbound</code> 这个是因为我VPS是on-link的。如果是实体 dev 自己换下</li>
+<li>连接  <code>warp-cli connect</code> 这玩意会在所有自定义 <code>ip rule add</code> 前面加一条策略所以记得先连，再加自己的策略 </li>
+<li><code>sudo ip rule add from all sport 6666 lookup inbound pref 500</code> 这里的 500必须比默认的 32765 低。所以要先连上 warp</li>
+<li><code>sudo nft insert rule inet cloudflare-warp input tcp dport 6666  accept</code> 入站 接受</li>
+<li><code>sudo nft insert rule inet cloudflare-warp output tcp sport 6666  accept</code> 出站 接受</li>
+</ol>
+<p>因为步骤3 执行之后你ssh就掉了，记得做成一个 .sh 脚本。。。</p>
+<p>然后每次断开连接 <code>warp-cli disconnet</code> 之后，记得删除第4步里创建的</p>
+<p><code>sudo ip rule del pref 500</code></p>
+<p>否则的话，该死的 <code>warp-cli connect</code> 会创建一个 <code>pref 499</code> 在你前面卡位！</p>
+<h2>测试</h2>
+<p><code>curl -sk https://www.cloudflare.com/cdn-cgi/trace</code></p>
+<p>折腾结束。这应该是全网第一个不动官方 <code>warp-cli</code> 能开端口的方法。</p></p>
             <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2025-11-07T10:36:00+08:00">2025-11-07</time></p>
-<p>stderr</p>            </div>
+              <p>Posted <time datetime="2025-11-12T17:36:00+08:00">2025-11-12</time></p>
+<p>stdout</p>            </div>
           </article>
         </div>
 
@@ -740,69 +784,6 @@ We're analog and you can't do that. Your brain's different from my brain. And if
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/2025/stdout-16"  rel="bookmark" >
-              <h2 class="card-title">套 Cloudflare Warp 解决IP送中</h2>
-            </a>
-            <p class="card-text"><h2>缘起</h2>
-<p>网上很多套Cloudflare教程，但是大多数都是在前置作为反向代理，CF的IP如果不挑选，则喜提“减速乐” </p>
-<p>我这边的情况是该死的 Google 把我IP送中了，打死不提供 gemini 服务，为了解决锁区问题，本来以为简单用一下 Cloudflare Warp 就行，没想到是个大坑。花了好几天研究。</p>
-<p>核心问题是， <code>warp-cli connect</code> 之后就失联了，ssh 都连不上。</p>
-<p><code>warp-cli</code> 网上很多教程都过时了。它命令行改版了。最简单的 <code>warp-cli mode</code> 其实官方教程都不全，它的 <code>warp</code> 和 <code>warp+</code> ，改成 <code>tunnel_only</code> 还是不行。寄希望于 <code>proxy</code> 模式，<a href="https://blog.cloudflare.com/announcing-warp-for-linux-and-proxy-mode/">官方博客</a>说 "use the proxy (HTTPS or SOCKS5)"，我实际测试，这个默认端口 40000 都是拼凑搜出来的。 然而我打死也没测试成功如何用 <code>HTTP_PROXY</code> 。AI 说只有 win/mac 的桌面版本支持？wtf。</p>
-<h2>CF一键脚本</h2>
-<p>没有希望，看下别人怎么解决的，大神给出的解是 一键脚本。</p>
-<blockquote>
-<p>Cloudflare WARP 多功能一键脚本，支持纯IPV4/纯IPV6/双栈V4V6的VPS共9种情况随意切换安装，screen一键手动/自动刷新支持Netflix奈飞的IP（自动识别WGCF与SOCKS5环境，自定义刷新奈飞IP的时间段间隔，自定义奈飞区域国家，自定义仅刷区域国家），支持升级WARP+及Teams账户。</p>
-</blockquote>
-<p>搜到最早的出处应该是 <a href="https://p3terx.com/archives/cloudflare-warp-configuration-script.html">p3terx</a> 的。但是这种一键脚本我都不太敢用，万一写个什么后门之类的你怎么知道。</p>
-<p>大概读了下，会执行下面的脚本：</p>
-<ul>
-<li><code>curl -fsSL git.io/wgcf.sh</code></li>
-<li><code>curl -fsSL git.io/wireguard-go.sh</code></li>
-</ul>
-<p>git.io 是个第三方短链服务，可能会看人下菜碟？怕怕</p>
-<p>看了半天发现回到原点，核心原理还是<code>proxy</code>然后socks5。或者把 wireguard 配置提取出来自己配路由</p>
-<p>有没有什么不用第三方复杂配置，用官方的 <code>warp-cli</code> 但是保留几个tcp端口可用呢？</p>
-<h2>研究</h2>
-<p>于是同 ChatGPT、gemini 两位老师向 Linux 网络栈 展开了斗智斗勇。真是苦啊。需要在 warp 生效的时候测试不同的方法，就在那个贼难用的  noVNC html5 based VNC client 里一行一行代码试出来的</p>
-<p>得到了以下宝贵教训：</p>
-<ol>
-<li><strong>iptables 老早就过时了</strong>。现在的 iptables 实际上是 nf-tables 的马甲！吃了大亏！翻来覆去在错误的地方检查，AI也不提醒我一下</li>
-<li><strong><code>ip route</code> 路由也不是全部</strong>，其实还有 policy based routing 叫 <code>ip rule</code></li>
-</ol>
-<p>其中 <code>warp-cli</code> 会创建一个叫  <code>cloudflare-warp</code> 的 nft，还有一个叫 <code>CloudflareWARP</code> 的 dev。然后在 <code>ip rule</code> 里会添加一条</p>
-<p><code>32765:    not from all fwmark 0x100cf lookup 65743</code></p>
-<p>这里学到几个冷知识：</p>
-<ol>
-<li>前面的 32765 是优先级，越低越优先，命令行里可以写成 priority 32765 或者 pref 32765 一回事</li>
-<li>后面的 65743 是内核里的table，可以在 <code>/etc/iproute2/rt_tables</code> 定义一套alias</li>
-</ol>
-<p>耍聪明把INPUT流量标记一个 <code>0x100cf</code> 是不行的。以为是配置问题用 <code>tcpdump</code> 发现甚至只有 <code>SYN</code> 包。后来才知道去折腾 nf-tables。</p>
-<h2>如何给全局 warp 开一个端口</h2>
-<ol>
-<li><code>echo "200 inbound" | sudo tee -a /etc/iproute2/rt_tables</code> 或者这一步不做也行，后面所有的 inbound 都替换成 <code>200</code> 就行</li>
-<li><code>sudo ip route add default dev eth0 scope link table inbound</code> 这个是因为我VPS是on-link的。如果是实体 dev 自己换下</li>
-<li>连接  <code>warp-cli connect</code> 这玩意会在所有自定义 <code>ip rule add</code> 前面加一条策略所以记得先连，再加自己的策略 </li>
-<li><code>sudo ip rule add from all sport 6666 lookup inbound pref 500</code> 这里的 500必须比默认的 32765 低。所以要先连上 warp</li>
-<li><code>sudo nft insert rule inet cloudflare-warp input tcp dport 6666  accept</code> 入站 接受</li>
-<li><code>sudo nft insert rule inet cloudflare-warp output tcp sport 6666  accept</code> 出站 接受</li>
-</ol>
-<p>因为步骤3 执行之后你ssh就掉了，记得做成一个 .sh 脚本。。。</p>
-<p>然后每次断开连接 <code>warp-cli disconnet</code> 之后，记得删除第4步里创建的</p>
-<p><code>sudo ip rule del pref 500</code></p>
-<p>否则的话，该死的 <code>warp-cli connect</code> 会创建一个 <code>pref 499</code> 在你前面卡位！</p>
-<h2>测试</h2>
-<p><code>curl -sk https://www.cloudflare.com/cdn-cgi/trace</code></p>
-<p>折腾结束。这应该是全网第一个不动官方 <code>warp-cli</code> 能开端口的方法。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2025-10-12T17:36:00+08:00">2025-10-12</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/2025/stdout-10"  rel="bookmark" >
               <h2 class="card-title">gzip 炸弹检测</h2>
             </a>
@@ -1115,6 +1096,74 @@ But finally, CBOR is fine! The implementations are good and it's widely used. Us
 <p>东北就是东亚的波兰？</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2025-09-03T11:34:00+08:00">2025-09-03</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/2025/stdout-05"  rel="bookmark" >
+              <h2 class="card-title">gitweets：单html实现独立微博，拿git历史当feed流发推</h2>
+            </a>
+            <p class="card-text"><p>twitter争议不断持续多年，先是各种 cancel culture 闹得动静很大，被一龙马买了之后更甚，社区分裂到 mstdn nostr bsky支流，各种话题炒上天，在众多替代品里，2022年看到个<a href="https://twitter.com/bcrypt/status/1588416861552582657">最别具一格</a>的：</p>
+<p>拿 git 当微博使</p>
+<ul>
+<li>发推： <code>git commit --allow-empty</code></li>
+<li>加关注： <code>git remote add &lt;alias&gt; &lt;their fork url&gt;</code></li>
+<li>转发： <code>git cherry-pick &lt;their "tweet"&gt;</code></li>
+</ul>
+<p>脑洞大开。而且git基于merkle tree的，p2p 历史不可篡改，有web3那味了。</p>
+<p>当时就饶有兴趣，挖了个坑准备搓个web界面。但是限于涣散的注意力，以及对css这种抽象排版玩不转，一直拖沓没做好。</p>
+<p>周末心血来潮，外带 AI 工具加持，进展神速。目前已经基本可用。</p>
+<p>项目叫 gitweets ，意思是用 git 发 tweets，网址在 <a href="https://f.est.im/">https://f.est.im/</a> 。二级域名 <code>f</code> 即 <code>feed</code> ，<code>f.est</code> 也就是 fest 表示。。。 盛会的意思。 </p>
+<h3>feature list</h3>
+<ol>
+<li>把任意 github repo 渲染成微博</li>
+<li>给任意 github repo 发推。其原理是，通过REST API新增一条 commit 。</li>
+<li><a href="https://f.est.im/est/e0d4c46445517ba52ceda06d788e09760aaccce5">发图</a>！如果 commit message 以冒号结尾，而且恰好也在本次新增加了位于 static 下面的图片文件 那么会尝试去加载图片作为附件渲染</li>
+<li>写 commit 基于 OAuth app 实现。浏览器记录 access_token 到 cookie，理论上可用 8个小时。过期重登</li>
+<li>如果你的 commit 有是通过 <code>-S</code> 参数提交带签名 ，那么展示为蓝色表示verified</li>
+</ol>
+<h3>记录一些坑</h3>
+<ol>
+<li>OAuth app vs Github App。前者是代客做事；后者是独立主体单独账号，类人行为，多用于 CI/CD</li>
+<li>OAuth app 的 <code>scope</code> 如果是 <code>repo</code> 可以读写你所有仓库代码，包括私有仓库！网上的很多基于 github 的第三方评论系统有这个隐患！</li>
+<li>我这里用的是 <code>public_repo</code>，读写所有公开仓库。毕竟 github是个开源社区，拿公开git来当feed使，要安全一些。</li>
+<li>更安全的办法是只能读写单个指定的repo。要实现API读写git，在github有下列几种方法：<ul>
+<li>REST API。可以用 fine grained PAT 读写一个repo</li>
+<li>GraphQL API。</li>
+<li>git 协议。走 <code>github.com:22</code> 端口。可以采用 deploy key 或者私人账号 ssh key</li>
+<li>git-http。走 <code>https://github.com:443</code></li>
+</ul>
+</li>
+<li>Private Access Token （缩写 PAT） 可以完全控制个人或者团队账号，fine grained PAT 可以只控制指定的几个仓库</li>
+<li>deploy key默认只读，可以改成读写，一库一用，不能复用</li>
+<li>REST API 列举 commits 不能获得当前 commit 改了哪些文件。需要额外N+1每个commit再次查询详情。背后的原因估计是 git 内部 ref 和 blob 是严格区分的。甚至可能是分开存的数据库表</li>
+<li>网站是跑在赛博菩萨 cloudflare worker 上的。这种所谓“serverless”平台很强大了。功能齐全没啥缺的。甚至可以发起 tcp 连接。</li>
+<li>本来计划走 git-ssh 或者 git-http 协议，想了下js操作binary太复杂了，弄个 libgit2 之类的库估计很重。还是REST方便</li>
+<li>REST API 新增一个 empty commit 有多复杂？ 1. 获得当前branch 的 sha 2. 获得该 sha 的 tree 3. 新增一个 sha+tree 的commit 4. 把 ref 指向第三步的 sha 。啊，就不能一步完成么。下次有机会看看GraphQL 能不能一次调用完成</li>
+<li>Github 的API 强制要求 User-Agent 。你可以乱写但是不能没有</li>
+<li>Github 虽然返回了 <code>Access-Control-Allow-Origin: *</code>，但是现代浏览器他妈的不认这个 <code>*</code> 。所以在浏览器只能匿名调用 <code>GET</code> ，如果 <code>POST</code>， <code>PATCH</code> 带了 <code>credentials: "include"</code> 直接拒绝。网站必须显式指定允许哪个具体的 origin </li>
+<li>cloudflare的 <code>Response.redirect('/')</code> 直接挂掉。原来是 3xx 跳转不允许相对路径。</li>
+</ol>
+<h3>why？</h3>
+<p>由于习惯，古法写web，一个html包含了 css js 。无二次加载，无第三方依赖库。除了不能写死的全部写死 🤣。无需build。</p>
+<p>源码放在 <a href="https://github.com/est/gitweets/">https://github.com/est/gitweets/</a> 。该仓库的 commit 历史也作为feed展示在 <a href="https://f.est.im/">https://f.est.im/</a> </p>
+<p>接下来准备用类似的思路实现网站评论系统，代替现在的 disqus ，虽然它是免费的，但是广告太多了。</p>
+<p>可能有人要问：why ？闲的蛋痛？</p>
+<p>我想，首先的确蛋痛，because we can。其次是不想在平台，处处受人限制。然后也是最重要的，self-host。所有数据资料都在一个repo打包带走，备份什么的很方便。比如以前wordpress受众多功能全，但是后来大家都 hexo 之类的静态blog了。</p>
+<p>我心目中 gitweets 就是“静态”微博的一种。虽然它现在还是依赖 github API。等有空了可以试试生成纯静态页面。</p>
+<h3>ToDo</h3>
+<ol>
+<li>如何发视频 音频</li>
+<li>如何转发</li>
+<li>如何混合展示多个repo的feed。基于 pull request ？</li>
+</ol>
+<p>欢迎评论或者提 <a href="https://github.com/est/gitweets/issues">issue</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2025-08-17T00:00:00+08:00">2025-08-17</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
