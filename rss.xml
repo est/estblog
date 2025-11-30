@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sun, 30 Nov 2025 04:56:05 +0800</lastBuildDate><item><title>《藏在罐子里的爱》未删减版</title><link>https://blog.est.im/2025/stdin-13</link><description>&lt;p&gt;秋夜凄凉，月光暗淡。如墨般漆黑的夜空中却闪着几点星光。我抬起头，凝视着天上闪光的星，想起我妈曾经在星空下和我说过的：每个勤劳善良的人，在死后都会变成天上的星星，保佑着地上的人。幼小的我便在想，里面的哪一个会是奶奶呢？&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sun, 30 Nov 2025 12:43:00 +0800</lastBuildDate><item><title>OpenWRT p910nd适配兄弟打印机</title><link>https://blog.est.im/2025/stdout-17</link><description>&lt;p&gt;买了个兄弟牌(Brother)的打印机，热销基础款，听说他家的联网打印很烂，所以只有USB的。&lt;/p&gt;
+&lt;p&gt;又买了个打印盒子，OpenWRT的，本来以为是 CUPS，结果一看 p910nd 好家伙。看了下这玩意纯粹是 tcp 直连 &lt;code&gt;/dev/usb/lp0&lt;/code&gt; 。&lt;/p&gt;
+&lt;p&gt;在 macOS 上配置陷入了迷茫，最后问ChatGPT给调通了居然。&lt;/p&gt;
+&lt;p&gt;首先还是得下载官方驱动，然后添加 IP打印机&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Address 那里输入OpenWRT的 IP:9100 &lt;/li&gt;
+&lt;li&gt;Protocol 这里注意，选 HP JetDirect。这里的意思为 AppSocket。&lt;/li&gt;
+&lt;li&gt;最下面的 Use 选择驱动&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;也就是说IPP, AirPrint，LPD这些协议都不行。&lt;/p&gt;
+&lt;p&gt;然后试了下也失败，看了下默认USB双向通信，最好改成单向。OpenWRT上：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# cat /etc/config/p910nd 
+config p910nd
+  option device        /dev/usb/lp0
+  option port          0
+  option bidirectional 0
+  option enabled       1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;macOS上：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;lpadmin -p &amp;lt;IP打印机名字&amp;gt;  -o usb-no-bidi-default=true&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;应该就行了。&lt;/p&gt;
+&lt;p&gt;支持 Airprint 就下一步想办法了。安卓上的打印只能输入IP，不支持 9100端口，估计支持了也是白费力，还得 .ppd 之类的翻译一下。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 30 Nov 2025 12:43:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-11-30:/2025/stdout-17</guid><category>stdout</category></item><item><title>《藏在罐子里的爱》未删减版</title><link>https://blog.est.im/2025/stdin-13</link><description>&lt;p&gt;秋夜凄凉，月光暗淡。如墨般漆黑的夜空中却闪着几点星光。我抬起头，凝视着天上闪光的星，想起我妈曾经在星空下和我说过的：每个勤劳善良的人，在死后都会变成天上的星星，保佑着地上的人。幼小的我便在想，里面的哪一个会是奶奶呢？&lt;/p&gt;
 &lt;p&gt;今天乡下的月很圆，后山的土地和院里的人沐浴着同样的月亮，只是一层薄薄的土，人与人就再难相见了。只有月亮还和几年前的一样，看着它，思绪就跨过了时间，回到了过去橱柜子上的罐子里。&lt;/p&gt;
 &lt;p&gt;那时我还只有几岁大，和爷爷奶奶一起生活在乡下。当时我的话都说不太利索，天天只知道向外跑，对许多新奇东西有着极大的好奇心，总是喜欢跟着大声嘎嘎叫的肥鸭绕着院子转。在屋里的各东种小东西都喜欢看一看，摸一摸，有时甚至还会用嘴尝一尝。&lt;/p&gt;
 &lt;p&gt;那是一个炎热的下午，毒辣的阳光炙烤着大地，刺眼的阳光令人望而生畏，我像一只无头苍蝇一样在客厅里乱窜，一转头，又跑进了厨房看到了正在忙活着的奶奶，极度无聊的我看见旁边的柜子上有一个罐子，里面似乎装着些什么。我努力地伸手想去拿，可就是差那么一点。奶奶好似背后也长了一双眼睛，看见了我踮着脚目不转睛地盯着那个罐子。她水龙头都没关，放下了手上的东西，就毫不犹豫地冲了过来，赶忙用双手小心翼翼地给我抱到旁边。然后才注意到我是想要罐子，于是便帮我拿了下来，拿着小勺子喂了我一点。这时我才看见罐子里装的是什么，是许多的白色小颗粒，入口时这种甜蜜的味道不断地冲击着我的大脑。后来奶奶每天都会给我吃一点，每次我都笑的非常开心，奶奶明明没吃，却也和我一样。幸福从罐子里跑了出来，弥漫了整个屋子。&lt;/p&gt;
@@ -213,28 +234,7 @@ It had to be global because &lt;code&gt;concurrent.futures&lt;/code&gt; only all
 &lt;li&gt;
 &lt;p&gt;avoid gRPC&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 04 Nov 2025 10:46:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-11-04:/2025/stdout-15</guid><category>stdout</category></item><item><title>OpenWRT p910nd适配兄弟打印机</title><link>https://blog.est.im/2025/stdout-17</link><description>&lt;p&gt;买了个兄弟牌(Brother)的打印机，热销基础款，听说他家的联网打印很烂，所以只有USB的。&lt;/p&gt;
-&lt;p&gt;又买了个打印盒子，OpenWRT的，本来以为是 CUPS，结果一看 p910nd 好家伙。看了下这玩意纯粹是 tcp 直连 &lt;code&gt;/dev/usb/lp0&lt;/code&gt; 。&lt;/p&gt;
-&lt;p&gt;在 macOS 上配置陷入了迷茫，最后问ChatGPT给调通了居然。&lt;/p&gt;
-&lt;p&gt;首先还是得下载官方驱动，然后添加 IP打印机&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Address 那里输入OpenWRT的 IP:9100 &lt;/li&gt;
-&lt;li&gt;Protocol 这里注意，选 HP JetDirect。这里的意思为 AppSocket。&lt;/li&gt;
-&lt;li&gt;最下面的 Use 选择驱动&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;也就是说IPP, AirPrint，LPD这些协议都不行。&lt;/p&gt;
-&lt;p&gt;然后试了下也失败，看了下默认USB双向通信，最好改成单向。OpenWRT上：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# cat /etc/config/p910nd 
-config p910nd
-  option device        /dev/usb/lp0
-  option port          0
-  option bidirectional 0
-  option enabled       1
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;macOS上：&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;lpadmin -p &amp;lt;IP打印机名字&amp;gt;  -o usb-no-bidi-default=true&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;应该就行了。&lt;/p&gt;
-&lt;p&gt;支持 Airprint 就下一步想办法了。安卓上的打印只能输入IP，不支持 9100端口，估计支持了也是白费力，还得 .ppd 之类的翻译一下。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 30 Oct 2025 12:43:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-10-30:/2025/stdout-17</guid><category>stdout</category></item><item><title>特立独行的中文</title><link>https://blog.est.im/2025/stderr-07</link><description>&lt;p&gt;上一篇&lt;a href="https://blog.est.im/2025/stderr-06"&gt;汉字 和 汉语 的先进性&lt;/a&gt; 还没完&lt;/p&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 04 Nov 2025 10:46:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-11-04:/2025/stdout-15</guid><category>stdout</category></item><item><title>特立独行的中文</title><link>https://blog.est.im/2025/stderr-07</link><description>&lt;p&gt;上一篇&lt;a href="https://blog.est.im/2025/stderr-06"&gt;汉字 和 汉语 的先进性&lt;/a&gt; 还没完&lt;/p&gt;
 &lt;p&gt;最近不知道在 X 上还是 xhs 上，原帖我翻不到了。有留子在图书馆查资料，用中文搜索，旁边印度妹问在看啥？&lt;/p&gt;
 &lt;p&gt;留子说在查学术问题。印度妹悻然说到，她的母语就没有这么多资料可查，只能有英语资料可看。&lt;/p&gt;
 &lt;p&gt;这回到我今年第一篇blog &lt;a href="https://blog.est.im/2025/stdout-01"&gt;如何用英语给出简短的 “春节” 定义&lt;/a&gt; 抛出的一个观点：&lt;/p&gt;
