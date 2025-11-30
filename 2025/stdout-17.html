@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>OpenWRT p910nd适配兄弟打印机 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="OpenWRT p910nd适配兄弟打印机" />
+
+    <link rel="canonical" href="https://blog.est.im/2025/stdout-17" />
+    <meta property="og:url" content="https://blog.est.im/2025/stdout-17">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="OpenWRT p910nd适配兄弟打印机">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">OpenWRT p910nd适配兄弟打印机</h2>
+    <p class="post-date">Posted <time datetime="2025-10-30T12:43:00+08:00">2025-10-30</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>买了个兄弟牌(Brother)的打印机，热销基础款，听说他家的联网打印很烂，所以只有USB的。</p>
+<p>又买了个打印盒子，OpenWRT的，本来以为是 CUPS，结果一看 p910nd 好家伙。看了下这玩意纯粹是 tcp 直连 <code>/dev/usb/lp0</code> 。</p>
+<p>在 macOS 上配置陷入了迷茫，最后问ChatGPT给调通了居然。</p>
+<p>首先还是得下载官方驱动，然后添加 IP打印机</p>
+<ul>
+<li>Address 那里输入OpenWRT的 IP:9100 </li>
+<li>Protocol 这里注意，选 HP JetDirect。这里的意思为 AppSocket。</li>
+<li>最下面的 Use 选择驱动</li>
+</ul>
+<p>也就是说IPP, AirPrint，LPD这些协议都不行。</p>
+<p>然后试了下也失败，看了下默认USB双向通信，最好改成单向。OpenWRT上：</p>
+<pre><code># cat /etc/config/p910nd 
+config p910nd
+  option device        /dev/usb/lp0
+  option port          0
+  option bidirectional 0
+  option enabled       1
+</code></pre>
+<p>macOS上：</p>
+<p><code>lpadmin -p &lt;IP打印机名字&gt;  -o usb-no-bidi-default=true</code></p>
+<p>应该就行了。</p>
+<p>支持 Airprint 就下一步想办法了。安卓上的打印只能输入IP，不支持 9100端口，估计支持了也是白费力，还得 .ppd 之类的翻译一下。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

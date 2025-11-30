@@ -54,6 +54,46 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2023/stdout-10"  rel="bookmark" >
+              <h2 class="card-title">SVG放在 img 中不能加载图片/字体</h2>
+            </a>
+            <p class="card-text"><p>最近想在 markdown 里搞图文混排，遇到一个大图把版面占完了，想缩小一些，由于 .md 渲染器安全限制，没法直接指定宽高</p>
+<p>只能从图片本身想办法，首先最直接的手段就是服务器再缩放一次，但是蛋痛的问题是缩放之后文件怎么存，怎么给静态文件路由，怎么保障图片可用性，怎么兼容各种尺寸，想想都头大。</p>
+<p>想到一个 hack，要不直接放一个 .svg 进去，因为 svg 支持加载位图资源，所以把 svg 位图缩小一点，让浏览器渲染 svg 不就行了。</p>
+<p>没想到就被这个 hack 坑了。原因是 svg 如果被 <code>&lt;img&gt;</code> 标签渲染，那么禁止加载任何外部资源，脚本也禁止执行。</p>
+<p>为了证明这个限制，我写了个 demo 放在 <a href="https://lab.est.im/shit_svg/">https://lab.est.im/shit_svg/</a></p>
+<p>这个问题太隐蔽了。stackoverflow 上只有 <a href="https://stackoverflow.com/a/30467585/41948">Robert Longson</a>、<a href="https://stackoverflow.com/a/69160093/41948">ThangLeQuoc</a>、<a href="https://stackoverflow.com/a/18244035/41948#18244035">TheHippo<br />
+</a> 的答案提到隐约线索：</p>
+<p>后来搜了到 <a href="https://supercodepower.com/en/svg-img-use-font">skychx</a> 把这个问题研究透了。罪魁祸首 <a href="https://www.w3.org/wiki/SVG_Security">SVG Security</a></p>
+<blockquote>
+<p>If an SVG file is fetched as image, then certain requirements apply to this document:   </p>
+<ul>
+<li>The SVG document is not allowed to fetch any resources. This also applies to scripts, stylesheets or images.   </li>
+<li>Fonts shouldn't be loaded as well. The situation in UAs seems to still be unclear though.<br />
+Scripts must not be executed.   </li>
+<li>Event listeners must be disabled at all times.   </li>
+</ul>
+</blockquote>
+<p>浪费我好多时间。SVG2里把这个说得很明白了 <a href="https://www.w3.org/TR/SVG2/conform.html#processing-modes">https://www.w3.org/TR/SVG2/conform.html#processing-modes</a></p>
+<blockquote>
+<p>When external references are disabled in an SVG document, any attempt to fetch a document through an external reference must instead be treated as if a network error occurred and no data was received.</p>
+</blockquote>
+<p>不过查阅资料的时候发现个好玩的，<a href="https://www.w3.org/TR/SVG11/single-page.html#linking-LinksIntoSVG">SVG 1.1 支持 URL fragments</a></p>
+<p>比如：</p>
+<ul>
+<li>原图 <a href="https://lab.est.im/shit_svg/1.svg">https://lab.est.im/shit_svg/1.svg</a> <embed src="https://lab.est.im/shit_svg/1.svg"></li>
+<li>放大 <a href="https://lab.est.im/shit_svg/1.svg#svgView(viewBox(20,20,60,60))">https://lab.est.im/shit_svg/1.svg#svgView(viewBox(20,20,60,60))</a> <embed src="https://lab.est.im/shit_svg/1.svg#svgView(viewBox(20,20,60,60))"></li>
+</ul></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2023-10-17T22:13:18+08:00">2023-10-17</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2023/stdout-09"  rel="bookmark" >
               <h2 class="card-title">市以上行政区划去掉后缀</h2>
             </a>
@@ -3102,25 +3142,6 @@ tcp.keepinit Timeout, in milliseconds, for new, non-established TCP connections.
 </a> 直接支持 Cloudflare 了不用这么麻烦了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-01-05T23:36:09+08:00">2021-01-05</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202101/stdout-001"  rel="bookmark" >
-              <h2 class="card-title">OpenWRT 随机设置 PPPoE 拨号的 MAC 地址 Randomize WAN MAC address in OpenWRT PPPoE</h2>
-            </a>
-            <p class="card-text"><p>新年第一贴！</p>
-<p>Run the command before connect to PPPoE or as cronjob</p>
-<p>添加一个重启的定时任务，在重启之间执行一个命令：</p>
-<pre><code>  uci set network.wan.mac_addr=$(hexdump -n3 -e'1/3 "8c:8d:8e" 3/1 ":%02X" "\n"' /dev/random) &amp;&amp; uci commit network
-</code></pre>
-<p>为什么要在拨号前随机生成WAN口的 MAC 地址呢？嘿嘿。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-01-01T00:27:52+08:00">2021-01-01</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

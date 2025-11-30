@@ -54,6 +54,49 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2025/stdout-08"  rel="bookmark" >
+              <h2 class="card-title">xHTML5</h2>
+            </a>
+            <p class="card-text"><p>有 ChatGPT学姿势就是快</p>
+<pre><code class="language-html">&lt;!DOCTYPE html [
+  &lt;!ENTITY myEntity &quot;Hello World&quot;&gt;
+  &lt;!ENTITY wow &quot;alert('hi')&quot;&gt;
+]&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;body&gt;
+  &amp;myEntity;
+  &lt;script&gt;
+    &amp;wow;
+  &lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>保存到本地 1.xhtml，双击浏览器打开。谁能想到这也行？xml entity 还可以这样玩？</p>
+<p>只要MIME为 <code>application/xhtml+xml</code> 就可以把HTML5当XML渲染。</p>
+<p>部署了个在线demo： <a href="https://lab.est.im/svg/entity.xhtml">https://lab.est.im/svg/entity.xhtml</a></p>
+<p>不敢相信自己眼睛，确认下是HTML5:</p>
+<ul>
+<li><code>document.compatMode</code> 返回 <code>CSS1Compat</code> 没问题</li>
+<li><code>ocument.doctype</code> 返回 <code>&lt;!DOCTYPE html&gt;</code> 没毛病</li>
+</ul>
+<p>如果是老的兼容模式：</p>
+<ul>
+<li><code>document.compatMode</code> 为 <code>BackCompat</code></li>
+<li><code>document.doctype.publicId</code> 为 <code>-//W3C//DTD HTML 4.01//EN</code></li>
+<li><code>document.doctype.systemId</code> 为 <code>http://www.w3.org/TR/html4/strict.dtd</code></li>
+</ul>
+<p>思路打开了。哈哈</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2025-09-15T00:12:00+08:00">2025-09-15</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2025/stdout-07"  rel="bookmark" >
               <h2 class="card-title">disqus已卸载，手搓了套blog评论系统 - req4cmt</h2>
             </a>
@@ -898,60 +941,6 @@ Yes! January 29, 2025, falls on Lunar New Year’s Eve, which is the day before 
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-11-28T09:45:00+08:00">2024-11-28</time></p>
 <p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2024/stdin-19"  rel="bookmark" >
-              <h2 class="card-title">如何给职场老登们提意见</h2>
-            </a>
-            <p class="card-text"><p>老登们从来不抱怨环境差，因为环境差就是他们造成的。哈哈哈。开个玩笑。<a href="https://news.ycombinator.com/item?id=42223099">HN上</a>看到一篇<a href="https://newsletter.weskao.com/p/how-to-give-a-senior-leader-feedback-without-getting-fired">How to give a senior leader feedback without getting fired</a> 如何在不丢工作的前提下，向资深管理者提出反馈，觉得有用。上班打工这么多年，发现沟通与影响力太真实了。摘录几条：</p>
-<h3>1. 更多、更好、更棒，而不是二极管</h3>
-<p>🚫 “新员工培训欠缺”——老登：“你懂完了？就你会培训？滚“<br />
-✅ “我们可能需要为新员工提供更多指导” —— “的确现有的培训不够，还得加强”</p>
-<p>二元的指责，意味着要么有培训，要么没培训，意味着这是对老登领导地位的威胁。</p>
-<h3>2. 拿自己当例子</h3>
-<p>🚫 “你应该试试 X 技术。”<br />
-✅ “我曾经为此而苦苦挣扎，当我尝试 X 时，它真的很有帮助。”</p>
-<h3>3. 外交式措辞</h3>
-<ul>
-<li>我们可能想试试......</li>
-<li>我想知道是不是......</li>
-<li>也许我们可以......</li>
-<li>你怎么看......</li>
-<li>一种方法可能是......</li>
-</ul>
-<h3>4. 数据支撑对比</h3>
-<p>🚫 “这个项目麻烦您老给我们多指点”  <br />
-✅ “我们发现，我们同客户每周都评审一轮设计稿时，他们往往对最终都比较满意；而对于现在这个项目，如果能在早期多确认一些事，可以帮助我们在某个方向上深入进展的时候，确保和目标是对齐的，并防止返工。”</p>
-<p>🚫 “团队需要更明确定个优先级”  <br />
-✅ “上个月当我们都专注于网站更新时，团队取得了大幅度进步；如果这个月，为团队制定一两个明确的重点事项，这样可以让每个人更加聚焦“</p>
-<p>🚫 “我们应该花更多时间培训新人员工”<br />
-✅ “记得Steve来的第一周，都在投入培训，他很快就跟上了速度。一点前期时间投入看上去得到了很好的回报，为我们的下一位员工采用类似的培训方法，帮助他们同样快速地提高。你觉得怎么样？</p>
-<p>作者推荐三个原则：</p>
-<ul>
-<li>以清晰、可操作的建议结束</li>
-<li>展示更新方法的好处</li>
-<li>保持简单、合乎逻辑和积极</li>
-</ul>
-<p>建议熟读英语的可以看看原文。作者还有一篇 <a href="https://newsletter.weskao.com/p/super-specific-feedback">如何给下属训话</a> 我觉得写得也挺好。</p>
-<p>翻HN的时候发现很惊人，大概意思是，如果你发现需要花言巧语(fluff up)才听得进去，那么高层已经烂透了，最好开始润色简历。。。。。好吧。作者这篇标题就叫在“不丢工作”的前提下如何向上反馈。都没错。人和人的信任在利益面前都很脆弱：职位低的担心自己，因为很有可能因为狗屁原因就莫名其妙丢了工作；职位高的最害怕丢脸，怕输给资历没自己老，职级比自己低的。陷入猜疑链了。highly effective communication 难呀。大多数评论是：<a href="https://www.manager-tools.com/2012/02/do-not-give-feedback-your-boss-hall-fame-guidance">不值得给老板提意见</a></p>
-<ul>
-<li>权力能量不对等</li>
-<li>过激对抗风险</li>
-<li>损坏关系</li>
-<li>工作没辣</li>
-<li>误会</li>
-<li>破坏汇报关系</li>
-<li>“开放”只是口号，说说而已</li>
-</ul>
-<p>🤣🤣🤣🤣</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-11-24T00:00:00+08:00">2024-11-24</time></p>
-<p>stdin</p>            </div>
           </article>
         </div>
 

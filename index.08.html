@@ -54,6 +54,30 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2022/stdin-19"  rel="bookmark" >
+              <h2 class="card-title">Twitter资助的 Bluesky项目</h2>
+            </a>
+            <p class="card-text"><p>发现一个有点好玩的东东 <a href="https://github.com/bluesky-social/atproto">ATP(Authenticated Transfer Protocol)协议</a>，是 ActivityPub 的竞品。ATP对应 blusky，AP 对应 Mastodon</p>
+<p>其中<a href="https://github.com/bluesky-social/atproto/issues/255#issuecomment-1287953987">维护者pfraze谈到为什么</a>要抛开 ActivityPub 单独搞一套协议：</p>
+<blockquote>
+<p>There are a lot of differing design decisions.</p>
+<p>Account portability is a major reason why we chose to build a separate protocol. Signed data repositories and DIDs are both unique to ATP and not terribly easy to retrofit into ActivityPub.</p>
+<p>There are smaller things as well: a different viewpoint about how schemas should be handled, a preference for domain usernames over AP’s double-@ email usernames, and the goal of having large scale search and discovery (rather than the hashtag style of discovery that AP favors).</p>
+<p>Meta:</p>
+<p>The AP community has always been somewhat suspicious of Bluesky, for reasons that are understandable. AP’s community is volunteer driven and the users joined to escape Twitter. So, here we come, a startup funded by Twitter, with strong opinions on how the tech should be done. I’ve heard concerns that we’d “embrace, extend, &amp; extinguish.” I’ve heard concerns that we’d force through changes that people don’t want by dint of being a funded company. You can criticize us for going a different direction but I think it’d have been a difficult collaboration if we chose to use AP, especially since we weren’t willing to compromise on some of the decisions above.</p>
+</blockquote>
+<p>其中ATP 支持直接用域名而不是 Mastodon 的双at <code>@someone@somesite.com</code> 的形式，我觉得非常好！</p>
+<p><a href="https://news.ycombinator.com/item?id=33737896">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2022-11-25T10:41:05+08:00">2022-11-25</time></p>
+<p>stdin</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2022/stderr-11"  rel="bookmark" >
               <h2 class="card-title">生命的苦恼</h2>
             </a>
@@ -820,58 +844,6 @@ Corporate Memphis</p>
 <p>想在这个提示里加一个 snooze 1分钟功能，但是好像无法支持。罢了。2333</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-07-20T14:52:56+08:00">2022-07-20</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2022/stdout-07"  rel="bookmark" >
-              <h2 class="card-title">终于吧 blog 的自动构建 pipeline 配置好了</h2>
-            </a>
-            <p class="card-text"><p>目前博客是基于 pelican 的 static-site generator，一个 python 模块本地渲染成静态文件然后通过 github pages 发布。</p>
-<p>源码放在 bitbucket，之前比较懒都是本地跑，一直想改成 CI/CD pipeline，今天终于配置好了。记录一些坑吧</p>
-<ol>
-<li>bitbucket pipeline 不同 step 之间数据是不共享的。本来想用 parallel 功能在下载 pip 模块和 git clone 皮肤做个并行，后来发现 artifact 拷贝速度还不如串行去跑。就所有操作一个 step 做完</li>
-<li>
-<p>博客源码和生成结果可以直接同步提交信息：    </p>
-<pre><code>msg=$(git log -1  --pretty=%B)
-cd output
-git config user.name est
-git config user.email 邮箱
-git add .
-git commit -m "$msg"
-git push
-</code></pre>
-<ol start="3">
-<li>
-<p>由于 pip 模块装了不知道在哪里，所以调试 pip 安装路径方法：    </p>
-<p><code>python -c 'import site; print(*site.getsitepackages(), sep="\n")'</code></p>
-</li>
-</ol>
-</li>
-<li>
-<p>pelican 默认居然没支持 Markdown 也是醉了    </p>
-<pre><code>python -m pip install pelican==4.8.0 Markdown
-</code></pre>
-<ol start="5">
-<li>
-<p>自定义皮肤依赖，由于 submodule 我没玩转，所以这样安装：    </p>
-<p>git clone --depth=1 git@github.com:est/aether-pelican.git || (cd aether-pelican; git pull --rebase)</p>
-</li>
-</ol>
-</li>
-</ol>
-<p>Bitbucket 每个月有50分钟的免费pipeline 时间，自己用下来差不多29秒 build &amp; publish 一次。感觉每个月也写不了60篇，所以目前是够了。</p>
-<p>接下来的优化：</p>
-<ol>
-<li>新图片通过 squoosh 压缩优化</li>
-<li>通过 cloudflare worker 替换掉 disqus 评论功能</li>
-</ol></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2022-07-19T19:06:49+08:00">2022-07-19</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

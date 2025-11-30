@@ -366,6 +366,41 @@ It had to be global because <code>concurrent.futures</code> only allows it this 
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2025/stdout-17"  rel="bookmark" >
+              <h2 class="card-title">OpenWRT p910nd适配兄弟打印机</h2>
+            </a>
+            <p class="card-text"><p>买了个兄弟牌(Brother)的打印机，热销基础款，听说他家的联网打印很烂，所以只有USB的。</p>
+<p>又买了个打印盒子，OpenWRT的，本来以为是 CUPS，结果一看 p910nd 好家伙。看了下这玩意纯粹是 tcp 直连 <code>/dev/usb/lp0</code> 。</p>
+<p>在 macOS 上配置陷入了迷茫，最后问ChatGPT给调通了居然。</p>
+<p>首先还是得下载官方驱动，然后添加 IP打印机</p>
+<ul>
+<li>Address 那里输入OpenWRT的 IP:9100 </li>
+<li>Protocol 这里注意，选 HP JetDirect。这里的意思为 AppSocket。</li>
+<li>最下面的 Use 选择驱动</li>
+</ul>
+<p>也就是说IPP, AirPrint，LPD这些协议都不行。</p>
+<p>然后试了下也失败，看了下默认USB双向通信，最好改成单向。OpenWRT上：</p>
+<pre><code># cat /etc/config/p910nd 
+config p910nd
+  option device        /dev/usb/lp0
+  option port          0
+  option bidirectional 0
+  option enabled       1
+</code></pre>
+<p>macOS上：</p>
+<p><code>lpadmin -p &lt;IP打印机名字&gt;  -o usb-no-bidi-default=true</code></p>
+<p>应该就行了。</p>
+<p>支持 Airprint 就下一步想办法了。安卓上的打印只能输入IP，不支持 9100端口，估计支持了也是白费力，还得 .ppd 之类的翻译一下。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2025-10-30T12:43:00+08:00">2025-10-30</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2025/stderr-07"  rel="bookmark" >
               <h2 class="card-title">特立独行的中文</h2>
             </a>
@@ -1101,49 +1136,6 @@ But finally, CBOR is fine! The implementations are good and it's widely used. Us
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2025-09-25T10:27:00+08:00">2025-09-25</time></p>
 <p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2025/stdout-08"  rel="bookmark" >
-              <h2 class="card-title">xHTML5</h2>
-            </a>
-            <p class="card-text"><p>有 ChatGPT学姿势就是快</p>
-<pre><code class="language-html">&lt;!DOCTYPE html [
-  &lt;!ENTITY myEntity &quot;Hello World&quot;&gt;
-  &lt;!ENTITY wow &quot;alert('hi')&quot;&gt;
-]&gt;
-&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
-&lt;body&gt;
-  &amp;myEntity;
-  &lt;script&gt;
-    &amp;wow;
-  &lt;/script&gt;
-
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<p>保存到本地 1.xhtml，双击浏览器打开。谁能想到这也行？xml entity 还可以这样玩？</p>
-<p>只要MIME为 <code>application/xhtml+xml</code> 就可以把HTML5当XML渲染。</p>
-<p>部署了个在线demo： <a href="https://lab.est.im/svg/entity.xhtml">https://lab.est.im/svg/entity.xhtml</a></p>
-<p>不敢相信自己眼睛，确认下是HTML5:</p>
-<ul>
-<li><code>document.compatMode</code> 返回 <code>CSS1Compat</code> 没问题</li>
-<li><code>ocument.doctype</code> 返回 <code>&lt;!DOCTYPE html&gt;</code> 没毛病</li>
-</ul>
-<p>如果是老的兼容模式：</p>
-<ul>
-<li><code>document.compatMode</code> 为 <code>BackCompat</code></li>
-<li><code>document.doctype.publicId</code> 为 <code>-//W3C//DTD HTML 4.01//EN</code></li>
-<li><code>document.doctype.systemId</code> 为 <code>http://www.w3.org/TR/html4/strict.dtd</code></li>
-</ul>
-<p>思路打开了。哈哈</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2025-09-15T00:12:00+08:00">2025-09-15</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 
