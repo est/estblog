@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Thu, 04 Dec 2025 17:19:00 +0800</lastBuildDate><item><title>AI吊牌</title><link>https://blog.est.im/2025/stdin-14</link><description>&lt;p&gt;AI厂家为了勾引你多消费token，每次回答都会在末尾问一句“客官，加钟不”。恰好联想到最近 &lt;a href="https://www.sohu.com/a/961228186_121284943"&gt;“巨型吊牌防退货”&lt;/a&gt; 很火。光鲜亮丽的的背后，是扭曲丑陋的灵魂。 所以起了这么个标题。&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Mon, 08 Dec 2025 15:20:00 +0800</lastBuildDate><item><title>获得自己在Google眼里的IP</title><link>https://blog.est.im/2025/stdout-18</link><description>&lt;p&gt;可能是最古老的问题，自己的IP是什么，网上这样的工具一大把，我自己甚至都&lt;a href="https://t.est.im/ip"&gt;搓了个&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;但是你访问 google 的ip，如果遇到网络配置很复杂，split tunnel 什么的，可能就麻烦了。&lt;/p&gt;
+&lt;h3&gt;Google&lt;/h3&gt;
+&lt;p&gt;搜了一圈，没想到 gemini 给的线索最有用。它提到可以&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;dig TXT +short @ns1.google.com o-o.myaddr.l.google.com&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;但是AI 毕竟笨了些，套个 DoH 不就可用了。&lt;/p&gt;
+&lt;p&gt;curl -s "https://dns.google/resolve?name=o-o.myaddr.l.google.com&amp;amp;type=TXT"&lt;br /&gt;
+{"Status":0,"TC":false,"RD":true,"RA":true,"AD":false,"CD":false,"Question":[{"name":"o-o.myaddr.l.google.com.","type":16}],"Answer":[{"name":"o-o.myaddr.l.google.com.","type":16,"TTL":60,"data":"edns0-client-subnet x.x.x.x/24"},{"name":"o-o.myaddr.l.google.com.","type":16,"TTL":60,"data":"74.114.31.154"}],"Comment":"Response from 216.239.38.10."}&lt;/p&gt;
+&lt;p&gt;网上关于google这个 trick 没有正式文档支持。我在&lt;a href="https://groups.google.com/g/public-dns-discuss/c/uyzmMcHQBE0/m/x7o-uUVQFAAJ"&gt;&lt;code&gt;public-dns-discuss&lt;/code&gt; 能搜到&lt;/a&gt; 最早 2015年一位叫 Shen Wan 的疑似google员工的问题排查方法。他原话&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;our name is "Google Public DNS", not "Open DNS"&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;所以应该和当年 8.8.8.8 推出有关。&lt;/p&gt;
+&lt;h3&gt;其它DNS&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;dig whoami.cloudflare ch txt @1.1.1.1 +short&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dig +short myip.opendns.com @resolver1.opendns.com&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dig whoami.akamai.net. @ns1-1.akamaitech.net. +short&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;aws&lt;/h3&gt;
+&lt;p&gt;然后顺便发现 https://checkip.amazonaws.com/ 有&lt;a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/get-set-up-for-amazon-ecs.html"&gt;官方文档&lt;/a&gt;说明&lt;/p&gt;
+&lt;h3&gt;cloudflare&lt;/h3&gt;
+&lt;p&gt;所有 cloudflare 都可以查 /cdn-cgi/trace 比如&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;https://www.cloudflare.com/cdn-cgi/trace&lt;/li&gt;
+&lt;li&gt;https://x.com/cdn-cgi/trace&lt;/li&gt;
+&lt;li&gt;https://chatgpt.com/cdn-cgi/trace&lt;/li&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Mon, 08 Dec 2025 15:20:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-12-08:/2025/stdout-18</guid><category>stdout</category></item><item><title>AI吊牌</title><link>https://blog.est.im/2025/stdin-14</link><description>&lt;p&gt;AI厂家为了勾引你多消费token，每次回答都会在末尾问一句“客官，加钟不”。恰好联想到最近 &lt;a href="https://www.sohu.com/a/961228186_121284943"&gt;“巨型吊牌防退货”&lt;/a&gt; 很火。光鲜亮丽的的背后，是扭曲丑陋的灵魂。 所以起了这么个标题。&lt;/p&gt;
 &lt;p&gt;&lt;img referrerpolicy="no-referrer" src="https://pbs.twimg.com/media/G7UBK_CbMAAqRL4?format=jpg&amp;name=large" /&gt;&lt;br /&gt;
 &lt;img referrerpolicy="no-referrer" src="https://pbs.twimg.com/media/G7UBQ8rakAAXi3d?format=jpg&amp;name=large" /&gt;&lt;br /&gt;
 &lt;img referrerpolicy="no-referrer" src="https://pbs.twimg.com/media/G7UBZ78awAE2Lgb?format=jpg&amp;name=large" /&gt;&lt;br /&gt;
@@ -772,17 +799,4 @@ It's a &lt;a href="https://issues.chromium.org/issues/40777458"&gt;Chromium thin
 &lt;p&gt;The AI wrote code using &lt;code&gt;os.path.walk&lt;/code&gt; and I changed it with &lt;code&gt;pathlib.Path&lt;/code&gt;, which was more pleasant with its &lt;code&gt;rglob&lt;/code&gt; method.&lt;/p&gt;
 &lt;p&gt;You can try it:&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;python ssd_warmup.py /path/to/fix/&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;The lesson learned: Don't buy Sandick or WestData. At least the low-end ones.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 09 Oct 2025 10:30:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-10-09:/2025/stdout-09</guid><category>stdout</category></item><item><title>CBOR 和 MsgPack 是一回事</title><link>https://blog.est.im/2025/stdin-09</link><description>&lt;p&gt;翻旧账的时候无意中&lt;a href="https://news.ycombinator.com/item?id=42664005"&gt;发现&lt;/a&gt;的。MessagePack的实现者 mdhb 说：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Disclaimer: I wrote and maintain a MessagePack implementation.&lt;br /&gt;
-CBOR is MessagePack. The story is that Carsten Bormann wanted to create an IETF standardized MP version, the creators asked him not to (after he acted in pretty bad faith), he forked off a version, added some very ill-advised tweaks, named it after himself, and submitted it anyway.&lt;br /&gt;
-I wrote this up years ago (https://news.ycombinator.com/item?id=14072598), and since then the only thing they've addressed is undefined behavior when a decoder encounters an unknown simple value.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;a href="https://news.ycombinator.com/item?id=43229259"&gt;以及&lt;/a&gt;：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;There's no reason an MP implementation has to be slower than a CBOR implementation. If a given library wanted to be very fast it could be. If anything, the fact that CBOR more or less requires you to allocate should put a ceiling on how fast it can really be. Or, put another way, benchmarks of dynamic language implementations of a serialization format aren't a high signal indication of its speed ceiling. If you use a dynamic language and speed is a concern to this degree, you'd write an adapter yourself, probably building on one of the low level implementations.&lt;br /&gt;
-That said, people are usually disappointed by MP's speed over JSON. A lot of engineering hours have gone into making JSON fast, to the point where I don't think it ever made sense to choose MP over it for speed reasons (there are other good reasons). Other posters here have pointed out that your metrics are usually dominated by something else.&lt;br /&gt;
-But finally, CBOR is fine! The implementations are good and it's widely used. Users of CBOR and MP alike will probably have very similar experiences unless you have a niche use case (on an embedded device that can't allocate, you really need bignums, etc).&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;看它又翻了一堆旧帐。。hmmmm。。。好吧。&lt;/p&gt;
-&lt;p&gt;最近在看 &lt;a href="https://atproto.com/specs/data-model"&gt;ATProto&lt;/a&gt; 发现它既可以 CBOR 也可以 JSON &lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 27 Sep 2025 20:01:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-09-27:/2025/stdin-09</guid><category>stdin</category></item></channel></rss>
+&lt;p&gt;The lesson learned: Don't buy Sandick or WestData. At least the low-end ones.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 09 Oct 2025 10:30:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-10-09:/2025/stdout-09</guid><category>stdout</category></item></channel></rss>

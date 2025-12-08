@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>获得自己在Google眼里的IP – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="获得自己在Google眼里的IP" />
+
+    <link rel="canonical" href="https://blog.est.im/2025/stdout-18" />
+    <meta property="og:url" content="https://blog.est.im/2025/stdout-18">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="获得自己在Google眼里的IP">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">获得自己在Google眼里的IP</h2>
+    <p class="post-date">Posted <time datetime="2025-12-08T15:20:00+08:00">2025-12-08</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>可能是最古老的问题，自己的IP是什么，网上这样的工具一大把，我自己甚至都<a href="https://t.est.im/ip">搓了个</a></p>
+<p>但是你访问 google 的ip，如果遇到网络配置很复杂，split tunnel 什么的，可能就麻烦了。</p>
+<h3>Google</h3>
+<p>搜了一圈，没想到 gemini 给的线索最有用。它提到可以</p>
+<p><code>dig TXT +short @ns1.google.com o-o.myaddr.l.google.com</code></p>
+<p>但是AI 毕竟笨了些，套个 DoH 不就可用了。</p>
+<p>curl -s "https://dns.google/resolve?name=o-o.myaddr.l.google.com&amp;type=TXT"<br />
+{"Status":0,"TC":false,"RD":true,"RA":true,"AD":false,"CD":false,"Question":[{"name":"o-o.myaddr.l.google.com.","type":16}],"Answer":[{"name":"o-o.myaddr.l.google.com.","type":16,"TTL":60,"data":"edns0-client-subnet x.x.x.x/24"},{"name":"o-o.myaddr.l.google.com.","type":16,"TTL":60,"data":"74.114.31.154"}],"Comment":"Response from 216.239.38.10."}</p>
+<p>网上关于google这个 trick 没有正式文档支持。我在<a href="https://groups.google.com/g/public-dns-discuss/c/uyzmMcHQBE0/m/x7o-uUVQFAAJ"><code>public-dns-discuss</code> 能搜到</a> 最早 2015年一位叫 Shen Wan 的疑似google员工的问题排查方法。他原话</p>
+<blockquote>
+<p>our name is "Google Public DNS", not "Open DNS"</p>
+</blockquote>
+<p>所以应该和当年 8.8.8.8 推出有关。</p>
+<h3>其它DNS</h3>
+<ul>
+<li><code>dig whoami.cloudflare ch txt @1.1.1.1 +short</code></li>
+<li><code>dig +short myip.opendns.com @resolver1.opendns.com</code></li>
+<li><code>dig whoami.akamai.net. @ns1-1.akamaitech.net. +short</code></li>
+</ul>
+<h3>aws</h3>
+<p>然后顺便发现 https://checkip.amazonaws.com/ 有<a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/get-set-up-for-amazon-ecs.html">官方文档</a>说明</p>
+<h3>cloudflare</h3>
+<p>所有 cloudflare 都可以查 /cdn-cgi/trace 比如</p>
+<ul>
+<li>https://www.cloudflare.com/cdn-cgi/trace</li>
+<li>https://x.com/cdn-cgi/trace</li>
+<li>https://chatgpt.com/cdn-cgi/trace</li>
+</ul>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

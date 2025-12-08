@@ -54,6 +54,47 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2025/stdout-18"  rel="bookmark" >
+              <h2 class="card-title">获得自己在Google眼里的IP</h2>
+            </a>
+            <p class="card-text"><p>可能是最古老的问题，自己的IP是什么，网上这样的工具一大把，我自己甚至都<a href="https://t.est.im/ip">搓了个</a></p>
+<p>但是你访问 google 的ip，如果遇到网络配置很复杂，split tunnel 什么的，可能就麻烦了。</p>
+<h3>Google</h3>
+<p>搜了一圈，没想到 gemini 给的线索最有用。它提到可以</p>
+<p><code>dig TXT +short @ns1.google.com o-o.myaddr.l.google.com</code></p>
+<p>但是AI 毕竟笨了些，套个 DoH 不就可用了。</p>
+<p>curl -s "https://dns.google/resolve?name=o-o.myaddr.l.google.com&amp;type=TXT"<br />
+{"Status":0,"TC":false,"RD":true,"RA":true,"AD":false,"CD":false,"Question":[{"name":"o-o.myaddr.l.google.com.","type":16}],"Answer":[{"name":"o-o.myaddr.l.google.com.","type":16,"TTL":60,"data":"edns0-client-subnet x.x.x.x/24"},{"name":"o-o.myaddr.l.google.com.","type":16,"TTL":60,"data":"74.114.31.154"}],"Comment":"Response from 216.239.38.10."}</p>
+<p>网上关于google这个 trick 没有正式文档支持。我在<a href="https://groups.google.com/g/public-dns-discuss/c/uyzmMcHQBE0/m/x7o-uUVQFAAJ"><code>public-dns-discuss</code> 能搜到</a> 最早 2015年一位叫 Shen Wan 的疑似google员工的问题排查方法。他原话</p>
+<blockquote>
+<p>our name is "Google Public DNS", not "Open DNS"</p>
+</blockquote>
+<p>所以应该和当年 8.8.8.8 推出有关。</p>
+<h3>其它DNS</h3>
+<ul>
+<li><code>dig whoami.cloudflare ch txt @1.1.1.1 +short</code></li>
+<li><code>dig +short myip.opendns.com @resolver1.opendns.com</code></li>
+<li><code>dig whoami.akamai.net. @ns1-1.akamaitech.net. +short</code></li>
+</ul>
+<h3>aws</h3>
+<p>然后顺便发现 https://checkip.amazonaws.com/ 有<a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/get-set-up-for-amazon-ecs.html">官方文档</a>说明</p>
+<h3>cloudflare</h3>
+<p>所有 cloudflare 都可以查 /cdn-cgi/trace 比如</p>
+<ul>
+<li>https://www.cloudflare.com/cdn-cgi/trace</li>
+<li>https://x.com/cdn-cgi/trace</li>
+<li>https://chatgpt.com/cdn-cgi/trace</li>
+</ul></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2025-12-08T15:20:00+08:00">2025-12-08</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2025/stdout-17"  rel="bookmark" >
               <h2 class="card-title">OpenWRT p910nd适配兄弟打印机</h2>
             </a>
@@ -3323,37 +3364,6 @@ async def api_stream(req: Request):
 <p>苦逼撸业务的一天又开始了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2023-11-02T09:44:12+08:00">2023-11-02</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2023/stdout-11"  rel="bookmark" >
-              <h2 class="card-title">浏览器拉起钉钉客户端并跳转OA工单</h2>
-            </a>
-            <p class="card-text"><p>又是 corporate software engineering 吃屎的一天。用户在内部系统走流程，厂里用的是钉钉自带的OA工单审批。已经接入了API创建、完成工单</p>
-<p>问题在于发起工单之后，用户并没有感知，不知道工单去哪里了，流程就断了，向钉钉官方售后发起咨询，对方丢了一句：不支持。无语</p>
-<p>只能自己鼓捣。已知工单链接，在钉钉聊天窗口内部的最短的网址为：</p>
-<pre><code>  https://aflow.dingtalk.com/dingtalk/mobile/homepage.htm?corpid=...&amp;procInstId=...#approval
-</code></pre>
-<p>对方丢了一个 <a href="https://open.dingtalk.com/document/isvapp/webapp-unified-routing-protocol#title-kkq-kgx-lbq">dingtalk:// 跳转协议</a></p>
-<p>反复尝试，发现一个很有用：</p>
-<blockquote>
-<p>桌面端打开URL <br />
-<code>dingtalk://dingtalkclient/page/link</code> <br />
-侧边栏： <code>pc_slide=true</code> <br />
-大容器（类似工作台容器）<code>ddtab=true</code>   </p>
-</blockquote>
-<p>于是构造一个试试：</p>
-<pre><code>  dingtalk://dingtalkclient/page/link?url=https%3A%2F%2Faflow.dingtalk.com%2Fdingtalk%2Fpc%2Fquery%2Fpchomepage.htm%3Fcorpid%3D...%26procInstId%3D...%23%2Fapproval
-</code></pre>
-<p>然后果然ok了。</p>
-<p>钉钉给人的感觉就是各个部门 hack 强行揉合起来一个怪物。各种不完善、不一致的问题。有空写一下吐槽。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2023-10-18T14:57:00+08:00">2023-10-18</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
