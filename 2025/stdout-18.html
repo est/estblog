@@ -58,13 +58,21 @@
 <p>搜了一圈，没想到 gemini 给的线索最有用。它提到可以</p>
 <p><code>dig TXT +short @ns1.google.com o-o.myaddr.l.google.com</code></p>
 <p>但是AI 毕竟笨了些，套个 DoH 不就可用了。</p>
-<p>curl -s "https://dns.google/resolve?name=o-o.myaddr.l.google.com&amp;type=TXT"<br />
-{"Status":0,"TC":false,"RD":true,"RA":true,"AD":false,"CD":false,"Question":[{"name":"o-o.myaddr.l.google.com.","type":16}],"Answer":[{"name":"o-o.myaddr.l.google.com.","type":16,"TTL":60,"data":"edns0-client-subnet x.x.x.x/24"},{"name":"o-o.myaddr.l.google.com.","type":16,"TTL":60,"data":"74.114.31.154"}],"Comment":"Response from 216.239.38.10."}</p>
+<pre><code>curl -s &quot;https://dns.google/resolve?name=o-o.myaddr.l.google.com&amp;type=TXT&quot;
+{&quot;Status&quot;:0,&quot;TC&quot;:false,&quot;RD&quot;:true,&quot;RA&quot;:true,&quot;AD&quot;:false,&quot;CD&quot;:false,&quot;Question&quot;:[{&quot;name&quot;:&quot;o-o.myaddr.l.google.com.&quot;,&quot;type&quot;:16}],&quot;Answer&quot;:[{&quot;name&quot;:&quot;o-o.myaddr.l.google.com.&quot;,&quot;type&quot;:16,&quot;TTL&quot;:60,&quot;data&quot;:&quot;edns0-client-subnet x.x.x.x/24&quot;},{&quot;name&quot;:&quot;o-o.myaddr.l.google.com.&quot;,&quot;type&quot;:16,&quot;TTL&quot;:60,&quot;data&quot;:&quot;74.114.31.154&quot;}],&quot;Comment&quot;:&quot;Response from 216.239.38.10.&quot;}
+</code></pre>
+<p>返回里的 edns0-client-subnet 就是C类网址。不够精确但是够用。</p>
+<p>curl -6 可以获得 ipv6 </p>
+<p>如果 dns.google 不够好，可以换 dns.google.com </p>
+<p><code>curl "https://dns.google.com/resolve?type=TXT&amp;name=o-o.myaddr.l.google.com"</code></p>
 <p>网上关于google这个 trick 没有正式文档支持。我在<a href="https://groups.google.com/g/public-dns-discuss/c/uyzmMcHQBE0/m/x7o-uUVQFAAJ"><code>public-dns-discuss</code> 能搜到</a> 最早 2015年一位叫 Shen Wan 的疑似google员工的问题排查方法。他原话</p>
 <blockquote>
 <p>our name is "Google Public DNS", not "Open DNS"</p>
 </blockquote>
 <p>所以应该和当年 8.8.8.8 推出有关。</p>
+<h3>Gmail 登录历史</h3>
+<p><a href="https://v2ex.com/t/1177588">V站</a> 还有一个偏方说 Gmail 把邮件滚动到底部有个 Last account activity ，点开也有IP。</p>
+<p>但是需要登录，而且网址里有个 <code>ik</code> 的参数猜不出规律。</p>
 <h3>其它DNS</h3>
 <ul>
 <li><code>dig whoami.cloudflare ch txt @1.1.1.1 +short</code></li>

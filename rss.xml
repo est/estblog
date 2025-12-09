@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Mon, 08 Dec 2025 15:20:00 +0800</lastBuildDate><item><title>获得自己在Google眼里的IP</title><link>https://blog.est.im/2025/stdout-18</link><description>&lt;p&gt;可能是最古老的问题，自己的IP是什么，网上这样的工具一大把，我自己甚至都&lt;a href="https://t.est.im/ip"&gt;搓了个&lt;/a&gt;&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 09 Dec 2025 02:18:58 +0800</lastBuildDate><item><title>获得自己在Google眼里的IP</title><link>https://blog.est.im/2025/stdout-18</link><description>&lt;p&gt;可能是最古老的问题，自己的IP是什么，网上这样的工具一大把，我自己甚至都&lt;a href="https://t.est.im/ip"&gt;搓了个&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;但是你访问 google 的ip，如果遇到网络配置很复杂，split tunnel 什么的，可能就麻烦了。&lt;/p&gt;
 &lt;h3&gt;Google&lt;/h3&gt;
 &lt;p&gt;搜了一圈，没想到 gemini 给的线索最有用。它提到可以&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;dig TXT +short @ns1.google.com o-o.myaddr.l.google.com&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;但是AI 毕竟笨了些，套个 DoH 不就可用了。&lt;/p&gt;
-&lt;p&gt;curl -s "https://dns.google/resolve?name=o-o.myaddr.l.google.com&amp;amp;type=TXT"&lt;br /&gt;
-{"Status":0,"TC":false,"RD":true,"RA":true,"AD":false,"CD":false,"Question":[{"name":"o-o.myaddr.l.google.com.","type":16}],"Answer":[{"name":"o-o.myaddr.l.google.com.","type":16,"TTL":60,"data":"edns0-client-subnet x.x.x.x/24"},{"name":"o-o.myaddr.l.google.com.","type":16,"TTL":60,"data":"74.114.31.154"}],"Comment":"Response from 216.239.38.10."}&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;curl -s &amp;quot;https://dns.google/resolve?name=o-o.myaddr.l.google.com&amp;amp;type=TXT&amp;quot;
+{&amp;quot;Status&amp;quot;:0,&amp;quot;TC&amp;quot;:false,&amp;quot;RD&amp;quot;:true,&amp;quot;RA&amp;quot;:true,&amp;quot;AD&amp;quot;:false,&amp;quot;CD&amp;quot;:false,&amp;quot;Question&amp;quot;:[{&amp;quot;name&amp;quot;:&amp;quot;o-o.myaddr.l.google.com.&amp;quot;,&amp;quot;type&amp;quot;:16}],&amp;quot;Answer&amp;quot;:[{&amp;quot;name&amp;quot;:&amp;quot;o-o.myaddr.l.google.com.&amp;quot;,&amp;quot;type&amp;quot;:16,&amp;quot;TTL&amp;quot;:60,&amp;quot;data&amp;quot;:&amp;quot;edns0-client-subnet x.x.x.x/24&amp;quot;},{&amp;quot;name&amp;quot;:&amp;quot;o-o.myaddr.l.google.com.&amp;quot;,&amp;quot;type&amp;quot;:16,&amp;quot;TTL&amp;quot;:60,&amp;quot;data&amp;quot;:&amp;quot;74.114.31.154&amp;quot;}],&amp;quot;Comment&amp;quot;:&amp;quot;Response from 216.239.38.10.&amp;quot;}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;返回里的 edns0-client-subnet 就是C类网址。不够精确但是够用。&lt;/p&gt;
+&lt;p&gt;curl -6 可以获得 ipv6 &lt;/p&gt;
+&lt;p&gt;如果 dns.google 不够好，可以换 dns.google.com &lt;/p&gt;
+&lt;p&gt;&lt;code&gt;curl "https://dns.google.com/resolve?type=TXT&amp;amp;name=o-o.myaddr.l.google.com"&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;网上关于google这个 trick 没有正式文档支持。我在&lt;a href="https://groups.google.com/g/public-dns-discuss/c/uyzmMcHQBE0/m/x7o-uUVQFAAJ"&gt;&lt;code&gt;public-dns-discuss&lt;/code&gt; 能搜到&lt;/a&gt; 最早 2015年一位叫 Shen Wan 的疑似google员工的问题排查方法。他原话&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;our name is "Google Public DNS", not "Open DNS"&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;所以应该和当年 8.8.8.8 推出有关。&lt;/p&gt;
+&lt;h3&gt;Gmail 登录历史&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://v2ex.com/t/1177588"&gt;V站&lt;/a&gt; 还有一个偏方说 Gmail 把邮件滚动到底部有个 Last account activity ，点开也有IP。&lt;/p&gt;
+&lt;p&gt;但是需要登录，而且网址里有个 &lt;code&gt;ik&lt;/code&gt; 的参数猜不出规律。&lt;/p&gt;
 &lt;h3&gt;其它DNS&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;dig whoami.cloudflare ch txt @1.1.1.1 +short&lt;/code&gt;&lt;/li&gt;
