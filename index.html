@@ -54,6 +54,44 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stderr-01"  rel="bookmark" >
+              <h2 class="card-title">LLM的弱点——不能很好的讲笑话？</h2>
+            </a>
+            <p class="card-text"><p>元旦节长途旅行，无聊，我问娃，AI的弱点是什么？答：没有嗅觉，这个的确是物理限制，我之前吹的。哈哈哈。AI has no taste 🤣</p>
+<p>这一路为了打法无聊时光，下载安装了个豆包闲聊。娃很喜欢猜历史人物。我发现一个规律，豆包似乎在缩小3、4次范围之后，就会进入 “你想的是不是XXX” 这种点菜名儿模式，而不是想办法进一步缩小范围。</p>
+<p>这种模式如果是猜常见人物，那么特别准。如果是猜冷门、模糊的的，就容易 miss。</p>
+<p>AI这种 hit or miss，让我不禁联系到不知道哪里看到过一个大佬的说法，现阶段LLM有个弱点，训练的时候给 next token “回答正确” 的单一结果给的权重太高，比如让AI讲一个 joke，它便老是翻来覆去讲那一个最擅长最经典的，就像是背题背出幻觉了。</p>
+<p>不能很好的讲笑话，难道是LLM的终极弱点？</p>
+<p>让真人马上讲个笑话，如果一时半会儿想不到好的joke，会随便找个现成的凑数。AI我试了 gemini，chatgpt，deepseek都很烂。不好笑。或许是有的笑话是英语硬翻译过来丢了东西，也可能是我没接触到更好的AI，或者我 prompt 不会写，甚至SOTA已经解决了这个问题？</p>
+<p>如果没解决，我们是不是可以说，LLM往往对于有明确答案的东西能一发入魂；对于有多个能接受答案的东西明显变化度不足，甚至给个很差的答案。</p>
+<p>我也不知道这是为什么。但是反之 LLM 可以很到位的解释 joke 的笑点在哪里，它不能搜集这些经典笑话然后下一次需要用到的时候复述一遍。或许 transformer 就不是拿来干这个的，毕竟它是 decoder-only的。是不是应该交给RAG做这个事？</p>
+<p>我感觉现在的 reasoning 模型把这个问题变得更严重了。推理的时候想得太多。 Reinforcement Learning from Verifiable Rewards (RLVR) 是不是导致轻松愉快随便讲个笑话变得更痛苦严肃？</p>
+<p>或许 joke 这事本来就是逆智的东西。弱智吧的笑话是最让我想笑的。AI聪明过头了找不到好笑的，随便打发个回答。</p>
+<p>有研究甚至说 <a href="https://arxiv.org/abs/2509.12158">AI 压根不懂 pun</a>。比如 </p>
+<blockquote>
+<p>I used to be a comedian, but my life became a joke</p>
+</blockquote>
+<p>把最后的 joke 换成 chaotic，AI依然觉得好笑。哈哈，这是词向量近似了吧 🤣</p>
+<p>还有人说AI讲不好笑话是因为，<a href="https://danfabulich.medium.com/llms-tell-bad-jokes-because-they-avoid-surprises-7f111aac4f96">AI会刻意避免意外、惊喜行为</a>。作者说笑话的本质是一个不对劲的东西，然后回头看有搞怪的地方——a joke is surprising, but inevitable in hindsight。如果回头看没看明白，那么就是个烂梗。如果一个人看了太多梗，那么TA笑点就很高，作者以此推断出，没有“最牛笑话”。笑话总是在没见过的人眼里最好笑。AI的训练就陷入怪圈：训练得越多，什么笑话都见过了，越不好笑，笑点就越奇怪。这个问题不是加大训练力度能解决的。作者同时推断，这也是AI没法编一个好的故事情节的原因。</p>
+<p>对于这个说法，<a href="https://news.ycombinator.com/item?id=44932170">HN有评论</a> 说 Daniel Dennett 有本讲《Inside Jokes》书，幽默是心灵的逆向工程。</p>
+<blockquote>
+<p>humor depends on errors in reasoning and the punchline causes you to reevaluate your reasoning and discover your error. Humor evolved to be enjoyable to encourage the discovery of errors.</p>
+</blockquote>
+<p>这个说法感觉有点特别倾向老外式的 joke。比如 “程序员为什么老是搞混万圣节和圣诞节？因为 Oct 31 == Dec 25” 这类，我感觉更多的是 幽默。国内的笑话我感觉更无限逼近“地狱笑话”那种段子，要么是看别人倒霉，或者是屎尿系列的 butt joke 。</p>
+<hr />
+<p>除了讲笑话的问题，还有最老生常谈的LLM幻觉问题。猜成语我想了个冷门的「投杼逾墙」，AI懵逼。btw 这个成语也是 也是卢格杜努姆的奥古斯丁 这个up主之前某一期爆的典。</p>
+<p>然后又看到 <a href="https://mp.weixin.qq.com/s/k147AyWj01W-V7IpkV0g2A">Steve Yegge 的访谈</a>。的确现在 agent 生产会导致人和人的差距越来越大。我在想LLM似乎就很适合编程这种有规律可循，答案又很确定，很多写法都是 there should be one– and preferably only one –obvious way to do it，太适合 LLM 了。</p>
+<p>新年第一天，杂七杂八胡思乱想一篇。看了眼已经 01:37 了 😂</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-01-01T23:57:00+08:00">2026-01-01</time></p>
+<p>stderr</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2025/stderr-14"  rel="bookmark" >
               <h2 class="card-title">礼教的核心议题是——认爹</h2>
             </a>
@@ -1362,57 +1400,6 @@ Yield</p>
 <p>累了，毁灭吧。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2025-10-22T21:21:00+08:00">2025-10-22</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2025/stdout-12"  rel="bookmark" >
-              <h2 class="card-title">搓了个在线词典（半成品）</h2>
-            </a>
-            <p class="card-text"><p>看到网上很多人都在用AI干大活儿了，我也开始搓了，vibe coding对我这种人菜瘾大的人很友好，自己懒得写就交给AI写。</p>
-<p><a href="https://github.com/est/def.est.im/commits/master/?until=2013-02-01">13年前</a>就有一个想法，做一个在线词典。那个时候还打算白嫖 RedHat 免费的OpenShift。</p>
-<p>为什么要做在线词典呢？当时是眼红 Google Dictionary 觉得它什么都好。但就是需要翻墙，而且有一定几率查不出来，所以想做个镜像把它常用词都拉下来存起来。</p>
-<p>当然这个想法无可争议的烂尾了。</p>
-<p>一直到2023年，ChatGPT出来之后，发现大语言模型这玩意外语天才啊，用来写词典再好不过了。</p>
-<p>说起来，英语的 Dictionary 实际出现时间很晚，比《永乐大典》都晚了它妈的至少200多年，因为英语作为一个拼音语言书写统一（正字法）都是很近代的时候才被行政力量推行的。英语在大部分时间里都是被日耳曼蛮子和高卢蛮子看不起的一个小岛口音。</p>
-<p>英语词典的发明，是作为乡绅和学者随手一查拿来装逼的，并不是给初学者、外语学习者、特别是中文背景的ESL学生设计的</p>
-<p>词典被当成「语法翻译法」的核心工具，其根本原因是印欧语系的语法、词源都能找到共通的联系。而这一套工具本来是贵族用来训练自己的继承子女去学习古希腊语和拉丁语用的。</p>
-<p>当讲汉话写中文背景的家长、老师给娃讲英语的时候，就会遇到各种困难或者犯各种啼笑皆非的笑话。</p>
-<p>所以想起来通过 ChatGPT 和类似技术做一套「英语」。当时我列举的愿景有：</p>
-<ul>
-<li>这个词语用得多不多，是不是很偏门、冷门还是常用词、热词、必背词、高频词</li>
-<li>最典型的场景下，具体放在句子的哪个地方</li>
-<li>什么时候出现的这个词语，最早什么意思，又因为什么渊源演变成了现在的别的意思</li>
-<li>是不是用这个词汇是骂人的、得罪某个群体的，是否需要忌讳</li>
-<li>完整列举出所有 conjugation 和 declension 并且阐述和说明，突出的就是一个屈折语的诘屈聱牙。</li>
-<li>不拘泥于单个「词」，固定搭配组合也直接当成单词收录用于记忆。</li>
-</ul>
-<p>特别是第五点，过去的词典因为印刷和编辑成本很少这样做，现在电子产品完全有能力生成和遍历所有排列组合。</p>
-<p>突破「词典」的固有形态，做一个「英语」的说明书</p>
-<p>开始搓这个词典，我也看了下其他在线词典的问题：</p>
-<ul>
-<li>Oxford English Dictionary 收费。滚</li>
-<li>merriam-webster 用高级词汇解释简单词汇。需要thesaurus和dictionary合并到一个界面</li>
-<li>cambridge 可以，就是排版字体略乱</li>
-<li>collins 最适合</li>
-<li>onelook 需要点两下</li>
-<li>websters1913 最美。适合凭感觉学习。抛开一切语法和构词造句，纯粹体会词义之妙以及如何运用</li>
-<li>wordreference 最简单明了。比如 inspire [sb] == awaken [sb]'s creative ideas 比一个 [T] (transitive) 符号更容易理解得多</li>
-</ul>
-<p>搓的时候也陆陆续续解决了一些始料未及的问题：</p>
-<ol>
-<li>LLM中转站选哪家？openrouter 其实贵和卡</li>
-<li>很多LLM中转站连 CORS 问题都懒得处理。每次请求其实都要 preflight 一下。你明明加一个 Access-Control-Allow-Origin 就解决大问题</li>
-</ol>
-<p>本来想一个静态页面 .html 放在 Github Pages 万事，结果搓了一套mini后端。</p>
-<p>最后成果放在 <a href="https://def.est.im/">https://def.est.im/</a> 。还有很多待完善。当前版本我满意的就是在单独的释义下面放了 同义词 反义词，比混在一起方便清晰得多。</p>
-<p>以前纸质的词典把大段意思混杂在一起排版，各种缩写代码人看了都头大，Web时代就应该有更清晰的排版。（虽然我现在的排版也很欠缺）</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2025-10-18T21:47:00+08:00">2025-10-18</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
