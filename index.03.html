@@ -231,6 +231,44 @@ Yes! January 29, 2025, falls on Lunar New Year’s Eve, which is the day before 
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2025/stderr-15"  rel="bookmark" >
+              <h2 class="card-title">LLM的弱点——不能很好的讲笑话？</h2>
+            </a>
+            <p class="card-text"><p>元旦节长途旅行，无聊，我问娃，AI的弱点是什么？答：没有嗅觉，这个的确是物理限制，我之前吹的。哈哈哈。AI has no taste 🤣</p>
+<p>这一路为了打法无聊时光，下载安装了个豆包闲聊。娃很喜欢猜历史人物。我发现一个规律，豆包似乎在缩小3、4次范围之后，就会进入 “你想的是不是XXX” 这种点菜名儿模式，而不是想办法进一步缩小范围。</p>
+<p>这种模式如果是猜常见人物，那么特别准。如果是猜冷门、模糊的的，就容易 miss。</p>
+<p>AI这种 hit or miss，让我不禁联系到不知道哪里看到过一个大佬的说法，现阶段LLM有个弱点，训练的时候给 next token “回答正确” 的单一结果给的权重太高，比如让AI讲一个 joke，它便老是翻来覆去讲那一个最擅长最经典的，就像是背题背出幻觉了。</p>
+<p>不能很好的讲笑话，难道是LLM的终极弱点？</p>
+<p>让真人马上讲个笑话，如果一时半会儿想不到好的joke，会随便找个现成的凑数。AI我试了 gemini，chatgpt，deepseek都很烂。不好笑。或许是有的笑话是英语硬翻译过来丢了东西，也可能是我没接触到更好的AI，或者我 prompt 不会写，甚至SOTA已经解决了这个问题？</p>
+<p>如果没解决，我们是不是可以说，LLM往往对于有明确答案的东西能一发入魂；对于有多个能接受答案的东西明显变化度不足，甚至给个很差的答案。</p>
+<p>我也不知道这是为什么。但是反之 LLM 可以很到位的解释 joke 的笑点在哪里，它不能搜集这些经典笑话然后下一次需要用到的时候复述一遍。或许 transformer 就不是拿来干这个的，毕竟它是 decoder-only的。是不是应该交给RAG做这个事？</p>
+<p>我感觉现在的 reasoning 模型把这个问题变得更严重了。推理的时候想得太多。 Reinforcement Learning from Verifiable Rewards (RLVR) 是不是导致轻松愉快随便讲个笑话变得更痛苦严肃？</p>
+<p>或许 joke 这事本来就是逆智的东西。弱智吧的笑话是最让我想笑的。AI聪明过头了找不到好笑的，随便打发个回答。</p>
+<p>有研究甚至说 <a href="https://arxiv.org/abs/2509.12158">AI 压根不懂 pun</a>。比如 </p>
+<blockquote>
+<p>I used to be a comedian, but my life became a joke</p>
+</blockquote>
+<p>把最后的 joke 换成 chaotic，AI依然觉得好笑。哈哈，这是词向量近似了吧 🤣</p>
+<p>还有人说AI讲不好笑话是因为，<a href="https://danfabulich.medium.com/llms-tell-bad-jokes-because-they-avoid-surprises-7f111aac4f96">AI会刻意避免意外、惊喜行为</a>。作者说笑话的本质是一个不对劲的东西，然后回头看有搞怪的地方——a joke is surprising, but inevitable in hindsight。如果回头看没看明白，那么就是个烂梗。如果一个人看了太多梗，那么TA笑点就很高，作者以此推断出，没有“最牛笑话”。笑话总是在没见过的人眼里最好笑。AI的训练就陷入怪圈：训练得越多，什么笑话都见过了，越不好笑，笑点就越奇怪。这个问题不是加大训练力度能解决的。作者同时推断，这也是AI没法编一个好的故事情节的原因。</p>
+<p>对于这个说法，<a href="https://news.ycombinator.com/item?id=44932170">HN有评论</a> 说 Daniel Dennett 有本讲《Inside Jokes》书，幽默是心灵的逆向工程。</p>
+<blockquote>
+<p>humor depends on errors in reasoning and the punchline causes you to reevaluate your reasoning and discover your error. Humor evolved to be enjoyable to encourage the discovery of errors.</p>
+</blockquote>
+<p>这个说法感觉有点特别倾向老外式的 joke。比如 “程序员为什么老是搞混万圣节和圣诞节？因为 Oct 31 == Dec 25” 这类，我感觉更多的是 幽默。国内的笑话我感觉更无限逼近“地狱笑话”那种段子，要么是看别人倒霉，或者是屎尿系列的 butt joke 。</p>
+<hr />
+<p>除了讲笑话的问题，还有最老生常谈的LLM幻觉问题。猜成语我想了个冷门的「投杼逾墙」，AI懵逼。btw 这个成语也是 也是卢格杜努姆的奥古斯丁 这个up主之前某一期爆的典。</p>
+<p>然后又看到 <a href="https://mp.weixin.qq.com/s/k147AyWj01W-V7IpkV0g2A">Steve Yegge 的访谈</a>。的确现在 agent 生产会导致人和人的差距越来越大。我在想LLM似乎就很适合编程这种有规律可循，答案又很确定，很多写法都是 there should be one– and preferably only one –obvious way to do it，太适合 LLM 了。</p>
+<p>杂七杂八凑一篇。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2025-01-01T23:57:00+08:00">2025-01-01</time></p>
+<p>stderr</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stdout-06"  rel="bookmark" >
               <h2 class="card-title">Little known facts about Han</h2>
             </a>
@@ -952,44 +990,6 @@ make install
 <p>And it's done. All thanks to authors for open source project and butter-smooth build scripts.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-09-28T10:05:00+08:00">2024-09-28</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2024/stdout-19"  rel="bookmark" >
-              <h2 class="card-title">精准 javascript 节拍器</h2>
-            </a>
-            <p class="card-text"><p>娃学琴，节奏感糊成一坨了。老师让抖腿打节拍，显然不work。码农特有的穷B气质让我舍不得买个实体的；去找个节拍器app，结果各大市场都是各种广告，怕给娃用不正经；甚至找了很多公众号版的，小程序版的，网页版的，普遍都是各种跳转诱导点击。</p>
-<p>失望之余，想起来上次<a href="https://blog.est.im/2022/stdout-10">JS播放DTMF</a>对 WebAudio 有点感觉，要不这次自己干脆再手搓一个。<a href="https://news.ycombinator.com/item?id=20935492">调研</a>了一圈发现这玩意没那么容易，主要就是javascript在浏览器里 <code>setInterval</code> 是有时间抖动（jitter）的，不能保证节奏精确。下面的图<a href="https://meowni.ca/posts/metronomes/">来自 Monica Dinculescu</a></p>
-<p><img alt="" src="https://meowni.ca/images/metronomes/2.png" /></p>
-<p>即便采用了 <code>requestAnimationFrame</code> 也不行</p>
-<p><img alt="" src="https://meowni.ca/images/metronomes/3.png" /></p>
-<p>因为js的执行无论如何trick，本质都是在只有一个主线程的单线程。如何才能做到精准采样打节拍呢？连续精心编排 AudioContext 时间轴！因为音频播放是系统调度跟js无关</p>
-<p>搜了一圈发现一位叫 <a href="https://grantjam.es/creating-a-simple-metronome-using-javascript-and-the-web-audio-api/">Grant James 已经写好</a>放在 <a href="https://github.com/grantjames/metronome">github</a> 了。那还等什么直接拿来～～针对性下列需求改了一番</p>
-<ol>
-<li>无广告</li>
-<li>去掉 .js .css 依赖，单文件更快</li>
-<li>精简不必要的代码结构，方便以后魔改</li>
-</ol>
-<p>改完之后发现两三个坑也跟着一起修补了：</p>
-<ol>
-<li>用 <code>wakeLock</code> 防止手机上使用息屏</li>
-<li>突破固定的4拍子，加上可以增减的节拍控制</li>
-<li>增减按钮禁止调到小于 0</li>
-</ol>
-<p>最后成果就放在 <a href="https://lab.est.im/metronome/">https://lab.est.im/metronome/</a> 这里了。有需要的拿去用。协议 <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="license noopener noreferrer" style="display:inline-flex;">CC BY-NC 4.0<img style="height:1em!important;margin:auto 2px auto 2px;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"><img style="height:1em!important;margin:auto 2px auto 2px;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg"><img style="height:1em!important;margin:auto 2px auto 2px;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg"></a></p>
-<p>20240929更新：</p>
-<ol>
-<li>支持了长按按钮一直增加减少 bpm</li>
-<li>禁止长按出现菜单</li>
-<li>禁止双击缩放</li>
-</ol></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-09-26T22:52:00+08:00">2024-09-26</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

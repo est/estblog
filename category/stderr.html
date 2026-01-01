@@ -834,6 +834,44 @@ OKR确保你命中目标，至于是不是重要目标就不得而知了</p>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2025/stderr-15"  rel="bookmark" >
+              <h2 class="card-title">LLM的弱点——不能很好的讲笑话？</h2>
+            </a>
+            <p class="card-text"><p>元旦节长途旅行，无聊，我问娃，AI的弱点是什么？答：没有嗅觉，这个的确是物理限制，我之前吹的。哈哈哈。AI has no taste 🤣</p>
+<p>这一路为了打法无聊时光，下载安装了个豆包闲聊。娃很喜欢猜历史人物。我发现一个规律，豆包似乎在缩小3、4次范围之后，就会进入 “你想的是不是XXX” 这种点菜名儿模式，而不是想办法进一步缩小范围。</p>
+<p>这种模式如果是猜常见人物，那么特别准。如果是猜冷门、模糊的的，就容易 miss。</p>
+<p>AI这种 hit or miss，让我不禁联系到不知道哪里看到过一个大佬的说法，现阶段LLM有个弱点，训练的时候给 next token “回答正确” 的单一结果给的权重太高，比如让AI讲一个 joke，它便老是翻来覆去讲那一个最擅长最经典的，就像是背题背出幻觉了。</p>
+<p>不能很好的讲笑话，难道是LLM的终极弱点？</p>
+<p>让真人马上讲个笑话，如果一时半会儿想不到好的joke，会随便找个现成的凑数。AI我试了 gemini，chatgpt，deepseek都很烂。不好笑。或许是有的笑话是英语硬翻译过来丢了东西，也可能是我没接触到更好的AI，或者我 prompt 不会写，甚至SOTA已经解决了这个问题？</p>
+<p>如果没解决，我们是不是可以说，LLM往往对于有明确答案的东西能一发入魂；对于有多个能接受答案的东西明显变化度不足，甚至给个很差的答案。</p>
+<p>我也不知道这是为什么。但是反之 LLM 可以很到位的解释 joke 的笑点在哪里，它不能搜集这些经典笑话然后下一次需要用到的时候复述一遍。或许 transformer 就不是拿来干这个的，毕竟它是 decoder-only的。是不是应该交给RAG做这个事？</p>
+<p>我感觉现在的 reasoning 模型把这个问题变得更严重了。推理的时候想得太多。 Reinforcement Learning from Verifiable Rewards (RLVR) 是不是导致轻松愉快随便讲个笑话变得更痛苦严肃？</p>
+<p>或许 joke 这事本来就是逆智的东西。弱智吧的笑话是最让我想笑的。AI聪明过头了找不到好笑的，随便打发个回答。</p>
+<p>有研究甚至说 <a href="https://arxiv.org/abs/2509.12158">AI 压根不懂 pun</a>。比如 </p>
+<blockquote>
+<p>I used to be a comedian, but my life became a joke</p>
+</blockquote>
+<p>把最后的 joke 换成 chaotic，AI依然觉得好笑。哈哈，这是词向量近似了吧 🤣</p>
+<p>还有人说AI讲不好笑话是因为，<a href="https://danfabulich.medium.com/llms-tell-bad-jokes-because-they-avoid-surprises-7f111aac4f96">AI会刻意避免意外、惊喜行为</a>。作者说笑话的本质是一个不对劲的东西，然后回头看有搞怪的地方——a joke is surprising, but inevitable in hindsight。如果回头看没看明白，那么就是个烂梗。如果一个人看了太多梗，那么TA笑点就很高，作者以此推断出，没有“最牛笑话”。笑话总是在没见过的人眼里最好笑。AI的训练就陷入怪圈：训练得越多，什么笑话都见过了，越不好笑，笑点就越奇怪。这个问题不是加大训练力度能解决的。作者同时推断，这也是AI没法编一个好的故事情节的原因。</p>
+<p>对于这个说法，<a href="https://news.ycombinator.com/item?id=44932170">HN有评论</a> 说 Daniel Dennett 有本讲《Inside Jokes》书，幽默是心灵的逆向工程。</p>
+<blockquote>
+<p>humor depends on errors in reasoning and the punchline causes you to reevaluate your reasoning and discover your error. Humor evolved to be enjoyable to encourage the discovery of errors.</p>
+</blockquote>
+<p>这个说法感觉有点特别倾向老外式的 joke。比如 “程序员为什么老是搞混万圣节和圣诞节？因为 Oct 31 == Dec 25” 这类，我感觉更多的是 幽默。国内的笑话我感觉更无限逼近“地狱笑话”那种段子，要么是看别人倒霉，或者是屎尿系列的 butt joke 。</p>
+<hr />
+<p>除了讲笑话的问题，还有最老生常谈的LLM幻觉问题。猜成语我想了个冷门的「投杼逾墙」，AI懵逼。btw 这个成语也是 也是卢格杜努姆的奥古斯丁 这个up主之前某一期爆的典。</p>
+<p>然后又看到 <a href="https://mp.weixin.qq.com/s/k147AyWj01W-V7IpkV0g2A">Steve Yegge 的访谈</a>。的确现在 agent 生产会导致人和人的差距越来越大。我在想LLM似乎就很适合编程这种有规律可循，答案又很确定，很多写法都是 there should be one– and preferably only one –obvious way to do it，太适合 LLM 了。</p>
+<p>杂七杂八凑一篇。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2025-01-01T23:57:00+08:00">2025-01-01</time></p>
+<p>stderr</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2024/stderr-16"  rel="bookmark" >
               <h2 class="card-title">ATProto之言论 自由和触达的分离</h2>
             </a>
@@ -2054,59 +2092,6 @@ Social scientists have identified at least three major forces that collectively 
 <p>而人的智商发育是缓慢的。人的情绪和直觉是几乎实时的系统，而且是一个简化版的应激反应，在一个容量有限的寄存器上处理数据；人的理性是缓慢的 IO，需要综合各种因素随机读写才能 <em>事后</em> 做出判断。有太多的时候我们被眼前五花八门的带节奏冲昏了头脑。而且洗稿和内容水军机构又可以无限制的滥发内容，超额的天量让信息通货膨胀。由于人脑 buffer 的有限，所以强化一个谎言和错误认识最简单的办法就是重复，直到大脑溢出。。。。2333 </p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-04-13T14:51:33+08:00">2022-04-13</time></p>
-<p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2022/stderr-03"  rel="bookmark" >
-              <h2 class="card-title">4则关于 秩序 的段子</h2>
-            </a>
-            <p class="card-text"><h3>迦南讲经</h3>
-<p>第一个段子找不到了。好像说是如来佛让迦南去讲经，迦南出门的时候拿错了经书，结果到现场一看是一本无字经。于是就在现场傻站了2个小时。佛祖最后不仅没有责怪迦南，还赞扬了他。说经虽然没讲，但是守了按字讲经的规矩。</p>
-<h3>阳虎出逃</h3>
-<blockquote>
-<p>当年鲁国内乱，阳虎出逃，有个好心的看门人防他出城，他反手把看门人刺伤之后逃走了。后来所有的看门人都被惩罚，唯有这一个被刺伤的受赏了。为什么这个看门人能够受赏？因为他通过受伤表明自己尽了最大的努力，没有破坏上级的命令。</p>
-</blockquote>
-<p>来自 <a href="https://www.zhihu.com/pin/1492864769740292096">zhihu</a></p>
-<h3>东航 MU5735 和 “作风整顿”运动</h3>
-<blockquote>
-<p>这里不得不提实行了好几年的“作风整顿”运动，无论啥事都能扯到作风问题上来，还特意出了一个《无后果违章清单》，就这半年来，有起飞构型警告测试响了把机长撸成副驾驶的，有忘记做操纵检查把教员撸成副驾驶的，还有因为没戴飞行帽把一个副驾驶停飞半年的，惩罚极其随心所至！基本上就是领导一发火就把你从头撸到底！根本不按规定和手册来，而我们公司的手册里，是明确写明什么等级的差错是怎么处理的，目前状况是公司领导随心所欲，层层加码，一言堂！</p>
-</blockquote>
-<p>来自 <a href="https://www.zhihu.com/question/524372424/answer/2413512658">zhihu</a></p>
-<p>评论区更是精彩</p>
-<blockquote>
-<p><code>Long2Lees</code> 回复 <code>洗洗呀</code>：别了，不只是你们，只要是国字头的基本上都是这样，行政碾压技术，管你技术部门死活，我行政就是牛逼，专门收拾搞技术的<br />
-03-29 <code>知乎用户</code>：东航本来就属于那种能不坐绝对不坐的航司<br />
-03-29 <code>blueseason</code> 回复 <code>小川</code> ：听说绩效奖金是按飞行时长算的，所以很多机长能飞多慢就飞多慢，所以我这几年拒绝乘坐东航[飙泪笑]<br />
-2022-03-30 00:08 <code>Ferryman</code> 回复<code>东方红</code>  别人真没尬黑，东航确实是按任务时间来算绩效的，所以在滑行阶段东航几乎就是最慢的，你去听ATC就知道，地面经常叫东航滑快一点<br />
-2022-03-30 00:30 <code>blueseason</code>回复<code>东方红</code>  那就是你孤陋寡闻了，别家航司飞八九百公里的时速，东航经常飞六百公里的时速。网上放出来的ATC录音里都有空管受不了催东航飞快点，其他机长直接问空管前机是不是东航的，确认之后直接的回答就是：那难怪了，大家都晓得，东航的嘛[飙泪笑]<br />
-2022-03-30 04:43 <code>小羊和大白</code> 这十来年荒唐的事岂止是你们民航行业。。。我们干金融的见的更多啊。。。真的不敢说但是太荒唐了<br />
-2022-03-30 08:36 知乎用户知乎用户回复<code>小羊和大白</code>  民航业出事要命，金融业出事各自自行上天台[飙泪笑][捂脸]<br />
-<code>东伍德</code> 想起看过的一个观点，当一个公司陷入困境，而管理层又很无能，不知道公司困境的真正根源在哪里，就会狠抓纪律制度和考勤。<br />
-<code>vega</code> 回复 <code>东伍德</code>差校总爱抓纪律………</p>
-</blockquote>
-<p>想起一个填空题：</p>
-<blockquote>
-<p>2022年1月10日，全国民航航空安全工作会议召开，民航局副局长作航空安全工作报告。报告指出，2021年是极具历史意义的一年。全民航扎实开展______学习教育。</p>
-</blockquote>
-<p>答案见： <a href="http://www.caac.gov.cn/XWZX/MHYW/202201/t20220110_210844.html">http://www.caac.gov.cn/XWZX/MHYW/202201/t20220110_210844.html</a></p>
-<h3>最后一个故事 一个时代终结了</h3>
-<p>来自<a href="https://mp.weixin.qq.com/s/kZEyDaZYvp5l7KkGUVnmJw">王烁 BetterRead</a></p>
-<blockquote>
-<p>河朔旧事就是回到割据，军兵们比节度使还要上心，无他，服从朝廷的话，他们要失业，中央一直想裁各镇军队数量。收入会减少，一镇养一军，肯定养得比一镇既向中央交税又养一军要好。还得去打自己不想打的仗，西北的回鹘、西南的吐蕃，唐兵坟场。<br />
-成德反，魏博反，幽州也反。转眼间，河朔大好局面付诸东流。自此到唐亡，朝廷政令不过黄河，唐廷自然是失败者。兵变上来的一批又一批节度使也是失败者，他们被军队推上虎背，最后都被其所噬；乱兵也是失败者，无论谁上台，首先要做的就是杀光作乱之人。<br />
-职业军人获得自我意识，便成为最难压制的政治力量，一连串下克上，找不到停下来的均衡点。停不下来，便是大家都失败。</p>
-</blockquote>
-<p>以最后一个故事最后一句话结尾：</p>
-<blockquote>
-<p>一个时代确实终结了，但不是田兴和唐廷以为的那样。秩序正不可阻挡地奔向解体。</p>
-</blockquote></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2022-03-31T14:12:21+08:00">2022-03-31</time></p>
 <p>stderr</p>            </div>
           </article>
         </div>
