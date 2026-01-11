@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>est の 输入 输出和出入 - 2026 archives</title>
+    <title>I made a paste service – est の 输入 输出和出入</title>
 <link rel="icon" href="https://est.im/favicon.svg">
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -9,12 +9,12 @@
     <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="This blog is rated 🔞, viewer discretion is advised" />
+    <meta name="description" content="I made a paste service" />
 
-    <meta property="og:url" content="https://blog.est.im">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="est の 输入 输出和出入">
-    <meta property="og:description" content="This blog is rated 🔞, viewer discretion is advised">
+    <link rel="canonical" href="https://blog.est.im/2026/stdout-01" />
+    <meta property="og:url" content="https://blog.est.im/2026/stdout-01">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="I made a paste service">
 
     <link rel="stylesheet" href="/theme/css/normalize.min.css" />
     <link rel="stylesheet" href="/theme/css/style.css" />
@@ -45,16 +45,26 @@
     </ul>
   </div>
 </nav>    <main class="content side-text-padding">
-<h1>Archives for 2026</h1>
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">I made a paste service</h2>
+    <p class="post-date">Posted <time datetime="2026-01-10T12:36:00+08:00">2026-01-10</time> | <span>stdout</span></p>
+  </header>
 
-<dl>
-    <dt>2026-01-10</dt>
-    <dd><a href="/2026/stdout-01">I made a paste service</a></dd>
-    <dt>2026-01-07</dt>
-    <dd><a href="/2026/stdin-01">「负面」</a></dd>
-    <dt>2026-01-01</dt>
-    <dd><a href="/2026/stderr-01">LLM的弱点——不能很好的讲笑话？</a></dd>
-</dl>
+  
+  <p>I've been busy vibe coding a paste service. Sharing content has been painful these days and I always have some snippets or images to share with my friends. </p>
+<p>The service is up and running in publick hosted <code>$URL = https://p.est.im</code></p>
+<p>It's running on a free tier Cloudflare Worker with everything stored in D1.</p>
+<p>To upload a paste is easy, just <code>curl -T /path/myfile.txt $URL</code>. A random paste ID would be generated and returned.</p>
+<p>Or you can pipe some logs like <code>cmd | curl -T - $URL</code>. If you take a close look at the headers you can even find a delete token</p>
+<p>Hopefully no major spam nor abuse happen to this service. I did try hardwork to prevent them best to my knowledge, like </p>
+<ul>
+<li>Content-Security-Policy is very strict</li>
+<li>Anti hot-linking using Sec-Fetch-Site</li>
+</ul>
+<p>The source code is available at https://github.com/est/p.est.im</p>
+<p>If you have any better ideas please let me know 😎</p>
+</article>
 
 <div class="comments">
   <h2>Comments</h2>

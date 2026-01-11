@@ -54,6 +54,39 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2023/stderr-03"  rel="bookmark" >
+              <h2 class="card-title">为什么不太看好 Nostr/ActivityPub</h2>
+            </a>
+            <p class="card-text"><p>肤浅地记录一下为啥不太看好 Mastodon/nostr 等 <strong>fediverse</strong>。</p>
+<h2>Scalability:</h2>
+<p>对于千万活跃用户来说，如何展示时间线是个很古老的问题，<a href="http://highscalability.com/blog/2013/7/8/the-architecture-twitter-uses-to-deal-with-150m-active-users.html">highscalability</a> 和 <a href="https://www.cnblogs.com/sunli/archive/2010/08/24/twitter_feeds_push_pull.html">微博</a> 都有关于 push/pull 模式的讨论。简单的说：</p>
+<ol>
+<li>读多写少</li>
+<li>大V的巨型分发量压力</li>
+<li>热点读的 materialization 太慢</li>
+</ol>
+<p>一般的解决方案是 fanout-write。也就是如果大V发一条微博，那么他所有 follower 的专用timeline 队列都会被写入一条微博id</p>
+<p>这个问题放在 fediverse 会更加复杂。目前我了解的情况是，没有专门解决这个问题。如果哪天真有个用户量巨大的网络形成了，同步全量数据都超过百兆带宽，那么其他普通 vps 上的节点也就几乎无法同步全量数据了。所以需要部分同步，那么如何联机设计就会变得很复杂，每个节点都是选择性的同步一些用户的一些时间内的消息，就会产生上面 twitter 和 weibo 的问题。这两家公司内部db 和 es 内网查询都不能很好解决，我不太相信在公网做同步能更容易解决。</p>
+<p>基于这个判断，我觉得这些网络都不可能做大，因为这个技术问题（据我所知）还没解决；社交网络的「六度分隔理论」，是建立在 <a href="https://www.zdnet.com/article/six-degrees-of-separation-and-super-nodes/">「supernode」也就是超级大V</a>基础上的。所以如果这个技术问题没解决，fediverse 发展到天花板，人缘必定是很疏散的。无法形成 twitter/weibo 那种排山倒海的全行业舆论压力。</p>
+<h2>客户端太丑</h2>
+<p>这个是个主观判断。signal 和 matrix 都是因为客户端太丑，所以不如 telegram 好用。</p>
+<h2>言论压制</h2>
+<p>题外话1：我觉得 censorship 翻译成「审查」不太对。审查明明是 review 或者 moderation 。</p>
+<p>目前逃离 twitter/weibo 最大的动机就是平台删帖，但是 fediverse 这个问题其实并没有解决，而是把责任下方给各个提供方了。提供方可以决定是否删帖怎么删以什么标准删。而靠 hobby 热情支撑的 fediverse 服务我觉得不是长久之计。站方的财政比较正向，才比较健康。所以要完全自由就一个人建一个站。。这样其实从系统设计角度来说效率太低。摄像你 follow 了100个人，每次冷更新 timeline 就得至少发起100个请求。</p>
+<p>题外话2：我觉得 mastodon 的双 <code>@</code> 太难看了。 <code>@est@mastodon.social</code> 为啥不去掉第一个 <code>@</code> 变成 <code>est@mastodon.social</code> 呢？有人说这样容易被不懂技术的识别成 email 。啊，还有这种好事？设想如果 mastodon 支持一下 SMTP 其实很不错呢。</p>
+<h2>静态建站</h2>
+<p>据我所知，ActivityPub 基础交互都需要 HTTP <code>POST</code>。我特别希望有一个 fediverse 协议能设计成比如 github pages 就能托管。站方时不时更新一个 比如旧时代的 <code>feed.rss</code> 之类的文件就完成发布，每次更新的时候ping(HTTP GET)一个网址表示有更新让爬虫来取一下。这样的轮询简单粗暴，推广成本最低，不需要复杂的 RoR 或者 nodejs 搭建技能。</p>
+<p>如果站点流量实在太大，需要长连接同步，可以采用 <a href="https://devdocs.io/dom/eventsource"><code>EventSource</code></a> 之类的单向流就行。使之基于 serverless/lambda 服务比如cloudflare worker就能跑，不要搞得太复杂。nostr 的 websocket 就麻烦得多。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2023-02-01T23:39:13+08:00">2023-02-01</time></p>
+<p>stderr</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2023/stdout-03"  rel="bookmark" >
               <h2 class="card-title">Play Cities:Skylines on Windows/MacOS without Paradox Launcher</h2>
             </a>
@@ -853,41 +886,6 @@ btw2 把 RSS 改成全文输出了。</p></p>
 <p>其实我想说的是，波普恐怕还漏了第四个世界，这个世界是基于 idea 上的虚拟机，这个虚拟机可以去模拟和推演他人的行为、个性和思维的世界，这也是中国人最擅长的，算计他人。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-10-19T00:30:29+08:00">2022-10-19</time></p>
-<p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2022/stdin-12"  rel="bookmark" >
-              <h2 class="card-title">刑事犯罪中起诉人数排名top3</h2>
-            </a>
-            <p class="card-text"><p>帮朋友看一家公司，专门做爬虫的。找到一些有意思的信息，各位可以先猜猜这个题：</p>
-<p>2020年以来，大陆各类刑事犯罪中起诉人数排名前3的罪名是？</p>
-<ul>
-<li>(A) 网上乱发言</li>
-<li>(B) 偷东西</li>
-<li>(C) 诈骗</li>
-<li>(D) 开车出事</li>
-<li>(E) 打架、杀人、伤人</li>
-<li>(F) 帮别人修理电脑或者网络</li>
-<li>(G) 贿赂</li>
-</ul>
-<details>
-  <summary>正确答案：</summary>
-  (D) (B) (G) 帮助信息网络犯罪活动罪（以下简称帮信罪）是2015年11月起施行的刑法修正案（九）新增罪名，主要指行为人明知他人利用信息网络实施犯罪，为其犯罪提供互联网接入、服务器托管、网络存储、通信传输等技术支持，或者提供广告推广、支付结算等帮助的犯罪行为，是电信网络犯罪的重要“帮凶”。2019年11月，最高检联合最高法制定出台《关于办理非法利用信息网络、帮助信息网络犯罪活动等刑事案件适用法律若干问题的解释》，明确了帮信罪定罪量刑标准和有关司法认定问题。近年来，特别是2020年10月“断卡”行动以来，检察机关起诉涉嫌帮信犯罪案件上涨较快，目前已成为各类刑事犯罪中起诉人数排名第3的罪名（前两位分别是危险驾驶罪、盗窃罪）。
-</details>
-
-<p>然后说回爬虫，最近看到<a href="https://www.spp.gov.cn/spp/llyj/202202/t20220215_544538.shtml">《明确越界网络爬虫行为的刑事处罚边界》</a>，虽然不是法规文件，但是可以参考。总体来说：</p>
-<ol>
-<li>如果你是 IT  从业人员，那么明知故犯罪加一等</li>
-<li>小爬没事，把别人服务器爬出500错误了就麻烦了。需要登录或者有反爬最好不要去碰</li>
-<li>公开数据理论上没事。不遵守 <code>robots.txt</code> 也无所谓</li>
-</ol></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2022-10-18T22:28:20+08:00">2022-10-18</time></p>
 <p>stdin</p>            </div>
           </article>
         </div>

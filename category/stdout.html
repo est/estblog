@@ -54,6 +54,31 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-01"  rel="bookmark" >
+              <h2 class="card-title">I made a paste service</h2>
+            </a>
+            <p class="card-text"><p>I've been busy vibe coding a paste service. Sharing content has been painful these days and I always have some snippets or images to share with my friends. </p>
+<p>The service is up and running in publick hosted <code>$URL = https://p.est.im</code></p>
+<p>It's running on a free tier Cloudflare Worker with everything stored in D1.</p>
+<p>To upload a paste is easy, just <code>curl -T /path/myfile.txt $URL</code>. A random paste ID would be generated and returned.</p>
+<p>Or you can pipe some logs like <code>cmd | curl -T - $URL</code>. If you take a close look at the headers you can even find a delete token</p>
+<p>Hopefully no major spam nor abuse happen to this service. I did try hardwork to prevent them best to my knowledge, like </p>
+<ul>
+<li>Content-Security-Policy is very strict</li>
+<li>Anti hot-linking using Sec-Fetch-Site</li>
+</ul>
+<p>The source code is available at https://github.com/est/p.est.im</p>
+<p>If you have any better ideas please let me know 😎</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-01-10T12:36:00+08:00">2026-01-10</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2025/stdout-18"  rel="bookmark" >
               <h2 class="card-title">获得自己在Google眼里的IP</h2>
             </a>
@@ -3234,146 +3259,6 @@ Windows version: 10.0.19045.3570
 <p>那么问题来了。在火星上怎么算工资呢？我觉得得安天结了。还有，假如亲爱的读者小伙伴将来到火星务工，应聘的时候一定确认好是按地球年结算还是火星年哦。谨防火星历诈骗！</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2023-11-09T15:50:11+08:00">2023-11-09</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2023/stdout-12"  rel="bookmark" >
-              <h2 class="card-title">FastAPI/Starlette graceful shutdown server-sent events</h2>
-            </a>
-            <p class="card-text"><h3>缘起</h3>
-<p>假如你用 FastAPI/Starlette框架，写了一段 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events">Server-sent Events</a></p>
-<pre><code class="language-python">@app.get('/api/my_stream')
-async def api_stream():
-  async def gen():
-    while 1:
-      yield &quot;data: {}\n\n&quot;
-      await asyncio.sleep(1.0)
-
-  return StreamingResponse(gen, media_type=&quot;text/event-stream&quot;, headers={
-    'X-Accel-Buffering': 'no',
-    'Cache-Control': &quot;no-cache&quot;,
-    'Connection': &quot;keep-alive&quot;,
-  })
-</code></pre>
-<h3>FastAPI 事件</h3>
-<p>然后你重启了服务器，比如 gunicorn+uvicorn，你会发现这个连接不会断开，一直输出结果。直到 worker 进程超过配置里的 <code>timeout</code> 参数（默认60秒），被 master 强行杀死然后重启。</p>
-<p>一开始尝试了 <a href="https://fastapi.tiangolo.com/advanced/events/#shutdown-event">FastAPI 官方的 <code>shutdown</code> 事件</a>，再在代码的 <code>while 1</code> 加一个 <code>if</code> 判断。发现不管用</p>
-<pre><code class="language-python">@app.on_event('shutdown')
-def on_server_shutdown():
-    app.state.running = False
-</code></pre>
-<p>发现这段代码执行是执行了，但是是在杀死worker的时候生效的。得更加提前。用<a href="https://asgi.readthedocs.io/en/latest/specs/lifespan.html">ASGI推荐的<code>lifespan</code></a>和 <a href="https://asgi.readthedocs.io/en/latest/specs/www.html#disconnect-receive-event"><code>http.disconnect</code></a> 太复杂，放弃。</p>
-<h3>Linux signal</h3>
-<p>尝试暴力监听 worker signal</p>
-<pre><code class="language-python">import signal
-signal.signal(signal.SIGINT, on_server_shutdown)  # ctrl+c
-signal.signal(signal.SIGUSR2, on_server_shutdown)
-signal.signal(signal.SIGTERM, on_server_shutdown)
-signal.signal(signal.SIGWINCH, on_server_shutdown)
-signal.signal(signal.SIGHUP, on_server_shutdown)
-signal.signal(signal.SIGQUIT, on_server_shutdown)
-</code></pre>
-<p>发现也不管用。研究了半天，似乎是 <code>UvicornWorker.init_signals</code> 的时候<a href="https://github.com/encode/uvicorn/issues/894">给<code>signal.SIG_DFL</code>了</a>。无语ing</p>
-<h3>uvicorn shutdown 流程</h3>
-<p>看gunicorn日志：</p>
-<pre><code>[2023-11-02 09:50:38 +0800] [25918] [INFO] Shutting down
-[2023-11-02 09:50:38 +0800] [25918] [INFO] Waiting for application shutdown.
-[2023-11-02 09:50:38 +0800] [25918] [INFO] Waiting for connections to close. (CTRL+C to force quit)
-....
-[2023-11-02 09:51:18 +0800] [25918] [INFO] Application shutdown complete.
-[2023-11-02 09:51:18 +0800] [25918] [INFO] Finished server process [25918]
-[2023-11-02 09:51:18 +0800] [25918] [INFO] Worker exiting (pid: 25918)
-</code></pre>
-<p>观察到 Waiting for connections to close 之后卡住。</p>
-<p>属于 uvicorn 的 <a href="](https://github.com/encode/uvicorn/blob/07c2b36455b5475ff7edfa54068ff2c0581a2be1/uvicorn/server.py#L303)"><code>Server.shutdown()</code></a> 方法</p>
-<p>这个方法调用链：</p>
-<ol>
-<li><code>Server.install_signal_handlers</code> 里注册 signal </li>
-<li><code>Server.handle_exit</code> 里设置 <code>Server.should_exit = True</code></li>
-<li>每秒一次的 <code>Server.on_tick</code> 就会打断 <code>Server.main_loop()</code> 死循环</li>
-<li>调用 <code>Server.shutdown</code></li>
-</ol>
-<p>如果能拿到 <code>Server.should_exit</code> 自行判断就好了，但是 ASGI 是容器无感的，只继续研究</p>
-<h3>断开http连接</h3>
-<p>上面日志有一个比较关键：</p>
-<pre><code class="language-python"># Request shutdown on all existing connections.
-for connection in list(self.server_state.connections):
-    connection.shutdown()
-    await asyncio.sleep(0.1)
-</code></pre>
-<p>其http连接关闭方法实现为：</p>
-<pre><code class="language-python">def shutdown(self):
-    &quot;&quot;&quot;
-    Called by the server to commence a graceful shutdown.
-    &quot;&quot;&quot;
-    if self.cycle is None or self.cycle.response_complete:
-        self.transport.close()
-    else:
-        self.cycle.keep_alive = False
-</code></pre>
-<p>这里应该走的是 <code>else</code> 分支。所以解决方法就是去代码里拿到 <code>cycle.keep_alive</code> 这个属性。</p>
-<h3>ASGI 接口</h3>
-<p>跟了一会儿，发现ASGI 在  starlette 里如下流程：</p>
-<ol>
-<li><code>Route()</code> 初始化 <code>self.app = request_response(endpoint)</code></li>
-<li><code>Route().handle()</code> 的时候会调用 <code>self.app(scope, receive, send)</code></li>
-<li><code>unicorn</code> 的 <code>run_asgi</code> 会 <code>result = await app(self.scope, self.receive, self.send)</code> 。其中 <code>app</code> 就是 starlette 的 <code>Route()</code> 实例</li>
-</ol>
-<p>所以解决方案逐渐明朗了</p>
-<h3>黎明的前夜</h3>
-<p>通过 FastAPI/Starlette 请求的 <code>.receive</code> 属性的 <code>__self__</code> 拿到 unicorn 的 <code>cycle</code> 实例，然后定时判断上面 <code>shutdown</code> 赋值的 <code>self.cycle.keep_alive = False</code></p>
-<pre><code class="language-python">@app.get('/api/my_stream')
-async def api_stream(req: Request):
-  async def gen():
-    while 1:
-      yield &quot;data: {}\n\n&quot;
-      await asyncio.sleep(1.0)
-      if getattr(req.receive.__self__, 'keep_alive', None) is False:
-        break
-
-  return StreamingResponse(...
-</code></pre>
-<p>这里用了个 <code>getattr()</code> 是保证这个 hack 在非 unicorn 下代码也能正常跑</p>
-<p><code>git commit . -m "haha"</code> 上机联调，发现坑了。。。我特么。。。。这个 <code>cycle.keep_alive</code> 默认就是 <code>False</code></p>
-<h3>扭转 keep_alive</h3>
-<p>这玩意一直为 <code>False</code> 的原因是，unicorn 的 <code>HttpToolsProtocol.on_headers_complete</code> 赋值过程：</p>
-<p><code>self.cycle = RequestResponseCycle(..., keep_alive=http_version != "1.0")</code></p>
-<p>这里 <code>http_version</code> 可以通过  <code>req.scope['http_version']</code> 得到，打印了一下，你猜怎么着，还真tm是。。。原因就是厂里反代 <a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_http_version">nginx的proxy_http_version</a>没配置。这里是个常见的坑，非常影响性能，因为每个请求会生成一个新的 http 连接。</p>
-<p>但是也等不急SA去改配置了。于是直接在代码 <code>async def gen():</code> 前面写死：</p>
-<p><code>req.receive.__self__.keep_alive = True</code> 。提交，再试。。。咦，怎么 <code>keep_alive</code> 依然为 <code>False</code>？？？？明明刚刚赋值了？</p>
-<p>继续读代码，发现第二个坑，发现 unicorn 的 <code>RequestResponseCycle.send()</code> 方法里，在构造返回的时候，有一句</p>
-<pre><code class="language-python">for name, value in headers:
-    elif name == b&quot;connection&quot; and value.lower() == b&quot;close&quot;:
-        self.keep_alive = False
-</code></pre>
-<p>好吧。。。那么解决方法就是，把 <code>keep_alive = True</code> 挪到返回内部。先完成返回构造，再强行改值。</p>
-<h4>最后的代码</h4>
-<pre><code class="language-python">@app.get('/api/my_stream')
-async def api_stream(req: Request):
-  # req.receive.__self__.keep_alive = True  # doesn't work here
-  async def gen():
-    req.receive.__self__.keep_alive = True  # works here
-    while 1:
-      yield &quot;data: {}\n\n&quot;
-      await asyncio.sleep(1.0)
-      if req.receive.__self__.keep_alive is False:
-        break
-
-  return StreamingResponse(gen, media_type=&quot;text/event-stream&quot;, headers={
-    'X-Accel-Buffering': 'no',
-    'Cache-Control': &quot;no-cache&quot;,
-    'Connection': &quot;keep-alive&quot;,
-  })
-</code></pre>
-<p>测试重启 worker，该连接在1秒后断开，worker平稳重启。完美。</p>
-<p>苦逼撸业务的一天又开始了。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2023-11-02T09:44:12+08:00">2023-11-02</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

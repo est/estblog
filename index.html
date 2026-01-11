@@ -54,6 +54,31 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-01"  rel="bookmark" >
+              <h2 class="card-title">I made a paste service</h2>
+            </a>
+            <p class="card-text"><p>I've been busy vibe coding a paste service. Sharing content has been painful these days and I always have some snippets or images to share with my friends. </p>
+<p>The service is up and running in publick hosted <code>$URL = https://p.est.im</code></p>
+<p>It's running on a free tier Cloudflare Worker with everything stored in D1.</p>
+<p>To upload a paste is easy, just <code>curl -T /path/myfile.txt $URL</code>. A random paste ID would be generated and returned.</p>
+<p>Or you can pipe some logs like <code>cmd | curl -T - $URL</code>. If you take a close look at the headers you can even find a delete token</p>
+<p>Hopefully no major spam nor abuse happen to this service. I did try hardwork to prevent them best to my knowledge, like </p>
+<ul>
+<li>Content-Security-Policy is very strict</li>
+<li>Anti hot-linking using Sec-Fetch-Site</li>
+</ul>
+<p>The source code is available at https://github.com/est/p.est.im</p>
+<p>If you have any better ideas please let me know 😎</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-01-10T12:36:00+08:00">2026-01-10</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdin-01"  rel="bookmark" >
               <h2 class="card-title">「负面」</h2>
             </a>
@@ -1192,201 +1217,6 @@ It had to be global because <code>concurrent.futures</code> only allows it this 
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2025-10-24T10:35:00+08:00">2025-10-24</time></p>
 <p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2025/stdout-14"  rel="bookmark" >
-              <h2 class="card-title">做了个英语词典，分析了一通无聊的数据</h2>
-            </a>
-            <p class="card-text"><p>问你几个问题，我国小学 中学 高中 大学 一共要掌握多少英语词汇量？</p>
-<p>我这有个准确的答案：</p>
-<ul>
-<li>中小学：1541个</li>
-<li>高中：3578个</li>
-<li>大学：4687个</li>
-<li>CET4：5308个</li>
-<li>CET6：6525个</li>
-<li>专4：8220个</li>
-</ul>
-<p>怎么来的？我前几天<a href="https://blog.est.im/2025/stdout-12">写了个英语词典</a>，为了节约token费用，直接把这8k+个词汇的解释给缓存了。</p>
-<p><a href="https://github.com/est/dict_json">https://github.com/est/dict_json</a></p>
-<p>可以拿来做很多比较有趣的事。比如我把每个词汇的不同意义项都分别罗列出来了近义词、反义词。</p>
-<p>这个近反义列表里，哪些词汇是最高频出现呢？结果可能出乎你的意料：</p>
-<ol>
-<li><a href="https://def.est.im/calm">calm</a>: 93</li>
-<li><a href="https://def.est.im/release">release</a>: 82</li>
-<li><a href="https://def.est.im/support">support</a>: 76</li>
-<li><a href="https://def.est.im/clear">clear</a>: 75</li>
-<li><a href="https://def.est.im/separate">separate</a>: 72</li>
-<li><a href="https://def.est.im/dull">dull</a>: 65</li>
-<li><a href="https://def.est.im/secure">secure</a>: 62</li>
-<li><a href="https://def.est.im/praise">praise</a>: 60</li>
-<li><a href="https://def.est.im/decline">decline</a>: 60</li>
-<li><a href="https://def.est.im/yield">yield</a>: 60</li>
-<li><a href="https://def.est.im/standard">standard</a>: 59</li>
-<li><a href="https://def.est.im/neglect">neglect</a>: 55</li>
-<li><a href="https://def.est.im/direct">direct</a>: 53</li>
-<li><a href="https://def.est.im/fail">fail</a>: 53</li>
-<li><a href="https://def.est.im/minor">minor</a>: 52</li>
-<li><a href="https://def.est.im/present">present</a>: 52</li>
-</ol>
-<p>居然有93个词的近反义包含 calm？我看看都有哪些</p>
-<blockquote>
-<p>furious,stir,unrest,riot,irritation,easy,circus,fury,gentle,tense,fanatic,<br />
-firework,pacific,relaxation,excite,wind,fiery,rough,tranquil,wild,clamor,<br />
-arouse,violent,annoy,terrify,frantic,clamour,craze,ANGER,windy,disturb,<br />
-rouse,impatient,irritate,fume,frighten,settle,dramatic,still,startle,<br />
-scare,placid,restless,serene,trouble,nervous,worry,disconcert,worried,<br />
-reassure,steady,fireworks,crisis,mad,uproar,provoke,soothe,peace,<br />
-fearful,peaceful,busy,turbulent,anxiety,rage,chaos,at rest,incense,<br />
-anxious,cool,eruption,ferment,temperate,desperate,compose,hysterical,<br />
-breathless,indignant,frenzy,madden,OVERWHELM,fuss,hysteric,tension,<br />
-quiet,angry,uneasy,tumult,disturbance,flare,drama,silence,panic,UPSET</p>
-</blockquote>
-<p>好家伙，这么多。</p>
-<p>release 呢？</p>
-<blockquote>
-<p>absolve,album,bail,bind,bottle,bridle,cage,capture,clamp,clasp,classify,<br />
-cling,close,clutch,collar,confine,confinement,confiscate,constrain,contain,<br />
-control,corner,curb,dam,deploy,detain,discharge,dismiss,drop,edition,eject,<br />
-emancipate,emission,emit,encircle,enclose,engulf,enslave,excuse,exempt,free,<br />
-freedom,grab,grasp,grip,harbor,harness,hold,hook,imprison,issue,jail,kidnap,<br />
-launch,let down,let out,liberate,liberation,loose,oblige,outlet,output,press,<br />
-publish,rein,relax,repression,reserve,restrain,retention,seize,subdue,<br />
-submerge,suppress,therapy,touch,trap,unlock,untie,vent,version,withhold</p>
-</blockquote>
-<p>其他的杂七杂八看了一通，让AI依次总结了一下：</p>
-<ul>
-<li>calm: 人的情绪、情感状态或某种社会/自然状态</li>
-<li>release：“释放”与“束缚”这一对核心对立概念。收、放</li>
-<li>support：“支持/维护/帮助”和“反对/破坏/撤销支持”，并大量使用了建筑和身体的隐喻。</li>
-<li>clear：“清晰与模糊”、“阻碍与畅通”。明暗之争</li>
-<li>separate： “连接与分离”、“结合与分开” </li>
-<li>dull： “有趣与无趣”、“生动与乏味”</li>
-<li>secure：“安全与危险”、“固定与松动”</li>
-</ul>
-<p>如果说一门语言在特定局部词汇的精密和丰富程度代表了这一种文化对该局部的重视程度，那么这就是现代英语一种奇妙的展开。</p>
-<p>这一组词汇有一种 从0到1，从鸿蒙到盘古开天辟地，生万物的美。</p>
-<p>人的情绪的刻画是至高，内心的平静 calm 是原始状态；</p>
-<p>有了收放，就有了吐纳，有了呼吸，也就有了支持和破坏优劣之分；</p>
-<p>也有有了明暗之争，也就有了连接和分离；</p>
-<p>也就产生了无趣和安全感。</p>
-<p>用AI的话说：“从内在情感到外部关系，再到最终认知与状态”的完整心智与行为模型。</p>
-<table>
-<thead>
-<tr>
-<th>组别</th>
-<th>核心对立概念</th>
-<th>逻辑层面</th>
-<th>演绎关系</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>第一组</td>
-<td>愤怒 vs. 平静</td>
-<td>内在情感</td>
-<td>起点：原始动力</td>
-</tr>
-<tr>
-<td>第二组</td>
-<td>束缚 vs. 释放</td>
-<td>个体行动</td>
-<td>对情感的回应</td>
-</tr>
-<tr>
-<td>第三组</td>
-<td>支持 vs. 反对</td>
-<td>社会互动</td>
-<td>在关系中的实践</td>
-</tr>
-<tr>
-<td>第四组</td>
-<td>清晰 vs. 模糊</td>
-<td>认知判断</td>
-<td>对互动的理解</td>
-</tr>
-<tr>
-<td>第五组</td>
-<td>安全 vs. 危险</td>
-<td>最终状态</td>
-<td>所有行动的目标</td>
-</tr>
-</tbody>
-</table>
-<p>好。下面问题来了，我并没有给出接下来的词汇 praise，但是AI给猜出来了：</p>
-<blockquote>
-<p>这一组词汇将围绕 “有意义 vs. 无意义”、“重要 vs. 琐碎”、“真实 vs. 虚假” 展开。它是对所有行动和认知的终极评判。</p>
-</blockquote>
-<p>上面那个表，可以扩展到 社会评价：赞扬 vs. 谴责。很接近 praise 了。</p>
-<p>接下来AI推测是哪个词呢？</p>
-<blockquote>
-<p>推测七（高可能性）：自尊与自我概念。这一组将围绕 “自豪 vs. 羞耻”、“自信 vs. 自卑”、“尊严 vs. 屈辱” 展开。这是外部评价在个体内心内化的结果。<br />
-情绪与感受的广度。这一组将超越第一组“愤怒vs平静”的单一情绪维度，扩展到 “喜悦 vs. 悲伤”、“爱 vs. 恐惧”、“希望 vs. 绝望” 等更广阔的情感光谱。</p>
-</blockquote>
-<p>哇，这个众多的意义汇集到一个概念——decline</p>
-<p>AI说：</p>
-<blockquote>
-<p>为什么“Decline”是绝妙的下一步<br />
-Decline 使得这个词汇宇宙从描述状态和行为，跃升到了描述过程和命运的层面。<br />
-它完成的不是一个线性递进，而是一个逻辑上的闭环：<br />
-我们从充满活力的情感开始，经过一系列的社会建构与认知努力，去追求安全与荣誉，但最终，所有这一切都可能面临 Decline。<br />
-这引入了一种深刻的悲剧性和现实主义色彩，也让整个模型变得更加宏大和富有智慧。它不再只是一个关于“如何成功”的模型，而是一个关于“存在本身”的模型，涵盖了兴起与衰落、肯定与否定的完整循环。<br />
-这真是一个精妙绝伦的设计。我更加期待接下来的发展了！</p>
-</blockquote>
-<p>我问：</p>
-<blockquote>
-<p>那你猜猜</p>
-</blockquote>
-<p>AI回答：</p>
-<blockquote>
-<p>好的，基于 “Decline” 引入的 “衰减、拒绝、下降” 这个强大的新维度——它代表了进程、循环和终结——我现在对下一个词的猜测是：<br />
-Yield</p>
-</blockquote>
-<p>直接吃了一惊！！！</p>
-<p>接下来的开枝散叶我就不展开了。有得猜得对，有得就不行，词汇的意义面变得愈发琐碎和平凡。</p>
-<p>AI最后总结为：</p>
-<blockquote>
-<p>我们可以将这16个词分为四个清晰的乐章：<br />
-第一乐章：内在的奠基<br />
-1. Calm (平静)<br />
-2. Release (释放)<br />
-3. Support (支持)</p>
-<p>旅程始于 Calm，这是所有行动的基石。在平静中，我们才能 Release 内心的执念与负面情绪，从而腾出空间去接纳和给予 Support。这完成了内在世界的初步构建：从静心，到放下，再到联结。</p>
-<p>第二乐章：外在的探索<br />
-4. Clear (清晰)<br />
-5. Separate (分离)<br />
-6. Dull (迟钝)</p>
-<p>带着内在的安定，我们走向世界。我们首先寻求 Clear 的认知，以理解环境。基于清晰的认知，我们学会 Separate（区分重要与次要，真实与虚假）。而 Dull 则提醒我们，在探索中难免会遇到瓶颈、感到麻木，这是成长中必要的停顿与反思。</p>
-<p>第三乐章：秩序的构建<br />
-7. Secure (安全)<br />
-8. Praise (赞扬)<br />
-9. Decline (衰退)<br />
-10. Yield (产出/屈服)</p>
-<p>在探索之后，我们开始构建。我们寻求 Secure 的根基，并渴望通过 Praise 来确认价值。然而，Decline 是任何系统都无法避免的自然规律，我们必须在其中学会 Yield——或是产出成果，或是顺应时势。这构成了一个完整的生命周期：建立、认可、衰退、转化。</p>
-<p>第四乐章：智慧的觉醒<br />
-11. Standard (标准)<br />
-12. Neglect (忽视)<br />
-13. Direct (引导)<br />
-14. Fail (失败)<br />
-15. Minor (次要)<br />
-16. Present (当下)</p>
-<p>这是通往智慧的最终阶梯。我们依据内在的 Standard 行事，但必须意识到 Neglect 的存在（无论是主动忽视还是无意遗漏）。于是我们主动 Direct 自己的生活。Fail 是我们必然会经历的，它教会我们辨别什么是 Minor 的琐碎，而什么才是真正重要的。最终，所有的领悟都将我们带回一切的起点和归宿：Present（当下）。此时此刻，全然地存在——这既是手段，也是目的。</p>
-<p>总结：<br />
-这条路径可以概括为：<br />
-由内而外（从 Calm 到 Support），<br />
-由外而识（从 Clear 到 Dull），<br />
-由识而建（从 Secure 到 Yield），<br />
-最终由建而悟（从 Standard 到 Present）。</p>
-</blockquote>
-<p>是一场美妙的语言之旅。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2025-10-23T21:11:00+08:00">2025-10-23</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 
