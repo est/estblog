@@ -54,6 +54,44 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-02"  rel="bookmark" >
+              <h2 class="card-title">精打细算VPS扫除</h2>
+            </a>
+            <p class="card-text"><p>2022年买的VPS一直没怎么管，今天想跑点东西发现大户 warp-cli 真是吃资源啊。果断删掉</p>
+<p>公司的服务器都是SA管理，自己的一般很少去折腾，这次也是闲的，好奇系统里杂七杂八都是啥玩意儿，挨个找AI审问一遍</p>
+<p><code>systemctl list-units --type=service --state=running</code></p>
+<ul>
+<li><code>blk-availability</code>  <code>udisks2</code>  插拔优盘的</li>
+<li><code>fwupd</code>  固件更新</li>
+<li><code>ModemManager</code> </li>
+<li><code>multipathd</code> <code>open-iscsi</code> <code>iscsid</code>  存储用的</li>
+<li><code>packagekit</code> GUI包管理器</li>
+<li><code>polkit</code>  GUI 策略kit</li>
+<li><code>snapd</code> <code>snapd.apparmor</code> <code>snapd.autoimport</code>  GUI里的 App store</li>
+<li><code>lvm2-monitor</code></li>
+<li><code>upower</code> <code>thermald</code> 电源和温度传感器</li>
+<li><code>cloud-init*</code> <code>cloud-config*</code> 云配置器</li>
+<li><code>apport*</code> Crash reporting</li>
+</ul>
+<p>这些都没用！直接 <code>sudo systemctl disable --now XXX</code> 禁用</p>
+<p>其中 snapd 直接 <code>sudo apt purge snapd</code> 斩草除根！</p>
+<p>最后看一下  <code>free -h</code> <code>used=110Mi</code> 感觉好多了。</p>
+<p>顺便把文件也清理下 <code>sudo journalctl --vacuum-size=500M</code>，发现比较大，编辑 <code>vi /etc/systemd/journald.conf</code></p>
+<pre><code>[Journal]
+SystemMaxUse=500M
+</code></pre>
+<p>然后 <code>sudo systemctl restart systemd-journald</code></p>
+<p>为什么要整理VPS？因为大善人Cloudflare 和 Vercel 都有 request buffering 导致一个 hobby project 做不下去了</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-01-13T22:30:00+08:00">2026-01-13</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-01"  rel="bookmark" >
               <h2 class="card-title">I made a paste service</h2>
             </a>
@@ -67,7 +105,7 @@
 <li>Content-Security-Policy is very strict</li>
 <li>Anti hot-linking using Sec-Fetch-Site</li>
 </ul>
-<p>The source code is available at https://github.com/est/p.est.im</p>
+<p>The source code is available at <a href="https://github.com/est/p.est.im">https://github.com/est/p.est.im</a></p>
 <p>If you have any better ideas please let me know 😎</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-01-10T12:36:00+08:00">2026-01-10</time></p>
@@ -3227,38 +3265,6 @@ Windows version: 10.0.19045.3570
 <p>Oh, and there's <code>git config core.fileMode false</code> needs to be checked!</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2023-11-11T10:31:11+08:00">2023-11-11</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2023/stdout-13"  rel="bookmark" >
-              <h2 class="card-title">火星上怎么结算工资</h2>
-            </a>
-            <p class="card-text"><p>看到个段子</p>
-<p><img alt="" src="/images/2023/stdout-13-01.jpg" /></p>
-<p>突然让我想起个事，如果去火星打工，薪资该怎么计算？摘录 wikipedia</p>
-<blockquote>
-<p>火星的恒星时长 <code>24小时37分钟22.663秒</code>，而太阳日则长 <code>24小时39分钟35.24409</code> 秒。而地球的恒星时和太阳日则分别是 <code>23小时56分钟4.0916秒</code> 及 <code>24小时</code>。在比较之下，一火星太阳日等于1.027491地球太阳日，即比地球太阳日长2.7%。</p>
-</blockquote>
-<p>怎么有两个天？继续搜</p>
-<blockquote>
-<p>太阳日（英语：solar day）是依据太阳运动，所定义的时间，可以分为视觉太阳日和平均太阳日。一太阳日传统称为一“日”、一“天”或一“昼夜”。</p>
-</blockquote>
-<p><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Sidereal_day_%28prograde%29.png/600px-Sidereal_day_%28prograde%29.png" /></p>
-<p>英语里把火星的一天叫做一个 <code>Sol</code>。一个火星年在英文的 wikipedia 有讲</p>
-<blockquote>
-<p>sidereal year ... is about 686.98 Earth solar days (≈ 1.88 Earth years), or <code>668.5991</code> sols 。也就是说火星一年有 668.5991 火星天。。。</p>
-</blockquote>
-<p>火星因为有<code>25.19°</code>的自转倾角，跟地球相近，所以也可以划分四季。但问题是，火星的轨道长这样：</p>
-<p><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Mars_earth_orbit.png/600px-Mars_earth_orbit.png" /></p>
-<p>所以如果按照四个季节划分，最长的季节有 <code>194 个 Martian Sols</code>，最短的 <code>142 Martian sols</code></p>
-<p>那么问题来了。在火星上怎么算工资呢？我觉得得安天结了。还有，假如亲爱的读者小伙伴将来到火星务工，应聘的时候一定确认好是按地球年结算还是火星年哦。谨防火星历诈骗！</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2023-11-09T15:50:11+08:00">2023-11-09</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

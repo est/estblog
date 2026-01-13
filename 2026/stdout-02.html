@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>精打细算VPS扫除 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="精打细算VPS扫除" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stdout-02" />
+    <meta property="og:url" content="https://blog.est.im/2026/stdout-02">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="精打细算VPS扫除">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">精打细算VPS扫除</h2>
+    <p class="post-date">Posted <time datetime="2026-01-13T22:30:00+08:00">2026-01-13</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>2022年买的VPS一直没怎么管，今天想跑点东西发现大户 warp-cli 真是吃资源啊。果断删掉</p>
+<p>公司的服务器都是SA管理，自己的一般很少去折腾，这次也是闲的，好奇系统里杂七杂八都是啥玩意儿，挨个找AI审问一遍</p>
+<p><code>systemctl list-units --type=service --state=running</code></p>
+<ul>
+<li><code>blk-availability</code>  <code>udisks2</code>  插拔优盘的</li>
+<li><code>fwupd</code>  固件更新</li>
+<li><code>ModemManager</code> </li>
+<li><code>multipathd</code> <code>open-iscsi</code> <code>iscsid</code>  存储用的</li>
+<li><code>packagekit</code> GUI包管理器</li>
+<li><code>polkit</code>  GUI 策略kit</li>
+<li><code>snapd</code> <code>snapd.apparmor</code> <code>snapd.autoimport</code>  GUI里的 App store</li>
+<li><code>lvm2-monitor</code></li>
+<li><code>upower</code> <code>thermald</code> 电源和温度传感器</li>
+<li><code>cloud-init*</code> <code>cloud-config*</code> 云配置器</li>
+<li><code>apport*</code> Crash reporting</li>
+</ul>
+<p>这些都没用！直接 <code>sudo systemctl disable --now XXX</code> 禁用</p>
+<p>其中 snapd 直接 <code>sudo apt purge snapd</code> 斩草除根！</p>
+<p>最后看一下  <code>free -h</code> <code>used=110Mi</code> 感觉好多了。</p>
+<p>顺便把文件也清理下 <code>sudo journalctl --vacuum-size=500M</code>，发现比较大，编辑 <code>vi /etc/systemd/journald.conf</code></p>
+<pre><code>[Journal]
+SystemMaxUse=500M
+</code></pre>
+<p>然后 <code>sudo systemctl restart systemd-journald</code></p>
+<p>为什么要整理VPS？因为大善人Cloudflare 和 Vercel 都有 request buffering 导致一个 hobby project 做不下去了</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>
