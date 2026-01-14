@@ -54,6 +54,49 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2023/stdout-14"  rel="bookmark" >
+              <h2 class="card-title">Getting started blogging on Win10</h2>
+            </a>
+            <p class="card-text"><p>I am planning to setup by blogging environment on my Windows PC.</p>
+<ul>
+<li>OS: Windows 10</li>
+<li>Shell: Bash on WSL1</li>
+<li>Program: <code>pelican</code> on Miniconda3 with Python 3.11</li>
+</ul>
+<p>My objective today is get rid of the <code>static/js/core.js</code> from <code>aether-pelican</code> theme and replace it with <a href="https://jsfiddle.net/t78mf7jb/3/">a simple CSS</a>, and it turns out quite challenging.</p>
+<h3>WSL1 and file system</h3>
+<p>As it turns out, the installed Ubuntu root filesystem on WSL1 is located here:</p>
+<p><code>%localappdata%\Packages\CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc\LocalState\rootfs</code></p>
+<p>I plan to move my home dir (at least) to another SSD on my PC, as the <code>C:\</code> drive is an old SanDisk Plus240, which is unforgivablly slow these days. I tried to <code>mv ~ /mnt/d/home</code>, ok but the permission gets weird.</p>
+<p>So I tried to copy the folder on Windows to <code>D:\home</code>, and <code>mklink</code> back. I tried both <code>mklink /D</code> and <code>mklink /J</code> ( the <code>/D</code> switch works on a remote drive whereas the <code>/J</code> junction works on local NTFS disks only) and they both failed be recognized by WSL1. The bash yields <code>Broken stdout/stdin</code> upon launch</p>
+<p>So OK, default home dir then. Bad luck for me.</p>
+<h3>Ubuntu 22</h3>
+<p>I just found out my <code>cat /etc/lsb-release</code> shows Ubuntu 18, which is the default distro installed on <code>WSL1</code> I assume. I tried to install Ubuntu 22 from the Microsoft Store, after several wasted minutes (curse the slow Internet in Mainland!) it turns out for WSL2 only. Luckily the Windows Subsystem for Linux was successfully upgraded to latest version:</p>
+<pre><code>C:\&gt; wsl --version
+WSL version: 1.2.5.0
+Kernel version: 5.15.90.1
+WSLg version: 1.0.51
+MSRDC version: 1.2.3770
+Direct3D version: 1.608.2-61064218
+DXCore version: 10.0.25131.1002-220531-1700.rs-onecore-base2-hyp
+Windows version: 10.0.19045.3570
+</code></pre>
+<p>the <code>wsl --list --online</code> commands stuck for a total of 10 minutes and returns nothing (curse the AS4134 163NET!)</p>
+<h3>Getting Python, Miniconda and Pelican</h3>
+<p>So linux distro setup was back to where started, I only have Python to mess with. Miniconda3 gets insalled easily, now that's a some progress. The static site generator I am using <code>pip install pelican[markdown]</code> finishes ok, the pypi was not blocked? Keke.</p>
+<p>Then I typed <code>make</code>. It was not part of WSL1? Blaspheme!</p>
+<p>Manually running <code>python -m pelican.server</code>, and voila! The Windows asks for firewall listening permission, granted, open up browser, BAM! My blog setup process is done and now I can write and tweak it on Windows. </p>
+<p>Oh, and there's <code>git config core.fileMode false</code> needs to be checked!</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2023-11-11T10:31:11+08:00">2023-11-11</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2023/stdout-13"  rel="bookmark" >
               <h2 class="card-title">火星上怎么结算工资</h2>
             </a>
@@ -3179,63 +3222,6 @@ tcp.keepinit Timeout, in milliseconds, for new, non-established TCP connections.
 <p>总的来说，ffmpeg 真是操作糟糕而功能强大的工具的典型。以上参数为东拼西凑撞大运偶得，如有不对敬请指正。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2021-06-05T20:42:15+08:00">2021-06-05</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/202104/stdout-005"  rel="bookmark" >
-              <h2 class="card-title">Win10 自动设置开机锁屏壁纸</h2>
-            </a>
-            <p class="card-text"><p>Win10启动后，锁屏界面有一些每天更新的漂亮的墙纸，但是每个用户进去却只能看到默认的墙纸，不能自动切换。很是遗憾，于是搞了一段小脚本弥补。</p>
-<p>找个地方比如桌面，右键新建一个 <code>est_win10_auto_wallpaper.bat</code></p>
-<pre><code>  @if (@X)==(@Y) @end /* JScript comment
-  @echo off
-
-  cscript //E:JScript %~n0.bat
-
-  exit /b %errorlevel%
-  */
-
-  var oShell = new ActiveXObject("WScript.Shell") ;
-  var oFSO = new ActiveXObject("Scripting.FileSystemObject");
-
-  var sWinDir = oFSO.GetSpecialFolder(0);
-  var sPath = oShell.ExpandEnvironmentStrings('%LOCALAPPDATA%\\Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets\\')
-
-  var oFolderEnum = new Enumerator(oFSO.GetFolder(sPath).Files);
-  var aFiles = []
-  for (;!oFolderEnum.atEnd();oFolderEnum.moveNext()) {
-      // var item = oFolderEnum.item()
-      aFiles.push(oFolderEnum.item())
-  }
-  var aFiles2 = aFiles.sort(function(x,y){return new Date(y.DateLastAccessed).getTime() - new Date(x.DateLastAccessed).getTime()}).slice(3)
-  var sWallpaper;
-  // for (var i=0;i&lt;aFiles2.length;i++){
-  for (var i in aFiles2){
-      // WScript.Echo('check ' + aFiles2[i].name + ' size: ' + aFiles2[i].size);
-      if(aFiles2[i].size &gt; 500000){  // guess &gt; 500KB is good wallpaper
-          sWallpaper = aFiles2[i].path
-          break;
-      }    
-  }
-  if(sWallpaper){
-      // or fso.GetStandardStream(1) for stdout, 2 for stderr
-      // WScript.Echo('set to ' + sWallpaper);
-      oShell.RegWrite("HKCU\\Control Panel\\Desktop\\Wallpaper", sWallpaper);
-      oShell.Run("%windir%\\System32\\RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters 1, True");
-  }
-</code></pre>
-<p>Win+R输入 <code>shell:startup</code> 回车，把刚才的 <code>est_win10_auto_wallpaper.bat</code> 在这里创建一个快捷方式</p>
-<p>解释下为啥要在 <code>shell:startup</code> 里创建快捷方式而不是直接放 .bat 。因为快捷方式可以设置当前运行目录，这样代码里的 <code>%~n0</code> 才能生效。懒得查询完整路径如何写了。。</p>
-<p>然后这段代码其实用了一个比较高级的 <a href="https://stackoverflow.com/a/28250760/41948">.js .bat 混合格式</a>。因为 Windows Smart Screen 会拦截 WScript 的直接执行，认为特别危险。但是如果你在 cmd 里执行系统就觉得很安全。。。。嗯。。</p>
-<p>吐槽1： 开始 → 启动 菜单都不见了。。。</p>
-<p>吐槽2：好久没写 WScript 了感觉都忘完了。vbs 是肯定不会的了。<a href="https://docs.microsoft.com/en-us/previous-versions//hbxc2t98(v=vs.85)?redirectedfrom=MSDN">JScript 居然是 ESMAScript3</a>。好多现代写法都不支持。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2021-04-11T22:35:12+08:00">2021-04-11</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

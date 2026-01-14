@@ -54,6 +54,63 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/202104/stdout-005"  rel="bookmark" >
+              <h2 class="card-title">Win10 自动设置开机锁屏壁纸</h2>
+            </a>
+            <p class="card-text"><p>Win10启动后，锁屏界面有一些每天更新的漂亮的墙纸，但是每个用户进去却只能看到默认的墙纸，不能自动切换。很是遗憾，于是搞了一段小脚本弥补。</p>
+<p>找个地方比如桌面，右键新建一个 <code>est_win10_auto_wallpaper.bat</code></p>
+<pre><code>  @if (@X)==(@Y) @end /* JScript comment
+  @echo off
+
+  cscript //E:JScript %~n0.bat
+
+  exit /b %errorlevel%
+  */
+
+  var oShell = new ActiveXObject("WScript.Shell") ;
+  var oFSO = new ActiveXObject("Scripting.FileSystemObject");
+
+  var sWinDir = oFSO.GetSpecialFolder(0);
+  var sPath = oShell.ExpandEnvironmentStrings('%LOCALAPPDATA%\\Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets\\')
+
+  var oFolderEnum = new Enumerator(oFSO.GetFolder(sPath).Files);
+  var aFiles = []
+  for (;!oFolderEnum.atEnd();oFolderEnum.moveNext()) {
+      // var item = oFolderEnum.item()
+      aFiles.push(oFolderEnum.item())
+  }
+  var aFiles2 = aFiles.sort(function(x,y){return new Date(y.DateLastAccessed).getTime() - new Date(x.DateLastAccessed).getTime()}).slice(3)
+  var sWallpaper;
+  // for (var i=0;i&lt;aFiles2.length;i++){
+  for (var i in aFiles2){
+      // WScript.Echo('check ' + aFiles2[i].name + ' size: ' + aFiles2[i].size);
+      if(aFiles2[i].size &gt; 500000){  // guess &gt; 500KB is good wallpaper
+          sWallpaper = aFiles2[i].path
+          break;
+      }    
+  }
+  if(sWallpaper){
+      // or fso.GetStandardStream(1) for stdout, 2 for stderr
+      // WScript.Echo('set to ' + sWallpaper);
+      oShell.RegWrite("HKCU\\Control Panel\\Desktop\\Wallpaper", sWallpaper);
+      oShell.Run("%windir%\\System32\\RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters 1, True");
+  }
+</code></pre>
+<p>Win+R输入 <code>shell:startup</code> 回车，把刚才的 <code>est_win10_auto_wallpaper.bat</code> 在这里创建一个快捷方式</p>
+<p>解释下为啥要在 <code>shell:startup</code> 里创建快捷方式而不是直接放 .bat 。因为快捷方式可以设置当前运行目录，这样代码里的 <code>%~n0</code> 才能生效。懒得查询完整路径如何写了。。</p>
+<p>然后这段代码其实用了一个比较高级的 <a href="https://stackoverflow.com/a/28250760/41948">.js .bat 混合格式</a>。因为 Windows Smart Screen 会拦截 WScript 的直接执行，认为特别危险。但是如果你在 cmd 里执行系统就觉得很安全。。。。嗯。。</p>
+<p>吐槽1： 开始 → 启动 菜单都不见了。。。</p>
+<p>吐槽2：好久没写 WScript 了感觉都忘完了。vbs 是肯定不会的了。<a href="https://docs.microsoft.com/en-us/previous-versions//hbxc2t98(v=vs.85)?redirectedfrom=MSDN">JScript 居然是 ESMAScript3</a>。好多现代写法都不支持。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-04-11T22:35:12+08:00">2021-04-11</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/202104/stdout-004"  rel="bookmark" >
               <h2 class="card-title">Mac 命令行终端里获得视频文件的长度</h2>
             </a>

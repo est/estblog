@@ -1,5 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 13 Jan 2026 22:30:00 +0800</lastBuildDate><item><title>精打细算VPS扫除</title><link>https://blog.est.im/2026/stdout-02</link><description>&lt;p&gt;2022年买的VPS一直没怎么管，今天想跑点东西发现大户 warp-cli 真是吃资源啊。果断删掉&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Wed, 14 Jan 2026 22:48:00 +0800</lastBuildDate><item><title>尝试让AI手搓个TTF格式生成器</title><link>https://blog.est.im/2026/stdout-03</link><description>&lt;p&gt;一个奇怪的需求：如何在浏览器判断一个字体是否支持某个字符？&lt;/p&gt;
+&lt;p&gt;一开始以为很easy，让 ChatGPT搓，打开浏览器就懵逼 &lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;OTS parsing error: bad table directory searchRange
+bad table directory entrySelector
+bad table directory rangeShift
+Invalid table tag: 0x66000000
+f\x00\x00\x00: invalid table offset
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;感觉事情没那么简单。让Antigravity搓，它把我免费额度烧光了也没搓出个所以然&lt;/p&gt;
+&lt;p&gt;其中一个小插曲是，css里允许对单独一个字符设置 &lt;code&gt;font-family&lt;/code&gt;，但是因为这个 .ttf 是动态生成的，所以需要动态生成这个CSS的声明，所以在生成 .ttf 之后需要类似这样的代码：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;document.head.insertAdjacentHTML(&amp;quot;beforeend&amp;quot;, `
+&amp;lt;style&amp;gt;
+@font-face {
+  font-family: GhostRaw;
+  src: url(${url});
+  unicode-range: U+2603;
+}
+body { font-family: GhostRaw, system-ui; }
+&amp;lt;/style&amp;gt;
+`);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;注意这个是在 html 里的 js 里的 template string 里的 css。antigravity改这一块出现了好多次 error，我猜是AI输出格式嵌套格式本来就容易出错，这里引用和转义太复杂以至于 agent 直接看不懂output了。哈哈&lt;/p&gt;
+&lt;p&gt;因为没额度了，所以换国产免费的 Trae。Trae 比antigravity更笨，但是也努力。js搓不动，就开始换写 .py 去验证。搞到最后搞出来一堆测试文件&lt;/p&gt;
+&lt;p&gt;check_maxp.py&lt;br /&gt;
+check_validation.py&lt;br /&gt;
+generate_minimal_ttf.py&lt;br /&gt;
+generate_proper_ttf.py&lt;br /&gt;
+generate_simple_zero_width_font.py&lt;br /&gt;
+generate_ttf.js&lt;br /&gt;
+generate_zero_width_font.py&lt;br /&gt;
+generated_font.ttf&lt;br /&gt;
+generated_font.ttx&lt;br /&gt;
+get_base64.js&lt;br /&gt;
+minimal_font_generator.py&lt;br /&gt;
+modify_existing_font.py&lt;br /&gt;
+simple_font_generator.py&lt;br /&gt;
+validate_ttf.py&lt;br /&gt;
+validate.js&lt;br /&gt;
+working_font_generator.py&lt;br /&gt;
+zero_width_font.ttf&lt;br /&gt;
+zero-width.ttf&lt;/p&gt;
+&lt;p&gt;这样几回合下来，直接搓超出上下文了，最后直接罢工，出现&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Output is too long, please enter 'Continue' to get more.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;而且你点了 continue 它思索半天还是出现这句话。上下文是彻底爆了。&lt;/p&gt;
+&lt;p&gt;正向构造一个 .ttf 很难，AI还很聪明的想到了：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我将使用一个更简单的方法，直接使用一个现有的基础字体文件，然后修改它的字符映射。让我检查一下是否有任何基础 TTF 文件可用。我将使用 Google Fonts 中的一个非常简单的字体作为基础。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;最后还是失败了。于是我就去搜索引擎找到了这个：&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://pomax.github.io/Minimal-font-generator/"&gt;https://pomax.github.io/Minimal-font-generator/&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;dynamically generated bespoke font that encodes that character as a zero-width glyph&lt;br /&gt;
+in the PDF.js project, where a PDF file may have fonts embedded for rendering text with, but no way to tell whether an extracted font has actually finished loading.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;和我想到一块去了。还是人类老哥牛逼，2012-01-14号就把这个方案搓出来了，距今刚好13年。&lt;/p&gt;
+&lt;p&gt;AI就像一个培训班出身的，对背题能过的任务能很快完成，对于这种考验细节的冷门任务，还是难。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 14 Jan 2026 22:48:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-01-14:/2026/stdout-03</guid><category>stdout</category></item><item><title>精打细算VPS扫除</title><link>https://blog.est.im/2026/stdout-02</link><description>&lt;p&gt;2022年买的VPS一直没怎么管，今天想跑点东西发现大户 warp-cli 真是吃资源啊。果断删掉&lt;/p&gt;
 &lt;p&gt;公司的服务器都是SA管理，自己的一般很少去折腾，这次也是闲的，好奇系统里杂七杂八都是啥玩意儿，挨个找AI审问一遍&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;systemctl list-units --type=service --state=running&lt;/code&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -787,22 +844,4 @@ It had to be global because &lt;code&gt;concurrent.futures&lt;/code&gt; only all
 &lt;li&gt;
 &lt;p&gt;avoid gRPC&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 04 Nov 2025 10:46:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-11-04:/2025/stdout-15</guid><category>stdout</category></item><item><title>特立独行的中文</title><link>https://blog.est.im/2025/stderr-07</link><description>&lt;p&gt;上一篇&lt;a href="https://blog.est.im/2025/stderr-06"&gt;汉字 和 汉语 的先进性&lt;/a&gt; 还没完&lt;/p&gt;
-&lt;p&gt;最近不知道在 X 上还是 xhs 上，原帖我翻不到了。有留子在图书馆查资料，用中文搜索，旁边印度妹问在看啥？&lt;/p&gt;
-&lt;p&gt;留子说在查学术问题。印度妹悻然说到，她的母语就没有这么多资料可查，只能有英语资料可看。&lt;/p&gt;
-&lt;p&gt;这回到我今年第一篇blog &lt;a href="https://blog.est.im/2025/stdout-01"&gt;如何用英语给出简短的 “春节” 定义&lt;/a&gt; 抛出的一个观点：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;其实，全世界的主要语言里，只有汉语还在坚持“意译”&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;仔细想想还是挺恐怖的，全世界都叫 ResNET，日本人甚至用假名 レズネット 也要坚持音译。&lt;/p&gt;
-&lt;p&gt;前端时间 龙是不是要翻译成 Lonng 也是个很火的话题，现在很多人明白了。意译实际上是中文使用者的一厢情愿，特立独行的。日韩把很多东西都已经抢注了，比如 围棋 Go 泡菜 kimchi，老中还在那里老老实实的 Sour Pickles。&lt;/p&gt;
-&lt;p&gt;这个做法有好有坏，但是这种坚持就。比较难评。&lt;/p&gt;
-&lt;p&gt;又想起一个老梗：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;元朝有个官职叫怯里马赤，放在现在叫翻译官。有一次忽必烈先生问孔子是什么人，有人告诉他：孔子是老天爷的怯里马赤。忽必烈先生很满意这个回答，曰：善。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;出处：叶奇《草木子》卷四下：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;（北人）立怯里马赤，盖译史也，以通华夷言语文字。昔世祖尝问孔子何如人。或应之曰：“是天的怯里马赤。”世祖深善之。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;意译这事坚持得有多离谱呢？连天意都要给你翻译成中文。巫文史医一脉相承了等于说是。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 24 Oct 2025 17:42:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-10-24:/2025/stderr-07</guid><category>stderr</category></item></channel></rss>
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 04 Nov 2025 10:46:00 +0800</pubDate><guid isPermaLink="false">tag:None,2025-11-04:/2025/stdout-15</guid><category>stdout</category></item></channel></rss>
