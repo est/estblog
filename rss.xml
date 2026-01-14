@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Wed, 14 Jan 2026 22:48:00 +0800</lastBuildDate><item><title>尝试让AI手搓个TTF格式生成器</title><link>https://blog.est.im/2026/stdout-03</link><description>&lt;p&gt;一个奇怪的需求：如何在浏览器判断一个字体是否支持某个字符？&lt;/p&gt;
+&lt;p&gt;（原始需求是：遇到一些字符渲染错位问题，看起来是字体不支持，fallback 到别的去了。）&lt;/p&gt;
+&lt;p&gt;想到的方法是：用canvas渲染看宽度。但因为这个 fallback机制，所以更好的办法是拿一个已知的特殊字体去比对，如果fallback了说明不支持。&lt;/p&gt;
+&lt;p&gt;那么问题来了，这个 fallback font 你不可能下载一个包含所有字符的，那样体积会很大，所以最好是按需生成一个，只包含一个字符，用来比对。那么这个问题就转换成了：如何在浏览器js里动态生成一个 .ttf 格式的字体文件，只包含一个字符？&lt;/p&gt;
+&lt;p&gt;这里不考虑 woff woff2，因为前者已经过时了后者比 ttf 更复杂。&lt;/p&gt;
 &lt;p&gt;一开始以为很easy，让 ChatGPT搓，打开浏览器就懵逼 &lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;OTS parsing error: bad table directory searchRange
 bad table directory entrySelector

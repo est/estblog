@@ -58,6 +58,10 @@
               <h2 class="card-title">尝试让AI手搓个TTF格式生成器</h2>
             </a>
             <p class="card-text"><p>一个奇怪的需求：如何在浏览器判断一个字体是否支持某个字符？</p>
+<p>（原始需求是：遇到一些字符渲染错位问题，看起来是字体不支持，fallback 到别的去了。）</p>
+<p>想到的方法是：用canvas渲染看宽度。但因为这个 fallback机制，所以更好的办法是拿一个已知的特殊字体去比对，如果fallback了说明不支持。</p>
+<p>那么问题来了，这个 fallback font 你不可能下载一个包含所有字符的，那样体积会很大，所以最好是按需生成一个，只包含一个字符，用来比对。那么这个问题就转换成了：如何在浏览器js里动态生成一个 .ttf 格式的字体文件，只包含一个字符？</p>
+<p>这里不考虑 woff woff2，因为前者已经过时了后者比 ttf 更复杂。</p>
 <p>一开始以为很easy，让 ChatGPT搓，打开浏览器就懵逼 </p>
 <pre><code>OTS parsing error: bad table directory searchRange
 bad table directory entrySelector
