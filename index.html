@@ -54,6 +54,27 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-04"  rel="bookmark" >
+              <h2 class="card-title">python版的mtr(traceroute for macOS)</h2>
+            </a>
+            <p class="card-text"><p>首先，我讨厌编译，我喜欢二进制，直到昨天我惊讶的发现macOS上一个 <code>yes</code> 命令都是接近100KB的大小。homebrew 一大坨东西还不一定每次都成功。</p>
+<p>说起编译，这几天读到一些关于软件法律方面的风险。zhihu说如果你的工具的不针对“特定用途”，那么就可以用一定免责的说辞，但是如果你提供下载只能拿来恰好做某一件特别具体的事，那么工具的提供者就有连带责任。我想这也是为啥大部分开源软件都是提供源码吧。我这代码又不能直接用，开源是为了研究技术。你自己编译之后拿来敲不对劲的命令那是用户自己的选择了。</p>
+<p>那么回到主题， <code>mtr</code> 作为居家旅行必备网络工具，它只提供源码分发。好多年前研究过，用python写了demo，但是终究不是太熟练，现在有 AI ，几句话就完成了</p>
+<p><a href="https://github.com/est/trpy">https://github.com/est/trpy</a></p>
+<p>使用方法是 <code>sudo python3 cli.py jd.com</code> 这样。 <code>-6</code> 可以强制使用 IPv6，<code>-c1</code> 可以每一跳只probe一次并退出。</p>
+<p>过程中反复折腾的，居然是最后一个 hop 重复显示，和丢失的问题。没想到AI也犯糊涂。</p>
+<p>期间遇到n次无法编辑文件的情况，估计AI输出乱了。还有不知道为什么，Google Antigravity每次写完代码就打 <code>Aurora</code> 几个字到末尾。</p>
+<p>现在基本框架有了，下一步支持点什么插件好呢。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-01-16T00:10:00+08:00">2026-01-16</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-03"  rel="bookmark" >
               <h2 class="card-title">尝试让AI手搓个TTF格式生成器</h2>
             </a>
@@ -1118,64 +1139,6 @@ The observer literally rewrites its internal model of the world in a simpler, mo
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2025-11-06T17:53:00+08:00">2025-11-06</time></p>
 <p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2025/stdout-15"  rel="bookmark" >
-              <h2 class="card-title">gRPC Python, AsyncIO and multiprocess</h2>
-            </a>
-            <p class="card-text"><p>I am torn about writing this. AsyncIO in Python is always a mess, protobuf is another, gRPC is the worst of them all because of all that boilerplate code that does nothing but trouble.</p>
-<p>The task I am facing is integrating a mesh API <strong>server</strong> based on our internal codebase. </p>
-<h2>non-gRPC options</h2>
-<p>I mean, gRPC is just h2+protobuf, how hard could it be? Even <a href="https://uwsgi-docs.readthedocs.io/en/latest/SPDY.html">uWSGI had h2</a> from decades ago</p>
-<p>Turns out the options are quite limited. h2 in uWSGI was major versions behind, SPDYv3 never took off. gRPC and h2 are related but different because the frames are marked and handled differently.</p>
-<p>So there's either <code>hypercorn</code> or fallback to gRPC. To avoid further mess I decided to stick with gRPC</p>
-<h2>infectious async/await</h2>
-<p>Now I face another challenge: The existing business logic is written in async/await style (cue FastAPI fad)</p>
-<p>I carefully studied the <a href="https://github.com/grpc/grpc/blob/master/examples/python/helloworld/async_greeter_server_with_graceful_shutdown.py">gRPC async hello world example</a></p>
-<p>Everything ran great, except the notorious GIL, my gRPC server runs but only on one single CPU. </p>
-<h2>multiprocess</h2>
-<p>Old school solution to GIL: spawn many processes. Given a 1:1 map to worker CPU. Easy? There's an <a href="https://github.com/grpc/grpc/tree/master/examples/python/multiprocessing">official <code>multiprocessing</code> example</a></p>
-<p>It worked... until it didn't. The major selling point of h2 is connection multiplexing, one TCP connection to serve all concurrency. And our mesh client is so good at this, only one worker consumes 100% of one CPU and the rest simply idle. 🤣</p>
-<h2>SO_REUSEPORT</h2>
-<p>I also tried to implement a prefork worker on my own. Let's get rid of master because <s>political-correctness</s> we have <code>SO_REUSEPORT</code> already.</p>
-<p>Unfortunately it didn't work at all, because of h2's multiplexing nature. The kernel won't schedule requests if there's only one single connection.</p>
-<h2>ProcessPoolExecutor</h2>
-<p>I looked closely and found how gRPC inits:</p>
-<p><code>grpc.server(futures.ThreadPoolExecutor(max_workers=10))</code></p>
-<p>Maybe swap it with <code>ProcessPoolExecutor()</code> ?</p>
-<p>Nope, server went dead with a timeout. Don't have time to look into C/C++ details. Nope.</p>
-<p>It seems gRPC only allows <code>ThreadPoolExecutor()</code>.</p>
-<p>Why does Google even allow it as a parameter then?</p>
-<h2>The apply_async() hallucination</h2>
-<p>Out of despair, next I asked ChatGPT. The advanced AI model said: just use <code>multiprocessing</code> in your invokes</p>
-<p>Yeah why not. So how do I run <code>async</code> in <code>multiprocessing</code>?</p>
-<p>ChatGPT hallucinated: use <a href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.pool.Pool.apply_async"><code>apply_async</code></a>. I initially believed that shit only to find it means the func will return an AsyncResult object, not running some <code>async/await</code> code. btw, I found the <code>.apply()</code> is just a shortcut for <code>.apply_async().get()</code></p>
-<h2>Putting it together</h2>
-<p>I got the mess to work eventually.</p>
-<ol>
-<li>Create a normal gRPC server with <code>add_generic_rpc_handlers</code> and stuff</li>
-<li>Create a <code>pool = ProcessPoolExecutor(...)</code> before the <code>unary_unary_rpc_method_handler</code>, with an <code>initializer</code> that spawns a global <code>loop = asyncio.new_event_loop()</code>.  <br />
-It had to be global because <code>concurrent.futures</code> only allows it this way</li>
-<li>Run <code>loop.run_until_complete()</code> inside <code>pool.submit()</code></li>
-</ol>
-<h2>lessons learned</h2>
-<p>If you aren't a try-hard:</p>
-<ul>
-<li>
-<p>avoid async</p>
-</li>
-<li>
-<p>avoid gRPC</p>
-</li>
-</ul></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2025-11-04T10:46:00+08:00">2025-11-04</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 
