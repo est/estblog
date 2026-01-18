@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>计算机科学里哪些极难的事 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="计算机科学里哪些极难的事" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stderr-03" />
+    <meta property="og:url" content="https://blog.est.im/2026/stderr-03">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="计算机科学里哪些极难的事">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">计算机科学里哪些极难的事</h2>
+    <p class="post-date">Posted <time datetime="2026-01-18T23:17:00+08:00">2026-01-18</time> | <span>stderr</span></p>
+  </header>
+
+  
+  <p>计科里有两件极难的事儿，cache invalidation，给东西起名字，和 off-by-1 errors.</p>
+<p>今天想说说这个，给东西起名儿。HN今日讨论，<a href="https://news.ycombinator.com/item?id=46667572">软能力会成为程序员最实用的技能</a>，这里的 软技能 就是指交流——特别是和 coding agent 交流。</p>
+<p>我觉得吧，coding agent 这波福利迟早会被吃干抹净。低垂的果实，虽然很多，很大，也会被摘完。</p>
+<p>AI能把它能解决的一切，全部拉到同一个水平，然后进入贤者模式。哪些从来没有文档说明，也就是没有语料拿来训练的东西，哪些尚没被定义，没被分析，没被起名字的问题，那些就算讨论都要先叠甲 lemma 的问题，AI就无能为力了。</p>
+<p>近几天几乎每天都能vibe出来一些成果，我很喜欢，但是突然又很空洞。欣喜的是多年以来的hobby得到了完成，解脱了；空洞一方面是没有下一步目标，索然无味了，还有更深层次的原因是：我失去了一个自己思考和实操的过程</p>
+<p>我这几天琢磨出一个味儿了。很多事情，product 不是全部。对没错，产品算个鸟。产品啥都不是。 <strong>byproduct 说不定才是真正无价之宝</strong>。我回顾了下很多idea都是在撸一个需求走了弯路，走了错路，无意中发明的额外的轮子，结果反而更值钱。就像人们常说的那样，淘金热里可能卖铲子更赚。还有那句怎么说的来着，结果不重要，过程才是经历。</p>
+<p>Vibe 爽是爽过了，但是总感觉隔了一层，AI在碰钉子复盘的时候，你在摸鱼，你就错过了一次 level up 的提升机会。AI 在调用别的工具和别的语言做交叉比对验证的时候，如果是人，会学习到新的知识，但是人现在只是个监工了。</p>
+<p>只看结果，只看绩效，是对事物的本质和变化缺乏观察的。比如写一篇漂亮的 spec 让AI完美执行，但是可能你就错过了AI 用clever trick 掩盖你一些内在的，本质的设计矛盾。</p>
+<p>恰好最近又看到这个 <a href="https://www.zhihu.com/question/666025273/answer/4157467225">为什么苏联武器在很长的一段时间里被黑成粗制滥造的劣等货？</a></p>
+<blockquote>
+<p>国产装备制造业机械厂里有个工艺技能，叫“照配”。意思就是配件加工时加工错了不要紧，一切都可以配。<br />
+举例说。这个部件上按照图纸应该加工十对直径20的销孔，上下半分开加工。上半十个加工没有问题，下半因为马虎大意上了直径25的绞刀，干错了一个销孔。问题不大，把上半对应的那个销孔扩大到直径25，另外照配一个直径25的销子。装配时这个25的销子和另外9个20的销子一起装，装上就行。<br />
+这就叫照配。又比如一根双头螺栓，两头螺纹长度要求是200长，结果发现手头这跟金属材料有点短，一头干了200，另一头长度只剩下160了。但是这根料弃之不用又可惜。那咋办?按照设计两头各有一个40厚的垫片，然后加上螺母。那么把其中一个垫片的厚度削减到5吧。然后误差还剩下5。嗯，算一下螺纹有效长度，剩下的5的误差不耽误和螺母把紧，就这么用吧。<br />
+这也叫照配。又比如，这个零部件的金属材质设计要求是15cr2mo1，但是你现在没有现成材质，仓库里倒是有15cr1mo1v的材料，虽然和图纸要求不一样，但是无所谓，一样能代替，就这么用了吧。<br />
+这也是一种照配。照配这个技能你在机械专业任何一本教科书上都找不到，是一个非常牛逼的技能，简直百分之八十（甚至可能更多）尺寸错误应该报废的零部件你都可以用这招把问题解决。尽管机械专业课堂上公差配合课程第一课就在强调“标准化”“互换性”，但，那又有什么关系?老板喜欢就行呗，省时省力又省钱啊。<br />
+《那年那兔那些事》漫画里面有个段子说美国工程师帮中国改造两架型号一样的战斗机，发现明明同一型号的部件上的零件拆下来后居然往另一台飞机的部件上装不上，因此困惑不已。这事历史上真有假有不知道，但是这种故事发生并不奇怪。<br />
+那么照配这个技能是和谁学的呢?答：苏联老师。<br />
+据说苏联老师这技能就来自于战争期间的军工生产。二战时期前线非常吃紧，后方的拖拉机厂拼命生产坦克和汽车供应前线。但是生产谁还没有失误的时候?这零部件造错了?配就完事了，一切以及时供应上前线为核心，武器能装配上就行，赶紧开到前线去，反正也不指望这玩意能回来了……然后发现，这虽然违背了机械制造的标准化原则，但是省时省力又省钱啊。能用就行呗，管啥设计要求和质量?<br />
+至于“粗制滥造”的指控?乐，军工产品在战场不就是消耗品吗，谁还指望这玩意能活多久似的，那还要那么长的设计寿命干啥?<br />
+所以苏联老师就能设计出诸如米格29这种前线战斗机之类的产品，设计思想就是这类东西定位就是前线消耗品，只要空中格斗机动性能好就行，别的啥的人机工程和使用寿命之类的……在乎那些干啥?主打一个能装上，能用，能动，能省钱省时省精力就行了（乐）<br />
+于是伴随着着156计划，苏联老师的这种思想以及照配之类的技术也就传授给了中国徒弟，然后丫的一直传承到了现在。<br />
+如果你把这种制造思想指导下生产出的产品评价为粗制滥造，我觉得问题不算大。</p>
+</blockquote>
+<p>反正能交差就行。我觉得AI编程，可能就需要长时间去「照配」一切了。</p>
+<p>有了AI，人们做啥事都可以一键直达了，不需要去思考，不需要去为了中间步骤搭桥，可能以后人们慢慢的不会再发明 library和一些 design pattern 了。毕竟AI 啥都懂，能识别很多人类察觉不到的 pattern。</p>
+<p>AI is one framework to rule all frameworks. 王者之戒，统御9戒</p>
+<p>我赶紧向AI问，人类历史有哪些著名的 byproduct 比原来的 product 更重要？它给我胡吹了一堆，最著名的，本来是研究葡萄球菌的，然后搞出来盘尼西林。我觉得这是西医摆脱巫医的质变；当然还有 ARPANET，本来是拿来扛核打击的，结果变成互联网；塑料，本来是拿来代替一种虫胶清漆，结果引发材料学革命；</p>
+<p>我大概知道一个冷门的，EUV光刻机。本来是NIF玩激光点火测试核聚变申请着玩没用的专利，交给 Intel 套现的。Intel 拿着也没用就卖给了 ASML台积电。而 NIF 其实就是个幌子项目，说是研究核聚变，实际上是拿来测试激光武器的。所谓我能对准原子核，也能对准你在外太空的导弹。</p>
+<p>试想一下，如果交给 AI 来做这些事，可能就完成了平庸的任务了事。压根不会多想。</p>
+<p>而且现在AI训练本身就有问题，它不太会拒绝你，它的神经网络是靠「迎合」来打分的。它不会说不知道，它只会问你 would you like to know more 来诱导消费更多的token，而不是回头看这个过程有什么有价值的东西。</p>
+<p>有价值？有价值的前提是你有个baseline，你知道什么东西你不知道。但是AI又是全能全知的，它不知道自己不知道，它也不知道你不知道。</p>
+<p>人类把折腾规律这一使命交给AI，人类也就失去了重大能力——命名权。</p>
+<p>命名权有多重要呢？“苍颉作书，而天雨粟，鬼夜哭”。这一点在藏区作为传统被保留了下来。<a href="https://blog.est.im/201906/stderr-003">藏区的鬼神都拥有所谓的命根子</a>。命根子有几种呢？一般分为：名字，种子字等。</p>
+<p>也就是说，正确喊出鬼神的名字，你就抓住了鬼神的命根子。翻译一下这句话，你把试题的出题类型正确识别了，题目也就解决了一大半。</p>
+<p>人类在蛮荒时代，面对社会、大自然的无知，天生对不确定性和后果有恐惧。起名字是一件神圣，专业和高深的艺术，在汉地其实一直由祭祀阶层以「诗书传家」的方式保留到宋代，也就是造纸术发明打破了这一切。西方也一样。对人性和行为规范的定义权，被教会牢牢控制，一直到 古腾堡 Gutenberg 才打破。说起来也搞笑，东方是拿来印佛经，打破了文化阶级桎梏，西方是拿来印赎罪券，造成进天堂通货膨胀 🤣 这似乎也算重大 by-product了。</p>
+<p>说远了。现在是 00:00，我想我应该总结下，AI 承包过程，必将架空人类最宝贵的过程经验。对下面发生了什么事，不仅不能察觉，连明明、定义的能力都会失去。</p>
+<p>所以啊，多看 reasoning model 的 thought process，多思考。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>
