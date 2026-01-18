@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hard Things in Computer Science, And AI Aren’t Fixing Them – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Hard Things in Computer Science, And AI Aren’t Fixing Them" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stderr-04" />
+    <meta property="og:url" content="https://blog.est.im/2026/stderr-04">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Hard Things in Computer Science, And AI Aren’t Fixing Them">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Hard Things in Computer Science, And AI Aren’t Fixing Them</h2>
+    <p class="post-date">Posted <time datetime="2026-01-19T00:27:00+08:00">2026-01-19</time> | <span>stderr</span></p>
+  </header>
+
+  
+  <p>Computer Science Jokes are Old, but They’re Still True</p>
+<blockquote>
+<p>“There are only two hard things in computer science: cache invalidation and naming things.” — Phil Karlton (and eventually, off-by-one errors).</p>
+</blockquote>
+<p>We’ve laughed at this trope for decades, but we’ve spent far too little time dissecting the second one: <strong>Naming.</strong> On the surface, naming is about semantics—choosing <code>user_id</code> over <code>id_1</code>. But at its core, naming is an act of exorcism. In ancient Tibetan folklore, as well as in Western occultism (think the <em>Goetia</em> or Ursula K. Le Guin’s <em>Earthsea</em>), to know the "True Name" of a demon or a dragon is to have absolute power over it. To name a bug is to strip it of its mystery. To name a design pattern is to make it reproducible.</p>
+<p>In the era of AI coding assistants, this is more important than ever. Low-hanging fruit—the repetitive boilerplate, the tasks with clear patterns—will soon be “harvested” by AI. Everything it can solve, it will. But the problems that <strong>haven’t been documented, defined, or named</strong> remain out of reach. AI simply doesn’t know what it doesn’t know.</p>
+<h3>The Value of the Waste: When Byproducts Become the Point</h3>
+<p>Recently, I’ve been experimenting with AI coding assistants almost every day. The results are impressive—sometimes even exhilarating. Years of hobby projects suddenly feel “done.” But there’s also a hollow feeling: the AI takes over the thinking, the tinkering, the trial-and-error process that once taught me more than the final product ever did.</p>
+<p>Here’s a key insight: <strong>the byproducts are often more valuable than the intended product.</strong> In the history of software, our most vital concepts weren’t created by committee; they were "named" after the lessons we learned while failing to do something else.</p>
+<ul>
+<li><strong>The "Bug":</strong> Grace Hopper didn’t set out to invent a new term for failure; she found an actual moth in a Harvard Mark II relay. The "Bug" was a byproduct of hardware failure, but it became the name for the entire discipline of quality.</li>
+<li><strong>"Technical Debt":</strong> Ward Cunningham didn’t create this as a financial theory. It was a metaphor—a byproduct of trying to explain to a non-technical boss why a "quick and dirty" release would eventually need to be paid back with interest.</li>
+<li><strong>The "Circuit Breaker" pattern</strong> wasn't a goal; it was the name we gave to the solution after watching cascading failures burn down production.</li>
+<li><strong>"Technical Debt"</strong> wasn't a design choice; it was a metaphor Ward Cunningham coined to explain to non-technical stakeholders why a "working" product was actually a liability.</li>
+<li><strong>"Garbage Collection"</strong> and <strong>"Promises"</strong> were names for byproducts of trying to solve human memory management and the "Callback Hell" of asynchronous logic.</li>
+</ul>
+<p>These names don't describe the <em>goal</em>; they describe the <em>scar tissue</em> of the process. By focusing only on the "clean result" provided by AI, we risk losing the ability to recognize these scars—and without the scars, we have nothing to name. </p>
+<p>If we move to a world where we only write "Specs" and let Agents handle the "Implementation," we are becoming high-level managers of a Soviet tank factory of "fitting".</p>
+<h3>The Engineering of "Fitting"</h3>
+<p>I happened to read a fascinating engineering story on <a href="https://www.zhihu.com/question/666025273/answer/4157467225">zhihu</a> from Soviet-era manufacturing—what they called <strong>“Fitting” (пригонка).</strong></p>
+<p>In Western manufacturing, the gold standard is "Interchangeable Parts." You build a part to a 0.01mm tolerance so it fits any machine on the line. But in Soviet tank factories, tolerances were loose. Instead of perfecting the part, they perfected the "fit."</p>
+<ul>
+<li>If a hole was drilled too wide, they’d just make a wider pin.</li>
+<li>If a bolt was too short, they’d file down the washer.</li>
+<li>Function over perfection. Pragmatism beats standardization when time is a luxury you don’t have.</li>
+</ul>
+<p>AI coding today is turning us all into "fitters." We are no longer architects designing perfect, interchangeable modules; we are engineers in a tank factory, taking AI-generated blocks that <em>almost</em> work and "fitting" them together with shims and workarounds. The AI can accelerate production, but it lacks the "eyes" to see why a part doesn't fit—it just produces more parts.</p>
+<h3>The Final Exorcism</h3>
+<p>If we outsource the struggle, we outsource the learning. The "fitting" process is where the real knowledge hides. When you manually debug a race condition for three days, you aren't just fixing a line of code; you are learning the "True Name" of concurrency.</p>
+<p>AI can give you the solution, but it cannot give you the "Aha!" moment. It can provide the syntax, but it cannot provide the <strong>Naming.</strong> As we move deeper into this automated era, the role of the developer is shifting from "Writer" to "Editor," and from "Builder" to "Exorcist." Our value will no longer lie in the volume of code we produce—AI has made the marginal cost of code zero. Our value will lie in our ability to look at a chaotic "fitting" of AI logic and give it a name.</p>
+<p>Because in the end, the AI is just a mirror of what has already been said. It can rearrange the words, but it cannot speak a new True Name into existence. If you let the AI do all the "shaving," don't be surprised when you find yourself standing in the cold, having forgotten why you wanted to wash the car in the first place.</p>
+<p>Master the tools, use them to "fit" your dreams into reality, but never stop looking for the "detour" in the relay. That's where the next great idea is hiding, waiting for someone to finally give it a name.</p>
+<hr />
+<p>Author's note:</p>
+<p>This original article was organically, hand-written by me <a href="https://blog.est.im/2026/stderr-03">https://blog.est.im/2026/stderr-03</a></p>
+<p>I also drafted this English version, and ultimately "fitted" together by Gemini 3.</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

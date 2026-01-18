@@ -54,6 +54,37 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2023/stdout-11"  rel="bookmark" >
+              <h2 class="card-title">浏览器拉起钉钉客户端并跳转OA工单</h2>
+            </a>
+            <p class="card-text"><p>又是 corporate software engineering 吃屎的一天。用户在内部系统走流程，厂里用的是钉钉自带的OA工单审批。已经接入了API创建、完成工单</p>
+<p>问题在于发起工单之后，用户并没有感知，不知道工单去哪里了，流程就断了，向钉钉官方售后发起咨询，对方丢了一句：不支持。无语</p>
+<p>只能自己鼓捣。已知工单链接，在钉钉聊天窗口内部的最短的网址为：</p>
+<pre><code>  https://aflow.dingtalk.com/dingtalk/mobile/homepage.htm?corpid=...&amp;procInstId=...#approval
+</code></pre>
+<p>对方丢了一个 <a href="https://open.dingtalk.com/document/isvapp/webapp-unified-routing-protocol#title-kkq-kgx-lbq">dingtalk:// 跳转协议</a></p>
+<p>反复尝试，发现一个很有用：</p>
+<blockquote>
+<p>桌面端打开URL <br />
+<code>dingtalk://dingtalkclient/page/link</code> <br />
+侧边栏： <code>pc_slide=true</code> <br />
+大容器（类似工作台容器）<code>ddtab=true</code>   </p>
+</blockquote>
+<p>于是构造一个试试：</p>
+<pre><code>  dingtalk://dingtalkclient/page/link?url=https%3A%2F%2Faflow.dingtalk.com%2Fdingtalk%2Fpc%2Fquery%2Fpchomepage.htm%3Fcorpid%3D...%26procInstId%3D...%23%2Fapproval
+</code></pre>
+<p>然后果然ok了。</p>
+<p>钉钉给人的感觉就是各个部门 hack 强行揉合起来一个怪物。各种不完善、不一致的问题。有空写一下吐槽。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2023-10-18T14:57:00+08:00">2023-10-18</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2023/stdout-10"  rel="bookmark" >
               <h2 class="card-title">SVG放在 img 中不能加载图片/字体</h2>
             </a>
@@ -1951,35 +1982,6 @@ user3043964493022: i 100% agree! i see it also at the preschool level... we are 
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2023-04-17T16:24:07+08:00">2023-04-17</time></p>
 <p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2023/stdout-04"  rel="bookmark" >
-              <h2 class="card-title">当前版本gpt的根本弱点</h2>
-            </a>
-            <p class="card-text"><p>下面的东西仅限当前，不是不可以解决的。</p>
-<ol>
-<li>gpt系列数学能力不行，是因为它把每一个数字当成一个整体在背加法表、乘法表。没理解到十进制的精髓</li>
-</ol>
-<p><img alt="" src="/images/2023/stdout-04-01.webp" /></p>
-<p>上图来自<a href="https://arxiv.org/abs/2005.14165">2020年 GPT-3 论文</a> 22页。主要还是因为 BPE 太糙。 </p>
-<ol start="2">
-<li>
-<p>gpt-4能通过一些文字材料和描述感知到每个字母大概长什么样，甚至知道一些简单汉字的结构，但是确切的书写结构它是不知道的。<br />
-所以要避免你的想法被 gpt 感知学会，得考虑每个字的偏旁部首作文章，而且你的变形得很少见。估计这个技巧在将来被AI监视的生活里会被用得上。</p>
-</li>
-<li>
-<p>还有一些语音漂移它知道概念但是因为没发音器官所以不能直接感知。但这也不是不能解决，只要语料够大也能摸到规律。相比英语等拼音文字而言，汉字这类表意但是又有同音的文字应该是文本类 AI 的普遍弱点。</p>
-</li>
-</ol>
-<p>如果你要秘密表达一些观点，可以通过描述发音、形状或者动作但是不直接写出来让对方领会。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2023-03-31T15:07:02+08:00">2023-03-31</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 
