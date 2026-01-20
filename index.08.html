@@ -54,6 +54,27 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2023/stdin-04"  rel="bookmark" >
+              <h2 class="card-title">关于发明的故事两则</h2>
+            </a>
+            <p class="card-text"><p><img alt="" src="/images/2023/stdin-04-01.jpg" /></p>
+<p>过去在非洲赞比西(Zambezi)河河边有许多鳄鱼，攻击到河边取水的人，结果不少人被鳄鱼吃掉。一个传教士李文斯顿(David Livingstone)路过，帮当地人想出一个好方法，在河边用木头建了一个栅栏，人在栅栏内定点取水，鳄鱼便无法伤害他们。</p>
+<p>这个故事出自道光一鸦年间，一个去非洲传教的苏格兰人自传《深入非洲三万里<br />
+·Biography of David Livingstone》，俞敏洪阐述这个故事说上千年来人们就这么打水没人想过去解决被鳄鱼吃掉的问题。而走出非洲的人类遇到了太多的挑战——不同季节的挑战、不同环境的挑战、不同族群的挑战，在一次次挑战中人类变得越来越机警和有创造力，越来越懂得利用工具和群体合作。</p>
+<p>不知道是Zambezi河边的土著真的这么蠢，还是俞敏洪发挥歪了？直到我看到了第二个故事：</p>
+<p>李商隐的那句诗：“何当共剪西窗烛，却话巴山夜雨时”。奇怪，剪烛是什么意思？你想，蜡烛燃烧得快，但是烛芯，就是那根中间的棉线，燃烧得慢，所以点蜡烛的时候长期不剪掉烛芯，就会导致火焰太大，浪费。所以，古人用蜡烛旁边还得配把剪子。这太麻烦了啊。那今天的蜡烛为啥不会出现这个问题呢？这个问题是直到1820年才解决的。法国人强巴歇列发明了三根棉线编成的烛芯，蜡烛烧的时候，自然就松开，末端正好翘到火焰的外侧，然后就被火烧掉了。就没有剪烛这个问题了。你看，就这么一个简单的技术，要等到19世纪初期，蒸汽机都发明了，才有机会解决。从这个例子，你看得出来，人类文明有多复杂，创新的发生有多偶然了。</p>
+<p>这个故事来自《罗胖60秒·2019年·056》，搜了下，这个叫 <a href="https://pubquizammo.wordpress.com/2009/04/23/7-the-candle-wick-is-probably-the-best-re-invention-of-the-19th-century/">braided wick</a>，但是具体是不是这法国人发明的我没查到。但是的确说是19世纪，灯芯才被改良。读完这篇对蜡烛这个古老的「发明」有了全新的认知。好神奇啊。比如为什么「香」是直接拿来燃烧，而蜡烛一定要有根棉线做的「灯芯」？蜡作为固体是没法直接燃烧的，蜡自己熔点低而且烧得慢，上面的石蜡融化后就会盖住下面的石蜡，隔绝空气，使下面的石蜡难以燃烧。解决办法是让石蜡液化、气化。灯芯起了一个capillary action毛细作用，蜡烛燃烧先把表面一层蜡融化，然后吸到焰心再充分燃烧。所谓 the wick is simply a delivery devise for the wax。如何控制燃烧速度不要太快导致黑烟，而不要太暗导致照明不够，听上去又是一个负反馈优化问题？</p>
+<p>感觉蜡烛其实也不简单。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2023-04-17T16:24:07+08:00">2023-04-17</time></p>
+<p>stdin</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2023/stdout-04"  rel="bookmark" >
               <h2 class="card-title">当前版本gpt的根本弱点</h2>
             </a>
@@ -780,32 +801,6 @@ A: yes!</p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-11-20T18:59:28+08:00">2022-11-20</time></p>
 <p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2022/stdout-11"  rel="bookmark" >
-              <h2 class="card-title">8行javascript录制屏幕</h2>
-            </a>
-            <p class="card-text"><p>看到个骚操作，玩了一下，写了个 bookmarklet</p>
-<pre><code class="language-javascript">navigator.mediaDevices.getDisplayMedia({video:true}).then(function(stream){
-  const mr=new MediaRecorder(stream,{mimeType:&quot;video/webm;codecs=h264,opus&quot;});
-  mr.ondataavailable=function(ev){
-    const a=document.createElement('a');a.href=URL.createObjectURL(ev.data);
-    a.download ='screen_capture.webm';a.click();
-  }; // will be called when .stop() with ev.data as a Blob
-  mr.start();
-})
-</code></pre>
-<p>这段代码也是很多WebRTC共享白板的实现原理。看起来也很简单，而且不需要额外的权限确认。</p>
-<p>如果不需要另存为一个名字，则可以直接 <code>location.assign()</code> 又节约几个字。不知道还有没有办法继续节约代码量？</p>
-<p>有点很好奇为啥chrome不支持 .mp4 封装。偏袒自家的 webm ？</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2022-11-18T18:50:05+08:00">2022-11-18</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Linux服务器各类“面板” – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Linux服务器各类“面板”" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stdout-05" />
+    <meta property="og:url" content="https://blog.est.im/2026/stdout-05">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Linux服务器各类“面板”">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Linux服务器各类“面板”</h2>
+    <p class="post-date">Posted <time datetime="2026-01-20T21:46:00+08:00">2026-01-20</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>一直习惯手动敲，想尝试下各种面板</p>
+<p>Redhat 的 Cockpit</p>
+<blockquote>
+<p>The following NEW packages will be installed: cockpit cockpit-bridge cockpit-networkmanager cockpit-packagekit cockpit-storaged cockpit-system cockpit-ws cracklib-runtime dconf-gsettings-backend dconf-service dns-root-data dnsmasq-base glib-networking glib-networking-common glib-networking-services gsettings-desktop-schemas libblockdev-mdraid2 libbluetooth3 libbytesize-common libbytesize1 libcrack2 libdconf1 libndp0 libnl-route-3-200 libnm0 libpcsclite1 libproxy1v5 libpwquality-common libpwquality-tools libpwquality1 libteamdctl0 network-manager network-manager-pptp ppp pptp-linux session-migration wamerican wpasupplicant 0 upgraded, 38 newly installed, 0 to remove and 81 not upgraded. Need to get 13.0 MB of archives. After this operation, 28.4 MB of additional disk space will be used.</p>
+</blockquote>
+<p>Webmin 这货居然是 perl 的。这是请了一屋子人</p>
+<p>The following NEW packages will be installed: html2text libalgorithm-c3-perl libauthen-pam-perl libb-hooks-endofscope-perl libb-hooks-op-check-perl libclass-c3-perl libclass-c3-xs-perl libclass-data-inheritable-perl libclass-inspector-perl libclass-method-modifiers-perl libclass-singleton-perl libclass-xsaccessor-perl libcommon-sense-perl libdata-optlist-perl libdatetime-locale-perl libdatetime-perl libdatetime-timezone-perl libdbd-mysql-perl libdbi-perl libdevel-callchecker-perl libdevel-caller-perl libdevel-lexalias-perl libdevel-stacktrace-perl libdynaloader-functions-perl libencode-detect-perl libeval-closure-perl libexception-class-perl libfile-sharedir-perl libio-pty-perl libjson-xs-perl libmodule-implementation-perl libmodule-runtime-perl libmro-compat-perl libmysqlclient21 libnamespace-autoclean-perl libnamespace-clean-perl libnet-ssleay-perl libpackage-stash-perl libpackage-stash-xs-perl libpadwalker-perl libparams-classify-perl libparams-util-perl libparams-validationcompiler-perl libqrencode4 libreadonly-perl libref-util-perl libref-util-xs-perl librole-tiny-perl libsocket6-perl libspecio-perl libsub-exporter-perl libsub-exporter-progressive-perl libsub-identify-perl libsub-install-perl libsub-name-perl libsub-quote-perl libtry-tiny-perl libtypes-serialiser-perl libvariable-magic-perl libxstring-perl mysql-common perl-openssl-defaults qrencode unzip usermin webmin 0 upgraded, 66 newly installed, 0 to remove and 79 not upgraded. Need to get 44.6 MB of archives. After this operation, 272 MB of additional disk space will be used.</p>
+<p>Ajenti 给我装了一堆 pip 然后编译 ldap 的时候挂了</p>
+<p>国产的没怎么试，怕装了有漏洞。</p>
+<p>但是这几个我粗略看了下感觉不太符合我的需要。基本的东西敲命令就行。复杂的比如网络调优它也帮不上什么大忙。</p>
+<p>我本来设想的是找一个 panel 的工具全面评估一下VPS的安全性、吞吐性能、网络触达性，顺便支持调整。现在看来要失望了。</p>
+<p>跟朋友聊了一下，感觉这种需求很niche了。现在自己跑服务器属于非常小众的人群了。大厂买PaaS的现成，或者 k8s 容器内部调优，只有国内这帮从 OpenWRT 一路成长过来的人才会孜孜不倦的折腾VPS吧。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>
