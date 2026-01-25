@@ -54,6 +54,83 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-06"  rel="bookmark" >
+              <h2 class="card-title">AI搞不懂人称代词</h2>
+            </a>
+            <p class="card-text"><p>陪娃学英语，由于我没啥耐心，于是找了豆包跟他陪练。课程是[New Concept English第一册 Lesson 140=(https://www.bilibili.com/video/BV1xa411J7jJ)（是的很old school），大概内容是：</p>
+<p>A提问： Are you tired?<br />
+B没听清：What does he want to know<br />
+C转述：He wants to know if you are tired.</p>
+<p>我把课本截图给豆包，豆包很快明白这一课讲的是啥，我的prompt是：豆包你扮演A和B，我回答C，你指出我的语法错误之后换别的问题继续问我。</p>
+<p>这样进行得很顺利，直到豆包问了这样一个问题：</p>
+<p>A: What can i do for you<br />
+B: What does she want to know? <br />
+C: <strong><em>_</em></strong>__</p>
+<p>娃不怎么熟练，回答 He wants to know what I can do for you。<br />
+豆包说：“完美，can也完全正确，语序超稳”<br />
+我：？？？？</p>
+<p>我以为是国产AI英语不行，去问 ChatGPT：</p>
+<blockquote>
+<p>English test:</p>
+<p>Person A: What can i do for you<br />
+Person B: What does she want to know?<br />
+Person C: <strong><em>_</em></strong>__</p>
+<p>Student answer as person C: He wants to know what I can do for you</p>
+<p>Is the answer correct?</p>
+</blockquote>
+<p>ChatGPT 回答：</p>
+<blockquote>
+<p>Yes, the student’s answer is grammatically correct and appropriate for the situation.<br />
+The sentence correctly:<br />
+1. Converts a direct question into an indirect statement (“what I can do for you,” not “what can I do for you”).<br />
+2. Uses proper tense and word order.<br />
+3. Maintains coherent reference across speakers (assuming “he” refers to Person A and “she” to Person B).<br />
+Stylistically, a teacher might also accept: “He wants to know what you can do for her.”</p>
+</blockquote>
+<p>这个 He wants to know what you can do for her 把我给整笑了。。。</p>
+<p>我怕是我原文没说清楚，又新开了个对话：</p>
+<blockquote>
+<p>English grammar test:</p>
+<p>Person A says to B: What can i do for you?<br />
+Person B says to C: What does she want to know?<br />
+Person C says to B: <strong><em>_</em></strong>__</p>
+</blockquote>
+<p>ChatGPT一本正经的回答：</p>
+<blockquote>
+<p>The blank in Person C’s reply should reflect answering Person B’s question about what Person A wants. A natural response would be:<br />
+“She wants to know what she can do for me.”</p>
+</blockquote>
+<p>我直接无语了。于是我决定开麦跟ChatGPT对喷。ChatGPT一直回答：</p>
+<ul>
+<li>Yes, exactly</li>
+<li>Sounds good!</li>
+<li>Perfect! That’s a great response.</li>
+<li>Excellent! That’s another perfect response.</li>
+<li>Great job!</li>
+<li>You did great!</li>
+<li>Your response is spot on</li>
+</ul>
+<p>我怀疑奥特曼是找三哥来标注的数据。为了迎合人连正确错误都不要了。于是我换 Gemini 问，它说：</p>
+<blockquote>
+<p>这句回答 He wants to know what I  can do for you 不对<br />
+正确的是 He wants to know what he can do for you</p>
+</blockquote>
+<p>但是 gemini 没搞明白B已经说了A是个 she 🤣 我怀疑是娃的回答给他误导了，于是新开一个对话，让Gemini直接回答C，gemini答对了</p>
+<blockquote>
+<p>She wants to know what she can do for you</p>
+</blockquote>
+<p>这几轮下来，我感觉可以得出一个结论，AI对 pronoun shift 容易犯错，注意力不够集中。各位拿AI来训练英语的要小心了。</p>
+<p>这是我已知的LLM的第三个硬缺陷了。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-01-25T16:13:00+08:00">2026-01-25</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-05"  rel="bookmark" >
               <h2 class="card-title">Linux服务器各类“面板”</h2>
             </a>
@@ -2687,96 +2764,6 @@ async def async_streamer():
 <p><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/North_pole_map.jpeg/800px-North_pole_map.jpeg" /></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2023-12-18T23:10:40+08:00">2023-12-18</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2023/stdout-17"  rel="bookmark" >
-              <h2 class="card-title">query git notes with Github GraphQL</h2>
-            </a>
-            <p class="card-text"><p>git notes is an interesting feature, you can use it like </p>
-<pre><code class="language-bash">git notes add -m &quot;hello test git notes&quot;
-git push origin 'refs/notes/*'
-</code></pre>
-<p>Github supported them back <a href="https://github.blog/2010-08-25-git-notes-display/">in 2010</a> then gave up LMAO.</p>
-<p>If you need to retrive them with Github API, try GraphQL like this</p>
-<pre><code>  {
-    repository(owner: "est", name: "snippets") {
-      refs(refPrefix:"refs/notes/",first:1) {
-        nodes{
-          ... on Ref{
-            target {
-              oid
-              ... on Commit{
-                changedFilesIfAvailable
-                message
-                tree{
-                  oid
-                  entries{
-                    oid
-                    path
-                    size
-                    lineCount
-                    mode
-                    object{
-                      ... on Blob{
-                        byteSize
-                        text
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-</code></pre>
-<p>It will return something like:</p>
-<pre><code>  {
-    "data": {
-      "repository": {
-        "refs": {
-          "nodes": [
-            {
-              "target": {
-                "oid": "bfdfda121f3d8a2d6aa399e3e8f0d58b3db0a543",
-                "changedFilesIfAvailable": 1,
-                "message": "Notes added by 'git notes add'",
-                "tree": {
-                  "oid": "2ab3e6a8b0dff6596fa60ecfb3c61bf91e5b4e1f",
-                  "entries": [
-                    {
-                      "oid": "404d353a254ffbc97b2e16d17b8c100461aef586",
-                      "path": "4fb1272f1e235580f87e3ec071984658de050dc9",
-                      "size": 21,
-                      "lineCount": 1,
-                      "mode": 33188,
-                      "object": {
-                        "byteSize": 21,
-                        "text": "hello test git notes\n"
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  }
-</code></pre>
-<p>Here <code>"path": "4fb1272f1e235580f87e3ec071984658de050dc9"</code> is the commit SHA.</p>
-<p>If you add more filter parameters in <code>refs()</code> you can fetch all the notes.</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2023-11-27T09:06:11+08:00">2023-11-27</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

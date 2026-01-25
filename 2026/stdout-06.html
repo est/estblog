@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AI搞不懂人称代词 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="AI搞不懂人称代词" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stdout-06" />
+    <meta property="og:url" content="https://blog.est.im/2026/stdout-06">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="AI搞不懂人称代词">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">AI搞不懂人称代词</h2>
+    <p class="post-date">Posted <time datetime="2026-01-25T16:13:00+08:00">2026-01-25</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>陪娃学英语，由于我没啥耐心，于是找了豆包跟他陪练。课程是[New Concept English第一册 Lesson 140=(https://www.bilibili.com/video/BV1xa411J7jJ)（是的很old school），大概内容是：</p>
+<p>A提问： Are you tired?<br />
+B没听清：What does he want to know<br />
+C转述：He wants to know if you are tired.</p>
+<p>我把课本截图给豆包，豆包很快明白这一课讲的是啥，我的prompt是：豆包你扮演A和B，我回答C，你指出我的语法错误之后换别的问题继续问我。</p>
+<p>这样进行得很顺利，直到豆包问了这样一个问题：</p>
+<p>A: What can i do for you<br />
+B: What does she want to know? <br />
+C: <strong><em>_</em></strong>__</p>
+<p>娃不怎么熟练，回答 He wants to know what I can do for you。<br />
+豆包说：“完美，can也完全正确，语序超稳”<br />
+我：？？？？</p>
+<p>我以为是国产AI英语不行，去问 ChatGPT：</p>
+<blockquote>
+<p>English test:</p>
+<p>Person A: What can i do for you<br />
+Person B: What does she want to know?<br />
+Person C: <strong><em>_</em></strong>__</p>
+<p>Student answer as person C: He wants to know what I can do for you</p>
+<p>Is the answer correct?</p>
+</blockquote>
+<p>ChatGPT 回答：</p>
+<blockquote>
+<p>Yes, the student’s answer is grammatically correct and appropriate for the situation.<br />
+The sentence correctly:<br />
+1. Converts a direct question into an indirect statement (“what I can do for you,” not “what can I do for you”).<br />
+2. Uses proper tense and word order.<br />
+3. Maintains coherent reference across speakers (assuming “he” refers to Person A and “she” to Person B).<br />
+Stylistically, a teacher might also accept: “He wants to know what you can do for her.”</p>
+</blockquote>
+<p>这个 He wants to know what you can do for her 把我给整笑了。。。</p>
+<p>我怕是我原文没说清楚，又新开了个对话：</p>
+<blockquote>
+<p>English grammar test:</p>
+<p>Person A says to B: What can i do for you?<br />
+Person B says to C: What does she want to know?<br />
+Person C says to B: <strong><em>_</em></strong>__</p>
+</blockquote>
+<p>ChatGPT一本正经的回答：</p>
+<blockquote>
+<p>The blank in Person C’s reply should reflect answering Person B’s question about what Person A wants. A natural response would be:<br />
+“She wants to know what she can do for me.”</p>
+</blockquote>
+<p>我直接无语了。于是我决定开麦跟ChatGPT对喷。ChatGPT一直回答：</p>
+<ul>
+<li>Yes, exactly</li>
+<li>Sounds good!</li>
+<li>Perfect! That’s a great response.</li>
+<li>Excellent! That’s another perfect response.</li>
+<li>Great job!</li>
+<li>You did great!</li>
+<li>Your response is spot on</li>
+</ul>
+<p>我怀疑奥特曼是找三哥来标注的数据。为了迎合人连正确错误都不要了。于是我换 Gemini 问，它说：</p>
+<blockquote>
+<p>这句回答 He wants to know what I  can do for you 不对<br />
+正确的是 He wants to know what he can do for you</p>
+</blockquote>
+<p>但是 gemini 没搞明白B已经说了A是个 she 🤣 我怀疑是娃的回答给他误导了，于是新开一个对话，让Gemini直接回答C，gemini答对了</p>
+<blockquote>
+<p>She wants to know what she can do for you</p>
+</blockquote>
+<p>这几轮下来，我感觉可以得出一个结论，AI对 pronoun shift 容易犯错，注意力不够集中。各位拿AI来训练英语的要小心了。</p>
+<p>这是我已知的LLM的第三个硬缺陷了。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>
