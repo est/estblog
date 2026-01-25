@@ -57,7 +57,7 @@
             <a href="/2026/stdout-06"  rel="bookmark" >
               <h2 class="card-title">AI搞不懂人称代词</h2>
             </a>
-            <p class="card-text"><p>陪娃学英语，由于我没啥耐心，于是找了豆包跟他陪练。课程是[New Concept English第一册 Lesson 140=(https://www.bilibili.com/video/BV1xa411J7jJ)（是的很old school），大概内容是：</p>
+            <p class="card-text"><p>陪娃学英语，由于我没啥耐心，于是找了豆包跟他陪练。课程是<a href="https://www.bilibili.com/video/BV1xa411J7jJ">New Concept English Book I Lesson 140</a>（是的很old school），大概内容是：</p>
 <p>A提问： Are you tired?<br />
 B没听清：What does he want to know<br />
 C转述：He wants to know if you are tired.</p>
@@ -66,7 +66,10 @@ C转述：He wants to know if you are tired.</p>
 <p>A: What can i do for you<br />
 B: What does she want to know? <br />
 C: <strong><em>_</em></strong>__</p>
-<p>娃不怎么熟练，回答 He wants to know what I can do for you。<br />
+<p>甲：我能帮你干点啥不？<br />
+乙：她问的啥来着？<br />
+丙：她问她能帮你干点啥不</p>
+<p>娃不怎么熟练，扮演C的回答： He wants to know what I can do for you。<br />
 豆包说：“完美，can也完全正确，语序超稳”<br />
 我：？？？？</p>
 <p>我以为是国产AI英语不行，去问 ChatGPT：</p>
@@ -110,16 +113,17 @@ Person C says to B: <strong><em>_</em></strong>__</p>
 <li>You did great!</li>
 <li>Your response is spot on</li>
 </ul>
-<p>我怀疑奥特曼是找三哥来标注的数据。为了迎合人连正确错误都不要了。于是我换 Gemini 问，它说：</p>
+<p>这是对话<a href="https://chatgpt.com/share/6975d972-567c-8012-a686-6635dd60f940">分享链接</a></p>
+<p>我怀疑奥特曼是找三哥来标注的数据。为了迎合人连正确错误都不要了。于是我换 Gemini 问，gemini看娃的的回答，说不对。正确的应该是</p>
 <blockquote>
-<p>这句回答 He wants to know what I  can do for you 不对<br />
-正确的是 He wants to know what he can do for you</p>
+<p>He wants to know what he can do for you</p>
 </blockquote>
 <p>但是 gemini 没搞明白B已经说了A是个 she 🤣 我怀疑是娃的回答给他误导了，于是新开一个对话，让Gemini直接回答C，gemini答对了</p>
 <blockquote>
 <p>She wants to know what she can do for you</p>
 </blockquote>
 <p>这几轮下来，我感觉可以得出一个结论，AI对 pronoun shift 容易犯错，注意力不够集中。各位拿AI来训练英语的要小心了。</p>
+<p>Transformer 是基于概率吐字的，he/she 这种高频词对AI来说大差不差。所以胡诌一个。LLM对于这种强指向、 强因果的关联性基本靠蒙。</p>
 <p>这是我已知的LLM的第三个硬缺陷了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-01-25T16:13:00+08:00">2026-01-25</time></p>
