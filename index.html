@@ -54,6 +54,25 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdin-02"  rel="bookmark" >
+              <h2 class="card-title">编程就是玩泥巴</h2>
+            </a>
+            <p class="card-text"><p>编程就像拿起一块泥巴，慢慢地把它捏成你想要的形状。在这个过程中，你与媒介和材料的亲密接触，会教会你你正在创造的东西——它的特性、容忍度与局限——即便你在创造的同时才逐渐理解它。你对你想做的东西，最不了解的时刻，恰恰是刚开始动手的那一刻。那时，你以为自己知道想做什么。而正是通过反复迭代的过程，你才会明白自己真正想要创造的是什么——无论一开始你是否意识到这一点。设计不仅仅是解决问题，更是发现真正需要解决的问题，然后去解决它。我们常常失败，并非因为没能把问题解决好，而是因为我们解决了错误的问题。</p>
+<p>当你跳过创造的过程，你用一件“你以为自己想要的东西”的影子，交换了原本可以在实践中学到的真正造物经验。被直接交付一件近似你设想的成品，就剥夺了那种发现与学习的本能——这是任何真正创作实践的核心。唯有从泥块开始亲手塑造的东西，你才能全然了解它；而从自动售货机里买来的成品，你对它一无所知。</p>
+<p>Coding is like taking a lump of clay and slowly working it into the thing you want it to become. It is this process, and your intimacy with the medium and the materials you’re shaping, that teaches you about what you’re making – its qualities, tolerances, and limits – even as you make it. You know the least about what you’re making the moment before you actually start making it. That’s when you think you know what you want to make. The process, which is an iterative one, is what leads you towards understanding what you actually want to make, whether you were aware of it or not at the beginning. Design is not merely about solving problems; it’s about discovering what the right problem to solve is and then solving it. Too often we fail not because we didn’t solve a problem well but because we solved the wrong problem.</p>
+<p>When you skip the process of creation you trade the thing you could have learned to make for the simulacrum of the thing you thought you wanted to make. Being handed a baked and glazed artefact that approximates what you thought you wanted to make removes the very human element of discovery and learning that’s at the heart of any authentic practice of creation. Where you know everything about the thing you shaped into being from when it was just a lump of clay, you know nothing about the image of the thing you received for your penny from the vending machine.</p>
+<p>来自 <a href="https://mastodon.ar.al/@aral/114160190826192080">Aral Balkan</a> via <a href="https://news.ycombinator.com/item?id=46881264">HN</a></p>
+<p>AI时代，人类书写的优美文字越来越值得珍惜了。错过了玩泥巴，就让出了<a href="https://blog.est.im/2026/stderr-03">命名权</a>。这也是我觉得损失最大的地方  <a href="https://blog.est.im/2026/stderr-04">Hard Things in Computer Science, And AI Aren’t Fixing Them</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-02-05T19:00:00+08:00">2026-02-05</time></p>
+<p>stdin</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-06"  rel="bookmark" >
               <h2 class="card-title">AI搞不懂人称代词</h2>
             </a>
@@ -1188,41 +1207,6 @@ Fratelli d'Italia (Inno di Mameli) ... （贴上歌词全文</p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2025-12-04T17:19:00+08:00">2025-12-04</time></p>
 <p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2025/stdout-17"  rel="bookmark" >
-              <h2 class="card-title">OpenWRT p910nd适配兄弟打印机</h2>
-            </a>
-            <p class="card-text"><p>买了个兄弟牌(Brother)的打印机，热销基础款，听说他家的联网打印很烂，所以只有USB的。</p>
-<p>又买了个打印盒子，OpenWRT的，本来以为是 CUPS，结果一看 p910nd 好家伙。看了下这玩意纯粹是 tcp 直连 <code>/dev/usb/lp0</code> 。</p>
-<p>在 macOS 上配置陷入了迷茫，最后问ChatGPT给调通了居然。</p>
-<p>首先还是得下载官方驱动，然后添加 IP打印机</p>
-<ul>
-<li>Address 那里输入OpenWRT的 IP:9100 </li>
-<li>Protocol 这里注意，选 HP JetDirect。这里的意思为 AppSocket。</li>
-<li>最下面的 Use 选择驱动</li>
-</ul>
-<p>也就是说IPP, AirPrint，LPD这些协议都不行。</p>
-<p>然后试了下也失败，看了下默认USB双向通信，最好改成单向。OpenWRT上：</p>
-<pre><code># cat /etc/config/p910nd 
-config p910nd
-  option device        /dev/usb/lp0
-  option port          0
-  option bidirectional 0
-  option enabled       1
-</code></pre>
-<p>macOS上：</p>
-<p><code>lpadmin -p &lt;IP打印机名字&gt;  -o usb-no-bidi-default=true</code></p>
-<p>应该就行了。</p>
-<p>支持 Airprint 就下一步想办法了。安卓上的打印只能输入IP，不支持 9100端口，估计支持了也是白费力，还得 .ppd 之类的翻译一下。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2025-11-30T12:43:00+08:00">2025-11-30</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 
