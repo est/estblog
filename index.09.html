@@ -54,6 +54,47 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2022/stdout-12"  rel="bookmark" >
+              <h2 class="card-title">Web Animation实现页面逐渐变灰</h2>
+            </a>
+            <p class="card-text"><p>在2006年我开始网上留下印记的时候，写了一个 dHTML 特效模拟<a href="https://blog.est.im/cnblogs/600413">XP关机对话框变灰</a>， 那个时候大行其道的还是IE6，用的还是微软特有的 <code>filter:progid:DXImageTransform.Microsoft.Fade</code> 叠加两个<code>&lt;div&gt;</code>实现。</p>
+<p>今天（2022-11-30）恰好长者去逝，学习一下最新的css姿势再实现一次。本来想用 CSS Animation+Filter实现，还是比较麻烦。比如我参考的例子是<a href="https://levelup.gitconnected.com/recreating-the-red-dead-redemption-2-tintype-loading-screen-effect-in-css-10ca87d5b9de">模仿 Red Dead Redemption 2</a> 照片效果css</p>
+<pre><code>  #invert{
+    filter: invert(1.0) grayscale(1.0);
+  }
+  #photo{
+    animation: blur 5s infinite alternate;
+  }
+  @keyframes blur{
+    from{
+      filter: blur(3px);
+      opacity: 0;
+    }
+    to{
+      filter: blur(0px);
+      opacity: 1;
+    }
+  }
+</code></pre>
+<p>这个方式有个问题就是需要单独设置一个 <code>&lt;script&gt;</code> 元素。后来经过 <a href="https://twitter.com/yuanchuan23">@yuanchuan23</a> 的指点发现可以通过 Web Animation 更简单的实现：</p>
+<pre><code>  document.body.animate([
+    {filter: 'brightness(none) grayscale(0%)'},
+    {filter: 'brightness(10) grayscale(10%)', offset: 0.2},
+    {filter: 'brightness(1) grayscale(100%)'}
+  ], {duration: 2000, fill: 'forwards'})
+</code></pre>
+<p>这样写比 css 方便多了。加一个类似照相机闪光灯过曝的效果。其中 <code>fill: 'forwards'</code> 可以让变灰之后停下来。</p>
+<p>放一个 demo 在这里：<a href="https://lab.est.im/grayscale_animation">https://lab.est.im/grayscale_animation</a> 点一下可以再变一次</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2022-11-30T18:02:18+08:00">2022-11-30</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2022/stdin-19"  rel="bookmark" >
               <h2 class="card-title">Twitter资助的 Bluesky项目</h2>
             </a>
@@ -820,31 +861,6 @@ Corporate Memphis</p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-08-19T17:10:39+08:00">2022-08-19</time></p>
 <p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2022/stdout-08"  rel="bookmark" >
-              <h2 class="card-title">macOS动态定时弹提醒</h2>
-            </a>
-            <p class="card-text"><p>上班地方有个付费计时，想在倒计时结束前在电脑弹个提醒，手动结束计费，趴下来API了。接下来就是如何弹窗了。</p>
-<p>本来想用macOS自带的 <code>UNUserNotificationCenter</code> 通过 PyObjC 撸个弹窗，遇到两个问题：</p>
-<ol>
-<li>系统自带的 PyObjC 太老了。还是Python2.7的。在<code>/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/PyObjC</code></li>
-<li>只能兼容旧款的 <code>NSUserNotification</code>，状态为 macOS 10.8–11.0 Deprecated<br />
- 新的API调用需要进程签名。<br />
-<code>codesign -dv --verbose=4 /usr/bin/python2.7</code></li>
-</ol>
-<p>只有官方的python2.7签名了 anaconda/miniconda 的都没签名。算了。还是直接 AppleScript 走起</p>
-<pre><code>  osascript  -e 'display notification "还有1分钟到达时辰" with title "准时付费" sound name "Frog"'
-</code></pre>
-<p>想在这个提示里加一个 snooze 1分钟功能，但是好像无法支持。罢了。2333</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2022-07-20T14:52:56+08:00">2022-07-20</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 
