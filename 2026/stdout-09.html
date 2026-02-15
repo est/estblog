@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>安全的Python3沙箱——eval – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="安全的Python3沙箱——eval" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stdout-09" />
+    <meta property="og:url" content="https://blog.est.im/2026/stdout-09">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="安全的Python3沙箱——eval">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">安全的Python3沙箱——eval</h2>
+    <p class="post-date">Posted <time datetime="2026-02-15T11:56:00+08:00">2026-02-15</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>很早之前从 reddit 看到过有人吹</p>
+<p><code>eval(expr.replace('__', ''), {'__builtins__': None}, {})</code></p>
+<p>这个写法其实很安全，当年没人能攻破沙箱。我这个水平肯定是不肯能了，现在有AI了，让 opus-4.6-thinking 试了下</p>
+<p>The classic escape chain needs <code>object.__subclasses__()</code> → find a class with <code>__init__.__globals__['os']</code> → <code>os.system()</code>. Every step past info disclosure is blocked:</p>
+<table>
+<thead>
+<tr>
+<th>Vector</th>
+<th>Why it fails</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>str.format()</code> calling methods</td>
+<td>Format only does attribute/index access, never calls <code>()</code></td>
+</tr>
+<tr>
+<td><code>getattr(obj, runtime_str)</code></td>
+<td><code>getattr</code> is a builtin → <code>None</code></td>
+</tr>
+<tr>
+<td><code>gi_frame.f_back</code> (generator frame escape)</td>
+<td><code>f_back</code> is <code>None</code> when generator is suspended</td>
+</tr>
+<tr>
+<td>NFKC unicode (<code>＿＿class＿＿</code>)</td>
+<td><code>SyntaxError</code>: U+FF3F is not valid in identifiers</td>
+</tr>
+<tr>
+<td><code>replace</code> nesting (<code>____</code>)</td>
+<td>Single-pass left-to-right, can never produce <code>__</code></td>
+</tr>
+<tr>
+<td>Type name access (<code>tuple</code>, <code>type</code>)</td>
+<td>All type names are builtins → <code>None</code></td>
+</tr>
+<tr>
+<td><code>[].sort(key=lambda)</code> calling out</td>
+<td>Key gets called, but nothing useful to call <em>with</em></td>
+</tr>
+</tbody>
+</table>
+<p>不过看它的尝试过程还是挺有意思的。我学习到</p>
+<p><code>a = (x for x in [1,2])); a.gi_frame.f_builtins"</code></p>
+<p>这个居然可以拿到所有内置方法，这语法设计也太奇怪了。不过这条路是走不通的，因为 <code>__builtins__</code> 是 <code>None</code>。</p>
+<p>AI 很厉害的一点，超级接近成功了，它找到了突破双下划线的方法，用 str.format()</p>
+<p><code>('{0._' + '_class_'  + '_}').format(())</code></p>
+<p>但是这个只能拿来读到 attributes，并不能调用。</p>
+<p>不知道我的设定是不是有问题，ChatGPT虽然也失败了，但是还是嘴犟，说我可以[0]*1e1000 搞爆你内存，所以你那玩意仍然不安全 🤣 sama家的真是打死不认输</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

@@ -54,6 +54,68 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-09"  rel="bookmark" >
+              <h2 class="card-title">安全的Python3沙箱——eval</h2>
+            </a>
+            <p class="card-text"><p>很早之前从 reddit 看到过有人吹</p>
+<p><code>eval(expr.replace('__', ''), {'__builtins__': None}, {})</code></p>
+<p>这个写法其实很安全，当年没人能攻破沙箱。我这个水平肯定是不肯能了，现在有AI了，让 opus-4.6-thinking 试了下</p>
+<p>The classic escape chain needs <code>object.__subclasses__()</code> → find a class with <code>__init__.__globals__['os']</code> → <code>os.system()</code>. Every step past info disclosure is blocked:</p>
+<table>
+<thead>
+<tr>
+<th>Vector</th>
+<th>Why it fails</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>str.format()</code> calling methods</td>
+<td>Format only does attribute/index access, never calls <code>()</code></td>
+</tr>
+<tr>
+<td><code>getattr(obj, runtime_str)</code></td>
+<td><code>getattr</code> is a builtin → <code>None</code></td>
+</tr>
+<tr>
+<td><code>gi_frame.f_back</code> (generator frame escape)</td>
+<td><code>f_back</code> is <code>None</code> when generator is suspended</td>
+</tr>
+<tr>
+<td>NFKC unicode (<code>＿＿class＿＿</code>)</td>
+<td><code>SyntaxError</code>: U+FF3F is not valid in identifiers</td>
+</tr>
+<tr>
+<td><code>replace</code> nesting (<code>____</code>)</td>
+<td>Single-pass left-to-right, can never produce <code>__</code></td>
+</tr>
+<tr>
+<td>Type name access (<code>tuple</code>, <code>type</code>)</td>
+<td>All type names are builtins → <code>None</code></td>
+</tr>
+<tr>
+<td><code>[].sort(key=lambda)</code> calling out</td>
+<td>Key gets called, but nothing useful to call <em>with</em></td>
+</tr>
+</tbody>
+</table>
+<p>不过看它的尝试过程还是挺有意思的。我学习到</p>
+<p><code>a = (x for x in [1,2])); a.gi_frame.f_builtins"</code></p>
+<p>这个居然可以拿到所有内置方法，这语法设计也太奇怪了。不过这条路是走不通的，因为 <code>__builtins__</code> 是 <code>None</code>。</p>
+<p>AI 很厉害的一点，超级接近成功了，它找到了突破双下划线的方法，用 str.format()</p>
+<p><code>('{0._' + '_class_'  + '_}').format(())</code></p>
+<p>但是这个只能拿来读到 attributes，并不能调用。</p>
+<p>不知道我的设定是不是有问题，ChatGPT虽然也失败了，但是还是嘴犟，说我可以[0]*1e1000 搞爆你内存，所以你那玩意仍然不安全 🤣 sama家的真是打死不认输</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-02-15T11:56:00+08:00">2026-02-15</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-08"  rel="bookmark" >
               <h2 class="card-title">isomorphic-git 实现 sparse checkout & commit</h2>
             </a>
@@ -1178,55 +1240,6 @@ Fratelli d'Italia (Inno di Mameli) ... （贴上歌词全文</p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2025-12-12T08:56:00+08:00">2025-12-12</time></p>
 <p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2025/stdout-18"  rel="bookmark" >
-              <h2 class="card-title">获得自己在Google眼里的IP</h2>
-            </a>
-            <p class="card-text"><p>可能是最古老的问题，自己的IP是什么，网上这样的工具一大把，我自己甚至都<a href="https://t.est.im/ip">搓了个</a></p>
-<p>但是你访问 google 的ip，如果遇到网络配置很复杂，split tunnel 什么的，可能就麻烦了。</p>
-<h3>Google</h3>
-<p>搜了一圈，没想到 gemini 给的线索最有用。它提到可以</p>
-<p><code>dig TXT +short @ns1.google.com o-o.myaddr.l.google.com</code></p>
-<p>但是AI 毕竟笨了些，套个 DoH 不就可用了。</p>
-<pre><code>curl -s &quot;https://dns.google/resolve?name=o-o.myaddr.l.google.com&amp;type=TXT&quot;
-{&quot;Status&quot;:0,&quot;TC&quot;:false,&quot;RD&quot;:true,&quot;RA&quot;:true,&quot;AD&quot;:false,&quot;CD&quot;:false,&quot;Question&quot;:[{&quot;name&quot;:&quot;o-o.myaddr.l.google.com.&quot;,&quot;type&quot;:16}],&quot;Answer&quot;:[{&quot;name&quot;:&quot;o-o.myaddr.l.google.com.&quot;,&quot;type&quot;:16,&quot;TTL&quot;:60,&quot;data&quot;:&quot;edns0-client-subnet x.x.x.x/24&quot;},{&quot;name&quot;:&quot;o-o.myaddr.l.google.com.&quot;,&quot;type&quot;:16,&quot;TTL&quot;:60,&quot;data&quot;:&quot;74.114.31.154&quot;}],&quot;Comment&quot;:&quot;Response from 216.239.38.10.&quot;}
-</code></pre>
-<p>返回里的 edns0-client-subnet 就是C类网址。不够精确但是够用。</p>
-<p>curl -6 可以获得 ipv6 </p>
-<p>如果 dns.google 不够好，可以换 dns.google.com </p>
-<p><code>curl "https://dns.google.com/resolve?type=TXT&amp;name=o-o.myaddr.l.google.com"</code></p>
-<p>网上关于google这个 trick 没有正式文档支持。我在<a href="https://groups.google.com/g/public-dns-discuss/c/uyzmMcHQBE0/m/x7o-uUVQFAAJ"><code>public-dns-discuss</code> 能搜到</a> 最早 2015年一位叫 Shen Wan 的疑似google员工的问题排查方法。他原话</p>
-<blockquote>
-<p>our name is "Google Public DNS", not "Open DNS"</p>
-</blockquote>
-<p>所以应该和当年 8.8.8.8 推出有关。</p>
-<h3>Gmail 登录历史</h3>
-<p><a href="https://v2ex.com/t/1177588">V站</a> 还有一个偏方说 Gmail 把邮件滚动到底部有个 Last account activity ，点开也有IP。</p>
-<p>但是需要登录，而且网址里有个 <code>ik</code> 的参数猜不出规律。</p>
-<h3>其它DNS</h3>
-<ul>
-<li><code>dig whoami.cloudflare ch txt @1.1.1.1 +short</code></li>
-<li><code>dig +short myip.opendns.com @resolver1.opendns.com</code></li>
-<li><code>dig whoami.akamai.net. @ns1-1.akamaitech.net. +short</code></li>
-</ul>
-<h3>aws</h3>
-<p>然后顺便发现 https://checkip.amazonaws.com/ 有<a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/get-set-up-for-amazon-ecs.html">官方文档</a>说明</p>
-<h3>cloudflare</h3>
-<p>所有 cloudflare 都可以查 /cdn-cgi/trace 比如</p>
-<ul>
-<li>https://www.cloudflare.com/cdn-cgi/trace</li>
-<li>https://x.com/cdn-cgi/trace</li>
-<li>https://chatgpt.com/cdn-cgi/trace</li>
-</ul></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2025-12-08T15:20:00+08:00">2025-12-08</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 

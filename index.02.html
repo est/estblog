@@ -54,6 +54,55 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2025/stdout-18"  rel="bookmark" >
+              <h2 class="card-title">获得自己在Google眼里的IP</h2>
+            </a>
+            <p class="card-text"><p>可能是最古老的问题，自己的IP是什么，网上这样的工具一大把，我自己甚至都<a href="https://t.est.im/ip">搓了个</a></p>
+<p>但是你访问 google 的ip，如果遇到网络配置很复杂，split tunnel 什么的，可能就麻烦了。</p>
+<h3>Google</h3>
+<p>搜了一圈，没想到 gemini 给的线索最有用。它提到可以</p>
+<p><code>dig TXT +short @ns1.google.com o-o.myaddr.l.google.com</code></p>
+<p>但是AI 毕竟笨了些，套个 DoH 不就可用了。</p>
+<pre><code>curl -s &quot;https://dns.google/resolve?name=o-o.myaddr.l.google.com&amp;type=TXT&quot;
+{&quot;Status&quot;:0,&quot;TC&quot;:false,&quot;RD&quot;:true,&quot;RA&quot;:true,&quot;AD&quot;:false,&quot;CD&quot;:false,&quot;Question&quot;:[{&quot;name&quot;:&quot;o-o.myaddr.l.google.com.&quot;,&quot;type&quot;:16}],&quot;Answer&quot;:[{&quot;name&quot;:&quot;o-o.myaddr.l.google.com.&quot;,&quot;type&quot;:16,&quot;TTL&quot;:60,&quot;data&quot;:&quot;edns0-client-subnet x.x.x.x/24&quot;},{&quot;name&quot;:&quot;o-o.myaddr.l.google.com.&quot;,&quot;type&quot;:16,&quot;TTL&quot;:60,&quot;data&quot;:&quot;74.114.31.154&quot;}],&quot;Comment&quot;:&quot;Response from 216.239.38.10.&quot;}
+</code></pre>
+<p>返回里的 edns0-client-subnet 就是C类网址。不够精确但是够用。</p>
+<p>curl -6 可以获得 ipv6 </p>
+<p>如果 dns.google 不够好，可以换 dns.google.com </p>
+<p><code>curl "https://dns.google.com/resolve?type=TXT&amp;name=o-o.myaddr.l.google.com"</code></p>
+<p>网上关于google这个 trick 没有正式文档支持。我在<a href="https://groups.google.com/g/public-dns-discuss/c/uyzmMcHQBE0/m/x7o-uUVQFAAJ"><code>public-dns-discuss</code> 能搜到</a> 最早 2015年一位叫 Shen Wan 的疑似google员工的问题排查方法。他原话</p>
+<blockquote>
+<p>our name is "Google Public DNS", not "Open DNS"</p>
+</blockquote>
+<p>所以应该和当年 8.8.8.8 推出有关。</p>
+<h3>Gmail 登录历史</h3>
+<p><a href="https://v2ex.com/t/1177588">V站</a> 还有一个偏方说 Gmail 把邮件滚动到底部有个 Last account activity ，点开也有IP。</p>
+<p>但是需要登录，而且网址里有个 <code>ik</code> 的参数猜不出规律。</p>
+<h3>其它DNS</h3>
+<ul>
+<li><code>dig whoami.cloudflare ch txt @1.1.1.1 +short</code></li>
+<li><code>dig +short myip.opendns.com @resolver1.opendns.com</code></li>
+<li><code>dig whoami.akamai.net. @ns1-1.akamaitech.net. +short</code></li>
+</ul>
+<h3>aws</h3>
+<p>然后顺便发现 https://checkip.amazonaws.com/ 有<a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/get-set-up-for-amazon-ecs.html">官方文档</a>说明</p>
+<h3>cloudflare</h3>
+<p>所有 cloudflare 都可以查 /cdn-cgi/trace 比如</p>
+<ul>
+<li>https://www.cloudflare.com/cdn-cgi/trace</li>
+<li>https://x.com/cdn-cgi/trace</li>
+<li>https://chatgpt.com/cdn-cgi/trace</li>
+</ul></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2025-12-08T15:20:00+08:00">2025-12-08</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2025/stdin-14"  rel="bookmark" >
               <h2 class="card-title">AI吊牌</h2>
             </a>
@@ -1086,33 +1135,6 @@ It's a <a href="https://issues.chromium.org/issues/40777458">Chromium thing</a> 
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2025-10-09T10:30:00+08:00">2025-10-09</time></p>
 <p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2025/stdin-09"  rel="bookmark" >
-              <h2 class="card-title">CBOR 和 MsgPack 是一回事</h2>
-            </a>
-            <p class="card-text"><p>翻旧账的时候无意中<a href="https://news.ycombinator.com/item?id=42664005">发现</a>的。MessagePack的实现者 mdhb 说：</p>
-<blockquote>
-<p>Disclaimer: I wrote and maintain a MessagePack implementation.<br />
-CBOR is MessagePack. The story is that Carsten Bormann wanted to create an IETF standardized MP version, the creators asked him not to (after he acted in pretty bad faith), he forked off a version, added some very ill-advised tweaks, named it after himself, and submitted it anyway.<br />
-I wrote this up years ago (https://news.ycombinator.com/item?id=14072598), and since then the only thing they've addressed is undefined behavior when a decoder encounters an unknown simple value.</p>
-</blockquote>
-<p><a href="https://news.ycombinator.com/item?id=43229259">以及</a>：</p>
-<blockquote>
-<p>There's no reason an MP implementation has to be slower than a CBOR implementation. If a given library wanted to be very fast it could be. If anything, the fact that CBOR more or less requires you to allocate should put a ceiling on how fast it can really be. Or, put another way, benchmarks of dynamic language implementations of a serialization format aren't a high signal indication of its speed ceiling. If you use a dynamic language and speed is a concern to this degree, you'd write an adapter yourself, probably building on one of the low level implementations.<br />
-That said, people are usually disappointed by MP's speed over JSON. A lot of engineering hours have gone into making JSON fast, to the point where I don't think it ever made sense to choose MP over it for speed reasons (there are other good reasons). Other posters here have pointed out that your metrics are usually dominated by something else.<br />
-But finally, CBOR is fine! The implementations are good and it's widely used. Users of CBOR and MP alike will probably have very similar experiences unless you have a niche use case (on an embedded device that can't allocate, you really need bignums, etc).</p>
-</blockquote>
-<p>看它又翻了一堆旧帐。。hmmmm。。。好吧。</p>
-<p>最近在看 <a href="https://atproto.com/specs/data-model">ATProto</a> 发现它既可以 CBOR 也可以 JSON </p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2025-09-27T20:01:00+08:00">2025-09-27</time></p>
-<p>stdin</p>            </div>
           </article>
         </div>
 

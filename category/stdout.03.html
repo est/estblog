@@ -54,6 +54,50 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2021/stdout-010"  rel="bookmark" >
+              <h2 class="card-title">shell script to graceful restart gunicorn with source code reloading</h2>
+            </a>
+            <p class="card-text"><p>I always thought restart <a href="https://gunicorn.org/">gnicorn</a> is as easy as <code>kill -HUP &lt;pid&gt;</code>, but there are two pitfalls:</p>
+<p>First of all the code might be loaded in master process then fork'ed into workers, so the <code>HUP</code> signal won't reload the source code, only gunicorn config is updated.</p>
+<p>Then there might be some bugs and your new code won't boot correctly, the worker will quit and drags down the master process along with it.</p>
+<p>I discovered a new trick from github issues that can spawn new worker first, check if new code loads correctly then restart the whole rack.</p>
+<p>According to <a href="https://docs.gunicorn.org/en/latest/signals.html#upgrading-to-a-new-binary-on-the-fly">the docs</a> you need to send several signals and blah blah, the author tried to explain in great detail of how it works rather than providing a simple option to do so.</p>
+<p>So I wrote a shell script to do that instead.</p>
+<pre><code>  #!/bin/bash
+
+  oldpid=$(&lt;./deploy/gunicorn.pid)
+  # forget the old kill -HUP 
+  kill -USR2 $oldpid
+  sleep 1
+  timeout=5
+  while [[ $timeout -gt 0 ]]; do
+    newpid=$(&lt;./deploy/gunicorn.pid.2) &amp;&amp; kill -0 $newpid
+    if [[ $? -eq 0 ]]; then
+      break
+    else
+      sleep 0.5
+      (( timeout-- ))
+    fi
+  done;
+
+  # shutdown old
+  echo "success. newpid=$newpid"
+  kill -WINCH $oldpid
+  sleep 1
+  kill -TERM $oldpid
+</code></pre>
+<p>The script will check for new master pid to be alive then kill the old master in a maximium timeout of 5 seconds.</p>
+<p>It works perfectly to replace the simple <code>HUP</code> signal as intended.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2021-08-21T00:53:20+08:00">2021-08-21</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2021/stdout-009"  rel="bookmark" >
               <h2 class="card-title">macOS 设置 TCP 握手连接超时，提升浏览器在糟糕网络下的访问体验</h2>
             </a>

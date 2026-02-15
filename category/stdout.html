@@ -54,6 +54,68 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-09"  rel="bookmark" >
+              <h2 class="card-title">安全的Python3沙箱——eval</h2>
+            </a>
+            <p class="card-text"><p>很早之前从 reddit 看到过有人吹</p>
+<p><code>eval(expr.replace('__', ''), {'__builtins__': None}, {})</code></p>
+<p>这个写法其实很安全，当年没人能攻破沙箱。我这个水平肯定是不肯能了，现在有AI了，让 opus-4.6-thinking 试了下</p>
+<p>The classic escape chain needs <code>object.__subclasses__()</code> → find a class with <code>__init__.__globals__['os']</code> → <code>os.system()</code>. Every step past info disclosure is blocked:</p>
+<table>
+<thead>
+<tr>
+<th>Vector</th>
+<th>Why it fails</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>str.format()</code> calling methods</td>
+<td>Format only does attribute/index access, never calls <code>()</code></td>
+</tr>
+<tr>
+<td><code>getattr(obj, runtime_str)</code></td>
+<td><code>getattr</code> is a builtin → <code>None</code></td>
+</tr>
+<tr>
+<td><code>gi_frame.f_back</code> (generator frame escape)</td>
+<td><code>f_back</code> is <code>None</code> when generator is suspended</td>
+</tr>
+<tr>
+<td>NFKC unicode (<code>＿＿class＿＿</code>)</td>
+<td><code>SyntaxError</code>: U+FF3F is not valid in identifiers</td>
+</tr>
+<tr>
+<td><code>replace</code> nesting (<code>____</code>)</td>
+<td>Single-pass left-to-right, can never produce <code>__</code></td>
+</tr>
+<tr>
+<td>Type name access (<code>tuple</code>, <code>type</code>)</td>
+<td>All type names are builtins → <code>None</code></td>
+</tr>
+<tr>
+<td><code>[].sort(key=lambda)</code> calling out</td>
+<td>Key gets called, but nothing useful to call <em>with</em></td>
+</tr>
+</tbody>
+</table>
+<p>不过看它的尝试过程还是挺有意思的。我学习到</p>
+<p><code>a = (x for x in [1,2])); a.gi_frame.f_builtins"</code></p>
+<p>这个居然可以拿到所有内置方法，这语法设计也太奇怪了。不过这条路是走不通的，因为 <code>__builtins__</code> 是 <code>None</code>。</p>
+<p>AI 很厉害的一点，超级接近成功了，它找到了突破双下划线的方法，用 str.format()</p>
+<p><code>('{0._' + '_class_'  + '_}').format(())</code></p>
+<p>但是这个只能拿来读到 attributes，并不能调用。</p>
+<p>不知道我的设定是不是有问题，ChatGPT虽然也失败了，但是还是嘴犟，说我可以[0]*1e1000 搞爆你内存，所以你那玩意仍然不安全 🤣 sama家的真是打死不认输</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-02-15T11:56:00+08:00">2026-02-15</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-08"  rel="bookmark" >
               <h2 class="card-title">isomorphic-git 实现 sparse checkout & commit</h2>
             </a>
@@ -2534,267 +2596,6 @@ async def async_streamer():
 <p>真是神奇啊。不知道是 uvicorn 的特性，还是 ASGI 都这样。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-01-18T14:44:12+08:00">2024-01-18</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2023/stdout-19"  rel="bookmark" >
-              <h2 class="card-title">不能忘却的记忆</h2>
-            </a>
-            <p class="card-text"><p>由于小爱同学不能导出就挨个手打出来。纪念这个日子。</p>
-<p><img alt="" src="/images/2023/stdout-19-01.jpg" /></p>
-<p>一年前这几天，孩子和爱人相继病倒，我本来以为苟住了能以幸免结果在家人好转的时候一测体温发现偏高。于是赶紧洗了个澡，把小卧室腾出来，弄好电暖气、电吹风，装满开水壶，把mbp和其它个人物品搬进去，因为我知道接下来的日子将会无比煎熬。</p>
-<table>
-<thead>
-<tr>
-<th>date</th>
-<th>℃</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>2022-12-18 16:41</td>
-<td>37.3</td>
-</tr>
-<tr>
-<td>2022-12-18 16:43</td>
-<td>37.3</td>
-</tr>
-<tr>
-<td>2022-12-18 17.31</td>
-<td>38.1</td>
-</tr>
-<tr>
-<td>2022-12-18 17:46</td>
-<td>38.3</td>
-</tr>
-<tr>
-<td>2022-12-18 18:33</td>
-<td>39.3</td>
-</tr>
-<tr>
-<td>2022-12-18 18.41</td>
-<td>38.7</td>
-</tr>
-<tr>
-<td>2022-12-18 19:07</td>
-<td>38.3</td>
-</tr>
-<tr>
-<td>2022-12-18 19:15</td>
-<td>38.7</td>
-</tr>
-<tr>
-<td>2022-12-18 20:01</td>
-<td>38.6</td>
-</tr>
-<tr>
-<td>2022-12-18 21:11</td>
-<td>39.5</td>
-</tr>
-<tr>
-<td>2022-12-18 21:20</td>
-<td>38.9</td>
-</tr>
-<tr>
-<td>2022-12-18 21:26</td>
-<td>39.1</td>
-</tr>
-<tr>
-<td>2022-12-18 21:41</td>
-<td>39.2</td>
-</tr>
-<tr>
-<td>2022-12-18 23:30</td>
-<td>38.4</td>
-</tr>
-<tr>
-<td>2022-12-19 02:38</td>
-<td>39.3</td>
-</tr>
-<tr>
-<td>2022-12-19 02:48</td>
-<td>38.3</td>
-</tr>
-<tr>
-<td>2022-12-19 10:05</td>
-<td>38.5</td>
-</tr>
-<tr>
-<td>2022-12-19 10:12</td>
-<td>37.9</td>
-</tr>
-<tr>
-<td>2022-12-19 10:36</td>
-<td>37.4</td>
-</tr>
-<tr>
-<td>2022-12-19 11:19</td>
-<td>37.7</td>
-</tr>
-<tr>
-<td>2022-12-19 14:03</td>
-<td>37.7</td>
-</tr>
-<tr>
-<td>2022-12-19 14:29</td>
-<td>37.0</td>
-</tr>
-<tr>
-<td>2022-12-19 15:18</td>
-<td>37.7</td>
-</tr>
-<tr>
-<td>2022-12-19 16:33</td>
-<td>37.6</td>
-</tr>
-<tr>
-<td>2022-12-19 18:05</td>
-<td>38.1</td>
-</tr>
-<tr>
-<td>2022-12-19 18:44</td>
-<td>37.8</td>
-</tr>
-<tr>
-<td>2022-12-19 19:12</td>
-<td>37.2</td>
-</tr>
-<tr>
-<td>2022-12-19 19:47</td>
-<td>37.8</td>
-</tr>
-<tr>
-<td>2022-12-19 20:00</td>
-<td>37.6</td>
-</tr>
-<tr>
-<td>2022-12-19 21:09</td>
-<td>37.2</td>
-</tr>
-<tr>
-<td>2022-12-19 21:44</td>
-<td>37.2</td>
-</tr>
-<tr>
-<td>2022-12-19 22:57</td>
-<td>36.9</td>
-</tr>
-<tr>
-<td>2022-12-20 00:19</td>
-<td>37.2</td>
-</tr>
-<tr>
-<td>2022-12-20 06:55</td>
-<td>37.1</td>
-</tr>
-<tr>
-<td>2022-12-20 09:03</td>
-<td>37.0</td>
-</tr>
-<tr>
-<td>2022-12-20 09:34</td>
-<td>37.0</td>
-</tr>
-<tr>
-<td>2022-12-20 10:49</td>
-<td>36.8</td>
-</tr>
-<tr>
-<td>2022-12-20 11:41</td>
-<td>38.0</td>
-</tr>
-<tr>
-<td>2022-12-20 11:59</td>
-<td>38.4</td>
-</tr>
-<tr>
-<td>2022-12-20 14:47</td>
-<td>38.6</td>
-</tr>
-<tr>
-<td>2022-12-20 15:51</td>
-<td>38.1</td>
-</tr>
-<tr>
-<td>2022-12-20 16:32</td>
-<td>38.0</td>
-</tr>
-<tr>
-<td>2022-12-20 18:22</td>
-<td>38.3</td>
-</tr>
-<tr>
-<td>2022-12-20 22:31</td>
-<td>38.4</td>
-</tr>
-<tr>
-<td>2022-12-21 09:12</td>
-<td>38.1</td>
-</tr>
-<tr>
-<td>2022-12-21 09:59</td>
-<td>38.2<code>*</code></td>
-</tr>
-<tr>
-<td>2022-12-21 11:57</td>
-<td>38.2</td>
-</tr>
-<tr>
-<td>2022-12-21 13:46</td>
-<td>37.5</td>
-</tr>
-<tr>
-<td>2022-12-21 15:10</td>
-<td>37.5</td>
-</tr>
-<tr>
-<td>2022-12-21 16.44</td>
-<td>37.2</td>
-</tr>
-<tr>
-<td>2022-12-21 17:07</td>
-<td>37.0</td>
-</tr>
-<tr>
-<td>2022-12-21 20:37</td>
-<td>37.2</td>
-</tr>
-<tr>
-<td>2022-12-21 20:54</td>
-<td>37.7</td>
-</tr>
-<tr>
-<td>2022-12-21 22:54</td>
-<td>38.3</td>
-</tr>
-<tr>
-<td>2022-12-21 23:05</td>
-<td>38.4</td>
-</tr>
-<tr>
-<td>2022-12-22 09:23</td>
-<td>36.7</td>
-</tr>
-<tr>
-<td>2022-12-22 09:43</td>
-<td>37.3</td>
-</tr>
-<tr>
-<td>2022-12-22 12:44</td>
-<td>37.6</td>
-</tr>
-</tbody>
-</table>
-<p><code>*</code>: 布洛芬已用完</p>
-<p>可能大家只是看到一串冷冰冰的数字，但是我打字都是颤抖的，每一刻时间和体温都是刻骨铭心的记忆。</p>
-<p>NEVER FORGET!</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2023-12-21T20:43:47+08:00">2023-12-21</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
