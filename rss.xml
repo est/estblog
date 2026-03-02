@@ -4,7 +4,7 @@
 &lt;p&gt;不过它搞出来的分类比较喜剧，用的是 MBTI 。测试集是一堆 YES/NO 二元分类&lt;/p&gt;
 &lt;p&gt;光说「人格」这种问题比较抽象，有哪些应用呢？很遗憾，我对此脑袋哐当一声没太多想法，还是AI提醒了我：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;因为是物理mask，所以 jailbreak 变得不可能了&lt;/li&gt;
+&lt;li&gt;因为是物理mask，所以 jailbreak 变得不太可能了&lt;/li&gt;
 &lt;li&gt;可以定向优化某些选项。它甚至在 &lt;code&gt;contra.py&lt;/code&gt; 里可以设置 mask_gamma  这个百分比。比如保持 100% 的好奇心，10%的拒绝率&lt;/li&gt;
 &lt;li&gt;避免「平均人」这个fallacy。这是让我震惊的&lt;/li&gt;
 &lt;/ol&gt;
@@ -16,7 +16,8 @@
 &lt;li&gt;阉割，在下一轮计算的时候，把网络和mask相乘，符合「人设」的KEEP(1)，不符合的全部标记为  DELETE(0)&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;想一想这个后果还是比较可怕的。最坏的情况是给你一个美丽新世界。&lt;/p&gt;
-&lt;p&gt;用得好的话可以拿来从不同角度思辨，A社那个出发点我太懂了，现在 AI coding 只靠一根筋是不行的，得首先靠一个thinking模型出活，再用另一个模型来挑刺做review，然后用另一个人格来精简优化。可能上线之后还得站在别的部门的位置考虑优化迭代。最后形成一个多角色演进的loop，让代码达到某种平衡。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 03 Mar 2026 05:03:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-03-03:/2026/stdin-07</guid><category>stdin</category></item><item><title>巴别塔，Vibe Coding和Lisp之咒</title><link>https://blog.est.im/2026/stderr-06</link><description>&lt;p&gt;西方世界有个「巴别塔」故事，传当年人类强盛至极，统一了语言，上达天听，下释万物，惊动了创世神，创世神就出奸计让人们说不同的语言，人们开始互相不理解，各自为战，世俗的力量就被消减了&lt;/p&gt;
+&lt;p&gt;用得好的话可以拿来从不同角度思辨，A社那个出发点我太懂了，现在 AI coding 只靠一根筋是不行的，得首先靠一个thinking模型出活，再用另一个模型来挑刺做review，然后用另一个人格来精简优化。可能上线之后还得站在别的部门的位置考虑优化迭代。最后形成一个多角色演进的loop，让代码达到某种平衡。&lt;/p&gt;
+&lt;p&gt;关于 jailbreak 的问题，chatgpt跟我来劲了，说paper里写的方法只能提高 consistency 而不能完全杜绝。跟它辩经了一会儿，达成共识，可以用论文的方法去 mask 一个小模型，用来保护大模型的安全。底线可以尽可能保证让大模型只能工作在指定的范围内。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 03 Mar 2026 05:03:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-03-03:/2026/stdin-07</guid><category>stdin</category></item><item><title>巴别塔，Vibe Coding和Lisp之咒</title><link>https://blog.est.im/2026/stderr-06</link><description>&lt;p&gt;西方世界有个「巴别塔」故事，传当年人类强盛至极，统一了语言，上达天听，下释万物，惊动了创世神，创世神就出奸计让人们说不同的语言，人们开始互相不理解，各自为战，世俗的力量就被消减了&lt;/p&gt;
 &lt;p&gt;当然我说这个版本是去掉神秘学的一个引子。2026年了，全世界都被AI这迷人的玩意给勾引了，数据飞轮使得天下语料大同，似乎人类又可以相互理解，同样的概念embedding有几乎雷同的相似度，可以看成同一个语言又统一了。&lt;/p&gt;
 &lt;p&gt;在这种统一带来惊人的生产力，甚至可以说是「神力」。&lt;/p&gt;
 &lt;p&gt;我记得高中大学听闻上古大神编写代码，是拿纸和笔在大脑模拟，然后上机一次性敲入代码，一次性编译成功。膜拜不已&lt;/p&gt;
