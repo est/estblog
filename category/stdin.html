@@ -54,6 +54,35 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdin-07"  rel="bookmark" >
+              <h2 class="card-title">Configurable Intelligence</h2>
+            </a>
+            <p class="card-text"><p>无聊看了下 <a href="https://news.ycombinator.com/item?id=47219387">Language Model Contains Personality Subnetworks </a>，刚好A社也最近也写了篇<a href="https://www.anthropic.com/research/persona-selection-model">The persona selection model</a>，感觉现在讨论LLM的「人格」比较火</p>
+<p>先说下这篇论文，它提出，可以做类似「脑前额叶切除」让AI屏蔽一部分人格，不需要 fine-tune，而且就算prompt指定其它人格也无济于事。</p>
+<p>不过它搞出来的分类比较喜剧，用的是 MBTI 。测试集是一堆 YES/NO 二元分类</p>
+<p>光说「人格」这种问题比较抽象，有哪些应用呢？很遗憾，我对此脑袋哐当一声没太多想法，还是AI提醒了我：</p>
+<ol>
+<li>因为是物理mask，所以 jailbreak 变得不可能了</li>
+<li>可以定向优化某些选项。它甚至在 <code>contra.py</code> 里可以设置 mask_gamma  这个百分比。比如保持 100% 的好奇心，10%的拒绝率</li>
+<li>避免「平均人」这个fallacy。这是让我震惊的</li>
+</ol>
+<p>因为我始终觉得 MBTI 不太准，问AI业界里有啥更好的，AI说"Big Five" (OCEAN: Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism)。又了解到新东西了</p>
+<p>具体怎么阉割模型呢？Wanda (Pruning by Weights and Activations)</p>
+<ol>
+<li>给模型喂料，两种相反的，观察哪些区域激活，</li>
+<li>把多种相反的交叉比对，形成一个「人格」，做成一个 mask</li>
+<li>阉割，在下一轮计算的时候，把网络和mask相乘，符合「人设」的KEEP(1)，不符合的全部标记为  DELETE(0)</li>
+</ol></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-03-03T05:03:00+08:00">2026-03-03</time></p>
+<p>stdin</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdin-06"  rel="bookmark" >
               <h2 class="card-title">Citrini的2028智力危机</h2>
             </a>
@@ -2380,62 +2409,6 @@ A: yes!</p>
 <p><a href="https://news.ycombinator.com/item?id=33737896">via</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-11-25T10:41:05+08:00">2022-11-25</time></p>
-<p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2022/stdin-18"  rel="bookmark" >
-              <h2 class="card-title">[大图]F1 Class of 2022 车队毕业照</h2>
-            </a>
-            <p class="card-text"><p>2022赛季结束了，几乎每场都看完。搜集一下各个车队的集体照，也算是纪念一下。</p>
-<ol>
-<li>
-<p><a href="https://twitter.com/alfaromeoorlen/status/1594217643510218754">Alfa Romeo F1 Team ORLEN</a><br />
-<img alt="F1 class 2022 Alfa Romeo" src="/images/2022/stdin-18-f1class2022-alfaromeo.jpg" /></p>
-</li>
-<li>
-<p><a href="https://twitter.com/ScuderiaFerrari/status/1593278249290924033">Scuderia Ferrari</a><br />
-<img alt="F1 class 2022 Ferrari" src="/images/2022/stdin-18-f1class2022-ferrari.jpg" /></p>
-</li>
-<li>
-<p><a href="https://twitter.com/redbullracing/status/1593227499588431874">Oracle Red Bull Racing</a><br />
-<img alt="F1 class 2022 redbull" src="/images/2022/stdin-18-f1class2022-redbull.jpg" /></p>
-</li>
-<li>
-<p><a href="https://twitter.com/AstonMartinF1/status/1594058104853131264">Aston Martin Aramco Cognizant F1 Team</a><br />
-<img alt="F1 class 2022 aston martin" src="/images/2022/stdin-18-f1class2022-astonmartin.jpg" /></p>
-</li>
-<li>
-<p><a href="https://twitter.com/WilliamsRacing/status/1594025799916871681">Williams Racing</a><br />
-<img alt="F1 class 2022 williams" src="/images/2022/stdin-18-f1class2022-williams.jpg" /></p>
-</li>
-<li>
-<p><a href="https://twitter.com/AlphaTauriF1/status/1594261771937792001">Scuderia AlphaTauri</a><br />
-<img alt="F1 class 2022 AlphaTauri" src="/images/2022/stdin-18-f1class2022-alphatauri.jpg" /></p>
-</li>
-<li>
-<p><a href="https://twitter.com/HaasF1Team/status/1594270544370753544">Haas F1 Team</a><br />
-<img alt="F1 class 2022 haas" src="/images/2022/stdin-18-f1class2022-haas.jpg" /></p>
-</li>
-<li>
-<p><a href="https://twitter.com/MercedesAMGF1/status/1593282638558728194">Mercedes-AMG PETRONAS F1 Team</a><br />
-<img alt="F1 class 2022 mercedes" src="/images/2022/stdin-18-f1class2022-mercedes.jpg" /></p>
-</li>
-<li>
-<p><a href="https://twitter.com/McLarenF1/status/1594627152485535744">McLaren</a></p>
-</li>
-</ol>
-<p><img alt="F1 class 2022 mclaren" src="/images/2022/stdin-18-f1class2022-mclaren.jpg" /></p>
-<ol start="10">
-<li>Alpine</li>
-</ol>
-<p>好像今年集体照都没拍，因为头哥闹别扭？</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2022-11-20T18:59:28+08:00">2022-11-20</time></p>
 <p>stdin</p>            </div>
           </article>
         </div>

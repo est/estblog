@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Configurable Intelligence – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Configurable Intelligence" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stdin-07" />
+    <meta property="og:url" content="https://blog.est.im/2026/stdin-07">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Configurable Intelligence">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Configurable Intelligence</h2>
+    <p class="post-date">Posted <time datetime="2026-03-03T05:03:00+08:00">2026-03-03</time> | <span>stdin</span></p>
+  </header>
+
+  
+  <p>无聊看了下 <a href="https://news.ycombinator.com/item?id=47219387">Language Model Contains Personality Subnetworks </a>，刚好A社也最近也写了篇<a href="https://www.anthropic.com/research/persona-selection-model">The persona selection model</a>，感觉现在讨论LLM的「人格」比较火</p>
+<p>先说下这篇论文，它提出，可以做类似「脑前额叶切除」让AI屏蔽一部分人格，不需要 fine-tune，而且就算prompt指定其它人格也无济于事。</p>
+<p>不过它搞出来的分类比较喜剧，用的是 MBTI 。测试集是一堆 YES/NO 二元分类</p>
+<p>光说「人格」这种问题比较抽象，有哪些应用呢？很遗憾，我对此脑袋哐当一声没太多想法，还是AI提醒了我：</p>
+<ol>
+<li>因为是物理mask，所以 jailbreak 变得不可能了</li>
+<li>可以定向优化某些选项。它甚至在 <code>contra.py</code> 里可以设置 mask_gamma  这个百分比。比如保持 100% 的好奇心，10%的拒绝率</li>
+<li>避免「平均人」这个fallacy。这是让我震惊的</li>
+</ol>
+<p>因为我始终觉得 MBTI 不太准，问AI业界里有啥更好的，AI说"Big Five" (OCEAN: Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism)。又了解到新东西了</p>
+<p>具体怎么阉割模型呢？Wanda (Pruning by Weights and Activations)</p>
+<ol>
+<li>给模型喂料，两种相反的，观察哪些区域激活，</li>
+<li>把多种相反的交叉比对，形成一个「人格」，做成一个 mask</li>
+<li>阉割，在下一轮计算的时候，把网络和mask相乘，符合「人设」的KEEP(1)，不符合的全部标记为  DELETE(0)</li>
+</ol>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>
