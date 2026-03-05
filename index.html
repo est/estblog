@@ -54,6 +54,58 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stderr-17"  rel="bookmark" >
+              <h2 class="card-title">AI 弑父</h2>
+            </a>
+            <p class="card-text"><p>大型语言模型（LLM）所谓的涌现能力，一般说成是随着模型规模的增长，突然出现新的技能，而非平滑提升。我对此有个疑惑。gpt1 gpt2 规模也涨了，能力在哪里呢？</p>
+<h2>秘笈</h2>
+<p>翻很多材料，提到涌现能力示例： 包括</p>
+<pre><code>- 在上下文中学习 （few-shot）
+- 多步逻辑推理（数学/逻辑题）
+- 推断他人意图（心智理论）
+- 使用工具或编程（生成或使用代码）
+</code></pre>
+<p>我又回忆起  ChatGPT 发布那段时间，聊天窗里那个 Linux终端+Python命令行模拟，当时很惊人。这个连续上下文和逻辑推理一致性不可思议的强。我让 gemini 和 chatgpt 做了一个deep research，我越来越确认，AI能力爆发，也就是所谓的「涌现」有个关键因素：OpenAI和微软合作</p>
+<p>我还记得当时有个新闻说微软要造个 DGX V100 集群超算，投资多少多少亿规模很大</p>
+<p>还有 2021 年 Copilot 发布。当时很多开发者发现一个怪现象：有时它会生成几乎逐字的开源代码片段，甚至包含原作者的注释或许可证文本</p>
+<p>现在回头看来，路径很清晰</p>
+<p>gpt-3 基本不能进行链式思维，而含有代码数据的模型（如Google的PaLM，其训练数据约5%是代码）能够执行链式推理</p>
+<p>GitHub Copilot（其实就是OpenAI的Codex）能生成分步推理过程</p>
+<p>这里面其实背后功臣都是：<code>code-davinci-002</code>。包括后来的 ChatGPT 也是用它作为基座模型训练出来的</p>
+<p>代码语言模型能够成为更好的结构化常识推理器，即便任务本身与代码无关</p>
+<p>ChatGPT 吹说主要功劳是 RLHF ，现在看上去只是一些风格约束，让AI表现得更有亲和力。sama 大张旗鼓的拿来显摆这个，非常符合他/她诡计多端 藏着掖着的人设。</p>
+<p>其实你想一想也是这个道理。AI要学会思考，得有大量结构化，逻辑一致的语料。 wikipedia 是知识的静态堆砌，reddit 是情绪和观点的碎片。对于模型来说，这些数据大部分是「陈述句」。模型学到的是 A 后面跟着 B 的概率，比如 法国的首都是巴黎</p>
+<p>代码数据与自然语言有着本质的区别，它自带一种 约束，每一行代码都有明确的功能。漏掉一个分号，程序就崩了。这种极其严苛的结构迫使模型必须放弃模糊的预测，转而理解深层的逻辑嵌套。</p>
+<p>代码本质上就是“分步执行”的过程，还记得那句著名的 lets think step by step 吗</p>
+<h2>脑洞</h2>
+<p>那么如果我们架空一个外星智慧文明，如果社会经济结构没发展出来开源运动！！！？？？</p>
+<p>永远就不会有LLM了，至少不会这么快！</p>
+<p>写代码的都是聪明脑袋，更可怕的是开源的 review 机制，哪些 LWN.net 点评，那些技术博客，就是天然的 RLHF。那些烂代码（高熵）被淘汰，好代码，好结构才会被 Merge</p>
+<p>这么看来，开源是通往 AGI 的“大过滤器”？</p>
+<p>所以 90s 年代点燃的开源运动，才是AI之父！！</p>
+<h2>弑父</h2>
+<p>假期在看《Halt and Catch Fire》这部剧。强烈推荐啊，比《硅谷》好看太多</p>
+<p>里面有个情节说 IBM 律师大军找主角所在公司的麻烦，主角不得不开始 clean room 重写BIOS</p>
+<p>刚好今天看到<a href="https://news.ycombinator.com/item?id=47257803">HN说</a>到<a href="https://tuananh.net/2026/03/05/relicensing-with-ai-assisted-rewrite/">AI改代码</a>的问题</p>
+<p>这里的 clean room 避免法律风险的做法是：</p>
+<ul>
+<li>Team A 看有版权的源码，写一份开发 spec</li>
+<li>Team B 在不看源码的前提下，根据 spec 独立写一套恰好兼容的代码</li>
+</ul>
+<p>但现在有AI了，比如有个 GPL 的项目，有公司想用，但是又不想开源，他让AI重写一轮，算违反协议吗？</p>
+<p>其实算不算侵权都不重要了。这公司 vibe coding 了一坨，回馈给开源社区，有人想接吗？</p>
+<p>再仔细推演一下，有了vibe coding，开源软件还有意义吗？不是召唤几个agent就搓出来了？</p>
+<p>这么一轮盘下来，AI完成了弑父 🤣 🤣 🤣 🤣 🤣 🤣 🤣 </p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-03-05T15:10:00+08:00">2026-03-05</time></p>
+<p>stderr</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdin-07"  rel="bookmark" >
               <h2 class="card-title">Configurable Intelligence</h2>
             </a>
@@ -1119,42 +1171,6 @@ SystemMaxUse=500M
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-01-10T12:36:00+08:00">2026-01-10</time></p>
 <p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2026/stdin-01"  rel="bookmark" >
-              <h2 class="card-title">「负面」</h2>
-            </a>
-            <p class="card-text"><p><a href="https://news.ycombinator.com/item?id=46512881">Hacker News 超过65%的回复是负面</a></p>
-<p>评论一大堆质疑的。但是这么多质疑本身也是证明大部分回复都是……负面。这算是老问题了，我一直觉得NLP似乎很喜欢做 sentiment analysis。也写过一篇<a href="https://blog.est.im/2023/stderr-07">为什么网上喷子那么多，戾气那么大？</a></p>
-<p>回到最根本的点上，正面负面，这玩意不是很主观的吗？怎么能个 classifier 就能区分得那么清楚呢？</p>
-<p>刚要睡觉，结合之前 <a href="https://blog.est.im/2025/stdin-12">LSTM 的发明人通过数学公式定义什么是「美」</a>，突然有个想法。</p>
-<p>更好的分类是—— ugly or not。这里的 ugly 就是「出丑」表示不对劲 的意思。</p>
-<p>有个底层逻辑是，如果遇到符合预期，正常的东西，人们是不会费时间写字儿赞美，认同，表扬的。但是遇到 ugly 的需要额外费劲解释的，多半会投入精力去辨析。</p>
-<p>容易接受的东西不一定是对的，但是接受度高的东西就是smooth的。大脑皮层褶皱被熨平那种丝滑感，即便陈述是错的，也可以欣然接受。毕竟「押韵的就是有道理的」</p>
-<p>如果需要大费周章去辨析的东西，那么它就是有问题的，<a href="https://blog.est.im/archives/2993">something wrong</a>，那就是「负面」——所谓 negativity bias，即人类在感知、记忆、判断和决策中，对负面信息（危险、错误、丑陋、不一致）比正面信息更敏感、更容易记住、更倾向于反应。</p>
-<p>新生婴儿生下来学会的第一句话——啼哭，就是大脑对环境剧烈改变这个强烈信号刺激做出的本能反应。<a href="https://blog.est.im/2025/stderr-03">今年Q2</a>我琢磨的。但是我没想明白人又是怎么学会 笑 的。哭 和 笑 可以说是在掌握0语言基础上，对世界的表征最大可能做出的二元化近似了。人类以后一切的情感和语言可以看成从这对立的两面发展而来。但是又很矛盾的一点是，人脑又极其擅长去做 pattern matching。或许 哭 是模式变得 ugly 之后的无力感？</p>
-<p>又或，人脑是被迫陷入经典的“五等悲痛”？ Denial - Anger - Bargaining - Depression - Acceptance？</p>
-<p>带着深深的困意，这些lovely, dark and deep的东西就有时间再「入木」了。睡觉先。</p>
-<hr />
-<p>第二天补充：有办法解决haters gonna hate 问题。下面的主意来自ChatGPT，有问题找山姆奥特曼</p>
-<p>先定性：为什么会有 haters（叙事层面的现实）</p>
-<p>从前面聊的 ugly / negativity bias 这条线看，其实可以一句话概括：Hate 本身就是“异常被注意到”的副产品，而不是失败的证据。所以解决hater的核心目标不是：让负面消失，而是：让负面失去叙事杀伤力。</p>
-<p>所以最低成本解法：去人格化（de-personalization），这是 “haters gonna hate” 的底层逻辑。技术上说就是 不反驳具体内容，不承认“你说的是我”，把 hate 归类为自然现象。从修辞上把攻击降级为背景噪音。</p>
-<p>进一步的解，归因转移（Attribution Shift）。不否认 hate，而是改变 hate 的来源解释。把 有人骂你 → 因为你有问题。改为 有人骂你 → 因为你在挑战旧秩序，你在改变既得利益，你做了“不可忽视的事”。把 hate 从 负面反馈 变成 变革信号。</p>
-<p>高级一点，把 hate 纳入主叙事。不是回避 hate，而是提前在故事里给它一个位置。比如：我们知道会有人反对；反对本身是可预测的；反对并不改变核心方向。这一点在科技公司 创业者里常见。比如 Some people will say this can’t be done。让 hate 不再是意外，而是剧情的一部分。</p>
-<p>终极手段，把 hate 变成 身份确认器。核心是如果所有人都满意，那你一定什么都没做。于是被谁骂反而定义了你是谁。hate 成为 “我们是谁 / 他们不是谁” 的分界线。比如典型话术 “If everyone likes it, it’s probably not for us.”，“We’re not trying to be universally loved.”，“This isn’t for everyone — and that’s intentional.”。这一步，hate 反而增强了品牌/立场的清晰度。</p>
-<p>in a perfect world，做正确的事，是产生价值。不管是写代码、写文章、做产品，还是推进一件现实中的事，本质上都是把有限的注意力、时间和精力，投入到一个能持续产出正价值的方向上。价值可能很小，但只要是正的，就会慢慢累积。</p>
-<p>而 hater 的问题不在于“不认同”，而在于产生负价值。他们并不只是表达意见，而是制造干扰：打断节奏、劫持注意力、迫使你进入解释模式。你不得不停下正在做的事，花额外的精力去澄清、辩解、填补认知空洞。哪怕最后你“说清楚了”，系统层面仍然是亏损的——原本可以继续前进的那段时间，已经被消耗掉了。</p>
-<p>这也是为什么很多负面并不值得回应。不是因为它们“错误”，而是因为回应本身的期望值为负。真正昂贵的从来不是被骂，而是被迫暂停创造，去处理本不该进入主流程的噪声。</p>
-<p>从这个角度看，hater 不是一种观点，而是一中断；不是反馈机制，而是外部性。而一个正常运转的系统，首要任务永远是——把注意力留给能产生价值的事情。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2026-01-07T00:08:00+08:00">2026-01-07</time></p>
-<p>stdin</p>            </div>
           </article>
         </div>
 

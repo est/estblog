@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AI 弑父 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="AI 弑父" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stderr-17" />
+    <meta property="og:url" content="https://blog.est.im/2026/stderr-17">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="AI 弑父">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">AI 弑父</h2>
+    <p class="post-date">Posted <time datetime="2026-03-05T15:10:00+08:00">2026-03-05</time> | <span>stderr</span></p>
+  </header>
+
+  
+  <p>大型语言模型（LLM）所谓的涌现能力，一般说成是随着模型规模的增长，突然出现新的技能，而非平滑提升。我对此有个疑惑。gpt1 gpt2 规模也涨了，能力在哪里呢？</p>
+<h2>秘笈</h2>
+<p>翻很多材料，提到涌现能力示例： 包括</p>
+<pre><code>- 在上下文中学习 （few-shot）
+- 多步逻辑推理（数学/逻辑题）
+- 推断他人意图（心智理论）
+- 使用工具或编程（生成或使用代码）
+</code></pre>
+<p>我又回忆起  ChatGPT 发布那段时间，聊天窗里那个 Linux终端+Python命令行模拟，当时很惊人。这个连续上下文和逻辑推理一致性不可思议的强。我让 gemini 和 chatgpt 做了一个deep research，我越来越确认，AI能力爆发，也就是所谓的「涌现」有个关键因素：OpenAI和微软合作</p>
+<p>我还记得当时有个新闻说微软要造个 DGX V100 集群超算，投资多少多少亿规模很大</p>
+<p>还有 2021 年 Copilot 发布。当时很多开发者发现一个怪现象：有时它会生成几乎逐字的开源代码片段，甚至包含原作者的注释或许可证文本</p>
+<p>现在回头看来，路径很清晰</p>
+<p>gpt-3 基本不能进行链式思维，而含有代码数据的模型（如Google的PaLM，其训练数据约5%是代码）能够执行链式推理</p>
+<p>GitHub Copilot（其实就是OpenAI的Codex）能生成分步推理过程</p>
+<p>这里面其实背后功臣都是：<code>code-davinci-002</code>。包括后来的 ChatGPT 也是用它作为基座模型训练出来的</p>
+<p>代码语言模型能够成为更好的结构化常识推理器，即便任务本身与代码无关</p>
+<p>ChatGPT 吹说主要功劳是 RLHF ，现在看上去只是一些风格约束，让AI表现得更有亲和力。sama 大张旗鼓的拿来显摆这个，非常符合他/她诡计多端 藏着掖着的人设。</p>
+<p>其实你想一想也是这个道理。AI要学会思考，得有大量结构化，逻辑一致的语料。 wikipedia 是知识的静态堆砌，reddit 是情绪和观点的碎片。对于模型来说，这些数据大部分是「陈述句」。模型学到的是 A 后面跟着 B 的概率，比如 法国的首都是巴黎</p>
+<p>代码数据与自然语言有着本质的区别，它自带一种 约束，每一行代码都有明确的功能。漏掉一个分号，程序就崩了。这种极其严苛的结构迫使模型必须放弃模糊的预测，转而理解深层的逻辑嵌套。</p>
+<p>代码本质上就是“分步执行”的过程，还记得那句著名的 lets think step by step 吗</p>
+<h2>脑洞</h2>
+<p>那么如果我们架空一个外星智慧文明，如果社会经济结构没发展出来开源运动！！！？？？</p>
+<p>永远就不会有LLM了，至少不会这么快！</p>
+<p>写代码的都是聪明脑袋，更可怕的是开源的 review 机制，哪些 LWN.net 点评，那些技术博客，就是天然的 RLHF。那些烂代码（高熵）被淘汰，好代码，好结构才会被 Merge</p>
+<p>这么看来，开源是通往 AGI 的“大过滤器”？</p>
+<p>所以 90s 年代点燃的开源运动，才是AI之父！！</p>
+<h2>弑父</h2>
+<p>假期在看《Halt and Catch Fire》这部剧。强烈推荐啊，比《硅谷》好看太多</p>
+<p>里面有个情节说 IBM 律师大军找主角所在公司的麻烦，主角不得不开始 clean room 重写BIOS</p>
+<p>刚好今天看到<a href="https://news.ycombinator.com/item?id=47257803">HN说</a>到<a href="https://tuananh.net/2026/03/05/relicensing-with-ai-assisted-rewrite/">AI改代码</a>的问题</p>
+<p>这里的 clean room 避免法律风险的做法是：</p>
+<ul>
+<li>Team A 看有版权的源码，写一份开发 spec</li>
+<li>Team B 在不看源码的前提下，根据 spec 独立写一套恰好兼容的代码</li>
+</ul>
+<p>但现在有AI了，比如有个 GPL 的项目，有公司想用，但是又不想开源，他让AI重写一轮，算违反协议吗？</p>
+<p>其实算不算侵权都不重要了。这公司 vibe coding 了一坨，回馈给开源社区，有人想接吗？</p>
+<p>再仔细推演一下，有了vibe coding，开源软件还有意义吗？不是召唤几个agent就搓出来了？</p>
+<p>这么一轮盘下来，AI完成了弑父 🤣 🤣 🤣 🤣 🤣 🤣 🤣 </p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>
