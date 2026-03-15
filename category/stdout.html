@@ -54,6 +54,28 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-10"  rel="bookmark" >
+              <h2 class="card-title">chat.est.im launches at 3.14</h2>
+            </a>
+            <p class="card-text"><p>Long over due. But finally, it's here.</p>
+<p>Last year I saw an interesting <a href="https://www.v2ex.com/t/1176289">thread on V2EX</a> that utilize <code>curl -N</code> to display cool ANSI art, and I wondered how to make it "interactive". After a series of battle with AI coding agents, it's finally done.</p>
+<p>The project is located at <a href="https://chat.est.im/">https://chat.est.im/</a>. You can try it with <code>curl -NT. https://chat.est.im/hello</code>. I wrote a bi-directional streaming with async underneath, all messages were buffered in a queue and delivered in real-time, without any logs.</p>
+<p>To keep messaging secure, an TLS layer is required, so I went along with ACME auto cert renewal as well. In the beginning, I tried <code>HTTP-01</code> challenge, it requires a standalone 80 port which I think is totally unnecessary, only later to find out there's also <code>TLS-ALPN-01</code>. A good lesson learned with ALPN and stuff.</p>
+<p>Also to prevent progress meters in <code>curl</code>, I read source code with the help of <code>opus-4.5</code>. AI is a good assistant for doing such research.</p>
+<p>The <code>curl -T</code> is quite fun, I also built <a href="https://blog.est.im/2026/stdout-01">a paste service</a>.</p>
+<p>Some may ask why not telnet, ssh or IRC? Because those are pretty ancient, Web crowds are used to <code>curl</code> for everything these days.</p>
+<p>The next step would be adding moar pretty ANSI to the server, some chat control commands, and perhaps AI? lol no.</p>
+<p>This project is closed source.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-03-14T12:04:00+08:00">2026-03-14</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-09"  rel="bookmark" >
               <h2 class="card-title">安全的Python3沙箱——eval</h2>
             </a>
@@ -2555,47 +2577,6 @@ done;
 <p>有了「家族」和「关卡」两套机制，游戏的玩家也成了游戏机制进化的一部分，可以说病毒式传播，生生不息了。反正我又不做游戏，所以随便YY，不用关心可行性和成本，谁有兴趣请自行挪用，最好做出来能邀请我内测 :)</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-02-12T14:52:00+08:00">2024-02-12</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2024/stdout-01"  rel="bookmark" >
-              <h2 class="card-title">FastAPI/Starlette 长连接感知断开</h2>
-            </a>
-            <p class="card-text"><p>之前写过如何 <a href="/2023/stdout-12">在服务器重启的时候感知长连接</a>，最近发现折腾复杂了。</p>
-<p><a href="https://github.com/encode/starlette/discussions/1776">https://github.com/encode/starlette/discussions/1776</a></p>
-<p>测试代码： </p>
-<pre><code>import asyncio
-
-async def async_streamer():
-    try:
-        while True:
-            yield b&quot;--boundary\r\nContent-Type: text/plain\r\nContent-Length: 1\r\n\r\n1\r\n&quot;
-            await asyncio.sleep(0)
-    except asyncio.CancelledError:
-        print(&quot;caught cancelled error&quot;)
-
-app = Starlette(routes=[
-    Route('/async', async_endpoint),
-])
-</code></pre>
-<p>跑起来： <code>uvicorn stream:app</code></p>
-<p>这段代码粗一看没啥大不了的，但是神奇的地方在于，如果去掉 <code>try ... except asyncio.CancelledError</code> ，代码也能正常跑</p>
-<pre><code>
-async def async_streamer():
-    while True:
-        yield b&quot;--boundary\r\nContent-Type: text/plain\r\nContent-Length: 1\r\n\r\n1\r\n&quot;
-        await asyncio.sleep(0)
-</code></pre>
-<p>而且不会报错！最蛋痛的是，这玩意因为是个 <code>while True</code>，如果你里面有打开的数据库连接，是不会中断的，也不会回收的。因为这个 coroutine 没有继续 <code>async for</code> 来消费，就一直挂在进程里当僵尸了！</p>
-<p>加上 <code>try ... except asyncio.CancelledError</code>，能捕获出错，也能处理善后了。</p>
-<p>真是神奇啊。不知道是 uvicorn 的特性，还是 ASGI 都这样。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-01-18T14:44:12+08:00">2024-01-18</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Fri, 13 Mar 2026 23:19:00 +0800</lastBuildDate><item><title>2026 股灾？</title><link>https://blog.est.im/2026/stderr-07</link><description>&lt;p&gt;有这么一个发明，他被美国人最先搞出来，工业化，标准化铺开，在极短的时间内迅速占领报纸头版，在当时的人们认为具有划时代意义，很可能极大的方便明天人们的工作和生活，整个世界的运行逻辑也会随之改变。&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sun, 15 Mar 2026 04:19:09 +0800</lastBuildDate><item><title>chat.est.im launches at 3.14</title><link>https://blog.est.im/2026/stdout-10</link><description>&lt;p&gt;Long over due. But finally, it's here.&lt;/p&gt;
+&lt;p&gt;Last year I saw an interesting &lt;a href="https://www.v2ex.com/t/1176289"&gt;thread on V2EX&lt;/a&gt; that utilize &lt;code&gt;curl -N&lt;/code&gt; to display cool ANSI art, and I wondered how to make it "interactive". After a series of battle with AI coding agents, it's finally done.&lt;/p&gt;
+&lt;p&gt;The project is located at &lt;a href="https://chat.est.im/"&gt;https://chat.est.im/&lt;/a&gt;. You can try it with &lt;code&gt;curl -NT. https://chat.est.im/hello&lt;/code&gt;. I wrote a bi-directional streaming with async underneath, all messages were buffered in a queue and delivered in real-time, without any logs.&lt;/p&gt;
+&lt;p&gt;To keep messaging secure, an TLS layer is required, so I went along with ACME auto cert renewal as well. In the beginning, I tried &lt;code&gt;HTTP-01&lt;/code&gt; challenge, it requires a standalone 80 port which I think is totally unnecessary, only later to find out there's also &lt;code&gt;TLS-ALPN-01&lt;/code&gt;. A good lesson learned with ALPN and stuff.&lt;/p&gt;
+&lt;p&gt;Also to prevent progress meters in &lt;code&gt;curl&lt;/code&gt;, I read source code with the help of &lt;code&gt;opus-4.5&lt;/code&gt;. AI is a good assistant for doing such research.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;curl -T&lt;/code&gt; is quite fun, I also built &lt;a href="https://blog.est.im/2026/stdout-01"&gt;a paste service&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Some may ask why not telnet, ssh or IRC? Because those are pretty ancient, Web crowds are used to &lt;code&gt;curl&lt;/code&gt; for everything these days.&lt;/p&gt;
+&lt;p&gt;The next step would be adding moar pretty ANSI to the server, some chat control commands, and perhaps AI? lol no.&lt;/p&gt;
+&lt;p&gt;This project is closed source.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 14 Mar 2026 12:04:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-03-14:/2026/stdout-10</guid><category>stdout</category></item><item><title>2026 股灾？</title><link>https://blog.est.im/2026/stderr-07</link><description>&lt;p&gt;有这么一个发明，他被美国人最先搞出来，工业化，标准化铺开，在极短的时间内迅速占领报纸头版，在当时的人们认为具有划时代意义，很可能极大的方便明天人们的工作和生活，整个世界的运行逻辑也会随之改变。&lt;/p&gt;
 &lt;p&gt;唯一的问题是，这个发明被生产制造能力拖累了。由于稀缺性，成为少量富人的珍品。但是作为一个有巨大战略价值的东西，它终将会飞入寻常百姓家。&lt;/p&gt;
 &lt;p&gt;这样的发明，你心目中可能有很多，放在今天可能是 大语言模型 LLM。看着现在涨价到离谱的内存价格，我突然想起一个往事：清末橡胶股&lt;/p&gt;
 &lt;p&gt;下面开始AI吟唱，由我洗稿转述。&lt;/p&gt;
@@ -874,28 +882,4 @@ zero-width.ttf&lt;/p&gt;
 in the PDF.js project, where a PDF file may have fonts embedded for rendering text with, but no way to tell whether an extracted font has actually finished loading.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;和我想到一块去了。还是人类老哥牛逼，2012-01-14号就把这个方案搓出来了，距今刚好整整14年。&lt;/p&gt;
-&lt;p&gt;AI就像一个培训班出身的，对背题能过的任务能很快完成，对于这种考验细节的冷门任务，还是难。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 14 Jan 2026 22:48:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-01-14:/2026/stdout-03</guid><category>stdout</category></item><item><title>精打细算VPS扫除</title><link>https://blog.est.im/2026/stdout-02</link><description>&lt;p&gt;2022年买的VPS一直没怎么管，今天想跑点东西发现大户 warp-cli 真是吃资源啊。果断删掉&lt;/p&gt;
-&lt;p&gt;公司的服务器都是SA管理，自己的一般很少去折腾，这次也是闲的，好奇系统里杂七杂八都是啥玩意儿，挨个找AI审问一遍&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;systemctl list-units --type=service --state=running&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;blk-availability&lt;/code&gt;  &lt;code&gt;udisks2&lt;/code&gt;  插拔优盘的&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;fwupd&lt;/code&gt;  固件更新&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;ModemManager&lt;/code&gt; &lt;/li&gt;
-&lt;li&gt;&lt;code&gt;multipathd&lt;/code&gt; &lt;code&gt;open-iscsi&lt;/code&gt; &lt;code&gt;iscsid&lt;/code&gt;  存储用的&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;packagekit&lt;/code&gt; GUI包管理器&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;polkit&lt;/code&gt;  GUI 策略kit&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;snapd&lt;/code&gt; &lt;code&gt;snapd.apparmor&lt;/code&gt; &lt;code&gt;snapd.autoimport&lt;/code&gt;  GUI里的 App store&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;lvm2-monitor&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;upower&lt;/code&gt; &lt;code&gt;thermald&lt;/code&gt; 电源和温度传感器&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;cloud-init*&lt;/code&gt; &lt;code&gt;cloud-config*&lt;/code&gt; 云配置器&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;apport*&lt;/code&gt; Crash reporting&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;这些都没用！直接 &lt;code&gt;sudo systemctl disable --now XXX&lt;/code&gt; 禁用&lt;/p&gt;
-&lt;p&gt;其中 snapd 直接 &lt;code&gt;sudo apt purge snapd&lt;/code&gt; 斩草除根！&lt;/p&gt;
-&lt;p&gt;最后看一下  &lt;code&gt;free -h&lt;/code&gt; &lt;code&gt;used=110Mi&lt;/code&gt; 感觉好多了。&lt;/p&gt;
-&lt;p&gt;顺便把文件也清理下 &lt;code&gt;sudo journalctl --vacuum-size=500M&lt;/code&gt;，发现比较大，编辑 &lt;code&gt;vi /etc/systemd/journald.conf&lt;/code&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;[Journal]
-SystemMaxUse=500M
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;然后 &lt;code&gt;sudo systemctl restart systemd-journald&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;为什么要整理VPS？因为大善人Cloudflare 和 Vercel 都有 request buffering 导致一个 hobby project 做不下去了&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 13 Jan 2026 22:30:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-01-13:/2026/stdout-02</guid><category>stdout</category></item></channel></rss>
+&lt;p&gt;AI就像一个培训班出身的，对背题能过的任务能很快完成，对于这种考验细节的冷门任务，还是难。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 14 Jan 2026 22:48:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-01-14:/2026/stdout-03</guid><category>stdout</category></item></channel></rss>

@@ -54,6 +54,28 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-10"  rel="bookmark" >
+              <h2 class="card-title">chat.est.im launches at 3.14</h2>
+            </a>
+            <p class="card-text"><p>Long over due. But finally, it's here.</p>
+<p>Last year I saw an interesting <a href="https://www.v2ex.com/t/1176289">thread on V2EX</a> that utilize <code>curl -N</code> to display cool ANSI art, and I wondered how to make it "interactive". After a series of battle with AI coding agents, it's finally done.</p>
+<p>The project is located at <a href="https://chat.est.im/">https://chat.est.im/</a>. You can try it with <code>curl -NT. https://chat.est.im/hello</code>. I wrote a bi-directional streaming with async underneath, all messages were buffered in a queue and delivered in real-time, without any logs.</p>
+<p>To keep messaging secure, an TLS layer is required, so I went along with ACME auto cert renewal as well. In the beginning, I tried <code>HTTP-01</code> challenge, it requires a standalone 80 port which I think is totally unnecessary, only later to find out there's also <code>TLS-ALPN-01</code>. A good lesson learned with ALPN and stuff.</p>
+<p>Also to prevent progress meters in <code>curl</code>, I read source code with the help of <code>opus-4.5</code>. AI is a good assistant for doing such research.</p>
+<p>The <code>curl -T</code> is quite fun, I also built <a href="https://blog.est.im/2026/stdout-01">a paste service</a>.</p>
+<p>Some may ask why not telnet, ssh or IRC? Because those are pretty ancient, Web crowds are used to <code>curl</code> for everything these days.</p>
+<p>The next step would be adding moar pretty ANSI to the server, some chat control commands, and perhaps AI? lol no.</p>
+<p>This project is closed source.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-03-14T12:04:00+08:00">2026-03-14</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stderr-07"  rel="bookmark" >
               <h2 class="card-title">2026 股灾？</h2>
             </a>
@@ -1187,44 +1209,6 @@ in the PDF.js project, where a PDF file may have fonts embedded for rendering te
 <p>AI就像一个培训班出身的，对背题能过的任务能很快完成，对于这种考验细节的冷门任务，还是难。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-01-14T22:48:00+08:00">2026-01-14</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2026/stdout-02"  rel="bookmark" >
-              <h2 class="card-title">精打细算VPS扫除</h2>
-            </a>
-            <p class="card-text"><p>2022年买的VPS一直没怎么管，今天想跑点东西发现大户 warp-cli 真是吃资源啊。果断删掉</p>
-<p>公司的服务器都是SA管理，自己的一般很少去折腾，这次也是闲的，好奇系统里杂七杂八都是啥玩意儿，挨个找AI审问一遍</p>
-<p><code>systemctl list-units --type=service --state=running</code></p>
-<ul>
-<li><code>blk-availability</code>  <code>udisks2</code>  插拔优盘的</li>
-<li><code>fwupd</code>  固件更新</li>
-<li><code>ModemManager</code> </li>
-<li><code>multipathd</code> <code>open-iscsi</code> <code>iscsid</code>  存储用的</li>
-<li><code>packagekit</code> GUI包管理器</li>
-<li><code>polkit</code>  GUI 策略kit</li>
-<li><code>snapd</code> <code>snapd.apparmor</code> <code>snapd.autoimport</code>  GUI里的 App store</li>
-<li><code>lvm2-monitor</code></li>
-<li><code>upower</code> <code>thermald</code> 电源和温度传感器</li>
-<li><code>cloud-init*</code> <code>cloud-config*</code> 云配置器</li>
-<li><code>apport*</code> Crash reporting</li>
-</ul>
-<p>这些都没用！直接 <code>sudo systemctl disable --now XXX</code> 禁用</p>
-<p>其中 snapd 直接 <code>sudo apt purge snapd</code> 斩草除根！</p>
-<p>最后看一下  <code>free -h</code> <code>used=110Mi</code> 感觉好多了。</p>
-<p>顺便把文件也清理下 <code>sudo journalctl --vacuum-size=500M</code>，发现比较大，编辑 <code>vi /etc/systemd/journald.conf</code></p>
-<pre><code>[Journal]
-SystemMaxUse=500M
-</code></pre>
-<p>然后 <code>sudo systemctl restart systemd-journald</code></p>
-<p>为什么要整理VPS？因为大善人Cloudflare 和 Vercel 都有 request buffering 导致一个 hobby project 做不下去了</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2026-01-13T22:30:00+08:00">2026-01-13</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

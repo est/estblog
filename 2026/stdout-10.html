@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>chat.est.im launches at 3.14 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="chat.est.im launches at 3.14" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stdout-10" />
+    <meta property="og:url" content="https://blog.est.im/2026/stdout-10">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="chat.est.im launches at 3.14">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">chat.est.im launches at 3.14</h2>
+    <p class="post-date">Posted <time datetime="2026-03-14T12:04:00+08:00">2026-03-14</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>Long over due. But finally, it's here.</p>
+<p>Last year I saw an interesting <a href="https://www.v2ex.com/t/1176289">thread on V2EX</a> that utilize <code>curl -N</code> to display cool ANSI art, and I wondered how to make it "interactive". After a series of battle with AI coding agents, it's finally done.</p>
+<p>The project is located at <a href="https://chat.est.im/">https://chat.est.im/</a>. You can try it with <code>curl -NT. https://chat.est.im/hello</code>. I wrote a bi-directional streaming with async underneath, all messages were buffered in a queue and delivered in real-time, without any logs.</p>
+<p>To keep messaging secure, an TLS layer is required, so I went along with ACME auto cert renewal as well. In the beginning, I tried <code>HTTP-01</code> challenge, it requires a standalone 80 port which I think is totally unnecessary, only later to find out there's also <code>TLS-ALPN-01</code>. A good lesson learned with ALPN and stuff.</p>
+<p>Also to prevent progress meters in <code>curl</code>, I read source code with the help of <code>opus-4.5</code>. AI is a good assistant for doing such research.</p>
+<p>The <code>curl -T</code> is quite fun, I also built <a href="https://blog.est.im/2026/stdout-01">a paste service</a>.</p>
+<p>Some may ask why not telnet, ssh or IRC? Because those are pretty ancient, Web crowds are used to <code>curl</code> for everything these days.</p>
+<p>The next step would be adding moar pretty ANSI to the server, some chat control commands, and perhaps AI? lol no.</p>
+<p>This project is closed source.</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>
