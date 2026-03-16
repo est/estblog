@@ -55,6 +55,7 @@
   <p>Long over due. But finally, it's here.</p>
 <p>Last year I saw an interesting <a href="https://www.v2ex.com/t/1176289">thread on V2EX</a> that utilize <code>curl -N</code> to display cool ANSI art, and I wondered how to make it "interactive". After a series of battle with AI coding agents, it's finally done.</p>
 <p>The project is located at <a href="https://chat.est.im/">https://chat.est.im/</a>. You can try it with <code>curl -NT. https://chat.est.im/hello</code>. I wrote a bi-directional streaming with async underneath, all messages were buffered in a queue and delivered in real-time, without any logs.</p>
+<p>Lots of trouble when deploying this. Cloudflare and Vercel didn't work, so I have to self-host on IPv6.</p>
 <p>To keep messaging secure, a TLS layer is required, so I went along with ACME auto cert renewal as well. In the beginning, I tried <code>HTTP-01</code> challenge, it requires a standalone 80 port which I think is totally unnecessary, only later to find out there's also <code>TLS-ALPN-01</code>. A good lesson learned with ALPN and stuff.</p>
 <p>Also to prevent progress meters in CLI, I read <code>curl</code>'s source code with the help of <code>opus-4.5</code>. AI is a good assistant for doing researches.</p>
 <p>The <code>curl -T</code> is quite fun, I also built <a href="https://blog.est.im/2026/stdout-01">a paste service</a>.</p>
