@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>tmux enables AIs to operate servers safely – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="tmux enables AIs to operate servers safely" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stdout-11" />
+    <meta property="og:url" content="https://blog.est.im/2026/stdout-11">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="tmux enables AIs to operate servers safely">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">tmux enables AIs to operate servers safely</h2>
+    <p class="post-date">Posted <time datetime="2026-03-17T17:48:00+08:00">2026-03-17</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>We’ve all seen plenty of horror stories about AI trashing servers. Yet, there are still tedious tasks we’d love for AI to handle. To keep things safe, the current mainstream solutions usually involve "adding another layer": intercepting dangerous commands or using a smaller model as a filter.</p>
+<p>But these solutions rely heavily on dedicated Agent tools or MCP, which means you have to let the AI connect directly. If the server doesn't allow direct SSH, sits behind a jump box, or is completely air-gapped, you’re basically stuck.</p>
+<p>My friend and I were discussing this, and at one point, we even thought about vibe coding a middleware to handle it. Then, while staring blankly at iTerm2 and Ghostty, it hit me: <strong>tmux</strong>.</p>
+<p>If I connect to the server via tmux on my local machine, the rest is easy. Here’s the prompt I used:</p>
+<blockquote>
+<p>I’ve started a new tmux session: <code>tmux new-session -d -s opus</code>.<br />
+I’ve already logged into the server. This server has no external internet access but has mirrors for yum, pip, etc.<br />
+The environment XXX and working directory XXX are ready. The objective is XXX<br />
+First, analyze the environment and write a plan. If you have questions, clarify them first.</p>
+</blockquote>
+<p>To my surprise, the AI actually started interacting and executing commands:</p>
+<ul>
+<li><strong>Sending commands:</strong> <code>tmux send-keys -t opus 'complete_command' Enter</code></li>
+<li><strong>Reading output:</strong> <code>tmux capture-pane -t opus -p -S -15</code></li>
+</ul>
+<p>However, I soon realized <code>send-keys</code> isn't entirely safe—the AI would just append an <code>Enter</code> and execute the command immediately. What to do?</p>
+<p>When in doubt, ask the AI. The conclusion: Replace <code>tmux send-keys</code> with a filtered alias.</p>
+<p><code>ts() { tmux send-keys -t opus -l -- "$(printf '%s' "$*" | tr -d '\000-\037\177')"; }</code></p>
+<p><strong>So, the workflow looks like this:</strong></p>
+<ol>
+<li>Enable this alias, fire up tmux and login to the server</li>
+<li>In your Agent config, allow <code>ts</code> to execute automatically, but disallow <code>tmux</code>.</li>
+<li>Write your prompt, explaining what needs to be done and instructing the AI to use this alias.</li>
+<li>The AI starts thinking, the commands would appear on your tmux. <strong>Crucially, it absolutely cannot press Enter.</strong></li>
+<li>Human-in-the-loop: Stare at the command carefully ⚠️. If the command looks safe, you press Enter to proceed.</li>
+<li>If there’s a problem, hit <code>Ctrl+C</code>, and start a new line with a comment: <code># I canceled this because blah</code>.</li>
+<li>Go back to the Agent. Since <code>tmux</code> is blacklisted for auto-execution, you manually "Allow" it to run <code>tmux capture-pane</code> to read the output.</li>
+<li>Iterate until the task is complete.</li>
+</ol>
+<p>Bonus: if you’re on a "# of Requests" subscription plan, this entire operation theoretically only counts as <strong>one</strong>.</p>
+<hr />
+<p>用AI撸服务器翻车的案例很多了。但是服务器上有些麻烦事儿还是想让AI去解决，为了安全，网上现在的方案都是——再套一层。比如拦截危险指令，用小模型做过滤等等。</p>
+<p>这些方案都依靠agent tool或者MCP，也就是说你得允许让AI直连。如果服务器不允许直接ssh，有跳板机，断外网的话可能就抓瞎了</p>
+<p>我和朋友也聊到这个问题，甚至一度想 vibe 一个middleware去实现这样的功能。我盯着 iTerm2 和 Ghostty 发呆，突然想到个东西，tmux。</p>
+<p>在本机用tmux把服务器连上，然后接下来的问题就简单了，下面是我的prompt</p>
+<blockquote>
+<p>我新建了个tmux <br />
+tmux new-session -d -s opus <br />
+并且已经登录服务器。该服务器禁止外网，但是有 yum pip 等镜像。<br />
+已经准备好XXX，工作目录 XXX，需要实现 已经准备好XXX，工作目录<br />
+先分析环境，写个plan。有问题确认清楚</p>
+</blockquote>
+<p>没想到 AI 真的开始调用命令开始交互执行了</p>
+<ul>
+<li>发送指令：<code>tmux send-keys -t opus '完整命令' Enter</code></li>
+<li>阅读输出：<code>tmux capture-pane -t opus -p -S -15</code></li>
+</ul>
+<p>期间发现 <code>send-keys</code> 也不太安全，AI直接把命令回车执行了。怎么办？</p>
+<p>遇到这种问题，继续问AI啊。结论是 <code>tmux send-keys</code> 换成一个带过滤 alias 就行</p>
+<p><code>ts() { tmux send-keys -t opus -l -- "$(printf '%s' "$*" | tr -d '\000-\037\177')"; }</code></p>
+<p>所以流程是：</p>
+<ol>
+<li>把tmux跑起来，把这个 alias  生效</li>
+<li>在 agent 配置里，允许 <code>ts</code> 直接执行，不允许 <code>tmux</code>改成手动确认</li>
+<li>写prompt交代你要干啥，交代务必用这个alias。</li>
+<li>AI开始想办法，一顿命令输出，在tmux敲命令了，但是重点来了，绝对没按回车</li>
+<li>用瞪眼法观察里面的是否有诈，human-in-the-loop。没问题就敲回车。</li>
+<li>有问题你Ctrl+C然后新起一行写个注释 <code># I canceled this because blah</code></li>
+<li>回到 agent 工具，这个时候 <code>tmux</code> 命令应该是黑名单，不能直接执行，你点 allow 允许它去 <code>tmux capture-pane</code> 读输出内容</li>
+<li>逐渐迭代直到任务完成</li>
+</ol>
+<p>这套流程还有一个额外的好处，如果你买的是「次数」套餐，那么整体操作下来，理论上只算1次。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

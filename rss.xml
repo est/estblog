@@ -1,5 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Mon, 16 Mar 2026 12:11:27 +0800</lastBuildDate><item><title>chat.est.im launches at 3.14</title><link>https://blog.est.im/2026/stdout-10</link><description>&lt;p&gt;Long over due. But finally, it's here.&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 17 Mar 2026 17:48:00 +0800</lastBuildDate><item><title>tmux enables AIs to operate servers safely</title><link>https://blog.est.im/2026/stdout-11</link><description>&lt;p&gt;We’ve all seen plenty of horror stories about AI trashing servers. Yet, there are still tedious tasks we’d love for AI to handle. To keep things safe, the current mainstream solutions usually involve "adding another layer": intercepting dangerous commands or using a smaller model as a filter.&lt;/p&gt;
+&lt;p&gt;But these solutions rely heavily on dedicated Agent tools or MCP, which means you have to let the AI connect directly. If the server doesn't allow direct SSH, sits behind a jump box, or is completely air-gapped, you’re basically stuck.&lt;/p&gt;
+&lt;p&gt;My friend and I were discussing this, and at one point, we even thought about vibe coding a middleware to handle it. Then, while staring blankly at iTerm2 and Ghostty, it hit me: &lt;strong&gt;tmux&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;If I connect to the server via tmux on my local machine, the rest is easy. Here’s the prompt I used:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;I’ve started a new tmux session: &lt;code&gt;tmux new-session -d -s opus&lt;/code&gt;.&lt;br /&gt;
+I’ve already logged into the server. This server has no external internet access but has mirrors for yum, pip, etc.&lt;br /&gt;
+The environment XXX and working directory XXX are ready. The objective is XXX&lt;br /&gt;
+First, analyze the environment and write a plan. If you have questions, clarify them first.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;To my surprise, the AI actually started interacting and executing commands:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Sending commands:&lt;/strong&gt; &lt;code&gt;tmux send-keys -t opus 'complete_command' Enter&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reading output:&lt;/strong&gt; &lt;code&gt;tmux capture-pane -t opus -p -S -15&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;However, I soon realized &lt;code&gt;send-keys&lt;/code&gt; isn't entirely safe—the AI would just append an &lt;code&gt;Enter&lt;/code&gt; and execute the command immediately. What to do?&lt;/p&gt;
+&lt;p&gt;When in doubt, ask the AI. The conclusion: Replace &lt;code&gt;tmux send-keys&lt;/code&gt; with a filtered alias.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ts() { tmux send-keys -t opus -l -- "$(printf '%s' "$*" | tr -d '\000-\037\177')"; }&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;So, the workflow looks like this:&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Enable this alias, fire up tmux and login to the server&lt;/li&gt;
+&lt;li&gt;In your Agent config, allow &lt;code&gt;ts&lt;/code&gt; to execute automatically, but disallow &lt;code&gt;tmux&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Write your prompt, explaining what needs to be done and instructing the AI to use this alias.&lt;/li&gt;
+&lt;li&gt;The AI starts thinking, the commands would appear on your tmux. &lt;strong&gt;Crucially, it absolutely cannot press Enter.&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Human-in-the-loop: Stare at the command carefully ⚠️. If the command looks safe, you press Enter to proceed.&lt;/li&gt;
+&lt;li&gt;If there’s a problem, hit &lt;code&gt;Ctrl+C&lt;/code&gt;, and start a new line with a comment: &lt;code&gt;# I canceled this because blah&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Go back to the Agent. Since &lt;code&gt;tmux&lt;/code&gt; is blacklisted for auto-execution, you manually "Allow" it to run &lt;code&gt;tmux capture-pane&lt;/code&gt; to read the output.&lt;/li&gt;
+&lt;li&gt;Iterate until the task is complete.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Bonus: if you’re on a "# of Requests" subscription plan, this entire operation theoretically only counts as &lt;strong&gt;one&lt;/strong&gt;.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;用AI撸服务器翻车的案例很多了。但是服务器上有些麻烦事儿还是想让AI去解决，为了安全，网上现在的方案都是——再套一层。比如拦截危险指令，用小模型做过滤等等。&lt;/p&gt;
+&lt;p&gt;这些方案都依靠agent tool或者MCP，也就是说你得允许让AI直连。如果服务器不允许直接ssh，有跳板机，断外网的话可能就抓瞎了&lt;/p&gt;
+&lt;p&gt;我和朋友也聊到这个问题，甚至一度想 vibe 一个middleware去实现这样的功能。我盯着 iTerm2 和 Ghostty 发呆，突然想到个东西，tmux。&lt;/p&gt;
+&lt;p&gt;在本机用tmux把服务器连上，然后接下来的问题就简单了，下面是我的prompt&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我新建了个tmux &lt;br /&gt;
+tmux new-session -d -s opus &lt;br /&gt;
+并且已经登录服务器。该服务器禁止外网，但是有 yum pip 等镜像。&lt;br /&gt;
+已经准备好XXX，工作目录 XXX，需要实现 已经准备好XXX，工作目录&lt;br /&gt;
+先分析环境，写个plan。有问题确认清楚&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;没想到 AI 真的开始调用命令开始交互执行了&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;发送指令：&lt;code&gt;tmux send-keys -t opus '完整命令' Enter&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;阅读输出：&lt;code&gt;tmux capture-pane -t opus -p -S -15&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;期间发现 &lt;code&gt;send-keys&lt;/code&gt; 也不太安全，AI直接把命令回车执行了。怎么办？&lt;/p&gt;
+&lt;p&gt;遇到这种问题，继续问AI啊。结论是 &lt;code&gt;tmux send-keys&lt;/code&gt; 换成一个带过滤 alias 就行&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ts() { tmux send-keys -t opus -l -- "$(printf '%s' "$*" | tr -d '\000-\037\177')"; }&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;所以流程是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;把tmux跑起来，把这个 alias  生效&lt;/li&gt;
+&lt;li&gt;在 agent 配置里，允许 &lt;code&gt;ts&lt;/code&gt; 直接执行，不允许 &lt;code&gt;tmux&lt;/code&gt;改成手动确认&lt;/li&gt;
+&lt;li&gt;写prompt交代你要干啥，交代务必用这个alias。&lt;/li&gt;
+&lt;li&gt;AI开始想办法，一顿命令输出，在tmux敲命令了，但是重点来了，绝对没按回车&lt;/li&gt;
+&lt;li&gt;用瞪眼法观察里面的是否有诈，human-in-the-loop。没问题就敲回车。&lt;/li&gt;
+&lt;li&gt;有问题你Ctrl+C然后新起一行写个注释 &lt;code&gt;# I canceled this because blah&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;回到 agent 工具，这个时候 &lt;code&gt;tmux&lt;/code&gt; 命令应该是黑名单，不能直接执行，你点 allow 允许它去 &lt;code&gt;tmux capture-pane&lt;/code&gt; 读输出内容&lt;/li&gt;
+&lt;li&gt;逐渐迭代直到任务完成&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这套流程还有一个额外的好处，如果你买的是「次数」套餐，那么整体操作下来，理论上只算1次。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 17 Mar 2026 17:48:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-03-17:/2026/stdout-11</guid><category>stdout</category></item><item><title>chat.est.im launches at 3.14</title><link>https://blog.est.im/2026/stdout-10</link><description>&lt;p&gt;Long over due. But finally, it's here.&lt;/p&gt;
 &lt;p&gt;Last year I saw an interesting &lt;a href="https://www.v2ex.com/t/1176289"&gt;thread on V2EX&lt;/a&gt; that utilize &lt;code&gt;curl -N&lt;/code&gt; to display cool ANSI art, and I wondered how to make it "interactive". After a series of battle with AI coding agents, it's finally done.&lt;/p&gt;
 &lt;p&gt;The project is located at &lt;a href="https://chat.est.im/"&gt;https://chat.est.im/&lt;/a&gt;. You can try it with &lt;code&gt;curl -NT. https://chat.est.im/hello&lt;/code&gt;. I wrote a bi-directional streaming with async underneath, all messages were buffered in a queue and delivered in real-time, without any logs.&lt;/p&gt;
 &lt;p&gt;Lots of trouble when deploying this. Cloudflare and Vercel didn't work, so I have to self-host on IPv6.&lt;/p&gt;
@@ -821,65 +882,4 @@ By treating microblogging like &lt;strong&gt;Scripture&lt;/strong&gt;, we return
 &lt;p&gt;过程中反复折腾的，居然是最后一个 hop 重复显示，和丢失的问题。没想到AI也犯糊涂。&lt;/p&gt;
 &lt;p&gt;不过需要sudo还是很蛋痛。有一些折衷的办法比如去读 &lt;code&gt;traceroute -d&lt;/code&gt;， &lt;code&gt;mtr&lt;/code&gt; 或者 iproute2 的debug输出，有空再折腾。&lt;/p&gt;
 &lt;p&gt;期间遇到n次无法编辑文件的情况，估计AI输出乱了。还有不知道为什么，Google Antigravity每次写完代码就打 &lt;code&gt;Aurora&lt;/code&gt; 几个字到末尾。&lt;/p&gt;
-&lt;p&gt;现在基本框架有了，下一步支持点什么插件好呢。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 16 Jan 2026 00:10:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-01-16:/2026/stdout-04</guid><category>stdout</category></item><item><title>尝试让AI手搓个TTF格式生成器</title><link>https://blog.est.im/2026/stdout-03</link><description>&lt;p&gt;一个奇怪的需求：如何在浏览器判断一个字体是否支持某个字符？&lt;/p&gt;
-&lt;p&gt;（原始需求是：遇到一些字符渲染错位问题，看起来是字体不支持，fallback 到别的去了。）&lt;/p&gt;
-&lt;p&gt;想到的方法是：用canvas渲染看宽度。但因为这个 fallback机制，所以更好的办法是拿一个已知的特殊字体去比对，如果fallback了说明不支持。&lt;/p&gt;
-&lt;p&gt;那么问题来了，这个 fallback font 你不可能下载一个包含所有字符的，那样体积会很大，所以最好是按需生成一个，只包含一个字符，用来比对。那么这个问题就转换成了：如何在浏览器js里动态生成一个 .ttf 格式的字体文件，只包含一个字符？&lt;/p&gt;
-&lt;p&gt;这里不考虑 woff woff2，因为前者已经过时了后者比 ttf 更复杂。&lt;/p&gt;
-&lt;p&gt;一开始以为很easy，让 ChatGPT搓，打开浏览器就懵逼 &lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;OTS parsing error: bad table directory searchRange
-bad table directory entrySelector
-bad table directory rangeShift
-Invalid table tag: 0x66000000
-f\x00\x00\x00: invalid table offset
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;感觉事情没那么简单。让Antigravity搓，它把我免费额度烧光了也没搓出个所以然&lt;/p&gt;
-&lt;p&gt;其中一个小插曲是，css里允许对单独一个字符设置 &lt;code&gt;font-family&lt;/code&gt;，但是因为这个 .ttf 是动态生成的，所以需要动态生成这个CSS的声明，所以在生成 .ttf 之后需要类似这样的代码：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;document.head.insertAdjacentHTML(&amp;quot;beforeend&amp;quot;, `
-&amp;lt;style&amp;gt;
-@font-face {
-  font-family: GhostRaw;
-  src: url(${url});
-  unicode-range: U+2603;
-}
-body { font-family: GhostRaw, system-ui; }
-&amp;lt;/style&amp;gt;
-`);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;注意这个是在 html 里的 js 里的 template string 里的 css。antigravity改这一块出现了好多次 error，我猜是AI输出格式嵌套格式本来就容易出错，这里引用和转义太复杂以至于 agent 直接看不懂output了。哈哈&lt;/p&gt;
-&lt;p&gt;因为没额度了，所以换国产免费的 Trae。Trae 比antigravity更笨，但是也努力。js搓不动，就开始换写 .py 去验证。搞到最后搞出来一堆测试文件&lt;/p&gt;
-&lt;p&gt;check_maxp.py&lt;br /&gt;
-check_validation.py&lt;br /&gt;
-generate_minimal_ttf.py&lt;br /&gt;
-generate_proper_ttf.py&lt;br /&gt;
-generate_simple_zero_width_font.py&lt;br /&gt;
-generate_ttf.js&lt;br /&gt;
-generate_zero_width_font.py&lt;br /&gt;
-generated_font.ttf&lt;br /&gt;
-generated_font.ttx&lt;br /&gt;
-get_base64.js&lt;br /&gt;
-minimal_font_generator.py&lt;br /&gt;
-modify_existing_font.py&lt;br /&gt;
-simple_font_generator.py&lt;br /&gt;
-validate_ttf.py&lt;br /&gt;
-validate.js&lt;br /&gt;
-working_font_generator.py&lt;br /&gt;
-zero_width_font.ttf&lt;br /&gt;
-zero-width.ttf&lt;/p&gt;
-&lt;p&gt;这样几回合下来，直接搓超出上下文了，最后直接罢工，出现&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Output is too long, please enter 'Continue' to get more.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;而且你点了 continue 它思索半天还是出现这句话。上下文是彻底爆了。&lt;/p&gt;
-&lt;p&gt;正向构造一个 .ttf 很难，AI还很聪明的想到了：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;我将使用一个更简单的方法，直接使用一个现有的基础字体文件，然后修改它的字符映射。让我检查一下是否有任何基础 TTF 文件可用。我将使用 Google Fonts 中的一个非常简单的字体作为基础。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;最后还是失败了。于是我就去搜索引擎找到了这个：&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://pomax.github.io/Minimal-font-generator/"&gt;https://pomax.github.io/Minimal-font-generator/&lt;/a&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;dynamically generated bespoke font that encodes that character as a zero-width glyph&lt;br /&gt;
-in the PDF.js project, where a PDF file may have fonts embedded for rendering text with, but no way to tell whether an extracted font has actually finished loading.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;和我想到一块去了。还是人类老哥牛逼，2012-01-14号就把这个方案搓出来了，距今刚好整整14年。&lt;/p&gt;
-&lt;p&gt;AI就像一个培训班出身的，对背题能过的任务能很快完成，对于这种考验细节的冷门任务，还是难。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 14 Jan 2026 22:48:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-01-14:/2026/stdout-03</guid><category>stdout</category></item></channel></rss>
+&lt;p&gt;现在基本框架有了，下一步支持点什么插件好呢。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 16 Jan 2026 00:10:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-01-16:/2026/stdout-04</guid><category>stdout</category></item></channel></rss>

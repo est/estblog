@@ -54,6 +54,81 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-11"  rel="bookmark" >
+              <h2 class="card-title">tmux enables AIs to operate servers safely</h2>
+            </a>
+            <p class="card-text"><p>We’ve all seen plenty of horror stories about AI trashing servers. Yet, there are still tedious tasks we’d love for AI to handle. To keep things safe, the current mainstream solutions usually involve "adding another layer": intercepting dangerous commands or using a smaller model as a filter.</p>
+<p>But these solutions rely heavily on dedicated Agent tools or MCP, which means you have to let the AI connect directly. If the server doesn't allow direct SSH, sits behind a jump box, or is completely air-gapped, you’re basically stuck.</p>
+<p>My friend and I were discussing this, and at one point, we even thought about vibe coding a middleware to handle it. Then, while staring blankly at iTerm2 and Ghostty, it hit me: <strong>tmux</strong>.</p>
+<p>If I connect to the server via tmux on my local machine, the rest is easy. Here’s the prompt I used:</p>
+<blockquote>
+<p>I’ve started a new tmux session: <code>tmux new-session -d -s opus</code>.<br />
+I’ve already logged into the server. This server has no external internet access but has mirrors for yum, pip, etc.<br />
+The environment XXX and working directory XXX are ready. The objective is XXX<br />
+First, analyze the environment and write a plan. If you have questions, clarify them first.</p>
+</blockquote>
+<p>To my surprise, the AI actually started interacting and executing commands:</p>
+<ul>
+<li><strong>Sending commands:</strong> <code>tmux send-keys -t opus 'complete_command' Enter</code></li>
+<li><strong>Reading output:</strong> <code>tmux capture-pane -t opus -p -S -15</code></li>
+</ul>
+<p>However, I soon realized <code>send-keys</code> isn't entirely safe—the AI would just append an <code>Enter</code> and execute the command immediately. What to do?</p>
+<p>When in doubt, ask the AI. The conclusion: Replace <code>tmux send-keys</code> with a filtered alias.</p>
+<p><code>ts() { tmux send-keys -t opus -l -- "$(printf '%s' "$*" | tr -d '\000-\037\177')"; }</code></p>
+<p><strong>So, the workflow looks like this:</strong></p>
+<ol>
+<li>Enable this alias, fire up tmux and login to the server</li>
+<li>In your Agent config, allow <code>ts</code> to execute automatically, but disallow <code>tmux</code>.</li>
+<li>Write your prompt, explaining what needs to be done and instructing the AI to use this alias.</li>
+<li>The AI starts thinking, the commands would appear on your tmux. <strong>Crucially, it absolutely cannot press Enter.</strong></li>
+<li>Human-in-the-loop: Stare at the command carefully ⚠️. If the command looks safe, you press Enter to proceed.</li>
+<li>If there’s a problem, hit <code>Ctrl+C</code>, and start a new line with a comment: <code># I canceled this because blah</code>.</li>
+<li>Go back to the Agent. Since <code>tmux</code> is blacklisted for auto-execution, you manually "Allow" it to run <code>tmux capture-pane</code> to read the output.</li>
+<li>Iterate until the task is complete.</li>
+</ol>
+<p>Bonus: if you’re on a "# of Requests" subscription plan, this entire operation theoretically only counts as <strong>one</strong>.</p>
+<hr />
+<p>用AI撸服务器翻车的案例很多了。但是服务器上有些麻烦事儿还是想让AI去解决，为了安全，网上现在的方案都是——再套一层。比如拦截危险指令，用小模型做过滤等等。</p>
+<p>这些方案都依靠agent tool或者MCP，也就是说你得允许让AI直连。如果服务器不允许直接ssh，有跳板机，断外网的话可能就抓瞎了</p>
+<p>我和朋友也聊到这个问题，甚至一度想 vibe 一个middleware去实现这样的功能。我盯着 iTerm2 和 Ghostty 发呆，突然想到个东西，tmux。</p>
+<p>在本机用tmux把服务器连上，然后接下来的问题就简单了，下面是我的prompt</p>
+<blockquote>
+<p>我新建了个tmux <br />
+tmux new-session -d -s opus <br />
+并且已经登录服务器。该服务器禁止外网，但是有 yum pip 等镜像。<br />
+已经准备好XXX，工作目录 XXX，需要实现 已经准备好XXX，工作目录<br />
+先分析环境，写个plan。有问题确认清楚</p>
+</blockquote>
+<p>没想到 AI 真的开始调用命令开始交互执行了</p>
+<ul>
+<li>发送指令：<code>tmux send-keys -t opus '完整命令' Enter</code></li>
+<li>阅读输出：<code>tmux capture-pane -t opus -p -S -15</code></li>
+</ul>
+<p>期间发现 <code>send-keys</code> 也不太安全，AI直接把命令回车执行了。怎么办？</p>
+<p>遇到这种问题，继续问AI啊。结论是 <code>tmux send-keys</code> 换成一个带过滤 alias 就行</p>
+<p><code>ts() { tmux send-keys -t opus -l -- "$(printf '%s' "$*" | tr -d '\000-\037\177')"; }</code></p>
+<p>所以流程是：</p>
+<ol>
+<li>把tmux跑起来，把这个 alias  生效</li>
+<li>在 agent 配置里，允许 <code>ts</code> 直接执行，不允许 <code>tmux</code>改成手动确认</li>
+<li>写prompt交代你要干啥，交代务必用这个alias。</li>
+<li>AI开始想办法，一顿命令输出，在tmux敲命令了，但是重点来了，绝对没按回车</li>
+<li>用瞪眼法观察里面的是否有诈，human-in-the-loop。没问题就敲回车。</li>
+<li>有问题你Ctrl+C然后新起一行写个注释 <code># I canceled this because blah</code></li>
+<li>回到 agent 工具，这个时候 <code>tmux</code> 命令应该是黑名单，不能直接执行，你点 allow 允许它去 <code>tmux capture-pane</code> 读输出内容</li>
+<li>逐渐迭代直到任务完成</li>
+</ol>
+<p>这套流程还有一个额外的好处，如果你买的是「次数」套餐，那么整体操作下来，理论上只算1次。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-03-17T17:48:00+08:00">2026-03-17</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-10"  rel="bookmark" >
               <h2 class="card-title">chat.est.im launches at 3.14</h2>
             </a>
@@ -1134,81 +1209,6 @@ By treating microblogging like <strong>Scripture</strong>, we return gravity to 
 <p>现在基本框架有了，下一步支持点什么插件好呢。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-01-16T00:10:00+08:00">2026-01-16</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2026/stdout-03"  rel="bookmark" >
-              <h2 class="card-title">尝试让AI手搓个TTF格式生成器</h2>
-            </a>
-            <p class="card-text"><p>一个奇怪的需求：如何在浏览器判断一个字体是否支持某个字符？</p>
-<p>（原始需求是：遇到一些字符渲染错位问题，看起来是字体不支持，fallback 到别的去了。）</p>
-<p>想到的方法是：用canvas渲染看宽度。但因为这个 fallback机制，所以更好的办法是拿一个已知的特殊字体去比对，如果fallback了说明不支持。</p>
-<p>那么问题来了，这个 fallback font 你不可能下载一个包含所有字符的，那样体积会很大，所以最好是按需生成一个，只包含一个字符，用来比对。那么这个问题就转换成了：如何在浏览器js里动态生成一个 .ttf 格式的字体文件，只包含一个字符？</p>
-<p>这里不考虑 woff woff2，因为前者已经过时了后者比 ttf 更复杂。</p>
-<p>一开始以为很easy，让 ChatGPT搓，打开浏览器就懵逼 </p>
-<pre><code>OTS parsing error: bad table directory searchRange
-bad table directory entrySelector
-bad table directory rangeShift
-Invalid table tag: 0x66000000
-f\x00\x00\x00: invalid table offset
-</code></pre>
-<p>感觉事情没那么简单。让Antigravity搓，它把我免费额度烧光了也没搓出个所以然</p>
-<p>其中一个小插曲是，css里允许对单独一个字符设置 <code>font-family</code>，但是因为这个 .ttf 是动态生成的，所以需要动态生成这个CSS的声明，所以在生成 .ttf 之后需要类似这样的代码：</p>
-<pre><code>document.head.insertAdjacentHTML(&quot;beforeend&quot;, `
-&lt;style&gt;
-@font-face {
-  font-family: GhostRaw;
-  src: url(${url});
-  unicode-range: U+2603;
-}
-body { font-family: GhostRaw, system-ui; }
-&lt;/style&gt;
-`);
-</code></pre>
-<p>注意这个是在 html 里的 js 里的 template string 里的 css。antigravity改这一块出现了好多次 error，我猜是AI输出格式嵌套格式本来就容易出错，这里引用和转义太复杂以至于 agent 直接看不懂output了。哈哈</p>
-<p>因为没额度了，所以换国产免费的 Trae。Trae 比antigravity更笨，但是也努力。js搓不动，就开始换写 .py 去验证。搞到最后搞出来一堆测试文件</p>
-<p>check_maxp.py<br />
-check_validation.py<br />
-generate_minimal_ttf.py<br />
-generate_proper_ttf.py<br />
-generate_simple_zero_width_font.py<br />
-generate_ttf.js<br />
-generate_zero_width_font.py<br />
-generated_font.ttf<br />
-generated_font.ttx<br />
-get_base64.js<br />
-minimal_font_generator.py<br />
-modify_existing_font.py<br />
-simple_font_generator.py<br />
-validate_ttf.py<br />
-validate.js<br />
-working_font_generator.py<br />
-zero_width_font.ttf<br />
-zero-width.ttf</p>
-<p>这样几回合下来，直接搓超出上下文了，最后直接罢工，出现</p>
-<blockquote>
-<p>Output is too long, please enter 'Continue' to get more.</p>
-</blockquote>
-<p>而且你点了 continue 它思索半天还是出现这句话。上下文是彻底爆了。</p>
-<p>正向构造一个 .ttf 很难，AI还很聪明的想到了：</p>
-<blockquote>
-<p>我将使用一个更简单的方法，直接使用一个现有的基础字体文件，然后修改它的字符映射。让我检查一下是否有任何基础 TTF 文件可用。我将使用 Google Fonts 中的一个非常简单的字体作为基础。</p>
-</blockquote>
-<p>最后还是失败了。于是我就去搜索引擎找到了这个：</p>
-<p><a href="https://pomax.github.io/Minimal-font-generator/">https://pomax.github.io/Minimal-font-generator/</a></p>
-<blockquote>
-<p>dynamically generated bespoke font that encodes that character as a zero-width glyph<br />
-in the PDF.js project, where a PDF file may have fonts embedded for rendering text with, but no way to tell whether an extracted font has actually finished loading.</p>
-</blockquote>
-<p>和我想到一块去了。还是人类老哥牛逼，2012-01-14号就把这个方案搓出来了，距今刚好整整14年。</p>
-<p>AI就像一个培训班出身的，对背题能过的任务能很快完成，对于这种考验细节的冷门任务，还是难。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2026-01-14T22:48:00+08:00">2026-01-14</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
