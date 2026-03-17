@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 17 Mar 2026 17:48:00 +0800</lastBuildDate><item><title>tmux enables AIs to operate servers safely</title><link>https://blog.est.im/2026/stdout-11</link><description>&lt;p&gt;We’ve all seen plenty of horror stories about AI trashing servers. Yet, there are still tedious tasks we’d love for AI to handle. To keep things safe, the current mainstream solutions usually involve "adding another layer": intercepting dangerous commands or using a smaller model as a filter.&lt;/p&gt;
-&lt;p&gt;But these solutions rely heavily on dedicated Agent tools or MCP, which means you have to let the AI connect directly. If the server doesn't allow direct SSH, sits behind a jump box, or is completely air-gapped, you’re basically stuck.&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 17 Mar 2026 17:48:00 +0800</lastBuildDate><item><title>tmux enables AIs to operate servers safely</title><link>https://blog.est.im/2026/stdout-11</link><description>&lt;p&gt;We’ve all seen plenty of horror stories about AI trashing servers. Yet, there are still tedious tasks we’d love for AI to handle. To keep things safe, you have to manually copy-paste back and forth commands and outputs. Yet the current mainstream solutions usually involve "adding another layer": relay IO, intercepting dangerous commands or even using a smaller model as a filter.&lt;/p&gt;
+&lt;p&gt;But these solutions rely heavily on dedicated Agent tools or MCP, which means you have to let the AI connect to server directly as first party. If the server doesn't allow direct SSH, sits behind a jump box, or is completely air-gapped, you’re basically stuck.&lt;/p&gt;
 &lt;p&gt;My friend and I were discussing this, and at one point, we even thought about vibe coding a middleware to handle it. Then, while staring blankly at iTerm2 and Ghostty, it hit me: &lt;strong&gt;tmux&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;If I connect to the server via tmux on my local machine, the rest is easy. Here’s the prompt I used:&lt;/p&gt;
 &lt;blockquote&gt;
@@ -28,9 +28,10 @@ First, analyze the environment and write a plan. If you have questions, clarify 
 &lt;li&gt;Go back to the Agent. Since &lt;code&gt;tmux&lt;/code&gt; is blacklisted for auto-execution, you manually "Allow" it to run &lt;code&gt;tmux capture-pane&lt;/code&gt; to read the output.&lt;/li&gt;
 &lt;li&gt;Iterate until the task is complete.&lt;/li&gt;
 &lt;/ol&gt;
+&lt;p&gt;You don't need to bookmark the &lt;code&gt;ts&lt;/code&gt; alias, you can always ask your AI to make one for you. The alias isn't perfect in all cases, but clever AIs would figure it out 😉&lt;/p&gt;
+&lt;p&gt;Heck I don't even bother to explain the &lt;code&gt;ts&lt;/code&gt; here. But I did asked several AIs to check for correctness and rubustness.&lt;/p&gt;
 &lt;p&gt;P.S. if you’re on a "# of Requests" subscription plan, this entire operation theoretically only counts as &lt;strong&gt;one&lt;/strong&gt;.&lt;br /&gt;
-P.P.S. here tmux acts as a natural "checkpoint" for autoregressive generation process. You can approve, cancel or redirect the&lt;br /&gt;
-P.P.P.S. You don't need to bookmark the &lt;code&gt;ts&lt;/code&gt; alias, you can always ask your AI to make one for you. Heck I don't even bother to explain it here. But I did asked several AIs to check for correctness and rubustness.&lt;/p&gt;
+P.P.S. here tmux acts as a natural "checkpoint" for autoregressive generation process. You can approve, cancel or redirect the&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;用AI撸服务器翻车的案例很多了。但是服务器上有些麻烦事儿还是想让AI去解决，为了安全，网上现在的方案都是——再套一层。比如拦截危险指令，用小模型做过滤等等。&lt;/p&gt;
 &lt;p&gt;这些方案都依靠agent tool或者MCP，也就是说你得允许让AI直连。如果服务器不允许直接ssh，有跳板机，断外网的话可能就抓瞎了&lt;/p&gt;
