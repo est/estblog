@@ -81,7 +81,9 @@ First, analyze the environment and write a plan. If you have questions, clarify 
 <li>Go back to the Agent. Since <code>tmux</code> is blacklisted for auto-execution, you manually "Allow" it to run <code>tmux capture-pane</code> to read the output.</li>
 <li>Iterate until the task is complete.</li>
 </ol>
-<p>Bonus: if you’re on a "# of Requests" subscription plan, this entire operation theoretically only counts as <strong>one</strong>.</p>
+<p>P.S. if you’re on a "# of Requests" subscription plan, this entire operation theoretically only counts as <strong>one</strong>.<br />
+P.P.S. here tmux acts as a natural "checkpoint" for autoregressive generation process. You can approve, cancel or redirect the<br />
+P.P.P.S. You don't need to bookmark the <code>ts</code> alias, you can always ask your AI to make one for you. Heck I don't even bother to explain it here. But I did asked several AIs to check for correctness and rubustness.</p>
 <hr />
 <p>用AI撸服务器翻车的案例很多了。但是服务器上有些麻烦事儿还是想让AI去解决，为了安全，网上现在的方案都是——再套一层。比如拦截危险指令，用小模型做过滤等等。</p>
 <p>这些方案都依靠agent tool或者MCP，也就是说你得允许让AI直连。如果服务器不允许直接ssh，有跳板机，断外网的话可能就抓瞎了</p>
