@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>看好 Taalas – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="看好 Taalas" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stderr-11" />
+    <meta property="og:url" content="https://blog.est.im/2026/stderr-11">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="看好 Taalas">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">看好 Taalas</h2>
+    <p class="post-date">Posted <time datetime="2026-03-23T20:38:00+08:00">2026-03-23</time> | <span>stderr</span></p>
+  </header>
+
+  
+  <p>可能你还没刷到过 <a href="https://chatjimmy.ai">https://chatjimmy.ai</a> 我被它几万 tokens/s 的推理速度震惊了。也在zhihu上翻了不少技术细节讨论。它背后的公司叫 Taalas 号称把 4-bit LLaMA3.2-3B 直接刻电路上，当然很多人第一反应是，这玩意废品啊，模型升级了岂不是硬件就白费了。</p>
+<p>但仔细研究，发现这里面另有乾坤。</p>
+<p>大模型在显卡VRAM里，70%拿来存静态权重，推理的时候这玩意就一层一层做卷积只读不写，然后30% 才是 KVcache 上下文，又读又写。吞吐频繁</p>
+<p>于是聪明人就想到了ROM。类似游戏机里的卡带，插进去 CPU/GPU 能直接访问一块特殊的内存区域。ROM成本比DRAM便宜得多，速度极快，但是只读，烧制一次就成型了。其他部分可以直接上SRAM，也就是CPU里高速缓存那种。DRAM断电丢数据，SRAM是6个晶体管保存一个1bit，不需要持续通电。DRAM是一直通电刷新bit状态。</p>
+<p>所以 ROM+SRAM 非常省电，而且推理速度极快，如果你懂一点LLM，那么你应该才出来了。基座模型的确是ROM做好就不能升级了。但是 SRAM 里可以做mask做LoRA啊。</p>
+<p>而且更绝的一点是，SRAM里可以后期 fine-tune 一下，吧ROM里的坏快屏蔽掉或者权重弥补一下。这样 ROM 的良率又回极大提高！</p>
+<p>所以这玩意不是不能升级，是能可以一直挖掘座模型的能力天花板。</p>
+<p>有人说这玩意过时快，我想如果你买一个 USB设备，你向它输入 bytes 它能返回 bytes，你觉得它智商不够用了，你可以出二手啊。现在很多地方都需要用到不是那么大的LLM，够用就行。所以这玩意跟卡带一样是有残值的。</p>
+<p>不过今天突然想到，taalas这玩意最佳用途应该是自动驾驶：</p>
+<ol>
+<li>超高速推理：即时决策，遇到路况实时反应</li>
+<li>离线运行：无需依赖云端，本地VLA</li>
+<li>智驾其实迟早成熟，只要练成了，很少更新。恰好适合固化到ROM里</li>
+<li>功耗</li>
+<li>你是真的买一块板子，而不是一个订阅，用户为智驾付费更有实物感和仪式感。</li>
+<li>确定性推理：相同输入总会输出相同结果，事故或异常可以完全重现，便于追踪和取证。</li>
+</ol>
+<p>现在智驾最大的问题就是L2 L3责任归因是个黑盒。如果把推理做成硬件，那么当 temperature 为0，把传感器数据也存一份，是可以精确还原replay当时智驾决策的。</p>
+<p>遇到问题该升级升级该赔钱赔钱。商业的本质不是追求“零风险”，而是追求风险的可控与可定价。</p>
+<p>唯一的问题就是知识产权盗窃。直接逆向板子不太可能，最大的隐患是蒸馏。</p>
+<p>这里也只是做个记录，怕以后忘记了。希望看到 Taalas 或者类似的技术早日普及。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

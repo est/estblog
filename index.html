@@ -54,6 +54,40 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stderr-11"  rel="bookmark" >
+              <h2 class="card-title">看好 Taalas</h2>
+            </a>
+            <p class="card-text"><p>可能你还没刷到过 <a href="https://chatjimmy.ai">https://chatjimmy.ai</a> 我被它几万 tokens/s 的推理速度震惊了。也在zhihu上翻了不少技术细节讨论。它背后的公司叫 Taalas 号称把 4-bit LLaMA3.2-3B 直接刻电路上，当然很多人第一反应是，这玩意废品啊，模型升级了岂不是硬件就白费了。</p>
+<p>但仔细研究，发现这里面另有乾坤。</p>
+<p>大模型在显卡VRAM里，70%拿来存静态权重，推理的时候这玩意就一层一层做卷积只读不写，然后30% 才是 KVcache 上下文，又读又写。吞吐频繁</p>
+<p>于是聪明人就想到了ROM。类似游戏机里的卡带，插进去 CPU/GPU 能直接访问一块特殊的内存区域。ROM成本比DRAM便宜得多，速度极快，但是只读，烧制一次就成型了。其他部分可以直接上SRAM，也就是CPU里高速缓存那种。DRAM断电丢数据，SRAM是6个晶体管保存一个1bit，不需要持续通电。DRAM是一直通电刷新bit状态。</p>
+<p>所以 ROM+SRAM 非常省电，而且推理速度极快，如果你懂一点LLM，那么你应该才出来了。基座模型的确是ROM做好就不能升级了。但是 SRAM 里可以做mask做LoRA啊。</p>
+<p>而且更绝的一点是，SRAM里可以后期 fine-tune 一下，吧ROM里的坏快屏蔽掉或者权重弥补一下。这样 ROM 的良率又回极大提高！</p>
+<p>所以这玩意不是不能升级，是能可以一直挖掘座模型的能力天花板。</p>
+<p>有人说这玩意过时快，我想如果你买一个 USB设备，你向它输入 bytes 它能返回 bytes，你觉得它智商不够用了，你可以出二手啊。现在很多地方都需要用到不是那么大的LLM，够用就行。所以这玩意跟卡带一样是有残值的。</p>
+<p>不过今天突然想到，taalas这玩意最佳用途应该是自动驾驶：</p>
+<ol>
+<li>超高速推理：即时决策，遇到路况实时反应</li>
+<li>离线运行：无需依赖云端，本地VLA</li>
+<li>智驾其实迟早成熟，只要练成了，很少更新。恰好适合固化到ROM里</li>
+<li>功耗</li>
+<li>你是真的买一块板子，而不是一个订阅，用户为智驾付费更有实物感和仪式感。</li>
+<li>确定性推理：相同输入总会输出相同结果，事故或异常可以完全重现，便于追踪和取证。</li>
+</ol>
+<p>现在智驾最大的问题就是L2 L3责任归因是个黑盒。如果把推理做成硬件，那么当 temperature 为0，把传感器数据也存一份，是可以精确还原replay当时智驾决策的。</p>
+<p>遇到问题该升级升级该赔钱赔钱。商业的本质不是追求“零风险”，而是追求风险的可控与可定价。</p>
+<p>唯一的问题就是知识产权盗窃。直接逆向板子不太可能，最大的隐患是蒸馏。</p>
+<p>这里也只是做个记录，怕以后忘记了。希望看到 Taalas 或者类似的技术早日普及。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-03-23T20:38:00+08:00">2026-03-23</time></p>
+<p>stderr</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stderr-10"  rel="bookmark" >
               <h2 class="card-title">码奸</h2>
             </a>
@@ -1210,62 +1244,6 @@ Person C says to B: <strong><em>_</em></strong>__</p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-01-20T21:46:00+08:00">2026-01-20</time></p>
 <p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2026/stderr-04"  rel="bookmark" >
-              <h2 class="card-title">Hard Things in Computer Science, And AI Aren’t Fixing Them</h2>
-            </a>
-            <p class="card-text"><p>Computer Science jokes are old, but they’re still true</p>
-<blockquote>
-<p>“There are only two hard things in computer science: cache invalidation and naming things.” — Phil Karlton (and eventually, off-by-one errors).</p>
-</blockquote>
-<p>We’ve laughed at this trope for decades, but we’ve spent far too little time dissecting the second one: <strong>Naming.</strong> On the surface, naming is about semantics—choosing <code>user_id</code> over <code>id_1</code>. But at its core, naming is an act of exorcism. In ancient Tibetan folklore, as well as in Western occultism (think the <em>Goetia</em> or Ursula K. Le Guin’s <em>Earthsea</em>), to know the "True Name" of a demon or a dragon is to have absolute power over it. To name a bug is to strip it of its mystery. To name a design pattern is to make it reproducible.</p>
-<p>In the era of AI coding assistants, this is more important than ever. Low-hanging fruit—the repetitive boilerplate, the tasks with clear patterns—will soon be “harvested” by AI. Everything it can solve, it will. But the problems that <strong>haven’t been documented, defined, or named</strong> remain out of reach. AI simply doesn’t know what it doesn’t know.</p>
-<h3>The Value of the Waste: When Byproducts Become the Point</h3>
-<p>Recently, I’ve been experimenting with AI coding assistants almost every day. The results are impressive—sometimes even exhilarating. Years of hobby projects suddenly feel “done.” But there’s also a hollow feeling: the AI takes over the thinking, the tinkering, the trial-and-error process that once taught me more than the final product ever did.</p>
-<p>Here’s a key insight: <strong>sometimes the byproducts are often more valuable than the intended product.</strong> </p>
-<p>The real danger of AI isn't that it's "wrong"—it's that it's too helpful. AI is a "direct-to-result" machine. But in the history of human progress, the <strong>Product</strong> is often the least interesting part. The <strong>Byproduct</strong> is where the revolution happens.</p>
-<ul>
-<li><strong>Penicillin</strong> was a byproduct of a messy lab and a failed experiment on staphylococcus.</li>
-<li><strong>The Internet (ARPANET)</strong> was a byproduct of trying to build a nuclear-resilient command chain.</li>
-<li><strong>EUV Lithography</strong> (the tech in your 3nm chip) exists because the National Ignition Facility (NIF) was trying to achieve nuclear fusion via lasers.</li>
-</ul>
-<p>When you struggle to build a library, you might fail to ship the app on time, but you end up naming a new state-management pattern or a faster JSON parser. That "byproduct" becomes your tool for the next ten years. AI doesn't do "side quests." It follows the shortest path of least resistance to satisfy your prompt.</p>
-<p>In the history of software, our most vital concepts weren’t created by committee; they were "named" after the lessons we learned while failing to do something else.</p>
-<ul>
-<li><strong>The "Bug":</strong> Grace Hopper didn’t set out to invent a new term for failure; she found an actual moth in a Harvard Mark II relay. The "Bug" was a byproduct of hardware failure, but it became the name for the entire discipline of quality.</li>
-<li><strong>The "Circuit Breaker" pattern</strong> wasn't a goal; it was the name we gave to the solution after watching cascading failures burn down production.</li>
-<li><strong>"Technical Debt"</strong> wasn't a design choice; it was a metaphor Ward Cunningham coined to explain to non-technical stakeholders why a "working" product was actually a liability.</li>
-<li><strong>"Garbage Collection"</strong> and <strong>"Promises"</strong> were names for byproducts of trying to solve human memory management and the "Callback Hell" of asynchronous logic.</li>
-</ul>
-<p>These names don't describe the <em>goal</em>; they describe the <em>scar tissue</em> of the process. By focusing only on the "clean result" provided by AI, we risk losing the ability to recognize these scars—and without the scars, we have nothing to name. </p>
-<p>If we move to a world where we only write "Specs" and let Agents handle the "Implementation," we are becoming high-level managers of a Soviet tank factory of "fitting".</p>
-<h3>The Engineering of "Fitting"</h3>
-<p>I happened to read a fascinating engineering story on <a href="https://www.zhihu.com/question/666025273/answer/4157467225">zhihu</a> from Soviet-era manufacturing—what they called <strong>“Fitting” (пригонка).</strong></p>
-<p>In Western manufacturing, the gold standard is "Interchangeable Parts." You build a part to a 0.01mm tolerance so it fits any machine on the line. But in Soviet tank factories, tolerances were loose. Instead of perfecting the part, they perfected the "fit."</p>
-<ul>
-<li>If a hole was drilled too wide, they’d just make a wider pin.</li>
-<li>If a bolt was too short, they’d file down the washer.</li>
-<li>Function over perfection. Pragmatism beats standardization when time is a luxury you don’t have.</li>
-</ul>
-<p>AI coding today is turning us all into "fitters." We are no longer architects designing perfect, interchangeable modules; we are engineers in a tank factory, taking AI-generated blocks that <em>almost</em> work and "fitting" them together with shims and workarounds. The AI can accelerate production, but it lacks the "eyes" to see why a part doesn't fit—it just produces more parts.</p>
-<h3>The Final Exorcism</h3>
-<p>If we outsource the struggle, we outsource the learning. The "fitting" process is where the real knowledge hides. When you manually debug a race condition for three days, you aren't just fixing a line of code; you are learning the "True Name" of concurrency.</p>
-<p>AI can give you the solution, but it cannot give you the "Aha!" moment. It can provide the syntax, but it cannot provide the <strong>Naming.</strong> As we move deeper into this automated era, the role of the developer is shifting from "Writer" to "Editor," and from "Builder" to "Exorcist." Our value will no longer lie in the volume of code we produce—AI has made the marginal cost of code zero. Our value will lie in our ability to look at a chaotic "fitting" of AI logic and give it a name.</p>
-<p>Because in the end, the AI is just a mirror of what has already been said. It can rearrange the words, but it cannot speak a new True Name into existence. If you let the AI do all the "shaving," don't be surprised when you find yourself standing in the cold, having forgotten why you wanted to wash the car in the first place.</p>
-<p>Master the tools, use them to "fit" your dreams into reality, but never stop looking for the "detour" in the relay. That's where the next great idea is hiding, waiting for someone to finally give it a name.</p>
-<hr />
-<p>Author's note:</p>
-<p>This original article was organically, hand-written by me <a href="https://blog.est.im/2026/stderr-03">https://blog.est.im/2026/stderr-03</a></p>
-<p>I also drafted this English version, and ultimately "fitted" together by Gemini 3.</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2026-01-19T00:27:00+08:00">2026-01-19</time></p>
-<p>stderr</p>            </div>
           </article>
         </div>
 

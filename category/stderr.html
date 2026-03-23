@@ -54,6 +54,40 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stderr-11"  rel="bookmark" >
+              <h2 class="card-title">看好 Taalas</h2>
+            </a>
+            <p class="card-text"><p>可能你还没刷到过 <a href="https://chatjimmy.ai">https://chatjimmy.ai</a> 我被它几万 tokens/s 的推理速度震惊了。也在zhihu上翻了不少技术细节讨论。它背后的公司叫 Taalas 号称把 4-bit LLaMA3.2-3B 直接刻电路上，当然很多人第一反应是，这玩意废品啊，模型升级了岂不是硬件就白费了。</p>
+<p>但仔细研究，发现这里面另有乾坤。</p>
+<p>大模型在显卡VRAM里，70%拿来存静态权重，推理的时候这玩意就一层一层做卷积只读不写，然后30% 才是 KVcache 上下文，又读又写。吞吐频繁</p>
+<p>于是聪明人就想到了ROM。类似游戏机里的卡带，插进去 CPU/GPU 能直接访问一块特殊的内存区域。ROM成本比DRAM便宜得多，速度极快，但是只读，烧制一次就成型了。其他部分可以直接上SRAM，也就是CPU里高速缓存那种。DRAM断电丢数据，SRAM是6个晶体管保存一个1bit，不需要持续通电。DRAM是一直通电刷新bit状态。</p>
+<p>所以 ROM+SRAM 非常省电，而且推理速度极快，如果你懂一点LLM，那么你应该才出来了。基座模型的确是ROM做好就不能升级了。但是 SRAM 里可以做mask做LoRA啊。</p>
+<p>而且更绝的一点是，SRAM里可以后期 fine-tune 一下，吧ROM里的坏快屏蔽掉或者权重弥补一下。这样 ROM 的良率又回极大提高！</p>
+<p>所以这玩意不是不能升级，是能可以一直挖掘座模型的能力天花板。</p>
+<p>有人说这玩意过时快，我想如果你买一个 USB设备，你向它输入 bytes 它能返回 bytes，你觉得它智商不够用了，你可以出二手啊。现在很多地方都需要用到不是那么大的LLM，够用就行。所以这玩意跟卡带一样是有残值的。</p>
+<p>不过今天突然想到，taalas这玩意最佳用途应该是自动驾驶：</p>
+<ol>
+<li>超高速推理：即时决策，遇到路况实时反应</li>
+<li>离线运行：无需依赖云端，本地VLA</li>
+<li>智驾其实迟早成熟，只要练成了，很少更新。恰好适合固化到ROM里</li>
+<li>功耗</li>
+<li>你是真的买一块板子，而不是一个订阅，用户为智驾付费更有实物感和仪式感。</li>
+<li>确定性推理：相同输入总会输出相同结果，事故或异常可以完全重现，便于追踪和取证。</li>
+</ol>
+<p>现在智驾最大的问题就是L2 L3责任归因是个黑盒。如果把推理做成硬件，那么当 temperature 为0，把传感器数据也存一份，是可以精确还原replay当时智驾决策的。</p>
+<p>遇到问题该升级升级该赔钱赔钱。商业的本质不是追求“零风险”，而是追求风险的可控与可定价。</p>
+<p>唯一的问题就是知识产权盗窃。直接逆向板子不太可能，最大的隐患是蒸馏。</p>
+<p>这里也只是做个记录，怕以后忘记了。希望看到 Taalas 或者类似的技术早日普及。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-03-23T20:38:00+08:00">2026-03-23</time></p>
+<p>stderr</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stderr-10"  rel="bookmark" >
               <h2 class="card-title">码奸</h2>
             </a>
@@ -2280,28 +2314,6 @@ the exploitation of children through any form of work that interferes with their
 <p>有一点「潘多拉的魔盒」那个味道了。真不知道这个世界明天又会发生什么。或许 AI 去研究LHC 然后帮人类实现AI手搓核聚变呢。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2023-02-18T00:49:24+08:00">2023-02-18</time></p>
-<p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2023/stderr-04"  rel="bookmark" >
-              <h2 class="card-title">PC时代的终结？</h2>
-            </a>
-            <p class="card-text"><p>最近ChatGPT一再出圈引爆话题，很多封装OpenAI API 的项目都火爆得不行。自己也跟朋友、网友有些讨论，有些感慨。</p>
-<p>回顾自己成长和从业经历，接触计算机是从「微机」这个概念入手的。当时学校的「微机室」是需要焚香沐浴才能「上机」的。我理解以前IBM mainframe霸权时代，都是巨头的天下，神仙打架，压根没有普通玩家能入场的机会，因为UNIX大型机硬件就不是普通人能接触到的，只有 Bill Gates 这种私校才有可能给学生提供机房；后来行业发展机缘巧合，X86为代表的 PC 普及，顾名思义就是 personal computer，摩尔定律推动PC性能暴增，我觉得1900-2020 几乎所有创业项目雏形都能在单台PC上跑通，并且由单人开发维护。</p>
-<p>现在有点变化了。当年gpt3出来，已经不是普通大厂能玩得起的了。和它之前的ImageNet一样，就算给你训练好的模型，推理成本，动辄80G显存起的LLM对个人玩家门槛有点高了。其次是数据成本，只能从别人采集、标注好的数据基础上进行开发，个人是不太可能从原始语料数据开始清洗整理训练的。</p>
-<p>从这个角度来考虑，如果 gpt3/gpt4小型化技术迟迟没到来，我悲观的估计，PC时代已经快接近历史性的尾声，单兵作战的个人英雄主义是不是已经终结了？</p>
-<p>有人会问，IT行业那么大，不能每个赛道都被颠覆吧。今天2个帖子打动了我。一个是鼓吹微软可能将来是蓝星<a href="https://twitter.com/amaldorai/status/1623020570085588993">第一个市值突破 $10 trillion的公司</a>，一个是<a href="https://news.ycombinator.com/item?id=34702055">Meta公司入局太早</a>误判了形势</p>
-<p>分开说，微软其实现在卖给个人Windows/Office都不赚钱，Xbox和游戏都不怎么赚钱，主要还是2B的SaaS和Azure</p>
-<p>企业服务，其实最大的成本就是「沟通」和「交流」的成本，这里既有IT服务商和客户的扯皮，也有商家和自己的客户撕逼的开销。然而归根结底这一切都是「人类语言」的低效和模糊导致的。ChatGPT恰好可以适合这一场景。所以这个 tweet thread 也讲到微软有业界最好的知识库，这里我是认同的，MSDN全世界最牛逼有没有。但凡微软稍微用点心，估计开发者友好程度会直接薄纱友商，进而推动SaaS/Azure的销量。</p>
-<p>Meta 的 VR 可以说是起了个大早，赶了个晚集。Meta的元世界可以说高投资做了2nd Life VR edition。但是如果配合Generative AI，畅想一下以后 NPC 能用她自己的口气通过合成语音呼唤你作为主角的名字，想象一下以后游戏你的AI伴侣就是你梦中情人的脸/穿着，想象一下以后游戏能根据你几句话的设定生成开放世界地图和剧情，并且里面的角色都是自定义的独一无二的。这会变得非常不一样。</p>
-<p>总之，未来的世界是什么样的，我充满了不安和好奇</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2023-02-08T17:44:37+08:00">2023-02-08</time></p>
 <p>stderr</p>            </div>
           </article>
         </div>
