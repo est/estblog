@@ -55,7 +55,7 @@
         <div class="card blog-card">
           <article class="card-body">
             <a href="/2026/stderr-12"  rel="bookmark" >
-              <h2 class="card-title">发明 system prompt 的人真是天才</h2>
+              <h2 class="card-title">发明后训练的人真是天才</h2>
             </a>
             <p class="card-text"><p>有了AI很多东西摸索得比多，也是快速记录一下。</p>
 <p>问1：你的 system prompt 里有明确指出你是个 AI 吗<br />
@@ -123,9 +123,10 @@
             <p class="card-text"><p>可能你还没刷到过 <a href="https://chatjimmy.ai">https://chatjimmy.ai</a> 我被它几万 tokens/s 的推理速度震惊了。也在zhihu上翻了不少技术细节讨论。它背后的公司叫 Taalas 号称把 4-bit LLaMA3.2-3B 直接刻电路上，当然很多人第一反应是，这玩意废品啊，模型升级了岂不是硬件就白费了。</p>
 <p>但仔细研究，发现这里面另有乾坤。</p>
 <p>大模型在显卡VRAM里，70%拿来存静态权重，推理的时候这玩意就一层一层做卷积只读不写，然后30% 才是 KVcache 上下文，又读又写。吞吐频繁</p>
-<p>于是聪明人就想到了ROM。类似游戏机里的卡带，插进去 CPU/GPU 能直接访问一块特殊的内存区域。ROM成本比DRAM便宜得多，速度极快，但是只读，烧制一次就成型了。其他部分可以直接上SRAM，也就是CPU里高速缓存那种。DRAM断电丢数据，SRAM是6个晶体管保存一个1bit，不需要持续通电。DRAM是一直通电刷新bit状态。</p>
-<p>所以 ROM+SRAM 非常省电，而且推理速度极快，如果你懂一点LLM，那么你应该才出来了。基座模型的确是ROM做好就不能升级了。但是 SRAM 里可以做mask做LoRA啊。</p>
-<p>而且更绝的一点是，SRAM里可以后期 fine-tune 一下，吧ROM里的坏快屏蔽掉或者权重弥补一下。这样 ROM 的良率又回极大提高！</p>
+<p>如果你懂一点LLM，那么你应该猜出来了。</p>
+<p>聪明人就想到了ROM。类似游戏机里的卡带，插进去 CPU/GPU 能直接访问一块特殊的内存区域。ROM成本比DRAM便宜得多，速度极快，但是只读，烧制一次就成型了。其他部分可以直接上SRAM，也就是CPU里高速缓存那种。DRAM断电丢数据，SRAM是6个晶体管保存一个1bit，不需要持续通电。DRAM是一直通电刷新bit状态。</p>
+<p>ROM+SRAM 非常省电，而且推理速度极快，基座模型的确是ROM做好就不能升级了。但是 SRAM 里可以做mask做LoRA啊。</p>
+<p>而且更绝的一点是，SRAM里可以后期 fine-tune 一下，吧ROM里的坏快屏蔽掉，或者权重弥补一下。这样 ROM 的良率又回极大提高！</p>
 <p>所以这玩意不是不能升级，是能可以一直挖掘座模型的能力天花板。</p>
 <p>有人说这玩意过时快，我想如果你买一个 USB设备，你向它输入 bytes 它能返回 bytes，你觉得它智商不够用了，你可以出二手啊。现在很多地方都需要用到不是那么大的LLM，够用就行。所以这玩意跟卡带一样是有残值的。</p>
 <p>不过今天突然想到，taalas这玩意最佳用途应该是自动驾驶：</p>
