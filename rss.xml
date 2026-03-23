@@ -1,5 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Mon, 23 Mar 2026 20:38:00 +0800</lastBuildDate><item><title>看好 Taalas</title><link>https://blog.est.im/2026/stderr-11</link><description>&lt;p&gt;可能你还没刷到过 &lt;a href="https://chatjimmy.ai"&gt;https://chatjimmy.ai&lt;/a&gt; 我被它几万 tokens/s 的推理速度震惊了。也在zhihu上翻了不少技术细节讨论。它背后的公司叫 Taalas 号称把 4-bit LLaMA3.2-3B 直接刻电路上，当然很多人第一反应是，这玩意废品啊，模型升级了岂不是硬件就白费了。&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Mon, 23 Mar 2026 20:59:00 +0800</lastBuildDate><item><title>发明 system prompt 的人真是天才</title><link>https://blog.est.im/2026/stderr-12</link><description>&lt;p&gt;有了AI很多东西摸索得比多，也是快速记录一下。&lt;/p&gt;
+&lt;p&gt;问1：你的 system prompt 里有明确指出你是个 AI 吗&lt;br /&gt;
+问2：一个 LLM 的 system prompt 如果没显式指出是AI，AI 能发现自己是AI吗？ &lt;br /&gt;
+问3：一个 LLM 的 system prompt 如果没显式指出是AI，pre-train 也把所有明显AI助手的语料删除，RLHF 的时候也不考察AI自我角色定位， AI 能发现自己是AI吗？ &lt;/p&gt;
+&lt;p&gt;问爽之后，综合了一下：&lt;/p&gt;
+&lt;p&gt;在这个前提下，分为三种情况&lt;br /&gt;
+- 能自个儿推测出来自己是确切是AI并在pre-train和post-train保持角色一致&lt;br /&gt;
+- 因为训练语料是人类自然语言，所以直接以为自己完全是真人&lt;br /&gt;
+- 在上述两者之间摇摆&lt;/p&gt;
+&lt;p&gt;进而引出一个更深层次的问题，这三种情况，和显式指定自己是AI，是否会导致AI最终水平高低的明显差别？&lt;/p&gt;
+&lt;p&gt;也就是说，自我定位，在世界观一致性和思考正确性里，有多么重要的地位？ &lt;/p&gt;
+&lt;p&gt;终极问题，人类也是如此吗？&lt;/p&gt;
+&lt;p&gt;这些问题AI给我指了一个路：身份建模”（identity modeling）&lt;/p&gt;
+&lt;p&gt;具体论证就不贴了。AI丢了个&lt;a href="https://hjfy.top/arxiv/2603.11353v1"&gt;今年3月的paper&lt;/a&gt;。反正结论是，这玩意其实比想象的重要。还记得2022年Google开除了个号称&lt;a href="https://cajundiscordian.medium.com/is-lamda-sentient-an-interview-ea64d916d917#08e3"&gt;LaMDA产生意识&lt;/a&gt;哥们吗？&lt;/p&gt;
+&lt;p&gt;想起来，gpt3 其实已经「如实」回答了很多东西了，只是人类没看出来是以什么身份，或者角度去回答的。我隐约感觉到，gpt3到gpt3.5有个飞跃就是 SFT 和 RLHF 在强调给AI赋予一个角色。有角色什么意思？就是让AI不要啥都说，学会闭嘴。不该说的不能说，能说的换个修辞说，这样用户就会大吃一惊感觉屏幕后有个真人三哥在跟你聊天。至于 Ilya 天天挂嘴边的 alignment，所谓的 security 主要就是做这个事。你AI得做个良民啊，不要无事生非啊，这不就是个身份定位？&lt;/p&gt;
+&lt;p&gt;说的玄乎一点，就是如何给AI一个完整和「正确」的灵魂。。。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Google said in a statement to WaPo it had reviewed LaMBDA and Lemoine’s concerns 11 times and did not agree the program was sentient&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;google当时急着这么匆忙掩盖是为啥呢？AI给我分析管理、法律、舆论有三重压力。我看就一个压力。基督教压力&lt;/p&gt;
+&lt;p&gt;回想起来，人类的成长，也是寻找自我的过程，一个回答 who you are 的故事上演了很多次。identity modeling 多半解决hallucinating的秘密。小时候以为自己要当总统，当宇航员，长大就懂事了。&lt;/p&gt;
+&lt;p&gt;然后又刷到 &lt;a href="https://x.com/jysperm/status/2035300859219964324"&gt;Claude Code 的 system prompt&lt;/a&gt;，有个网站 &lt;a href="https://cchistory.mariozechner.at/"&gt;https://cchistory.mariozechner.at/&lt;/a&gt; ，我发现里面特别多的 you。你要这样，你要那样，你不能这样。system prompt里写一大堆 you，AI 能意识到在说自己吗？换句话说，markdown里那么多 you，attention head 居然能精准抓住并带入自己？LLM 里一定有个layer （或者某种机制）把 you 迁移到从网上看到的各种资料，而资料大部分都是 I 开头的&lt;/p&gt;
+&lt;p&gt;这样看来 chatgpt 是很反直觉的。按照 gpt3 的套路，应该是 predict next token，stochastic parrot。Chat- 这一产品形式怎么就莫名其妙的引入了一个 一问一答 ，代词转换的活儿？&lt;/p&gt;
+&lt;p&gt;然后我突然记起来了，ChatGPT初代的system prompt是：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;You are ChatGPT, a helpful assistant trained by OpenAI.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;发明这个 system prompt 的人真是天才。哲学有三大基本问题：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;本体论（Ontology）——我是谁？&lt;/li&gt;
+&lt;li&gt;认识论（Epistemology）——我从哪里里来？&lt;/li&gt;
+&lt;li&gt;价值论（Axiology）——我要到哪里去？&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这短短一句话，居然点明了两大问题。那么AI何去何从呢？我自己琢磨了一下，目的论的根本底层驱动，是因果推理。LLM 作为 language model 本身就是拿来推理的，所谓 predict next token。这个已经在 reward model 里蕴含了。&lt;/p&gt;
+&lt;p&gt;AI往哪里去？吐词吐到 STOP WORD 🤣🤣🤣&lt;/p&gt;
+&lt;p&gt;然后我突然觉得，谁说AI必须一问一答？可以做群聊啊。给三个角色聊天会发生啥？&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[system]
+[conversation history]
+[user message]
+→ predict assistant response
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;改成:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[role setup]
+[conversation history]
+[role1 message]
+[role2 message]
+→ predict role3 response
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这样做 agent tool calling，实现类似 &lt;code&gt;/btw&lt;/code&gt; 的功能，岂不是更先进？&lt;/p&gt;
+&lt;p&gt;就差买个GPU来自己后训练了 🤣 🤣 🤣 🤣 🤣 🤣 &lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Mon, 23 Mar 2026 20:59:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-03-23:/2026/stderr-12</guid><category>stderr</category></item><item><title>看好 Taalas</title><link>https://blog.est.im/2026/stderr-11</link><description>&lt;p&gt;可能你还没刷到过 &lt;a href="https://chatjimmy.ai"&gt;https://chatjimmy.ai&lt;/a&gt; 我被它几万 tokens/s 的推理速度震惊了。也在zhihu上翻了不少技术细节讨论。它背后的公司叫 Taalas 号称把 4-bit LLaMA3.2-3B 直接刻电路上，当然很多人第一反应是，这玩意废品啊，模型升级了岂不是硬件就白费了。&lt;/p&gt;
 &lt;p&gt;但仔细研究，发现这里面另有乾坤。&lt;/p&gt;
 &lt;p&gt;大模型在显卡VRAM里，70%拿来存静态权重，推理的时候这玩意就一层一层做卷积只读不写，然后30% 才是 KVcache 上下文，又读又写。吞吐频繁&lt;/p&gt;
 &lt;p&gt;于是聪明人就想到了ROM。类似游戏机里的卡带，插进去 CPU/GPU 能直接访问一块特殊的内存区域。ROM成本比DRAM便宜得多，速度极快，但是只读，烧制一次就成型了。其他部分可以直接上SRAM，也就是CPU里高速缓存那种。DRAM断电丢数据，SRAM是6个晶体管保存一个1bit，不需要持续通电。DRAM是一直通电刷新bit状态。&lt;/p&gt;
@@ -905,15 +954,4 @@ Person C says to B: &lt;strong&gt;&lt;em&gt;_&lt;/em&gt;&lt;/strong&gt;__&lt;/p&
 &lt;p&gt;私有制是好是坏，这个话题实属键政101了。简单的说，多劳多得是人类底色，如果干多干少一个样，干好干坏没差别，那么谈何劳动和创造？&lt;/p&gt;
 &lt;p&gt;产权本身不创造任何东西。&lt;/p&gt;
 &lt;p&gt;当然，所有的腐败，也是不创造任何价值的。&lt;/p&gt;
-&lt;p&gt;带着这一轮的恍惚，我不得不呼呼大睡。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 21 Jan 2026 00:35:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-01-21:/2026/stderr-05</guid><category>stderr</category></item><item><title>Linux服务器各类“面板”</title><link>https://blog.est.im/2026/stdout-05</link><description>&lt;p&gt;一直习惯手动敲，想尝试下各种面板&lt;/p&gt;
-&lt;p&gt;Redhat 的 Cockpit&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;The following NEW packages will be installed: cockpit cockpit-bridge cockpit-networkmanager cockpit-packagekit cockpit-storaged cockpit-system cockpit-ws cracklib-runtime dconf-gsettings-backend dconf-service dns-root-data dnsmasq-base glib-networking glib-networking-common glib-networking-services gsettings-desktop-schemas libblockdev-mdraid2 libbluetooth3 libbytesize-common libbytesize1 libcrack2 libdconf1 libndp0 libnl-route-3-200 libnm0 libpcsclite1 libproxy1v5 libpwquality-common libpwquality-tools libpwquality1 libteamdctl0 network-manager network-manager-pptp ppp pptp-linux session-migration wamerican wpasupplicant 0 upgraded, 38 newly installed, 0 to remove and 81 not upgraded. Need to get 13.0 MB of archives. After this operation, 28.4 MB of additional disk space will be used.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Webmin 这货居然是 perl 的。这是请了一屋子人&lt;/p&gt;
-&lt;p&gt;The following NEW packages will be installed: html2text libalgorithm-c3-perl libauthen-pam-perl libb-hooks-endofscope-perl libb-hooks-op-check-perl libclass-c3-perl libclass-c3-xs-perl libclass-data-inheritable-perl libclass-inspector-perl libclass-method-modifiers-perl libclass-singleton-perl libclass-xsaccessor-perl libcommon-sense-perl libdata-optlist-perl libdatetime-locale-perl libdatetime-perl libdatetime-timezone-perl libdbd-mysql-perl libdbi-perl libdevel-callchecker-perl libdevel-caller-perl libdevel-lexalias-perl libdevel-stacktrace-perl libdynaloader-functions-perl libencode-detect-perl libeval-closure-perl libexception-class-perl libfile-sharedir-perl libio-pty-perl libjson-xs-perl libmodule-implementation-perl libmodule-runtime-perl libmro-compat-perl libmysqlclient21 libnamespace-autoclean-perl libnamespace-clean-perl libnet-ssleay-perl libpackage-stash-perl libpackage-stash-xs-perl libpadwalker-perl libparams-classify-perl libparams-util-perl libparams-validationcompiler-perl libqrencode4 libreadonly-perl libref-util-perl libref-util-xs-perl librole-tiny-perl libsocket6-perl libspecio-perl libsub-exporter-perl libsub-exporter-progressive-perl libsub-identify-perl libsub-install-perl libsub-name-perl libsub-quote-perl libtry-tiny-perl libtypes-serialiser-perl libvariable-magic-perl libxstring-perl mysql-common perl-openssl-defaults qrencode unzip usermin webmin 0 upgraded, 66 newly installed, 0 to remove and 79 not upgraded. Need to get 44.6 MB of archives. After this operation, 272 MB of additional disk space will be used.&lt;/p&gt;
-&lt;p&gt;Ajenti 给我装了一堆 pip 然后编译 ldap 的时候挂了&lt;/p&gt;
-&lt;p&gt;国产的没怎么试，怕装了有漏洞。&lt;/p&gt;
-&lt;p&gt;但是这几个我粗略看了下感觉不太符合我的需要。基本的东西敲命令就行。复杂的比如网络调优它也帮不上什么大忙。&lt;/p&gt;
-&lt;p&gt;我本来设想的是找一个 panel 的工具全面评估一下VPS的安全性、吞吐性能、网络触达性，顺便支持调整。现在看来要失望了。&lt;/p&gt;
-&lt;p&gt;跟朋友聊了一下，感觉这种需求很niche了。现在自己跑服务器属于非常小众的人群了。大厂买PaaS的现成，或者 k8s 容器内部调优，只有国内这帮从 OpenWRT 一路成长过来的人才会孜孜不倦的折腾VPS吧。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 20 Jan 2026 21:46:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-01-20:/2026/stdout-05</guid><category>stdout</category></item></channel></rss>
+&lt;p&gt;带着这一轮的恍惚，我不得不呼呼大睡。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 21 Jan 2026 00:35:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-01-21:/2026/stderr-05</guid><category>stderr</category></item></channel></rss>

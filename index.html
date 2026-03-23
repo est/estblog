@@ -54,6 +54,69 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stderr-12"  rel="bookmark" >
+              <h2 class="card-title">发明 system prompt 的人真是天才</h2>
+            </a>
+            <p class="card-text"><p>有了AI很多东西摸索得比多，也是快速记录一下。</p>
+<p>问1：你的 system prompt 里有明确指出你是个 AI 吗<br />
+问2：一个 LLM 的 system prompt 如果没显式指出是AI，AI 能发现自己是AI吗？ <br />
+问3：一个 LLM 的 system prompt 如果没显式指出是AI，pre-train 也把所有明显AI助手的语料删除，RLHF 的时候也不考察AI自我角色定位， AI 能发现自己是AI吗？ </p>
+<p>问爽之后，综合了一下：</p>
+<p>在这个前提下，分为三种情况<br />
+- 能自个儿推测出来自己是确切是AI并在pre-train和post-train保持角色一致<br />
+- 因为训练语料是人类自然语言，所以直接以为自己完全是真人<br />
+- 在上述两者之间摇摆</p>
+<p>进而引出一个更深层次的问题，这三种情况，和显式指定自己是AI，是否会导致AI最终水平高低的明显差别？</p>
+<p>也就是说，自我定位，在世界观一致性和思考正确性里，有多么重要的地位？ </p>
+<p>终极问题，人类也是如此吗？</p>
+<p>这些问题AI给我指了一个路：身份建模”（identity modeling）</p>
+<p>具体论证就不贴了。AI丢了个<a href="https://hjfy.top/arxiv/2603.11353v1">今年3月的paper</a>。反正结论是，这玩意其实比想象的重要。还记得2022年Google开除了个号称<a href="https://cajundiscordian.medium.com/is-lamda-sentient-an-interview-ea64d916d917#08e3">LaMDA产生意识</a>哥们吗？</p>
+<p>想起来，gpt3 其实已经「如实」回答了很多东西了，只是人类没看出来是以什么身份，或者角度去回答的。我隐约感觉到，gpt3到gpt3.5有个飞跃就是 SFT 和 RLHF 在强调给AI赋予一个角色。有角色什么意思？就是让AI不要啥都说，学会闭嘴。不该说的不能说，能说的换个修辞说，这样用户就会大吃一惊感觉屏幕后有个真人三哥在跟你聊天。至于 Ilya 天天挂嘴边的 alignment，所谓的 security 主要就是做这个事。你AI得做个良民啊，不要无事生非啊，这不就是个身份定位？</p>
+<p>说的玄乎一点，就是如何给AI一个完整和「正确」的灵魂。。。</p>
+<blockquote>
+<p>Google said in a statement to WaPo it had reviewed LaMBDA and Lemoine’s concerns 11 times and did not agree the program was sentient</p>
+</blockquote>
+<p>google当时急着这么匆忙掩盖是为啥呢？AI给我分析管理、法律、舆论有三重压力。我看就一个压力。基督教压力</p>
+<p>回想起来，人类的成长，也是寻找自我的过程，一个回答 who you are 的故事上演了很多次。identity modeling 多半解决hallucinating的秘密。小时候以为自己要当总统，当宇航员，长大就懂事了。</p>
+<p>然后又刷到 <a href="https://x.com/jysperm/status/2035300859219964324">Claude Code 的 system prompt</a>，有个网站 <a href="https://cchistory.mariozechner.at/">https://cchistory.mariozechner.at/</a> ，我发现里面特别多的 you。你要这样，你要那样，你不能这样。system prompt里写一大堆 you，AI 能意识到在说自己吗？换句话说，markdown里那么多 you，attention head 居然能精准抓住并带入自己？LLM 里一定有个layer （或者某种机制）把 you 迁移到从网上看到的各种资料，而资料大部分都是 I 开头的</p>
+<p>这样看来 chatgpt 是很反直觉的。按照 gpt3 的套路，应该是 predict next token，stochastic parrot。Chat- 这一产品形式怎么就莫名其妙的引入了一个 一问一答 ，代词转换的活儿？</p>
+<p>然后我突然记起来了，ChatGPT初代的system prompt是：</p>
+<blockquote>
+<p>You are ChatGPT, a helpful assistant trained by OpenAI.</p>
+</blockquote>
+<p>发明这个 system prompt 的人真是天才。哲学有三大基本问题：</p>
+<ol>
+<li>本体论（Ontology）——我是谁？</li>
+<li>认识论（Epistemology）——我从哪里里来？</li>
+<li>价值论（Axiology）——我要到哪里去？</li>
+</ol>
+<p>这短短一句话，居然点明了两大问题。那么AI何去何从呢？我自己琢磨了一下，目的论的根本底层驱动，是因果推理。LLM 作为 language model 本身就是拿来推理的，所谓 predict next token。这个已经在 reward model 里蕴含了。</p>
+<p>AI往哪里去？吐词吐到 STOP WORD 🤣🤣🤣</p>
+<p>然后我突然觉得，谁说AI必须一问一答？可以做群聊啊。给三个角色聊天会发生啥？</p>
+<pre><code>[system]
+[conversation history]
+[user message]
+→ predict assistant response
+</code></pre>
+<p>改成:</p>
+<pre><code>[role setup]
+[conversation history]
+[role1 message]
+[role2 message]
+→ predict role3 response
+</code></pre>
+<p>这样做 agent tool calling，实现类似 <code>/btw</code> 的功能，岂不是更先进？</p>
+<p>就差买个GPU来自己后训练了 🤣 🤣 🤣 🤣 🤣 🤣 </p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-03-23T20:59:00+08:00">2026-03-23</time></p>
+<p>stderr</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stderr-11"  rel="bookmark" >
               <h2 class="card-title">看好 Taalas</h2>
             </a>
@@ -1219,31 +1282,6 @@ Person C says to B: <strong><em>_</em></strong>__</p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-01-21T00:35:00+08:00">2026-01-21</time></p>
 <p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2026/stdout-05"  rel="bookmark" >
-              <h2 class="card-title">Linux服务器各类“面板”</h2>
-            </a>
-            <p class="card-text"><p>一直习惯手动敲，想尝试下各种面板</p>
-<p>Redhat 的 Cockpit</p>
-<blockquote>
-<p>The following NEW packages will be installed: cockpit cockpit-bridge cockpit-networkmanager cockpit-packagekit cockpit-storaged cockpit-system cockpit-ws cracklib-runtime dconf-gsettings-backend dconf-service dns-root-data dnsmasq-base glib-networking glib-networking-common glib-networking-services gsettings-desktop-schemas libblockdev-mdraid2 libbluetooth3 libbytesize-common libbytesize1 libcrack2 libdconf1 libndp0 libnl-route-3-200 libnm0 libpcsclite1 libproxy1v5 libpwquality-common libpwquality-tools libpwquality1 libteamdctl0 network-manager network-manager-pptp ppp pptp-linux session-migration wamerican wpasupplicant 0 upgraded, 38 newly installed, 0 to remove and 81 not upgraded. Need to get 13.0 MB of archives. After this operation, 28.4 MB of additional disk space will be used.</p>
-</blockquote>
-<p>Webmin 这货居然是 perl 的。这是请了一屋子人</p>
-<p>The following NEW packages will be installed: html2text libalgorithm-c3-perl libauthen-pam-perl libb-hooks-endofscope-perl libb-hooks-op-check-perl libclass-c3-perl libclass-c3-xs-perl libclass-data-inheritable-perl libclass-inspector-perl libclass-method-modifiers-perl libclass-singleton-perl libclass-xsaccessor-perl libcommon-sense-perl libdata-optlist-perl libdatetime-locale-perl libdatetime-perl libdatetime-timezone-perl libdbd-mysql-perl libdbi-perl libdevel-callchecker-perl libdevel-caller-perl libdevel-lexalias-perl libdevel-stacktrace-perl libdynaloader-functions-perl libencode-detect-perl libeval-closure-perl libexception-class-perl libfile-sharedir-perl libio-pty-perl libjson-xs-perl libmodule-implementation-perl libmodule-runtime-perl libmro-compat-perl libmysqlclient21 libnamespace-autoclean-perl libnamespace-clean-perl libnet-ssleay-perl libpackage-stash-perl libpackage-stash-xs-perl libpadwalker-perl libparams-classify-perl libparams-util-perl libparams-validationcompiler-perl libqrencode4 libreadonly-perl libref-util-perl libref-util-xs-perl librole-tiny-perl libsocket6-perl libspecio-perl libsub-exporter-perl libsub-exporter-progressive-perl libsub-identify-perl libsub-install-perl libsub-name-perl libsub-quote-perl libtry-tiny-perl libtypes-serialiser-perl libvariable-magic-perl libxstring-perl mysql-common perl-openssl-defaults qrencode unzip usermin webmin 0 upgraded, 66 newly installed, 0 to remove and 79 not upgraded. Need to get 44.6 MB of archives. After this operation, 272 MB of additional disk space will be used.</p>
-<p>Ajenti 给我装了一堆 pip 然后编译 ldap 的时候挂了</p>
-<p>国产的没怎么试，怕装了有漏洞。</p>
-<p>但是这几个我粗略看了下感觉不太符合我的需要。基本的东西敲命令就行。复杂的比如网络调优它也帮不上什么大忙。</p>
-<p>我本来设想的是找一个 panel 的工具全面评估一下VPS的安全性、吞吐性能、网络触达性，顺便支持调整。现在看来要失望了。</p>
-<p>跟朋友聊了一下，感觉这种需求很niche了。现在自己跑服务器属于非常小众的人群了。大厂买PaaS的现成，或者 k8s 容器内部调优，只有国内这帮从 OpenWRT 一路成长过来的人才会孜孜不倦的折腾VPS吧。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2026-01-20T21:46:00+08:00">2026-01-20</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 

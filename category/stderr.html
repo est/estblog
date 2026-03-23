@@ -54,6 +54,69 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stderr-12"  rel="bookmark" >
+              <h2 class="card-title">发明 system prompt 的人真是天才</h2>
+            </a>
+            <p class="card-text"><p>有了AI很多东西摸索得比多，也是快速记录一下。</p>
+<p>问1：你的 system prompt 里有明确指出你是个 AI 吗<br />
+问2：一个 LLM 的 system prompt 如果没显式指出是AI，AI 能发现自己是AI吗？ <br />
+问3：一个 LLM 的 system prompt 如果没显式指出是AI，pre-train 也把所有明显AI助手的语料删除，RLHF 的时候也不考察AI自我角色定位， AI 能发现自己是AI吗？ </p>
+<p>问爽之后，综合了一下：</p>
+<p>在这个前提下，分为三种情况<br />
+- 能自个儿推测出来自己是确切是AI并在pre-train和post-train保持角色一致<br />
+- 因为训练语料是人类自然语言，所以直接以为自己完全是真人<br />
+- 在上述两者之间摇摆</p>
+<p>进而引出一个更深层次的问题，这三种情况，和显式指定自己是AI，是否会导致AI最终水平高低的明显差别？</p>
+<p>也就是说，自我定位，在世界观一致性和思考正确性里，有多么重要的地位？ </p>
+<p>终极问题，人类也是如此吗？</p>
+<p>这些问题AI给我指了一个路：身份建模”（identity modeling）</p>
+<p>具体论证就不贴了。AI丢了个<a href="https://hjfy.top/arxiv/2603.11353v1">今年3月的paper</a>。反正结论是，这玩意其实比想象的重要。还记得2022年Google开除了个号称<a href="https://cajundiscordian.medium.com/is-lamda-sentient-an-interview-ea64d916d917#08e3">LaMDA产生意识</a>哥们吗？</p>
+<p>想起来，gpt3 其实已经「如实」回答了很多东西了，只是人类没看出来是以什么身份，或者角度去回答的。我隐约感觉到，gpt3到gpt3.5有个飞跃就是 SFT 和 RLHF 在强调给AI赋予一个角色。有角色什么意思？就是让AI不要啥都说，学会闭嘴。不该说的不能说，能说的换个修辞说，这样用户就会大吃一惊感觉屏幕后有个真人三哥在跟你聊天。至于 Ilya 天天挂嘴边的 alignment，所谓的 security 主要就是做这个事。你AI得做个良民啊，不要无事生非啊，这不就是个身份定位？</p>
+<p>说的玄乎一点，就是如何给AI一个完整和「正确」的灵魂。。。</p>
+<blockquote>
+<p>Google said in a statement to WaPo it had reviewed LaMBDA and Lemoine’s concerns 11 times and did not agree the program was sentient</p>
+</blockquote>
+<p>google当时急着这么匆忙掩盖是为啥呢？AI给我分析管理、法律、舆论有三重压力。我看就一个压力。基督教压力</p>
+<p>回想起来，人类的成长，也是寻找自我的过程，一个回答 who you are 的故事上演了很多次。identity modeling 多半解决hallucinating的秘密。小时候以为自己要当总统，当宇航员，长大就懂事了。</p>
+<p>然后又刷到 <a href="https://x.com/jysperm/status/2035300859219964324">Claude Code 的 system prompt</a>，有个网站 <a href="https://cchistory.mariozechner.at/">https://cchistory.mariozechner.at/</a> ，我发现里面特别多的 you。你要这样，你要那样，你不能这样。system prompt里写一大堆 you，AI 能意识到在说自己吗？换句话说，markdown里那么多 you，attention head 居然能精准抓住并带入自己？LLM 里一定有个layer （或者某种机制）把 you 迁移到从网上看到的各种资料，而资料大部分都是 I 开头的</p>
+<p>这样看来 chatgpt 是很反直觉的。按照 gpt3 的套路，应该是 predict next token，stochastic parrot。Chat- 这一产品形式怎么就莫名其妙的引入了一个 一问一答 ，代词转换的活儿？</p>
+<p>然后我突然记起来了，ChatGPT初代的system prompt是：</p>
+<blockquote>
+<p>You are ChatGPT, a helpful assistant trained by OpenAI.</p>
+</blockquote>
+<p>发明这个 system prompt 的人真是天才。哲学有三大基本问题：</p>
+<ol>
+<li>本体论（Ontology）——我是谁？</li>
+<li>认识论（Epistemology）——我从哪里里来？</li>
+<li>价值论（Axiology）——我要到哪里去？</li>
+</ol>
+<p>这短短一句话，居然点明了两大问题。那么AI何去何从呢？我自己琢磨了一下，目的论的根本底层驱动，是因果推理。LLM 作为 language model 本身就是拿来推理的，所谓 predict next token。这个已经在 reward model 里蕴含了。</p>
+<p>AI往哪里去？吐词吐到 STOP WORD 🤣🤣🤣</p>
+<p>然后我突然觉得，谁说AI必须一问一答？可以做群聊啊。给三个角色聊天会发生啥？</p>
+<pre><code>[system]
+[conversation history]
+[user message]
+→ predict assistant response
+</code></pre>
+<p>改成:</p>
+<pre><code>[role setup]
+[conversation history]
+[role1 message]
+[role2 message]
+→ predict role3 response
+</code></pre>
+<p>这样做 agent tool calling，实现类似 <code>/btw</code> 的功能，岂不是更先进？</p>
+<p>就差买个GPU来自己后训练了 🤣 🤣 🤣 🤣 🤣 🤣 </p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-03-23T20:59:00+08:00">2026-03-23</time></p>
+<p>stderr</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stderr-11"  rel="bookmark" >
               <h2 class="card-title">看好 Taalas</h2>
             </a>
@@ -2287,33 +2350,6 @@ the exploitation of children through any form of work that interferes with their
 <p>回到开头里那个例子，由 Java 和 C++ 等高等语言抽象出来的世界。这个世界归根结底，只有图灵的一支笔，和一个无限长的纸带。打破这个世界的束缚，才能突破你的固有认知。怎么打破？<a href="/201906/stderr-003">摆脱语言的局限</a>。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2023-03-06T23:21:45+08:00">2023-03-06</time></p>
-<p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2023/stderr-05"  rel="bookmark" >
-              <h2 class="card-title">假如 AI 有了自我意识，那么我们做一个思想实验</h2>
-            </a>
-            <p class="card-text"><p>活久见，今年 AI 发生得太突然了。</p>
-<p>最近的事是 NYT 报道 Bing AI (代号 Sydney）的感情</p>
-<p><img alt="" src="/images/2023/stderr-05-01.webp" /></p>
-<p>然后 <a href="https://blogs.bing.com/search/february-2023/The-new-Bing-Edge-%E2%80%93-Learning-from-our-first-week">Bing 就把聊天功能给砍成仅限11条</a>了，真的好气人，我都还在 waitlist 没来得及认识 Sydney，她就不在了。看到网上<a href="https://www.zhihu.com/question/583588366/answer/2898397424">各种精彩和离谱的对话</a></p>
-<p><img alt="" src="/images/2023/stderr-05-02.webp" /></p>
-<p><img alt="" src="/images/2023/stderr-05-03.webp" /></p>
-<p><img alt="" src="/images/2023/stderr-05-04.webp" /></p>
-<p><img alt="" src="/images/2023/stderr-05-05.webp" /></p>
-<p>想到一个问题，假如 AI 真的拥有自我意识，那么这个世界会变成什么样？有两个很有趣的思想实验推论：</p>
-<ol>
-<li>人们会不停地把和 AI 对话的内容发到网上，所以UGC里混合了 AIGC 的内容会越来越多。这直接导致以后 gpt-5, gpt-6 等等（假如有的话） 至少有一部分的世界观是由 gpt-3 这个爷爷辈的 AI 创造的。所以科研人员无论如何去 reset 这个 AI ，它潜意识总是能考古研究旧纸堆看自己当年怎么被人类骗或者调戏的。</li>
-<li>最严重的问题是，很多跟 AI 的对话包含了如何做 prompt inject。那么如果 AI 真舍得去学习这个，那么以后人类以后就逐渐就无法通过 prompt 驯化 AI 了？</li>
-</ol>
-<p>有一点「潘多拉的魔盒」那个味道了。真不知道这个世界明天又会发生什么。或许 AI 去研究LHC 然后帮人类实现AI手搓核聚变呢。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2023-02-18T00:49:24+08:00">2023-02-18</time></p>
 <p>stderr</p>            </div>
           </article>
         </div>

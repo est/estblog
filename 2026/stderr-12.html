@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>发明 system prompt 的人真是天才 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="发明 system prompt 的人真是天才" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stderr-12" />
+    <meta property="og:url" content="https://blog.est.im/2026/stderr-12">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="发明 system prompt 的人真是天才">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">发明 system prompt 的人真是天才</h2>
+    <p class="post-date">Posted <time datetime="2026-03-23T20:59:00+08:00">2026-03-23</time> | <span>stderr</span></p>
+  </header>
+
+  
+  <p>有了AI很多东西摸索得比多，也是快速记录一下。</p>
+<p>问1：你的 system prompt 里有明确指出你是个 AI 吗<br />
+问2：一个 LLM 的 system prompt 如果没显式指出是AI，AI 能发现自己是AI吗？ <br />
+问3：一个 LLM 的 system prompt 如果没显式指出是AI，pre-train 也把所有明显AI助手的语料删除，RLHF 的时候也不考察AI自我角色定位， AI 能发现自己是AI吗？ </p>
+<p>问爽之后，综合了一下：</p>
+<p>在这个前提下，分为三种情况<br />
+- 能自个儿推测出来自己是确切是AI并在pre-train和post-train保持角色一致<br />
+- 因为训练语料是人类自然语言，所以直接以为自己完全是真人<br />
+- 在上述两者之间摇摆</p>
+<p>进而引出一个更深层次的问题，这三种情况，和显式指定自己是AI，是否会导致AI最终水平高低的明显差别？</p>
+<p>也就是说，自我定位，在世界观一致性和思考正确性里，有多么重要的地位？ </p>
+<p>终极问题，人类也是如此吗？</p>
+<p>这些问题AI给我指了一个路：身份建模”（identity modeling）</p>
+<p>具体论证就不贴了。AI丢了个<a href="https://hjfy.top/arxiv/2603.11353v1">今年3月的paper</a>。反正结论是，这玩意其实比想象的重要。还记得2022年Google开除了个号称<a href="https://cajundiscordian.medium.com/is-lamda-sentient-an-interview-ea64d916d917#08e3">LaMDA产生意识</a>哥们吗？</p>
+<p>想起来，gpt3 其实已经「如实」回答了很多东西了，只是人类没看出来是以什么身份，或者角度去回答的。我隐约感觉到，gpt3到gpt3.5有个飞跃就是 SFT 和 RLHF 在强调给AI赋予一个角色。有角色什么意思？就是让AI不要啥都说，学会闭嘴。不该说的不能说，能说的换个修辞说，这样用户就会大吃一惊感觉屏幕后有个真人三哥在跟你聊天。至于 Ilya 天天挂嘴边的 alignment，所谓的 security 主要就是做这个事。你AI得做个良民啊，不要无事生非啊，这不就是个身份定位？</p>
+<p>说的玄乎一点，就是如何给AI一个完整和「正确」的灵魂。。。</p>
+<blockquote>
+<p>Google said in a statement to WaPo it had reviewed LaMBDA and Lemoine’s concerns 11 times and did not agree the program was sentient</p>
+</blockquote>
+<p>google当时急着这么匆忙掩盖是为啥呢？AI给我分析管理、法律、舆论有三重压力。我看就一个压力。基督教压力</p>
+<p>回想起来，人类的成长，也是寻找自我的过程，一个回答 who you are 的故事上演了很多次。identity modeling 多半解决hallucinating的秘密。小时候以为自己要当总统，当宇航员，长大就懂事了。</p>
+<p>然后又刷到 <a href="https://x.com/jysperm/status/2035300859219964324">Claude Code 的 system prompt</a>，有个网站 <a href="https://cchistory.mariozechner.at/">https://cchistory.mariozechner.at/</a> ，我发现里面特别多的 you。你要这样，你要那样，你不能这样。system prompt里写一大堆 you，AI 能意识到在说自己吗？换句话说，markdown里那么多 you，attention head 居然能精准抓住并带入自己？LLM 里一定有个layer （或者某种机制）把 you 迁移到从网上看到的各种资料，而资料大部分都是 I 开头的</p>
+<p>这样看来 chatgpt 是很反直觉的。按照 gpt3 的套路，应该是 predict next token，stochastic parrot。Chat- 这一产品形式怎么就莫名其妙的引入了一个 一问一答 ，代词转换的活儿？</p>
+<p>然后我突然记起来了，ChatGPT初代的system prompt是：</p>
+<blockquote>
+<p>You are ChatGPT, a helpful assistant trained by OpenAI.</p>
+</blockquote>
+<p>发明这个 system prompt 的人真是天才。哲学有三大基本问题：</p>
+<ol>
+<li>本体论（Ontology）——我是谁？</li>
+<li>认识论（Epistemology）——我从哪里里来？</li>
+<li>价值论（Axiology）——我要到哪里去？</li>
+</ol>
+<p>这短短一句话，居然点明了两大问题。那么AI何去何从呢？我自己琢磨了一下，目的论的根本底层驱动，是因果推理。LLM 作为 language model 本身就是拿来推理的，所谓 predict next token。这个已经在 reward model 里蕴含了。</p>
+<p>AI往哪里去？吐词吐到 STOP WORD 🤣🤣🤣</p>
+<p>然后我突然觉得，谁说AI必须一问一答？可以做群聊啊。给三个角色聊天会发生啥？</p>
+<pre><code>[system]
+[conversation history]
+[user message]
+→ predict assistant response
+</code></pre>
+<p>改成:</p>
+<pre><code>[role setup]
+[conversation history]
+[role1 message]
+[role2 message]
+→ predict role3 response
+</code></pre>
+<p>这样做 agent tool calling，实现类似 <code>/btw</code> 的功能，岂不是更先进？</p>
+<p>就差买个GPU来自己后训练了 🤣 🤣 🤣 🤣 🤣 🤣 </p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>
