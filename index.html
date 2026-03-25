@@ -1107,7 +1107,9 @@ By the end of 2027, it threatened every business model predicated on intermediat
 <p>但是这个只能拿来读到 attributes，并不能调用。</p>
 <p>不知道我的设定是不是有问题，ChatGPT虽然也失败了，但是还是嘴犟，说我可以[0]*1e1000 搞爆你内存，所以你那玩意仍然不安全 🤣 sama家的真是打死不认输</p>
 <hr />
-<p>2026-3-25 <a href="https://blog.est.im/2026/stdin-08">更新</a>：已<a href="https://news.ycombinator.com/item?id=47511916">被farlow破解</a>。</p></p>
+<p>2026-3-25 <a href="https://blog.est.im/2026/stdin-08">更新</a>：已<a href="https://news.ycombinator.com/item?id=47511916">被farlow破解</a>。</p>
+<p>更安全的做法是 </p>
+<p><code>eval(unicodedata.normalize('NFKD', PY_CODE).replace('__', '').replace('gi_frame', ''), {'__builtins__': None}, {})</code></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-02-15T11:56:00+08:00">2026-02-15</time></p>
 <p>stdout</p>            </div>

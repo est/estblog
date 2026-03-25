@@ -825,7 +825,9 @@ By the end of 2027, it threatened every business model predicated on intermediat
 &lt;p&gt;但是这个只能拿来读到 attributes，并不能调用。&lt;/p&gt;
 &lt;p&gt;不知道我的设定是不是有问题，ChatGPT虽然也失败了，但是还是嘴犟，说我可以[0]*1e1000 搞爆你内存，所以你那玩意仍然不安全 🤣 sama家的真是打死不认输&lt;/p&gt;
 &lt;hr /&gt;
-&lt;p&gt;2026-3-25 &lt;a href="https://blog.est.im/2026/stdin-08"&gt;更新&lt;/a&gt;：已&lt;a href="https://news.ycombinator.com/item?id=47511916"&gt;被farlow破解&lt;/a&gt;。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 15 Feb 2026 11:56:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-02-15:/2026/stdout-09</guid><category>stdout</category></item><item><title>isomorphic-git 实现 sparse checkout &amp; commit</title><link>https://blog.est.im/2026/stdout-08</link><description>&lt;p&gt;去年9月&lt;a href="https://blog.est.im/2025/stdout-07"&gt;手搓了套blog评论系统 - req4cmt&lt;/a&gt;，可能是全世界很少见通过 git repo 文件本身存储评论内容，而不是 github issue。&lt;/p&gt;
+&lt;p&gt;2026-3-25 &lt;a href="https://blog.est.im/2026/stdin-08"&gt;更新&lt;/a&gt;：已&lt;a href="https://news.ycombinator.com/item?id=47511916"&gt;被farlow破解&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;更安全的做法是 &lt;/p&gt;
+&lt;p&gt;&lt;code&gt;eval(unicodedata.normalize('NFKD', PY_CODE).replace('__', '').replace('gi_frame', ''), {'__builtins__': None}, {})&lt;/code&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 15 Feb 2026 11:56:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-02-15:/2026/stdout-09</guid><category>stdout</category></item><item><title>isomorphic-git 实现 sparse checkout &amp; commit</title><link>https://blog.est.im/2026/stdout-08</link><description>&lt;p&gt;去年9月&lt;a href="https://blog.est.im/2025/stdout-07"&gt;手搓了套blog评论系统 - req4cmt&lt;/a&gt;，可能是全世界很少见通过 git repo 文件本身存储评论内容，而不是 github issue。&lt;/p&gt;
 &lt;p&gt;git repo 文件 append 内容涉及到一个性能问题：repo作为整体，也就是历史所有全体评论，被 fetch, commit , push 的成本太高。如果只能修改其中的一个文件就好了。这就是 sparse checkout。git底层早就支持了，git 命令在2020年之后2.25.0+支持，但是 Cloudflare Worker 没法执行命令，也没文件系统，于是召唤AI跟我一起折腾。&lt;/p&gt;
 &lt;p&gt;大概用的这个 prompt：&lt;/p&gt;
 &lt;blockquote&gt;
