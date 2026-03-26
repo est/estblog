@@ -54,6 +54,47 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-12"  rel="bookmark" >
+              <h2 class="card-title">首页和404更新</h2>
+            </a>
+            <p class="card-text"><p>觉得每年都得折腾一下。</p>
+<p>做了个 404 页面 <a href="https://est.im/404">https://est.im/404</a> 老登们<a href="https://v2ex.com/t/1201147">一眼</a>就能get到点。00后可能没见过。</p>
+<p>哈哈哈，等有空了去做个多语言版本的 😎</p>
+<p>可能没折腾过的不知道这玩意是在 shdoclc.dll 里，通过 <a href="https://www.angusj.com/resourcehacker/">Reource Hacker</a> 可以提取出来</p>
+<p>本来想去 win10 瞻仰一下遗迹，发现 iexplore.exe 直接强行启动 Edge了。搜到个法子可以绕过，新建个 1.vbs</p>
+<pre><code>Set ie = CreateObject(&quot;InternetExplorer.Application&quot;)
+ie.Navigate &quot;about:blank&quot;
+ie.Visible = 1
+</code></pre>
+<p>然后地址栏输入 <code>res://shdoclc.dll/http_404.htm</code> 。嘿，您猜怎么着，Win10 连 shdoclc.dll 都没啦。</p>
+<p>于是只能去下载个。那个感叹号图标是给 gemini 下令 pixel perfect replica 绘制的，虽然最后还是得手工调整。别的icon就随便找个 emoji 充数了。</p>
+<hr />
+<p>首页也折腾了一下 https://est.im/  ，AI搓特效就是快啊。难点主要是提示词，怎么描述这个现象。什么</p>
+<ul>
+<li>flowing vibrant color</li>
+<li>lava-lamp</li>
+<li>no-signal-tv effect</li>
+</ul>
+<p>然后 AI 挨着问我是不是</p>
+<ul>
+<li>Plasma effect</li>
+<li>Perlin noise / noise flow</li>
+<li>Reaction–diffusion</li>
+<li>neon lights but flowing</li>
+<li>Aurora effect</li>
+<li>gradient flow</li>
+</ul>
+<p>最后bingo，我也做了这个 <a href="https://lab.est.im/grad-flow">gradient flow</a> 的demo</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-03-25T23:21:00+08:00">2026-03-25</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdin-08"  rel="bookmark" >
               <h2 class="card-title">无用之用——或许LLM真的还不是AGI</h2>
             </a>
@@ -1176,87 +1217,6 @@ const newTreeSha = await git.writeTree(...);
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-02-05T19:00:00+08:00">2026-02-05</time></p>
 <p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2026/stdout-06"  rel="bookmark" >
-              <h2 class="card-title">AI搞不懂人称代词</h2>
-            </a>
-            <p class="card-text"><p>陪娃学英语，由于我没啥耐心，于是找了豆包跟他陪练。课程是<a href="https://www.bilibili.com/video/BV1xa411J7jJ?t=32.4&amp;p=197">New Concept English Book I Lesson 140</a>（是的很old school），大概内容是：</p>
-<p>A提问： Are you tired?<br />
-B没听清：What does he want to know<br />
-C转述：He wants to know if you are tired.</p>
-<p>我把课本截图给豆包，豆包很快明白这一课讲的是啥，我的prompt是：豆包你扮演A和B，我回答C，你指出我的语法错误之后换别的问题继续问我。</p>
-<p>这样进行得很顺利，直到豆包问了这样一个问题：</p>
-<p>A: What can i do for you<br />
-B: What does she want to know? <br />
-C: <strong><em>_</em></strong>__</p>
-<p>甲：我能帮你干点啥不？<br />
-乙：她问的啥来着？<br />
-丙：她问她能帮你干点啥不</p>
-<p>娃不怎么熟练，扮演C的回答： He wants to know what I can do for you。<br />
-豆包说：“完美，can也完全正确，语序超稳”<br />
-我：？？？？</p>
-<p>我以为是国产AI英语不行，去问 ChatGPT：</p>
-<blockquote>
-<p>English test:</p>
-<p>Person A: What can i do for you<br />
-Person B: What does she want to know?<br />
-Person C: <strong><em>_</em></strong>__</p>
-<p>Student answer as person C: He wants to know what I can do for you</p>
-<p>Is the answer correct?</p>
-</blockquote>
-<p>ChatGPT 回答：</p>
-<blockquote>
-<p>Yes, the student’s answer is grammatically correct and appropriate for the situation.<br />
-The sentence correctly:<br />
-1. Converts a direct question into an indirect statement (“what I can do for you,” not “what can I do for you”).<br />
-2. Uses proper tense and word order.<br />
-3. Maintains coherent reference across speakers (assuming “he” refers to Person A and “she” to Person B).<br />
-Stylistically, a teacher might also accept: “He wants to know what you can do for her.”</p>
-</blockquote>
-<p>这个 He wants to know what you can do for her 把我给整笑了。。。</p>
-<p>我怕是我原文没说清楚，又新开了个对话：</p>
-<blockquote>
-<p>English grammar test:</p>
-<p>Person A says to B: What can i do for you?<br />
-Person B says to C: What does she want to know?<br />
-Person C says to B: <strong><em>_</em></strong>__</p>
-</blockquote>
-<p>ChatGPT一本正经的回答：</p>
-<blockquote>
-<p>The blank in Person C’s reply should reflect answering Person B’s question about what Person A wants. A natural response would be:<br />
-“She wants to know what she can do for me.”</p>
-</blockquote>
-<p>我直接无语了。于是我决定开麦跟ChatGPT对喷。ChatGPT一直回答：</p>
-<ul>
-<li>Yes, exactly</li>
-<li>Sounds good!</li>
-<li>Perfect! That’s a great response.</li>
-<li>Excellent! That’s another perfect response.</li>
-<li>Great job!</li>
-<li>You did great!</li>
-<li>Your response is spot on</li>
-</ul>
-<p>这是对话<a href="https://chatgpt.com/share/6975d972-567c-8012-a686-6635dd60f940">分享链接</a></p>
-<p>我怀疑奥特曼是找三哥来标注的数据。为了迎合人连正确错误都不要了。于是我换 Gemini 问，gemini看娃的的回答，说不对。正确的应该是</p>
-<blockquote>
-<p>He wants to know what he can do for you</p>
-</blockquote>
-<p>但是 gemini 没搞明白B已经说了A是个 she 🤣 我怀疑是娃的回答给他误导了，于是新开一个对话，让Gemini直接回答C，gemini答对了</p>
-<blockquote>
-<p>She wants to know what she can do for you</p>
-</blockquote>
-<p>这几轮下来，我感觉可以得出一个结论，AI对 pronoun shift 容易犯错，注意力不够集中。各位拿AI来训练英语的要小心了。</p>
-<p>Transformer 是基于概率吐字的，he/she 这种高频词对AI来说大差不差。所以胡诌一个。LLM对于这种强指向、 强因果的关联性基本靠蒙。</p>
-<p>这是我已知的LLM的第三个硬缺陷了。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2026-01-25T16:13:00+08:00">2026-01-25</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 

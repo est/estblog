@@ -54,6 +54,47 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-12"  rel="bookmark" >
+              <h2 class="card-title">首页和404更新</h2>
+            </a>
+            <p class="card-text"><p>觉得每年都得折腾一下。</p>
+<p>做了个 404 页面 <a href="https://est.im/404">https://est.im/404</a> 老登们<a href="https://v2ex.com/t/1201147">一眼</a>就能get到点。00后可能没见过。</p>
+<p>哈哈哈，等有空了去做个多语言版本的 😎</p>
+<p>可能没折腾过的不知道这玩意是在 shdoclc.dll 里，通过 <a href="https://www.angusj.com/resourcehacker/">Reource Hacker</a> 可以提取出来</p>
+<p>本来想去 win10 瞻仰一下遗迹，发现 iexplore.exe 直接强行启动 Edge了。搜到个法子可以绕过，新建个 1.vbs</p>
+<pre><code>Set ie = CreateObject(&quot;InternetExplorer.Application&quot;)
+ie.Navigate &quot;about:blank&quot;
+ie.Visible = 1
+</code></pre>
+<p>然后地址栏输入 <code>res://shdoclc.dll/http_404.htm</code> 。嘿，您猜怎么着，Win10 连 shdoclc.dll 都没啦。</p>
+<p>于是只能去下载个。那个感叹号图标是给 gemini 下令 pixel perfect replica 绘制的，虽然最后还是得手工调整。别的icon就随便找个 emoji 充数了。</p>
+<hr />
+<p>首页也折腾了一下 https://est.im/  ，AI搓特效就是快啊。难点主要是提示词，怎么描述这个现象。什么</p>
+<ul>
+<li>flowing vibrant color</li>
+<li>lava-lamp</li>
+<li>no-signal-tv effect</li>
+</ul>
+<p>然后 AI 挨着问我是不是</p>
+<ul>
+<li>Plasma effect</li>
+<li>Perlin noise / noise flow</li>
+<li>Reaction–diffusion</li>
+<li>neon lights but flowing</li>
+<li>Aurora effect</li>
+<li>gradient flow</li>
+</ul>
+<p>最后bingo，我也做了这个 <a href="https://lab.est.im/grad-flow">gradient flow</a> 的demo</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-03-25T23:21:00+08:00">2026-03-25</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-11"  rel="bookmark" >
               <h2 class="card-title">tmux enables AIs to operate servers safely</h2>
             </a>
@@ -2592,30 +2633,6 @@ ValueError: day is out of range for month
 <p>真复杂！</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-03-01T13:57:00+08:00">2024-03-01</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2024/stdout-03"  rel="bookmark" >
-              <h2 class="card-title">穷人的supervisor OOM killer</h2>
-            </a>
-            <p class="card-text"><p>厂里的docker上跑了个supervisord，用来把挂掉的进程拉起来。最近的问题不是进程挂掉，而是内存泄漏</p>
-<p>跑着跑着内存爆了，然后宿主机OOM随机杀掉一个进程，结果占用内存最大的那个还活着，正常的进程反而gg，该漏的继续漏，然后反复OOM。想看下哪里漏了，<code>--cap-add=SYS_PTRACE</code> 也不给加，OOM策略也不给调，思来想去只能自己做防水补漏了。做起来也简单，supervisor再跑一套bash脚本即可：</p>
-<pre><code>while true; do
-  p=`ps --no-headers  -xo rss,pid --sort=-rss | awk '{
-    if($1 &gt; 1000000){ print $2 }
-  }'`
-  kill $p 2&gt;/dev/null || echo "everything fine";
-  sleep 60;
-done;
-</code></pre>
-<p><code>1000000</code> 代表1G 内存。 <code>sleep 60</code> 表示 每60秒检查一次。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-02-27T16:48:00+08:00">2024-02-27</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
