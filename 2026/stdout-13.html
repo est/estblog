@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bonsai 在 M2 安装 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Bonsai 在 M2 安装" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stdout-13" />
+    <meta property="og:url" content="https://blog.est.im/2026/stdout-13">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Bonsai 在 M2 安装">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Bonsai 在 M2 安装</h2>
+    <p class="post-date">Posted <time datetime="2026-04-01T15:40:00+08:00">2026-04-01</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>有个 1bit 模型最近很火 <a href="https://github.com/PrismML-Eng/Bonsai-demo">https://github.com/PrismML-Eng/Bonsai-demo</a></p>
+<p>我本地环境不知道咋回事，搞混了 x86_64 和 arm64 。还有官方默认 python 3.11 我也不太满意，强行升级一波。</p>
+<pre><code>diff --git setup.sh setup.sh
+index 543fab0..80c1190 100755
+--- setup.sh
++++ setup.sh
+@@ -13,7 +13,8 @@ cd &quot;$SCRIPT_DIR&quot;
+
+ VENV_DIR=&quot;$SCRIPT_DIR/.venv&quot;
+ VENV_PY=&quot;$VENV_DIR/bin/python&quot;
+-PYTHON_VERSION=&quot;3.11&quot;
++# PYTHON_VERSION=&quot;3.11&quot;
++PYTHON_VERSION=3.14
+
+ # ────────────────────────────────────────────────────
+ #  Helpers
+@@ -266,6 +267,10 @@ if [ &quot;$OS&quot; = &quot;Darwin&quot; ]; then
+     fi
+
+     step &quot;Building MLX from source (this takes 2-5 minutes on first install) ...&quot;
++    # Force arm64 so CMake does not pick x86_64 (e.g. universal cc / Rosetta); MLX rejects x86_64+Metal on macOS.
++    if [ &quot;$(uname -m)&quot; = &quot;arm64&quot; ]; then
++        export ARCHFLAGS=&quot;${ARCHFLAGS:--arch arm64}&quot;
++    fi
+     # --no-build-isolation required: MLX's C++/Metal build needs pre-installed setuptools
+     uv pip install --python &quot;$VENV_PY&quot; -e mlx/ --no-build-isolation
+     step &quot;Installing MLX Python deps (mlx-lm, torch, transformers, ...) ...&quot;
+</code></pre>
+<p>cd mlx</p>
+<pre><code>diff --git CMakeLists.txt CMakeLists.txt
+index 041a476c..459ddae2 100644
+--- CMakeLists.txt
++++ CMakeLists.txt
+@@ -56,7 +56,17 @@ message(
+ )
+
+ if(${CMAKE_SYSTEM_NAME} MATCHES &quot;Darwin&quot;)
+-  if(${CMAKE_SYSTEM_PROCESSOR} MATCHES &quot;x86_64&quot;)
++  # CMAKE_SYSTEM_PROCESSOR can stay x86_64 on Apple silicon until the toolchain
++  # is fully configured; CMAKE_OSX_ARCHITECTURES reflects the actual target.
++  set(_mlx_macos_targeting_x86 OFF)
++  if(CMAKE_OSX_ARCHITECTURES)
++    if(&quot;x86_64&quot; IN_LIST CMAKE_OSX_ARCHITECTURES)
++      set(_mlx_macos_targeting_x86 ON)
++    endif()
++  elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES &quot;x86_64&quot;)
++    set(_mlx_macos_targeting_x86 ON)
++  endif()
++  if(_mlx_macos_targeting_x86)
+     if(NOT MLX_ENABLE_X64_MAC)
+       message(
+         FATAL_ERROR
+diff --git setup.py setup.py
+index 12505bd1..db0c67c8 100644
+--- setup.py
++++ setup.py
+@@ -126,6 +126,9 @@ class CMakeBuild(build_ext):
+         if build_macos:
+             # Cross-compile support for macOS - respect ARCHFLAGS if set
+             archs = re.findall(r&quot;-arch (\S+)&quot;, os.environ.get(&quot;ARCHFLAGS&quot;, &quot;&quot;))
++            # Default to native Apple-silicon when ARCHFLAGS is unset (avoids CMAKE_SYSTEM_PROCESSOR=x86_64 with universal toolchains)
++            if not archs and platform.machine() == &quot;arm64&quot;:
++                archs = [&quot;arm64&quot;]
+             if archs:
+                 cmake_args += [&quot;-DCMAKE_OSX_ARCHITECTURES={}&quot;.format(&quot;;&quot;.join(archs))]
+</code></pre>
+<p>然后发现 metal 命令不存在。继续折腾。因为我没升级 macOS 26，还是 Sequoia 15.7.3，XCode从商店安装直接提示</p>
+<blockquote>
+<p>Xcode can’t be installed on “Macintosh HD” because macOS version 26.2 or later is required.</p>
+</blockquote>
+<p>手动：</p>
+<pre><code>wget https://download.developer.apple.com/Developer_Tools/Xcode_16/Xcode_16.xip
+xip --expand Xcode_16.xip
+sudo mv Xcode.app /Applications/
+sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+sudo xcodebuild -license accept
+</code></pre>
+<p>有AI代为折腾真好。</p>
+<p>最后吐槽下，open-webui什么妖魔鬼怪。就tmd一个界面玩意也整出来好几个GB。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>
