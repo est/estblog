@@ -54,6 +54,40 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2023/stdin-07"  rel="bookmark" >
+              <h2 class="card-title">吐蕃问题和名正言顺</h2>
+            </a>
+            <p class="card-text"><p>最近在 reddit 上看到一个很扯的对话，当年国际上有谁承认吐蕃是个 country？有人说 UK，但是被马上被人指出臭名昭著的 McMahon line 也没承认吐蕃啊。这人<a href="https://np.reddit.com/r/worldnews/comments/149ify5/_/jo6kr3s/?context=6">回复</a>到：</p>
+<blockquote>
+<p>China was seen as a suzerain over Tibet by the UK until the 1914 Simla Convention, which led to the creation of the McMahon line. In China's refusal to sign the convention, they forfeited their rights of suzerainty in the eyes of the British and Tibet signed it for itself.<br />
+If China signed the treaty, Tibet would've been seen as a vassal under China and ineligible to sign for itself. In accepting Tibet's signature as a party to the Simla Convention as sufficient, the UK de facto recognized Tibet as an independent nation capable of conducting it's own foreign relations.</p>
+</blockquote>
+<p>也就是说，UK 按照 Simla Convention 认为中央政府是吐蕃的宗主国，但是宗主国不在条约上签字，而吐蕃擅自做了主张，那么就等于中央政府放弃了宗主权力。</p>
+<p>我靠，还能这样强词夺理弯弯绕绕？不愧是搅屎棍带英。这个说辞的问题在哪里呢？对于一个莫名其妙的条约，你以为有两种状态：</p>
+<ol>
+<li><code>signed</code>   2. <code>unsigned</code></li>
+</ol>
+<p>但是按这套说辞，条约是一个 <code>bool | null</code> 类型，有3个状态：</p>
+<ol>
+<li><code>true</code>  2. <code>false</code> 3. <code>null</code></li>
+</ol>
+<p>其中 <code>null</code> 才表示未签署也就是放弃权力。当时应该签一个 NOPE &amp; FUCK YOU。</p>
+<p>不过这让我想起一个事，当时英国渗透印度、阿富汗、吐蕃多严重？1944年，当时RoC政府新任驻藏办事处处长沈宗濂带领随员一行赴西藏上任，因为内地和拉萨交通不便，却需要绕路新德里。妈的太难了。</p>
+<p>然后又想起来那个著名的<a href="https://zh.wikipedia.org/zh-cn/%E6%B1%89%E5%A7%94%E5%A5%B4%E5%9B%BD%E7%8E%8B%E5%8D%B0">汉委奴国王印</a></p>
+<p><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/King_of_Na_gold_seal_knob.jpg/600px-King_of_Na_gold_seal_knob.jpg" /></p>
+<p><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/King_of_Na_gold_seal_imprint.svg/600px-King_of_Na_gold_seal_imprint.svg.png" /></p>
+<p>不得不说，老祖宗在弯弯道道这一方面还是很精，你接了我的印，就代表接受我的权威。你拿这个印处理国事，那么就意味着你的权威是通过我这个印授予的。你不用这个印，那就意味着 <em>casus belli</em> ！。从这个意义上来说，国际秩序其实真不是靠铁拳砸出来的，而是靠这些弯弯道道形成一个威慑和平衡。</p>
+<p>那么回到开头，最近一直在想一个问题，名正言顺，师出有名，名份这个东西，说起来挺虚的，但是文明的核心也就是一个名份。孔丘不就是为了争他爹一个贵族的title搞了那么多花样，他一辈子至高追求也就是要求别人尊重周天子这个所谓的天下共主的名份。礼就是社会秩序，社会秩序核心就是一个名份。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2023-06-15T11:20:09+08:00">2023-06-15</time></p>
+<p>stdin</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2023/stdout-08"  rel="bookmark" >
               <h2 class="card-title">Rimworld 1.4 Biotech Xenogene/Endogene code names</h2>
             </a>
@@ -1931,36 +1965,6 @@ Q: 歌词里 波兰的血 是什么意思<br />
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2022-12-17T22:17:42+08:00">2022-12-17</time></p>
 <p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2022/stdout-13"  rel="bookmark" >
-              <h2 class="card-title">Jira里JQL实现查找上一个「工作日」的任务</h2>
-            </a>
-            <p class="card-text"><p>厂里终于开始用笨拙的Jira了。总体用下来跟 Teambition 相比各有各的笨处。。。</p>
-<p>默认的 board 过滤器有点不好用。本着为了stand-up meeting和周报快速检索上一个工作日和当周干了什么，找到一个 filter 写法：</p>
-<h3>JQL过滤上一个工作日干了啥：</h3>
-<pre><code>(updatedDate &lt; endofweek("-8d") AND updatedDate &gt; startofday("-3d")) OR updatedDate &gt; startofday("-1d")
-</code></pre>
-<p>这里不是简单的查昨天干了啥。比如周一需要看周五干了啥。所以有个 <code>-8d</code> 并 <code>-3d</code> 的神奇操作。具体的逻辑自己琢磨</p>
-<h3>过滤本周干了啥</h3>
-<pre><code>updatedDate &gt;= startOfWeek(0)
-</code></pre>
-<p>Jira这种资本主义软件是没法适配我们社会主义法定节假日的设定。所以遇到非双休放假还是判断起来比较蛋痛。</p>
-<p>其实我比较反感每天早上开站会。我比较推荐每天下班前最后10分钟开会。好处有：</p>
-<ol>
-<li>当天干了什么记得很清楚。明天需要干什么也很显然。</li>
-<li>如果谁拖堂，谁就承担对不起大家不能准时下班的道德压力</li>
-<li>如果都开会了你事情都还没做完，要么你事情安排得太多，要么你完成能力不足，要么你时间安排有问题。</li>
-</ol>
-<p>之前在两个公司这样执行过。结果被大老板强行改到早上开会了。无语。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2022-12-12T14:51:50+08:00">2022-12-12</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 
