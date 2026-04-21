@@ -61,7 +61,14 @@
 <li>TOML: Superior for AI because it is flat. A section header <code>[header.subheader]</code> anchors the state for the following lines, requiring zero long-distance nesting memory.</li>
 <li>Markdown/LaTeX: This explains why even the best models still hallucinate unrenderable LaTeX. The moment a formula requires deeply nested curly braces, the <code>Dyck-k</code> problem strikes, and the model "forgets" to close a bracket.</li>
 </ul>
-<p>In the era of silicon minds, indentting is not about aesthetics; Indent is logic. We used to think Python's indentation was for humans who couldn't keep track of their braces. It turns out, it was the perfect scaffold for an architecture that can't keep track of its own state. If you want a reliable agent, stop asking it to write 50 lines of escaped Bash. Give it a language that lets it see its own state, one indent at a time.</p>
+<p>To verify this, one could conduct a simple "Indentation Test" experiment: ask a SOTA model to generate C++ code in two scenarios &amp; then compare accuracy:</p>
+<ul>
+<li>Standard C++ with mandatory indentation and newlines.</li>
+<li>Minified C++ on a single line where indentation is forbidden.</li>
+</ul>
+<p>The divergence in error rates as the nesting depth increases would likely prove that for AI, the "indentation" is the logic.</p>
+<p>Ultimately, while Bash is a powerful glue, it is a treacherous foundation for autonomous agents. If we want reliable agents, we should favor languages and formats that offload state into the context.</p>
+<p>Indent is all you need.</p>
 <hr />
 <p>Translated from <a href="https://www.zhihu.com/question/1992208967498236682/answer/2028074933238907033">Zhihu 胡一鸣</a> &amp; edited by ChatGPT</p>
 </article>
