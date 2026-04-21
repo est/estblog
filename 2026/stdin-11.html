@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Indent Is All You Need – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Indent Is All You Need" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stdin-11" />
+    <meta property="og:url" content="https://blog.est.im/2026/stdin-11">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Indent Is All You Need">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Indent Is All You Need</h2>
+    <p class="post-date">Posted <time datetime="2026-04-21T13:09:00+08:00">2026-04-21</time> | <span>stdin</span></p>
+  </header>
+
+  
+  <p>There’s an interesting debate around whether “Bash is all you need” for AI agents. Claude Code’s Thariq Shihipar argues that LLMs may never be particularly good at Bash. The reasoning is both practical and theoretical: complex Bash commands often break on nested quotes, parentheses, and escapes. Even GPT-5.4 struggles with deeply nested inline Bash calls, and some engineers have resorted to wrapping binaries into microcommands so the model only outputs the inner command, achieving near-perfect reliability.</p>
+<p>The theory behind this is rooted in formal language classes. Bash’s quoting and parentheses matching form a <code>Dyck-k</code> language problem—a type of task that requires maintaining a stack of arbitrary depth. Standard Transformers are in the <code>TC0</code> omplexity class, which makes deep nesting and parity tracking inherently challenging. Python, by contrast, is almost Transformer-friendly by design: each line’s indentation implicitly encodes block depth. This “outsources” state tracking to the syntax itself, effectively converting a potentially hard nesting problem into something the model can handle token by token. That may explain why LLMs have excelled at Python generation from early versions, despite struggling with even basic arithmetic.</p>
+<p>Practically, this explains the patterns people see: nested Bash commands are error-prone, while Python functions with proper indentation work reliably. YAML, Markdown, and other indentation-heavy formats behave similarly. Comments point out that Markdown math formulas and JSON/XML often cause minor errors because of brace or bracket mismatches—but mistakes are usually nonfatal. Bash mistakes, on the other hand, can be catastrophic, especially when used in agent frameworks that make the AI directly invoke commands.</p>
+<p>--</p>
+<p>This is a high-signal take that would likely trigger a massive thread on Hacker News. By framing it around the "Indent" rather than just a "Python vs. Bash" debate, you tap into the underlying CS theory (<code>TC0</code> complexity) that HN readers love.</p>
+<p>Here is the revised version, tailored for that specific "Front Page" energy.</p>
+<p>If we accept that LLMs are "state-tracking challenged," our choice of formats must evolve toward "line-local" state:</p>
+<ul>
+<li>JSON/XML: High-risk. Every <code>{</code> is a debt that must be paid with a <code>}</code> 50 tokens later.</li>
+<li>TOML: Superior for AI because it is flat. A section header <code>[header.subheader]</code> anchors the state for the following lines, requiring zero long-distance nesting memory.</li>
+<li>Markdown/LaTeX: This explains why even the best models still hallucinate unrenderable LaTeX. The moment a formula requires deeply nested curly braces, the <code>Dyck-k</code> problem strikes, and the model "forgets" to close a bracket.</li>
+</ul>
+<p>In the era of silicon minds, indentting is not about aesthetics; Indent is logic. We used to think Python’s indentation was for humans who couldn't keep track of their braces. It turns out, it was the perfect scaffold for an architecture that can’t keep track of its own state. If you want a reliable agent, stop asking it to write 50 lines of escaped Bash. Give it a language that lets it see its own state, one indent at a time.</p>
+<hr />
+<p>Translated from <a href="https://www.zhihu.com/question/1992208967498236682/answer/2028074933238907033">Zhihu 胡一鸣<br />
+</a> &amp; edited by ChatGPT</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

@@ -54,6 +54,35 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdin-11"  rel="bookmark" >
+              <h2 class="card-title">Indent Is All You Need</h2>
+            </a>
+            <p class="card-text"><p>There’s an interesting debate around whether “Bash is all you need” for AI agents. Claude Code’s Thariq Shihipar argues that LLMs may never be particularly good at Bash. The reasoning is both practical and theoretical: complex Bash commands often break on nested quotes, parentheses, and escapes. Even GPT-5.4 struggles with deeply nested inline Bash calls, and some engineers have resorted to wrapping binaries into microcommands so the model only outputs the inner command, achieving near-perfect reliability.</p>
+<p>The theory behind this is rooted in formal language classes. Bash’s quoting and parentheses matching form a <code>Dyck-k</code> language problem—a type of task that requires maintaining a stack of arbitrary depth. Standard Transformers are in the <code>TC0</code> omplexity class, which makes deep nesting and parity tracking inherently challenging. Python, by contrast, is almost Transformer-friendly by design: each line’s indentation implicitly encodes block depth. This “outsources” state tracking to the syntax itself, effectively converting a potentially hard nesting problem into something the model can handle token by token. That may explain why LLMs have excelled at Python generation from early versions, despite struggling with even basic arithmetic.</p>
+<p>Practically, this explains the patterns people see: nested Bash commands are error-prone, while Python functions with proper indentation work reliably. YAML, Markdown, and other indentation-heavy formats behave similarly. Comments point out that Markdown math formulas and JSON/XML often cause minor errors because of brace or bracket mismatches—but mistakes are usually nonfatal. Bash mistakes, on the other hand, can be catastrophic, especially when used in agent frameworks that make the AI directly invoke commands.</p>
+<p>--</p>
+<p>This is a high-signal take that would likely trigger a massive thread on Hacker News. By framing it around the "Indent" rather than just a "Python vs. Bash" debate, you tap into the underlying CS theory (<code>TC0</code> complexity) that HN readers love.</p>
+<p>Here is the revised version, tailored for that specific "Front Page" energy.</p>
+<p>If we accept that LLMs are "state-tracking challenged," our choice of formats must evolve toward "line-local" state:</p>
+<ul>
+<li>JSON/XML: High-risk. Every <code>{</code> is a debt that must be paid with a <code>}</code> 50 tokens later.</li>
+<li>TOML: Superior for AI because it is flat. A section header <code>[header.subheader]</code> anchors the state for the following lines, requiring zero long-distance nesting memory.</li>
+<li>Markdown/LaTeX: This explains why even the best models still hallucinate unrenderable LaTeX. The moment a formula requires deeply nested curly braces, the <code>Dyck-k</code> problem strikes, and the model "forgets" to close a bracket.</li>
+</ul>
+<p>In the era of silicon minds, indentting is not about aesthetics; Indent is logic. We used to think Python’s indentation was for humans who couldn't keep track of their braces. It turns out, it was the perfect scaffold for an architecture that can’t keep track of its own state. If you want a reliable agent, stop asking it to write 50 lines of escaped Bash. Give it a language that lets it see its own state, one indent at a time.</p>
+<hr />
+<p>Translated from <a href="https://www.zhihu.com/question/1992208967498236682/answer/2028074933238907033">Zhihu 胡一鸣<br />
+</a> &amp; edited by ChatGPT</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-04-21T13:09:00+08:00">2026-04-21</time></p>
+<p>stdin</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdin-10"  rel="bookmark" >
               <h2 class="card-title">语文学习和考试</h2>
             </a>
@@ -2331,37 +2360,6 @@ user3043964493022: i 100% agree! i see it also at the preschool level... we are 
 <p>感觉蜡烛其实也不简单。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2023-04-17T16:24:07+08:00">2023-04-17</time></p>
-<p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2023/stdin-03"  rel="bookmark" >
-              <h2 class="card-title">为什么要读大学拿文凭</h2>
-            </a>
-            <p class="card-text"><p>刷到<a href="https://twitter.com/mrbleem_eth/status/1614968917801472000">一则推</a>：</p>
-<blockquote>
-<p>我其实不太理解<br />
-为啥高中毕业要上大学？<br />
-我看现在99%的岗位高中学历足够了，如果不会的还有Google和chatGPT<br />
-我觉得应该出来打工<br />
-毕竟在大学玩四年游戏甚至研究生再玩三年<br />
-不如出来打工四年，挣到钱了去环游世界打游戏，或者再去读三年大学比较好<br />
-至少能想明白自己为啥要读大学</p>
-</blockquote>
-<p>刚好看到 Tulsa King 里面讲这个为啥要拿  college degree</p>
-<p><img alt="" src="/images/2023/stdin-01-01.webp" /></p>
-<blockquote>
-<p>Do you think anyone really gives a shit about what your major is? English literature, biology, whatever. The whole point of a college degree is to show a potential employer that you showed up someplace four years in a row, completed a series of tasks reasonably well, and on time. So if he hires you, there's a semi-decent chance that you'll show up there every day and not fuck his business up.<br />
-你觉得谁他妈会在乎你的大学专业？英语文学，生命科学，管他的。大学文凭的全部意义，是给你潜在的雇主展示，你连续4年按时出现在某个地方，合理地并且按地时完成了一系列任务，也就是说如果他雇佣了你，那么多半你也会接下来准时每天上班然后不会把他的生意给搞砸。</p>
-</blockquote>
-<p>当然有大聪明会问了，打工是不可能打工的，这一辈子都不会打工。你想去当老板？</p>
-<p>还真是这个道理。很多人为了当老板直接大学辍学。如果是自己雇佣自己，学历算个屌啊。学知识学技能啥时候不能学。非得等大学才去学。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2023-01-17T16:42:08+08:00">2023-01-17</time></p>
 <p>stdin</p>            </div>
           </article>
         </div>
