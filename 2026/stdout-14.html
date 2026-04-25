@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>浏览器通过WebGPU上做AI推理 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="浏览器通过WebGPU上做AI推理" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stdout-14" />
+    <meta property="og:url" content="https://blog.est.im/2026/stdout-14">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="浏览器通过WebGPU上做AI推理">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">浏览器通过WebGPU上做AI推理</h2>
+    <p class="post-date">Posted <time datetime="2026-04-25T16:53:00+08:00">2026-04-25</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>先说结论，在2026Q2这个时间点，通过浏览器webgpu 做 AI 不值得。</p>
+<p>本来看<a href="https://huggingface.co/spaces/Xenova/kokoro-web">官方demo</a>跑得好好的，自己搓下来也觉得没啥，就一个小问题，fp32的模型有点大，最好换 q8 的。</p>
+<p>q8的不能在 webgpu上跑，wasm也凑合用。原因是缺少一些矩阵乘法算子。开源库嘛，也理解。只是速度就慢了一点。</p>
+<p>本来前几个月就这样平安无事，结果 transformers.js 升级到 v4，支持 q8 跑webgpu了，甚至 q4 q2 bitnet 这种高级货都支持了。满心欢喜的切过去，结果 webgpu 跟 wasm 一样慢？</p>
+<p>于是就不甘心了。一路折腾，发现这个不仅跟算子有关，还跟硬件有关。甚至老掉牙的硬件不支持 <code>shader-f16</code> 。简单的说其实 GPU 原生支持最好的就 IEEE 754 fp32，f16 i8 这种属于要么新一点的硬件才支持，要么就是靠各种算子在软件层奇技淫巧去模拟。</p>
+<p>我甚至脑洞大开让AI去搓一个 q8 dequant 到 fp32 ，发现模型也是不好惹的，太多坑了。HF官方甚至也自己搞了一套 q8f16 q4f16，然而 HF 自己的 transformers.js 都支持得不完善。</p>
+<p>压死骆驼最后的稻草是，我在macbook上开发完成，最长9s，能忍受的极限，拿出手机、pad，win10台式机一测，发现webgpu大多数不支持，然后wasm推理需要 20s。微软甚至不准备在win100承诺支持WebGPU，因为依赖的 DirectX 12 只会面向win11更新了；高通，联发科这边的 WebGPU 稀碎。要说生态好，还得是Apple。</p>
+<p>那还玩个蛋啊。怪不得现在AI几乎都是云上面跑，端上的问题太多了。</p>
+<p>国产AI芯片，NPU什么的现在觉得得可以洗洗睡了。CUDA生态不是简单的堆算力问题，transformer模型推理本质上就是矩阵乘法，但是坑就坑在layer的结果需要进一步传播，叠加，汇总。但凡做个 fusion 就很考验对硬件的理解了。</p>
+<p>啊啊啊啊，头痛，坑。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>
