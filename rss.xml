@@ -8,19 +8,25 @@
 &lt;p&gt;最后选了 bugsink 。记录一下 &lt;a href="https://www.bugsink.com/docs/local-install-using-virtualenv/"&gt;pip 安装部署&lt;/a&gt;的坑&lt;/p&gt;
 &lt;p&gt;下面的配置指 &lt;code&gt;bugsink-create-conf&lt;/code&gt; 命令生成的 &lt;code&gt;bugsink_conf.py&lt;/code&gt;&lt;/p&gt;
 &lt;h2&gt;避免安装 MySQLdb&lt;/h2&gt;
-&lt;p&gt;docker编译环境一坨，所有用纯py的 &lt;code&gt;pymysql&lt;/code&gt; 代替，在配置顶部写&lt;/p&gt;
+&lt;p&gt;docker编译环境一坨，改纯py的 &lt;code&gt;pymysql&lt;/code&gt; 代替，在配置顶部写&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;import pymysql; pymysql.install_as_MySQLdb()&lt;/code&gt;&lt;/p&gt;
 &lt;h2&gt;CSRF&lt;/h2&gt;
 &lt;p&gt;前面有一层 nginx 反代，然后一直报 CSRF 错误，因为 &lt;code&gt;X-Forwarded-Proto&lt;/code&gt; 没值，所以 django csrf middleware 当成http给拦了。修改方法是配置里加一行&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;SECURE_PROXY_SSL_HEADER = ("HTTP_ORIGIN", BUGSINK['BASE_URL'])&lt;/code&gt;&lt;/p&gt;
 &lt;h2&gt;厂家遥测&lt;/h2&gt;
 &lt;p&gt;配置里 &lt;code&gt;PHONEHOME = False&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;如果不这样干，我记得会启动报错。需要&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;from django.apps import apps
+Installation = apps.get_model(&amp;quot;phonehome&amp;quot;, &amp;quot;Installation&amp;quot;)
+Installation.objects.create()
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h2&gt;绕过 migration 建表&lt;/h2&gt;
 &lt;p&gt;手上没pg，django高版本居然限制死了 mysql &amp;gt; 8.0 无语。&lt;/p&gt;
 &lt;p&gt;直接配置里加两句&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-python"&gt;from django.db.backends.mysql.features import DatabaseFeatures
 DatabaseFeatures.minimum_database_version = None
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;实测 bugsink跑在mysql 5.6 完全ok，没用到任何高版本特性。纯纯是 django框架在作妖，懒得支持 EOF &lt;/p&gt;
 &lt;h2&gt;跳过 migration&lt;/h2&gt;
 &lt;p&gt;我执行 &lt;code&gt;bugsink-manage migrate&lt;/code&gt; 发现mysql 5.6 太老了。于是想办法直接建表而不是一步一步migrate。获得所有建表语句是：&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-python"&gt;import os
