@@ -1,5 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sat, 25 Apr 2026 16:53:00 +0800</lastBuildDate><item><title>浏览器通过WebGPU上做AI推理</title><link>https://blog.est.im/2026/stdout-14</link><description>&lt;p&gt;先说结论，在2026Q2这个时间点，通过浏览器webgpu 做 AI 不值得。&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Wed, 06 May 2026 16:21:00 +0800</lastBuildDate><item><title>Sentry 替代品 Bugsink 安装配置</title><link>https://blog.est.im/2026/stdout-15</link><description>&lt;p&gt;如果你像我一样需要一个线上异常 traceback 跟踪工具，又没法忍受 Kafka/ClickHouse/Snuba/Zookeeper 这一坨依赖，那么归根结底有&lt;a href="https://www.bugsink.com/blog/glitchtip-vs-sentry-vs-bugsink/"&gt;三个选择&lt;/a&gt;：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;sentry&amp;lt;10.0 大概是2019年之前的版本，只依赖db/redis，太老&lt;/li&gt;
+&lt;li&gt;glitchtip 除了错误跟踪也支持 uptime 等&lt;/li&gt;
+&lt;li&gt;bugsink。不支持 Android/Java 的在线符号化（无 mapping 上传）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;最后选了 bugsink 。记录一下 &lt;a href="https://www.bugsink.com/docs/local-install-using-virtualenv/"&gt;pip 安装部署&lt;/a&gt;的坑&lt;/p&gt;
+&lt;p&gt;下面的配置指 &lt;code&gt;bugsink-create-conf&lt;/code&gt; 命令生成的 &lt;code&gt;bugsink_conf.py&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;避免安装 MySQLdb&lt;/h2&gt;
+&lt;p&gt;docker编译环境一坨，所有用纯py的 &lt;code&gt;pymysql&lt;/code&gt; 代替，在配置顶部写&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;import pymysql; pymysql.install_as_MySQLdb()&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;CSRF&lt;/h2&gt;
+&lt;p&gt;前面有一层 nginx 反代，然后一直报 CSRF 错误，因为 &lt;code&gt;X-Forwarded-Proto&lt;/code&gt; 没值，所以 django csrf middleware 当成http给拦了。修改方法是配置里加一行&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;SECURE_PROXY_SSL_HEADER = ("HTTP_ORIGIN", BUGSINK['BASE_URL'])&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;厂家遥测&lt;/h2&gt;
+&lt;p&gt;配置里 &lt;code&gt;PHONEHOME = False&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;绕过 migration 建表&lt;/h2&gt;
+&lt;p&gt;手上没pg，django高版本居然限制死了 mysql &amp;gt; 8.0 无语。&lt;/p&gt;
+&lt;p&gt;直接配置里加两句&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;from django.db.backends.mysql.features import DatabaseFeatures
+DatabaseFeatures.minimum_database_version = None
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;跳过 migration&lt;/h2&gt;
+&lt;p&gt;我执行 &lt;code&gt;bugsink-manage migrate&lt;/code&gt; 发现mysql 5.6 太老了。于是想办法直接建表而不是一步一步migrate。获得所有建表语句是：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;import os
+import django
+
+os.environ.setdefault(&amp;quot;DJANGO_SETTINGS_MODULE&amp;quot;, &amp;quot;bugsink_conf&amp;quot;)
+django.setup()
+
+from django.apps import apps
+from django.db import connection
+
+with connection.schema_editor(collect_sql=True) as editor:
+    for model in apps.get_models():
+        editor.create_model(model)
+
+print(&amp;quot;\n&amp;quot;.join(editor.collected_sql))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;打印出来比较乱，建议让AI重新整理一版，让 CONSTRAINT，FOREIGN KEY 都写到一起。更加方便一次性生效&lt;/p&gt;
+&lt;p&gt;吐槽下 django 这种 migration 真是不方便。明明新系统直接一次性建表就行。&lt;/p&gt;
+&lt;p&gt;建表之后要登记一下 migration 完毕 &lt;code&gt;python manage.py migrate --fake-initial&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;日期格式&lt;/h2&gt;
+&lt;p&gt;本来想配置里加&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;DATETIME_FORMAT = &amp;quot;c&amp;quot;   # ISO 8601
+DATE_FORMAT = &amp;quot;Y-m-d&amp;quot;
+TIME_FORMAT = &amp;quot;H:i:s&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;不过发现bugsink代码里日期格式是写死的。&lt;a href="https://github.com/bugsink/bugsink/pull/374"&gt;改起来太麻烦，作罢&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 06 May 2026 16:21:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-05-06:/2026/stdout-15</guid><category>stdout</category></item><item><title>浏览器通过WebGPU上做AI推理</title><link>https://blog.est.im/2026/stdout-14</link><description>&lt;p&gt;先说结论，在2026Q2这个时间点，通过浏览器webgpu 做 AI 不值得。&lt;/p&gt;
 &lt;p&gt;本来看&lt;a href="https://huggingface.co/spaces/Xenova/kokoro-web"&gt;官方demo&lt;/a&gt;跑得好好的，自己搓下来也觉得没啥，就一个小问题，fp32的模型有点大，最好换 q8 的。&lt;/p&gt;
 &lt;p&gt;q8的不能在 webgpu上跑，wasm也凑合用。原因是缺少一些矩阵乘法算子。开源库嘛，也理解。只是速度就慢了一点。&lt;/p&gt;
 &lt;p&gt;本来前几个月就这样平安无事，结果 transformers.js 升级到 v4，支持 q8 跑webgpu了，甚至 q4 q2 bitnet 这种高级货都支持了。满心欢喜的切过去，结果 webgpu 跟 wasm 一样慢？&lt;/p&gt;
@@ -741,22 +789,4 @@ tmux new-session -d -s opus &lt;br /&gt;
 &lt;p&gt;但现在有AI了，比如有个 GPL 的项目，有公司想用，但是又不想开源，他让AI重写一轮，算违反协议吗？&lt;/p&gt;
 &lt;p&gt;其实算不算侵权都不重要了。这公司 vibe coding 了一坨，回馈给开源社区，有人想接吗？&lt;/p&gt;
 &lt;p&gt;再仔细推演一下，有了vibe coding，开源软件还有意义吗？不是召唤几个agent就搓出来了？&lt;/p&gt;
-&lt;p&gt;这么一轮盘下来，AI完成了弑父 🤣 🤣 🤣 🤣 🤣 🤣 🤣 &lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 05 Mar 2026 15:10:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-03-05:/2026/stderr-17</guid><category>stderr</category></item><item><title>Configurable Intelligence</title><link>https://blog.est.im/2026/stdin-07</link><description>&lt;p&gt;无聊看了下 &lt;a href="https://news.ycombinator.com/item?id=47219387"&gt;Language Model Contains Personality Subnetworks &lt;/a&gt;，刚好A社也最近也写了篇&lt;a href="https://www.anthropic.com/research/persona-selection-model"&gt;The persona selection model&lt;/a&gt;，感觉现在讨论LLM的「人格」比较火&lt;/p&gt;
-&lt;p&gt;先说下这篇论文，它提出，可以做类似「脑前额叶切除」让AI屏蔽一部分人格，不需要 fine-tune，而且就算prompt指定其它人格也无济于事。&lt;/p&gt;
-&lt;p&gt;不过它搞出来的分类比较喜剧，用的是 MBTI 。测试集是一堆 YES/NO 二元分类&lt;/p&gt;
-&lt;p&gt;光说「人格」这种问题比较抽象，有哪些应用呢？很遗憾，我对此脑袋哐当一声没太多想法，还是AI提醒了我：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;因为是物理mask，所以 jailbreak 变得不太可能了&lt;/li&gt;
-&lt;li&gt;可以定向优化某些选项。它甚至在 &lt;code&gt;contra.py&lt;/code&gt; 里可以设置 mask_gamma  这个百分比。比如保持 100% 的好奇心，10%的拒绝率&lt;/li&gt;
-&lt;li&gt;避免「平均人」这个fallacy。这是让我震惊的&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;因为我始终觉得 MBTI 不太准，问AI业界里有啥更好的，AI说"Big Five" (OCEAN: Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism)。又了解到新东西了&lt;/p&gt;
-&lt;p&gt;具体怎么阉割模型呢？Wanda (Pruning by Weights and Activations)&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;给模型喂料，两种相反的，观察哪些区域激活，&lt;/li&gt;
-&lt;li&gt;把多种相反的交叉比对，形成一个「人格」，做成一个 mask&lt;/li&gt;
-&lt;li&gt;阉割，在下一轮计算的时候，把网络和mask相乘，符合「人设」的KEEP(1)，不符合的全部标记为  DELETE(0)&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;想一想这个后果还是比较可怕的。最坏的情况是给你一个美丽新世界。&lt;/p&gt;
-&lt;p&gt;用得好的话可以拿来从不同角度思辨，A社那个出发点我太懂了，现在 AI coding 只靠一根筋是不行的，得首先靠一个thinking模型出活，再用另一个模型来挑刺做review，然后用另一个人格来精简优化。可能上线之后还得站在别的部门的位置考虑优化迭代。最后形成一个多角色演进的loop，让代码达到某种平衡。&lt;/p&gt;
-&lt;p&gt;关于 jailbreak 的问题，chatgpt跟我来劲了，说paper里写的方法只能提高 consistency 而不能完全杜绝。跟它辩经了一会儿，达成共识，可以用论文的方法去 mask 一个小模型，用来保护大模型的安全。底线可以尽可能保证让大模型只能工作在指定的范围内。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 03 Mar 2026 05:03:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-03-03:/2026/stdin-07</guid><category>stdin</category></item></channel></rss>
+&lt;p&gt;这么一轮盘下来，AI完成了弑父 🤣 🤣 🤣 🤣 🤣 🤣 🤣 &lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 05 Mar 2026 15:10:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-03-05:/2026/stderr-17</guid><category>stderr</category></item></channel></rss>

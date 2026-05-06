@@ -54,6 +54,68 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-15"  rel="bookmark" >
+              <h2 class="card-title">Sentry 替代品 Bugsink 安装配置</h2>
+            </a>
+            <p class="card-text"><p>如果你像我一样需要一个线上异常 traceback 跟踪工具，又没法忍受 Kafka/ClickHouse/Snuba/Zookeeper 这一坨依赖，那么归根结底有<a href="https://www.bugsink.com/blog/glitchtip-vs-sentry-vs-bugsink/">三个选择</a>：</p>
+<ol>
+<li>sentry&lt;10.0 大概是2019年之前的版本，只依赖db/redis，太老</li>
+<li>glitchtip 除了错误跟踪也支持 uptime 等</li>
+<li>bugsink。不支持 Android/Java 的在线符号化（无 mapping 上传）</li>
+</ol>
+<p>最后选了 bugsink 。记录一下 <a href="https://www.bugsink.com/docs/local-install-using-virtualenv/">pip 安装部署</a>的坑</p>
+<p>下面的配置指 <code>bugsink-create-conf</code> 命令生成的 <code>bugsink_conf.py</code></p>
+<h2>避免安装 MySQLdb</h2>
+<p>docker编译环境一坨，所有用纯py的 <code>pymysql</code> 代替，在配置顶部写</p>
+<p><code>import pymysql; pymysql.install_as_MySQLdb()</code></p>
+<h2>CSRF</h2>
+<p>前面有一层 nginx 反代，然后一直报 CSRF 错误，因为 <code>X-Forwarded-Proto</code> 没值，所以 django csrf middleware 当成http给拦了。修改方法是配置里加一行</p>
+<p><code>SECURE_PROXY_SSL_HEADER = ("HTTP_ORIGIN", BUGSINK['BASE_URL'])</code></p>
+<h2>厂家遥测</h2>
+<p>配置里 <code>PHONEHOME = False</code></p>
+<h2>绕过 migration 建表</h2>
+<p>手上没pg，django高版本居然限制死了 mysql &gt; 8.0 无语。</p>
+<p>直接配置里加两句</p>
+<pre><code class="language-python">from django.db.backends.mysql.features import DatabaseFeatures
+DatabaseFeatures.minimum_database_version = None
+</code></pre>
+<h2>跳过 migration</h2>
+<p>我执行 <code>bugsink-manage migrate</code> 发现mysql 5.6 太老了。于是想办法直接建表而不是一步一步migrate。获得所有建表语句是：</p>
+<pre><code class="language-python">import os
+import django
+
+os.environ.setdefault(&quot;DJANGO_SETTINGS_MODULE&quot;, &quot;bugsink_conf&quot;)
+django.setup()
+
+from django.apps import apps
+from django.db import connection
+
+with connection.schema_editor(collect_sql=True) as editor:
+    for model in apps.get_models():
+        editor.create_model(model)
+
+print(&quot;\n&quot;.join(editor.collected_sql))
+</code></pre>
+<p>打印出来比较乱，建议让AI重新整理一版，让 CONSTRAINT，FOREIGN KEY 都写到一起。更加方便一次性生效</p>
+<p>吐槽下 django 这种 migration 真是不方便。明明新系统直接一次性建表就行。</p>
+<p>建表之后要登记一下 migration 完毕 <code>python manage.py migrate --fake-initial</code></p>
+<h2>日期格式</h2>
+<p>本来想配置里加</p>
+<pre><code>DATETIME_FORMAT = &quot;c&quot;   # ISO 8601
+DATE_FORMAT = &quot;Y-m-d&quot;
+TIME_FORMAT = &quot;H:i:s&quot;
+</code></pre>
+<p>不过发现bugsink代码里日期格式是写死的。<a href="https://github.com/bugsink/bugsink/pull/374">改起来太麻烦，作罢</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-05-06T16:21:00+08:00">2026-05-06</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-14"  rel="bookmark" >
               <h2 class="card-title">浏览器通过WebGPU上做AI推理</h2>
             </a>
@@ -1055,38 +1117,6 @@ tmux new-session -d -s opus <br />
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-03-05T15:10:00+08:00">2026-03-05</time></p>
 <p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2026/stdin-07"  rel="bookmark" >
-              <h2 class="card-title">Configurable Intelligence</h2>
-            </a>
-            <p class="card-text"><p>无聊看了下 <a href="https://news.ycombinator.com/item?id=47219387">Language Model Contains Personality Subnetworks </a>，刚好A社也最近也写了篇<a href="https://www.anthropic.com/research/persona-selection-model">The persona selection model</a>，感觉现在讨论LLM的「人格」比较火</p>
-<p>先说下这篇论文，它提出，可以做类似「脑前额叶切除」让AI屏蔽一部分人格，不需要 fine-tune，而且就算prompt指定其它人格也无济于事。</p>
-<p>不过它搞出来的分类比较喜剧，用的是 MBTI 。测试集是一堆 YES/NO 二元分类</p>
-<p>光说「人格」这种问题比较抽象，有哪些应用呢？很遗憾，我对此脑袋哐当一声没太多想法，还是AI提醒了我：</p>
-<ol>
-<li>因为是物理mask，所以 jailbreak 变得不太可能了</li>
-<li>可以定向优化某些选项。它甚至在 <code>contra.py</code> 里可以设置 mask_gamma  这个百分比。比如保持 100% 的好奇心，10%的拒绝率</li>
-<li>避免「平均人」这个fallacy。这是让我震惊的</li>
-</ol>
-<p>因为我始终觉得 MBTI 不太准，问AI业界里有啥更好的，AI说"Big Five" (OCEAN: Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism)。又了解到新东西了</p>
-<p>具体怎么阉割模型呢？Wanda (Pruning by Weights and Activations)</p>
-<ol>
-<li>给模型喂料，两种相反的，观察哪些区域激活，</li>
-<li>把多种相反的交叉比对，形成一个「人格」，做成一个 mask</li>
-<li>阉割，在下一轮计算的时候，把网络和mask相乘，符合「人设」的KEEP(1)，不符合的全部标记为  DELETE(0)</li>
-</ol>
-<p>想一想这个后果还是比较可怕的。最坏的情况是给你一个美丽新世界。</p>
-<p>用得好的话可以拿来从不同角度思辨，A社那个出发点我太懂了，现在 AI coding 只靠一根筋是不行的，得首先靠一个thinking模型出活，再用另一个模型来挑刺做review，然后用另一个人格来精简优化。可能上线之后还得站在别的部门的位置考虑优化迭代。最后形成一个多角色演进的loop，让代码达到某种平衡。</p>
-<p>关于 jailbreak 的问题，chatgpt跟我来劲了，说paper里写的方法只能提高 consistency 而不能完全杜绝。跟它辩经了一会儿，达成共识，可以用论文的方法去 mask 一个小模型，用来保护大模型的安全。底线可以尽可能保证让大模型只能工作在指定的范围内。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2026-03-03T05:03:00+08:00">2026-03-03</time></p>
-<p>stdin</p>            </div>
           </article>
         </div>
 

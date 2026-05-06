@@ -54,6 +54,68 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-15"  rel="bookmark" >
+              <h2 class="card-title">Sentry 替代品 Bugsink 安装配置</h2>
+            </a>
+            <p class="card-text"><p>如果你像我一样需要一个线上异常 traceback 跟踪工具，又没法忍受 Kafka/ClickHouse/Snuba/Zookeeper 这一坨依赖，那么归根结底有<a href="https://www.bugsink.com/blog/glitchtip-vs-sentry-vs-bugsink/">三个选择</a>：</p>
+<ol>
+<li>sentry&lt;10.0 大概是2019年之前的版本，只依赖db/redis，太老</li>
+<li>glitchtip 除了错误跟踪也支持 uptime 等</li>
+<li>bugsink。不支持 Android/Java 的在线符号化（无 mapping 上传）</li>
+</ol>
+<p>最后选了 bugsink 。记录一下 <a href="https://www.bugsink.com/docs/local-install-using-virtualenv/">pip 安装部署</a>的坑</p>
+<p>下面的配置指 <code>bugsink-create-conf</code> 命令生成的 <code>bugsink_conf.py</code></p>
+<h2>避免安装 MySQLdb</h2>
+<p>docker编译环境一坨，所有用纯py的 <code>pymysql</code> 代替，在配置顶部写</p>
+<p><code>import pymysql; pymysql.install_as_MySQLdb()</code></p>
+<h2>CSRF</h2>
+<p>前面有一层 nginx 反代，然后一直报 CSRF 错误，因为 <code>X-Forwarded-Proto</code> 没值，所以 django csrf middleware 当成http给拦了。修改方法是配置里加一行</p>
+<p><code>SECURE_PROXY_SSL_HEADER = ("HTTP_ORIGIN", BUGSINK['BASE_URL'])</code></p>
+<h2>厂家遥测</h2>
+<p>配置里 <code>PHONEHOME = False</code></p>
+<h2>绕过 migration 建表</h2>
+<p>手上没pg，django高版本居然限制死了 mysql &gt; 8.0 无语。</p>
+<p>直接配置里加两句</p>
+<pre><code class="language-python">from django.db.backends.mysql.features import DatabaseFeatures
+DatabaseFeatures.minimum_database_version = None
+</code></pre>
+<h2>跳过 migration</h2>
+<p>我执行 <code>bugsink-manage migrate</code> 发现mysql 5.6 太老了。于是想办法直接建表而不是一步一步migrate。获得所有建表语句是：</p>
+<pre><code class="language-python">import os
+import django
+
+os.environ.setdefault(&quot;DJANGO_SETTINGS_MODULE&quot;, &quot;bugsink_conf&quot;)
+django.setup()
+
+from django.apps import apps
+from django.db import connection
+
+with connection.schema_editor(collect_sql=True) as editor:
+    for model in apps.get_models():
+        editor.create_model(model)
+
+print(&quot;\n&quot;.join(editor.collected_sql))
+</code></pre>
+<p>打印出来比较乱，建议让AI重新整理一版，让 CONSTRAINT，FOREIGN KEY 都写到一起。更加方便一次性生效</p>
+<p>吐槽下 django 这种 migration 真是不方便。明明新系统直接一次性建表就行。</p>
+<p>建表之后要登记一下 migration 完毕 <code>python manage.py migrate --fake-initial</code></p>
+<h2>日期格式</h2>
+<p>本来想配置里加</p>
+<pre><code>DATETIME_FORMAT = &quot;c&quot;   # ISO 8601
+DATE_FORMAT = &quot;Y-m-d&quot;
+TIME_FORMAT = &quot;H:i:s&quot;
+</code></pre>
+<p>不过发现bugsink代码里日期格式是写死的。<a href="https://github.com/bugsink/bugsink/pull/374">改起来太麻烦，作罢</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-05-06T16:21:00+08:00">2026-05-06</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-14"  rel="bookmark" >
               <h2 class="card-title">浏览器通过WebGPU上做AI推理</h2>
             </a>
@@ -2657,34 +2719,6 @@ Win+R 敲入：<br />
 <p>老夫当年给 <code>C:</code> 装了个最慢的SSD，失策。去年（2023）那一波M.2降价潮一直等等结果错过了，拍断大腿追悔莫及。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-06-14T22:50:00+08:00">2024-06-14</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2024/stdout-07"  rel="bookmark" >
-              <h2 class="card-title">从 Leanote 迁移到 Obsidian</h2>
-            </a>
-            <p class="card-text"><p>差不多积累了<a href="https://www.v2ex.com/t/133479">10年</a>的笔记，因为软件开发商跑路去做 2B 了，这玩意也没人维护了。换 Obsidian</p>
-<p>Leanote 不支持导出 <code>.md</code> 但是它自己的格式就是 json，转换一下很简单。</p>
-<ol>
-<li>把一个目录下的笔记批量导出为 Leanote 格式，比如导出到 <code>/tmp/folder1</code></li>
-<li>执行Python代码<br />
-<code>import json
-    dir = '/tmp/folder1'
-    for n in os.listdir(dir):
-    if not n.endswith('.leanote'): continue
-    with open(f"{dir}{n.replace('.leanote', '.md')}", "w") as f2, open(dir+n) as f1:
-        f2.write(json.load(f1)['notes'][0]['content'])
-    os.remove(dir+n)</code></li>
-<li>你会发现该目录下的 <code>.leanote</code> 都变成了 <code>.md</code>。拖拽到 Obsidian 即可</li>
-</ol>
-<p>希望对搜到这篇文章的人有所帮助。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-06-10T22:21:00+08:00">2024-06-10</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
