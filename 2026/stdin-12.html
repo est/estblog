@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Instruct 的意义 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Instruct 的意义" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stdin-12" />
+    <meta property="og:url" content="https://blog.est.im/2026/stdin-12">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Instruct 的意义">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Instruct 的意义</h2>
+    <p class="post-date">Posted <time datetime="2026-05-08T15:00:00+08:00">2026-05-08</time> | <span>stdin</span></p>
+  </header>
+
+  
+  <p>回顾AI这一波潮流，NLP CV ML DL 一路到 gpt2 gpt3 我都勉强能看懂怎么个事。</p>
+<p>ChatGPT 就完全不懂了，剩下的只有惊叹。</p>
+<p>但是 o1 之后感觉又能看懂了，reasoning无非是每个受过正规教育的学生都会的，面对答题之前要打草稿；sora之类的VLA world model无非是要突破文字限制，投入 embody的更多传感器；其余的多模态什么的无非琴棋书画玩一玩</p>
+<p>感觉 chatgpt 之前是scaling law量变，之后也是正常能力增强的量变，只有 gpt-3.5 本尊是前无古人后无来者的质变。</p>
+<p>拆开去看，核心就是 RLHF？ 我也尝试去理解，媒体宣传和网络报道都照搬“带人类偏好”</p>
+<p>为毛带个人类偏好，模型的能力就会产生翻天覆地的飞跃？</p>
+<p>这个问题我也分别问了AI</p>
+<blockquote>
+<p>qwen-3.6-plus： 意图理解被激活：从模糊指令中推断真实需求，长度、风格、结构、安全性有了"方向盘"，减少"知道但说错"的概率<br />
+deepseek-v4：让模型学会了“拒绝”自己最擅长的东西——无休止、无方向的预测。<br />
+ChatGPT： 不是礼貌，也不死让模型更符合人类偏好，而是目标函数改变 导致的行为相变（phase transition），让模型学会 什么样的输出，在长期交互中会被认为是成功完成任务<br />
+Gemini：在没有 RLHF 之前，大模型本质上是一个极其强大的平庸文本接龙机器。RLHF 的介入，硬生生地改变了模型的“目标函数”</p>
+</blockquote>
+<p>还是很抽象，有点隔靴搔痒的味道</p>
+<p>直到今天，我偶然<a href="https://news.ycombinator.com/item?id=48051562">刷到</a>一篇文章《<a href="https://bsuh.bearblog.dev/agents-need-control-flow/">agents need control flow, not more prompts</a>》，感觉有点豁然开朗</p>
+<blockquote>
+<p>If you’ve ever resorted to MANDATORY or DO NOT SKIP, you’ve hit the ceiling of prompting.</p>
+</blockquote>
+<p>如果跟AI下指令 “务必” “绝对禁止” 这类的话，说明你已经没招了，已经跟AI较劲到天花板了。</p>
+<p>嘿嘿。</p>
+<p>但是等等！我突然想到，哪个人类tmd会在日常这么说话呢？你会写个blog，然后回顾自己某个经历踩坑历程，写 MANDATORY 或者 DO NOT SKIP 这种字样吗？  书籍，论文，wikipedia，reddit等等，包括 <em>Common Crawl</em> 应该都找不到这样的原话。如果 gpt3 来响应这句话，就跟 stochasic parrot一样会乱回复。</p>
+<p>所以AI的“指令遵循”能力一定是在 post-train 获得的。</p>
+<p>经过一番搜索查证，感觉有点眉目了。</p>
+<p>模型虽然懂  must / shall / required / do not / never / ensure / prerequisite 这类结构 ，原理和根本上来说，这些指令只是 wishful thinking，你最好祈祷你prompt这一块恰好在 post-train 被针对性强化过？即便搭配一大堆杂七杂八的知识，怎么在没见过的组合里区分哪些要，哪些不要？</p>
+<p>也就是说，你直接让foundation模型去根据一定「指令」去检索 predict next token，大概率要翻车，或者综合来看回答质量有高有低，最终回归平庸</p>
+<p>最主要的点，如果某个prompt恰好在 pretrain 没人这样说过，post-train 也没针对性训练过，翻车的概率会大很多？比如一个 2026年新出来的新事物，你指挥一个2024年的模型去这那的，他幻觉的可能性会大大提高。因为AI它没见过啊，只能连蒙带猜</p>
+<p>模型vendor或者第三方有没有对这些 指令遵循 的可靠程度有一种科学的评价？？？用户预感要翻车，或者翻车后，有没有办法回归这些 eval 去看下是否符合“出厂设定” ？还是说业界几乎都是 凭感觉 ？我想，根据草台班子理论，大概率是无。</p>
+<p>所以 instruct 的意义就在此。它等于是提前预演了很多Assitant和 User 的对话场景。即便某些场景没有预案，多个说胡话的鹦鹉，在合理的流程控制下，可能做出正确的事和得到可靠的结果。reasoning 模型就是这么来的。</p>
+<p>“意图对齐” 这一点被sama过度包装营销了。原理其实想明白了很简单：</p>
+<p>你能扒下来的普通文本，都是固定人称的。</p>
+<p>InstructGPT 把 知识 拆解成了一问一答，有了人称和「指令跟随」的痕迹。人类才能用熟悉的方式从模型嘴里提取想要的知识或者能力。</p>
+<p>这就是我觉得 instruct 这一套最大的意义。前人的corpus虽然庞大，但是没法直接利用，需要带入不同的人称identity和视角去一步一步理解还原全貌。等于是个重新整理和学习的过程</p>
+<p>Assistant永远不知道 User 会从什么刁钻的角度去提问，所以得提前在 post-train 去自己多推演准备好。</p>
+<p>人们惊叹AI的能力，实际上是AI在某个corpus角落或者post-train的场景里，把前人的智慧给你演出了一遍而已。</p>
+<p>而且这个演出及其精准，恰好弥补了 User 在当时状态的某个盲区。</p>
+<p>这一幕演出迷倒了大多数人，但是很少有人去想明白幕后是怎么来的。</p>
+<p>还有一个关键的，人对“满意”的感受实际上是个非线性的。gpt-3那种模型，你遇到几个不满意的回答，就没耐心等到它超神发挥就已经关闭对话框了。InstructGPT学会了关键的一招，能把大多数场面话都处理得相当漂亮，极大的降低了AI的接受度门槛。</p>
+<p>AI 实际上懂的很多，会的也很多，但真正能转换为生产力，得看如何把 User 不知道不明白的前人的智慧，掰开揉碎，搬运，再组合，完美嵌入到 User 手上的任务中。谁能更高效精准的完成这一过程，谁就是更厉害的AI。</p>
+<p>每个 User 遇到的问题和情况不一样，直接去pre-train的模型是检索不出来这个能力的，得模型去多排练，多准备，多角度思考，这个能力才能在真正被需要的时候立马派上用场。</p>
+<p>所以 Instruct 是一个拒绝死记硬背的故事。</p>
+<hr />
+<p>本文除了 引用部分全手搓。有不对的地方欢迎批评。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>
