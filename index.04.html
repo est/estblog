@@ -54,6 +54,64 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2025/stdout-15"  rel="bookmark" >
+              <h2 class="card-title">gRPC Python, AsyncIO and multiprocess</h2>
+            </a>
+            <p class="card-text"><p>I am torn about writing this. AsyncIO in Python is always a mess, protobuf is another, gRPC is the worst of them all because of all that boilerplate code that does nothing but trouble.</p>
+<p>The task I am facing is integrating a mesh API <strong>server</strong> based on our internal codebase. </p>
+<h2>non-gRPC options</h2>
+<p>I mean, gRPC is just h2+protobuf, how hard could it be? Even <a href="https://uwsgi-docs.readthedocs.io/en/latest/SPDY.html">uWSGI had h2</a> from decades ago</p>
+<p>Turns out the options are quite limited. h2 in uWSGI was major versions behind, SPDYv3 never took off. gRPC and h2 are related but different because the frames are marked and handled differently.</p>
+<p>So there's either <code>hypercorn</code> or fallback to gRPC. To avoid further mess I decided to stick with gRPC</p>
+<h2>infectious async/await</h2>
+<p>Now I face another challenge: The existing business logic is written in async/await style (cue FastAPI fad)</p>
+<p>I carefully studied the <a href="https://github.com/grpc/grpc/blob/master/examples/python/helloworld/async_greeter_server_with_graceful_shutdown.py">gRPC async hello world example</a></p>
+<p>Everything ran great, except the notorious GIL, my gRPC server runs but only on one single CPU. </p>
+<h2>multiprocess</h2>
+<p>Old school solution to GIL: spawn many processes. Given a 1:1 map to worker CPU. Easy? There's an <a href="https://github.com/grpc/grpc/tree/master/examples/python/multiprocessing">official <code>multiprocessing</code> example</a></p>
+<p>It worked... until it didn't. The major selling point of h2 is connection multiplexing, one TCP connection to serve all concurrency. And our mesh client is so good at this, only one worker consumes 100% of one CPU and the rest simply idle. 🤣</p>
+<h2>SO_REUSEPORT</h2>
+<p>I also tried to implement a prefork worker on my own. Let's get rid of master because <s>political-correctness</s> we have <code>SO_REUSEPORT</code> already.</p>
+<p>Unfortunately it didn't work at all, because of h2's multiplexing nature. The kernel won't schedule requests if there's only one single connection.</p>
+<h2>ProcessPoolExecutor</h2>
+<p>I looked closely and found how gRPC inits:</p>
+<p><code>grpc.server(futures.ThreadPoolExecutor(max_workers=10))</code></p>
+<p>Maybe swap it with <code>ProcessPoolExecutor()</code> ?</p>
+<p>Nope, server went dead with a timeout. Don't have time to look into C/C++ details. Nope.</p>
+<p>It seems gRPC only allows <code>ThreadPoolExecutor()</code>.</p>
+<p>Why does Google even allow it as a parameter then?</p>
+<h2>The apply_async() hallucination</h2>
+<p>Out of despair, next I asked ChatGPT. The advanced AI model said: just use <code>multiprocessing</code> in your invokes</p>
+<p>Yeah why not. So how do I run <code>async</code> in <code>multiprocessing</code>?</p>
+<p>ChatGPT hallucinated: use <a href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.pool.Pool.apply_async"><code>apply_async</code></a>. I initially believed that shit only to find it means the func will return an AsyncResult object, not running some <code>async/await</code> code. btw, I found the <code>.apply()</code> is just a shortcut for <code>.apply_async().get()</code></p>
+<h2>Putting it together</h2>
+<p>I got the mess to work eventually.</p>
+<ol>
+<li>Create a normal gRPC server with <code>add_generic_rpc_handlers</code> and stuff</li>
+<li>Create a <code>pool = ProcessPoolExecutor(...)</code> before the <code>unary_unary_rpc_method_handler</code>, with an <code>initializer</code> that spawns a global <code>loop = asyncio.new_event_loop()</code>.  <br />
+It had to be global because <code>concurrent.futures</code> only allows it this way</li>
+<li>Run <code>loop.run_until_complete()</code> inside <code>pool.submit()</code></li>
+</ol>
+<h2>lessons learned</h2>
+<p>If you aren't a try-hard:</p>
+<ul>
+<li>
+<p>avoid async</p>
+</li>
+<li>
+<p>avoid gRPC</p>
+</li>
+</ul></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2025-11-04T10:46:00+08:00">2025-11-04</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2025/stderr-07"  rel="bookmark" >
               <h2 class="card-title">特立独行的中文</h2>
             </a>
@@ -1164,28 +1222,6 @@ print(my_func(httpx.get, 'https://est.im'))
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2025-05-14T14:35:00+08:00">2025-05-14</time></p>
 <p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2025/stdin-05"  rel="bookmark" >
-              <h2 class="card-title">听 彭罗斯 吹了90分钟波函数的坍塌</h2>
-            </a>
-            <p class="card-text"><p><a href="https://www.youtube.com/watch?v=sGm505TFMbU">https://www.youtube.com/watch?v=sGm505TFMbU</a></p>
-<p>Roger Penrose:  I don't believe it is consciousness that collapses the wave function, instead it's the collapse of the wave functions that produces consciousness</p>
-<p>这句话很美妙啊。一下子把唯物和唯心给联系起来了。</p>
-<p>我一直觉得，人的意识，就是因果律的推演。这个推演明显是一个离散的，有清晰步骤的，quantized 的和决定论的。</p>
-<p>人的潜意识和直觉可能是概率的。</p>
-<p>看完这个 90分钟的访谈，我大概明白为啥 量子力学 和 神棍 经常联系在一起了。一切都源于这个薛定谔方程 和 “观察者”</p>
-<p>观察者不是一个真实存在的定义。你甚至无法严格定义 观察。欧美神棍一般喜欢往三位一体，意识，灵性上面靠。感觉物理世界是混沌的，一下子有了光，状态就坍缩了。哈哈哈。</p>
-<p>国内的话 遇事不决，量子力学。民科重灾区。甚至还有量子佛学这种离谱的。</p>
-<p>他还写了一本书，Fashion , Faith and Fantacy，fashion就是弦论，faith 就是量子力学。fantacy是宇宙膨胀理论。哈！</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2025-04-30T16:31:00+08:00">2025-04-30</time></p>
-<p>stdin</p>            </div>
           </article>
         </div>
 
