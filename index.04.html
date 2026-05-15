@@ -54,6 +54,30 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2025/stdin-11"  rel="bookmark" >
+              <h2 class="card-title">一个叛逆大爷的童年</h2>
+            </a>
+            <p class="card-text"><p>偶然刷到这么一个人的童年：</p>
+<ol>
+<li>十分讨厌传统文化</li>
+<li>上小学喜欢看小说。比如 三国 西游 等。怕被老师抓？老师过来，用一本书盖住。</li>
+<li>因为老师苛刻，打学生。所以10岁逃学，不敢回家；山谷里流浪三天，最后找到发现是兜圈子，离家大概才8里</li>
+<li>13岁忤逆父母。<details><summary>离家出走！</summary>有一件事我记得特别清楚。在我大约１３岁的时候，我父亲请了许多客人到家里；我们两人当着他们的面争论起来。父亲当众骂我懒而无用。这一下激怒了我。我回骂了他，接着就离家出走。我母亲追着我想劝我回去。父亲也追上来，边骂边命令我回去。我跑到一个池塘边，并且威胁说如果他再走近一步，我就要跳进水里。在这种情况下，停止内战的要求和反要求都提出来了。我父亲坚持要我道歉并磕头认错。我同意如果他答应不打我，我可以跪一只腿磕头。战争就这样结束了。</details></li>
+<li>认为皇帝不是坏人，甚至不反对帝制，都是手下干坏事？</li>
+<li>从小大量阅读，知道拿破仑、叶卡德琳娜女皇、彼得大帝、威灵顿、格拉斯顿、卢梭、孟德斯鸠和林肯</li>
+<li>上大学想出国，学法语。还认识一位在加州加入了Ku Klux Klan的学长。</li>
+</ol>
+<p>奇妙的经历，估计好多人感觉都有<a href="http://www.mzdbl.cn/gushi/maozedongzishu/maozedongzishu-2.html">相似之处</a>？ 🤣</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2025-11-06T17:53:00+08:00">2025-11-06</time></p>
+<p>stdin</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2025/stdout-15"  rel="bookmark" >
               <h2 class="card-title">gRPC Python, AsyncIO and multiprocess</h2>
             </a>
@@ -1139,89 +1163,6 @@ But finally, CBOR is fine! The implementations are good and it's widely used. Us
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2025-06-18T13:55:00+08:00">2025-06-18</time></p>
 <p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2025/stdout-04"  rel="bookmark" >
-              <h2 class="card-title">A single Python function for both async/sync</h2>
-            </a>
-            <p class="card-text"><p>Scenario: I often need to write Python functions like:</p>
-<ol>
-<li>take some parameters and format them</li>
-<li>call an API with the formatted parameters</li>
-<li>parse the result and return chosen values</li>
-</ol>
-<p>There's a huge problem in step #2.</p>
-<p>In today's Python world, troubles arise because async/await are "infectious", In practice this function is splitted - like in Python stdlib, where a vanilla <code>method</code> and its async counterpart <code>amethod</code> often come in pairs. Package authors scramble to provide sync transport and another async transport. I discovered this ugly fact while reading the source code of<code>redis-py</code>, <code>httpx</code> and <code>elasticsearch-py</code>.  Duplicate and lookalike code was always written twice. All it takes is some random async IOs in one place and your code would be forced to change forever.</p>
-<p>Is there a way to write the function in one place, but callable both with async and without?</p>
-<p>I pondered this question for ages, and today I stumbled upon something interesting:</p>
-<pre><code class="language-python">
-  def s1():
-    return asyncio.sleep(1)
-
-  async def s2():
-    return await async.sleep(1)
-</code></pre>
-<p>There's virtually no difference when calling <code>await s1()</code> and <code>await s2()</code></p>
-<p>I vaguely remembered how Python’s coroutines were designed, and after some tinkering, I came up with this snippet:</p>
-<pre><code class="language-python">
-import asyncio, types, functools
-
-def aa(f):
-    &quot;&quot;&quot;
-    make a function both awaitable and sync
-    idk how to property name this. anti-asyncio (aa) maybe?
-    &quot;&quot;&quot;
-    @functools.wraps(f)
-    def wrapper(func, *args, **kwargs):
-        if asyncio.iscoroutinefunction(func):
-            return types.coroutine(f)(func, *args, **kwargs)
-        else:
-            async def afunc(*a, **kw):
-                return func(*a, **kw)
-            g = types.coroutine(f)(afunc, *args, **kwargs)
-            try:
-                while True: next(g)
-            except StopIteration as ex:
-                return ex.value
-    return wrapper
-
-
-@aa
-def my_func(func, *args, **kwargs):
-    # prepare args, kwargs here
-    # add a prefix `yield from` everywhere, for either sync/async
-    result = yield from func(*args, **kwargs)
-    # handle the result here
-    return result
-
-
-import httpx
-
-# async
-async def main():
-    # the same as `await httpx.AsyncClient(timeout=3).get('https://est.im')`
-    print(await my_func(httpx.AsyncClient(timeout=3).get, 'https://est.im/'))
-asyncio.run(main())
-
-
-# sync
-print(my_func(httpx.get, 'https://est.im'))
-# works the same as httpx.get('https://est.im')
-
-</code></pre>
-<p>The above shows a single function called <code>my_func</code>, dependency injection of an HTTP <code>get</code>  call of either sync/async, allows for customizable  pre- and post-processing logic, and returns the result with clean syntax.</p>
-<p><strike>The only mental tax: inside <code>my_func</code>, you have to replace all <code>await</code> keyword with `yield from.</strike></p>
-<p>Update 2025-05-16: The only mental tax: add a <code>yield from</code> prefix for every <code>func</code>calls for IO or API, either sync or async.</p>
-<p>It solves all problems for my scenario and I’ve yet to find a simpler solution. If you have a good name for the <code>@aa</code> decorator please comment!</p>
-<p>A sidenote, I am not sure if this method affects async schedulers and blocks something maybe? Like the <code>while True</code> might be a new kind of GIL. Also i haven't looked at problems with contextvars.</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2025-05-14T14:35:00+08:00">2025-05-14</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 

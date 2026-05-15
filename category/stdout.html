@@ -54,6 +54,39 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-16"  rel="bookmark" >
+              <h2 class="card-title">SVG 时钟</h2>
+            </a>
+            <p class="card-text"><p>一个奇怪的想法： GitHub Profile README、邮件签名等没有JS的情况下，如何展示当前时间，并且最好可以跳动？</p>
+<p>想来想去，纯 SVG 实现。于是呼来AI：</p>
+<ul>
+<li><a href="https://lab.est.im/svg-clock/codex-5.3.mod.svg">codex-5.3.mod.svg</a></li>
+<li><a href="https://lab.est.im/svg-clock/codex-5.3.new.svg">codex-5.3.new.svg</a></li>
+<li><a href="https://lab.est.im/svg-clock/gemini-3.1-pro-thinking.new.svg">gemini-3.1-pro-thinking.new.svg</a></li>
+<li><a href="https://lab.est.im/svg-clock/gemini-3.1-pro.new.svg">gemini-3.1-pro.new.svg</a></li>
+<li><a href="https://lab.est.im/svg-clock/gemini-3.mod.svg">gemini-3.mod.svg</a></li>
+<li><a href="https://lab.est.im/svg-clock/mimo-2.5-pro.new.svg">mimo-2.5-pro.new.svg</a></li>
+<li><a href="https://lab.est.im/svg-clock/opus-4.6.mod.svg">opus-4.6.mod.svg</a></li>
+<li><a href="https://lab.est.im/svg-clock/opus-4.6.thinking.new.svg">opus-4.6.thinking.new.svg</a></li>
+</ul>
+<p>其中大多数AI写得都很平庸。采用堆一大堆 <code>&lt;text&gt;</code> 。gemini 惊艳，它用了滑动胶片法（Filmstrip）</p>
+<blockquote>
+<p>为了彻底解决冗余和跨天 Bug，我们可以采用“滑动胶片”的设计思维：将单独的数字拼成一条长长的文本带（胶片），外面罩上一个双位宽度的剪裁窗口（<clipPath>）。时间流逝时，整个文本带像胶片一样通过 transform: translateX 整体向左跳格（使用 steps() 级联函数）。<br />
+这样优化后，我们不仅消除了长达几十行的冗余标签，还将“时、分、秒”整合成三个独立的数字流，顺手统一了时间同步的计算公式（全部共享同一个 -23906s 延迟）。</p>
+</blockquote>
+<p>那么最后的效果便是，现在为您报时：</p>
+<p><a href="https://t.est.im/clock.svg">https://t.est.im/clock.svg</a></p>
+<p><img alt="" src="https://t.est.im/clock.svg" /></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-05-15T15:28:00+08:00">2026-05-15</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-15"  rel="bookmark" >
               <h2 class="card-title">Sentry 替代品 Bugsink 安装配置</h2>
             </a>
@@ -2692,39 +2725,6 @@ p.terminate()
 <p>想了下好像也搞复杂了。要不直接跑一个 <code>sh -c "blah.sh &amp;"</code> 算了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-06-21T09:30:00+08:00">2024-06-21</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2024/stdout-08"  rel="bookmark" >
-              <h2 class="card-title">如何删除 C:\Windows\WinSxS 文件</h2>
-            </a>
-            <p class="card-text"><p>天气热得心慌，看Win10不爽，决定删几个文件玩玩</p>
-<ol>
-<li>首先你需要以 <code>SYSTEM</code> 用户启动 <code>cmd.exe</code><br />
-Win+R 敲入：<br />
-<code>"\\live.sysinternals.com@SSL\DavWWWRoot\tools\PsExec.exe" -i -s cmd.exe</code><br />
-回车。确认当前身份敲入 <code>whoami</code></li>
-<li>夺权：<code>takeown /F "C:\Windows\WinSxS\Backup" /A /R /D Y</code></li>
-<li>授权：<code>cacls "C:\Windows\WinSxS\Backup" /T /G SYSTEM:F /C</code></li>
-<li>开删：<code>rd /s /q "C:\Windows\WinSxS\Backup"</code></li>
-</ol>
-<p>爽！</p>
-<p>当然，你也可以让系统代替你清理：</p>
-<p><code>Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase</code></p>
-<p>很老的磁盘清理工具 <code>cleanmgr.exe</code>  也可以试试，删不要的程序 <code>appwiz.cpl</code></p>
-<p>老黄家的  DXCache 也十分让人不解。这破玩意还存2个地方：</p>
-<ol>
-<li><code>%LOCALAPPDATA%\NVIDIA\</code></li>
-<li><code>%APPDATA%\NVIDIA</code></li>
-</ol>
-<p>老夫当年给 <code>C:</code> 装了个最慢的SSD，失策。去年（2023）那一波M.2降价潮一直等等结果错过了，拍断大腿追悔莫及。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-06-14T22:50:00+08:00">2024-06-14</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

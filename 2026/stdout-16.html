@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SVG 时钟 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="SVG 时钟" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stdout-16" />
+    <meta property="og:url" content="https://blog.est.im/2026/stdout-16">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="SVG 时钟">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">SVG 时钟</h2>
+    <p class="post-date">Posted <time datetime="2026-05-15T15:28:00+08:00">2026-05-15</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>一个奇怪的想法： GitHub Profile README、邮件签名等没有JS的情况下，如何展示当前时间，并且最好可以跳动？</p>
+<p>想来想去，纯 SVG 实现。于是呼来AI：</p>
+<ul>
+<li><a href="https://lab.est.im/svg-clock/codex-5.3.mod.svg">codex-5.3.mod.svg</a></li>
+<li><a href="https://lab.est.im/svg-clock/codex-5.3.new.svg">codex-5.3.new.svg</a></li>
+<li><a href="https://lab.est.im/svg-clock/gemini-3.1-pro-thinking.new.svg">gemini-3.1-pro-thinking.new.svg</a></li>
+<li><a href="https://lab.est.im/svg-clock/gemini-3.1-pro.new.svg">gemini-3.1-pro.new.svg</a></li>
+<li><a href="https://lab.est.im/svg-clock/gemini-3.mod.svg">gemini-3.mod.svg</a></li>
+<li><a href="https://lab.est.im/svg-clock/mimo-2.5-pro.new.svg">mimo-2.5-pro.new.svg</a></li>
+<li><a href="https://lab.est.im/svg-clock/opus-4.6.mod.svg">opus-4.6.mod.svg</a></li>
+<li><a href="https://lab.est.im/svg-clock/opus-4.6.thinking.new.svg">opus-4.6.thinking.new.svg</a></li>
+</ul>
+<p>其中大多数AI写得都很平庸。采用堆一大堆 <code>&lt;text&gt;</code> 。gemini 惊艳，它用了滑动胶片法（Filmstrip）</p>
+<blockquote>
+<p>为了彻底解决冗余和跨天 Bug，我们可以采用“滑动胶片”的设计思维：将单独的数字拼成一条长长的文本带（胶片），外面罩上一个双位宽度的剪裁窗口（<clipPath>）。时间流逝时，整个文本带像胶片一样通过 transform: translateX 整体向左跳格（使用 steps() 级联函数）。<br />
+这样优化后，我们不仅消除了长达几十行的冗余标签，还将“时、分、秒”整合成三个独立的数字流，顺手统一了时间同步的计算公式（全部共享同一个 -23906s 延迟）。</p>
+</blockquote>
+<p>那么最后的效果便是，现在为您报时：</p>
+<p><a href="https://t.est.im/clock.svg">https://t.est.im/clock.svg</a></p>
+<p><img alt="" src="https://t.est.im/clock.svg" /></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>
