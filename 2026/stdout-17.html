@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FSRS核心字段 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="FSRS核心字段" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stdout-17" />
+    <meta property="og:url" content="https://blog.est.im/2026/stdout-17">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="FSRS核心字段">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">FSRS核心字段</h2>
+    <p class="post-date">Posted <time datetime="2026-05-17T09:53:00+08:00">2026-05-17</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>无聊看了下 FSRS (Free Spaced Repetition Scheduler) ，想看它怎么存数据的</p>
+<h2>Card — 卡片当前状态</h2>
+<p>表结构：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>due</code></td>
+<td>Date</td>
+<td>下次复习时间</td>
+</tr>
+<tr>
+<td><code>stability</code></td>
+<td>float</td>
+<td>记忆稳定性（R=90% 时的间隔天数）</td>
+</tr>
+<tr>
+<td><code>difficulty</code></td>
+<td>float</td>
+<td>难度，范围 [1, 10]</td>
+</tr>
+<tr>
+<td><code>state</code></td>
+<td>int</td>
+<td>状态机：New=0, Learning=1, Review=2, Relearning=3</td>
+</tr>
+<tr>
+<td><code>learning_steps</code></td>
+<td>int</td>
+<td>当前学习步骤 index</td>
+</tr>
+<tr>
+<td><code>scheduled_days</code></td>
+<td>int</td>
+<td>本次调度天数</td>
+</tr>
+<tr>
+<td><code>reps</code></td>
+<td>int</td>
+<td>总复习次数</td>
+</tr>
+<tr>
+<td><code>lapses</code></td>
+<td>int</td>
+<td>遗忘次数</td>
+</tr>
+<tr>
+<td><code>last_review</code></td>
+<td>Date?</td>
+<td>上次复习时间</td>
+</tr>
+</tbody>
+</table>
+<h2>核心字段详解</h2>
+<h3>1. state</h3>
+<p>状态机，取值</p>
+<ul>
+<li>New=0</li>
+<li>Learning=1</li>
+<li>Review=2</li>
+<li>Relearning=3</li>
+</ul>
+<pre><code>         Again          Good/Hard/Easy
+New ──────────→ Learning ──────────────→ Review
+                  ↑  │                      │
+                  │  │ Again (learning步内)  │
+                  │  └──────────────────────┘
+                  │                           │
+                  │      Again (遗忘)         │
+                  └─────── Relearning ←──────┘
+</code></pre>
+<p><code>state</code> 决定调度公式分支，不能从 stability/difficulty 推导。同一个 stability/difficulty 的卡片，Review 和 Relearning 走完全不同的公式。</p>
+<h3>2. learning_steps</h3>
+<p>learning_steps 字段记录的是当前走到第几步（0-based index）。</p>
+<p>新卡片第一次看到时，你不可能直接让它 10 天后再复习。所以先用预设的短间隔反复巩固：</p>
+<p>默认 learning_steps = ['1m', '10m']</p>
+<ul>
+<li>第1次看 → 1分钟后复习</li>
+<li>第2次看 → 10分钟后复习</li>
+<li>第3次看 → 毕业，进入 Review，走 FSRS 长期间隔（几天→几周→几月）</li>
+</ul>
+<p>某些测试用例里能看到 <code>['1m', '10m', '30m', '1h', '6h', '12h']</code></p>
+<pre><code>New ──[首次复习]──→ Learning (step=0)
+                        │
+                    [Good]│→ Learning (step=1)
+                        │       │
+                    [Good]│→ Review (毕业，FSRS接管)
+                        │
+                    [Again]│→ 回到 step=0
+Review ──[Again]──→ Relearning (step=0)
+                        │
+                    [Good]│→ Review (重新毕业)
+</code></pre>
+<h3>3. difficulty</h3>
+<p>一般取值1-10</p>
+<h4>3.1 初始化（New 卡片首次复习）</h4>
+<pre><code class="language-ts">init_difficulty(g: Grade): number {
+  const d = w[4] - Math.exp((g - 1) * w[5]) + 1
+  return clamp(roundTo(d, 8), 1, 10)
+}
+</code></pre>
+<p>从 grade（1-4）计算初始难度。grade 越大（记得越好），难度越低。</p>
+<h4>3.2 更新（已有卡片复习）</h4>
+<pre><code class="language-ts">next_difficulty(d: number, g: Grade): number {
+  const delta_d = -w[6] * (g - 3)          // grade&gt;3 降难度，grade&lt;3 升难度
+  const next_d = d + linear_damping(delta_d, d)  // 线性阻尼防止越界
+  return clamp(mean_reversion(init_easy, next_d), 1, 10)  // 均值回归
+}
+</code></pre>
+<p>从当前 difficulty 和 本次 grade 推算下一个 difficulty。<br />
+关键结论<br />
+difficulty 是纯计算值，只依赖<br />
+- 上一次的值<br />
+- 本次 grade（1-4）<br />
+- 权重参数 w4, w5, w6, w7</p>
+<p>不需要额外存储输入参数。每次复习时算法读 difficulty → 算新的 → 写回去</p>
+<h3>3. last_review</h3>
+<p>上一次 review 时间</p>
+<h3>4. stability</h3>
+<p>FSRS的核心指标，是个 float，看定义</p>
+<pre><code class="language-ts">export const S_MIN = 0.001
+export const S_MAX = 36500.0
+</code></pre>
+<h2>极限精简字段</h2>
+<ul>
+<li>stability==0 默认 state=0。</li>
+<li>step给四个值0,1,2，然后为3表示走review。也代替 state</li>
+<li>difficulty 给 16 状态够了</li>
+<li>fp16 拿来存 stability</li>
+<li>32bit 拿来存 due_at </li>
+<li>1byte 拿来存 due_days</li>
+</ul>
+<p>FSRS 最终算 interval 时是 round(s * modifier) 取整到天</p>
+<p>之前最先学习的，到期那一天就先复习</p>
+<p>考虑到db检索的方便性，直接存 4byte <code>due_at</code> 代替 <code>last_review</code>，然后1byte <code>due_days</code> 用来反推 <code>last_review</code></p>
+<p>为什么 <code>due_days</code> 0-255 ？需要连续 Good 评分 7-8 次才能突破 256 天。要么你彻底记住，要么就忘干净了。无所谓了。</p>
+<p>┌──────────┬───────────┬──────────────┐<br />
+│ 2 bit    │ 4 bit     │ 16 bit       │<br />
+│ step     │ difficulty│ stability    │<br />
+│ 0,1,2,3  │ 0-11→1-10 │ FP16         │<br />
+└──────────┴───────────┴──────────────┘</p>
+<hr />
+<p>更新</p>
+<p>实际上 due_days 都不用存</p>
+<p><code>min(max_interval, max(1, round(stability * interval_modifier)))</code></p>
+<p>直接可以 stability 反推。囧。突然有点领会FSRS精华在哪里了。它丫的其实没啥调度算法。</p>
+<p>甚至都不是给每张卡训练一条曲线。就是用数据集训练一组全局参数 w，设定为标准遗忘曲线长什么样，然后每次复习后就去更新 stability difficulty，也就是说S D这两个参数去映射这个曲线。</p>
+<p>值钱的是这个曲线。。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

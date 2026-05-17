@@ -54,6 +54,173 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-17"  rel="bookmark" >
+              <h2 class="card-title">FSRS核心字段</h2>
+            </a>
+            <p class="card-text"><p>无聊看了下 FSRS (Free Spaced Repetition Scheduler) ，想看它怎么存数据的</p>
+<h2>Card — 卡片当前状态</h2>
+<p>表结构：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>due</code></td>
+<td>Date</td>
+<td>下次复习时间</td>
+</tr>
+<tr>
+<td><code>stability</code></td>
+<td>float</td>
+<td>记忆稳定性（R=90% 时的间隔天数）</td>
+</tr>
+<tr>
+<td><code>difficulty</code></td>
+<td>float</td>
+<td>难度，范围 [1, 10]</td>
+</tr>
+<tr>
+<td><code>state</code></td>
+<td>int</td>
+<td>状态机：New=0, Learning=1, Review=2, Relearning=3</td>
+</tr>
+<tr>
+<td><code>learning_steps</code></td>
+<td>int</td>
+<td>当前学习步骤 index</td>
+</tr>
+<tr>
+<td><code>scheduled_days</code></td>
+<td>int</td>
+<td>本次调度天数</td>
+</tr>
+<tr>
+<td><code>reps</code></td>
+<td>int</td>
+<td>总复习次数</td>
+</tr>
+<tr>
+<td><code>lapses</code></td>
+<td>int</td>
+<td>遗忘次数</td>
+</tr>
+<tr>
+<td><code>last_review</code></td>
+<td>Date?</td>
+<td>上次复习时间</td>
+</tr>
+</tbody>
+</table>
+<h2>核心字段详解</h2>
+<h3>1. state</h3>
+<p>状态机，取值</p>
+<ul>
+<li>New=0</li>
+<li>Learning=1</li>
+<li>Review=2</li>
+<li>Relearning=3</li>
+</ul>
+<pre><code>         Again          Good/Hard/Easy
+New ──────────→ Learning ──────────────→ Review
+                  ↑  │                      │
+                  │  │ Again (learning步内)  │
+                  │  └──────────────────────┘
+                  │                           │
+                  │      Again (遗忘)         │
+                  └─────── Relearning ←──────┘
+</code></pre>
+<p><code>state</code> 决定调度公式分支，不能从 stability/difficulty 推导。同一个 stability/difficulty 的卡片，Review 和 Relearning 走完全不同的公式。</p>
+<h3>2. learning_steps</h3>
+<p>learning_steps 字段记录的是当前走到第几步（0-based index）。</p>
+<p>新卡片第一次看到时，你不可能直接让它 10 天后再复习。所以先用预设的短间隔反复巩固：</p>
+<p>默认 learning_steps = ['1m', '10m']</p>
+<ul>
+<li>第1次看 → 1分钟后复习</li>
+<li>第2次看 → 10分钟后复习</li>
+<li>第3次看 → 毕业，进入 Review，走 FSRS 长期间隔（几天→几周→几月）</li>
+</ul>
+<p>某些测试用例里能看到 <code>['1m', '10m', '30m', '1h', '6h', '12h']</code></p>
+<pre><code>New ──[首次复习]──→ Learning (step=0)
+                        │
+                    [Good]│→ Learning (step=1)
+                        │       │
+                    [Good]│→ Review (毕业，FSRS接管)
+                        │
+                    [Again]│→ 回到 step=0
+Review ──[Again]──→ Relearning (step=0)
+                        │
+                    [Good]│→ Review (重新毕业)
+</code></pre>
+<h3>3. difficulty</h3>
+<p>一般取值1-10</p>
+<h4>3.1 初始化（New 卡片首次复习）</h4>
+<pre><code class="language-ts">init_difficulty(g: Grade): number {
+  const d = w[4] - Math.exp((g - 1) * w[5]) + 1
+  return clamp(roundTo(d, 8), 1, 10)
+}
+</code></pre>
+<p>从 grade（1-4）计算初始难度。grade 越大（记得越好），难度越低。</p>
+<h4>3.2 更新（已有卡片复习）</h4>
+<pre><code class="language-ts">next_difficulty(d: number, g: Grade): number {
+  const delta_d = -w[6] * (g - 3)          // grade&gt;3 降难度，grade&lt;3 升难度
+  const next_d = d + linear_damping(delta_d, d)  // 线性阻尼防止越界
+  return clamp(mean_reversion(init_easy, next_d), 1, 10)  // 均值回归
+}
+</code></pre>
+<p>从当前 difficulty 和 本次 grade 推算下一个 difficulty。<br />
+关键结论<br />
+difficulty 是纯计算值，只依赖<br />
+- 上一次的值<br />
+- 本次 grade（1-4）<br />
+- 权重参数 w4, w5, w6, w7</p>
+<p>不需要额外存储输入参数。每次复习时算法读 difficulty → 算新的 → 写回去</p>
+<h3>3. last_review</h3>
+<p>上一次 review 时间</p>
+<h3>4. stability</h3>
+<p>FSRS的核心指标，是个 float，看定义</p>
+<pre><code class="language-ts">export const S_MIN = 0.001
+export const S_MAX = 36500.0
+</code></pre>
+<h2>极限精简字段</h2>
+<ul>
+<li>stability==0 默认 state=0。</li>
+<li>step给四个值0,1,2，然后为3表示走review。也代替 state</li>
+<li>difficulty 给 16 状态够了</li>
+<li>fp16 拿来存 stability</li>
+<li>32bit 拿来存 due_at </li>
+<li>1byte 拿来存 due_days</li>
+</ul>
+<p>FSRS 最终算 interval 时是 round(s * modifier) 取整到天</p>
+<p>之前最先学习的，到期那一天就先复习</p>
+<p>考虑到db检索的方便性，直接存 4byte <code>due_at</code> 代替 <code>last_review</code>，然后1byte <code>due_days</code> 用来反推 <code>last_review</code></p>
+<p>为什么 <code>due_days</code> 0-255 ？需要连续 Good 评分 7-8 次才能突破 256 天。要么你彻底记住，要么就忘干净了。无所谓了。</p>
+<p>┌──────────┬───────────┬──────────────┐<br />
+│ 2 bit    │ 4 bit     │ 16 bit       │<br />
+│ step     │ difficulty│ stability    │<br />
+│ 0,1,2,3  │ 0-11→1-10 │ FP16         │<br />
+└──────────┴───────────┴──────────────┘</p>
+<hr />
+<p>更新</p>
+<p>实际上 due_days 都不用存</p>
+<p><code>min(max_interval, max(1, round(stability * interval_modifier)))</code></p>
+<p>直接可以 stability 反推。囧。突然有点领会FSRS精华在哪里了。它丫的其实没啥调度算法。</p>
+<p>甚至都不是给每张卡训练一条曲线。就是用数据集训练一组全局参数 w，设定为标准遗忘曲线长什么样，然后每次复习后就去更新 stability difficulty，也就是说S D这两个参数去映射这个曲线。</p>
+<p>值钱的是这个曲线。。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-05-17T09:53:00+08:00">2026-05-17</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-16"  rel="bookmark" >
               <h2 class="card-title">SVG 时钟</h2>
             </a>
@@ -2643,88 +2810,6 @@ return line
 <p>btw 打了这么多网址，该不会被误认为SEO吧。囧。。。。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-06-21T22:48:00+08:00">2024-06-21</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2024/stdout-09"  rel="bookmark" >
-              <h2 class="card-title">吐槽pynsq，另外给subprocess糊了一个异步</h2>
-            </a>
-            <p class="card-text"><h3>pynsq太烂了</h3>
-<p>起初是因为需要在 Web API 里消费一个消息队列(nsq)，给浏览器返回 <a href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource">EventSource</a> 做实时输出。但是没想到<a href="https://github.com/nsqio/pynsq/blob/master/nsq/__init__.py">官方库pynsq</a>居然写得这么渣：</p>
-<pre><code>def _handle_term_signal(sig_num, frame):
-    logging.getLogger(__name__).info(
-        'TERM Signal handler called with signal %r', sig_num)
-    tornado.ioloop.IOLoop.current().stop()
-
-def run():
-    """
-    Starts any instantiated :class:`nsq.Reader` or :class:`nsq.Writer`
-    """
-    signal.signal(signal.SIGTERM, _handle_term_signal)
-    signal.signal(signal.SIGINT, _handle_term_signal)
-    tornado.ioloop.IOLoop.current().start()
-</code></pre>
-<p>这都什么玩意儿？一个库何德何能也敢去乱劫持 signal？最他妈逗的是这个库的推荐写法：</p>
-<pre><code>import nsq
-r = nsq.Reader(message_handler=handler,
-        lookupd_http_addresses=['http://127.0.0.1:4161'],
-        topic='nsq_reader', channel='asdf', lookupd_poll_interval=15)
-nsq.run()
-</code></pre>
-<p>这个 <code>r</code> 莫名其妙的就能跑起来了。真是魔法。anyway，在Web API兼容这一坨是失败了，爆了一堆错，对付魔法的办法就是隔离，所以打算糊个脚本，通过多进程+PIPE来得到数据。</p>
-<h3>给 subprocess 加一个异步补丁</h3>
-<p>糊的时候发现，<code>subprocess</code> 模块的 <code>.communicate()</code> 方法是 blocking的， 居然不支持 async/await，于是只能继续糊：</p>
-<pre><code>import subprocess, fcntl, asyncio
-p = subprocess.Popen(
-    cmd, bufsize=0, text=True, stdin=subprocess.PIPE,
-    stderr=subprocess.PIPE,  stdout=subprocess.PIPE, close_fds=True)
-fcntl.fcntl(p.stdout.fileno(), fcntl.F_SETFL, os.O_NONBLOCK)
-buf = ''
-while p.poll() is None:
-    try:
-        # read() with O_NONBLOCK might gets None thus TypeError
-        buf += (p.stdout.read(1024) or '')
-        contents = buf.split('\n')
-        if len(contents) &lt; 2:
-            raise TypeError('Not enough')
-    except TypeError:
-        await asyncio.sleep(1)
-        yield None
-        continue
-    buf = contents.pop(-1)
-    for x in contents:
-        yield x
-
-p.terminate()
-</code></pre>
-<p>这里用 <code>buf</code>、<code>contents</code> 是因为直接调用消息队列，每个消息都是分割好的；但是通过管道来读。得自己去处理字节流如何分割的问题，也就是传说简中特供的「粘包」问题。</p>
-<p>另外子进程可能因为Web框架的种种原因，不自觉退出或者变僵尸进程，需要向 stdout/stderr 做输出的时候检查一下 BrokenPipeError 处理后事主动退出即可。</p>
-<p>还有子进程如果输出完毕，需要代码里调用一下 <code>p.terminate()</code>，才能回收，避免变zombie</p>
-<p>试了一下，也不是不能用，成功！正觉得自己又行了的时候，发现官方：</p>
-<p><a href="https://docs.python.org/3.8/library/asyncio-subprocess.html">https://docs.python.org/3.8/library/asyncio-subprocess.html</a></p>
-<p>啊这。白忙活。</p>
-<h3>超长待机 subprocess</h3>
-<p>想起来之前还有个问题，一个API调用一个subprocess，然后等它执行，不想管。这个时候可以加一个参数 detach 模式：</p>
-<p><code>subprocess.Popen(..., start_new_session=True)</code></p>
-<p>然后在同进程用里跑一个后台检查循环去检查子进程的 <code>WNOHANG</code>：</p>
-<pre><code>while 1:
-    try:
-        chpid, retcode, res = os.wait3(os.WNOHANG)
-    except ChildProcessError:
-        break
-    sleep(5)
-    if chpid == os.getpid():
-        do_sth()
-        break
-</code></pre>
-<p>想了下好像也搞复杂了。要不直接跑一个 <code>sh -c "blah.sh &amp;"</code> 算了。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-06-21T09:30:00+08:00">2024-06-21</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
