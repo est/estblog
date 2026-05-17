@@ -121,9 +121,9 @@ difficulty 是纯计算值，只依赖&lt;br /&gt;
 - 本次 grade（1-4）&lt;br /&gt;
 - 权重参数 w4, w5, w6, w7&lt;/p&gt;
 &lt;p&gt;不需要额外存储输入参数。每次复习时算法读 difficulty → 算新的 → 写回去&lt;/p&gt;
-&lt;h3&gt;3. last_review&lt;/h3&gt;
+&lt;h3&gt;4. last_review&lt;/h3&gt;
 &lt;p&gt;上一次 review 时间&lt;/p&gt;
-&lt;h3&gt;4. stability&lt;/h3&gt;
+&lt;h3&gt;5. stability&lt;/h3&gt;
 &lt;p&gt;FSRS的核心指标，是个 float，看定义&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-ts"&gt;export const S_MIN = 0.001
 export const S_MAX = 36500.0
@@ -141,11 +141,12 @@ export const S_MAX = 36500.0
 &lt;p&gt;之前最先学习的，到期那一天就先复习&lt;/p&gt;
 &lt;p&gt;考虑到db检索的方便性，直接存 4byte &lt;code&gt;due_at&lt;/code&gt; 代替 &lt;code&gt;last_review&lt;/code&gt;，然后1byte &lt;code&gt;due_days&lt;/code&gt; 用来反推 &lt;code&gt;last_review&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;为什么 &lt;code&gt;due_days&lt;/code&gt; 0-255 ？需要连续 Good 评分 7-8 次才能突破 256 天。要么你彻底记住，要么就忘干净了。无所谓了。&lt;/p&gt;
-&lt;p&gt;┌──────────┬───────────┬──────────────┐&lt;br /&gt;
-│ 2 bit    │ 4 bit     │ 16 bit       │&lt;br /&gt;
-│ step     │ difficulty│ stability    │&lt;br /&gt;
-│ 0,1,2,3  │ 0-11→1-10 │ FP16         │&lt;br /&gt;
-└──────────┴───────────┴──────────────┘&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;┌──────────┬───────────┬──────────────┐
+│ 2 bit    │ 4 bit     │ 16 bit       │
+│ step     │ difficulty│ stability    │
+│ 0,1,2,3  │ 0-11→1-10 │ FP16         │
+└──────────┴───────────┴──────────────┘
+&lt;/code&gt;&lt;/pre&gt;
 &lt;hr /&gt;
 &lt;p&gt;更新&lt;/p&gt;
 &lt;p&gt;实际上 due_days 都不用存&lt;/p&gt;
