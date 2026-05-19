@@ -54,6 +54,31 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-18"  rel="bookmark" >
+              <h2 class="card-title">AI 流式接口的pattern</h2>
+            </a>
+            <p class="card-text"><p>AI 现在调用都走 OpenAI-like 接口，遇到长任务多半会走 stream=true</p>
+<p>然后AI能力也多半会接力返回给下游，比如浏览器</p>
+<p>那么问题来了。下游如果连接断开，是不是就意味着服务器得把AI的输出接住，然后下一次请求接着吐？</p>
+<p>如果下一次请求不路由到这个节点和进程，意味着接住要设计一套缓存</p>
+<p>更麻烦的是，现代web框架一般都是请求 - 响应模式的，如果浏览器断开连接，按正常流程，后端也会抛出异常之类的中断</p>
+<p>所以“接AI的话”这玩意实际上设计还要考虑挺多东西，很麻烦？？？</p>
+<p>这个问题丢给 ChatGPT它这么回答：</p>
+<blockquote>
+<p>断了就断了，不续传。用户重新发起请求，后端重新生成，最多靠 prompt cache / KV cache / 上下文缓存降低重复成本。很多产品其实就是这么干的，因为实现成本最低。</p>
+</blockquote>
+<p>尼玛。又学到一招。人脑还是想复杂了。</p>
+<p>btw 吐槽一下现在 vibe coding 开发者估计很少有人会去在意这些细节了。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-05-19T16:13:00+08:00">2026-05-19</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-17"  rel="bookmark" >
               <h2 class="card-title">FSRS核心字段</h2>
             </a>
@@ -2783,34 +2808,6 @@ return line
 <p>I guess another lesson learned today.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-06-22T12:26:00+08:00">2024-06-22</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2024/stdout-10"  rel="bookmark" >
-              <h2 class="card-title">人声分离简单评测</h2>
-            </a>
-            <p class="card-text"><p>娃要去表演唱歌，老师要求提供MTV。。 视频是<a href="https://www.bilibili.com/video/BV1Ty4y147Sj/">这个</a>，需要去掉人声部分</p>
-<p>先用 ffmpeg 提音轨 <code>ffmpeg -i v.mp4  -ac 1 1.mp3</code></p>
-<p>微信小程序上的全是骗充值的，网上的服务：</p>
-<ol>
-<li>没卵用 https://vocalremover.org/ 名气很大，搜出来第一就这个</li>
-<li>没用 https://www.conversion-tool.com/karaoke/</li>
-<li>卡死 https://www.songpeel.com/song-to-karaoke</li>
-<li>要安装 https://github.com/adefossez/demucs</li>
-<li>要6G显存 https://github.com/Anjok07/ultimatevocalremovergui</li>
-<li>效果很好！ https://tunebat.com/Vocal-Remover 推荐</li>
-</ol>
-<p>看来人声分离，特别是童声，还是有点难。</p>
-<p>最后把得到的 a.mp3 塞回去</p>
-<p><code>ffmpeg -i v.mp4 -i a.mp3 -c:v copy -map 0:v:0 -map 1:a:0 new.mp4</code></p>
-<p>btw 打了这么多网址，该不会被误认为SEO吧。囧。。。。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-06-21T22:48:00+08:00">2024-06-21</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

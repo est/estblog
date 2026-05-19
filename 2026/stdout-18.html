@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AI 流式接口的pattern – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="AI 流式接口的pattern" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stdout-18" />
+    <meta property="og:url" content="https://blog.est.im/2026/stdout-18">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="AI 流式接口的pattern">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">AI 流式接口的pattern</h2>
+    <p class="post-date">Posted <time datetime="2026-05-19T16:13:00+08:00">2026-05-19</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>AI 现在调用都走 OpenAI-like 接口，遇到长任务多半会走 stream=true</p>
+<p>然后AI能力也多半会接力返回给下游，比如浏览器</p>
+<p>那么问题来了。下游如果连接断开，是不是就意味着服务器得把AI的输出接住，然后下一次请求接着吐？</p>
+<p>如果下一次请求不路由到这个节点和进程，意味着接住要设计一套缓存</p>
+<p>更麻烦的是，现代web框架一般都是请求 - 响应模式的，如果浏览器断开连接，按正常流程，后端也会抛出异常之类的中断</p>
+<p>所以“接AI的话”这玩意实际上设计还要考虑挺多东西，很麻烦？？？</p>
+<p>这个问题丢给 ChatGPT它这么回答：</p>
+<blockquote>
+<p>断了就断了，不续传。用户重新发起请求，后端重新生成，最多靠 prompt cache / KV cache / 上下文缓存降低重复成本。很多产品其实就是这么干的，因为实现成本最低。</p>
+</blockquote>
+<p>尼玛。又学到一招。人脑还是想复杂了。</p>
+<p>btw 吐槽一下现在 vibe coding 开发者估计很少有人会去在意这些细节了。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>
