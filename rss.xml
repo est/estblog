@@ -51,7 +51,9 @@
 &lt;p&gt;突然又想起一个老事，pip 依赖解析为什么那么慢，以及&lt;a href="https://pydevtools.com/blog/how-uv-solves-dependencies-so-fast/"&gt;uv为啥快&lt;/a&gt;。Rust和Node允许一个库多版本共存，python要求唯一。&lt;code&gt;cargo&lt;/code&gt;用了 graph traversal，&lt;code&gt;uv&lt;/code&gt; 则是基于 CDCL的 SAT solver。&lt;/p&gt;
 &lt;p&gt;这个 CDCL(conflict-driven clause learning) 是一种形式化验证技巧，学习冲突去剪枝。渊源来自于 &lt;a href="https://github.com/pubgrub-rs/pubgrub"&gt;PubGrub&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;我上班这么多年，大小，央企民企都待过。发现很多既定管理和流程，就是用最笨的堆人的办法去遍历，跟最老的 &lt;code&gt;pip&lt;/code&gt; 一样。python的依赖包最早是个 &lt;code&gt;setup.py&lt;/code&gt; 它被当成 .tgz 打包进 cheeze shop，你要去解析，得完整下载，解压。这些麻烦就不说了，最逆天的是他丫的不是声明式的，而是一个可执行文件，依赖是可以动态生成的。吐血。pip老遭罪了，得一个一个去下载，一个一个去问，然后一个一个去试。&lt;/p&gt;
-&lt;p&gt;是不是恰似某些部门办事的各种 “&lt;a href="https://blog.est.im/post/175976643500"&gt;潜规则&lt;/a&gt;” ？哈哈哈&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 21 May 2026 16:55:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-05-21:/2026/stderr-19</guid><category>stderr</category></item><item><title>AI 流式接口的pattern</title><link>https://blog.est.im/2026/stdout-18</link><description>&lt;p&gt;AI 现在调用都走 OpenAI-like 接口，遇到长任务多半会走 stream=true&lt;/p&gt;
+&lt;p&gt;是不是恰似某些部门办事的各种 “&lt;a href="https://blog.est.im/post/175976643500"&gt;潜规则&lt;/a&gt;” ？哈哈哈&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;这些问题有没有解呢？可能终极形态，就是 Kubernetes 那样的吧。可观察性+声明式+状态推理&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 21 May 2026 16:55:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-05-21:/2026/stderr-19</guid><category>stderr</category></item><item><title>AI 流式接口的pattern</title><link>https://blog.est.im/2026/stdout-18</link><description>&lt;p&gt;AI 现在调用都走 OpenAI-like 接口，遇到长任务多半会走 stream=true&lt;/p&gt;
 &lt;p&gt;然后AI能力也多半会接力返回给下游，比如浏览器&lt;/p&gt;
 &lt;p&gt;那么问题来了。下游如果连接断开，是不是就意味着服务器得把AI的输出接住，然后下一次请求接着吐？&lt;/p&gt;
 &lt;p&gt;如果下一次请求不路由到这个节点和进程，意味着接住要设计一套缓存&lt;/p&gt;
