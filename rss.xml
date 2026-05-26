@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 26 May 2026 08:11:35 +0800</lastBuildDate><item><title>理解LLM的范式——它就是个差分机？</title><link>https://blog.est.im/2026/stderr-20</link><description>&lt;p&gt;作为一个外行，我一直对“AI”的魔力感到惊奇，我一度以为神经网络一层一层传播，可以看成某种有限步骤的图灵机。AI提醒我不要瞎类比，图灵机左移右移是离散，确定的逻辑，神经网络是fp32上连续的概率映射。&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 26 May 2026 08:17:07 +0800</lastBuildDate><item><title>理解LLM的范式——它就是个差分机？</title><link>https://blog.est.im/2026/stderr-20</link><description>&lt;p&gt;作为一个外行，我一直对“AI”的魔力感到惊奇，我一度以为神经网络一层一层传播，可以看成某种有限步骤的图灵机。AI提醒我不要瞎类比，图灵机左移右移是离散，确定的逻辑，神经网络是fp32上连续的概率映射。&lt;/p&gt;
 &lt;p&gt;后来稍微深入了解了一下，认识到对于一个深度固定的 Transformer 模型（比如 96 层的 GPT-4），它的单次前向传播算是一个深度固定的有向无环图（DAG）。所谓的 predict next token，可以粗糙理解成&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;  next_token = eval(model_weights, history+input)
 &lt;/code&gt;&lt;/pre&gt;
@@ -144,10 +144,12 @@
 &lt;p&gt;kvcache 就是这个时代的寄存器&lt;/p&gt;
 &lt;p&gt;加上真正的 &lt;code&gt;if&lt;/code&gt;，&lt;code&gt;loop&lt;/code&gt; 控制器，才是完整的“大脑”&lt;/p&gt;
 &lt;p&gt;大脑要工作，还得接存储。&lt;/p&gt;
+&lt;p&gt;文章一开始的，LLM算不算图灵机，其实差远了。&lt;/p&gt;
 &lt;p&gt;用这个范式去分析现在流行的AI论断，就很有趣了。&lt;/p&gt;
 &lt;p&gt;LLM是真正的智能吗？是 AGI 吗？&lt;/p&gt;
 &lt;p&gt;同理，ALU它懂“真正的加法”吗？它能解决 “现实世界” 的四则运算问题吗？&lt;/p&gt;
-&lt;p&gt;哈哈哈，都是什么问题啊。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Mon, 25 May 2026 11:57:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-05-25:/2026/stderr-20</guid><category>stderr</category></item><item><title>路径依赖</title><link>https://blog.est.im/2026/stderr-19</link><description>&lt;p&gt;最近vibe了个分布式系统，没有 master 和 arbiter，全是平等的peer&lt;/p&gt;
+&lt;p&gt;哈哈哈，都是什么问题啊。&lt;/p&gt;
+&lt;p&gt;什么算“智能”？它也是很多不同范式的任务被杂糅在一起的概念。而且它是什么已经。。。不重要了。关键看某一类任务它能做什么。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Mon, 25 May 2026 11:57:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-05-25:/2026/stderr-20</guid><category>stderr</category></item><item><title>路径依赖</title><link>https://blog.est.im/2026/stderr-19</link><description>&lt;p&gt;最近vibe了个分布式系统，没有 master 和 arbiter，全是平等的peer&lt;/p&gt;
 &lt;p&gt;然后这些peer去处理流量问题。&lt;/p&gt;
 &lt;p&gt;处理多个事情，当流量爆发，承载能力不足的时候，需要快速补足peer&lt;/p&gt;
 &lt;p&gt;扩容是个最简单，很强烈，明确的信号，而且效果立竿见影。&lt;/p&gt;
