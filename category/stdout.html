@@ -54,6 +54,100 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-20"  rel="bookmark" >
+              <h2 class="card-title">不修改nginx接收websocket</h2>
+            </a>
+            <p class="card-text"><p>以前只记得要支持websocket 需要 nginx 改：</p>
+<pre><code>  location /ws-service-a {
+      proxy_pass http://backend_a;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection $connection_upgrade;
+  }
+</code></pre>
+<p>今天折腾忘记这茬了，一直在调 FastAPI ，<code>@app.websocket()</code> 死活不识别 <code>wscat</code> 的请求</p>
+<p>WebSocket 协议的工作方式是：</p>
+<p>1.客户端发 GET + Upgrade: websocket 头<br />
+2.服务端识别这个特殊 GET，返回 101 Switching Protocols<br />
+3.连接升级完成</p>
+<p><code>opus-4.6</code> 说：既然路由确实注册了，那问题几乎可以确定是：前面的反向代理/LB 没有透传 WebSocket</p>
+<p>我就来劲了，让AI写一份 特殊 GET，返回 101 Switching Protocols 。</p>
+<p>结果还真成功了。<code>wscat</code> 返回 error: Invalid Sec-WebSocket-Accept header</p>
+<p>折腾了几下，发现此路不通</p>
+<blockquote>
+<p>问题不是 @app.websocket() 没挂载，它挂载了，但永远匹配不到。原因是 uvicorn 的路由分发发生在更底层：</p>
+<p>请求到达 uvicorn<br />
+    ↓<br />
+uvicorn 检查 headers：有 Upgrade: websocket？<br />
+    ├── 是 → scope.type = "websocket" → 只匹配 @app.websocket() 路由<br />
+    └── 否 → scope.type = "http"     → 只匹配 @app.get/post() 路由<br />
+你的 nginx 把 Upgrade 头吃了，所以 uvicorn 永远把请求标记为 http scope。在 http scope 下，@app.websocket(...) 路由根本不参与匹配 — 就像它不存在一样。</p>
+<p>这就是为什么：</p>
+<p>@app.get('/ws/test') 能匹配 — 它是 HTTP 路由，匹配 HTTP scope<br />
+@app.websocket('/ws/real') 匹配不到 — 它是 WebSocket 路由，只在 websocket scope 下才可见<br />
+两个都注册成功了，但 scope 类型不对，uvicorn 在路由匹配之前就把它们分到了不同的赛道。</p>
+</blockquote>
+<p>接下来几轮错误复制粘贴大法：</p>
+<ul>
+<li>最初想法：ASGI middleware 翻译协议 → 80 行，手搓 websockets 库</li>
+<li>精简版：用 websockets 库做帧编码 → 还是 50 行 middleware</li>
+</ul>
+<p>后来发现ASGI 这一层做不到。因为 标准 ASGI middleware 拿到请求时已经太晚了：</p>
+<p>uvicorn TCP 收包<br />
+1. httptools 解析 headers<br />
+2. on_headers_complete 决定 scope type (http vs websocket)  ← 需要在这里拦截<br />
+3. 创建 scope + receive/send（已经绑定为 HTTP 协议）<br />
+4. 调用 ASGI app (middleware 链)                            ← middleware 才在这里介入</p>
+<p>middleware 只能看到已经定型的 scope['type'] = 'http'，改不了底层的 receive/send 绑定。</p>
+<p>然后尝试了一个 <code>gunicorn.conf.py</code> 的hack：</p>
+<pre><code class="language-python">def post_worker_init(worker):
+    &quot;&quot;&quot;让 uvicorn 从 sec-websocket-key 识别 WebSocket，绕过 nginx 吞 Upgrade 头的问题&quot;&quot;&quot;
+    import httptools
+    from uvicorn.protocols.http.httptools_impl import HttpToolsProtocol
+    _orig = HttpToolsProtocol.on_headers_complete
+    def _patched(self):
+        has_ws_key = any(n == b&quot;sec-websocket-key&quot; for n, _ in self.headers)
+        if has_ws_key and self._should_upgrade_to_ws():
+            self.headers.append((b&quot;upgrade&quot;, b&quot;websocket&quot;))
+            self.headers.append((b&quot;connection&quot;, b&quot;Upgrade&quot;))
+            self.scope[&quot;headers&quot;] = self.headers
+            self.scope[&quot;method&quot;] = self.parser.get_method().decode(&quot;ascii&quot;)
+            raise httptools.HttpParserUpgrade(b&quot;&quot;)
+        return _orig(self)
+    HttpToolsProtocol.on_headers_complete = _patched
+</code></pre>
+<p>我也觉得，ws这协议是不是有病。如果有 <code>sec-websocket-key</code> 就认定为 ws 不就完了。搞那么复杂。</p>
+<p>然后这个办法在 ASGI 里还是行不通。最终版：直接篡改 uvicorn 收到的 raw TCP 字节</p>
+<pre><code class="language-python">def post_worker_init(worker):
+    import re
+    from uvicorn.protocols.http.httptools_impl import HttpToolsProtocol
+
+    _orig_data_received = HttpToolsProtocol.data_received
+
+    def _patched_data_received(self, data):
+        if not getattr(self, '_ws_patched', False) and b'\r\n\r\n' in data:
+            self._ws_patched = True
+            lower = data.lower()
+            if b'sec-websocket-key:' in lower and b'\nupgrade:' not in lower:
+                data = re.sub(rb'(?i)\r\nconnection:[^\r]*', b'\r\nConnection: Upgrade', data)
+                data = data.replace(b'\r\n\r\n', b'\r\nUpgrade: websocket\r\n\r\n', 1)
+        return _orig_data_received(self, data)
+
+    HttpToolsProtocol.data_received = _patched_data_received
+</code></pre>
+<p>居然成功了！不修改nginx兼容websocket！</p>
+<p>这路子太野了。还是老老实实去改nginx了。</p>
+<p>不过也学到一些姿势，比如 <code>258EAFA5-E914-47DA-95CA-C5AB0DC85B11</code> ，以及ws居然是二进制流。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-05-28T18:35:00+08:00">2026-05-28</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-18"  rel="bookmark" >
               <h2 class="card-title">AI 流式接口的pattern</h2>
             </a>
@@ -2748,66 +2842,6 @@ coc NukaTownMarket01; player.moveto 06054CA8;
 <p>Also there's <code>coc TestCory01; 06044B4B;</code> for testing purposes.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-07-13T06:31:00+08:00">2024-07-13</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2024/stdout-11"  rel="bookmark" >
-              <h2 class="card-title">Making subprocess async friendly in Python</h2>
-            </a>
-            <p class="card-text"><p>It's been a while since i wrote something in English, mostly because there's nothing really interesting, <a href="https://blog.est.im/2024/stdout-09">until now</a>.</p>
-<p>Occasionally, when facing a long running task in Python, I would choose either a distrubuted tasks queue system, or for the convenience, just the <code>subprocess</code> module. It's built-in and well designed for grabbing outputs of a child process running for a short period of time.</p>
-<p>But what if the child-process takes a really, really long time? In my case it's an expensive query, or some CPU/GPU intensive task, which needs to be launched from a running Web framework, like FastAPI. </p>
-<h3>Popen() fire and forget</h3>
-<p>if child-process's output, end state and the return code are irrelevant, a simple Popen would do</p>
-<p><code>subprocess.Popen(..., stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)</code></p>
-<p>The problem is, after the child-process finishes, it will hang as a zombie, because the parents refused to claim its exit status. To fix this, add an extra parameter in <code>Popen()</code> like <code>subprocess.Popen(..., start_new_session=True)</code></p>
-<p>And write a simple loop periodically check for <code>WNOHANG</code></p>
-<p><code>while 1:
-    try:
-        chpid, retcode, res = os.wait3(os.WNOHANG)
-    except ChildProcessError:
-        break
-    sleep(5)
-    if chpid == os.getpid():
-        do_sth()
-        break</code></p>
-<p>This can be done using <code>BackgroundTasks</code> in FastAPI/Starlette.</p>
-<p>In a way, the child-process hebaves like <code>nohup</code> or screen/tmux, running in a detatched fashion.</p>
-<p>If you hate this many lines of code, just <code>subprocess.run("blah.sh &amp;", shell=True)</code> and wrap your commands in <code>blah.sh</code></p>
-<h3>Make <code>.communicate()</code> async</h3>
-<p>Sometimes I need to monitor and handle the stdout/stderr of a child-process, like forward the outputs as an <a href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource">EventSource</a> response to the browser.</p>
-<p>First I tried <code>.communicate()</code> it will block until the process quites.</p>
-<p>Then I tried <code>Popen.stdout.read()</code>, it will also block. Eventually I found a great hack from Stackoverlow like this:</p>
-<pre><code>p = subprocess.Popen(
-    cmd, bufsize=0, text=True, stdin=subprocess.PIPE,
-    stderr=subprocess.PIPE,  stdout=subprocess.PIPE, close_fds=True)
-fcntl.fcntl(p.stdout.fileno(), fcntl.F_SETFL, os.O_NONBLOCK)
-</code></pre>
-<p>Now <code>p.stdout.read(1024)</code> would return immediately, or with a <code>TypeError</code> bnecause internal messed up with <code>None</code> as non-blocking empty return.</p>
-<p>Wrap it with <code>try...except</code> inside a loop, it worked fine as expected.</p>
-<p>When the parent process crashes unexpectedly, the child-process is still working, to detect this, just check for <code>BrokenPipeError</code> carefully in child-process and gracefully shutdown.</p>
-<h3>Solved with <code>asyncio</code></h3>
-<p>I tried harder reading the official Python docs, turns out the most easy solution is already there:</p>
-<pre><code>proc = await asyncio.create_subprocess_exec(
-    sys.executable, '-c', code,
-    stdout=asyncio.subprocess.PIPE)
-
-# Read one line of output.
-data = await proc.stdout.readline()
-line = data.decode('ascii').rstrip()
-
-# Wait for the subprocess exit.
-await proc.wait()
-return line
-</code></pre>
-<p>I guess another lesson learned today.</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-06-22T12:26:00+08:00">2024-06-22</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

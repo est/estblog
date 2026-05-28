@@ -1,5 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 26 May 2026 08:17:07 +0800</lastBuildDate><item><title>理解LLM的范式——它就是个差分机？</title><link>https://blog.est.im/2026/stderr-20</link><description>&lt;p&gt;作为一个外行，我一直对“AI”的魔力感到惊奇，我一度以为神经网络一层一层传播，可以看成某种有限步骤的图灵机。AI提醒我不要瞎类比，图灵机左移右移是离散，确定的逻辑，神经网络是fp32上连续的概率映射。&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Thu, 28 May 2026 18:35:00 +0800</lastBuildDate><item><title>不修改nginx接收websocket</title><link>https://blog.est.im/2026/stdout-20</link><description>&lt;p&gt;以前只记得要支持websocket 需要 nginx 改：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  location /ws-service-a {
+      proxy_pass http://backend_a;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection $connection_upgrade;
+  }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;今天折腾忘记这茬了，一直在调 FastAPI ，&lt;code&gt;@app.websocket()&lt;/code&gt; 死活不识别 &lt;code&gt;wscat&lt;/code&gt; 的请求&lt;/p&gt;
+&lt;p&gt;WebSocket 协议的工作方式是：&lt;/p&gt;
+&lt;p&gt;1.客户端发 GET + Upgrade: websocket 头&lt;br /&gt;
+2.服务端识别这个特殊 GET，返回 101 Switching Protocols&lt;br /&gt;
+3.连接升级完成&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;opus-4.6&lt;/code&gt; 说：既然路由确实注册了，那问题几乎可以确定是：前面的反向代理/LB 没有透传 WebSocket&lt;/p&gt;
+&lt;p&gt;我就来劲了，让AI写一份 特殊 GET，返回 101 Switching Protocols 。&lt;/p&gt;
+&lt;p&gt;结果还真成功了。&lt;code&gt;wscat&lt;/code&gt; 返回 error: Invalid Sec-WebSocket-Accept header&lt;/p&gt;
+&lt;p&gt;折腾了几下，发现此路不通&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;问题不是 @app.websocket() 没挂载，它挂载了，但永远匹配不到。原因是 uvicorn 的路由分发发生在更底层：&lt;/p&gt;
+&lt;p&gt;请求到达 uvicorn&lt;br /&gt;
+    ↓&lt;br /&gt;
+uvicorn 检查 headers：有 Upgrade: websocket？&lt;br /&gt;
+    ├── 是 → scope.type = "websocket" → 只匹配 @app.websocket() 路由&lt;br /&gt;
+    └── 否 → scope.type = "http"     → 只匹配 @app.get/post() 路由&lt;br /&gt;
+你的 nginx 把 Upgrade 头吃了，所以 uvicorn 永远把请求标记为 http scope。在 http scope 下，@app.websocket(...) 路由根本不参与匹配 — 就像它不存在一样。&lt;/p&gt;
+&lt;p&gt;这就是为什么：&lt;/p&gt;
+&lt;p&gt;@app.get('/ws/test') 能匹配 — 它是 HTTP 路由，匹配 HTTP scope&lt;br /&gt;
+@app.websocket('/ws/real') 匹配不到 — 它是 WebSocket 路由，只在 websocket scope 下才可见&lt;br /&gt;
+两个都注册成功了，但 scope 类型不对，uvicorn 在路由匹配之前就把它们分到了不同的赛道。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;接下来几轮错误复制粘贴大法：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;最初想法：ASGI middleware 翻译协议 → 80 行，手搓 websockets 库&lt;/li&gt;
+&lt;li&gt;精简版：用 websockets 库做帧编码 → 还是 50 行 middleware&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;后来发现ASGI 这一层做不到。因为 标准 ASGI middleware 拿到请求时已经太晚了：&lt;/p&gt;
+&lt;p&gt;uvicorn TCP 收包&lt;br /&gt;
+1. httptools 解析 headers&lt;br /&gt;
+2. on_headers_complete 决定 scope type (http vs websocket)  ← 需要在这里拦截&lt;br /&gt;
+3. 创建 scope + receive/send（已经绑定为 HTTP 协议）&lt;br /&gt;
+4. 调用 ASGI app (middleware 链)                            ← middleware 才在这里介入&lt;/p&gt;
+&lt;p&gt;middleware 只能看到已经定型的 scope['type'] = 'http'，改不了底层的 receive/send 绑定。&lt;/p&gt;
+&lt;p&gt;然后尝试了一个 &lt;code&gt;gunicorn.conf.py&lt;/code&gt; 的hack：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;def post_worker_init(worker):
+    &amp;quot;&amp;quot;&amp;quot;让 uvicorn 从 sec-websocket-key 识别 WebSocket，绕过 nginx 吞 Upgrade 头的问题&amp;quot;&amp;quot;&amp;quot;
+    import httptools
+    from uvicorn.protocols.http.httptools_impl import HttpToolsProtocol
+    _orig = HttpToolsProtocol.on_headers_complete
+    def _patched(self):
+        has_ws_key = any(n == b&amp;quot;sec-websocket-key&amp;quot; for n, _ in self.headers)
+        if has_ws_key and self._should_upgrade_to_ws():
+            self.headers.append((b&amp;quot;upgrade&amp;quot;, b&amp;quot;websocket&amp;quot;))
+            self.headers.append((b&amp;quot;connection&amp;quot;, b&amp;quot;Upgrade&amp;quot;))
+            self.scope[&amp;quot;headers&amp;quot;] = self.headers
+            self.scope[&amp;quot;method&amp;quot;] = self.parser.get_method().decode(&amp;quot;ascii&amp;quot;)
+            raise httptools.HttpParserUpgrade(b&amp;quot;&amp;quot;)
+        return _orig(self)
+    HttpToolsProtocol.on_headers_complete = _patched
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;我也觉得，ws这协议是不是有病。如果有 &lt;code&gt;sec-websocket-key&lt;/code&gt; 就认定为 ws 不就完了。搞那么复杂。&lt;/p&gt;
+&lt;p&gt;然后这个办法在 ASGI 里还是行不通。最终版：直接篡改 uvicorn 收到的 raw TCP 字节&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;def post_worker_init(worker):
+    import re
+    from uvicorn.protocols.http.httptools_impl import HttpToolsProtocol
+
+    _orig_data_received = HttpToolsProtocol.data_received
+
+    def _patched_data_received(self, data):
+        if not getattr(self, '_ws_patched', False) and b'\r\n\r\n' in data:
+            self._ws_patched = True
+            lower = data.lower()
+            if b'sec-websocket-key:' in lower and b'\nupgrade:' not in lower:
+                data = re.sub(rb'(?i)\r\nconnection:[^\r]*', b'\r\nConnection: Upgrade', data)
+                data = data.replace(b'\r\n\r\n', b'\r\nUpgrade: websocket\r\n\r\n', 1)
+        return _orig_data_received(self, data)
+
+    HttpToolsProtocol.data_received = _patched_data_received
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;居然成功了！不修改nginx兼容websocket！&lt;/p&gt;
+&lt;p&gt;这路子太野了。还是老老实实去改nginx了。&lt;/p&gt;
+&lt;p&gt;不过也学到一些姿势，比如 &lt;code&gt;258EAFA5-E914-47DA-95CA-C5AB0DC85B11&lt;/code&gt; ，以及ws居然是二进制流。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 28 May 2026 18:35:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-05-28:/2026/stdout-20</guid><category>stdout</category></item><item><title>理解LLM的范式——它就是个差分机？</title><link>https://blog.est.im/2026/stderr-20</link><description>&lt;p&gt;作为一个外行，我一直对“AI”的魔力感到惊奇，我一度以为神经网络一层一层传播，可以看成某种有限步骤的图灵机。AI提醒我不要瞎类比，图灵机左移右移是离散，确定的逻辑，神经网络是fp32上连续的概率映射。&lt;/p&gt;
 &lt;p&gt;后来稍微深入了解了一下，认识到对于一个深度固定的 Transformer 模型（比如 96 层的 GPT-4），它的单次前向传播算是一个深度固定的有向无环图（DAG）。所谓的 predict next token，可以粗糙理解成&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;  next_token = eval(model_weights, history+input)
 &lt;/code&gt;&lt;/pre&gt;
@@ -910,32 +990,4 @@ That’s the Porsche Diffusion Law.&lt;/p&gt;
 &lt;p&gt;The system ends up with massive scale, high efficiency-and very few cells actually reproducing.&lt;/p&gt;
 &lt;p&gt;If you squint, the pattern doesn’t feel entirely alien.&lt;/p&gt;
 &lt;hr /&gt;
-&lt;p&gt;I wrote this blog because of &lt;a href="https://news.ycombinator.com/item?id=47554773"&gt;an HN thread&lt;/a&gt;. Praise the unholy AI trinity of 搜广推 business (Another Chinese connotation which stands for Search, Ads, and Recommendation engines in case you are wondering).&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 29 Mar 2026 00:27:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-03-29:/2026/stdin-09</guid><category>stdin</category></item><item><title>首页和404更新</title><link>https://blog.est.im/2026/stdout-12</link><description>&lt;p&gt;觉得每年都得折腾一下。&lt;/p&gt;
-&lt;p&gt;做了个 404 页面 &lt;a href="https://est.im/404"&gt;https://est.im/404&lt;/a&gt; 老登们&lt;a href="https://v2ex.com/t/1201147"&gt;一眼&lt;/a&gt;就能get到点。00后可能没见过。&lt;/p&gt;
-&lt;p&gt;哈哈哈，等有空了去做个多语言版本的 😎&lt;/p&gt;
-&lt;p&gt;可能没折腾过的不知道这玩意是在 shdoclc.dll 里，通过 &lt;a href="https://www.angusj.com/resourcehacker/"&gt;Reource Hacker&lt;/a&gt; 可以提取出来&lt;/p&gt;
-&lt;p&gt;本来想去 win10 瞻仰一下遗迹，发现 iexplore.exe 直接强行启动 Edge了。搜到个法子可以绕过，新建个 1.vbs&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Set ie = CreateObject(&amp;quot;InternetExplorer.Application&amp;quot;)
-ie.Navigate &amp;quot;about:blank&amp;quot;
-ie.Visible = 1
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;然后地址栏输入 &lt;code&gt;res://shdoclc.dll/http_404.htm&lt;/code&gt; 。嘿，您猜怎么着，Win10 连 shdoclc.dll 都没啦。&lt;/p&gt;
-&lt;p&gt;于是只能去下载个。那个感叹号图标是给 gemini 下令 pixel perfect replica 绘制的，虽然最后还是得手工调整。别的icon就随便找个 emoji 充数了。&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;首页也折腾了一下 &lt;a href="https://est.im/"&gt;https://est.im/&lt;/a&gt;  ，AI搓特效就是快啊。难点主要是提示词，怎么描述这个现象。什么&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;flowing vibrant color&lt;/li&gt;
-&lt;li&gt;lava-lamp&lt;/li&gt;
-&lt;li&gt;no-signal-tv effect&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;然后 AI 挨着问我是不是&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Plasma effect&lt;/li&gt;
-&lt;li&gt;Perlin noise / noise flow&lt;/li&gt;
-&lt;li&gt;Reaction–diffusion&lt;/li&gt;
-&lt;li&gt;neon lights but flowing&lt;/li&gt;
-&lt;li&gt;Aurora effect&lt;/li&gt;
-&lt;li&gt;gradient flow&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;最后bingo，我也做了这个 &lt;a href="https://lab.est.im/grad-flow"&gt;gradient flow&lt;/a&gt; 的demo&lt;/p&gt;
-&lt;p&gt;感觉有了AI之后很多idea都能很快实现，何尝不是一种快乐呢。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 25 Mar 2026 23:21:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-03-25:/2026/stdout-12</guid><category>stdout</category></item></channel></rss>
+&lt;p&gt;I wrote this blog because of &lt;a href="https://news.ycombinator.com/item?id=47554773"&gt;an HN thread&lt;/a&gt;. Praise the unholy AI trinity of 搜广推 business (Another Chinese connotation which stands for Search, Ads, and Recommendation engines in case you are wondering).&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 29 Mar 2026 00:27:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-03-29:/2026/stdin-09</guid><category>stdin</category></item></channel></rss>
