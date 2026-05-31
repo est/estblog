@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sun, 31 May 2026 02:33:50 +0800</lastBuildDate><item><title>Playlet：DLNA听歌神器 免安装app播放NAS里的歌</title><link>https://blog.est.im/2026/stdout-21</link><description>&lt;p&gt;家里有个小 NAS 。里面存了一些歌。一半是用 NAS 自带的 app 听，一半是。。。SMB 共享打开听&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sun, 31 May 2026 02:56:02 +0800</lastBuildDate><item><title>Playlet：DLNA听歌神器 免安装app播放NAS里的歌</title><link>https://blog.est.im/2026/stdout-21</link><description>&lt;p&gt;家里有个小 NAS 。里面存了一些歌。一半是用 NAS 自带的 app 听，一半是。。。SMB 共享打开听&lt;/p&gt;
 &lt;p&gt;虽然 NAS 也提供 DLNA ，一直以来找不到趁手 app ，要么收费，要么 bug 多，要么不能多端。&lt;/p&gt;
-&lt;p&gt;今天闲着没事，就搓了个网页版听歌的。不需要安装 app ，只需要一个浏览器书签&lt;/p&gt;
-&lt;p&gt;也需要你对网络、DLNA 的亿点点知识。比如你得自己想办法找出 DLNA 的 IP 和端口，然后&lt;/p&gt;
+&lt;p&gt;13年前我也想&lt;a href="https://github.com/est/push2air"&gt;基于 &lt;code&gt;chrome.socket&lt;/code&gt; 做个 Chrome App&lt;/a&gt; 弄个类似的。结果这破玩意实现有问题，&lt;a href="https://issuetracker.google.com/issues/40960228"&gt;多连接会导致 hang&lt;/a&gt;。最后&lt;a href="https://blog.chromium.org/2020/01/moving-forward-from-chrome-apps.html"&gt;2020年Chromium决定杀死 Chrome Apps&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;周六的时候，实在无聊，决定又开始搓轮子。在思考  SSDP/UPnP ，native UI, electron，命令行这些选型的时候，突然想到，DLNA服本来就要提供一个http，自己再造个 http 客户端去通信，岂不是多此一举？只要依托它，解决跨域……等等，用个 bookmarklet 不就行了？当页调用 &lt;code&gt;fetch()&lt;/code&gt; ，走 SOAP 协议，完美。&lt;/p&gt;
+&lt;p&gt;所以这就有了，网页版听歌的。不需要安装 app ，只需要一个浏览器书签&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://est.github.io/playlet/"&gt;https://est.github.io/playlet/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;也需要你对网络、DLNA 的亿点点知识。比如你得自己想办法找出 DLNA 的 IP 和端口&lt;/p&gt;
 &lt;p&gt;使用方法：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;

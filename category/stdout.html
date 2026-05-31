@@ -59,9 +59,11 @@
             </a>
             <p class="card-text"><p>家里有个小 NAS 。里面存了一些歌。一半是用 NAS 自带的 app 听，一半是。。。SMB 共享打开听</p>
 <p>虽然 NAS 也提供 DLNA ，一直以来找不到趁手 app ，要么收费，要么 bug 多，要么不能多端。</p>
-<p>今天闲着没事，就搓了个网页版听歌的。不需要安装 app ，只需要一个浏览器书签</p>
-<p>也需要你对网络、DLNA 的亿点点知识。比如你得自己想办法找出 DLNA 的 IP 和端口，然后</p>
+<p>13年前我也想<a href="https://github.com/est/push2air">基于 <code>chrome.socket</code> 做个 Chrome App</a> 弄个类似的。结果这破玩意实现有问题，<a href="https://issuetracker.google.com/issues/40960228">多连接会导致 hang</a>。最后<a href="https://blog.chromium.org/2020/01/moving-forward-from-chrome-apps.html">2020年Chromium决定杀死 Chrome Apps</a></p>
+<p>周六的时候，实在无聊，决定又开始搓轮子。在思考  SSDP/UPnP ，native UI, electron，命令行这些选型的时候，突然想到，DLNA服本来就要提供一个http，自己再造个 http 客户端去通信，岂不是多此一举？只要依托它，解决跨域……等等，用个 bookmarklet 不就行了？当页调用 <code>fetch()</code> ，走 SOAP 协议，完美。</p>
+<p>所以这就有了，网页版听歌的。不需要安装 app ，只需要一个浏览器书签</p>
 <p><a href="https://est.github.io/playlet/">https://est.github.io/playlet/</a></p>
+<p>也需要你对网络、DLNA 的亿点点知识。比如你得自己想办法找出 DLNA 的 IP 和端口</p>
 <p>使用方法：</p>
 <ol>
 <li>
