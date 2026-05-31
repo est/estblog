@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Playlet：DLNA听歌神器 免安装app播放NAS里的歌 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Playlet：DLNA听歌神器 免安装app播放NAS里的歌" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stdout-21" />
+    <meta property="og:url" content="https://blog.est.im/2026/stdout-21">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Playlet：DLNA听歌神器 免安装app播放NAS里的歌">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Playlet：DLNA听歌神器 免安装app播放NAS里的歌</h2>
+    <p class="post-date">Posted <time datetime="2026-05-30T20:03:08+08:00">2026-05-30</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>家里有个小 NAS 。里面存了一些歌。一半是用 NAS 自带的 app 听，一半是。。。SMB 共享打开听</p>
+<p>虽然 NAS 也提供 DLNA ，一直以来找不到趁手 app ，要么收费，要么 bug 多，要么不能多端。</p>
+<p>今天闲着没事，就搓了个网页版听歌的。不需要安装 app ，只需要一个浏览器书签</p>
+<p>也需要你对网络、DLNA 的亿点点知识。比如你得自己想办法找出 DLNA 的 IP 和端口，然后</p>
+<p><a href="https://est.github.io/playlet/">https://est.github.io/playlet/</a></p>
+<p>使用方法：</p>
+<ol>
+<li>
+<p>把这个网址加到浏览器书签</p>
+<pre><code>    javascript:import("https://est.github.io/playlet/loader.js")
+</code></pre>
+</li>
+<li>
+<p>打开 DLNA 服务器的网页</p>
+</li>
+<li>点击第一步加的书签（如果找不到书签栏，右上角三个点菜单 -&gt; 收藏 可以切换）</li>
+</ol>
+<p>自测兼容 NAS 的 MiniDLNA 。chrome ，手机浏览器和 webview 都可以播放。</p>
+<p>当年嵌入个 <code>&lt;script&gt;</code> 写法多复杂，createElement又这那的；现在直接 <code>import()</code> 搞定。简洁明了，还不会重复加载。</p>
+<p>最后是个 50KB 左右的单体 js。实现了播放、搜索等核心功能+UI。</p>
+<p>给本地测试环境动了个小心思，利用 iframe 去模拟 bookmarklet 注入。还学习到 <code>&lt;audio crossorigin="anonymous"&gt;</code> 居然主动去检查跨域CORS头导致加载失败，去掉 <code>crossorigin</code> 就行。AI嘴硬不给去掉，服了。</p>
+<p>这下随时随地打开浏览器就能听歌了。除了收藏的一些古典CD是 .cue 分段的没法播放。感觉需要去电脑上硬切割一下了。</p>
+<p>接下来想把歌词什么的整理好。不知道有没有类似 opensubtitles 之类的服务。</p>
+<p>最后想起来，miniDLNA为啥不直接把这一坨JS内置了 😂 可能当年那个条件没厂家愿意去js手搓一套DLNA协议+播放界面吧。甚至浏览器对常见音频格式都不怎么支持</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

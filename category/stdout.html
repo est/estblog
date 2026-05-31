@@ -54,6 +54,43 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-21"  rel="bookmark" >
+              <h2 class="card-title">Playlet：DLNA听歌神器 免安装app播放NAS里的歌</h2>
+            </a>
+            <p class="card-text"><p>家里有个小 NAS 。里面存了一些歌。一半是用 NAS 自带的 app 听，一半是。。。SMB 共享打开听</p>
+<p>虽然 NAS 也提供 DLNA ，一直以来找不到趁手 app ，要么收费，要么 bug 多，要么不能多端。</p>
+<p>今天闲着没事，就搓了个网页版听歌的。不需要安装 app ，只需要一个浏览器书签</p>
+<p>也需要你对网络、DLNA 的亿点点知识。比如你得自己想办法找出 DLNA 的 IP 和端口，然后</p>
+<p><a href="https://est.github.io/playlet/">https://est.github.io/playlet/</a></p>
+<p>使用方法：</p>
+<ol>
+<li>
+<p>把这个网址加到浏览器书签</p>
+<pre><code>    javascript:import("https://est.github.io/playlet/loader.js")
+</code></pre>
+</li>
+<li>
+<p>打开 DLNA 服务器的网页</p>
+</li>
+<li>点击第一步加的书签（如果找不到书签栏，右上角三个点菜单 -&gt; 收藏 可以切换）</li>
+</ol>
+<p>自测兼容 NAS 的 MiniDLNA 。chrome ，手机浏览器和 webview 都可以播放。</p>
+<p>当年嵌入个 <code>&lt;script&gt;</code> 写法多复杂，createElement又这那的；现在直接 <code>import()</code> 搞定。简洁明了，还不会重复加载。</p>
+<p>最后是个 50KB 左右的单体 js。实现了播放、搜索等核心功能+UI。</p>
+<p>给本地测试环境动了个小心思，利用 iframe 去模拟 bookmarklet 注入。还学习到 <code>&lt;audio crossorigin="anonymous"&gt;</code> 居然主动去检查跨域CORS头导致加载失败，去掉 <code>crossorigin</code> 就行。AI嘴硬不给去掉，服了。</p>
+<p>这下随时随地打开浏览器就能听歌了。除了收藏的一些古典CD是 .cue 分段的没法播放。感觉需要去电脑上硬切割一下了。</p>
+<p>接下来想把歌词什么的整理好。不知道有没有类似 opensubtitles 之类的服务。</p>
+<p>最后想起来，miniDLNA为啥不直接把这一坨JS内置了 😂 可能当年那个条件没厂家愿意去js手搓一套DLNA协议+播放界面吧。甚至浏览器对常见音频格式都不怎么支持</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-05-30T20:03:08+08:00">2026-05-30</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-20"  rel="bookmark" >
               <h2 class="card-title">不修改nginx接收websocket</h2>
             </a>
@@ -2836,43 +2873,6 @@ bool HttpUtil::IsTokenChar(char c) {
 <p>那还搞个屁的 RESTful 啊。直接用特殊符号一把梭。不过各种服务端框架可能不是很容易做兼容。哈哈。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-07-17T09:47:00+08:00">2024-07-17</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2024/stdout-13"  rel="bookmark" >
-              <h2 class="card-title">Cappy in a Haystack locations</h2>
-            </a>
-            <p class="card-text"><p>For <a href="https://fallout.fandom.com/wiki/Cappy_in_a_Haystack">the mission</a> from the beloved Fallout 4 Nuka-World DLC</p>
-<pre><code>coc DLC04KiddieKingdomFunHouse01; player.moveto 06015A94
-coc NukaWorldWildWestExt02; player.moveto 06015A8A
-coc DLC04BottlingPlant01; player.moveto 060445DF
-coc DLC04BottlingPlant01; player.moveto 0604A812
-coc DLC04GalacticZoneExt04; player.moveto 06015A8E
-coc DLC04GalacticZoneExt04; player.moveto 0604AD3F
-coc DLC04GalacticZoneExt08; player.moveto 06015A91
-coc DLC04GalacticZoneExt08; player.moveto 0604AD40
-coc DLC04KiddieKingdomFunHouse01; player.moveto 0604AD3D
-coc DLC04WWMineCart01; player.moveto 06015A8B
-coc DLC04WWMineCart01; player.moveto 0604AA39
-coc KiddieKingdomExt06; player.moveto 06015A97
-coc KiddieKingdomExt06; player.moveto 0604AD3E
-coc NukaWorldNukaTownUSA06; player.moveto 0604A814
-coc NukaWorldNukaTownUSA06; player.moveto 0604A813
-coc NukaWorldWildWestExt02; player.moveto 0604A815
-coc SafariAdventure03; player.moveto 06015A9A 
-coc SafariAdventure03; player.moveto 0604AA3A
-coc SafariAdventure07; player.moveto 06015A9D
-coc SafariAdventure07; player.moveto 06015A9D
-coc SafariAdventure07; player.moveto 0604AA3B
-</code></pre>
-<p>idk hope it works lol.</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-07-13T09:19:00+08:00">2024-07-13</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
