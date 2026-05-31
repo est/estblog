@@ -54,6 +54,33 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2025/stdin-09"  rel="bookmark" >
+              <h2 class="card-title">CBOR 和 MsgPack 是一回事</h2>
+            </a>
+            <p class="card-text"><p>翻旧账的时候无意中<a href="https://news.ycombinator.com/item?id=42664005">发现</a>的。MessagePack的实现者 mdhb 说：</p>
+<blockquote>
+<p>Disclaimer: I wrote and maintain a MessagePack implementation.<br />
+CBOR is MessagePack. The story is that Carsten Bormann wanted to create an IETF standardized MP version, the creators asked him not to (after he acted in pretty bad faith), he forked off a version, added some very ill-advised tweaks, named it after himself, and submitted it anyway.<br />
+I wrote this up years ago (https://news.ycombinator.com/item?id=14072598), and since then the only thing they've addressed is undefined behavior when a decoder encounters an unknown simple value.</p>
+</blockquote>
+<p><a href="https://news.ycombinator.com/item?id=43229259">以及</a>：</p>
+<blockquote>
+<p>There's no reason an MP implementation has to be slower than a CBOR implementation. If a given library wanted to be very fast it could be. If anything, the fact that CBOR more or less requires you to allocate should put a ceiling on how fast it can really be. Or, put another way, benchmarks of dynamic language implementations of a serialization format aren't a high signal indication of its speed ceiling. If you use a dynamic language and speed is a concern to this degree, you'd write an adapter yourself, probably building on one of the low level implementations.<br />
+That said, people are usually disappointed by MP's speed over JSON. A lot of engineering hours have gone into making JSON fast, to the point where I don't think it ever made sense to choose MP over it for speed reasons (there are other good reasons). Other posters here have pointed out that your metrics are usually dominated by something else.<br />
+But finally, CBOR is fine! The implementations are good and it's widely used. Users of CBOR and MP alike will probably have very similar experiences unless you have a niche use case (on an embedded device that can't allocate, you really need bignums, etc).</p>
+</blockquote>
+<p>看它又翻了一堆旧帐。。hmmmm。。。好吧。</p>
+<p>最近在看 <a href="https://atproto.com/specs/data-model">ATProto</a> 发现它既可以 CBOR 也可以 JSON </p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2025-09-27T20:01:00+08:00">2025-09-27</time></p>
+<p>stdin</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2025/stdin-08"  rel="bookmark" >
               <h2 class="card-title">大集团，小组织和原子个体</h2>
             </a>
@@ -907,54 +934,6 @@ Yes! January 29, 2025, falls on Lunar New Year’s Eve, which is the day before 
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2025-01-14T23:36:23+08:00">2025-01-14</time></p>
 <p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2024/stdout-06"  rel="bookmark" >
-              <h2 class="card-title">Little known facts about Han</h2>
-            </a>
-            <p class="card-text"><p>I was planning to publish this article on 2024-04-05 00:01, but rejected because it looked silly for this blog. On that day, butt hurt as usual, I watched this short-vid called <a href="https://www.douyin.com/video/7345777842376019252">Why Sichuan people were chill</a>, by the influencer 罗胖. I was quite amazed by his 3.79M many fans and more strangely, IP location: Sichuan. I followed the article he mentioned: <a href="https://www.dedao.cn/course/article?id=rykaNlMY5gn3Jq19QdJ7EAROW0DLje">1001 A.D. and How Sichuan got its name?</a> and find it quite interesting, as all history lessons are.</p>
-<p>So let's explore the little known details and find out why history of Sichuan is somewhat special (Whig-style narrative alert!)</p>
-<h2>The birthplace of Taoism</h2>
-<p>Records shows that the birthplace of Taoism, the most chill religion ever, points to 鹤鸣山 at 大邑, and the 青城山 nearby was considered a holy mountain. Some say 龙虎山 at 江西 as an alternative, but in my opinion its where the <em>tianshi</em> (prophet) 张道陵 pactice his alchemy rather than the developing the belief，The real deal including Wudoumi movement clearly originates from 龙门 mountain ranges on the western of Chengdu plain.</p>
-<h2>Inspired by Buddhism</h2>
-<p>When I was searching for tourist attactions I found that 鹤鸣山 were suspiciously connected to Buddhism. Chinese Buddhism were first landed at 白马寺 at then capital 洛阳 at 68 B.C. But 白马寺 itself wasn't supposed to be a <em>temple</em> per se, but rather a settlement sponsored by the imperial court. There were nine houses of governance established by Han court covering Justice, Sacrifices, Royal affairs, Carriages and so on, one of them is 鸿胪寺 for Royal Hospitality. The 白马寺 was built by the order of the Second Emperor of E. Han as a guest house to translate the <em>42 chapters of Sutra</em> acting like a 鸿胪寺. Some 6 years later, after the job were done, the two buddhist monks, 迦什摩腾 and 竺法兰, went to Sichuan seeking a legendary mountain called 雾中山 according a prophecy. The prophecy were carved on a Ming-era stele 开化寺碑记, describes the Buddha Shakyamuni, when about to enter Nirvana in the city of Kushinagar, once said to his disciple Sariputta:</p>
-<blockquote>
-<p>“我灭去七百年，尔往震旦雾中大光明山。山脉发源于昆仑，有七十二峰，为古佛弥陀道化之所。严密保护，嗣后圣者来居。”</p>
-</blockquote>
-<p>So the two Indian monks built a real Buddhism temple 开化寺 on 雾中山 and began spreading the religion there. It's said the temple had a collection of Pāli Canon transcribing Theravada Buddhism, one of the O.G. version of two Buddhism major branches in Asia.</p>
-<p>So what's the connection anyway? The first prophet of Taoism, <em>tianshi</em> Zhang, chose 鹤鸣山 somewhere 10km near the first Buddhism temple</p>
-<p><img alt="" src="/images/2024/stdout-06-01.jpg" /></p>
-<p>And later Taoism flourished in Sichuan, like Wudoumi, and ultimately, its variant Taiping-Tao, wrecked the mighty Han empire.</p>
-<p>I also commented this travia <a href="https://news.ycombinator.com/item?id=42254106">on HN</a></p>
-<p>The doctrine of religious Taoism and Buddhism were strikingly similar, which leds to series of conflicts and accusations over the millennia. The most famous example, <em>Laozi Converted the Barbarians 老子化胡经</em> were publicly debated in Mongol-era imperial court and Taoist lost the battle.</p>
-<h2>Silk</h2>
-<p>Also an interesting article from HN <a href="https://news.ycombinator.com/item?id=42297733#42305823">Evidence of the use of silk by Bronze Age civilization</a>, which I also commented, because some guy suggests Sichuan were once non-Han, it triggered me. TFA states (with my edits): </p>
-<blockquote>
-<p>HuangDi lived on the hill of Xuanyuan and married the daughter of Xiling clan. HuangDi's consort Leizu of Xiling taught others to raise silkworms, and the legend Leizu is from the people of Chengdu in Sichuan. <em>Shu</em> refers to “mulberry worms” aka “silkworm larvae”. The character <em>Shu</em> is related to the initial sericulture, referring to the beginning of the Shu State and the people, for whom sericulture was central to their economic activities.</p>
-</blockquote>
-<h2>HuangDi</h2>
-<p>For those who aren't familiar, <em>HuangDi</em> the Yellow Emperor was considered the ancester of the Han, the Hun, the Hmong and Xianbei of the Siberians. The second son of <em>HuangDi</em>, married ChangPu from the Shu clan. Their son <em>zhuānxū</em> was another <em>Di</em>, out of the <em>5 Di of Ancient Kings 五帝</em></p>
-<h2>Baijiu</h2>
-<p>Baijiu, the Kaoliang liquor, strong distilled from great millet, were first introduced in Sichuan known as 蜀黍. Even today top notch brands like <em>Maotai</em> were from  the Chishui Valley of Sichuan (administratively divided to Guizhou by purpose)</p>
-<h2>Han</h2>
-<p>But what does <em>Han</em> has anything to do with Sichuan? Well everything does. The literal meaning of "Han" traces back to LiuBang, the Great King of Han, founder and first ruler of the Han dynasty, literally settled his fief over Sichuan (Ba, Shu, Hanzhong and its 41 counties). Liubang spent his next 5 years elimilated all his enemies and began the first Pax Sinica of 300 years.</p>
-<p>The second Pax Sinica, led by the Great Worrier Li Shimin, also titled <em>Yizhou Acting Desk of the Supreme Book</em>. To explain, <em>the Supreme Book</em> refers to 尚书, the source of great power, the source of ultimate authority, one and only text that describes how Chinese civilization came into being since ancient times. The Desk is the government body where the book operates, Yizhou Acting Desk is like the copy that covers Sichuan, aliased Sichuan. The soldiers of Sichuan, as the last reserve force led by general 窦轨, joined Li Shimin for the final attack on Dou JianDe on 620 A.D. at the Hulao Pass, which leds to the live capture of two kings, and helped Li Shimin rose to throne.</p>
-<h2>Tang</h2>
-<p>At 虎牢关 Hulao Pass, King of Qin - Li Shimin crushed Dou Jiande’s relief army, then forced Luoyang’s Wang Shichong to surrender. Two kings captured in one stroke. Final victory sealed by the ruthless Ba-Shu troops under 窦轨, arriving just in time to stabilize stretched lines—turning a risky siege into empire-making triumph.</p>
-<h2>8 Partners of Oath</h2>
-<p>The fighting spirit of Sichuan soldiers dates back. An oath was taken between Zhou and 8 partner states, including Shu, as described in <em>the Supreme Book</em> on Zhou chapter 4, to rebel against the cruel Shang dynasty. The battle took place at 牧野 on 1046 B.C. where the Ba people performed a war dance on the frontline and Shang army collapsed upon witness.</p>
-<h2>Libai and the Great Prose Masters</h2>
-<p>Libai, the God of Poetry, was raised in Sichuan, but where he's born is debatable. However, four out of the Eight Great Prose Masters, were born in Sichuan. So it's either Libai a Sichuanese or Ouyang Xiu, or both.</p>
-<h2>... and there's more</h2>
-<p>That's all of the trivia I could think of, for now! Leave a comment if you think otherwise. Feel free to correct my English mistakes please, as I am an ESL blogger without use of any AI</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-12-03T22:26:00+08:00">2024-12-03</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 
