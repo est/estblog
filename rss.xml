@@ -1,5 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 09 Jun 2026 08:45:23 +0800</lastBuildDate><item><title>AI和柜台费</title><link>https://blog.est.im/2026/stderr-21</link><description>&lt;p&gt;现在这个时间点，观察到两件事：&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Wed, 10 Jun 2026 23:21:00 +0800</lastBuildDate><item><title>基于 git 的零拷贝静态web服务器</title><link>https://blog.est.im/2026/stdout-22</link><description>&lt;p&gt;无聊，产生了个crazy的想法。&lt;/p&gt;
+&lt;p&gt;git 内部用 zlib 压缩文件内容&lt;/p&gt;
+&lt;p&gt;Content-Encoding: gzip 也是&lt;/p&gt;
+&lt;p&gt;如果web服务器输出 .git 里的 静态 内容，是不是可以减一个二次解压/压缩步骤？？？&lt;/p&gt;
+&lt;p&gt;blob sha1 直接当etag？&lt;/p&gt;
+&lt;p&gt;跟AI较量了几轮，一开始它说做不到。因为 blob 的格式比较变态。因为&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;hello world...&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;在 .git/objects/ab/cdef... 里的东西是这么存的&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;zlib(blob 1234\0hello world...)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;I was like&lt;/p&gt;
+&lt;p&gt;？？？日他妈真变态啊。这前面是写死了 &lt;code&gt;blob &amp;lt;size&amp;gt;\0&lt;/code&gt; 然后把文件内容放在一起，再压缩的。&lt;/p&gt;
+&lt;p&gt;.git 这设计脑子有病啊。。。为啥不是原始文件gz而是加个头去gz。。。&lt;/p&gt;
+&lt;p&gt;此路不通！结束&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;然后AI嘴瓢了，说&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;先别急着吐槽 Linus，这个设计不仅没病，反而是 Git 能成为现代“内容寻址数据库”的精髓所在。&lt;br /&gt;
+当 Git 从磁盘读取一个松散对象时，它是个流（Stream）。Git 只需要解压出最开始的几个字节，读到 blob 4096\0，内核就可以立刻执行 malloc(4096) 分配精准的内存。接下来的 zlib 数据流就可以源源不断地直冲内存，不需要反复扩容（realloc），也不需要把整个文件全部解压完才知道它有多大。&lt;br /&gt;
+况且，这里有一个长久的误解：你吐槽的那个把 blob &lt;size&gt;\0 塞进 zlib 的逻辑，其实只存在于松散对象（Loose Object）中。在真正的 Packfile 里，这个文本格式的头早就被干掉了。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;【松散对象 Loose Object】&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;+-------------------------------------------------------+
+| zlib 压缩包: [ &amp;quot;blob 1024\0&amp;quot; + 原始文件纯数据 ]           |
++-------------------------------------------------------+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;【包文件 Packfile 内部的一条记录】&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;+-------------------------------------------------------+
+| [3-bit 类型] + [变长 Varint 表达的 Size] + [纯 zlib 数据流] |
++-------------------------------------------------------+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;我去，这么好的东西，你怎么不早点告诉我！&lt;/p&gt;
+&lt;p&gt;然后AI给我泼一盆冷水：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Git Packfile 内部的流是zlib 格式 (RFC 1950)，头部 2 字节 (CMF/FLG)，校验算法 Adler-32 (追求极速快照比对)&lt;/li&gt;
+&lt;li&gt;HTTP Content-Encoding: gzip 期待的流 gzip格式 (RFC 1952)，头部 10 字节 (Magic Number, CM, FLG, Time 等)，校验算法CRC32 (追求网络传输抗干扰)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;不！兼！容！&lt;/p&gt;
+&lt;p&gt;完结！&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;嘿，亏得我早年完 IIS 长大的。我记得有个偏方，&lt;code&gt;Content-Encoding: deflate&lt;/code&gt;，尾部crc32直接丢了&lt;/p&gt;
+&lt;p&gt;AI：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;恭喜你，这是Web 历史上著名的 “Deflate 格式混乱案”&lt;br /&gt;
+RFC 2616 (HTTP/1.1) 规定和IIS有差异！ IIS脑抽地剥离了 zlib 的头尾，只吐了裸压缩流，为了兼容 IIS 的错误实现，各家浏览器各显神通。有的浏览器严格按 RFC 执行，有的浏览器看到 zlib 头会报错，必须看内核的容错机制。&lt;br /&gt;
+真正的zlib 格式 (RFC 1950) 是要求包含 2 字节头 + DEFLATE 压缩流 + 4 字节 Adler-32 尾&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;等等，你说啥？Adler-32？这不就又对上了嘛！！！&lt;/p&gt;
+&lt;p&gt;那么开始 Vibe！！！&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Git Packfile 的终极大 Boss：差分存储（Delta Compression）&lt;br /&gt;
+即便你搞定了上面的所有协议头和校验和，Git 的终极形态——Packfile 还会给你最后一击。你假设的场景是：Git 里的 Blob 都是一个个完整的、独立的压缩包。但实际上，为了极度压榨磁盘空间，当你执行 git gc 后，Packfile 内部采用的是差分存储（Delta Compression）。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;啊这？？我于是问，能在配置里禁用掉吗？&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# 将比对窗口设为 0，彻底禁用 Delta 差分计算
+git config --global pack.window 0
+
+# 强制打包所有对象，并立刻、无条件地清除所有 Loose 文件（无视 2 周保护期）
+git gc --prune=now --aggressive
+
+# -a 表示把所有对象打包进一个全新的 pack
+# -d 表示打包成功后，立刻删除原本的 loose 对象和旧的 pack 文件
+git repack -a -d
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;哎，你tmd不早说。这不就闭环了嘛！！！&lt;/p&gt;
+&lt;p&gt;于是最后，通过 OpenCode Zen 免费的 MiMo V2.5 Free &lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/est/git2www-zerocopy"&gt;https://github.com/est/git2www-zerocopy&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本地自测是OK的&lt;/p&gt;
+&lt;p&gt;我也算是写过 zero-copy 的人了 🤣（assert AI会写 === 我也会写）&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 10 Jun 2026 23:21:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-06-10:/2026/stdout-22</guid><category>stdout</category></item><item><title>AI和柜台费</title><link>https://blog.est.im/2026/stderr-21</link><description>&lt;p&gt;现在这个时间点，观察到两件事：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;华为的大模型哑火。国内的AI圈反而没那么多恶臭拉踩舆论&lt;/li&gt;
 &lt;li&gt;雷不斯天天给MIMO搞新闻。一开始是免费用在Openrouter刷榜；然后在大家都玩按次数的 codng plan它家率先搞 token plan涨价；然后又是 100T 申请免费送；然后跟ds4同款缓存优化降价；然后又是给流失老付费用户免费一个月套餐&lt;/li&gt;
@@ -1095,29 +1162,4 @@ TIME_FORMAT = &amp;quot;H:i:s&amp;quot;
 &lt;p&gt;Ultimately, while Bash is a powerful glue, it is a treacherous foundation for autonomous agents. If we want reliable agents, we should favor languages and formats that offload state into the context.&lt;/p&gt;
 &lt;p&gt;Indent is all you need.&lt;/p&gt;
 &lt;hr /&gt;
-&lt;p&gt;Translated from &lt;a href="https://www.zhihu.com/question/1992208967498236682/answer/2028074933238907033"&gt;Zhihu 胡一鸣&lt;/a&gt; &amp;amp; edited by ChatGPT&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 21 Apr 2026 13:09:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-04-21:/2026/stdin-11</guid><category>stdin</category></item><item><title>语文学习和考试</title><link>https://blog.est.im/2026/stdin-10</link><description>&lt;p&gt;前面抖了两篇&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://blog.est.im/2026/stderr-14"&gt;如何跟孩子讲学习的意义&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://blog.est.im/2026/stderr-15"&gt;失落的学习兴趣&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;今天就抬一个具体论据。&lt;a href="https://www.zhihu.com/question/1893326454940475483/answer/2023187143992821733"&gt;来自zhihu&lt;/a&gt;：&lt;/p&gt;
-&lt;p&gt;Q: 如果文言文退出中国教育体系，你是支持还是反对？为什么?&lt;br /&gt;
-A: 文言文真退了，可能就真的不知道以后高中语文课上来是干什么的了。&lt;/p&gt;
-&lt;p&gt;但是作者不允许转载。我只能先归档 &lt;a href="https://archive.md/UUomq"&gt;https://archive.md/UUomq&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;再让AI转述一下这篇回答的精华：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;高中语文长期处于一种尴尬状态：教材内容与高考要求之间缺乏明确对应关系，导致教学目标模糊。相比数学、物理、英语等学科，语文老师很难清晰地回答“教这些课文到底是为了什么”。&lt;br /&gt;
-首先，考试内容与教材几乎脱节。&lt;br /&gt;
-1. 语文选择题中的拼音字形成语病句这些基础知识，在教材中完全没有体现。&lt;br /&gt;
-2. 科技文现代文阅读选择题，考验逻辑，教材上完全没有。&lt;br /&gt;
-3. 现代文阅读主观题和课本上的内容风马牛不相及，&lt;br /&gt;
-4. 最后的作文，60分，教材介绍了一些什么“三段论”分三个论点，那都是老套筒陈腐不堪的东西，真正要在作文上拿高分，文采和立意方面的讲解，教材一概也无。&lt;br /&gt;
-其次，现代文课文在功能上不清晰。它既不像学术训练（没有系统语言学、修辞学或逻辑训练），也不像文学训练（缺乏文学史框架与深度阅读体系），同时又不能有效转化为应试能力。因此它在课程中处于“既不像工具课，也不像素养课”的位置。&lt;br /&gt;
-相比之下，文言文反而形成了一个相对闭环的系统：&lt;br /&gt;
-它既直接对应考试中的古文阅读与默写题，也在表达层面提供稳定的文化引用资源，使学生能够在作文中实际使用。因此它成为语文课程中少数“教学—考试—成果”之间可以对应的部分。&lt;br /&gt;
-从更功利的角度看，学生在语文学习中的真实策略也逐渐向应试收敛：基础题靠刷题训练，现代文阅读靠答题模板，作文靠素材与套路积累，而课本现代文本身的作用被弱化。&lt;br /&gt;
-于是产生一个结构性结果：语文课表面占据重要课时和分值，但实际有效训练主要集中在有限模块（尤其是文言文和应试训练体系），而大量现代文课文难以被明确归类其教学目标。&lt;br /&gt;
-结论，并不是简单“文言文该不该保留”，而是指出：如果文言文也被移除，那么语文课程中最后一个同时具备“可考性 + 可教学性 + 可评价性”的稳定支点也会消失，高中语文可能进一步陷入目标不清的状态。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;作者开头那4个点，对我来说是醍醐灌顶。宝贵的经验必须记录下来，也顺便分享。&lt;/p&gt;
-&lt;p&gt;以后有时间，我也会写一点关于数学的。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Mon, 20 Apr 2026 16:00:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-04-20:/2026/stdin-10</guid><category>stdin</category></item></channel></rss>
+&lt;p&gt;Translated from &lt;a href="https://www.zhihu.com/question/1992208967498236682/answer/2028074933238907033"&gt;Zhihu 胡一鸣&lt;/a&gt; &amp;amp; edited by ChatGPT&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 21 Apr 2026 13:09:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-04-21:/2026/stdin-11</guid><category>stdin</category></item></channel></rss>

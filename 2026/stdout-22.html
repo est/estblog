@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>基于 git 的零拷贝静态web服务器 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="基于 git 的零拷贝静态web服务器" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stdout-22" />
+    <meta property="og:url" content="https://blog.est.im/2026/stdout-22">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="基于 git 的零拷贝静态web服务器">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">基于 git 的零拷贝静态web服务器</h2>
+    <p class="post-date">Posted <time datetime="2026-06-10T23:21:00+08:00">2026-06-10</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>无聊，产生了个crazy的想法。</p>
+<p>git 内部用 zlib 压缩文件内容</p>
+<p>Content-Encoding: gzip 也是</p>
+<p>如果web服务器输出 .git 里的 静态 内容，是不是可以减一个二次解压/压缩步骤？？？</p>
+<p>blob sha1 直接当etag？</p>
+<p>跟AI较量了几轮，一开始它说做不到。因为 blob 的格式比较变态。因为</p>
+<p><code>hello world...</code></p>
+<p>在 .git/objects/ab/cdef... 里的东西是这么存的</p>
+<p><code>zlib(blob 1234\0hello world...)</code></p>
+<p>I was like</p>
+<p>？？？日他妈真变态啊。这前面是写死了 <code>blob &lt;size&gt;\0</code> 然后把文件内容放在一起，再压缩的。</p>
+<p>.git 这设计脑子有病啊。。。为啥不是原始文件gz而是加个头去gz。。。</p>
+<p>此路不通！结束</p>
+<hr />
+<p>然后AI嘴瓢了，说</p>
+<blockquote>
+<p>先别急着吐槽 Linus，这个设计不仅没病，反而是 Git 能成为现代“内容寻址数据库”的精髓所在。<br />
+当 Git 从磁盘读取一个松散对象时，它是个流（Stream）。Git 只需要解压出最开始的几个字节，读到 blob 4096\0，内核就可以立刻执行 malloc(4096) 分配精准的内存。接下来的 zlib 数据流就可以源源不断地直冲内存，不需要反复扩容（realloc），也不需要把整个文件全部解压完才知道它有多大。<br />
+况且，这里有一个长久的误解：你吐槽的那个把 blob <size>\0 塞进 zlib 的逻辑，其实只存在于松散对象（Loose Object）中。在真正的 Packfile 里，这个文本格式的头早就被干掉了。</p>
+</blockquote>
+<p>【松散对象 Loose Object】</p>
+<pre><code>+-------------------------------------------------------+
+| zlib 压缩包: [ &quot;blob 1024\0&quot; + 原始文件纯数据 ]           |
++-------------------------------------------------------+
+</code></pre>
+<p>【包文件 Packfile 内部的一条记录】</p>
+<pre><code>+-------------------------------------------------------+
+| [3-bit 类型] + [变长 Varint 表达的 Size] + [纯 zlib 数据流] |
++-------------------------------------------------------+
+</code></pre>
+<p>我去，这么好的东西，你怎么不早点告诉我！</p>
+<p>然后AI给我泼一盆冷水：</p>
+<ul>
+<li>Git Packfile 内部的流是zlib 格式 (RFC 1950)，头部 2 字节 (CMF/FLG)，校验算法 Adler-32 (追求极速快照比对)</li>
+<li>HTTP Content-Encoding: gzip 期待的流 gzip格式 (RFC 1952)，头部 10 字节 (Magic Number, CM, FLG, Time 等)，校验算法CRC32 (追求网络传输抗干扰)</li>
+</ul>
+<p>不！兼！容！</p>
+<p>完结！</p>
+<hr />
+<p>嘿，亏得我早年完 IIS 长大的。我记得有个偏方，<code>Content-Encoding: deflate</code>，尾部crc32直接丢了</p>
+<p>AI：</p>
+<blockquote>
+<p>恭喜你，这是Web 历史上著名的 “Deflate 格式混乱案”<br />
+RFC 2616 (HTTP/1.1) 规定和IIS有差异！ IIS脑抽地剥离了 zlib 的头尾，只吐了裸压缩流，为了兼容 IIS 的错误实现，各家浏览器各显神通。有的浏览器严格按 RFC 执行，有的浏览器看到 zlib 头会报错，必须看内核的容错机制。<br />
+真正的zlib 格式 (RFC 1950) 是要求包含 2 字节头 + DEFLATE 压缩流 + 4 字节 Adler-32 尾</p>
+</blockquote>
+<p>等等，你说啥？Adler-32？这不就又对上了嘛！！！</p>
+<p>那么开始 Vibe！！！</p>
+<blockquote>
+<p>Git Packfile 的终极大 Boss：差分存储（Delta Compression）<br />
+即便你搞定了上面的所有协议头和校验和，Git 的终极形态——Packfile 还会给你最后一击。你假设的场景是：Git 里的 Blob 都是一个个完整的、独立的压缩包。但实际上，为了极度压榨磁盘空间，当你执行 git gc 后，Packfile 内部采用的是差分存储（Delta Compression）。</p>
+</blockquote>
+<p>啊这？？我于是问，能在配置里禁用掉吗？</p>
+<pre><code># 将比对窗口设为 0，彻底禁用 Delta 差分计算
+git config --global pack.window 0
+
+# 强制打包所有对象，并立刻、无条件地清除所有 Loose 文件（无视 2 周保护期）
+git gc --prune=now --aggressive
+
+# -a 表示把所有对象打包进一个全新的 pack
+# -d 表示打包成功后，立刻删除原本的 loose 对象和旧的 pack 文件
+git repack -a -d
+</code></pre>
+<p>哎，你tmd不早说。这不就闭环了嘛！！！</p>
+<p>于是最后，通过 OpenCode Zen 免费的 MiMo V2.5 Free </p>
+<p><a href="https://github.com/est/git2www-zerocopy">https://github.com/est/git2www-zerocopy</a></p>
+<p>本地自测是OK的</p>
+<p>我也算是写过 zero-copy 的人了 🤣（assert AI会写 === 我也会写）</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>
