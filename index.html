@@ -83,9 +83,9 @@
 +-------------------------------------------------------+
 </code></pre>
 <p>【包文件 Packfile 内部的一条记录】</p>
-<pre><code>+-------------------------------------------------------+
+<pre><code>+---------------------------------------------------------+
 | [3-bit 类型] + [变长 Varint 表达的 Size] + [纯 zlib 数据流] |
-+-------------------------------------------------------+
++---------------------------------------------------------+
 </code></pre>
 <p>我去，这么好的东西，你怎么不早点告诉我！</p>
 <p>然后AI给我泼一盆冷水：</p>
@@ -94,9 +94,9 @@
 <li>HTTP Content-Encoding: gzip 期待的流 gzip格式 (RFC 1952)，头部 10 字节 (Magic Number, CM, FLG, Time 等)，校验算法CRC32 (追求网络传输抗干扰)</li>
 </ul>
 <p>不！兼！容！</p>
-<p>完结！</p>
+<p>要正确的CRC32你得把文件全部读一遍，那不就等于解压一遍了。白费力气。完结！</p>
 <hr />
-<p>嘿，亏得我早年完 IIS 长大的。我记得有个偏方，<code>Content-Encoding: deflate</code>，尾部crc32直接丢了</p>
+<p>嘿，得亏我早年玩 IIS 长大的。我记得有个偏方，<code>Content-Encoding: deflate</code>，尾部crc32直接丢了</p>
 <p>AI：</p>
 <blockquote>
 <p>恭喜你，这是Web 历史上著名的 “Deflate 格式混乱案”<br />
@@ -124,7 +124,8 @@ git repack -a -d
 <p>于是最后，通过 OpenCode Zen 免费的 MiMo V2.5 Free </p>
 <p><a href="https://github.com/est/git2www-zerocopy">https://github.com/est/git2www-zerocopy</a></p>
 <p>本地自测是OK的</p>
-<p>我也算是写过 zero-copy 的人了 🤣（assert AI会写 === 我也会写）</p></p>
+<p>我也算是写过 zero-copy 的人了 🤣（assert AI会写 === 我也会写）</p>
+<p>必须严肃吐槽一下AI这回答一板一眼，不思考完整，拷打一下挤一点。如果不是我知道 IIS 这个坑可能就放弃这个想法了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-06-10T23:21:00+08:00">2026-06-10</time></p>
 <p>stdout</p>            </div>

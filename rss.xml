@@ -25,9 +25,9 @@
 +-------------------------------------------------------+
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;【包文件 Packfile 内部的一条记录】&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;+-------------------------------------------------------+
+&lt;pre&gt;&lt;code&gt;+---------------------------------------------------------+
 | [3-bit 类型] + [变长 Varint 表达的 Size] + [纯 zlib 数据流] |
-+-------------------------------------------------------+
++---------------------------------------------------------+
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;我去，这么好的东西，你怎么不早点告诉我！&lt;/p&gt;
 &lt;p&gt;然后AI给我泼一盆冷水：&lt;/p&gt;
@@ -36,9 +36,9 @@
 &lt;li&gt;HTTP Content-Encoding: gzip 期待的流 gzip格式 (RFC 1952)，头部 10 字节 (Magic Number, CM, FLG, Time 等)，校验算法CRC32 (追求网络传输抗干扰)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;不！兼！容！&lt;/p&gt;
-&lt;p&gt;完结！&lt;/p&gt;
+&lt;p&gt;要正确的CRC32你得把文件全部读一遍，那不就等于解压一遍了。白费力气。完结！&lt;/p&gt;
 &lt;hr /&gt;
-&lt;p&gt;嘿，亏得我早年完 IIS 长大的。我记得有个偏方，&lt;code&gt;Content-Encoding: deflate&lt;/code&gt;，尾部crc32直接丢了&lt;/p&gt;
+&lt;p&gt;嘿，得亏我早年玩 IIS 长大的。我记得有个偏方，&lt;code&gt;Content-Encoding: deflate&lt;/code&gt;，尾部crc32直接丢了&lt;/p&gt;
 &lt;p&gt;AI：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;恭喜你，这是Web 历史上著名的 “Deflate 格式混乱案”&lt;br /&gt;
@@ -66,7 +66,8 @@ git repack -a -d
 &lt;p&gt;于是最后，通过 OpenCode Zen 免费的 MiMo V2.5 Free &lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/est/git2www-zerocopy"&gt;https://github.com/est/git2www-zerocopy&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;本地自测是OK的&lt;/p&gt;
-&lt;p&gt;我也算是写过 zero-copy 的人了 🤣（assert AI会写 === 我也会写）&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 10 Jun 2026 23:21:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-06-10:/2026/stdout-22</guid><category>stdout</category></item><item><title>AI和柜台费</title><link>https://blog.est.im/2026/stderr-21</link><description>&lt;p&gt;现在这个时间点，观察到两件事：&lt;/p&gt;
+&lt;p&gt;我也算是写过 zero-copy 的人了 🤣（assert AI会写 === 我也会写）&lt;/p&gt;
+&lt;p&gt;必须严肃吐槽一下AI这回答一板一眼，不思考完整，拷打一下挤一点。如果不是我知道 IIS 这个坑可能就放弃这个想法了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 10 Jun 2026 23:21:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-06-10:/2026/stdout-22</guid><category>stdout</category></item><item><title>AI和柜台费</title><link>https://blog.est.im/2026/stderr-21</link><description>&lt;p&gt;现在这个时间点，观察到两件事：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;华为的大模型哑火。国内的AI圈反而没那么多恶臭拉踩舆论&lt;/li&gt;
 &lt;li&gt;雷不斯天天给MIMO搞新闻。一开始是免费用在Openrouter刷榜；然后在大家都玩按次数的 codng plan它家率先搞 token plan涨价；然后又是 100T 申请免费送；然后跟ds4同款缓存优化降价；然后又是给流失老付费用户免费一个月套餐&lt;/li&gt;
