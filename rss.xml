@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Wed, 10 Jun 2026 23:21:00 +0800</lastBuildDate><item><title>基于 git 的零拷贝静态web服务器</title><link>https://blog.est.im/2026/stdout-22</link><description>&lt;p&gt;无聊，产生了个crazy的想法。&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sun, 14 Jun 2026 00:13:00 +0800</lastBuildDate><item><title>locate cost</title><link>https://blog.est.im/2026/stdin-17</link><description>&lt;p&gt;翻到一个 AI 编程的出错提示&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Could not find oldString in the file. It must match exactly, including  whitespace, indentation, and line endings&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;我突然发现 agent coding 浪费 token 有很大一部分，可能不是问题输入的思考，和输出&lt;/p&gt;
+&lt;p&gt;而是在什么位置输出。想了下，人写代码，也是考虑好，再寻找一个合适的位置，开始插入或者修改&lt;/p&gt;
+&lt;p&gt;找位置 - 插入 - 修改 这个操作要完全用文本语言描述，的确不简单啊。甚至可以说超级复杂。&lt;/p&gt;
+&lt;p&gt;问了下AI，这个叫 locate cost 。定位成本&lt;/p&gt;
+&lt;p&gt;要做好这一点，Banthropic 他们的做法是 bash，grep。玩得花的是 SAT，diff，patch 什么的&lt;/p&gt;
+&lt;p&gt;进一步推论，AI 新写代码容易，改代码难？AI 也确认了我这一点&lt;/p&gt;
+&lt;p&gt;我突然回忆起cursor那个界面刷刷刷把我2w+行的源码全部刷新一遍，卧槽，原来这么回事&lt;/p&gt;
+&lt;p&gt;于是我有个理论，AI编程似乎把源码拆得更小，或许更省token，AI不仅改起来更容易，也更容易一眼看出问题&lt;/p&gt;
+&lt;p&gt;无论你拆多少个文件，AI上下文里都是连续的。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 14 Jun 2026 00:13:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-06-14:/2026/stdin-17</guid><category>stdin</category></item><item><title>基于 git 的零拷贝静态web服务器</title><link>https://blog.est.im/2026/stdout-22</link><description>&lt;p&gt;无聊，产生了个crazy的想法。&lt;/p&gt;
 &lt;p&gt;git 内部用 zlib 压缩文件内容&lt;/p&gt;
 &lt;p&gt;Content-Encoding: gzip 也是&lt;/p&gt;
 &lt;p&gt;如果web服务器输出 .git 里的 静态 内容，是不是可以减一个二次解压/压缩步骤？？？&lt;/p&gt;
@@ -63,6 +75,8 @@ git gc --prune=now --aggressive
 git repack -a -d
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;哎，你tmd不早说。这不就闭环了嘛！！！&lt;/p&gt;
+&lt;p&gt;你觉得这几个命令难的记？ &lt;code&gt;git clone --depth=1&lt;/code&gt; 就行。这只有一个 depth 必须自动pack。&lt;/p&gt;
+&lt;p&gt;如果你存的是 .jpg 之类的二进制，那么git会直接放弃 delta 。&lt;/p&gt;
 &lt;p&gt;于是最后，通过 OpenCode Zen 免费的 MiMo V2.5 Free &lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/est/git2www-zerocopy"&gt;https://github.com/est/git2www-zerocopy&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;本地自测是OK的&lt;/p&gt;
@@ -1143,24 +1157,4 @@ TIME_FORMAT = &amp;quot;H:i:s&amp;quot;
 &lt;p&gt;压死骆驼最后的稻草是，我在macbook上开发完成，最长9s，能忍受的极限，拿出手机、pad，win10台式机一测，发现webgpu大多数不支持，然后wasm推理需要 20s。微软甚至不准备在win100承诺支持WebGPU，因为依赖的 DirectX 12 只会面向win11更新了；高通，联发科这边的 WebGPU 稀碎。要说生态好，还得是Apple。&lt;/p&gt;
 &lt;p&gt;那还玩个蛋啊。怪不得现在AI几乎都是云上面跑，端上的问题太多了。&lt;/p&gt;
 &lt;p&gt;国产AI芯片，NPU什么的现在觉得得可以洗洗睡了。CUDA生态不是简单的堆算力问题，transformer模型推理本质上就是矩阵乘法，但是坑就坑在layer的结果需要进一步传播，叠加，汇总。但凡做个 fusion 就很考验对硬件的理解了。&lt;/p&gt;
-&lt;p&gt;啊啊啊啊，头痛，坑。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 25 Apr 2026 16:53:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-04-25:/2026/stdout-14</guid><category>stdout</category></item><item><title>Indent Is All You Need</title><link>https://blog.est.im/2026/stdin-11</link><description>&lt;p&gt;There's an interesting debate around whether "Bash is all you need" for AI agents. Claude Code's &lt;a href="https://www.youtube.com/watch?v=TqC1qOfiVcQ"&gt;Thariq Shihipar argues&lt;/a&gt; that LLMs may use Bash for anything&lt;/p&gt;
-&lt;p&gt;But is that the case? complex LLM generated bash may break on nested quotes, parentheses, and escapes. Even GPT-5.4 struggles with deeply nested inline Bash calls, and some engineers have resorted to wrapping binaries into microcommands, Gated Delta Net, so the model only outputs the inner command, achieving near-perfect reliability. The theory behind this is rooted in formal language classes. Bash's quoting and parentheses matching form a &lt;code&gt;Dyck-k&lt;/code&gt; language problem, a type of task that requires maintaining a stack of arbitrary depth. Standard Transformers are in the &lt;code&gt;TC0&lt;/code&gt; complexity class, which makes deep nesting and parity tracking inherently challenging.&lt;/p&gt;
-&lt;p&gt;Python, by contrast, is almost Transformer-friendly by design: each line's indentation implicitly encodes block depth. This "outsources" state tracking to the syntax itself, effectively converting a potentially hard nesting problem into something the model can handle token by token. That may explain why LLMs have excelled at Python generation from early versions, despite struggling with even basic arithmetic.&lt;/p&gt;
-&lt;p&gt;&lt;img referrerpolicy="no-referrer" src="https://pic1.zhimg.com/80/v2-6e0d28ae6e8c6e771b632c9a570b4429_720w.webp" /&gt;&lt;/p&gt;
-&lt;p&gt;Practically, this explains the patterns people see: nested Bash commands are error-prone, while Python functions with proper indentation work reliably. YAML, Markdown, and other indentation-heavy formats behave similarly. Many people say that  Markdown math formulas and JSON/XML often cause errors because of brace/bracket mismatches and escapes. Bash mistakes, on the other hand, can be catastrophic, especially when used in agent frameworks that make the AI directly invoke commands.&lt;/p&gt;
-&lt;p&gt;If we accept that LLMs are "state-tracking challenged," our choice of formats must evolve toward "line-local" state:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;JSON/XML: High-risk. Every &lt;code&gt;{&lt;/code&gt; is a debt that must be paid with a &lt;code&gt;}&lt;/code&gt; 50 tokens later.&lt;/li&gt;
-&lt;li&gt;TOML: Superior for AI because it is flat. A section header &lt;code&gt;[header.subheader]&lt;/code&gt; anchors the state for the following lines, requiring zero long-distance nesting memory.&lt;/li&gt;
-&lt;li&gt;Markdown/LaTeX: This explains why even the best models still hallucinate unrenderable LaTeX. The moment a formula requires deeply nested curly braces, the &lt;code&gt;Dyck-k&lt;/code&gt; problem strikes, and the model "forgets" to close a bracket.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;To verify this, one could conduct a simple "Indentation Test" experiment: ask a SOTA model to generate C++ code in two scenarios &amp;amp; then compare accuracy:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Standard C++ with mandatory indentation and newlines.&lt;/li&gt;
-&lt;li&gt;Minified C++ on a single line where indentation is forbidden.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The divergence in error rates as the nesting depth increases would likely prove that for AI, the "indentation" is the logic.&lt;/p&gt;
-&lt;p&gt;Ultimately, while Bash is a powerful glue, it is a treacherous foundation for autonomous agents. If we want reliable agents, we should favor languages and formats that offload state into the context.&lt;/p&gt;
-&lt;p&gt;Indent is all you need.&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;Translated from &lt;a href="https://www.zhihu.com/question/1992208967498236682/answer/2028074933238907033"&gt;Zhihu 胡一鸣&lt;/a&gt; &amp;amp; edited by ChatGPT&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 21 Apr 2026 13:09:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-04-21:/2026/stdin-11</guid><category>stdin</category></item></channel></rss>
+&lt;p&gt;啊啊啊啊，头痛，坑。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 25 Apr 2026 16:53:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-04-25:/2026/stdout-14</guid><category>stdout</category></item></channel></rss>

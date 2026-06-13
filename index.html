@@ -54,6 +54,32 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdin-17"  rel="bookmark" >
+              <h2 class="card-title">locate cost</h2>
+            </a>
+            <p class="card-text"><p>翻到一个 AI 编程的出错提示</p>
+<blockquote>
+<p>Could not find oldString in the file. It must match exactly, including  whitespace, indentation, and line endings</p>
+</blockquote>
+<p>我突然发现 agent coding 浪费 token 有很大一部分，可能不是问题输入的思考，和输出</p>
+<p>而是在什么位置输出。想了下，人写代码，也是考虑好，再寻找一个合适的位置，开始插入或者修改</p>
+<p>找位置 - 插入 - 修改 这个操作要完全用文本语言描述，的确不简单啊。甚至可以说超级复杂。</p>
+<p>问了下AI，这个叫 locate cost 。定位成本</p>
+<p>要做好这一点，Banthropic 他们的做法是 bash，grep。玩得花的是 SAT，diff，patch 什么的</p>
+<p>进一步推论，AI 新写代码容易，改代码难？AI 也确认了我这一点</p>
+<p>我突然回忆起cursor那个界面刷刷刷把我2w+行的源码全部刷新一遍，卧槽，原来这么回事</p>
+<p>于是我有个理论，AI编程似乎把源码拆得更小，或许更省token，AI不仅改起来更容易，也更容易一眼看出问题</p>
+<p>无论你拆多少个文件，AI上下文里都是连续的。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-06-14T00:13:00+08:00">2026-06-14</time></p>
+<p>stdin</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-22"  rel="bookmark" >
               <h2 class="card-title">基于 git 的零拷贝静态web服务器</h2>
             </a>
@@ -121,6 +147,8 @@ git gc --prune=now --aggressive
 git repack -a -d
 </code></pre>
 <p>哎，你tmd不早说。这不就闭环了嘛！！！</p>
+<p>你觉得这几个命令难的记？ <code>git clone --depth=1</code> 就行。这只有一个 depth 必须自动pack。</p>
+<p>如果你存的是 .jpg 之类的二进制，那么git会直接放弃 delta 。</p>
 <p>于是最后，通过 OpenCode Zen 免费的 MiMo V2.5 Free </p>
 <p><a href="https://github.com/est/git2www-zerocopy">https://github.com/est/git2www-zerocopy</a></p>
 <p>本地自测是OK的</p>
@@ -1457,40 +1485,6 @@ TIME_FORMAT = &quot;H:i:s&quot;
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-04-25T16:53:00+08:00">2026-04-25</time></p>
 <p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2026/stdin-11"  rel="bookmark" >
-              <h2 class="card-title">Indent Is All You Need</h2>
-            </a>
-            <p class="card-text"><p>There's an interesting debate around whether "Bash is all you need" for AI agents. Claude Code's <a href="https://www.youtube.com/watch?v=TqC1qOfiVcQ">Thariq Shihipar argues</a> that LLMs may use Bash for anything</p>
-<p>But is that the case? complex LLM generated bash may break on nested quotes, parentheses, and escapes. Even GPT-5.4 struggles with deeply nested inline Bash calls, and some engineers have resorted to wrapping binaries into microcommands, Gated Delta Net, so the model only outputs the inner command, achieving near-perfect reliability. The theory behind this is rooted in formal language classes. Bash's quoting and parentheses matching form a <code>Dyck-k</code> language problem, a type of task that requires maintaining a stack of arbitrary depth. Standard Transformers are in the <code>TC0</code> complexity class, which makes deep nesting and parity tracking inherently challenging.</p>
-<p>Python, by contrast, is almost Transformer-friendly by design: each line's indentation implicitly encodes block depth. This "outsources" state tracking to the syntax itself, effectively converting a potentially hard nesting problem into something the model can handle token by token. That may explain why LLMs have excelled at Python generation from early versions, despite struggling with even basic arithmetic.</p>
-<p><img referrerpolicy="no-referrer" src="https://pic1.zhimg.com/80/v2-6e0d28ae6e8c6e771b632c9a570b4429_720w.webp" /></p>
-<p>Practically, this explains the patterns people see: nested Bash commands are error-prone, while Python functions with proper indentation work reliably. YAML, Markdown, and other indentation-heavy formats behave similarly. Many people say that  Markdown math formulas and JSON/XML often cause errors because of brace/bracket mismatches and escapes. Bash mistakes, on the other hand, can be catastrophic, especially when used in agent frameworks that make the AI directly invoke commands.</p>
-<p>If we accept that LLMs are "state-tracking challenged," our choice of formats must evolve toward "line-local" state:</p>
-<ul>
-<li>JSON/XML: High-risk. Every <code>{</code> is a debt that must be paid with a <code>}</code> 50 tokens later.</li>
-<li>TOML: Superior for AI because it is flat. A section header <code>[header.subheader]</code> anchors the state for the following lines, requiring zero long-distance nesting memory.</li>
-<li>Markdown/LaTeX: This explains why even the best models still hallucinate unrenderable LaTeX. The moment a formula requires deeply nested curly braces, the <code>Dyck-k</code> problem strikes, and the model "forgets" to close a bracket.</li>
-</ul>
-<p>To verify this, one could conduct a simple "Indentation Test" experiment: ask a SOTA model to generate C++ code in two scenarios &amp; then compare accuracy:</p>
-<ul>
-<li>Standard C++ with mandatory indentation and newlines.</li>
-<li>Minified C++ on a single line where indentation is forbidden.</li>
-</ul>
-<p>The divergence in error rates as the nesting depth increases would likely prove that for AI, the "indentation" is the logic.</p>
-<p>Ultimately, while Bash is a powerful glue, it is a treacherous foundation for autonomous agents. If we want reliable agents, we should favor languages and formats that offload state into the context.</p>
-<p>Indent is all you need.</p>
-<hr />
-<p>Translated from <a href="https://www.zhihu.com/question/1992208967498236682/answer/2028074933238907033">Zhihu 胡一鸣</a> &amp; edited by ChatGPT</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2026-04-21T13:09:00+08:00">2026-04-21</time></p>
-<p>stdin</p>            </div>
           </article>
         </div>
 

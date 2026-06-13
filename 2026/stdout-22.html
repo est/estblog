@@ -116,6 +116,8 @@ git gc --prune=now --aggressive
 git repack -a -d
 </code></pre>
 <p>哎，你tmd不早说。这不就闭环了嘛！！！</p>
+<p>你觉得这几个命令难的记？ <code>git clone --depth=1</code> 就行。这只有一个 depth 必须自动pack。</p>
+<p>如果你存的是 .jpg 之类的二进制，那么git会直接放弃 delta 。</p>
 <p>于是最后，通过 OpenCode Zen 免费的 MiMo V2.5 Free </p>
 <p><a href="https://github.com/est/git2www-zerocopy">https://github.com/est/git2www-zerocopy</a></p>
 <p>本地自测是OK的</p>

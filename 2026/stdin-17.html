@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>locate cost – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="locate cost" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stdin-17" />
+    <meta property="og:url" content="https://blog.est.im/2026/stdin-17">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="locate cost">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">locate cost</h2>
+    <p class="post-date">Posted <time datetime="2026-06-14T00:13:00+08:00">2026-06-14</time> | <span>stdin</span></p>
+  </header>
+
+  
+  <p>翻到一个 AI 编程的出错提示</p>
+<blockquote>
+<p>Could not find oldString in the file. It must match exactly, including  whitespace, indentation, and line endings</p>
+</blockquote>
+<p>我突然发现 agent coding 浪费 token 有很大一部分，可能不是问题输入的思考，和输出</p>
+<p>而是在什么位置输出。想了下，人写代码，也是考虑好，再寻找一个合适的位置，开始插入或者修改</p>
+<p>找位置 - 插入 - 修改 这个操作要完全用文本语言描述，的确不简单啊。甚至可以说超级复杂。</p>
+<p>问了下AI，这个叫 locate cost 。定位成本</p>
+<p>要做好这一点，Banthropic 他们的做法是 bash，grep。玩得花的是 SAT，diff，patch 什么的</p>
+<p>进一步推论，AI 新写代码容易，改代码难？AI 也确认了我这一点</p>
+<p>我突然回忆起cursor那个界面刷刷刷把我2w+行的源码全部刷新一遍，卧槽，原来这么回事</p>
+<p>于是我有个理论，AI编程似乎把源码拆得更小，或许更省token，AI不仅改起来更容易，也更容易一眼看出问题</p>
+<p>无论你拆多少个文件，AI上下文里都是连续的。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>
