@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sun, 14 Jun 2026 00:13:00 +0800</lastBuildDate><item><title>locate cost</title><link>https://blog.est.im/2026/stdin-17</link><description>&lt;p&gt;翻到一个 AI 编程的出错提示&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sun, 14 Jun 2026 00:28:00 +0800</lastBuildDate><item><title>locate cost</title><link>https://blog.est.im/2026/stdin-17</link><description>&lt;p&gt;翻到一个 AI 编程的出错提示&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Could not find oldString in the file. It must match exactly, including  whitespace, indentation, and line endings&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -11,7 +11,10 @@
 &lt;p&gt;进一步推论，AI 新写代码容易，改代码难？AI 也确认了我这一点&lt;/p&gt;
 &lt;p&gt;我突然回忆起cursor那个界面刷刷刷把我2w+行的源码全部刷新一遍，卧槽，原来这么回事&lt;/p&gt;
 &lt;p&gt;于是我有个理论，AI编程似乎把源码拆得更小，或许更省token，AI不仅改起来更容易，也更容易一眼看出问题&lt;/p&gt;
-&lt;p&gt;无论你拆多少个文件，AI上下文里都是连续的。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 14 Jun 2026 00:13:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-06-14:/2026/stdin-17</guid><category>stdin</category></item><item><title>基于 git 的零拷贝静态web服务器</title><link>https://blog.est.im/2026/stdout-22</link><description>&lt;p&gt;无聊，产生了个crazy的想法。&lt;/p&gt;
+&lt;p&gt;无论你拆多少个文件，AI上下文里都是连续的。&lt;/p&gt;
+&lt;p&gt;我甚至联想到，机械臂目前搞什么 世界模型 VLA 具身智能 依然打不过人类，遇到训练之外的任务就抓瞎，是不是底层一样的道理？&lt;/p&gt;
+&lt;p&gt;比如叠衣服，当前是衣服乱的，叠好是个理想状态。人脑可以很快给这两个世界做个 diff，但是这个 locate cost 很高。按照编程的套路，机器人最简单的做法应该是把房子拆掉，家具拆掉，然后重新修一套房子，般进来家具，然后在指定的位置重新按照最佳形状现场纺织一套衣服 🤣&lt;/p&gt;
+&lt;p&gt;马斯克几千亿买 cursor ，如果能拿到眼球和编辑光标的超原始动作数据，那是真赚了。（如果你还不知道可以搜下）&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 14 Jun 2026 00:13:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-06-14:/2026/stdin-17</guid><category>stdin</category></item><item><title>基于 git 的零拷贝静态web服务器</title><link>https://blog.est.im/2026/stdout-22</link><description>&lt;p&gt;无聊，产生了个crazy的想法。&lt;/p&gt;
 &lt;p&gt;git 内部用 zlib 压缩文件内容&lt;/p&gt;
 &lt;p&gt;Content-Encoding: gzip 也是&lt;/p&gt;
 &lt;p&gt;如果web服务器输出 .git 里的 静态 内容，是不是可以减一个二次解压/压缩步骤？？？&lt;/p&gt;
