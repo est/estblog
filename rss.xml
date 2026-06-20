@@ -1,37 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sat, 20 Jun 2026 12:06:22 +0800</lastBuildDate><item><title>MacOS 快速插入当前时间</title><link>https://blog.est.im/2026/stdout-23</link><description>&lt;h2&gt;第一步：创建快捷指令&lt;/h2&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sat, 20 Jun 2026 12:18:22 +0800</lastBuildDate><item><title>MacOS 快速插入当前时间</title><link>https://blog.est.im/2026/stdout-23</link><description>&lt;h2&gt;第一步：创建快捷指令&lt;/h2&gt;
 &lt;p&gt;打开 &lt;strong&gt;Shortcuts&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;点击右上角 &lt;strong&gt;+&lt;/strong&gt; 新建快捷指令。&lt;/p&gt;
 &lt;h3&gt;添加动作 1：日期&lt;/h3&gt;
-&lt;p&gt;搜索：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;日期
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;添加 &lt;strong&gt;「日期（Current Date）」&lt;/strong&gt; 动作，它默认就是当前时间。也可以直接在后面的文本动作里使用内置的 &lt;strong&gt;Current Date&lt;/strong&gt; 变量。([Apple Support][1])&lt;/p&gt;
+&lt;p&gt;搜 添加 日期（Current Date） 动作，默认为当前时间&lt;/p&gt;
 &lt;h3&gt;添加动作 2：格式化日期&lt;/h3&gt;
-&lt;p&gt;搜索：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;格式化日期
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;添加 &lt;strong&gt;「格式化日期」&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;设置：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;日期：选择「当前日期」&lt;/li&gt;
-&lt;li&gt;日期格式：&lt;strong&gt;自定义&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;自定义格式填：&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre&gt;&lt;code class="language-text"&gt;yyyy-MM-dd HH:mm:ss
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;注意：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;yyyy&lt;/code&gt; 年&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;MM&lt;/code&gt; 月（大写）&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;dd&lt;/code&gt; 日&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;HH&lt;/code&gt; 24小时&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;mm&lt;/code&gt; 分钟（小写）&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;ss&lt;/code&gt; 秒（小写）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;这样输出就是：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-text"&gt;2026-06-20 14:37:52
-&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;添加 格式化日期，日期格式 自定义，填 &lt;code&gt;yyyy-MM-dd HH:mm:ss&lt;/code&gt;&lt;/p&gt;
 &lt;h3&gt;添加动作 3：Applescript&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;on run {input, parameters}
   -- 稍微延长一点延迟，确保触发快捷键的手指已经离开键盘
@@ -75,33 +49,11 @@ end run
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2&gt;第二步：设为快速操作&lt;/h2&gt;
 &lt;p&gt;点快捷指令右上角 &lt;strong&gt;ⓘ&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;勾选：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Use as Quick Action（用作快速操作）
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;然后选择：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;任何应用程序
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;这样它就会出现在系统的快速操作里。([iDownloadBlog.com][2])&lt;/p&gt;
-&lt;hr /&gt;
+&lt;p&gt;勾 Use as Quick Action（用作快速操作）&lt;/p&gt;
+&lt;p&gt;选 任何应用程序&lt;/p&gt;
 &lt;h2&gt;第三步：绑定快捷键&lt;/h2&gt;
-&lt;p&gt;打开：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;系统设置
-→ 键盘
-→ 键盘快捷键
-→ 服务（或“快速操作”）
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;找到你刚创建的快捷指令，例如：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Insert Timestamp
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;点右边添加快捷键，例如：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;⌥⌘T
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;以后任何文本框：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;⌥⌘T
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;就会输入：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;2026-06-20 14:37:52
-&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;新版macOS可以直接绑定。&lt;/p&gt;
+&lt;p&gt;之前的：系统设置 → 键盘 → 键盘快捷键 → 服务（或“快速操作”）&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;我习惯的方式是右手 Cmd+Opt+T 。&lt;/p&gt;
 &lt;p&gt;以前觉得 applescript 慢，但是现在反而发现需要 &lt;code&gt;delay 0.1&lt;/code&gt;  否则会触发 Cmd+Opt 的连招&lt;/p&gt;

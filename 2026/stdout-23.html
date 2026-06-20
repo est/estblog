@@ -56,35 +56,9 @@
 <p>打开 <strong>Shortcuts</strong>。</p>
 <p>点击右上角 <strong>+</strong> 新建快捷指令。</p>
 <h3>添加动作 1：日期</h3>
-<p>搜索：</p>
-<pre><code>日期
-</code></pre>
-<p>添加 <strong>「日期（Current Date）」</strong> 动作，它默认就是当前时间。也可以直接在后面的文本动作里使用内置的 <strong>Current Date</strong> 变量。([Apple Support][1])</p>
+<p>搜 添加 日期（Current Date） 动作，默认为当前时间</p>
 <h3>添加动作 2：格式化日期</h3>
-<p>搜索：</p>
-<pre><code>格式化日期
-</code></pre>
-<p>添加 <strong>「格式化日期」</strong>。</p>
-<p>设置：</p>
-<ul>
-<li>日期：选择「当前日期」</li>
-<li>日期格式：<strong>自定义</strong></li>
-<li>自定义格式填：</li>
-</ul>
-<pre><code class="language-text">yyyy-MM-dd HH:mm:ss
-</code></pre>
-<p>注意：</p>
-<ul>
-<li><code>yyyy</code> 年</li>
-<li><code>MM</code> 月（大写）</li>
-<li><code>dd</code> 日</li>
-<li><code>HH</code> 24小时</li>
-<li><code>mm</code> 分钟（小写）</li>
-<li><code>ss</code> 秒（小写）</li>
-</ul>
-<p>这样输出就是：</p>
-<pre><code class="language-text">2026-06-20 14:37:52
-</code></pre>
+<p>添加 格式化日期，日期格式 自定义，填 <code>yyyy-MM-dd HH:mm:ss</code></p>
 <h3>添加动作 3：Applescript</h3>
 <pre><code>on run {input, parameters}
   -- 稍微延长一点延迟，确保触发快捷键的手指已经离开键盘
@@ -128,33 +102,11 @@ end run
 </code></pre>
 <h2>第二步：设为快速操作</h2>
 <p>点快捷指令右上角 <strong>ⓘ</strong>。</p>
-<p>勾选：</p>
-<pre><code>Use as Quick Action（用作快速操作）
-</code></pre>
-<p>然后选择：</p>
-<pre><code>任何应用程序
-</code></pre>
-<p>这样它就会出现在系统的快速操作里。([iDownloadBlog.com][2])</p>
-<hr />
+<p>勾 Use as Quick Action（用作快速操作）</p>
+<p>选 任何应用程序</p>
 <h2>第三步：绑定快捷键</h2>
-<p>打开：</p>
-<pre><code>系统设置
-→ 键盘
-→ 键盘快捷键
-→ 服务（或“快速操作”）
-</code></pre>
-<p>找到你刚创建的快捷指令，例如：</p>
-<pre><code>Insert Timestamp
-</code></pre>
-<p>点右边添加快捷键，例如：</p>
-<pre><code>⌥⌘T
-</code></pre>
-<p>以后任何文本框：</p>
-<pre><code>⌥⌘T
-</code></pre>
-<p>就会输入：</p>
-<pre><code>2026-06-20 14:37:52
-</code></pre>
+<p>新版macOS可以直接绑定。</p>
+<p>之前的：系统设置 → 键盘 → 键盘快捷键 → 服务（或“快速操作”）</p>
 <hr />
 <p>我习惯的方式是右手 Cmd+Opt+T 。</p>
 <p>以前觉得 applescript 慢，但是现在反而发现需要 <code>delay 0.1</code>  否则会触发 Cmd+Opt 的连招</p>
