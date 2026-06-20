@@ -54,6 +54,128 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-23"  rel="bookmark" >
+              <h2 class="card-title">MacOS 快速插入当前时间</h2>
+            </a>
+            <p class="card-text"><p>可以，而且其实比想象中简单，全程不用写代码。</p>
+<h2>第一步：创建快捷指令</h2>
+<p>打开 <strong>Shortcuts</strong>。</p>
+<p>点击右上角 <strong>+</strong> 新建快捷指令。</p>
+<h3>添加动作 1：日期</h3>
+<p>搜索：</p>
+<pre><code>日期
+</code></pre>
+<p>添加 <strong>「日期（Current Date）」</strong> 动作，它默认就是当前时间。也可以直接在后面的文本动作里使用内置的 <strong>Current Date</strong> 变量。([Apple Support][1])</p>
+<h3>添加动作 2：格式化日期</h3>
+<p>搜索：</p>
+<pre><code>格式化日期
+</code></pre>
+<p>添加 <strong>「格式化日期」</strong>。</p>
+<p>设置：</p>
+<ul>
+<li>日期：选择「当前日期」</li>
+<li>日期格式：<strong>自定义</strong></li>
+<li>自定义格式填：</li>
+</ul>
+<pre><code class="language-text">yyyy-MM-dd HH:mm:ss
+</code></pre>
+<p>注意：</p>
+<ul>
+<li><code>yyyy</code> 年</li>
+<li><code>MM</code> 月（大写）</li>
+<li><code>dd</code> 日</li>
+<li><code>HH</code> 24小时</li>
+<li><code>mm</code> 分钟（小写）</li>
+<li><code>ss</code> 秒（小写）</li>
+</ul>
+<p>这样输出就是：</p>
+<pre><code class="language-text">2026-06-20 14:37:52
+</code></pre>
+<h3>添加动作 3：Applescript</h3>
+<pre><code>on run {input, parameters}
+  -- 稍微延长一点延迟，确保触发快捷键的手指已经离开键盘
+  delay 0.1
+  -- display dialog &quot;Current date&quot;
+
+  -- 将 Shortcuts 传入的 list 转换为字符串
+  set ts to item 1 of input as string
+
+  tell application &quot;System Events&quot;
+    -- 释放可能被系统残留挂起的修饰键状态
+    --  键盘区数字的 Key Code 分布是乱序的
+    set keyCodeMap to {29, 18, 19, 20, 21, 23, 22, 26, 28, 25}
+
+    key up command
+    key up option
+    key up control
+    key up shift
+
+
+    repeat with i from 1 to length of ts
+      set c to character i of ts
+      set charID to id of c
+      if c is &quot;:&quot; then
+        -- 分号，加 shift 变成冒号
+        key code 41 using {shift down}
+      else if c is &quot;-&quot; then
+        -- 减号，不需要 shift
+        key code 27
+      else if c is space then
+        key code 49
+      else if charID ≥ 48 and charID ≤ 57 then
+        -- ASCII 码范围过滤 转换算出 1 到 10 的索引
+        set targetIndex to charID - 47
+
+        key code (item targetIndex of keyCodeMap)
+      end if
+    end repeat
+  end tell
+end run
+</code></pre>
+<h2>第二步：设为快速操作</h2>
+<p>点快捷指令右上角 <strong>ⓘ</strong>。</p>
+<p>勾选：</p>
+<pre><code>Use as Quick Action（用作快速操作）
+</code></pre>
+<p>然后选择：</p>
+<pre><code>任何应用程序
+</code></pre>
+<p>这样它就会出现在系统的快速操作里。([iDownloadBlog.com][2])</p>
+<hr />
+<h2>第三步：绑定快捷键</h2>
+<p>打开：</p>
+<pre><code>系统设置
+→ 键盘
+→ 键盘快捷键
+→ 服务（或“快速操作”）
+</code></pre>
+<p>找到你刚创建的快捷指令，例如：</p>
+<pre><code>Insert Timestamp
+</code></pre>
+<p>点右边添加快捷键，例如：</p>
+<pre><code>⌥⌘T
+</code></pre>
+<p>以后任何文本框：</p>
+<pre><code>⌥⌘T
+</code></pre>
+<p>就会输入：</p>
+<pre><code>2026-06-20 14:37:52
+</code></pre>
+<hr />
+<p>我习惯的方式是右手 Cmd+Opt+T 。</p>
+<p>以前觉得 applescript 慢，但是现在反而发现需要 <code>delay 0.1</code>  否则会触发 Cmd+Opt 的连招</p>
+<p>本来AI给的版本是 <code>keystroke</code> 指令，容易误触 modifier keys，所以改成 key code。</p>
+<p>还以为 AI 写错了，没想到 mac 的 0-9 数字键code 居然不是连续的。 </p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-06-20T12:06:22+08:00">2026-06-20</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdin-17"  rel="bookmark" >
               <h2 class="card-title">locate cost</h2>
             </a>
@@ -1497,29 +1619,6 @@ TIME_FORMAT = &quot;H:i:s&quot;
 <p>不过发现bugsink代码里日期格式是写死的。<a href="https://github.com/bugsink/bugsink/pull/374">改起来太麻烦，作罢</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-05-06T16:21:00+08:00">2026-05-06</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2026/stdout-14"  rel="bookmark" >
-              <h2 class="card-title">浏览器通过WebGPU上做AI推理</h2>
-            </a>
-            <p class="card-text"><p>先说结论，在2026Q2这个时间点，通过浏览器webgpu 做 AI 不值得。</p>
-<p>本来看<a href="https://huggingface.co/spaces/Xenova/kokoro-web">官方demo</a>跑得好好的，自己搓下来也觉得没啥，就一个小问题，fp32的模型有点大，最好换 q8 的。</p>
-<p>q8的不能在 webgpu上跑，wasm也凑合用。原因是缺少一些矩阵乘法算子。开源库嘛，也理解。只是速度就慢了一点。</p>
-<p>本来前几个月就这样平安无事，结果 transformers.js 升级到 v4，支持 q8 跑webgpu了，甚至 q4 q2 bitnet 这种高级货都支持了。满心欢喜的切过去，结果 webgpu 跟 wasm 一样慢？</p>
-<p>于是就不甘心了。一路折腾，发现这个不仅跟算子有关，还跟硬件有关。甚至老掉牙的硬件不支持 <code>shader-f16</code> 。简单的说其实 GPU 原生支持最好的就 IEEE 754 fp32，f16 i8 这种属于要么新一点的硬件才支持，要么就是靠各种算子在软件层奇技淫巧去模拟。</p>
-<p>我甚至脑洞大开让AI去搓一个 q8 dequant 到 fp32 ，发现模型也是不好惹的，太多坑了。HF官方甚至也自己搞了一套 q8f16 q4f16，然而 HF 自己的 transformers.js 都支持得不完善。</p>
-<p>压死骆驼最后的稻草是，我在macbook上开发完成，最长9s，能忍受的极限，拿出手机、pad，win10台式机一测，发现webgpu大多数不支持，然后wasm推理需要 20s。微软甚至不准备在win100承诺支持WebGPU，因为依赖的 DirectX 12 只会面向win11更新了；高通，联发科这边的 WebGPU 稀碎。要说生态好，还得是Apple。</p>
-<p>那还玩个蛋啊。怪不得现在AI几乎都是云上面跑，端上的问题太多了。</p>
-<p>国产AI芯片，NPU什么的现在觉得得可以洗洗睡了。CUDA生态不是简单的堆算力问题，transformer模型推理本质上就是矩阵乘法，但是坑就坑在layer的结果需要进一步传播，叠加，汇总。但凡做个 fusion 就很考验对硬件的理解了。</p>
-<p>啊啊啊啊，头痛，坑。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2026-04-25T16:53:00+08:00">2026-04-25</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

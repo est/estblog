@@ -1,5 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Tue, 16 Jun 2026 14:42:59 +0800</lastBuildDate><item><title>locate cost</title><link>https://blog.est.im/2026/stdin-17</link><description>&lt;p&gt;翻到一个 AI 编程的出错提示&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sat, 20 Jun 2026 12:06:22 +0800</lastBuildDate><item><title>MacOS 快速插入当前时间</title><link>https://blog.est.im/2026/stdout-23</link><description>&lt;p&gt;可以，而且其实比想象中简单，全程不用写代码。&lt;/p&gt;
+&lt;h2&gt;第一步：创建快捷指令&lt;/h2&gt;
+&lt;p&gt;打开 &lt;strong&gt;Shortcuts&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;点击右上角 &lt;strong&gt;+&lt;/strong&gt; 新建快捷指令。&lt;/p&gt;
+&lt;h3&gt;添加动作 1：日期&lt;/h3&gt;
+&lt;p&gt;搜索：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;日期
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;添加 &lt;strong&gt;「日期（Current Date）」&lt;/strong&gt; 动作，它默认就是当前时间。也可以直接在后面的文本动作里使用内置的 &lt;strong&gt;Current Date&lt;/strong&gt; 变量。([Apple Support][1])&lt;/p&gt;
+&lt;h3&gt;添加动作 2：格式化日期&lt;/h3&gt;
+&lt;p&gt;搜索：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;格式化日期
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;添加 &lt;strong&gt;「格式化日期」&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;设置：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;日期：选择「当前日期」&lt;/li&gt;
+&lt;li&gt;日期格式：&lt;strong&gt;自定义&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;自定义格式填：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class="language-text"&gt;yyyy-MM-dd HH:mm:ss
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;注意：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;yyyy&lt;/code&gt; 年&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;MM&lt;/code&gt; 月（大写）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dd&lt;/code&gt; 日&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;HH&lt;/code&gt; 24小时&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mm&lt;/code&gt; 分钟（小写）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ss&lt;/code&gt; 秒（小写）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这样输出就是：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-text"&gt;2026-06-20 14:37:52
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;添加动作 3：Applescript&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;on run {input, parameters}
+  -- 稍微延长一点延迟，确保触发快捷键的手指已经离开键盘
+  delay 0.1
+  -- display dialog &amp;quot;Current date&amp;quot;
+
+  -- 将 Shortcuts 传入的 list 转换为字符串
+  set ts to item 1 of input as string
+
+  tell application &amp;quot;System Events&amp;quot;
+    -- 释放可能被系统残留挂起的修饰键状态
+    --  键盘区数字的 Key Code 分布是乱序的
+    set keyCodeMap to {29, 18, 19, 20, 21, 23, 22, 26, 28, 25}
+
+    key up command
+    key up option
+    key up control
+    key up shift
+
+
+    repeat with i from 1 to length of ts
+      set c to character i of ts
+      set charID to id of c
+      if c is &amp;quot;:&amp;quot; then
+        -- 分号，加 shift 变成冒号
+        key code 41 using {shift down}
+      else if c is &amp;quot;-&amp;quot; then
+        -- 减号，不需要 shift
+        key code 27
+      else if c is space then
+        key code 49
+      else if charID ≥ 48 and charID ≤ 57 then
+        -- ASCII 码范围过滤 转换算出 1 到 10 的索引
+        set targetIndex to charID - 47
+
+        key code (item targetIndex of keyCodeMap)
+      end if
+    end repeat
+  end tell
+end run
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;第二步：设为快速操作&lt;/h2&gt;
+&lt;p&gt;点快捷指令右上角 &lt;strong&gt;ⓘ&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;勾选：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Use as Quick Action（用作快速操作）
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后选择：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;任何应用程序
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这样它就会出现在系统的快速操作里。([iDownloadBlog.com][2])&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2&gt;第三步：绑定快捷键&lt;/h2&gt;
+&lt;p&gt;打开：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;系统设置
+→ 键盘
+→ 键盘快捷键
+→ 服务（或“快速操作”）
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;找到你刚创建的快捷指令，例如：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Insert Timestamp
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;点右边添加快捷键，例如：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;⌥⌘T
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;以后任何文本框：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;⌥⌘T
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;就会输入：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;2026-06-20 14:37:52
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;p&gt;我习惯的方式是右手 Cmd+Opt+T 。&lt;/p&gt;
+&lt;p&gt;以前觉得 applescript 慢，但是现在反而发现需要 &lt;code&gt;delay 0.1&lt;/code&gt;  否则会触发 Cmd+Opt 的连招&lt;/p&gt;
+&lt;p&gt;本来AI给的版本是 &lt;code&gt;keystroke&lt;/code&gt; 指令，容易误触 modifier keys，所以改成 key code。&lt;/p&gt;
+&lt;p&gt;还以为 AI 写错了，没想到 mac 的 0-9 数字键code 居然不是连续的。 &lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 20 Jun 2026 12:06:22 +0800</pubDate><guid isPermaLink="false">tag:None,2026-06-20:/2026/stdout-23</guid><category>stdout</category></item><item><title>locate cost</title><link>https://blog.est.im/2026/stdin-17</link><description>&lt;p&gt;翻到一个 AI 编程的出错提示&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Could not find oldString in the file. It must match exactly, including  whitespace, indentation, and line endings&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -1184,13 +1292,4 @@ print(&amp;quot;\n&amp;quot;.join(editor.collected_sql))
 DATE_FORMAT = &amp;quot;Y-m-d&amp;quot;
 TIME_FORMAT = &amp;quot;H:i:s&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;不过发现bugsink代码里日期格式是写死的。&lt;a href="https://github.com/bugsink/bugsink/pull/374"&gt;改起来太麻烦，作罢&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 06 May 2026 16:21:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-05-06:/2026/stdout-15</guid><category>stdout</category></item><item><title>浏览器通过WebGPU上做AI推理</title><link>https://blog.est.im/2026/stdout-14</link><description>&lt;p&gt;先说结论，在2026Q2这个时间点，通过浏览器webgpu 做 AI 不值得。&lt;/p&gt;
-&lt;p&gt;本来看&lt;a href="https://huggingface.co/spaces/Xenova/kokoro-web"&gt;官方demo&lt;/a&gt;跑得好好的，自己搓下来也觉得没啥，就一个小问题，fp32的模型有点大，最好换 q8 的。&lt;/p&gt;
-&lt;p&gt;q8的不能在 webgpu上跑，wasm也凑合用。原因是缺少一些矩阵乘法算子。开源库嘛，也理解。只是速度就慢了一点。&lt;/p&gt;
-&lt;p&gt;本来前几个月就这样平安无事，结果 transformers.js 升级到 v4，支持 q8 跑webgpu了，甚至 q4 q2 bitnet 这种高级货都支持了。满心欢喜的切过去，结果 webgpu 跟 wasm 一样慢？&lt;/p&gt;
-&lt;p&gt;于是就不甘心了。一路折腾，发现这个不仅跟算子有关，还跟硬件有关。甚至老掉牙的硬件不支持 &lt;code&gt;shader-f16&lt;/code&gt; 。简单的说其实 GPU 原生支持最好的就 IEEE 754 fp32，f16 i8 这种属于要么新一点的硬件才支持，要么就是靠各种算子在软件层奇技淫巧去模拟。&lt;/p&gt;
-&lt;p&gt;我甚至脑洞大开让AI去搓一个 q8 dequant 到 fp32 ，发现模型也是不好惹的，太多坑了。HF官方甚至也自己搞了一套 q8f16 q4f16，然而 HF 自己的 transformers.js 都支持得不完善。&lt;/p&gt;
-&lt;p&gt;压死骆驼最后的稻草是，我在macbook上开发完成，最长9s，能忍受的极限，拿出手机、pad，win10台式机一测，发现webgpu大多数不支持，然后wasm推理需要 20s。微软甚至不准备在win100承诺支持WebGPU，因为依赖的 DirectX 12 只会面向win11更新了；高通，联发科这边的 WebGPU 稀碎。要说生态好，还得是Apple。&lt;/p&gt;
-&lt;p&gt;那还玩个蛋啊。怪不得现在AI几乎都是云上面跑，端上的问题太多了。&lt;/p&gt;
-&lt;p&gt;国产AI芯片，NPU什么的现在觉得得可以洗洗睡了。CUDA生态不是简单的堆算力问题，transformer模型推理本质上就是矩阵乘法，但是坑就坑在layer的结果需要进一步传播，叠加，汇总。但凡做个 fusion 就很考验对硬件的理解了。&lt;/p&gt;
-&lt;p&gt;啊啊啊啊，头痛，坑。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 25 Apr 2026 16:53:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-04-25:/2026/stdout-14</guid><category>stdout</category></item></channel></rss>
+&lt;p&gt;不过发现bugsink代码里日期格式是写死的。&lt;a href="https://github.com/bugsink/bugsink/pull/374"&gt;改起来太麻烦，作罢&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Wed, 06 May 2026 16:21:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-05-06:/2026/stdout-15</guid><category>stdout</category></item></channel></rss>

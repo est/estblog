@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MacOS 快速插入当前时间 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="MacOS 快速插入当前时间" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stdout-23" />
+    <meta property="og:url" content="https://blog.est.im/2026/stdout-23">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="MacOS 快速插入当前时间">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">MacOS 快速插入当前时间</h2>
+    <p class="post-date">Posted <time datetime="2026-06-20T12:06:22+08:00">2026-06-20</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>可以，而且其实比想象中简单，全程不用写代码。</p>
+<h2>第一步：创建快捷指令</h2>
+<p>打开 <strong>Shortcuts</strong>。</p>
+<p>点击右上角 <strong>+</strong> 新建快捷指令。</p>
+<h3>添加动作 1：日期</h3>
+<p>搜索：</p>
+<pre><code>日期
+</code></pre>
+<p>添加 <strong>「日期（Current Date）」</strong> 动作，它默认就是当前时间。也可以直接在后面的文本动作里使用内置的 <strong>Current Date</strong> 变量。([Apple Support][1])</p>
+<h3>添加动作 2：格式化日期</h3>
+<p>搜索：</p>
+<pre><code>格式化日期
+</code></pre>
+<p>添加 <strong>「格式化日期」</strong>。</p>
+<p>设置：</p>
+<ul>
+<li>日期：选择「当前日期」</li>
+<li>日期格式：<strong>自定义</strong></li>
+<li>自定义格式填：</li>
+</ul>
+<pre><code class="language-text">yyyy-MM-dd HH:mm:ss
+</code></pre>
+<p>注意：</p>
+<ul>
+<li><code>yyyy</code> 年</li>
+<li><code>MM</code> 月（大写）</li>
+<li><code>dd</code> 日</li>
+<li><code>HH</code> 24小时</li>
+<li><code>mm</code> 分钟（小写）</li>
+<li><code>ss</code> 秒（小写）</li>
+</ul>
+<p>这样输出就是：</p>
+<pre><code class="language-text">2026-06-20 14:37:52
+</code></pre>
+<h3>添加动作 3：Applescript</h3>
+<pre><code>on run {input, parameters}
+  -- 稍微延长一点延迟，确保触发快捷键的手指已经离开键盘
+  delay 0.1
+  -- display dialog &quot;Current date&quot;
+
+  -- 将 Shortcuts 传入的 list 转换为字符串
+  set ts to item 1 of input as string
+
+  tell application &quot;System Events&quot;
+    -- 释放可能被系统残留挂起的修饰键状态
+    --  键盘区数字的 Key Code 分布是乱序的
+    set keyCodeMap to {29, 18, 19, 20, 21, 23, 22, 26, 28, 25}
+
+    key up command
+    key up option
+    key up control
+    key up shift
+
+
+    repeat with i from 1 to length of ts
+      set c to character i of ts
+      set charID to id of c
+      if c is &quot;:&quot; then
+        -- 分号，加 shift 变成冒号
+        key code 41 using {shift down}
+      else if c is &quot;-&quot; then
+        -- 减号，不需要 shift
+        key code 27
+      else if c is space then
+        key code 49
+      else if charID ≥ 48 and charID ≤ 57 then
+        -- ASCII 码范围过滤 转换算出 1 到 10 的索引
+        set targetIndex to charID - 47
+
+        key code (item targetIndex of keyCodeMap)
+      end if
+    end repeat
+  end tell
+end run
+</code></pre>
+<h2>第二步：设为快速操作</h2>
+<p>点快捷指令右上角 <strong>ⓘ</strong>。</p>
+<p>勾选：</p>
+<pre><code>Use as Quick Action（用作快速操作）
+</code></pre>
+<p>然后选择：</p>
+<pre><code>任何应用程序
+</code></pre>
+<p>这样它就会出现在系统的快速操作里。([iDownloadBlog.com][2])</p>
+<hr />
+<h2>第三步：绑定快捷键</h2>
+<p>打开：</p>
+<pre><code>系统设置
+→ 键盘
+→ 键盘快捷键
+→ 服务（或“快速操作”）
+</code></pre>
+<p>找到你刚创建的快捷指令，例如：</p>
+<pre><code>Insert Timestamp
+</code></pre>
+<p>点右边添加快捷键，例如：</p>
+<pre><code>⌥⌘T
+</code></pre>
+<p>以后任何文本框：</p>
+<pre><code>⌥⌘T
+</code></pre>
+<p>就会输入：</p>
+<pre><code>2026-06-20 14:37:52
+</code></pre>
+<hr />
+<p>我习惯的方式是右手 Cmd+Opt+T 。</p>
+<p>以前觉得 applescript 慢，但是现在反而发现需要 <code>delay 0.1</code>  否则会触发 Cmd+Opt 的连招</p>
+<p>本来AI给的版本是 <code>keystroke</code> 指令，容易误触 modifier keys，所以改成 key code。</p>
+<p>还以为 AI 写错了，没想到 mac 的 0-9 数字键code 居然不是连续的。 </p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>
