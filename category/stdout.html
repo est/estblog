@@ -54,6 +54,220 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-24"  rel="bookmark" >
+              <h2 class="card-title">我的 Vibe Coding 最佳实践——ADR文档</h2>
+            </a>
+            <p class="card-text"><p>工作和业余也用AI写代码，大大小小项目都经历了。从 rules, skills, spec, agent 到  harness 都玩过了</p>
+<p>从AI嘴里发现一条比较稳的套路——ADR文档</p>
+<p>rule, skills, spec 这些东西最大的问题就是瞎jb指挥。ADR 的好处是记录why，以及决策演变历史。</p>
+<p>贴一段<a href="https://github.com/est/rss_aggr/blob/main/docs/ADR/001.project.ADR-howto.md">我整理的 ADR 文档</a>就明白了： </p>
+<pre><code class="language-markdown">---
+title: 如何使用 ADR
+id: ADR-001
+date: 2026-06-26 09:01:21
+status: accepted
+---
+</code></pre>
+<h1>ADR</h1>
+<p>ADR（Architecture Decision Record，架构决策记录）的核心目标很简单：<strong>记录为什么做出了某个重要技术决策，而不是记录系统长什么样。</strong></p>
+<p>目前比较常见的是 MADR、Nygard ADR 两种风格，但组织方式都大同小异。</p>
+<p>一个团队通常会按下面几个层次组织。</p>
+<h2>1. 一个 ADR 对应一个决策</h2>
+<p>不要一个 ADR 写整个系统设计。</p>
+<p>好的粒度例如：</p>
+<blockquote>
+<p>ADR-001 使用 PostgreSQL 作为主数据库<br />
+ADR-002 API 使用 REST 而不是 GraphQL<br />
+ADR-003 服务间通信采用 gRPC<br />
+ADR-004 用户认证采用 OAuth2 + JWT<br />
+ADR-005 使用事件驱动 Outbox Pattern</p>
+</blockquote>
+<p>而不是</p>
+<blockquote>
+<p>系统架构设计.md</p>
+</blockquote>
+<p>因为几年以后，很难知道某个结论为什么来的。</p>
+<h2>2. 编号保持永久</h2>
+<p>一般都会固定编号。</p>
+<pre><code>adr/
+
+0001-use-postgresql.md
+0002-use-rest-api.md
+0003-use-grpc.md
+0004-use-oauth2.md
+</code></pre>
+<p>编号一旦存在，就不要修改。</p>
+<p>即使后来废弃：</p>
+<pre><code>0003-use-grpc.md
+Status: Superseded by ADR-0018
+</code></pre>
+<p>这样引用不会失效。</p>
+<h2>3. Status 非常重要</h2>
+<p>一般都有状态。</p>
+<ul>
+<li>Proposed</li>
+<li>Accepted</li>
+<li>Deprecated ❌</li>
+<li>Superseded 🔄</li>
+<li>Rejected ⛔️</li>
+</ul>
+<p>例如：</p>
+<pre><code>Status: Accepted
+Date: 2026-06-19 01:02:03
+</code></pre>
+<p>如果后来换了：</p>
+<pre><code>Status: Superseded
+Superseded by: ADR-0018
+</code></pre>
+<p>而新的 ADR：</p>
+<pre><code>ADR-0018
+Supersedes: ADR-0003
+</code></pre>
+<p>形成完整历史。</p>
+<h2>4. 一个 ADR 的典型模板</h2>
+<pre><code class="language-markdown">---
+title: ADR-008 使用 PostgreSQL
+id: ADR-008
+date: 2026-06-18 12:32:46
+status: accepted
+---
+
+
+## Context
+
+目前需要：
+
+- ACID
+- JSON 查询
+- 成熟生态
+
+候选：
+
+- PostgreSQL
+- MySQL
+- MongoDB
+
+## Decision
+
+选择 PostgreSQL。
+
+## Consequences
+
+优点：
+
+- SQL 功能完整
+- JSONB 支持优秀
+- 社区成熟
+
+缺点：
+
+- 运维复杂度略高
+- 分库分表方案需要额外设计
+</code></pre>
+<p>可以再加：</p>
+<pre><code>Alternatives
+
+Decision Drivers
+
+Trade-offs
+
+References
+</code></pre>
+<h2>5. 按领域组织，而不是按时间（可选）</h2>
+<p>在一个目录，用文件名体现领域：</p>
+<pre><code>008.backend.use-grpc.md
+010.security.use-oauth.md
+012.frontend.react-query.md
+</code></pre>
+<p>这样编号保持连续，查找也方便。</p>
+<h2>6. ADR 之间允许引用</h2>
+<p>例如：</p>
+<pre><code>ADR-0015
+
+Context
+
+依赖：
+- ADR-0002
+- ADR-0008
+
+Decision
+
+由于 ADR-0008 已经确定 PostgreSQL，
+因此 Outbox Pattern 可以直接利用事务。
+</code></pre>
+<p>形成决策网络，而不是孤立文档。</p>
+<h2>7. ADR 只记录"为什么"</h2>
+<p>这是很多团队最容易犯的错误。</p>
+<p>不要写：</p>
+<pre><code>Controller
+Service
+Repository
+</code></pre>
+<p>这是设计文档。</p>
+<p>ADR 应该写：</p>
+<pre><code>为什么不用 MongoDB？
+
+为什么不用 GraphQL？
+
+为什么采用 Saga？
+
+为什么拆成多个 Service？
+
+为什么 Event Sourcing 被放弃？
+</code></pre>
+<p>重点永远是 <strong>Why</strong>，而不是 <strong>What</strong>。</p>
+<h2>8. 和设计文档分开</h2>
+<p>过去很多团队会这样组织：</p>
+<table>
+<thead>
+<tr>
+<th>文档</th>
+<th>回答的问题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RFC / Proposal</td>
+<td>未来准备怎么做？</td>
+</tr>
+<tr>
+<td>ADR</td>
+<td>为什么这样做？</td>
+</tr>
+<tr>
+<td>Architecture Doc</td>
+<td>系统如何组织？</td>
+</tr>
+<tr>
+<td>Design Doc</td>
+<td>某个功能如何实现？</td>
+</tr>
+<tr>
+<td>Runbook</td>
+<td>如何运维？</td>
+</tr>
+</tbody>
+</table>
+<p>流程是 RFC → ADR → Design Doc → Code。</p>
+<p>RFC 用于讨论方案，达成决策后沉淀为 ADR；随后具体实现细节写入设计文档，最终落实到代码。这样既保留了决策依据，又避免 ADR 演变成冗长的设计说明。</p>
+<p>在AI 时代，更简洁，易维护的方式是：</p>
+<ul>
+<li>ADR 形成决策历史；</li>
+<li>DESIGN.md （小项目也可以直接放 README.md） 反应当前设计，大量引用 ADR 而不是重复。</li>
+<li>迭代排期（spec，phase文档等）引用ADR作为缘由</li>
+</ul>
+<hr />
+<p>AI编写的项目，到后期，泥潭就是大量的docs。ADR 的好处是不用修订，全面引用+supersed。保证决策链清晰，低上下文成本</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-06-26T09:40:00+08:00">2026-06-26</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-23"  rel="bookmark" >
               <h2 class="card-title">MacOS 快速插入当前时间</h2>
             </a>
@@ -2901,52 +3115,6 @@ make install
 <p>你就说好不好吧。同时<a href="https://news.ycombinator.com/item?id=41358020#41364190">评论在 Hacker News</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-08-27T11:06:00+08:00">2024-08-27</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2024/stdout-16"  rel="bookmark" >
-              <h2 class="card-title">2024年玩xml真是笑死了（xsl）</h2>
-            </a>
-            <p class="card-text"><p>昨天大早上的6点就醒了，翻来覆去睡不着，就开始胡思乱想。忘记是什么缘起了，反正突然想到一个问题，博客这种静态站，又要输出html，又要输出rss。太冗余了。要不直接把内容存在RSS里。然后用js去<code>fetch()</code>。。。。</p>
-<p>等等，死去的记忆突然攻击我。RSS不就是XML，XML似乎有个加皮肤的技术。于是就更睡不着了，起床一查，原来是 XSLT 转换成 HTML 然后就可以自由发挥了。</p>
-<p>可行性没问题，准备找个前人的例子开抄。比如 <a href="https://natclark.com/tutorials/xslt-style-rss-feed/">2021年Nathan Clark的Styling an RSS Feed With XSLT</a>，<a href="https://darekkay.com/blog/rss-styling/">2023年Darek Kay的Style your RSS feed</a></p>
-<p>思路就很匹配，执行效果也不错。我想百尺竿头更进一步，把 XSL 给 inline 到 RSS 里，避免额外的加载，节省一次网络请求。吗，没想到这下麻烦大了，折腾到现在才有个初步结果。直接贴源码：</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;#stylesheet&quot;?&gt;
-
-&lt;some_xml_root xmlns:shit=&quot;http://xxx&quot;&gt;
-
-&lt;xsl:stylesheet xml:id=&quot;stylesheet&quot; version=&quot;3.0&quot; xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;&gt;
-&lt;xsl:output method=&quot;html&quot; doctype-system=&quot;about:legacy-compat&quot; version=&quot;5.0&quot; encoding=&quot;UTF-8&quot; indent=&quot;yes&quot; /&gt;
-&lt;xsl:template match=&quot;/&quot;&gt;
-  &lt;html&gt;
-    ...
-  &lt;/html&gt;
-
-&lt;/xsl:template&gt;
-&lt;/xsl:stylesheet&gt;
-
-&lt;/some_xml_root&gt;
-</code></pre>
-<p>这里的 <code>href="#stylesheet"</code> 方法，是<a href="https://www.w3.org/TR/xslt-30/#embedded">官方推荐的</a> 。但是要起效果，一定注意 <code>type="text/xsl"</code> 别抄成网上的 <code>application/xslt+xml</code> 了</p>
-<p>主要浪费时间的坑点主要在根的 <code>xmlns</code> 上。这玩意把 xpath 给搞挂了。比如 sitemap你写</p>
-<p><code>&lt;xsl:for-each select="/urlset/url"&gt;</code></p>
-<p>好好的，加上 <code>xmlns</code> 就得写成：</p>
-<p><code>&lt;xsl:for-each select="/*[local-name() = 'urlset']/*[local-name() = 'url']"&gt;</code></p>
-<p>怪不得现在没人玩XML了。这破玩意没法直观的本地调试，还得靠各种第三方 validator，反人类啊。</p>
-<p>于是把根的 xmlns 直接改成 tag namespace。也就是 <code>xmlns:shit</code> 。反正你namespace冲突了关我什么事？<s>而且说实话，xmlns这玩意除了坑各种解析器不好写之外，并没有什么卵用。我以前写都是想办法去掉 xmlns 再解析。感觉这一块真的 over-engineering 了。</s> 好像有点明白 namespace 是干嘛的了。这玩意主要解决一个sb需求：允许多个XML合并到一个文件里。这不就得考虑如何分清楚tag谁是谁的。。。。并且标准已经挖好坑了，一个XML有且只有一个root。。你把别的 tag 合并进来，那的确不容易区分。还有这样写不会造成文件体积膨胀吗？真是xsl笑死了。</p>
-<p>接下来的问题就是如何生成一个规规矩矩的 html5 doctype。搜了下 <code>doctype-system</code>就可以了。本来其实可以在<code>&lt;xsl:template&gt;</code>后面加上 </p>
-<p><code>&lt;xsl:text disable-output-escaping='yes'&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/xsl:text&gt;</code></p>
-<p>但实际只加这个是不行的。</p>
-<p>另外吐槽下 Chrome，默认的viewer把xml渲染成html了，在 devtool 里通过 <code>$x()</code> 无法直接调试xpath，还得靠别的第三方工具。(⊙﹏⊙) </p>
-<p>这可能就是XSL的核心问题了——没法方便直观的调试，挂了就给你白屏。有点react那种白屏的 ptsd 感觉了。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-08-22T23:09:00+08:00">2024-08-22</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

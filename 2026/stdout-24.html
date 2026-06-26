@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>我的 Vibe Coding 最佳实践——ADR文档 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="我的 Vibe Coding 最佳实践——ADR文档" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stdout-24" />
+    <meta property="og:url" content="https://blog.est.im/2026/stdout-24">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="我的 Vibe Coding 最佳实践——ADR文档">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">我的 Vibe Coding 最佳实践——ADR文档</h2>
+    <p class="post-date">Posted <time datetime="2026-06-26T09:40:00+08:00">2026-06-26</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>工作和业余也用AI写代码，大大小小项目都经历了。从 rules, skills, spec, agent 到  harness 都玩过了</p>
+<p>从AI嘴里发现一条比较稳的套路——ADR文档</p>
+<p>rule, skills, spec 这些东西最大的问题就是瞎jb指挥。ADR 的好处是记录why，以及决策演变历史。</p>
+<p>贴一段<a href="https://github.com/est/rss_aggr/blob/main/docs/ADR/001.project.ADR-howto.md">我整理的 ADR 文档</a>就明白了： </p>
+<pre><code class="language-markdown">---
+title: 如何使用 ADR
+id: ADR-001
+date: 2026-06-26 09:01:21
+status: accepted
+---
+</code></pre>
+<h1>ADR</h1>
+<p>ADR（Architecture Decision Record，架构决策记录）的核心目标很简单：<strong>记录为什么做出了某个重要技术决策，而不是记录系统长什么样。</strong></p>
+<p>目前比较常见的是 MADR、Nygard ADR 两种风格，但组织方式都大同小异。</p>
+<p>一个团队通常会按下面几个层次组织。</p>
+<h2>1. 一个 ADR 对应一个决策</h2>
+<p>不要一个 ADR 写整个系统设计。</p>
+<p>好的粒度例如：</p>
+<blockquote>
+<p>ADR-001 使用 PostgreSQL 作为主数据库<br />
+ADR-002 API 使用 REST 而不是 GraphQL<br />
+ADR-003 服务间通信采用 gRPC<br />
+ADR-004 用户认证采用 OAuth2 + JWT<br />
+ADR-005 使用事件驱动 Outbox Pattern</p>
+</blockquote>
+<p>而不是</p>
+<blockquote>
+<p>系统架构设计.md</p>
+</blockquote>
+<p>因为几年以后，很难知道某个结论为什么来的。</p>
+<h2>2. 编号保持永久</h2>
+<p>一般都会固定编号。</p>
+<pre><code>adr/
+
+0001-use-postgresql.md
+0002-use-rest-api.md
+0003-use-grpc.md
+0004-use-oauth2.md
+</code></pre>
+<p>编号一旦存在，就不要修改。</p>
+<p>即使后来废弃：</p>
+<pre><code>0003-use-grpc.md
+Status: Superseded by ADR-0018
+</code></pre>
+<p>这样引用不会失效。</p>
+<h2>3. Status 非常重要</h2>
+<p>一般都有状态。</p>
+<ul>
+<li>Proposed</li>
+<li>Accepted</li>
+<li>Deprecated ❌</li>
+<li>Superseded 🔄</li>
+<li>Rejected ⛔️</li>
+</ul>
+<p>例如：</p>
+<pre><code>Status: Accepted
+Date: 2026-06-19 01:02:03
+</code></pre>
+<p>如果后来换了：</p>
+<pre><code>Status: Superseded
+Superseded by: ADR-0018
+</code></pre>
+<p>而新的 ADR：</p>
+<pre><code>ADR-0018
+Supersedes: ADR-0003
+</code></pre>
+<p>形成完整历史。</p>
+<h2>4. 一个 ADR 的典型模板</h2>
+<pre><code class="language-markdown">---
+title: ADR-008 使用 PostgreSQL
+id: ADR-008
+date: 2026-06-18 12:32:46
+status: accepted
+---
+
+
+## Context
+
+目前需要：
+
+- ACID
+- JSON 查询
+- 成熟生态
+
+候选：
+
+- PostgreSQL
+- MySQL
+- MongoDB
+
+## Decision
+
+选择 PostgreSQL。
+
+## Consequences
+
+优点：
+
+- SQL 功能完整
+- JSONB 支持优秀
+- 社区成熟
+
+缺点：
+
+- 运维复杂度略高
+- 分库分表方案需要额外设计
+</code></pre>
+<p>可以再加：</p>
+<pre><code>Alternatives
+
+Decision Drivers
+
+Trade-offs
+
+References
+</code></pre>
+<h2>5. 按领域组织，而不是按时间（可选）</h2>
+<p>在一个目录，用文件名体现领域：</p>
+<pre><code>008.backend.use-grpc.md
+010.security.use-oauth.md
+012.frontend.react-query.md
+</code></pre>
+<p>这样编号保持连续，查找也方便。</p>
+<h2>6. ADR 之间允许引用</h2>
+<p>例如：</p>
+<pre><code>ADR-0015
+
+Context
+
+依赖：
+- ADR-0002
+- ADR-0008
+
+Decision
+
+由于 ADR-0008 已经确定 PostgreSQL，
+因此 Outbox Pattern 可以直接利用事务。
+</code></pre>
+<p>形成决策网络，而不是孤立文档。</p>
+<h2>7. ADR 只记录"为什么"</h2>
+<p>这是很多团队最容易犯的错误。</p>
+<p>不要写：</p>
+<pre><code>Controller
+Service
+Repository
+</code></pre>
+<p>这是设计文档。</p>
+<p>ADR 应该写：</p>
+<pre><code>为什么不用 MongoDB？
+
+为什么不用 GraphQL？
+
+为什么采用 Saga？
+
+为什么拆成多个 Service？
+
+为什么 Event Sourcing 被放弃？
+</code></pre>
+<p>重点永远是 <strong>Why</strong>，而不是 <strong>What</strong>。</p>
+<h2>8. 和设计文档分开</h2>
+<p>过去很多团队会这样组织：</p>
+<table>
+<thead>
+<tr>
+<th>文档</th>
+<th>回答的问题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RFC / Proposal</td>
+<td>未来准备怎么做？</td>
+</tr>
+<tr>
+<td>ADR</td>
+<td>为什么这样做？</td>
+</tr>
+<tr>
+<td>Architecture Doc</td>
+<td>系统如何组织？</td>
+</tr>
+<tr>
+<td>Design Doc</td>
+<td>某个功能如何实现？</td>
+</tr>
+<tr>
+<td>Runbook</td>
+<td>如何运维？</td>
+</tr>
+</tbody>
+</table>
+<p>流程是 RFC → ADR → Design Doc → Code。</p>
+<p>RFC 用于讨论方案，达成决策后沉淀为 ADR；随后具体实现细节写入设计文档，最终落实到代码。这样既保留了决策依据，又避免 ADR 演变成冗长的设计说明。</p>
+<p>在AI 时代，更简洁，易维护的方式是：</p>
+<ul>
+<li>ADR 形成决策历史；</li>
+<li>DESIGN.md （小项目也可以直接放 README.md） 反应当前设计，大量引用 ADR 而不是重复。</li>
+<li>迭代排期（spec，phase文档等）引用ADR作为缘由</li>
+</ul>
+<hr />
+<p>AI编写的项目，到后期，泥潭就是大量的docs。ADR 的好处是不用修订，全面引用+supersed。保证决策链清晰，低上下文成本</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>
