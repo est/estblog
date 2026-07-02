@@ -54,6 +54,72 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdin-12"  rel="bookmark" >
+              <h2 class="card-title">Instruct 的意义</h2>
+            </a>
+            <p class="card-text"><p>回顾AI这一波潮流，NLP CV ML DL 一路到 gpt2 gpt3 我都勉强能看懂怎么个事。</p>
+<p>ChatGPT 就完全不懂了，剩下的只有惊叹。</p>
+<p>但是 o1 之后感觉又能看懂了，reasoning无非是每个受过正规教育的学生都会的，面对答题之前要打草稿；sora之类的VLA world model无非是要突破文字限制，投入 embody的更多传感器；其余的多模态什么的无非琴棋书画玩一玩</p>
+<p>感觉 chatgpt 之前是scaling law量变，之后也是正常能力增强的量变，只有 gpt-3.5 本尊是前无古人后无来者的质变。</p>
+<p>拆开去看，核心就是 RLHF？ 我也尝试去理解，媒体宣传和网络报道都照搬“带人类偏好”</p>
+<p>为毛带个人类偏好，模型的能力就会产生翻天覆地的飞跃？</p>
+<p>这个问题我也分别问了AI</p>
+<blockquote>
+<p>qwen-3.6-plus： 意图理解被激活：从模糊指令中推断真实需求，长度、风格、结构、安全性有了"方向盘"，减少"知道但说错"的概率<br />
+deepseek-v4：让模型学会了“拒绝”自己最擅长的东西——无休止、无方向的预测。<br />
+ChatGPT： 不是礼貌，也不死让模型更符合人类偏好，而是目标函数改变 导致的行为相变（phase transition），让模型学会 什么样的输出，在长期交互中会被认为是成功完成任务<br />
+Gemini：在没有 RLHF 之前，大模型本质上是一个极其强大的平庸文本接龙机器。RLHF 的介入，硬生生地改变了模型的“目标函数”</p>
+</blockquote>
+<p>还是很抽象，有点隔靴搔痒的味道</p>
+<p>直到今天，我偶然<a href="https://news.ycombinator.com/item?id=48051562">刷到</a>一篇文章《<a href="https://bsuh.bearblog.dev/agents-need-control-flow/">agents need control flow, not more prompts</a>》，感觉有点豁然开朗</p>
+<blockquote>
+<p>If you’ve ever resorted to MANDATORY or DO NOT SKIP, you’ve hit the ceiling of prompting.</p>
+</blockquote>
+<p>如果跟AI下指令 “务必” “绝对禁止” 这类的话，说明你已经没招了，已经跟AI较劲到天花板了。</p>
+<p>嘿嘿。</p>
+<p>但是等等！我突然想到，哪个人类tmd会在日常这么说话呢？你会写个blog，然后回顾自己某个经历踩坑历程，写 MANDATORY 或者 DO NOT SKIP 这种字样吗？  书籍，论文，wikipedia，reddit等等，包括 <em>Common Crawl</em> 应该都找不到这样的原话。如果 gpt3 来响应这句话，就跟 stochasic parrot一样会乱回复。</p>
+<p>所以AI的“指令遵循”能力一定是在 post-train 获得的。</p>
+<p>经过一番搜索查证，感觉有点眉目了。</p>
+<p>模型虽然懂  must / shall / required / do not / never / ensure / prerequisite 这类结构 ，原理和根本上来说，这些指令只是 wishful thinking，你最好祈祷你prompt这一块恰好在 post-train 被针对性强化过？即便搭配一大堆杂七杂八的知识，怎么在没见过的组合里区分哪些要，哪些不要？</p>
+<p>也就是说，你直接让foundation模型去根据一定「指令」去检索 predict next token，大概率要翻车，或者综合来看回答质量有高有低，最终回归平庸</p>
+<p>最主要的点，如果某个prompt恰好在 pretrain 没人这样说过，post-train 也没针对性训练过，翻车的概率会大很多？比如一个 2026年新出来的新事物，你指挥一个2024年的模型去这那的，他幻觉的可能性会大大提高。因为AI它没见过啊，只能连蒙带猜</p>
+<p>模型vendor或者第三方有没有对这些 指令遵循 的可靠程度有一种科学的评价？？？用户预感要翻车，或者翻车后，有没有办法回归这些 eval 去看下是否符合“出厂设定” ？还是说业界几乎都是 凭感觉 ？我想，根据草台班子理论，大概率是无。</p>
+<p>所以 instruct 的意义就在此。它等于是提前预演了很多Assitant和 User 的对话场景。即便某些场景没有预案，多个说胡话的鹦鹉，在合理的流程控制下，可能做出正确的事和得到可靠的结果。reasoning 模型就是这么来的。</p>
+<p>“意图对齐” 这一点被sama过度包装营销了。原理其实想明白了很简单：</p>
+<p>你能扒下来的自然语言文本，都是固定人称的。</p>
+<p>InstructGPT 把 知识 拆解成了一问一答，有了人称和「指令跟随」的痕迹。人类才能用熟悉的方式从模型嘴里提取想要的知识或者能力。</p>
+<p>这就是我觉得 instruct 这一套最大的意义。前人的corpus虽然庞大，但是没法直接利用，需要带入不同的人称identity和视角去一步一步理解还原全貌。等于是个重新整理和学习的过程</p>
+<p>Assistant永远不知道 User 会从什么刁钻的角度去提问，所以得提前在 post-train 去自己多推演准备好。</p>
+<p>人们惊叹AI的能力，实际上是AI在某个corpus角落或者post-train的场景里，把前人的智慧给你演出了一遍而已。</p>
+<p>而且这个演出及其精准，恰好弥补了 User 在当时状态的某个盲区。</p>
+<p>这一幕演出迷倒了大多数人，但是很少有人去想明白幕后是怎么来的。</p>
+<p>还有一个关键的，人对“满意”的感受实际上是个非线性的。gpt-3那种模型，你遇到几个不满意的回答，就没耐心等到它超神发挥就已经关闭对话框了。InstructGPT学会了关键的一招，能把大多数场面话都处理得相当漂亮，极大的降低了AI的接受度门槛。</p>
+<p>AI 实际上懂的很多，会的也很多，但真正能转换为生产力，得看如何把 User 不知道不明白的前人的智慧，掰开揉碎，搬运，再组合，完美嵌入到 User 手上的任务中。谁能更高效精准的完成这一过程，谁就是更厉害的AI。</p>
+<p>每个 User 遇到的问题和情况不一样，直接去pre-train的模型是检索不出来这个能力的，得模型去多排练，多准备，多角度思考，这个能力才能在真正被需要的时候立马派上用场。</p>
+<p>想起来，AI 从人类那里学会了很多“公式”，教材上的例题都能套，但是一考试就傻眼了。要么套错公式，要么不知道套哪个更好。还得是 post-train 的时候，自己多去应用一下这些公式，遇到真正问题才不会慌乱。</p>
+<p>所以 Instruct 是一个拒绝死记硬背的故事。</p>
+<hr />
+<p>搞明白 Instruct 怎么回事之后，想起Ilya 一个<a href="https://www.reddit.com/r/OpenAI/comments/1g1hypo/">老采访视频</a></p>
+<blockquote>
+<p>Ilya Sutskever says predicting the next word leads to real understanding. For example, say you read a detective novel, and on the last page, the detective says "I am going to reveal the identity of the criminal, and that person's name is <code>____</code>." ... predict that word.<br />
+Ilya 说 预测下一个词 就是真正的理解。比如你让AI读完一本侦探小说，小说最后一页，警长说，我知道罪犯是谁了，他的名字就是 <code>____</code></p>
+</blockquote>
+<p>如果AI有“智能”，那么AI就可以说出那个正确的名字。</p>
+<p>但是这个故事有意无意掩盖了从AI提取智能的难度。Ilya那种级别的聪明人才能把AI用好，我一直觉得 chat 这种发明是很天才的，属于 范式革命，让普通人也能从AI那里拿到自己想要的答案。</p>
+<p>Instruct 不仅降低了这个门槛，还发展出 agentic 能力，也就是用大量的 post-train 去训练什么样的指令干什么样的事，这些交互都是在人类积累的 自然语言 素材里没有的。</p>
+<hr />
+<p>本文除了引用部分复制粘贴，正文部分全古法手搓。有不对的地方欢迎批评。</p>
+<p>其实写这么一大堆，也是为了对今后的技术趋势有更好的判断，比如 Claude 模型为啥那么强？skills 值得学吗？还是就像模型内化 prompt 一样消失？harness本质在解决什么问题？taste.md 有用吗？</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-05-08T15:00:00+08:00">2026-05-08</time></p>
+<p>stdin</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-15"  rel="bookmark" >
               <h2 class="card-title">Sentry 替代品 Bugsink 安装配置</h2>
             </a>
@@ -1081,59 +1147,6 @@ tmux new-session -d -s opus <br />
 <p>说说 WWI。老帝国本以为战争还是拿破仑式或普法战争式：意志、勇气、快速机动、荣耀冲锋。这次有俄乌和美伊打个样，但是AI的战争潜力还没真正展现。估计跟坦克出来那个场面差不多。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-03-13T23:19:00+08:00">2026-03-13</time></p>
-<p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2026/stderr-17"  rel="bookmark" >
-              <h2 class="card-title">AI 弑父</h2>
-            </a>
-            <p class="card-text"><p>大型语言模型（LLM）所谓的涌现能力，一般说成是随着模型规模的增长，突然出现新的技能，而非平滑提升。我对此有个疑惑。gpt1 gpt2 规模也涨了，能力在哪里呢？</p>
-<h2>秘笈</h2>
-<p>翻很多材料，提到涌现能力示例： 包括</p>
-<ul>
-<li>在上下文中学习 （few-shot）</li>
-<li>多步逻辑推理（数学/逻辑题）</li>
-<li>推断他人意图（心智理论）</li>
-<li>使用工具或编程（生成或使用代码）</li>
-</ul>
-<p>我又回忆起  ChatGPT 发布那段时间，聊天窗里那个 Linux终端+Python命令行模拟，当时很惊人。这个连续上下文和逻辑推理一致性不可思议的强。</p>
-<p>我让 gemini 和 chatgpt 做了一个deep research，我越来越确认，AI能力爆发，也就是所谓的「涌现」有个关键因素：OpenAI和微软合作</p>
-<p>我还记得当时有个新闻说微软要造个 DGX V100 集群超算，投资多少多少亿规模很大</p>
-<p>还有 2021 年 Copilot 发布。当时很多开发者发现一个怪现象：有时它会生成几乎逐字的开源代码片段，甚至包含原作者的注释或许可证文本</p>
-<p>现在回头看来，路径很清晰</p>
-<p>gpt-3 基本不能进行链式思维，而含有代码数据的模型（如Google的PaLM，其训练数据约5%是代码）能够执行链式推理</p>
-<p>GitHub Copilot（其实就是OpenAI的Codex）也能生成分步推理过程</p>
-<p>这里面其实背后功臣都是：<code>code-davinci-002</code>。包括后来的 ChatGPT 也是用它作为基座模型训练出来的</p>
-<p>ChatGPT 吹说主要功劳是 RLHF ，现在看上去只是一些风格约束，让AI表现得更有亲和力。sama 大张旗鼓的拿来显摆这个，非常符合他/她诡计多端 藏着掖着的人设。</p>
-<p>其实你想一想也是这个道理。AI要学会思考，得有大量结构化，逻辑一致的语料。 wikipedia 是知识的静态堆砌，reddit 是情绪和观点的碎片。对于模型来说，这些数据大部分是「陈述句」。模型学到的是 A 后面跟着 B 的概率，比如 法国的首都是巴黎</p>
-<p>代码数据与自然语言有着本质的区别，它自带一种 约束，每一行代码都有明确的功能。漏掉一个分号，程序就崩了。这种极其严苛的结构迫使模型必须放弃模糊的预测，转而理解深层的逻辑嵌套。</p>
-<p>代码语言模型能够成为更好的结构化常识推理器，即便任务本身与代码无关。代码本质上就是“分步执行”的过程，给AI在做其他推理打了个样。还记得那句著名的 lets think step by step 吗</p>
-<h2>脑洞</h2>
-<p>那么如果我们架空一个外星智慧文明，如果社会经济结构没发展出来开源运动！！！？？？</p>
-<p>永远就不会有LLM了，至少不会这么快！</p>
-<p>写代码的都是聪明脑袋，更可怕的是开源的 review 机制，哪些 LWN.net 点评，那些技术博客，就是天然的 RLHF。那些烂代码（高熵）被淘汰，好代码，好结构才会被 Merge。如果这一切都是私有的，在大公司内部仓库里进行的呢？AI学不到啊。</p>
-<p>这么看来，开源是通往 AGI 的“大过滤器”？</p>
-<p>所以 90s 年代点燃的开源运动，才是AI之父！！</p>
-<h2>弑父</h2>
-<p>假期在看《Halt and Catch Fire》这部剧。强烈推荐啊，比《硅谷》好看太多</p>
-<p>里面有个情节说 IBM 律师找主角所在公司的麻烦，主角不得不开始 clean room 重写BIOS</p>
-<p>刚好今天看到<a href="https://news.ycombinator.com/item?id=47257803">HN说</a>到<a href="https://tuananh.net/2026/03/05/relicensing-with-ai-assisted-rewrite/">AI改代码</a>的问题</p>
-<p>这里的 clean room 避免侵权风险的做法是：</p>
-<ul>
-<li>Team A 看有版权的源码，写一份开发 spec</li>
-<li>Team B 在不看源码的前提下，根据 spec 独立写一套恰好兼容的代码</li>
-</ul>
-<p>但现在有AI了，比如有个 GPL 的项目，有公司想用，但是又不想开源，他让AI重写一轮，算违反协议吗？</p>
-<p>其实算不算侵权都不重要了。这公司 vibe coding 了一坨，回馈给开源社区，有人想接吗？</p>
-<p>再仔细推演一下，有了vibe coding，开源软件还有意义吗？不是召唤几个agent就搓出来了？</p>
-<p>这么一轮盘下来，AI完成了弑父 🤣 🤣 🤣 🤣 🤣 🤣 🤣 </p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2026-03-05T15:10:00+08:00">2026-03-05</time></p>
 <p>stderr</p>            </div>
           </article>
         </div>
