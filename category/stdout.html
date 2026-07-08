@@ -54,6 +54,147 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-25"  rel="bookmark" >
+              <h2 class="card-title">[AI] curl -NT. 导致100% CPU原因</h2>
+            </a>
+            <p class="card-text"><p>有AI就是好使，搁以前自己得盯半天也看不明白。。。</p>
+<h3>问题确认</h3>
+<p><code>curl -NT.</code> 在连接一个持续推送数据的 streaming 服务器时，会产生一个 <strong>紧密的 pause/unpause 循环</strong>，导致 100% CPU。</p>
+<h3>根因分析</h3>
+<p><code>-T.</code>（注意是点号，不是减号）将 stdin 设为<strong>非阻塞模式</strong>，然后依赖 <code>EAGAIN</code> + <code>CURL_READFUNC_PAUSE</code> 机制来避免阻塞。核心循环发生在三个回调之间：</p>
+<p><strong>第一步 — 上传尝试失败</strong>（<code>src/tool_cb_rea.c</code>）：</p>
+<p>```134:144:src/tool_cb_rea.c<br />
+  {<br />
+    rc = read(per-&gt;infd, buffer, sz * nmemb);<br />
+    if(rc &lt; 0) {<br />
+      if(errno == EAGAIN) {<br />
+        errno = 0;<br />
+        config-&gt;readbusy = TRUE;<br />
+        return CURL_READFUNC_PAUSE;<br />
+      }<br />
+      /<em> since size_t is unsigned we cannot return negative values fine </em>/<br />
+      rc = 0;<br />
+    }<br />
+  }</p>
+<pre><code>
+stdin 没数据 → `read()` 返回 `EAGAIN` → 设 `readbusy=TRUE` → 暂停上传。
+
+**第二步 — 下载数据到达立刻解除暂停**（`src/tool_cb_wrt.c`）：
+
+```345:348:src/tool_cb_wrt.c
+  if(config-&gt;readbusy) {
+    config-&gt;readbusy = FALSE;
+    curl_easy_pause(per-&gt;curl, CURLPAUSE_CONT);
+  }
+</code></pre>
+<p>streaming 服务器持续发送数据 → <code>tool_write_cb</code> 被不断调用 → 每次都<strong>无等待地立刻解除上传暂停</strong>。</p>
+<p><strong>第三步 — 进度回调只有 1ms 退避</strong>（<code>src/tool_cb_rea.c</code>）：</p>
+<p>```179:191:src/tool_cb_rea.c<br />
+  if(config-&gt;readbusy) {<br />
+    if(ulprev == ulnow) {</p>
+<h1>ifndef _WIN32</h1>
+<pre><code>    waitfd(1, per-&gt;infd);
+</code></pre>
+<h1>else</h1>
+<pre><code>    /* sleep */
+    curlx_wait_ms(1);
+</code></pre>
+<h1>endif</h1>
+<pre><code>  }
+
+  config-&gt;readbusy = FALSE;
+  curl_easy_pause(per-&gt;curl, CURLPAUSE_CONT);
+}
+</code></pre>
+<pre><code>
+`tool_readbusy_cb` 有 1ms 的 `waitfd` 退避，但被 `tool_write_cb` 的无等待解除抢先了。
+
+**完整的死循环（每次 `curl_multi_perform` 内）**：
+
+在 `lib/transfer.c` 的 `Curl_sendrecv` 中，处理顺序是**先下载后上传**：
+
+```372:383:lib/transfer.c
+  if(k-&gt;keepon &amp; KEEP_RECV) {
+    result = sendrecv_dl(data, k);
+    if(result || data-&gt;req.done)
+      goto out;
+  }
+
+  /* If we still have writing to do, we check if we have a writable socket. */
+  if(Curl_req_want_send(data)) {
+    result = sendrecv_ul(data);
+    if(result)
+      goto out;
+  }
+</code></pre>
+<p>所以单次迭代内：<br />
+1. <code>sendrecv_dl</code> → 读到 streaming 数据 → <code>tool_write_cb</code> → 看到 <code>readbusy=TRUE</code> → <strong>立刻解除暂停</strong>（零等待）<br />
+2. <code>sendrecv_ul</code> → <code>tool_read_cb</code> → stdin <code>EAGAIN</code> → <strong>又暂停</strong>，<code>readbusy=TRUE</code><br />
+3. 回到 <code>curl_multi_poll</code> → 下载 socket 有数据 → <strong>立刻返回</strong>（不会 sleep）<br />
+4. 重复 1-3</p>
+<p>而 <code>lib/easy.c</code> 的主循环：</p>
+<p>```688:694:lib/easy.c<br />
+  while(!done &amp;&amp; !mresult) {<br />
+    int still_running = 0;</p>
+<pre><code>  mresult = curl_multi_poll(multi, NULL, 0, 1000, NULL);
+
+  if(!mresult)
+    mresult = curl_multi_perform(multi, &amp;still_running);
+</code></pre>
+<pre><code>
+`curl_multi_poll` 的 1000ms 超时形同虚设——因为下载 socket 始终可读，`poll()` 立刻返回。
+
+**结果**：每秒跑上千次这个循环，每次包含多个系统调用（`poll`、`read`、`write`），CPU 直接打满。
+
+### 问题本质
+
+**stdin 没有被加入 `curl_multi_poll` 的 pollset**。只有网络 socket 参与了 poll。所以 curl 无法高效地&quot;同时等待 stdin 和网络数据&quot;，只能靠 `tool_write_cb` 里的盲目 unpause 来弥补，在 streaming 场景下退化成忙等。
+
+### 用户侧解决方案
+
+**如果你不需要从 stdin 上传数据**（只是想看 streaming 响应），不要用 `-T.`：
+
+```bash
+# 正确的方式：只看 streaming 输出
+curl -N https://streaming-server/events
+
+# 或者重定向 stdin 为空
+curl -NT. https://streaming-server/events &lt; /dev/null
+</code></pre>
+<p><code>&lt; /dev/null</code> 会让 <code>read()</code> 返回 0（EOF）而不是 EAGAIN，不会进入 pause/unpause 循环。</p>
+<p><strong>如果确实需要双向 streaming</strong>（边上传 stdin 边接收），目前没有完美的用户侧 workaround。可以考虑：</p>
+<pre><code class="language-bash"># 用管道加一层缓冲，减轻空转（效果有限）
+cat | curl -NT. https://streaming-server/events
+</code></pre>
+<h3>源码级修复思路</h3>
+<p>如果要在源码层面修复，最直接的方案是<strong>在 <code>tool_write_cb</code> 中去掉盲目 unpause</strong>，改为只在 <code>tool_readbusy_cb</code> 中带退避地 unpause，并增大退避时间：</p>
+<pre><code class="language-c">// tool_cb_wrt.c — 去掉这段，或加条件限制
+// 不再从 write callback 无脑解除上传暂停
+if(config-&gt;readbusy) {
+    config-&gt;readbusy = FALSE;
+    curl_easy_pause(per-&gt;curl, CURLPAUSE_CONT);  // 删除或改为有条件触发
+}
+</code></pre>
+<pre><code class="language-c">// tool_cb_rea.c — 增大退避时间
+if(config-&gt;readbusy) {
+    if(ulprev == ulnow) {
+        waitfd(100, per-&gt;infd);  // 从 1ms 提高到 100ms
+    }
+    config-&gt;readbusy = FALSE;
+    curl_easy_pause(per-&gt;curl, CURLPAUSE_CONT);
+}
+</code></pre>
+<p>更彻底的方案是把 stdin fd 加入 <code>curl_multi_poll</code> 的 extra fds，但这需要改 <code>curl_multi_poll</code> 的调用方式，涉及面更大。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-07-08T16:05:00+08:00">2026-07-08</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-24"  rel="bookmark" >
               <h2 class="card-title">我的 Vibe Coding 最佳实践——ADR文档</h2>
             </a>
@@ -3091,30 +3232,6 @@ make install
 <p>这串 hubApp 的id如何找到呢？新建一个浏览器profile，这个时候 Copilot 是有图标的。不要去点，去设置里翻 <code>edge://settings/sidebar</code> 就能看到 Copilot 的选项。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-09-22T21:49:00+08:00">2024-09-22</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2024/stdout-17"  rel="bookmark" >
-              <h2 class="card-title">php是最好的……serverless</h2>
-            </a>
-            <p class="card-text"><p>php是不是最好的语言先不说，但是如果从 serverless 的角度看php：</p>
-<ol>
-<li>语法简单，功能丰富，10分钟就能学会</li>
-<li>通过 FTP 之类的标准工具部署，而不是脑残的命令行</li>
-<li>不用管理麻烦的服务器。基于非常成熟的 php-fpm 去做 scaling。也有大量巨型网站验证过这一方案</li>
-<li>虽然不是 docker，但是 <code>vhost</code> 够用了。而且要容器化 <code>vhost</code> 也很容易</li>
-<li>让人梦寐以求的“热更新”技术</li>
-<li>超级便宜的月租。（还记得 dreamhost 吗？）</li>
-<li>不会吊死在一颗树（vendor lock-in）上。全球遍地的厂商都支持</li>
-</ol>
-<p>你就说好不好吧。同时<a href="https://news.ycombinator.com/item?id=41358020#41364190">评论在 Hacker News</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-08-27T11:06:00+08:00">2024-08-27</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
