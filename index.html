@@ -55,14 +55,14 @@
         <div class="card blog-card">
           <article class="card-body">
             <a href="/2026/stdout-26"  rel="bookmark" >
-              <h2 class="card-title">grep vs sqlite 谁跟适合微信聊天记录？</h2>
+              <h2 class="card-title">grep vs sqlite 谁更适合微信聊天记录？</h2>
             </a>
-            <p class="card-text"><p>看到个说法</p>
+            <p class="card-text"><p>一个爆火的讨论</p>
 <blockquote>
 <p>云风 @cloudwu <a href="https://xcancel.com/cloudwu/status/2071533904977428611">2026-06-29</a><br />
 微信的开发人员根本就不懂该怎么储存数据。这种聊天软件，文本和媒体文件分开存，文本根本就不应该保存在什么数据库(sqlite)里, 一个对话一个文本文件追加就可以了。需要搜索的时候 grep 一下性能完全符合需求。一个对话能有多少文本？一秒一个字 24 小时不间断，一年也就 30M 个字。</p>
 </blockquote>
-<p>无聊让 opus 跑了一局。</p>
+<p>网上的争论都是猜测，我呢，决定让 opus 跑一局。</p>
 <p>首先让AI去搜微信聊录表结构</p>
 <blockquote>
 <p>微信（Android）聊天记录存储在加密 SQLite 数据库 <code>EnMicroMsg.db</code> 中，使用 SQLCipher（AES-256-CBC，PBKDF2 256000 轮派生密钥）。核心 <code>message</code> 表：</p>
@@ -588,7 +588,9 @@ python3 benchmark.py 500000     # 基础测试 (SQLite/grep)
 python3 benchmark_v2.py 500000  # 扩展测试 (DuckDB/Polars/mmap/...)
 </code></pre>
 <p>源码放在 <a href="https://github.com/est/snippets/tree/master/grep_vs_sqlite">https://github.com/est/snippets/tree/master/grep_vs_sqlite</a> 。</p>
-<p>模拟聊天记录有500,000行 一个 50MB 的 .tsv 太大了。自己让AI根据文章和最上面表结构生成一份吧。</p></p>
+<p>模拟聊天记录有500,000行 一个 50MB 的 .tsv 太大了。自己让AI根据文章和最上面表结构生成一份吧。</p>
+<h3>后记</h3>
+<p>被Polars的性能震惊了。说实话如果换我肯定不会选sqlite。聊天记录又不会改。ACID的 OLTP 明显浪费</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-07-09T11:02:00+08:00">2026-07-09</time></p>
 <p>stdout</p>            </div>

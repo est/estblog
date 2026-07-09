@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Thu, 09 Jul 2026 11:02:00 +0800</lastBuildDate><item><title>grep vs sqlite 谁跟适合微信聊天记录？</title><link>https://blog.est.im/2026/stdout-26</link><description>&lt;p&gt;看到个说法&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Thu, 09 Jul 2026 11:02:00 +0800</lastBuildDate><item><title>grep vs sqlite 谁更适合微信聊天记录？</title><link>https://blog.est.im/2026/stdout-26</link><description>&lt;p&gt;一个爆火的讨论&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;云风 @cloudwu &lt;a href="https://xcancel.com/cloudwu/status/2071533904977428611"&gt;2026-06-29&lt;/a&gt;&lt;br /&gt;
 微信的开发人员根本就不懂该怎么储存数据。这种聊天软件，文本和媒体文件分开存，文本根本就不应该保存在什么数据库(sqlite)里, 一个对话一个文本文件追加就可以了。需要搜索的时候 grep 一下性能完全符合需求。一个对话能有多少文本？一秒一个字 24 小时不间断，一年也就 30M 个字。&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;无聊让 opus 跑了一局。&lt;/p&gt;
+&lt;p&gt;网上的争论都是猜测，我呢，决定让 opus 跑一局。&lt;/p&gt;
 &lt;p&gt;首先让AI去搜微信聊录表结构&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;微信（Android）聊天记录存储在加密 SQLite 数据库 &lt;code&gt;EnMicroMsg.db&lt;/code&gt; 中，使用 SQLCipher（AES-256-CBC，PBKDF2 256000 轮派生密钥）。核心 &lt;code&gt;message&lt;/code&gt; 表：&lt;/p&gt;
@@ -530,7 +530,9 @@ python3 benchmark.py 500000     # 基础测试 (SQLite/grep)
 python3 benchmark_v2.py 500000  # 扩展测试 (DuckDB/Polars/mmap/...)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;源码放在 &lt;a href="https://github.com/est/snippets/tree/master/grep_vs_sqlite"&gt;https://github.com/est/snippets/tree/master/grep_vs_sqlite&lt;/a&gt; 。&lt;/p&gt;
-&lt;p&gt;模拟聊天记录有500,000行 一个 50MB 的 .tsv 太大了。自己让AI根据文章和最上面表结构生成一份吧。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 09 Jul 2026 11:02:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-07-09:/2026/stdout-26</guid><category>stdout</category></item><item><title>[AI] curl -NT. 导致100% CPU原因</title><link>https://blog.est.im/2026/stdout-25</link><description>&lt;p&gt;有AI就是好使，搁以前自己得盯半天也看不明白。。。&lt;/p&gt;
+&lt;p&gt;模拟聊天记录有500,000行 一个 50MB 的 .tsv 太大了。自己让AI根据文章和最上面表结构生成一份吧。&lt;/p&gt;
+&lt;h3&gt;后记&lt;/h3&gt;
+&lt;p&gt;被Polars的性能震惊了。说实话如果换我肯定不会选sqlite。聊天记录又不会改。ACID的 OLTP 明显浪费&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 09 Jul 2026 11:02:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-07-09:/2026/stdout-26</guid><category>stdout</category></item><item><title>[AI] curl -NT. 导致100% CPU原因</title><link>https://blog.est.im/2026/stdout-25</link><description>&lt;p&gt;有AI就是好使，搁以前自己得盯半天也看不明白。。。&lt;/p&gt;
 &lt;h3&gt;问题确认&lt;/h3&gt;
 &lt;p&gt;&lt;code&gt;curl -NT.&lt;/code&gt; 在连接一个持续推送数据的 streaming 服务器时，会产生一个 &lt;strong&gt;紧密的 pause/unpause 循环&lt;/strong&gt;，导致 100% CPU。&lt;/p&gt;
 &lt;h3&gt;根因分析&lt;/h3&gt;
