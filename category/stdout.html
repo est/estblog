@@ -54,6 +54,551 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-26"  rel="bookmark" >
+              <h2 class="card-title">grep vs sqlite 谁跟适合微信聊天记录？</h2>
+            </a>
+            <p class="card-text"><p>看到个说法</p>
+<blockquote>
+<p>云风 @cloudwu <a href="https://xcancel.com/cloudwu/status/2071533904977428611">2026-06-29</a><br />
+微信的开发人员根本就不懂该怎么储存数据。这种聊天软件，文本和媒体文件分开存，文本根本就不应该保存在什么数据库(sqlite)里, 一个对话一个文本文件追加就可以了。需要搜索的时候 grep 一下性能完全符合需求。一个对话能有多少文本？一秒一个字 24 小时不间断，一年也就 30M 个字。</p>
+</blockquote>
+<p>无聊让 opus 跑了一局。</p>
+<p>首先让AI去搜微信聊录表结构</p>
+<blockquote>
+<p>微信（Android）聊天记录存储在加密 SQLite 数据库 <code>EnMicroMsg.db</code> 中，使用 SQLCipher（AES-256-CBC，PBKDF2 256000 轮派生密钥）。核心 <code>message</code> 表：</p>
+</blockquote>
+<pre><code class="language-sql">CREATE TABLE message (
+    msgId      INTEGER PRIMARY KEY,  -- 本地自增 ID
+    msgSvrId   INTEGER,              -- 服务器消息 ID
+    type       INTEGER,              -- 1=文字, 3=图片, 34=语音, 43=视频
+    isSend     INTEGER,              -- 0=接收, 1=发送
+    createTime INTEGER,              -- Unix 时间戳
+    talker     TEXT,                 -- wxid 或群 chatroom ID
+    content    TEXT,                 -- 消息正文
+    imgPath    TEXT                  -- 附件路径
+);
+</code></pre>
+<h3>测试设计</h3>
+<ul>
+<li><strong>数据量</strong>：50 万条模拟消息（模拟中度用户 ~2 年）</li>
+<li><strong>搜索关键词</strong>：<code>微信支付</code>、<code>服务器</code>、<code>数据库</code>、<code>会议</code>、<code>周末</code></li>
+<li><strong>环境</strong>：macOS Apple Silicon, Python 3.14, ripgrep 15.1, DuckDB 1.5.4, Polars 1.42</li>
+<li><strong>每项测试 3 轮取最小值</strong></li>
+</ul>
+<h3>参赛选手</h3>
+<table>
+<thead>
+<tr>
+<th>分类</th>
+<th>方案</th>
+<th>思路</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>传统文本</td>
+<td>grep (BSD)</td>
+<td>最朴素的逐字节匹配</td>
+</tr>
+<tr>
+<td>SIMD文本</td>
+<td>ripgrep</td>
+<td>AVX2/NEON 并行 + 多线程</td>
+</tr>
+<tr>
+<td>零拷贝</td>
+<td>mmap 直接搜索</td>
+<td>OS page cache + Python bytes.find</td>
+</tr>
+<tr>
+<td>压缩文本</td>
+<td>zstd 流式解压搜索</td>
+<td>省空间，边解压边搜</td>
+</tr>
+<tr>
+<td>索引</td>
+<td>倒排索引 (2-gram)</td>
+<td>搜索引擎思路，内存索引</td>
+</tr>
+<tr>
+<td>索引</td>
+<td>Bloom Filter 分块</td>
+<td>概率型预过滤</td>
+</tr>
+<tr>
+<td>RDBMS</td>
+<td>SQLite LIKE</td>
+<td>微信的实际方案(去掉加密)</td>
+</tr>
+<tr>
+<td>RDBMS</td>
+<td>SQLite mmap 模式</td>
+<td>mmap I/O 加速</td>
+</tr>
+<tr>
+<td>RDBMS FTS</td>
+<td>SQLite FTS5 (trigram)</td>
+<td>全文搜索引擎</td>
+</tr>
+<tr>
+<td>列式DB</td>
+<td>DuckDB contains()</td>
+<td>OLAP 列式扫描</td>
+</tr>
+<tr>
+<td>列式DB</td>
+<td>DuckDB FTS</td>
+<td>DuckDB 的全文搜索扩展</td>
+</tr>
+<tr>
+<td>列式文件</td>
+<td>Parquet(zstd) + DuckDB</td>
+<td>列式文件直接查询</td>
+</tr>
+<tr>
+<td>DataFrame</td>
+<td>Polars lazy scan</td>
+<td>Rust实现的极速 DataFrame</td>
+</tr>
+<tr>
+<td>DataFrame</td>
+<td>Polars in-memory</td>
+<td>全量载入内存</td>
+</tr>
+<tr>
+<td>并行文本</td>
+<td>ripgrep 多文件并行</td>
+<td>分块文件 + rg 多线程</td>
+</tr>
+</tbody>
+</table>
+<h3>测试结果</h3>
+<h4>关键词搜索延迟（ms, 3轮最小值）</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>方案</th>
+<th style="text-align: right;">微信支付</th>
+<th style="text-align: right;">服务器</th>
+<th style="text-align: right;">数据库</th>
+<th style="text-align: right;">会议</th>
+<th style="text-align: right;">周末</th>
+<th style="text-align: right;"><strong>平均</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>SQLite FTS5 (trigram)</strong></td>
+<td style="text-align: right;">0.65</td>
+<td style="text-align: right;">0.46</td>
+<td style="text-align: right;">0.37</td>
+<td style="text-align: right;">❌²</td>
+<td style="text-align: right;">❌²</td>
+<td style="text-align: right;"><strong>0.31</strong>¹</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Polars lazy scan</strong></td>
+<td style="text-align: right;">3.51</td>
+<td style="text-align: right;">2.56</td>
+<td style="text-align: right;">2.43</td>
+<td style="text-align: right;">2.49</td>
+<td style="text-align: right;">2.47</td>
+<td style="text-align: right;"><strong>2.69</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>倒排索引 (2-gram)</strong></td>
+<td style="text-align: right;">2.71</td>
+<td style="text-align: right;">3.26</td>
+<td style="text-align: right;">2.78</td>
+<td style="text-align: right;">3.24</td>
+<td style="text-align: right;">2.37</td>
+<td style="text-align: right;"><strong>2.87</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Polars in-memory</strong></td>
+<td style="text-align: right;">2.67</td>
+<td style="text-align: right;">3.61</td>
+<td style="text-align: right;">2.98</td>
+<td style="text-align: right;">3.21</td>
+<td style="text-align: right;">3.21</td>
+<td style="text-align: right;"><strong>3.13</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>DuckDB contains()</strong></td>
+<td style="text-align: right;">3.72</td>
+<td style="text-align: right;">3.23</td>
+<td style="text-align: right;">3.18</td>
+<td style="text-align: right;">3.91</td>
+<td style="text-align: right;">4.41</td>
+<td style="text-align: right;"><strong>3.69</strong></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Parquet + DuckDB</td>
+<td style="text-align: right;">4.63</td>
+<td style="text-align: right;">4.37</td>
+<td style="text-align: right;">4.55</td>
+<td style="text-align: right;">4.88</td>
+<td style="text-align: right;">4.84</td>
+<td style="text-align: right;"><strong>4.65</strong></td>
+</tr>
+<tr>
+<td>7</td>
+<td>ripgrep 多文件并行</td>
+<td style="text-align: right;">10.65</td>
+<td style="text-align: right;">10.26</td>
+<td style="text-align: right;">9.48</td>
+<td style="text-align: right;">10.32</td>
+<td style="text-align: right;">9.05</td>
+<td style="text-align: right;"><strong>9.95</strong></td>
+</tr>
+<tr>
+<td>8</td>
+<td>DuckDB FTS (BM25)</td>
+<td style="text-align: right;">12.53</td>
+<td style="text-align: right;">11.77</td>
+<td style="text-align: right;">12.85</td>
+<td style="text-align: right;">11.82</td>
+<td style="text-align: right;">12.78</td>
+<td style="text-align: right;"><strong>12.35</strong>³</td>
+</tr>
+<tr>
+<td>9</td>
+<td>ripgrep (SIMD, 单文件)</td>
+<td style="text-align: right;">13.24</td>
+<td style="text-align: right;">13.77</td>
+<td style="text-align: right;">13.40</td>
+<td style="text-align: right;">14.14</td>
+<td style="text-align: right;">13.10</td>
+<td style="text-align: right;"><strong>13.53</strong></td>
+</tr>
+<tr>
+<td>10</td>
+<td>mmap 直接搜索</td>
+<td style="text-align: right;">17.00</td>
+<td style="text-align: right;">22.62</td>
+<td style="text-align: right;">22.86</td>
+<td style="text-align: right;">31.36</td>
+<td style="text-align: right;">30.52</td>
+<td style="text-align: right;"><strong>24.87</strong></td>
+</tr>
+<tr>
+<td>11</td>
+<td>Bloom Filter + 扫描</td>
+<td style="text-align: right;">25.34</td>
+<td style="text-align: right;">25.25</td>
+<td style="text-align: right;">25.06</td>
+<td style="text-align: right;">26.68</td>
+<td style="text-align: right;">27.01</td>
+<td style="text-align: right;"><strong>25.87</strong></td>
+</tr>
+<tr>
+<td>12</td>
+<td>SQLite mmap LIKE</td>
+<td style="text-align: right;">37.45</td>
+<td style="text-align: right;">37.45</td>
+<td style="text-align: right;">37.92</td>
+<td style="text-align: right;">37.83</td>
+<td style="text-align: right;">37.81</td>
+<td style="text-align: right;"><strong>37.69</strong></td>
+</tr>
+<tr>
+<td>13</td>
+<td>SQLite LIKE</td>
+<td style="text-align: right;">43.13</td>
+<td style="text-align: right;">41.40</td>
+<td style="text-align: right;">41.50</td>
+<td style="text-align: right;">41.51</td>
+<td style="text-align: right;">41.46</td>
+<td style="text-align: right;"><strong>41.80</strong></td>
+</tr>
+<tr>
+<td>14</td>
+<td>grep (BSD)</td>
+<td style="text-align: right;">139.10</td>
+<td style="text-align: right;">136.86</td>
+<td style="text-align: right;">141.42</td>
+<td style="text-align: right;">122.54</td>
+<td style="text-align: right;">124.16</td>
+<td style="text-align: right;"><strong>132.82</strong></td>
+</tr>
+<tr>
+<td>15</td>
+<td>zstd 流式解压搜索</td>
+<td style="text-align: right;">161.32</td>
+<td style="text-align: right;">164.22</td>
+<td style="text-align: right;">164.56</td>
+<td style="text-align: right;">170.23</td>
+<td style="text-align: right;">170.73</td>
+<td style="text-align: right;"><strong>166.21</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>¹ FTS5 只对 ≥3字符 的关键词有效，取3个有效关键词平均<br />
+² trigram tokenizer 无法匹配 2 字符的中文词<br />
+³ DuckDB FTS 默认 tokenizer 不支持中文，返回 0 结果（延迟仍可参考）</p>
+</blockquote>
+<h4>视觉化排名</h4>
+<pre><code> 1.                                                            █   0.31ms SQLite FTS5
+ 2.                                                            █   2.69ms Polars lazy
+ 3.                                                            █   2.87ms 倒排索引
+ 4.                                                            █   3.13ms Polars in-mem
+ 5.                                                            █   3.69ms DuckDB contains
+ 6.                                                           ██   4.65ms Parquet+DuckDB
+ 7.                                                         ████   9.95ms rg多文件并行
+ 8.                                                       ██████  12.35ms DuckDB FTS
+ 9.                                                       ██████  13.53ms ripgrep (SIMD
+10.                                                 ████████████  24.87ms mmap 直接搜索
+11.                                                 ████████████  25.87ms Bloom+扫描
+12.                                           ██████████████████  37.69ms SQLite mmap LIKE
+13.                                         ████████████████████  41.80ms SQLite LIKE
+14. ████████████████████████████████████████████████████████████ 132.82ms grep (BSD
+15. ████████████████████████████████████████████████████████████ 166.21ms zstd流式解压
+</code></pre>
+<h4>复合条件查询（指定用户 + 时间范围 + 关键词"会议"）</h4>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th style="text-align: right;">延迟 (ms)</th>
+<th style="text-align: right;">倍率(vs grep)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SQLite indexed</strong></td>
+<td style="text-align: right;"><strong>2.80</strong></td>
+<td style="text-align: right;">76x</td>
+</tr>
+<tr>
+<td>DuckDB</td>
+<td style="text-align: right;">4.57</td>
+<td style="text-align: right;">47x</td>
+</tr>
+<tr>
+<td>Polars in-memory</td>
+<td style="text-align: right;">7.02</td>
+<td style="text-align: right;">30x</td>
+</tr>
+<tr>
+<td>ripgrep pipe</td>
+<td style="text-align: right;">20.47</td>
+<td style="text-align: right;">10x</td>
+</tr>
+<tr>
+<td>grep pipe</td>
+<td style="text-align: right;">213.90</td>
+<td style="text-align: right;">1x</td>
+</tr>
+</tbody>
+</table>
+<h4>存储大小</h4>
+<table>
+<thead>
+<tr>
+<th>格式</th>
+<th style="text-align: right;">大小</th>
+<th style="text-align: right;">vs TSV</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Parquet (zstd)</strong></td>
+<td style="text-align: right;"><strong>8.3 MB</strong></td>
+<td style="text-align: right;">0.18x</td>
+<td>列式 + 字典编码 + 压缩</td>
+</tr>
+<tr>
+<td>zstd 压缩 TSV</td>
+<td style="text-align: right;">12.7 MB</td>
+<td style="text-align: right;">0.27x</td>
+<td>纯压缩</td>
+</tr>
+<tr>
+<td>DuckDB + FTS</td>
+<td style="text-align: right;">26.0 MB</td>
+<td style="text-align: right;">0.55x</td>
+<td>含全文索引</td>
+</tr>
+<tr>
+<td>TSV 纯文本</td>
+<td style="text-align: right;">47.0 MB</td>
+<td style="text-align: right;">1.00x</td>
+<td>基线</td>
+</tr>
+<tr>
+<td>SQLite</td>
+<td style="text-align: right;">69.2 MB</td>
+<td style="text-align: right;">1.47x</td>
+<td>B-tree 开销</td>
+</tr>
+<tr>
+<td>SQLite + FTS5</td>
+<td style="text-align: right;">116.8 MB</td>
+<td style="text-align: right;">2.49x</td>
+<td>trigram 索引翻倍</td>
+</tr>
+</tbody>
+</table>
+<h3>各方案深度分析</h3>
+<h4>Tier 1: 亚毫秒级（&lt; 1ms）</h4>
+<p><strong>SQLite FTS5 (trigram)</strong><br />
+- 原理：对 content 字段的每个 3 字符子串建倒排索引<br />
+- 优点：查询极快（0.3-0.6ms），无需额外依赖<br />
+- 缺点：<strong>索引体积翻倍</strong>（+68MB）；trigram 无法匹配 ≤2 字符的关键词<br />
+- 适用：搜索词通常 ≥3 字符的场景</p>
+<h4>Tier 2: 低毫秒级（2-5ms）</h4>
+<p><strong>Polars (lazy/in-memory)</strong><br />
+- 原理：Rust 实现的 DataFrame 引擎，列式内存布局 + SIMD 字符串匹配<br />
+- 优点：<strong>Parquet 文件仅 8.3MB</strong>（最小！），查询 2-3ms，复合查询也快（7ms）<br />
+- 缺点：需要加载到内存；Python 库依赖<br />
+- 杀手锏：<strong>8MB 的 Parquet 文件 + 3ms 搜索延迟，这是存储效率和速度的最佳平衡点</strong></p>
+<p><strong>倒排索引 (2-gram, 内存)</strong><br />
+- 原理：搜索引擎最经典的思路，对所有 2-gram 建 posting list<br />
+- 优点：构建仅 0.78s，查询 2.9ms，<strong>支持任意长度关键词</strong><br />
+- 缺点：纯内存（需要序列化/加载），索引构建需要全量遍历<br />
+- 适用：append-only 数据可以增量更新索引</p>
+<p><strong>DuckDB contains()</strong><br />
+- 原理：列式存储，content 列连续存放，CPU cache 友好 + SIMD 扫描<br />
+- 优点：无需专门索引即可 3.7ms；复合查询也仅 4.6ms；<strong>文件仅 26MB</strong><br />
+- 缺点：需要 DuckDB 运行时<br />
+- 杀手锏：<strong>不建任何索引，纯靠列式布局就比 SQLite LIKE 快 11 倍</strong></p>
+<p><strong>Parquet 文件 + DuckDB 零拷贝查询</strong><br />
+- 原理：Parquet 本身就是列式格式，DuckDB 可以直接查询不需导入<br />
+- 优点：文件仅 8.3MB，不需要数据库进程，查询 4.6ms<br />
+- 缺点：每次查询需要启动 DuckDB 连接<br />
+- 杀手锏：<strong>一个 8MB 的文件就是完整的"数据库"，任何语言都能读</strong></p>
+<h4>Tier 3: 10ms 级</h4>
+<p><strong>ripgrep 多文件并行</strong><br />
+- 原理：把消息分块成多个文件，ripgrep 的 work-stealing 线程池并行搜索<br />
+- 优点：比单文件 ripgrep 快 ~35%（10ms vs 13.5ms）<br />
+- 缺点：文件管理复杂<br />
+- 适用：数据天然按时间分文件存储的场景</p>
+<p><strong>ripgrep (SIMD, 单文件)</strong><br />
+- 原理：AVX2/NEON 每周期处理 16-32 字节，多线程（对单文件仍用单线程）<br />
+- 优点：零配置，即装即用<br />
+- 缺点：对单文件只能单线程</p>
+<h4>Tier 4: 失败/不推荐的"邪路"</h4>
+<p><strong>Bloom Filter 分块预过滤</strong><br />
+- 问题：中文常用 2-gram 只有 ~690 种，<strong>每个块都包含所有 n-gram</strong>，过滤率为 0<br />
+- 结论：对高频 n-gram 的数据集完全无效，白费构建时间</p>
+<p><strong>zstd 流式解压搜索</strong><br />
+- 问题：Python 解压+搜索 166ms，比不压缩的 grep 还慢<br />
+- 结论：CPU 密集的解压抵消了 I/O 节省。如果数据在 SSD 上，不如直接读原文<br />
+- 可能有用的场景：数据在网络存储/HDD 上，I/O 是瓶颈时</p>
+<p><strong>DuckDB FTS (BM25)</strong><br />
+- 问题：默认 tokenizer（类似 ICU word boundary）不支持中文<br />
+- 结论：需要自定义 tokenizer 或等 DuckDB 支持 trigram/CJK</p>
+<p><strong>mmap 直接搜索</strong><br />
+- 表现：24.87ms，比 ripgrep 慢 2 倍<br />
+- 原因：Python 的 <code>mmap.find()</code> 是朴素搜索，没有 SIMD 优化<br />
+- 如果用 C/Rust 实现的 mmap + SIMD，预期接近 ripgrep 水平</p>
+<h3>推荐方案排名</h3>
+<h4>如果从零设计微信聊天存储</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">优先级</th>
+<th>方案</th>
+<th style="text-align: right;">搜索延迟</th>
+<th style="text-align: right;">存储</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">🥇</td>
+<td><strong>Parquet + Polars/DuckDB</strong></td>
+<td style="text-align: right;">3-5ms</td>
+<td style="text-align: right;">8 MB</td>
+<td>存储最小、搜索极快、格式通用、append 友好</td>
+</tr>
+<tr>
+<td style="text-align: center;">🥈</td>
+<td><strong>DuckDB 数据库</strong></td>
+<td style="text-align: right;">3.7ms</td>
+<td style="text-align: right;">26 MB</td>
+<td>单文件数据库、列式、SQL 查询、FTS 索引可选</td>
+</tr>
+<tr>
+<td style="text-align: center;">🥉</td>
+<td><strong>SQLite + FTS5</strong></td>
+<td style="text-align: right;">0.3ms</td>
+<td style="text-align: right;">117 MB</td>
+<td>最快搜索(有索引)、但索引太大</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td><strong>ripgrep + 分块 TSV</strong></td>
+<td style="text-align: right;">10ms</td>
+<td style="text-align: right;">47 MB</td>
+<td>最简单、无依赖、人类可读</td>
+</tr>
+</tbody>
+</table>
+<h4>如果要"一行命令搜聊天记录"</h4>
+<pre><code class="language-bash"># 方案 A#: ripgrep 搜纯文本 (~10ms)
+rg &quot;微信支付&quot; messages.tsv
+
+## 方案 B: DuckDB 直接查 Parquet (~5ms)
+duckdb -c &quot;SELECT * FROM read_parquet('messages.parquet') WHERE contains(content, '微信支付')&quot;
+
+## 方案 C: DuckDB 复合查询 (~5ms)  
+duckdb -c &quot;SELECT * FROM read_parquet('messages.parquet')
+           WHERE talker='wxid_xxx' AND createTime &gt; 1672531200
+           AND contains(content, '会议')&quot;
+</code></pre>
+<h3>最终结论</h3>
+<h4>"用 grep 代替 SQLite" — 部分正确，但格局太小</h4>
+<ol>
+<li><strong>ripgrep 比 SQLite LIKE 快 3 倍</strong>（13ms vs 42ms）— "grep 派"的论据成立</li>
+<li><strong>但 DuckDB/Polars 比 ripgrep 又快 4 倍</strong>（3ms vs 13ms）— 列式才是正道</li>
+<li><strong>Parquet 比纯文本还小 5.6 倍</strong>（8MB vs 47MB）— 省空间还更快</li>
+<li><strong>复合查询（按人+时间+关键词）SQLite 仍然最强</strong>（2.8ms）</li>
+</ol>
+<h4>真正的启示</h4>
+<blockquote>
+<p><strong>聊天记录是 append-only 数据 → 最适合列式存储 (Parquet/DuckDB)</strong></p>
+<ul>
+<li>不需要 RDBMS 的事务/锁/B-tree 开销</li>
+<li>列式布局让 <code>content</code> 列连续存放，CPU cache 极度友好</li>
+<li>zstd 字典压缩对重复模式多的聊天文本压缩率惊人（82%）</li>
+<li>追加写入只需要 append 新的 row group</li>
+</ul>
+<p><strong>微信搜索慢的根因</strong>：不是 SQLite vs grep 的问题，而是 <strong>SQLCipher 加密的 PBKDF2 256000 轮</strong> + 行式存储对全文扫描不友好。如果用 Parquet + 硬件 AES，可以同时做到加密和极速搜索。</p>
+</blockquote>
+<h4>脑洞：终极方案</h4>
+<pre><code>messages.parquet (8MB, zstd压缩, 硬件AES加密)
+  → DuckDB/Polars 直接查询 (3-5ms)
+  → 可选: 内存倒排索引 for &lt; 1ms 搜索
+  → 追加: 新消息 append 到 staging 文件, 定期 merge
+  → 导出: parquet 是开放格式, 任何语言/工具可读
+</code></pre>
+<h3>复现</h3>
+<pre><code class="language-bash">pip install duckdb polars zstandard cryptography
+python3 benchmark.py 500000     # 基础测试 (SQLite/grep)  
+python3 benchmark_v2.py 500000  # 扩展测试 (DuckDB/Polars/mmap/...)
+</code></pre>
+<p>源码放在 <a href="https://github.com/est/snippets/tree/master/grep_vs_sqlite">https://github.com/est/snippets/tree/master/grep_vs_sqlite</a> 。</p>
+<p>模拟聊天记录有500,000行 一个 50MB 的 .tsv 太大了。自己让AI根据文章和最上面表结构生成一份吧。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-07-09T11:02:00+08:00">2026-07-09</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-25"  rel="bookmark" >
               <h2 class="card-title">[AI] curl -NT. 导致100% CPU原因</h2>
             </a>
@@ -3189,29 +3734,6 @@ make install
 </ol></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-09-26T22:52:00+08:00">2024-09-26</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2024/stdout-18"  rel="bookmark" >
-              <h2 class="card-title">Edge找回丢失的右上角Copilot侧边栏图标</h2>
-            </a>
-            <p class="card-text"><p>右上角图标和侧边栏的官方截图：</p>
-<p><img referrerpolicy="no-referrer" src="https://blogs.windows.com/wp-content/uploads/prod/sites/33/2023/12/devtools-copilot-in-edge-1.png" /></p>
-<p>如果不小心关掉了，找回办法：</p>
-<ol>
-<li>打开 <code>edge://settings/sidebar/appSettings?hubApp=cd4688a9-e888-48ea-ad81-76193d56b1be</code></li>
-<li><code>F12</code> 或者 <code>Opt+Cmd+I</code>，找到第一个“Show Copilot”开关，把它改成关闭。</li>
-<li>如果第二步不会搞，输入 <code>document.querySelector('input[aria-label="Show Copilot"]').removeAttribute('disabled')</code> 可破</li>
-</ol>
-<p>为什么会有这个问题，因为政策的原因，Microsoft Copilot 不能在简中使用，于是右上角的按钮点一下会消失；但是开发或者集成测试的为了省事儿，就直接给隐藏掉，导致侧边栏无法点开</p>
-<p>这串 hubApp 的id如何找到呢？新建一个浏览器profile，这个时候 Copilot 是有图标的。不要去点，去设置里翻 <code>edge://settings/sidebar</code> 就能看到 Copilot 的选项。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2024-09-22T21:49:00+08:00">2024-09-22</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
