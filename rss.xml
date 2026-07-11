@@ -23,11 +23,11 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;如果 &lt;code&gt;$TMUX_PANE&lt;/code&gt; == active pane ID，说明用户就在看这个窗口，不需要通知。完全不需要知道前台是哪个 app。&lt;/p&gt;
 &lt;p&gt;非 tmux 场景才用进程树 + &lt;code&gt;lsappinfo&lt;/code&gt; 的 PID 比对。&lt;/p&gt;
-&lt;p&gt;然后就是挑选具体哪些时间要弹通知了。&lt;/p&gt;
-&lt;p&gt;权限通知：permission.ask，但文档说 "not yet wired"。试了一下，确实没触发。尴尬。&lt;/p&gt;
-&lt;p&gt;最后的方案：注册 &lt;code&gt;permission.ask&lt;/code&gt; 占位，如果哪天接入了就能精确捕获。目前靠 &lt;code&gt;tool.execute.after&lt;/code&gt; 推断——工具跑完了说明权限已过或不需要。&lt;/p&gt;
-&lt;p&gt;还有个情况就是 Subagent 完成也给我框框弹。最初硬编码了 &lt;code&gt;SUBAGENT_TYPES = ["general", "explore"]&lt;/code&gt;；后来发现 &lt;code&gt;actor.preStop&lt;/code&gt; / &lt;code&gt;actor.postStop&lt;/code&gt; 的 input 里有 &lt;code&gt;mode: "subagent" | "peer"&lt;/code&gt;。于是就做了个计数器&lt;/p&gt;
-&lt;p&gt;最好 Session 名字，折腾了一圈 直接 &lt;code&gt;sqlite3 ~/.local/share/mimocode/mimocode.db "SELECT title FROM session WHERE id = '$SESSION_ID'"&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;然后就是挑选具体哪些事件要弹通知了。&lt;/p&gt;
+&lt;p&gt;权限通知：&lt;code&gt;permission.ask&lt;/code&gt;，但文档说 "not yet wired"。试了一下，确实没触发。尴尬。雷军！！！金凡！！！&lt;/p&gt;
+&lt;p&gt;最后的方案：注册 &lt;code&gt;permission.ask&lt;/code&gt; 占位，如果哪天接入了就能精确捕获。目前靠 &lt;code&gt;tool.execute.before&lt;/code&gt; 抢占并推断。工具跑完了说明权限已过或不需要。&lt;/p&gt;
+&lt;p&gt;还有个情况就是 Subagent 完成也给我哐哐弹。最初硬编码了 &lt;code&gt;SUBAGENT_TYPES = ["general", "explore"]&lt;/code&gt;；后来发现 &lt;code&gt;actor.preStop&lt;/code&gt; / &lt;code&gt;actor.postStop&lt;/code&gt; 的 input 里有 &lt;code&gt;mode: "subagent" | "peer"&lt;/code&gt;。于是就做了个计数器&lt;/p&gt;
+&lt;p&gt;最后通知到时候带上 Session 名字，折腾了一圈 直接 &lt;code&gt;sqlite3 ~/.local/share/mimocode/mimocode.db "SELECT title FROM session WHERE id = '$SESSION_ID'"&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;完整代码放在 &lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/est/snippets/blob/master/mimocode-hooks/notify-done.ts"&gt;https://github.com/est/snippets/blob/master/mimocode-hooks/notify-done.ts&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;复制到 &lt;code&gt;~/.config/mimocode/hooks/&lt;/code&gt; 就可以试试效果&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 11 Jul 2026 11:53:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-07-11:/2026/stdout-27</guid><category>stdout</category></item><item><title>写作能力和 locate cost</title><link>https://blog.est.im/2026/stderr-24</link><description>&lt;p&gt;自从自个儿琢磨出 &lt;a href="https://blog.est.im/2026/stdin-17"&gt;locate cost&lt;/a&gt; 之后便开始关注这方面问题。最近看到两篇喷 harness 问题的&lt;/p&gt;

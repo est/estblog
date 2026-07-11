@@ -81,11 +81,11 @@
 </code></pre>
 <p>如果 <code>$TMUX_PANE</code> == active pane ID，说明用户就在看这个窗口，不需要通知。完全不需要知道前台是哪个 app。</p>
 <p>非 tmux 场景才用进程树 + <code>lsappinfo</code> 的 PID 比对。</p>
-<p>然后就是挑选具体哪些时间要弹通知了。</p>
-<p>权限通知：permission.ask，但文档说 "not yet wired"。试了一下，确实没触发。尴尬。</p>
-<p>最后的方案：注册 <code>permission.ask</code> 占位，如果哪天接入了就能精确捕获。目前靠 <code>tool.execute.after</code> 推断——工具跑完了说明权限已过或不需要。</p>
-<p>还有个情况就是 Subagent 完成也给我框框弹。最初硬编码了 <code>SUBAGENT_TYPES = ["general", "explore"]</code>；后来发现 <code>actor.preStop</code> / <code>actor.postStop</code> 的 input 里有 <code>mode: "subagent" | "peer"</code>。于是就做了个计数器</p>
-<p>最好 Session 名字，折腾了一圈 直接 <code>sqlite3 ~/.local/share/mimocode/mimocode.db "SELECT title FROM session WHERE id = '$SESSION_ID'"</code></p>
+<p>然后就是挑选具体哪些事件要弹通知了。</p>
+<p>权限通知：<code>permission.ask</code>，但文档说 "not yet wired"。试了一下，确实没触发。尴尬。雷军！！！金凡！！！</p>
+<p>最后的方案：注册 <code>permission.ask</code> 占位，如果哪天接入了就能精确捕获。目前靠 <code>tool.execute.before</code> 抢占并推断。工具跑完了说明权限已过或不需要。</p>
+<p>还有个情况就是 Subagent 完成也给我哐哐弹。最初硬编码了 <code>SUBAGENT_TYPES = ["general", "explore"]</code>；后来发现 <code>actor.preStop</code> / <code>actor.postStop</code> 的 input 里有 <code>mode: "subagent" | "peer"</code>。于是就做了个计数器</p>
+<p>最后通知到时候带上 Session 名字，折腾了一圈 直接 <code>sqlite3 ~/.local/share/mimocode/mimocode.db "SELECT title FROM session WHERE id = '$SESSION_ID'"</code></p>
 <p>完整代码放在 </p>
 <p><a href="https://github.com/est/snippets/blob/master/mimocode-hooks/notify-done.ts">https://github.com/est/snippets/blob/master/mimocode-hooks/notify-done.ts</a></p>
 <p>复制到 <code>~/.config/mimocode/hooks/</code> 就可以试试效果</p></p>
