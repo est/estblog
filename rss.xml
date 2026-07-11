@@ -1,5 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Thu, 09 Jul 2026 23:01:00 +0800</lastBuildDate><item><title>写作能力和 locate cost</title><link>https://blog.est.im/2026/stderr-24</link><description>&lt;p&gt;自从自个儿琢磨出 &lt;a href="https://blog.est.im/2026/stdin-17"&gt;locate cost&lt;/a&gt; 之后便开始关注这方面问题。最近看到两篇喷 harness 问题的&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sat, 11 Jul 2026 11:53:00 +0800</lastBuildDate><item><title>MiMoCode 干完活儿发通知</title><link>https://blog.est.im/2026/stdout-27</link><description>&lt;p&gt;AI在 coding 的时候我其实在玩别的。希望agent 每次干完活，macOS 弹个通知。&lt;/p&gt;
+&lt;p&gt;手上是 MimoCode，就让它自己写个。啪，很快写好了。结果还是折腾了好一会儿， 记录几个有意思的小坑。&lt;/p&gt;
+&lt;p&gt;首先是如果当前CLI是活动的，就不弹通知。&lt;/p&gt;
+&lt;p&gt;需要判断活动窗口。最初用 &lt;code&gt;osascript&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-bash"&gt;osascript -e 'tell application &amp;quot;System Events&amp;quot; to get name of first application process whose frontmost is true'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;直接报错 &lt;code&gt;Not authorized to send Apple events to System Events (-1743)&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;于是换 &lt;code&gt;lsappinfo&lt;/code&gt;，走 macOS Launch Services API，不需要任何额外授权：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-bash"&gt;lsappinfo info -only name $(lsappinfo front)
+# → &amp;quot;LSDisplayName&amp;quot;=&amp;quot;Terminal&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;还能拿 PID：&lt;code&gt;lsappinfo info -only pid $(lsappinfo front)&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;然后如何判定活动窗口是不是 CLI？&lt;/p&gt;
+&lt;p&gt;写死个&lt;code&gt;["iTerm2", "Terminal", "Alacritty", "kitty", ...]&lt;/code&gt; 列表&lt;/p&gt;
+&lt;p&gt;太笨了。当前hook是子进程，直接遍历 parent 进程树啊！找到终端模拟器的 PID，再跟前台 app 的 PID 比对。&lt;/p&gt;
+&lt;p&gt;但是在 tmux 里爬出来是这样的：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;node → zsh → tmux → launchd(1) → init(0)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Terminal.app 的 PID 根本不在树上。因为 tmux server 启动后被 reparent 到了 launchd，跟 Terminal.app 断开了父子关系。&lt;/p&gt;
+&lt;p&gt;又想到一个办法，直接查 &lt;code&gt;$TMUX_PANE&lt;/code&gt; 是否是当前 active pane：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-bash"&gt;tmux list-panes -F '#{pane_id} #{pane_active}' | awk '$2==1 {print $1}'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;如果 &lt;code&gt;$TMUX_PANE&lt;/code&gt; == active pane ID，说明用户就在看这个窗口，不需要通知。完全不需要知道前台是哪个 app。&lt;/p&gt;
+&lt;p&gt;非 tmux 场景才用进程树 + &lt;code&gt;lsappinfo&lt;/code&gt; 的 PID 比对。&lt;/p&gt;
+&lt;p&gt;然后就是挑选具体哪些时间要弹通知了。&lt;/p&gt;
+&lt;p&gt;权限通知：permission.ask，但文档说 "not yet wired"。试了一下，确实没触发。尴尬。&lt;/p&gt;
+&lt;p&gt;最后的方案：注册 &lt;code&gt;permission.ask&lt;/code&gt; 占位，如果哪天接入了就能精确捕获。目前靠 &lt;code&gt;tool.execute.after&lt;/code&gt; 推断——工具跑完了说明权限已过或不需要。&lt;/p&gt;
+&lt;p&gt;还有个情况就是 Subagent 完成也给我框框弹。最初硬编码了 &lt;code&gt;SUBAGENT_TYPES = ["general", "explore"]&lt;/code&gt;；后来发现 &lt;code&gt;actor.preStop&lt;/code&gt; / &lt;code&gt;actor.postStop&lt;/code&gt; 的 input 里有 &lt;code&gt;mode: "subagent" | "peer"&lt;/code&gt;。于是就做了个计数器&lt;/p&gt;
+&lt;p&gt;最好 Session 名字，折腾了一圈 直接 &lt;code&gt;sqlite3 ~/.local/share/mimocode/mimocode.db "SELECT title FROM session WHERE id = '$SESSION_ID'"&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;完整代码放在 &lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/est/snippets/blob/master/mimocode-hooks/notify-done.ts"&gt;https://github.com/est/snippets/blob/master/mimocode-hooks/notify-done.ts&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;复制到 &lt;code&gt;~/.config/mimocode/hooks/&lt;/code&gt; 就可以试试效果&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 11 Jul 2026 11:53:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-07-11:/2026/stdout-27</guid><category>stdout</category></item><item><title>写作能力和 locate cost</title><link>https://blog.est.im/2026/stderr-24</link><description>&lt;p&gt;自从自个儿琢磨出 &lt;a href="https://blog.est.im/2026/stdin-17"&gt;locate cost&lt;/a&gt; 之后便开始关注这方面问题。最近看到两篇喷 harness 问题的&lt;/p&gt;
 &lt;p&gt;第一个是 Can Bölük &lt;a href="https://blog.can.ac/2026/02/12/the-harness-problem/"&gt;https://blog.can.ac/2026/02/12/the-harness-problem/&lt;/a&gt; 今年2月的时候发现：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Codex uses &lt;code&gt;apply_patch&lt;/code&gt;: It takes a string as input, which is essentially an OpenAI-flavored diff, and instead of relying on a structured schema, the harness just expects this blob to follow a strict set of rules&lt;br /&gt;
@@ -2037,23 +2068,4 @@ export const S_MAX = 36500.0
 &lt;p&gt;&lt;code&gt;min(max_interval, max(1, round(stability * interval_modifier)))&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;直接可以 stability 反推。囧。突然有点领会FSRS精华在哪里了。它丫的其实没啥调度算法。&lt;/p&gt;
 &lt;p&gt;甚至都不是给每张卡训练一条曲线。就是用数据集训练一组全局参数 w，设定为标准遗忘曲线长什么样，然后每次复习后就去更新 stability difficulty，也就是说S D这两个参数去映射这个曲线。&lt;/p&gt;
-&lt;p&gt;值钱的是这个曲线。。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 17 May 2026 09:53:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-05-17:/2026/stdout-17</guid><category>stdout</category></item><item><title>SVG 时钟</title><link>https://blog.est.im/2026/stdout-16</link><description>&lt;p&gt;一个奇怪的想法： GitHub Profile README、邮件签名等没有JS的情况下，如何展示当前时间，并且最好可以跳动？&lt;/p&gt;
-&lt;p&gt;想来想去，纯 SVG 实现。于是呼来AI：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://lab.est.im/svg-clock/codex-5.3.mod.svg"&gt;codex-5.3.mod.svg&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://lab.est.im/svg-clock/codex-5.3.new.svg"&gt;codex-5.3.new.svg&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://lab.est.im/svg-clock/gemini-3.1-pro-thinking.new.svg"&gt;gemini-3.1-pro-thinking.new.svg&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://lab.est.im/svg-clock/gemini-3.1-pro.new.svg"&gt;gemini-3.1-pro.new.svg&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://lab.est.im/svg-clock/gemini-3.mod.svg"&gt;gemini-3.mod.svg&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://lab.est.im/svg-clock/mimo-2.5-pro.new.svg"&gt;mimo-2.5-pro.new.svg&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://lab.est.im/svg-clock/opus-4.6.mod.svg"&gt;opus-4.6.mod.svg&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://lab.est.im/svg-clock/opus-4.6.thinking.new.svg"&gt;opus-4.6.thinking.new.svg&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;其中大多数AI写得都很平庸。采用堆一大堆 &lt;code&gt;&amp;lt;text&amp;gt;&lt;/code&gt; 。gemini 惊艳，它用了滑动胶片法（Filmstrip）&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;为了彻底解决冗余和跨天 Bug，我们可以采用“滑动胶片”的设计思维：将单独的数字拼成一条长长的文本带（胶片），外面罩上一个双位宽度的剪裁窗口（&lt;clipPath&gt;）。时间流逝时，整个文本带像胶片一样通过 transform: translateX 整体向左跳格（使用 steps() 级联函数）。&lt;br /&gt;
-这样优化后，我们不仅消除了长达几十行的冗余标签，还将“时、分、秒”整合成三个独立的数字流，顺手统一了时间同步的计算公式（全部共享同一个 -23906s 延迟）。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;那么最后的效果便是，现在为您报时：&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://t.est.im/clock.svg"&gt;https://t.est.im/clock.svg&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="" src="https://t.est.im/clock.svg" /&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Fri, 15 May 2026 15:28:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-05-15:/2026/stdout-16</guid><category>stdout</category></item></channel></rss>
+&lt;p&gt;值钱的是这个曲线。。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 17 May 2026 09:53:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-05-17:/2026/stdout-17</guid><category>stdout</category></item></channel></rss>
