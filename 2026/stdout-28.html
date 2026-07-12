@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>gitweets改版，复刻微信「朋友圈」 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="gitweets改版，复刻微信「朋友圈」" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stdout-28" />
+    <meta property="og:url" content="https://blog.est.im/2026/stdout-28">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="gitweets改版，复刻微信「朋友圈」">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">gitweets改版，复刻微信「朋友圈」</h2>
+    <p class="post-date">Posted <time datetime="2026-07-12T17:53:00+08:00">2026-07-12</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>去年搓了个 <a href="https://blog.est.im/2025/stdout-05">gitweets</a>，一个 .html 实现了「微博」，拿git历史当feed流～发推</p>
+<p>这个周末看着 coding plan 还剩 20% 要到期，没用完，怎么办呢？想来想去，挖大坑干不完，小修小改，就拿这个 gitweets 继续填坑了</p>
+<p>首先是让AI把界面改成模仿微信 朋友圈，啪一下，很快啊，结果让人非常印象深刻，很逼真</p>
+<p><a href="https://f.est.im/est">https://f.est.im/est</a></p>
+<p><img alt="" src="/images/2026/stdout-28.01.avif" /></p>
+<p>现在的AI真厉害。让我去调CSS可能这辈子都搞不出来这个效果了。</p>
+<p>然后想起来独乐乐不如众乐乐，要不，支持个评论功能？</p>
+<p>项目的初衷是 static page，要实现互动肯定得用一些API了。</p>
+<p>最能想到的思路，走传统的 github issue 什么的，和这个 gitweets 最大的出发点冲突了：一个 git repo 包含所有数据，随时搬家，不用导出。</p>
+<p>而且麻烦的是，post 是绑定到 commit 上的。如果你用一个 JSON 之类的来存评论，势必也会新增一个 commit，这样会污染post时间线。</p>
+<p>突然想起来一个古老的东西，<a href="https://blog.est.im/2023/stdout-17">git notes</a>，这是连 ChatGPT 和 Claude 都没想到的邪路，不过它们很快确认这个办法甚好，可行。</p>
+<p>于是 Vibe 出来了。</p>
+<p>git notes选型定下里，建立这个数据模型让我纠结了很久。围绕 github 开展流程，让我一度误入歧途</p>
+<ol>
+<li>oauth 登录，不要任何scope</li>
+<li>用来存 github notes的repo邀请登录人加入项目</li>
+<li>浏览器通过该用户access token发起 notes append</li>
+</ol>
+<p>最后想明白了，压根不应该走浏览器这一套。而是只能走后端代劳，用 Fine-Grained PAT 来和 github API 交互</p>
+<p>其间还考虑 github 越来越拉垮，想避免 vendor lock-in，直接走git http协议。</p>
+<p>首先想到的是 Cloudflare 那个牛逼的 <a href="https://blog.cloudflare.com/artifacts-git-for-agents-beta/">zig 写的 100kb 的 wasm 可以 http 读写任意 git 仓库</a></p>
+<blockquote>
+<p>git protocol engine is written in pure Zig (no libc), compiled to a ~100KB WASM binary. Support for both v1 and v2 of the git protocol. Support capabilities including ls-refs, shallow clones (deepen, deepen-since, deepen-relative), and incremental fetch with have/want negotiation.</p>
+</blockquote>
+<p>仔细读了下文档，让AI一起调研，发现tmd这玩意仅限 Worker 内部使用，只能读写 CF 内部的 假 git，不支持读写外部任意 git http。</p>
+<p>用 <a href="https://blog.est.im/2026/stdout-08">isomorphic-git 坑也挺多</a> 。还是先走 github API 吧</p>
+<p>不过这个 git notes 要走REST API 有查询放大的问题，怕掉用次数爆掉，于是让AI走 GraphQL。我自己手动是搓不动 GraphQL，太难了。AI虽然是 flash 普通智商版本，也分分钟拼接好。一次成功。真猛 😭</p>
+<p>搓完了想起一个问题，如果有人刷评论怎么办？于是让AI搓了个 <code>/.admin</code> 管理页面。也是秒写好。太方便了。</p>
+<p>明显欠缺的功能搓完之后，感觉又进入了贤者时间，索然无味了。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

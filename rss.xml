@@ -1,5 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sat, 11 Jul 2026 11:53:00 +0800</lastBuildDate><item><title>MiMoCode 干完活儿发通知</title><link>https://blog.est.im/2026/stdout-27</link><description>&lt;p&gt;AI在 coding 的时候我其实在玩别的。希望agent 每次干完活，macOS 弹个通知。&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sun, 12 Jul 2026 17:53:00 +0800</lastBuildDate><item><title>gitweets改版，复刻微信「朋友圈」</title><link>https://blog.est.im/2026/stdout-28</link><description>&lt;p&gt;去年搓了个 &lt;a href="https://blog.est.im/2025/stdout-05"&gt;gitweets&lt;/a&gt;，一个 .html 实现了「微博」，拿git历史当feed流～发推&lt;/p&gt;
+&lt;p&gt;这个周末看着 coding plan 还剩 20% 要到期，没用完，怎么办呢？想来想去，挖大坑干不完，小修小改，就拿这个 gitweets 继续填坑了&lt;/p&gt;
+&lt;p&gt;首先是让AI把界面改成模仿微信 朋友圈，啪一下，很快啊，结果让人非常印象深刻，很逼真&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://f.est.im/est"&gt;https://f.est.im/est&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="/images/2026/stdout-28.01.avif" /&gt;&lt;/p&gt;
+&lt;p&gt;现在的AI真厉害。让我去调CSS可能这辈子都搞不出来这个效果了。&lt;/p&gt;
+&lt;p&gt;然后想起来独乐乐不如众乐乐，要不，支持个评论功能？&lt;/p&gt;
+&lt;p&gt;项目的初衷是 static page，要实现互动肯定得用一些API了。&lt;/p&gt;
+&lt;p&gt;最能想到的思路，走传统的 github issue 什么的，和这个 gitweets 最大的出发点冲突了：一个 git repo 包含所有数据，随时搬家，不用导出。&lt;/p&gt;
+&lt;p&gt;而且麻烦的是，post 是绑定到 commit 上的。如果你用一个 JSON 之类的来存评论，势必也会新增一个 commit，这样会污染post时间线。&lt;/p&gt;
+&lt;p&gt;突然想起来一个古老的东西，&lt;a href="https://blog.est.im/2023/stdout-17"&gt;git notes&lt;/a&gt;，这是连 ChatGPT 和 Claude 都没想到的邪路，不过它们很快确认这个办法甚好，可行。&lt;/p&gt;
+&lt;p&gt;于是 Vibe 出来了。&lt;/p&gt;
+&lt;p&gt;git notes选型定下里，建立这个数据模型让我纠结了很久。围绕 github 开展流程，让我一度误入歧途&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;oauth 登录，不要任何scope&lt;/li&gt;
+&lt;li&gt;用来存 github notes的repo邀请登录人加入项目&lt;/li&gt;
+&lt;li&gt;浏览器通过该用户access token发起 notes append&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;最后想明白了，压根不应该走浏览器这一套。而是只能走后端代劳，用 Fine-Grained PAT 来和 github API 交互&lt;/p&gt;
+&lt;p&gt;其间还考虑 github 越来越拉垮，想避免 vendor lock-in，直接走git http协议。&lt;/p&gt;
+&lt;p&gt;首先想到的是 Cloudflare 那个牛逼的 &lt;a href="https://blog.cloudflare.com/artifacts-git-for-agents-beta/"&gt;zig 写的 100kb 的 wasm 可以 http 读写任意 git 仓库&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;git protocol engine is written in pure Zig (no libc), compiled to a ~100KB WASM binary. Support for both v1 and v2 of the git protocol. Support capabilities including ls-refs, shallow clones (deepen, deepen-since, deepen-relative), and incremental fetch with have/want negotiation.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;仔细读了下文档，让AI一起调研，发现tmd这玩意仅限 Worker 内部使用，只能读写 CF 内部的 假 git，不支持读写外部任意 git http。&lt;/p&gt;
+&lt;p&gt;用 &lt;a href="https://blog.est.im/2026/stdout-08"&gt;isomorphic-git 坑也挺多&lt;/a&gt; 。还是先走 github API 吧&lt;/p&gt;
+&lt;p&gt;不过这个 git notes 要走REST API 有查询放大的问题，怕掉用次数爆掉，于是让AI走 GraphQL。我自己手动是搓不动 GraphQL，太难了。AI虽然是 flash 普通智商版本，也分分钟拼接好。一次成功。真猛 😭&lt;/p&gt;
+&lt;p&gt;搓完了想起一个问题，如果有人刷评论怎么办？于是让AI搓了个 &lt;code&gt;/.admin&lt;/code&gt; 管理页面。也是秒写好。太方便了。&lt;/p&gt;
+&lt;p&gt;明显欠缺的功能搓完之后，感觉又进入了贤者时间，索然无味了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 12 Jul 2026 17:53:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-07-12:/2026/stdout-28</guid><category>stdout</category></item><item><title>MiMoCode 干完活儿发通知</title><link>https://blog.est.im/2026/stdout-27</link><description>&lt;p&gt;AI在 coding 的时候我其实在玩别的。希望agent 每次干完活，macOS 弹个通知。&lt;/p&gt;
 &lt;p&gt;手上是 MimoCode，就让它自己写个。啪，很快写好了。结果还是折腾了好一会儿， 记录几个有意思的小坑。&lt;/p&gt;
 &lt;p&gt;首先是如果当前CLI是活动的，就不弹通知。&lt;/p&gt;
 &lt;p&gt;需要判断活动窗口。最初用 &lt;code&gt;osascript&lt;/code&gt;&lt;/p&gt;
@@ -1914,158 +1942,4 @@ uvicorn 检查 headers：有 Upgrade: websocket？&lt;br /&gt;
 &lt;p&gt;断了就断了，不续传。用户重新发起请求，后端重新生成，最多靠 prompt cache / KV cache / 上下文缓存降低重复成本。很多产品其实就是这么干的，因为实现成本最低。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;尼玛。又学到一招。人脑还是想复杂了。&lt;/p&gt;
-&lt;p&gt;btw 吐槽一下现在 vibe coding 开发者估计很少有人会去在意这些细节了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 19 May 2026 16:13:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-05-19:/2026/stdout-18</guid><category>stdout</category></item><item><title>FSRS核心字段</title><link>https://blog.est.im/2026/stdout-17</link><description>&lt;p&gt;无聊看了下 FSRS (Free Spaced Repetition Scheduler) ，想看它怎么存数据的&lt;/p&gt;
-&lt;h2&gt;Card — 卡片当前状态&lt;/h2&gt;
-&lt;p&gt;表结构：&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;字段&lt;/th&gt;
-&lt;th&gt;类型&lt;/th&gt;
-&lt;th&gt;说明&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;due&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Date&lt;/td&gt;
-&lt;td&gt;下次复习时间&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;stability&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;float&lt;/td&gt;
-&lt;td&gt;记忆稳定性（R=90% 时的间隔天数）&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;difficulty&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;float&lt;/td&gt;
-&lt;td&gt;难度，范围 [1, 10]&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;state&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;int&lt;/td&gt;
-&lt;td&gt;状态机：New=0, Learning=1, Review=2, Relearning=3&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;learning_steps&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;int&lt;/td&gt;
-&lt;td&gt;当前学习步骤 index&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;scheduled_days&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;int&lt;/td&gt;
-&lt;td&gt;本次调度天数&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;reps&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;int&lt;/td&gt;
-&lt;td&gt;总复习次数&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;lapses&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;int&lt;/td&gt;
-&lt;td&gt;遗忘次数&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;last_review&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Date?&lt;/td&gt;
-&lt;td&gt;上次复习时间&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h2&gt;核心字段详解&lt;/h2&gt;
-&lt;h3&gt;1. state&lt;/h3&gt;
-&lt;p&gt;状态机，取值&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;New=0&lt;/li&gt;
-&lt;li&gt;Learning=1&lt;/li&gt;
-&lt;li&gt;Review=2&lt;/li&gt;
-&lt;li&gt;Relearning=3&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre&gt;&lt;code&gt;         Again          Good/Hard/Easy
-New ──────────→ Learning ──────────────→ Review
-                  ↑  │                      │
-                  │  │ Again (learning步内)  │
-                  │  └──────────────────────┘
-                  │                           │
-                  │      Again (遗忘)         │
-                  └─────── Relearning ←──────┘
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;state&lt;/code&gt; 决定调度公式分支，不能从 stability/difficulty 推导。同一个 stability/difficulty 的卡片，Review 和 Relearning 走完全不同的公式。&lt;/p&gt;
-&lt;h3&gt;2. learning_steps&lt;/h3&gt;
-&lt;p&gt;learning_steps 字段记录的是当前走到第几步（0-based index）。&lt;/p&gt;
-&lt;p&gt;新卡片第一次看到时，你不可能直接让它 10 天后再复习。所以先用预设的短间隔反复巩固：&lt;/p&gt;
-&lt;p&gt;默认 learning_steps = ['1m', '10m']&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;第1次看 → 1分钟后复习&lt;/li&gt;
-&lt;li&gt;第2次看 → 10分钟后复习&lt;/li&gt;
-&lt;li&gt;第3次看 → 毕业，进入 Review，走 FSRS 长期间隔（几天→几周→几月）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;某些测试用例里能看到 &lt;code&gt;['1m', '10m', '30m', '1h', '6h', '12h']&lt;/code&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;New ──[首次复习]──→ Learning (step=0)
-                        │
-                    [Good]│→ Learning (step=1)
-                        │       │
-                    [Good]│→ Review (毕业，FSRS接管)
-                        │
-                    [Again]│→ 回到 step=0
-Review ──[Again]──→ Relearning (step=0)
-                        │
-                    [Good]│→ Review (重新毕业)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;3. difficulty&lt;/h3&gt;
-&lt;p&gt;一般取值1-10&lt;/p&gt;
-&lt;h4&gt;3.1 初始化（New 卡片首次复习）&lt;/h4&gt;
-&lt;pre&gt;&lt;code class="language-ts"&gt;init_difficulty(g: Grade): number {
-  const d = w[4] - Math.exp((g - 1) * w[5]) + 1
-  return clamp(roundTo(d, 8), 1, 10)
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;从 grade（1-4）计算初始难度。grade 越大（记得越好），难度越低。&lt;/p&gt;
-&lt;h4&gt;3.2 更新（已有卡片复习）&lt;/h4&gt;
-&lt;pre&gt;&lt;code class="language-ts"&gt;next_difficulty(d: number, g: Grade): number {
-  const delta_d = -w[6] * (g - 3)          // grade&amp;gt;3 降难度，grade&amp;lt;3 升难度
-  const next_d = d + linear_damping(delta_d, d)  // 线性阻尼防止越界
-  return clamp(mean_reversion(init_easy, next_d), 1, 10)  // 均值回归
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;从当前 difficulty 和 本次 grade 推算下一个 difficulty。&lt;br /&gt;
-关键结论&lt;br /&gt;
-difficulty 是纯计算值，只依赖&lt;br /&gt;
-- 上一次的值&lt;br /&gt;
-- 本次 grade（1-4）&lt;br /&gt;
-- 权重参数 w4, w5, w6, w7&lt;/p&gt;
-&lt;p&gt;不需要额外存储输入参数。每次复习时算法读 difficulty → 算新的 → 写回去&lt;/p&gt;
-&lt;h3&gt;4. last_review&lt;/h3&gt;
-&lt;p&gt;上一次 review 时间&lt;/p&gt;
-&lt;h3&gt;5. stability&lt;/h3&gt;
-&lt;p&gt;FSRS的核心指标，是个 float，看定义&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-ts"&gt;export const S_MIN = 0.001
-export const S_MAX = 36500.0
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;极限精简字段&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;stability==0 默认 state=0。&lt;/li&gt;
-&lt;li&gt;step给四个值0,1,2，然后为3表示走review。也代替 state&lt;/li&gt;
-&lt;li&gt;difficulty 给 16 状态够了&lt;/li&gt;
-&lt;li&gt;fp16 拿来存 stability&lt;/li&gt;
-&lt;li&gt;32bit 拿来存 due_at &lt;/li&gt;
-&lt;li&gt;1byte 拿来存 due_days&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;FSRS 最终算 interval 时是 round(s * modifier) 取整到天&lt;/p&gt;
-&lt;p&gt;之前最先学习的，到期那一天就先复习&lt;/p&gt;
-&lt;p&gt;考虑到db检索的方便性，直接存 4byte &lt;code&gt;due_at&lt;/code&gt; 代替 &lt;code&gt;last_review&lt;/code&gt;，然后1byte &lt;code&gt;due_days&lt;/code&gt; 用来反推 &lt;code&gt;last_review&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;为什么 &lt;code&gt;due_days&lt;/code&gt; 0-255 ？需要连续 Good 评分 7-8 次才能突破 256 天。要么你彻底记住，要么就忘干净了。无所谓了。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;┌──────────┬───────────┬──────────────┐
-│ 2 bit    │ 4 bit     │ 16 bit       │
-│ step     │ difficulty│ stability    │
-│ 0,1,2,3  │ 0-11→1-10 │ FP16         │
-└──────────┴───────────┴──────────────┘
-&lt;/code&gt;&lt;/pre&gt;
-&lt;hr /&gt;
-&lt;p&gt;更新&lt;/p&gt;
-&lt;p&gt;实际上 due_days 都不用存&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;min(max_interval, max(1, round(stability * interval_modifier)))&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;直接可以 stability 反推。囧。突然有点领会FSRS精华在哪里了。它丫的其实没啥调度算法。&lt;/p&gt;
-&lt;p&gt;甚至都不是给每张卡训练一条曲线。就是用数据集训练一组全局参数 w，设定为标准遗忘曲线长什么样，然后每次复习后就去更新 stability difficulty，也就是说S D这两个参数去映射这个曲线。&lt;/p&gt;
-&lt;p&gt;值钱的是这个曲线。。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sun, 17 May 2026 09:53:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-05-17:/2026/stdout-17</guid><category>stdout</category></item></channel></rss>
+&lt;p&gt;btw 吐槽一下现在 vibe coding 开发者估计很少有人会去在意这些细节了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 19 May 2026 16:13:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-05-19:/2026/stdout-18</guid><category>stdout</category></item></channel></rss>

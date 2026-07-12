@@ -54,6 +54,48 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-28"  rel="bookmark" >
+              <h2 class="card-title">gitweets改版，复刻微信「朋友圈」</h2>
+            </a>
+            <p class="card-text"><p>去年搓了个 <a href="https://blog.est.im/2025/stdout-05">gitweets</a>，一个 .html 实现了「微博」，拿git历史当feed流～发推</p>
+<p>这个周末看着 coding plan 还剩 20% 要到期，没用完，怎么办呢？想来想去，挖大坑干不完，小修小改，就拿这个 gitweets 继续填坑了</p>
+<p>首先是让AI把界面改成模仿微信 朋友圈，啪一下，很快啊，结果让人非常印象深刻，很逼真</p>
+<p><a href="https://f.est.im/est">https://f.est.im/est</a></p>
+<p><img alt="" src="/images/2026/stdout-28.01.avif" /></p>
+<p>现在的AI真厉害。让我去调CSS可能这辈子都搞不出来这个效果了。</p>
+<p>然后想起来独乐乐不如众乐乐，要不，支持个评论功能？</p>
+<p>项目的初衷是 static page，要实现互动肯定得用一些API了。</p>
+<p>最能想到的思路，走传统的 github issue 什么的，和这个 gitweets 最大的出发点冲突了：一个 git repo 包含所有数据，随时搬家，不用导出。</p>
+<p>而且麻烦的是，post 是绑定到 commit 上的。如果你用一个 JSON 之类的来存评论，势必也会新增一个 commit，这样会污染post时间线。</p>
+<p>突然想起来一个古老的东西，<a href="https://blog.est.im/2023/stdout-17">git notes</a>，这是连 ChatGPT 和 Claude 都没想到的邪路，不过它们很快确认这个办法甚好，可行。</p>
+<p>于是 Vibe 出来了。</p>
+<p>git notes选型定下里，建立这个数据模型让我纠结了很久。围绕 github 开展流程，让我一度误入歧途</p>
+<ol>
+<li>oauth 登录，不要任何scope</li>
+<li>用来存 github notes的repo邀请登录人加入项目</li>
+<li>浏览器通过该用户access token发起 notes append</li>
+</ol>
+<p>最后想明白了，压根不应该走浏览器这一套。而是只能走后端代劳，用 Fine-Grained PAT 来和 github API 交互</p>
+<p>其间还考虑 github 越来越拉垮，想避免 vendor lock-in，直接走git http协议。</p>
+<p>首先想到的是 Cloudflare 那个牛逼的 <a href="https://blog.cloudflare.com/artifacts-git-for-agents-beta/">zig 写的 100kb 的 wasm 可以 http 读写任意 git 仓库</a></p>
+<blockquote>
+<p>git protocol engine is written in pure Zig (no libc), compiled to a ~100KB WASM binary. Support for both v1 and v2 of the git protocol. Support capabilities including ls-refs, shallow clones (deepen, deepen-since, deepen-relative), and incremental fetch with have/want negotiation.</p>
+</blockquote>
+<p>仔细读了下文档，让AI一起调研，发现tmd这玩意仅限 Worker 内部使用，只能读写 CF 内部的 假 git，不支持读写外部任意 git http。</p>
+<p>用 <a href="https://blog.est.im/2026/stdout-08">isomorphic-git 坑也挺多</a> 。还是先走 github API 吧</p>
+<p>不过这个 git notes 要走REST API 有查询放大的问题，怕掉用次数爆掉，于是让AI走 GraphQL。我自己手动是搓不动 GraphQL，太难了。AI虽然是 flash 普通智商版本，也分分钟拼接好。一次成功。真猛 😭</p>
+<p>搓完了想起一个问题，如果有人刷评论怎么办？于是让AI搓了个 <code>/.admin</code> 管理页面。也是秒写好。太方便了。</p>
+<p>明显欠缺的功能搓完之后，感觉又进入了贤者时间，索然无味了。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-07-12T17:53:00+08:00">2026-07-12</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-27"  rel="bookmark" >
               <h2 class="card-title">MiMoCode 干完活儿发通知</h2>
             </a>
@@ -2227,174 +2269,6 @@ uvicorn 检查 headers：有 Upgrade: websocket？<br />
 <p>btw 吐槽一下现在 vibe coding 开发者估计很少有人会去在意这些细节了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-05-19T16:13:00+08:00">2026-05-19</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2026/stdout-17"  rel="bookmark" >
-              <h2 class="card-title">FSRS核心字段</h2>
-            </a>
-            <p class="card-text"><p>无聊看了下 FSRS (Free Spaced Repetition Scheduler) ，想看它怎么存数据的</p>
-<h2>Card — 卡片当前状态</h2>
-<p>表结构：</p>
-<table>
-<thead>
-<tr>
-<th>字段</th>
-<th>类型</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>due</code></td>
-<td>Date</td>
-<td>下次复习时间</td>
-</tr>
-<tr>
-<td><code>stability</code></td>
-<td>float</td>
-<td>记忆稳定性（R=90% 时的间隔天数）</td>
-</tr>
-<tr>
-<td><code>difficulty</code></td>
-<td>float</td>
-<td>难度，范围 [1, 10]</td>
-</tr>
-<tr>
-<td><code>state</code></td>
-<td>int</td>
-<td>状态机：New=0, Learning=1, Review=2, Relearning=3</td>
-</tr>
-<tr>
-<td><code>learning_steps</code></td>
-<td>int</td>
-<td>当前学习步骤 index</td>
-</tr>
-<tr>
-<td><code>scheduled_days</code></td>
-<td>int</td>
-<td>本次调度天数</td>
-</tr>
-<tr>
-<td><code>reps</code></td>
-<td>int</td>
-<td>总复习次数</td>
-</tr>
-<tr>
-<td><code>lapses</code></td>
-<td>int</td>
-<td>遗忘次数</td>
-</tr>
-<tr>
-<td><code>last_review</code></td>
-<td>Date?</td>
-<td>上次复习时间</td>
-</tr>
-</tbody>
-</table>
-<h2>核心字段详解</h2>
-<h3>1. state</h3>
-<p>状态机，取值</p>
-<ul>
-<li>New=0</li>
-<li>Learning=1</li>
-<li>Review=2</li>
-<li>Relearning=3</li>
-</ul>
-<pre><code>         Again          Good/Hard/Easy
-New ──────────→ Learning ──────────────→ Review
-                  ↑  │                      │
-                  │  │ Again (learning步内)  │
-                  │  └──────────────────────┘
-                  │                           │
-                  │      Again (遗忘)         │
-                  └─────── Relearning ←──────┘
-</code></pre>
-<p><code>state</code> 决定调度公式分支，不能从 stability/difficulty 推导。同一个 stability/difficulty 的卡片，Review 和 Relearning 走完全不同的公式。</p>
-<h3>2. learning_steps</h3>
-<p>learning_steps 字段记录的是当前走到第几步（0-based index）。</p>
-<p>新卡片第一次看到时，你不可能直接让它 10 天后再复习。所以先用预设的短间隔反复巩固：</p>
-<p>默认 learning_steps = ['1m', '10m']</p>
-<ul>
-<li>第1次看 → 1分钟后复习</li>
-<li>第2次看 → 10分钟后复习</li>
-<li>第3次看 → 毕业，进入 Review，走 FSRS 长期间隔（几天→几周→几月）</li>
-</ul>
-<p>某些测试用例里能看到 <code>['1m', '10m', '30m', '1h', '6h', '12h']</code></p>
-<pre><code>New ──[首次复习]──→ Learning (step=0)
-                        │
-                    [Good]│→ Learning (step=1)
-                        │       │
-                    [Good]│→ Review (毕业，FSRS接管)
-                        │
-                    [Again]│→ 回到 step=0
-Review ──[Again]──→ Relearning (step=0)
-                        │
-                    [Good]│→ Review (重新毕业)
-</code></pre>
-<h3>3. difficulty</h3>
-<p>一般取值1-10</p>
-<h4>3.1 初始化（New 卡片首次复习）</h4>
-<pre><code class="language-ts">init_difficulty(g: Grade): number {
-  const d = w[4] - Math.exp((g - 1) * w[5]) + 1
-  return clamp(roundTo(d, 8), 1, 10)
-}
-</code></pre>
-<p>从 grade（1-4）计算初始难度。grade 越大（记得越好），难度越低。</p>
-<h4>3.2 更新（已有卡片复习）</h4>
-<pre><code class="language-ts">next_difficulty(d: number, g: Grade): number {
-  const delta_d = -w[6] * (g - 3)          // grade&gt;3 降难度，grade&lt;3 升难度
-  const next_d = d + linear_damping(delta_d, d)  // 线性阻尼防止越界
-  return clamp(mean_reversion(init_easy, next_d), 1, 10)  // 均值回归
-}
-</code></pre>
-<p>从当前 difficulty 和 本次 grade 推算下一个 difficulty。<br />
-关键结论<br />
-difficulty 是纯计算值，只依赖<br />
-- 上一次的值<br />
-- 本次 grade（1-4）<br />
-- 权重参数 w4, w5, w6, w7</p>
-<p>不需要额外存储输入参数。每次复习时算法读 difficulty → 算新的 → 写回去</p>
-<h3>4. last_review</h3>
-<p>上一次 review 时间</p>
-<h3>5. stability</h3>
-<p>FSRS的核心指标，是个 float，看定义</p>
-<pre><code class="language-ts">export const S_MIN = 0.001
-export const S_MAX = 36500.0
-</code></pre>
-<h2>极限精简字段</h2>
-<ul>
-<li>stability==0 默认 state=0。</li>
-<li>step给四个值0,1,2，然后为3表示走review。也代替 state</li>
-<li>difficulty 给 16 状态够了</li>
-<li>fp16 拿来存 stability</li>
-<li>32bit 拿来存 due_at </li>
-<li>1byte 拿来存 due_days</li>
-</ul>
-<p>FSRS 最终算 interval 时是 round(s * modifier) 取整到天</p>
-<p>之前最先学习的，到期那一天就先复习</p>
-<p>考虑到db检索的方便性，直接存 4byte <code>due_at</code> 代替 <code>last_review</code>，然后1byte <code>due_days</code> 用来反推 <code>last_review</code></p>
-<p>为什么 <code>due_days</code> 0-255 ？需要连续 Good 评分 7-8 次才能突破 256 天。要么你彻底记住，要么就忘干净了。无所谓了。</p>
-<pre><code>┌──────────┬───────────┬──────────────┐
-│ 2 bit    │ 4 bit     │ 16 bit       │
-│ step     │ difficulty│ stability    │
-│ 0,1,2,3  │ 0-11→1-10 │ FP16         │
-└──────────┴───────────┴──────────────┘
-</code></pre>
-<hr />
-<p>更新</p>
-<p>实际上 due_days 都不用存</p>
-<p><code>min(max_interval, max(1, round(stability * interval_modifier)))</code></p>
-<p>直接可以 stability 反推。囧。突然有点领会FSRS精华在哪里了。它丫的其实没啥调度算法。</p>
-<p>甚至都不是给每张卡训练一条曲线。就是用数据集训练一组全局参数 w，设定为标准遗忘曲线长什么样，然后每次复习后就去更新 stability difficulty，也就是说S D这两个参数去映射这个曲线。</p>
-<p>值钱的是这个曲线。。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2026-05-17T09:53:00+08:00">2026-05-17</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>
