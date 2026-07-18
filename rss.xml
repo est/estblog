@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sun, 12 Jul 2026 17:53:00 +0800</lastBuildDate><item><title>gitweets改版，复刻微信「朋友圈」</title><link>https://blog.est.im/2026/stdout-28</link><description>&lt;p&gt;去年搓了个 &lt;a href="https://blog.est.im/2025/stdout-05"&gt;gitweets&lt;/a&gt;，一个 .html 实现了「微博」，拿git历史当feed流～发推&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sat, 18 Jul 2026 19:32:00 +0800</lastBuildDate><item><title>为什么 Github OAuth 故意拦截 CORS</title><link>https://blog.est.im/2026/stdout-29</link><description>&lt;p&gt;跟AI发闹骚学到的&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/isaacs/github/issues/330"&gt;https://github.com/isaacs/github/issues/330&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Allowing CORS for the endpoint you mentioned would mean that you could complete this step of the Web flow from a browser:&lt;br /&gt;
+And this would mean that you're hard-coding your client_id and client_secret into a webpage (or JS file loaded into that webpage) for everyone to see. This would indeed cause security concerns since the client_secret should be kept secret. If someone got hold of your client_id and client_secret, they could impersonate you application, and for example -- wipe all the tokens for that application:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;如果允许在浏览器通过 &lt;code&gt;client_id&lt;/code&gt;, &lt;code&gt;client_secret&lt;/code&gt; 交换得到 &lt;code&gt;access_token&lt;/code&gt;，那么实际上你的账号等于公开裸奔，你所有的 github 资产等于公开被人控制。所以必须走一个服务端流程，然后再把 &lt;code&gt;access_token&lt;/code&gt; 下发&lt;/p&gt;
+&lt;p&gt;呃，好像很有道理。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Sat, 18 Jul 2026 19:32:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-07-18:/2026/stdout-29</guid><category>stdout</category></item><item><title>gitweets改版，复刻微信「朋友圈」</title><link>https://blog.est.im/2026/stdout-28</link><description>&lt;p&gt;去年搓了个 &lt;a href="https://blog.est.im/2025/stdout-05"&gt;gitweets&lt;/a&gt;，一个 .html 实现了「微博」，拿git历史当feed流～发推&lt;/p&gt;
 &lt;p&gt;这个周末看着 coding plan 还剩 20% 要到期，没用完，怎么办呢？想来想去，挖大坑干不完，小修小改，就拿这个 gitweets 继续填坑了&lt;/p&gt;
 &lt;p&gt;首先是让AI把界面改成模仿微信 朋友圈，啪一下，很快啊，结果让人非常印象深刻，很逼真&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://f.est.im/est"&gt;https://f.est.im/est&lt;/a&gt;&lt;/p&gt;
@@ -1932,15 +1939,4 @@ uvicorn 检查 headers：有 Upgrade: websocket？&lt;br /&gt;
 &lt;p&gt;我上班这么多年，大小，央企民企都待过。发现很多既定管理和流程，就是用最笨的堆人的办法去遍历，跟最老的 &lt;code&gt;pip&lt;/code&gt; 一样。python的依赖包最早是个 &lt;code&gt;setup.py&lt;/code&gt; 它被当成 .tgz 打包进 cheeze shop，你要去解析，得完整下载，解压。这些麻烦就不说了，最逆天的是他丫的不是声明式的，而是一个可执行文件，依赖是可以动态生成的。吐血。pip老遭罪了，得一个一个去下载，一个一个去问，然后一个一个去试。&lt;/p&gt;
 &lt;p&gt;是不是恰似某些部门办事的各种 “&lt;a href="https://blog.est.im/post/175976643500"&gt;潜规则&lt;/a&gt;” ？哈哈哈&lt;/p&gt;
 &lt;hr /&gt;
-&lt;p&gt;这些问题有没有解呢？可能终极形态，就是 Kubernetes 那样的吧。可观察性+声明式+状态推理&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 21 May 2026 16:55:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-05-21:/2026/stderr-19</guid><category>stderr</category></item><item><title>AI 流式接口的pattern</title><link>https://blog.est.im/2026/stdout-18</link><description>&lt;p&gt;AI 现在调用都走 OpenAI-like 接口，遇到长任务多半会走 stream=true&lt;/p&gt;
-&lt;p&gt;然后AI能力也多半会接力返回给下游，比如浏览器&lt;/p&gt;
-&lt;p&gt;那么问题来了。下游如果连接断开，是不是就意味着服务器得把AI的输出接住，然后下一次请求接着吐？&lt;/p&gt;
-&lt;p&gt;如果下一次请求不路由到这个节点和进程，意味着接住要设计一套缓存&lt;/p&gt;
-&lt;p&gt;更麻烦的是，现代web框架一般都是请求 - 响应模式的，如果浏览器断开连接，按正常流程，后端也会抛出异常之类的中断&lt;/p&gt;
-&lt;p&gt;所以“接AI的话”这玩意实际上设计还要考虑挺多东西，很麻烦？？？&lt;/p&gt;
-&lt;p&gt;这个问题丢给 ChatGPT它这么回答：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;断了就断了，不续传。用户重新发起请求，后端重新生成，最多靠 prompt cache / KV cache / 上下文缓存降低重复成本。很多产品其实就是这么干的，因为实现成本最低。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;尼玛。又学到一招。人脑还是想复杂了。&lt;/p&gt;
-&lt;p&gt;btw 吐槽一下现在 vibe coding 开发者估计很少有人会去在意这些细节了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Tue, 19 May 2026 16:13:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-05-19:/2026/stdout-18</guid><category>stdout</category></item></channel></rss>
+&lt;p&gt;这些问题有没有解呢？可能终极形态，就是 Kubernetes 那样的吧。可观察性+声明式+状态推理&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">est</dc:creator><pubDate>Thu, 21 May 2026 16:55:00 +0800</pubDate><guid isPermaLink="false">tag:None,2026-05-21:/2026/stderr-19</guid><category>stderr</category></item></channel></rss>

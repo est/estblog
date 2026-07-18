@@ -54,6 +54,27 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-29"  rel="bookmark" >
+              <h2 class="card-title">为什么 Github OAuth 故意拦截 CORS</h2>
+            </a>
+            <p class="card-text"><p>跟AI发闹骚学到的</p>
+<p><a href="https://github.com/isaacs/github/issues/330">https://github.com/isaacs/github/issues/330</a></p>
+<blockquote>
+<p>Allowing CORS for the endpoint you mentioned would mean that you could complete this step of the Web flow from a browser:<br />
+And this would mean that you're hard-coding your client_id and client_secret into a webpage (or JS file loaded into that webpage) for everyone to see. This would indeed cause security concerns since the client_secret should be kept secret. If someone got hold of your client_id and client_secret, they could impersonate you application, and for example -- wipe all the tokens for that application:</p>
+</blockquote>
+<p>如果允许在浏览器通过 <code>client_id</code>, <code>client_secret</code> 交换得到 <code>access_token</code>，那么实际上你的账号等于公开裸奔，你所有的 github 资产等于公开被人控制。所以必须走一个服务端流程，然后再把 <code>access_token</code> 下发</p>
+<p>呃，好像很有道理。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-07-18T19:32:00+08:00">2026-07-18</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-28"  rel="bookmark" >
               <h2 class="card-title">gitweets改版，复刻微信「朋友圈」</h2>
             </a>
@@ -2246,31 +2267,6 @@ uvicorn 检查 headers：有 Upgrade: websocket？<br />
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-05-21T16:55:00+08:00">2026-05-21</time></p>
 <p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2026/stdout-18"  rel="bookmark" >
-              <h2 class="card-title">AI 流式接口的pattern</h2>
-            </a>
-            <p class="card-text"><p>AI 现在调用都走 OpenAI-like 接口，遇到长任务多半会走 stream=true</p>
-<p>然后AI能力也多半会接力返回给下游，比如浏览器</p>
-<p>那么问题来了。下游如果连接断开，是不是就意味着服务器得把AI的输出接住，然后下一次请求接着吐？</p>
-<p>如果下一次请求不路由到这个节点和进程，意味着接住要设计一套缓存</p>
-<p>更麻烦的是，现代web框架一般都是请求 - 响应模式的，如果浏览器断开连接，按正常流程，后端也会抛出异常之类的中断</p>
-<p>所以“接AI的话”这玩意实际上设计还要考虑挺多东西，很麻烦？？？</p>
-<p>这个问题丢给 ChatGPT它这么回答：</p>
-<blockquote>
-<p>断了就断了，不续传。用户重新发起请求，后端重新生成，最多靠 prompt cache / KV cache / 上下文缓存降低重复成本。很多产品其实就是这么干的，因为实现成本最低。</p>
-</blockquote>
-<p>尼玛。又学到一招。人脑还是想复杂了。</p>
-<p>btw 吐槽一下现在 vibe coding 开发者估计很少有人会去在意这些细节了。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2026-05-19T16:13:00+08:00">2026-05-19</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 
