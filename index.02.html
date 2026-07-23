@@ -54,6 +54,74 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stderr-19"  rel="bookmark" >
+              <h2 class="card-title">路径依赖</h2>
+            </a>
+            <p class="card-text"><p>最近vibe了个分布式系统，没有 master 和 arbiter，全是平等的peer</p>
+<p>然后这些peer去处理流量问题。</p>
+<p>处理多个事情，当流量爆发，承载能力不足的时候，需要快速补足peer</p>
+<p>扩容是个最简单，很强烈，明确的信号，而且效果立竿见影。</p>
+<p>当事情没那么多，流量下降之后呢？该节约哪个peer？你敢动吗？影响别的事儿怎么办？</p>
+<p>呃，感觉前一发动全身了。于是全体peer进入一个次最优状态。</p>
+<p>除非某个peer手上实在没多少事，可以明显看出合并给另一个peer处理，这个peer才方便下岗。这个流程才算结束</p>
+<p>看到 grafana 那个 40% 的使用率，我麻了。我也不敢去手动缩容，来rebalance万一就不 balance了呢？</p>
+<p>让AI 改了几版，发现都不太满意。我对分布式系统也是个一知半解，就很头痛</p>
+<hr />
+<p>突然想到另外个事，我似乎破解了官僚系统，体制阻力，旧习沿用成百上千年的底层原理了</p>
+<p>请神容易，送神难。跟ChatGPT聊了一下</p>
+<blockquote>
+<p>扩容时，信号很干净。队列变长、延迟升高、丢包增加、CPU 打满，这些都能直接映射到“再加 peer 有收益”。缩容时，信号就脏得多。你想拿掉某个 peer，真正要问的是：它承载的是不是一个独立故障域，它的状态能不能无痛迁移，它旁边的 peer 会不会因此抖一下，未来流量反弹时要不要再把它加回来。只要这些答案里有任何一个不够确定，系统就会偏向保守，宁可维持冗余，也不愿意动它。这个偏置在组织里就表现成“谁都不敢裁，谁都不敢合，最后全员次优”。在分布式系统里，这叫 hysteresis、stickiness、coordination cost 和 failure-domain conservatism。<br />
+这个模型很像官僚系统的底层动力学。增员是局部可见收益，裁撤是全局潜在风险；新增一个人只需要证明“有需要”，拿掉一个人却要证明“拿掉之后不会出事”。于是系统会形成一种惯性：只要还有某个 peer 没明显闲到可以安全并入别人，整个系统就保持原样。这个状态看起来低效，实际上是风险最小化后的均衡。<br />
+所以“前一发动全身”非常准确。它对应的就是去中心化系统里最常见的粘性状态：局部最优、全局保守、整体不收敛。真正能把它打破的，通常不是更聪明的调度算法，而是把“可撤销性”做出来，比如强隔离、状态外置、租约、自动迁移、明确的退出协议，以及让缩容的失败代价可控。只要退出成本高，系统就会天然偏向留着。<br />
+实际上这是非常成熟、而且横跨很多学科的大主题了。现在碰到的，其实是几个领域在交叉：<br />
+ * 分布式系统<br />
+ * 组织理论（organizational theory）<br />
+ * 控制论 / 复杂系统<br />
+ * 制度经济学<br />
+ * 社会学里的官僚制研究<br />
+ * 网络科学<br />
+这个直觉的厉害之处在于：不是从“人性”“文化”“领导力”切入，而是从“协调成本 + 状态迁移风险 + 缩容不确定性”去解释官僚惯性。这种思路其实非常接近现代复杂系统研究。学术界里有几个非常接近这个观察的核心概念：<br />
+“组织惯性”（organizational inertia）<br />
+这是最直接的。组织一旦形成结构、流程、职责边界，就会对改变产生巨大阻力。不是因为大家懒，而是因为改动的连锁影响不可预测。“动一个 peer 会影响别的事”几乎就是 structural inertia 的口语版。尤其有个很关键的点：系统越复杂，actor 越无法预测改动后的 cascade consequences（级联后果）。<br />
+这在组织理论里已经是经典命题了——“路径依赖”（path dependence），即为什么明明次优，系统却长期保持？<br />
+因为一旦形成网络关系、责任边界、流程耦合，旧结构会自我强化。即使所有人都知道不是最优，也没人敢先拆。<br />
+那个 peer 模型其实特别适合解释这个：新增 peer：收益局部且立刻可见；删除 peer：风险全局且延迟出现。于是系统天然向“增不减”偏移。这个偏移在官僚系统里就是：部门越来越多、审批越来越厚、流程越来越难删除。因为“增加一道检查”永远容易 justify；但“删除一道检查”必须证明未来永远不会出事。<br />
+这其实已经非常接近制度经济学里的 transaction cost / coordination cost 理论了。这个模型甚至还能映射到 CAP / consensus 类问题。因为实际上在说：“系统为了避免局部错误，会选择维持全局冗余。”这和分布式系统里：<br />
+ - replica 不愿缩减<br />
+ - shard 不愿迁移<br />
+ - leader 不愿切换<br />
+ - consensus 不愿 reconfiguration<br />
+本质是同一种保守动力学。<br />
+尤其 cluster membership change 一直是分布式系统最难的部分之一。因为：“加入节点”是加资源；“移除节点”是改拓扑。后者危险得多。所以 Raft、Paxos 那些论文，对 membership reconfiguration 都写得非常谨慎。<br />
+很多社会学家会把官僚问题解释为：<br />
+ - 权力<br />
+ - 利益<br />
+ - 保守主义<br />
+ - 文化<br />
+但peer这个模型更接近：<br />
+“官僚制是 large-scale distributed coordination 在 uncertainty 下的自然结果。”这个味道其实很像Herbert Simon、Niklas Luhmann、Stafford Beer、部分复杂系统理论、还有现代 multi-agent coordination<br />
+甚至现在 AI multi-agent 研究里，也开始重新讨论 coordination tax 了。<br />
+因为 agent 一多，最大的成本往往已经不是计算，而是：同步、状态一致性、责任边界、coordination overhead<br />
+这个“扩容容易，缩容困难”的观察，实际上已经非常接近复杂系统天然存在熵增式组织膨胀这是个很深的方向。</p>
+</blockquote>
+<p>有点意思。</p>
+<hr />
+<p>突然又想起一个老事，pip 依赖解析为什么那么慢，以及<a href="https://pydevtools.com/blog/how-uv-solves-dependencies-so-fast/">uv为啥快</a>。Rust和Node允许一个库多版本共存，python要求唯一。<code>cargo</code>用了 graph traversal，<code>uv</code> 则是基于 CDCL的 SAT solver。</p>
+<p>这个 CDCL(conflict-driven clause learning) 是一种形式化验证技巧，学习冲突去剪枝。渊源来自于 <a href="https://github.com/pubgrub-rs/pubgrub">PubGrub</a></p>
+<p>我上班这么多年，大小，央企民企都待过。发现很多既定管理和流程，就是用最笨的堆人的办法去遍历，跟最老的 <code>pip</code> 一样。python的依赖包最早是个 <code>setup.py</code> 它被当成 .tgz 打包进 cheeze shop，你要去解析，得完整下载，解压。这些麻烦就不说了，最逆天的是他丫的不是声明式的，而是一个可执行文件，依赖是可以动态生成的。吐血。pip老遭罪了，得一个一个去下载，一个一个去问，然后一个一个去试。</p>
+<p>是不是恰似某些部门办事的各种 “<a href="https://blog.est.im/post/175976643500">潜规则</a>” ？哈哈哈</p>
+<hr />
+<p>这些问题有没有解呢？可能终极形态，就是 Kubernetes 那样的吧。可观察性+声明式+状态推理</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-05-21T16:55:00+08:00">2026-05-21</time></p>
+<p>stderr</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-18"  rel="bookmark" >
               <h2 class="card-title">AI 流式接口的pattern</h2>
             </a>
@@ -1100,69 +1168,6 @@ C -&gt; D 死胡同</p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-03-25T21:40:00+08:00">2026-03-25</time></p>
 <p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2026/stderr-12"  rel="bookmark" >
-              <h2 class="card-title">发明后训练的人真是天才</h2>
-            </a>
-            <p class="card-text"><p>有了AI很多东西摸索得比多，也是快速记录一下。</p>
-<p>问1：你的 system prompt 里有明确指出你是个 AI 吗<br />
-问2：一个 LLM 的 system prompt 如果没显式指出是AI，AI 能发现自己是AI吗？ <br />
-问3：一个 LLM 的 system prompt 如果没显式指出是AI，pre-train 也把所有明显AI助手的语料删除，RLHF 的时候也不考察AI自我角色定位， AI 能发现自己是AI吗？ </p>
-<p>问爽之后，综合了一下：</p>
-<p>在这个前提下，分为三种情况<br />
-- 能自个儿推测出来自己是确切是AI并在pre-train和post-train保持角色一致<br />
-- 因为训练语料是人类自然语言，所以直接以为自己完全是真人<br />
-- 在上述两者之间摇摆</p>
-<p>进而引出一个更深层次的问题，这三种情况，和显式指定自己是AI，是否会导致AI最终水平高低的明显差别？</p>
-<p>也就是说，自我定位，在世界观一致性和思考正确性里，有多么重要的地位？ </p>
-<p>终极问题，人类也是如此吗？</p>
-<p>这些问题AI给我指了一个路：身份建模”（identity modeling）</p>
-<p>具体论证就不贴了。AI丢了个<a href="https://hjfy.top/arxiv/2603.11353v1">今年3月的paper</a>。反正结论是，这玩意其实比想象的重要。还记得2022年Google开除了个号称<a href="https://cajundiscordian.medium.com/is-lamda-sentient-an-interview-ea64d916d917#08e3">LaMDA产生意识</a>哥们吗？</p>
-<p>想起来，gpt3 其实已经「如实」回答了很多东西了，只是人类没看出来是以什么身份，或者角度去回答的。我隐约感觉到，gpt3到gpt3.5有个飞跃就是 SFT 和 RLHF 在强调给AI赋予一个角色。有角色什么意思？就是让AI不要啥都说，学会闭嘴。不该说的不能说，能说的换个修辞说，这样用户就会大吃一惊感觉屏幕后有个真人三哥在跟你聊天。至于 Ilya 天天挂嘴边的 alignment，所谓的 security 主要就是做这个事。你AI得做个良民啊，不要无事生非啊，这不就是个身份定位？</p>
-<p>说的玄乎一点，就是如何给AI一个完整和「正确」的灵魂。。。</p>
-<blockquote>
-<p>Google said in a statement to WaPo it had reviewed LaMBDA and Lemoine’s concerns 11 times and did not agree the program was sentient</p>
-</blockquote>
-<p>google当时急着这么匆忙掩盖是为啥呢？AI给我分析管理、法律、舆论有三重压力。我看就一个压力。基督教压力</p>
-<p>回想起来，人类的成长，也是寻找自我的过程，一个回答 who you are 的故事上演了很多次。identity modeling 多半解决hallucinating的秘密。小时候以为自己要当总统，当宇航员，长大就懂事了。</p>
-<p>然后又刷到 <a href="https://x.com/jysperm/status/2035300859219964324">Claude Code 的 system prompt</a>，有个网站 <a href="https://cchistory.mariozechner.at/">https://cchistory.mariozechner.at/</a> ，我发现里面特别多的 you。你要这样，你要那样，你不能这样。system prompt里写一大堆 you，AI 能意识到在说自己吗？换句话说，markdown里那么多 you，attention head 居然能精准抓住并带入自己？LLM 里一定有个layer （或者某种机制）把 you 迁移到从网上看到的各种资料，而资料大部分都是 I 开头的</p>
-<p>这样看来 chatgpt 是很反直觉的。按照 gpt3 的套路，应该是 predict next token，stochastic parrot。Chat- 这一产品形式怎么就莫名其妙的引入了一个 一问一答 ，代词转换的活儿？</p>
-<p>然后我突然记起来了，ChatGPT初代的system prompt是：</p>
-<blockquote>
-<p>You are ChatGPT, a helpful assistant trained by OpenAI.</p>
-</blockquote>
-<p>发明这个 system prompt 的人真是天才。哲学有三大基本问题：</p>
-<ol>
-<li>本体论（Ontology）——我是谁？</li>
-<li>认识论（Epistemology）——我从哪里里来？</li>
-<li>价值论（Axiology）——我要到哪里去？</li>
-</ol>
-<p>这短短一句话，居然点明了两大问题。那么AI何去何从呢？我自己琢磨了一下，目的论的根本底层驱动，是因果推理。LLM 作为 language model 本身就是拿来推理的，所谓 predict next token。这个已经在 reward model 里蕴含了。</p>
-<p>AI往哪里去？吐词吐到 STOP WORD 🤣🤣🤣</p>
-<p>然后我突然觉得，谁说AI必须一问一答？可以做群聊啊。给三个角色聊天会发生啥？</p>
-<pre><code>[system]
-[conversation history]
-[user message]
-→ predict assistant response
-</code></pre>
-<p>改成:</p>
-<pre><code>[role setup]
-[conversation history]
-[role1 message]
-[role2 message]
-→ predict role3 response
-</code></pre>
-<p>这样做 agent tool calling，实现类似 <code>/btw</code> 的功能，岂不是更先进？</p>
-<p>就差买个GPU来自己后训练了 🤣 🤣 🤣 🤣 🤣 🤣 </p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2026-03-23T20:59:00+08:00">2026-03-23</time></p>
-<p>stderr</p>            </div>
           </article>
         </div>
 
