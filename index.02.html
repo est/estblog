@@ -54,6 +54,45 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-21"  rel="bookmark" >
+              <h2 class="card-title">Playlet：DLNA听歌神器 免安装app播放NAS里的歌</h2>
+            </a>
+            <p class="card-text"><p>家里有个小 NAS 。里面存了一些歌。一半是用 NAS 自带的 app 听，一半是。。。SMB 共享打开听</p>
+<p>虽然 NAS 也提供 DLNA ，一直以来找不到趁手 app ，要么收费，要么 bug 多，要么不能多端。</p>
+<p>13年前我也想<a href="https://github.com/est/push2air">基于 <code>chrome.socket</code> 做个 Chrome App</a> 弄个类似的。结果这破玩意实现有问题，<a href="https://issuetracker.google.com/issues/40960228">多连接会导致 hang</a>。最后<a href="https://blog.chromium.org/2020/01/moving-forward-from-chrome-apps.html">2020年Chromium决定杀死 Chrome Apps</a></p>
+<p>周六的时候，实在无聊，决定又开始搓轮子。在思考  SSDP/UPnP ，native UI, electron，命令行这些选型的时候，突然想到，DLNA服本来就要提供一个http，自己再造个 http 客户端去通信，岂不是多此一举？只要依托它，解决跨域……等等，用个 bookmarklet 不就行了？当页调用 <code>fetch()</code> ，走 SOAP 协议，完美。</p>
+<p>所以这就有了，网页版听歌的。不需要安装 app ，只需要一个浏览器书签</p>
+<p><a href="https://est.github.io/playlet/">https://est.github.io/playlet/</a></p>
+<p>也需要你对网络、DLNA 的亿点点知识。比如你得自己想办法找出 DLNA 的 IP 和端口</p>
+<p>使用方法：</p>
+<ol>
+<li>
+<p>把这个网址加到浏览器书签</p>
+<pre><code>    javascript:import("https://est.github.io/playlet/loader.js")
+</code></pre>
+</li>
+<li>
+<p>打开 DLNA 服务器的网页</p>
+</li>
+<li>点击第一步加的书签（如果找不到书签栏，右上角三个点菜单 -&gt; 收藏 可以切换）</li>
+</ol>
+<p>自测兼容 NAS 的 MiniDLNA 。chrome ，手机浏览器和 webview 都可以播放。</p>
+<p>当年嵌入个 <code>&lt;script&gt;</code> 写法多复杂，createElement又这那的；现在直接 <code>import()</code> 搞定。简洁明了，还不会重复加载。</p>
+<p>最后是个 50KB 左右的单体 js。实现了播放、搜索等核心功能+UI。</p>
+<p>给本地测试环境动了个小心思，利用 iframe 去模拟 bookmarklet 注入。还学习到 <code>&lt;audio crossorigin="anonymous"&gt;</code> 居然主动去检查跨域CORS头导致加载失败，去掉 <code>crossorigin</code> 就行。AI嘴硬不给去掉，服了。</p>
+<p>这下随时随地打开浏览器就能听歌了。除了收藏的一些古典CD是 .cue 分段的没法播放。感觉需要去电脑上硬切割一下了。</p>
+<p>接下来想把歌词什么的整理好。不知道有没有类似 opensubtitles 之类的服务。</p>
+<p>最后想起来，miniDLNA为啥不直接把这一坨JS内置了 😂 可能当年那个条件没厂家愿意去js手搓一套DLNA协议+播放界面吧。甚至浏览器对常见音频格式都不怎么支持</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-05-30T20:03:08+08:00">2026-05-30</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-20"  rel="bookmark" >
               <h2 class="card-title">不修改nginx接收websocket</h2>
             </a>
@@ -1278,98 +1317,6 @@ A: 文言文真退了，可能就真的不知道以后高中语文课上来是�
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-04-02T21:08:00+08:00">2026-04-02</time></p>
 <p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2026/stdout-13"  rel="bookmark" >
-              <h2 class="card-title">Bonsai 在 M2 安装</h2>
-            </a>
-            <p class="card-text"><p>有个 1bit 模型最近很火 <a href="https://github.com/PrismML-Eng/Bonsai-demo">https://github.com/PrismML-Eng/Bonsai-demo</a></p>
-<p>我本地环境不知道咋回事，搞混了 x86_64 和 arm64 。还有官方默认 python 3.11 我也不太满意，强行升级一波。</p>
-<pre><code>diff --git setup.sh setup.sh
-index 543fab0..80c1190 100755
---- setup.sh
-+++ setup.sh
-@@ -13,7 +13,8 @@ cd &quot;$SCRIPT_DIR&quot;
-
- VENV_DIR=&quot;$SCRIPT_DIR/.venv&quot;
- VENV_PY=&quot;$VENV_DIR/bin/python&quot;
--PYTHON_VERSION=&quot;3.11&quot;
-+# PYTHON_VERSION=&quot;3.11&quot;
-+PYTHON_VERSION=3.14
-
- # ────────────────────────────────────────────────────
- #  Helpers
-@@ -266,6 +267,10 @@ if [ &quot;$OS&quot; = &quot;Darwin&quot; ]; then
-     fi
-
-     step &quot;Building MLX from source (this takes 2-5 minutes on first install) ...&quot;
-+    # Force arm64 so CMake does not pick x86_64 (e.g. universal cc / Rosetta); MLX rejects x86_64+Metal on macOS.
-+    if [ &quot;$(uname -m)&quot; = &quot;arm64&quot; ]; then
-+        export ARCHFLAGS=&quot;${ARCHFLAGS:--arch arm64}&quot;
-+    fi
-     # --no-build-isolation required: MLX's C++/Metal build needs pre-installed setuptools
-     uv pip install --python &quot;$VENV_PY&quot; -e mlx/ --no-build-isolation
-     step &quot;Installing MLX Python deps (mlx-lm, torch, transformers, ...) ...&quot;
-</code></pre>
-<p>cd mlx</p>
-<pre><code>diff --git CMakeLists.txt CMakeLists.txt
-index 041a476c..459ddae2 100644
---- CMakeLists.txt
-+++ CMakeLists.txt
-@@ -56,7 +56,17 @@ message(
- )
-
- if(${CMAKE_SYSTEM_NAME} MATCHES &quot;Darwin&quot;)
--  if(${CMAKE_SYSTEM_PROCESSOR} MATCHES &quot;x86_64&quot;)
-+  # CMAKE_SYSTEM_PROCESSOR can stay x86_64 on Apple silicon until the toolchain
-+  # is fully configured; CMAKE_OSX_ARCHITECTURES reflects the actual target.
-+  set(_mlx_macos_targeting_x86 OFF)
-+  if(CMAKE_OSX_ARCHITECTURES)
-+    if(&quot;x86_64&quot; IN_LIST CMAKE_OSX_ARCHITECTURES)
-+      set(_mlx_macos_targeting_x86 ON)
-+    endif()
-+  elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES &quot;x86_64&quot;)
-+    set(_mlx_macos_targeting_x86 ON)
-+  endif()
-+  if(_mlx_macos_targeting_x86)
-     if(NOT MLX_ENABLE_X64_MAC)
-       message(
-         FATAL_ERROR
-diff --git setup.py setup.py
-index 12505bd1..db0c67c8 100644
---- setup.py
-+++ setup.py
-@@ -126,6 +126,9 @@ class CMakeBuild(build_ext):
-         if build_macos:
-             # Cross-compile support for macOS - respect ARCHFLAGS if set
-             archs = re.findall(r&quot;-arch (\S+)&quot;, os.environ.get(&quot;ARCHFLAGS&quot;, &quot;&quot;))
-+            # Default to native Apple-silicon when ARCHFLAGS is unset (avoids CMAKE_SYSTEM_PROCESSOR=x86_64 with universal toolchains)
-+            if not archs and platform.machine() == &quot;arm64&quot;:
-+                archs = [&quot;arm64&quot;]
-             if archs:
-                 cmake_args += [&quot;-DCMAKE_OSX_ARCHITECTURES={}&quot;.format(&quot;;&quot;.join(archs))]
-</code></pre>
-<p>然后发现 metal 命令不存在。继续折腾。因为我没升级 macOS 26，还是 Sequoia 15.7.3，XCode从商店安装直接提示</p>
-<blockquote>
-<p>Xcode can’t be installed on “Macintosh HD” because macOS version 26.2 or later is required.</p>
-</blockquote>
-<p>手动：</p>
-<pre><code>wget https://download.developer.apple.com/Developer_Tools/Xcode_16/Xcode_16.xip
-xip --expand Xcode_16.xip
-sudo mv Xcode.app /Applications/
-sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
-sudo xcodebuild -license accept
-</code></pre>
-<p>有AI代为折腾真好。</p>
-<p>最后吐槽下，open-webui什么妖魔鬼怪。就tmd一个界面玩意也整出来好几个GB。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2026-04-01T15:40:00+08:00">2026-04-01</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 
