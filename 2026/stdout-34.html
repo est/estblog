@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mimocode/Opencode 的 Responses API 支持 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Mimocode/Opencode 的 Responses API 支持" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stdout-34" />
+    <meta property="og:url" content="https://blog.est.im/2026/stdout-34">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Mimocode/Opencode 的 Responses API 支持">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Mimocode/Opencode 的 Responses API 支持</h2>
+    <p class="post-date">Posted <time datetime="2026-08-29T16:47:00+08:00">2026-08-29</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>当前的 MiMoCodev0.1.13里，Responses API 有两套入口</p>
+<ol>
+<li>Vercel SDK 的 responses() 方法 —— 触发条件是 provider id 为 <code>openai</code> / <code>github-copilot</code> / <code>azure</code>。</li>
+<li>provider 为 <code>gitlab</code> 且每个模型加上 <code>"useResponsesApi": true</code> </li>
+</ol>
+<h3>走 <code>gitlab</code></h3>
+<pre><code class="language-jsonc">{
+  &quot;$schema&quot;: &quot;https://mimo.xiaomi.com/mimocode/config.json&quot;,
+  &quot;provider&quot;: {
+    &quot;gitlab&quot;: {
+      &quot;name&quot;: &quot;GitLab&quot;,
+      &quot;models&quot;: {
+        &quot;duo-chat-gpt-5-codex&quot;: { &quot;useResponsesApi&quot;: true }
+      }
+    }
+  }
+}
+</code></pre>
+<p>可以通过 <code>GITLAB_INSTANCE_URL</code> <code>GITLAB_TOKEN</code> 环境变量去变通，但是 <code>token</code> 来自 <code>directAccessClient.getDirectAccessToken()</code> 走的是 GitLab 的 token-exchange 协议（auth.openai.com 那套 OAuth exchange）</p>
+<p>所以即使你能把 <code>instanceUrl</code> 骗过去，token 交换这一步也会因为不是真 GitLab token 而失败——没有可配置的开源端点/key 入口，也没有绕过 token-exchange 的开关。</p>
+<h3>复用 <code>openai</code> 这个 provider id</h3>
+<p>支持自定义 <code>options.baseURL</code> + <code>apiKey</code></p>
+<pre><code class="language-jsonc">{
+  &quot;$schema&quot;: &quot;https://mimo.xiaomi.com/mimocode/config.json&quot;,
+  &quot;provider&quot;: {
+    &quot;openai&quot;: {
+      &quot;name&quot;: &quot;My Responses Backend&quot;,
+      &quot;npm&quot;: &quot;@ai-sdk/openai&quot;,
+      &quot;models&quot;: { &quot;my-model&quot;: { &quot;name&quot;: &quot;my-model&quot; } },
+      &quot;options&quot;: {
+        &quot;baseURL&quot;: &quot;https://你的后端域名/v1&quot;,
+        &quot;apiKey&quot;: &quot;你的key&quot;
+      }
+    }
+  }
+}
+</code></pre>
+<p>provider id 必须是 <code>"openai"</code>/<code>github-copilot</code>/<code>azure</code> 之一</p>
+<h3>实测模型支持</h3>
+<p>直接让 AI 用 curl 去测试 Opencode Zen / Opencode Go 哪些模型支持 Responses API</p>
+<table>
+<thead>
+<tr>
+<th>model</th>
+<th>completions</th>
+<th>responses</th>
+<th>真实可用端点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mimo-v2.5-pro</code></td>
+<td>✅ 200</td>
+<td>❌ 500</td>
+<td><strong>completions</strong></td>
+</tr>
+<tr>
+<td><code>mimo-v2.5</code></td>
+<td>✅ 200</td>
+<td>❌ 500 不支持</td>
+<td>都不可用(模型名 mapping 错)</td>
+</tr>
+<tr>
+<td><code>deepseek-v4-flash</code></td>
+<td>✅ 200</td>
+<td>✅ 200</td>
+<td>两者都行</td>
+</tr>
+<tr>
+<td><code>deepseek-v4-pro</code></td>
+<td>✅ 200</td>
+<td>✅ 200</td>
+<td>两者都行</td>
+</tr>
+<tr>
+<td><code>glm-5.1</code></td>
+<td>✅ 200</td>
+<td>❌ 500</td>
+<td><strong>completions</strong></td>
+</tr>
+<tr>
+<td><code>glm-5.2</code></td>
+<td>✅ 200</td>
+<td>❌ 500</td>
+<td><strong>completions</strong></td>
+</tr>
+<tr>
+<td><code>minimax-m3</code></td>
+<td>✅ 200</td>
+<td>❌ 401 不支持</td>
+<td><strong>completions</strong></td>
+</tr>
+<tr>
+<td><code>muse-spark-1.2-contributor</code></td>
+<td>❌ 500</td>
+<td>✅ 200</td>
+<td><strong>responses</strong></td>
+</tr>
+<tr>
+<td><code>mimo-v2.5-free</code></td>
+<td>✅ 200</td>
+<td>❌ 500</td>
+<td>限流,completions 理论上可用</td>
+</tr>
+<tr>
+<td><code>hy3-free</code></td>
+<td>✅ 200</td>
+<td>❌ 500</td>
+<td><strong>completions</strong></td>
+</tr>
+<tr>
+<td><code>deepseek-v4-flash-free</code></td>
+<td>❌ 400 模型不可用</td>
+<td>❌ 500</td>
+<td>都不可用(后端故障)</td>
+</tr>
+<tr>
+<td><code>muse-spark-1.2-contributor-free</code></td>
+<td>❌ 500</td>
+<td>✅ 200</td>
+<td><strong>responses</strong></td>
+</tr>
+</tbody>
+</table>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

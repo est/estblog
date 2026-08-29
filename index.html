@@ -54,6 +54,143 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-34"  rel="bookmark" >
+              <h2 class="card-title">Mimocode/Opencode 的 Responses API 支持</h2>
+            </a>
+            <p class="card-text"><p>当前的 MiMoCodev0.1.13里，Responses API 有两套入口</p>
+<ol>
+<li>Vercel SDK 的 responses() 方法 —— 触发条件是 provider id 为 <code>openai</code> / <code>github-copilot</code> / <code>azure</code>。</li>
+<li>provider 为 <code>gitlab</code> 且每个模型加上 <code>"useResponsesApi": true</code> </li>
+</ol>
+<h3>走 <code>gitlab</code></h3>
+<pre><code class="language-jsonc">{
+  &quot;$schema&quot;: &quot;https://mimo.xiaomi.com/mimocode/config.json&quot;,
+  &quot;provider&quot;: {
+    &quot;gitlab&quot;: {
+      &quot;name&quot;: &quot;GitLab&quot;,
+      &quot;models&quot;: {
+        &quot;duo-chat-gpt-5-codex&quot;: { &quot;useResponsesApi&quot;: true }
+      }
+    }
+  }
+}
+</code></pre>
+<p>可以通过 <code>GITLAB_INSTANCE_URL</code> <code>GITLAB_TOKEN</code> 环境变量去变通，但是 <code>token</code> 来自 <code>directAccessClient.getDirectAccessToken()</code> 走的是 GitLab 的 token-exchange 协议（auth.openai.com 那套 OAuth exchange）</p>
+<p>所以即使你能把 <code>instanceUrl</code> 骗过去，token 交换这一步也会因为不是真 GitLab token 而失败——没有可配置的开源端点/key 入口，也没有绕过 token-exchange 的开关。</p>
+<h3>复用 <code>openai</code> 这个 provider id</h3>
+<p>支持自定义 <code>options.baseURL</code> + <code>apiKey</code></p>
+<pre><code class="language-jsonc">{
+  &quot;$schema&quot;: &quot;https://mimo.xiaomi.com/mimocode/config.json&quot;,
+  &quot;provider&quot;: {
+    &quot;openai&quot;: {
+      &quot;name&quot;: &quot;My Responses Backend&quot;,
+      &quot;npm&quot;: &quot;@ai-sdk/openai&quot;,
+      &quot;models&quot;: { &quot;my-model&quot;: { &quot;name&quot;: &quot;my-model&quot; } },
+      &quot;options&quot;: {
+        &quot;baseURL&quot;: &quot;https://你的后端域名/v1&quot;,
+        &quot;apiKey&quot;: &quot;你的key&quot;
+      }
+    }
+  }
+}
+</code></pre>
+<p>provider id 必须是 <code>"openai"</code>/<code>github-copilot</code>/<code>azure</code> 之一</p>
+<h3>实测模型支持</h3>
+<p>直接让 AI 用 curl 去测试 Opencode Zen / Opencode Go 哪些模型支持 Responses API</p>
+<table>
+<thead>
+<tr>
+<th>model</th>
+<th>completions</th>
+<th>responses</th>
+<th>真实可用端点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mimo-v2.5-pro</code></td>
+<td>✅ 200</td>
+<td>❌ 500</td>
+<td><strong>completions</strong></td>
+</tr>
+<tr>
+<td><code>mimo-v2.5</code></td>
+<td>✅ 200</td>
+<td>❌ 500 不支持</td>
+<td>都不可用(模型名 mapping 错)</td>
+</tr>
+<tr>
+<td><code>deepseek-v4-flash</code></td>
+<td>✅ 200</td>
+<td>✅ 200</td>
+<td>两者都行</td>
+</tr>
+<tr>
+<td><code>deepseek-v4-pro</code></td>
+<td>✅ 200</td>
+<td>✅ 200</td>
+<td>两者都行</td>
+</tr>
+<tr>
+<td><code>glm-5.1</code></td>
+<td>✅ 200</td>
+<td>❌ 500</td>
+<td><strong>completions</strong></td>
+</tr>
+<tr>
+<td><code>glm-5.2</code></td>
+<td>✅ 200</td>
+<td>❌ 500</td>
+<td><strong>completions</strong></td>
+</tr>
+<tr>
+<td><code>minimax-m3</code></td>
+<td>✅ 200</td>
+<td>❌ 401 不支持</td>
+<td><strong>completions</strong></td>
+</tr>
+<tr>
+<td><code>muse-spark-1.2-contributor</code></td>
+<td>❌ 500</td>
+<td>✅ 200</td>
+<td><strong>responses</strong></td>
+</tr>
+<tr>
+<td><code>mimo-v2.5-free</code></td>
+<td>✅ 200</td>
+<td>❌ 500</td>
+<td>限流,completions 理论上可用</td>
+</tr>
+<tr>
+<td><code>hy3-free</code></td>
+<td>✅ 200</td>
+<td>❌ 500</td>
+<td><strong>completions</strong></td>
+</tr>
+<tr>
+<td><code>deepseek-v4-flash-free</code></td>
+<td>❌ 400 模型不可用</td>
+<td>❌ 500</td>
+<td>都不可用(后端故障)</td>
+</tr>
+<tr>
+<td><code>muse-spark-1.2-contributor-free</code></td>
+<td>❌ 500</td>
+<td>✅ 200</td>
+<td><strong>responses</strong></td>
+</tr>
+</tbody>
+</table></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-08-29T16:47:00+08:00">2026-08-29</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-33"  rel="bookmark" >
               <h2 class="card-title">git fetch 实现断点续传</h2>
             </a>
@@ -2528,56 +2665,6 @@ git repack -a -d
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-06-10T23:21:00+08:00">2026-06-10</time></p>
 <p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2026/stderr-21"  rel="bookmark" >
-              <h2 class="card-title">AI和柜台费</h2>
-            </a>
-            <p class="card-text"><p>现在这个时间点，观察到两件事：</p>
-<ol>
-<li>华为的大模型哑火。国内的AI圈反而没那么多恶臭拉踩舆论</li>
-<li>雷不斯天天给MIMO搞新闻。一开始是免费用在Openrouter刷榜；然后在大家都玩按次数的 codng plan它家率先搞 token plan涨价；然后又是 100T 申请免费送；然后跟ds4同款缓存优化降价；然后又是给流失老付费用户免费一个月套餐</li>
-</ol>
-<p>MIMO是很用力的去刷榜。why？</p>
-<p>马斯克几百亿买 cursor，一个vscode套壳，why？</p>
-<p>这两个问题，我在过去几周一直琢磨，那就是 AI 行业和 软件 互联网 最大的差别，他是有边际成本的。他的玩法变了</p>
-<p>雷不斯刷榜的 Openrouter 和马斯克买的 Cursor，还有遍地开花的 “中转站”，而且据说有大厂买中转站数据去训练和蒸馏。</p>
-<p>边际成本不为0 ，中间商，这两件事在我脑海里酝酿出一个结论：</p>
-<p><strong>AI 属于传统行业</strong></p>
-<ul>
-<li>它每次吐 token 是有不可忽视的制造成本的；</li>
-<li>中转站，Openrouter，Cursor，属于柜台费</li>
-</ul>
-<p>对于这个说法，跟身边的人和网友交流，并不能服众。跟AI交流，它一通分析，边际成本 和 柜台费 渠道费 有一定关联，但是没有必然因果性。它举了很多例子，比如 Appstore, Steam，音乐平台也算渠道。Tesla 也算没渠道。</p>
-<p>AI还买域名、租服务器，买Google Ads、做SEO等平台广告费，接入 Stripe、PayPal 或支付宝都算渠道费</p>
-<p>我觉得有点不可信，掰扯了几句。金融和 基础设施 打广告 不太算渠道吧。无论谁哪个行业这些成本都有，也绕不开。大家都是同一起跑线。这个渠道也不存在特定歧视</p>
-<p>我这里纠结的”柜台费“，特指 “保护费”，你不给渠道上供，人家就改卖你竞品，导致你不得不走额外负担和预算。</p>
-<p>传统行业特别维护渠道商利益甚至搞排他</p>
-<p>AI接下来一段回答突然点醒了我。</p>
-<blockquote>
-<p>传统行业有“物理库存”的生死劫<br />
-造一辆车、酿一批酒、生产一批家电，边际成本极高，且会产生巨大的库存。厂商如果自己去卖，一旦卖不出去，资金链就断了。渠道商的核心价值是“蓄水池”和“压货”。<br />
-厂商为了让渠道商心甘情愿地拿自己的钱去囤货（把库存风险转移给渠道），就必须出让巨大的利润空间，并给予 “区域排他保护”（保证你在这个区独家卖，不打价格战）。本质：传统厂商给渠道商“上供/排他”，是为了买渠道商的“库存吞吐能力”和“资金垫付”。</p>
-</blockquote>
-<p>其实核心不在 边际成本，而是库存压力，资金周转。</p>
-<p>关键的来了：AI模型供应商同样有库存压力。</p>
-<p>我把这句话扔给AI，AI说你说得对，然后分析了一通 GPU 折旧，HBM 价高，DC耗电，降温散热 等等成本问题</p>
-<p>哈哈哈哈。AI果然还是太笨</p>
-<p>AI库存费问题不在于GPU闲置，而在于没有真实用户使用数据，无法投入下一轮迭代，跟竞品相比会越来越落后。</p>
-<p>公开语料就那么多，预训练大差不差，全靠后训练 指令遵循这些地方拉开差距了</p>
-<p>token回笼，就是这个时代的现金流。你没有真实用户使用互动，你的模型就会被竞品淘汰。</p>
-<p>这就是为什么 雷不斯要不计成本推MIMO去Openrouter亏钱刷榜，马一龙要买 Cursor去<a href="https://x.com/elonmusk/status/2058787384364265734">增强Grok</a>的原因。</p>
-<p>这就是中间商、柜台越来越重要的理由。</p>
-<p>AI属于传统行业，重资产制造业。</p>
-<p>（或许这就是华为只卖高利润硬件不做大模型的理由？）</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2026-06-05T10:24:00+08:00">2026-06-05</time></p>
-<p>stderr</p>            </div>
           </article>
         </div>
 
