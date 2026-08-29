@@ -62,6 +62,7 @@
 <li>Vercel SDK 的 responses() 方法 —— 触发条件是 provider id 为 <code>openai</code> / <code>github-copilot</code> / <code>azure</code>。</li>
 <li>provider 为 <code>gitlab</code> 且每个模型加上 <code>"useResponsesApi": true</code> </li>
 </ol>
+<p>就tmd很神奇。。一眼 vibe coding。我感觉世界上理解 Responses API 意义的人可能比例很少。。。</p>
 <h3>走 <code>gitlab</code></h3>
 <pre><code class="language-jsonc">{
   &quot;$schema&quot;: &quot;https://mimo.xiaomi.com/mimocode/config.json&quot;,
@@ -69,14 +70,14 @@
     &quot;gitlab&quot;: {
       &quot;name&quot;: &quot;GitLab&quot;,
       &quot;models&quot;: {
-        &quot;duo-chat-gpt-5-codex&quot;: { &quot;useResponsesApi&quot;: true }
+        &quot;gpt-5-codex&quot;: { &quot;useResponsesApi&quot;: true }
       }
     }
   }
 }
 </code></pre>
 <p>可以通过 <code>GITLAB_INSTANCE_URL</code> <code>GITLAB_TOKEN</code> 环境变量去变通，但是 <code>token</code> 来自 <code>directAccessClient.getDirectAccessToken()</code> 走的是 GitLab 的 token-exchange 协议（auth.openai.com 那套 OAuth exchange）</p>
-<p>所以即使你能把 <code>instanceUrl</code> 骗过去，token 交换这一步也会因为不是真 GitLab token 而失败——没有可配置的开源端点/key 入口，也没有绕过 token-exchange 的开关。</p>
+<p>所以即使能把 <code>instanceUrl</code> 骗过去，token 交换这一步也会因为不是真 GitLab token 而失败——没有可配置的开源端点/key 入口，也没有绕过 token-exchange 的开关。</p>
 <h3>复用 <code>openai</code> 这个 provider id</h3>
 <p>支持自定义 <code>options.baseURL</code> + <code>apiKey</code></p>
 <pre><code class="language-jsonc">{
@@ -94,93 +95,275 @@
   }
 }
 </code></pre>
-<p>provider id 必须是 <code>"openai"</code>/<code>github-copilot</code>/<code>azure</code> 之一</p>
+<p>provider id 必须是 <code>openai</code>/<code>github-copilot</code>/<code>azure</code> 之一</p>
+<h3>两个npm包的区别</h3>
+<p><code>@ai-sdk/openai-compatible</code> 和 <code>@ai-sdk/openai</code> 都是来自 Vercel</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><code>@ai-sdk/openai-compatible</code></th>
+<th><code>@ai-sdk/openai</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是什么</td>
+<td>MiMoCode 自带/打包的通用 OpenAI 兼容适配器</td>
+<td>Vercel 官方的 OpenAI 原生 provider</td>
+</tr>
+<tr>
+<td>适用对象</td>
+<td>任何"像 OpenAI"的第三方端点（OpenRouter、DeepSeek、本地 vLLM、各种网关）</td>
+<td>OpenAI 自家 API，或任何支持 OpenAI Responses API 的后端（靠 <code>baseURL</code> 指过去）</td>
+</tr>
+<tr>
+<td>在 MiMoCode 里的默认角色</td>
+<td>自定义 provider 的默认 npm（你不写 <code>npm</code> 时，<code>up()</code> 函数默认填它）</td>
+<td>绑定内置 <code>openai</code> provider id</td>
+</tr>
+<tr>
+<td>协议能力</td>
+<td>只有 Chat Completions（<code>languageModel()</code>）</td>
+<td>Chat Completions + Responses API（<code>responses()</code> 方法）</td>
+</tr>
+<tr>
+<td>路由差异</td>
+<td>通用路径 <code>W()</code> 里固定走 <code>M.languageModel(id)</code> → chat</td>
+<td>内置 <code>openai</code> loader 的 <code>getModel</code> 是 <code>return Z.responses(Q)</code> → 默认就走 Responses</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>npm: "@ai-sdk/openai-compatible"</code> + 任意自定义 id** → 永远走 Chat Completions，拿不到 Responses API。这是最常用但偏偏不支持 responses 的那个。</li>
+<li><code>npm: "@ai-sdk/openai"</code> 本身有 <code>responses()</code> 方法，但只有当 provider id 叫 <code>openai</code>、<code>github-copilot</code>、<code>azure</code>，它们 loader 里也调 <code>responses()</code>）时，MiMoCode 才会用 <code>Z.responses(Q)</code>。自定义 id + <code>@ai-sdk/openai</code> 会掉回通用 <code>languageModel()</code> = chat。</li>
+</ul>
 <h3>实测模型支持</h3>
-<p>直接让 AI 用 curl 去测试 Opencode Zen / Opencode Go 哪些模型支持 Responses API</p>
+<h4>Opencode Go</h4>
 <table>
 <thead>
 <tr>
 <th>model</th>
 <th>completions</th>
 <th>responses</th>
-<th>真实可用端点</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>mimo-v2.5-pro</code></td>
+<td>deepseek-v4-flash</td>
+<td>✅ 200</td>
+<td>✅ 200</td>
+</tr>
+<tr>
+<td>deepseek-v4-flash-vision-exp</td>
+<td>✅ 200</td>
+<td>✅ 200</td>
+</tr>
+<tr>
+<td>deepseek-v4-pro</td>
+<td>✅ 200</td>
+<td>✅ 200</td>
+</tr>
+<tr>
+<td>glm-5</td>
 <td>✅ 200</td>
 <td>❌ 500</td>
-<td><strong>completions</strong></td>
 </tr>
 <tr>
-<td><code>mimo-v2.5</code></td>
-<td>✅ 200</td>
-<td>❌ 500 不支持</td>
-<td>都不可用(模型名 mapping 错)</td>
-</tr>
-<tr>
-<td><code>deepseek-v4-flash</code></td>
-<td>✅ 200</td>
-<td>✅ 200</td>
-<td>两者都行</td>
-</tr>
-<tr>
-<td><code>deepseek-v4-pro</code></td>
-<td>✅ 200</td>
-<td>✅ 200</td>
-<td>两者都行</td>
-</tr>
-<tr>
-<td><code>glm-5.1</code></td>
+<td>glm-5.1</td>
 <td>✅ 200</td>
 <td>❌ 500</td>
-<td><strong>completions</strong></td>
 </tr>
 <tr>
-<td><code>glm-5.2</code></td>
+<td>glm-5.2</td>
 <td>✅ 200</td>
 <td>❌ 500</td>
-<td><strong>completions</strong></td>
 </tr>
 <tr>
-<td><code>minimax-m3</code></td>
-<td>✅ 200</td>
-<td>❌ 401 不支持</td>
-<td><strong>completions</strong></td>
-</tr>
-<tr>
-<td><code>muse-spark-1.2-contributor</code></td>
-<td>❌ 500</td>
-<td>✅ 200</td>
-<td><strong>responses</strong></td>
-</tr>
-<tr>
-<td><code>mimo-v2.5-free</code></td>
+<td>glm-5.3</td>
 <td>✅ 200</td>
 <td>❌ 500</td>
-<td>限流,completions 理论上可用</td>
 </tr>
 <tr>
-<td><code>hy3-free</code></td>
+<td>glm-5.3-flash</td>
 <td>✅ 200</td>
 <td>❌ 500</td>
-<td><strong>completions</strong></td>
 </tr>
 <tr>
-<td><code>deepseek-v4-flash-free</code></td>
-<td>❌ 400 模型不可用</td>
-<td>❌ 500</td>
-<td>都不可用(后端故障)</td>
-</tr>
-<tr>
-<td><code>muse-spark-1.2-contributor-free</code></td>
+<td>gpt-5.6-luna</td>
 <td>❌ 500</td>
 <td>✅ 200</td>
-<td><strong>responses</strong></td>
+</tr>
+<tr>
+<td>grok-4.5</td>
+<td>❌ 503</td>
+<td>✅ 200</td>
+</tr>
+<tr>
+<td>grok-4.6</td>
+<td>❌ 401</td>
+<td>✅ 200</td>
+</tr>
+<tr>
+<td>hy3</td>
+<td>✅ 200</td>
+<td>❌ 500</td>
+</tr>
+<tr>
+<td>hy3-preview</td>
+<td>❌ 400</td>
+<td>❌ 500</td>
+</tr>
+<tr>
+<td>hy4-preview</td>
+<td>✅ 200</td>
+<td>❌ 500</td>
+</tr>
+<tr>
+<td>kimi-k2.5</td>
+<td>✅ 200</td>
+<td>❌ 500</td>
+</tr>
+<tr>
+<td>kimi-k2.6</td>
+<td>✅ 200</td>
+<td>❌ 500</td>
+</tr>
+<tr>
+<td>kimi-k2.7-code</td>
+<td>✅ 200</td>
+<td>❌ 500</td>
+</tr>
+<tr>
+<td>kimi-k3</td>
+<td>✅ 200</td>
+<td>❌ 401</td>
+</tr>
+<tr>
+<td>longcat-2.0</td>
+<td>✅ 200</td>
+<td>❌ 500</td>
+</tr>
+<tr>
+<td>mimo-v2-omni</td>
+<td>❌ 400</td>
+<td>❌ 500</td>
+</tr>
+<tr>
+<td>mimo-v2-pro</td>
+<td>❌ 400</td>
+<td>❌ 500</td>
+</tr>
+<tr>
+<td>mimo-v2.5</td>
+<td>✅ 200</td>
+<td>❌ 500</td>
+</tr>
+<tr>
+<td>mimo-v2.5-pro</td>
+<td>✅ 200</td>
+<td>❌ 500</td>
+</tr>
+<tr>
+<td>minimax-m2.5</td>
+<td>✅ 200</td>
+<td>❌ 401</td>
+</tr>
+<tr>
+<td>minimax-m2.7</td>
+<td>❌ 500</td>
+<td>❌ 500</td>
+</tr>
+<tr>
+<td>minimax-m3</td>
+<td>✅ 200</td>
+<td>❌ 401</td>
+</tr>
+<tr>
+<td>muse-spark-1.2-contributor</td>
+<td>❌ 500</td>
+<td>✅ 200</td>
+</tr>
+<tr>
+<td>qwen3.5-plus</td>
+<td>✅ 200</td>
+<td>❌ 401</td>
+</tr>
+<tr>
+<td>qwen3.6-plus</td>
+<td>✅ 200</td>
+<td>❌ 401</td>
+</tr>
+<tr>
+<td>qwen3.7-max</td>
+<td>✅ 200</td>
+<td>❌ 401</td>
+</tr>
+<tr>
+<td>qwen3.7-plus</td>
+<td>✅ 200</td>
+<td>❌ 401</td>
+</tr>
+<tr>
+<td>qwen3.8-flash</td>
+<td>✅ 200</td>
+<td>❌ 401</td>
+</tr>
+<tr>
+<td>qwen3.8-max</td>
+<td>✅ 200</td>
+<td>❌ 401</td>
 </tr>
 </tbody>
-</table></p>
+</table>
+<h4>Opencode Zen</h4>
+<table>
+<thead>
+<tr>
+<th>model</th>
+<th>completions</th>
+<th>responses</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>big-pickle</td>
+<td>⚠️ 429</td>
+<td>❌ 500</td>
+</tr>
+<tr>
+<td>hy3-free</td>
+<td>✅ 200</td>
+<td>❌ 500</td>
+</tr>
+<tr>
+<td>laguna-s-2.1-free</td>
+<td>✅ 200</td>
+<td>❌ 500</td>
+</tr>
+<tr>
+<td>ling-3.0-flash-fin-free</td>
+<td>✅ 200</td>
+<td>❌ 500</td>
+</tr>
+<tr>
+<td>mimo-v2.5-free</td>
+<td>⚠️ 429</td>
+<td>❌ 500</td>
+</tr>
+<tr>
+<td>muse-spark-1.2-contributor-free</td>
+<td>❌ 500</td>
+<td>✅ 200</td>
+</tr>
+<tr>
+<td>nemotron-3-ultra-free</td>
+<td>❌ 000</td>
+<td>❌ 500</td>
+</tr>
+</tbody>
+</table>
+<p>需要付费的 401 Insufficient balance 我就懒得测了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-08-29T16:47:00+08:00">2026-08-29</time></p>
 <p>stdout</p>            </div>
