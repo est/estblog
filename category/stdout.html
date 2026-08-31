@@ -200,7 +200,6 @@ client.post(url, content=httpx.MultiPart(
 <h3>12. Stricter typing on flexible parameters (discussed, not fully decided)</h3>
 <p>Background: currently <code>timeout=</code> accepts a bare float, a tuple of floats, or a <code>Timeout</code> instance; <code>proxy=</code> accepts a string, a <code>URL</code>, or a <code>Proxy</code> instance; similar flexibility exists for <code>auth=</code> and <code>headers=</code>.</p>
 <p>The design-call notes floated constraining these to fewer accepted shapes for clarity, but a maintainer pushed back in the same conversation that "it's not clear tightening the API types is a better user experience and could cause churn" — so this one is explicitly unresolved, not a committed change.</p>
-<h3>13. other type-checking</h3>
 <pre><code class="language-python">
 # `proxy=` → `ProxyTypes`
 httpx.Client(proxy=&quot;http://localhost:8030&quot;)                 # plain string
