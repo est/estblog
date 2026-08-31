@@ -55,10 +55,10 @@
         <div class="card blog-card">
           <article class="card-body">
             <a href="/2026/stdout-35"  rel="bookmark" >
-              <h2 class="card-title">httpx 1.0</h2>
+              <h2 class="card-title">The httpx 1.0 situation</h2>
             </a>
-            <p class="card-text"><p>In case you weren't aware, there's quite a debate over <code>httpx</code> Python library, especially maintainer of both <code>openai-python</code> and <code>anthropic-sdk-python</code> showed up and decided to switch to <code>httpx2</code>, a fork of <code>httpx</code> that maintains v0.28 styles</p>
-<p><code>httpx</code> is a library that can handle both sync/async http, replacing <code>requests</code> (sync-only) and <code>aiohttp</code> (async-opnly).</p>
+            <p class="card-text"><p>In case you weren't aware, there's quite a debate over <code>httpx</code> v1.0 release, especially maintainer of both <code>openai-python</code> and <code>anthropic-sdk-python</code> showed up and decided to switch to <code>httpx2</code>, a fork of <code>httpx</code> that maintains v0.28 styles</p>
+<p><code>httpx</code> is a Python library that can handle both sync/async http, replacing <code>requests</code> (sync-only) and <code>aiohttp</code> (async-opnly).</p>
 <h3>1. <code>verify=</code> and <code>cert=</code> → explicit <code>ssl.SSLContext</code></h3>
 <p>for version &lt; v1.0</p>
 <pre><code class="language-python"># Boolean on/off — still fine, not deprecated
@@ -222,7 +222,7 @@ httpx.get(url, headers=[(&quot;User-Agent&quot;, &quot;my-app&quot;)])          
 httpx.get(url, headers=httpx.Headers({&quot;User-Agent&quot;: &quot;my-app&quot;}))  # explicit Headers object
 </code></pre>
 <hr />
-<p>tl;dr Giving type system a handjob like Java</p></p>
+<p>tl;dr httpx v1.0 is trying to giving type system a handjob like Java</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-08-31T11:35:00+08:00">2026-08-31</time></p>
 <p>stdout</p>            </div>

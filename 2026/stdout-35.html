@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>httpx 1.0 – est の 输入 输出和出入</title>
+    <title>The httpx 1.0 situation – est の 输入 输出和出入</title>
 <link rel="icon" href="https://est.im/favicon.svg">
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -9,12 +9,12 @@
     <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="httpx 1.0" />
+    <meta name="description" content="The httpx 1.0 situation" />
 
     <link rel="canonical" href="https://blog.est.im/2026/stdout-35" />
     <meta property="og:url" content="https://blog.est.im/2026/stdout-35">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="httpx 1.0">
+    <meta property="og:title" content="The httpx 1.0 situation">
 
     <link rel="stylesheet" href="/theme/css/normalize.min.css" />
     <link rel="stylesheet" href="/theme/css/style.css" />
@@ -47,13 +47,13 @@
 </nav>    <main class="content side-text-padding">
 <article class="post">
   <header class="post-header">
-    <h2 class="post-title">httpx 1.0</h2>
+    <h2 class="post-title">The httpx 1.0 situation</h2>
     <p class="post-date">Posted <time datetime="2026-08-31T11:35:00+08:00">2026-08-31</time> | <span>stdout</span></p>
   </header>
 
   
-  <p>In case you weren't aware, there's quite a debate over <code>httpx</code> Python library, especially maintainer of both <code>openai-python</code> and <code>anthropic-sdk-python</code> showed up and decided to switch to <code>httpx2</code>, a fork of <code>httpx</code> that maintains v0.28 styles</p>
-<p><code>httpx</code> is a library that can handle both sync/async http, replacing <code>requests</code> (sync-only) and <code>aiohttp</code> (async-opnly).</p>
+  <p>In case you weren't aware, there's quite a debate over <code>httpx</code> v1.0 release, especially maintainer of both <code>openai-python</code> and <code>anthropic-sdk-python</code> showed up and decided to switch to <code>httpx2</code>, a fork of <code>httpx</code> that maintains v0.28 styles</p>
+<p><code>httpx</code> is a Python library that can handle both sync/async http, replacing <code>requests</code> (sync-only) and <code>aiohttp</code> (async-opnly).</p>
 <h3>1. <code>verify=</code> and <code>cert=</code> → explicit <code>ssl.SSLContext</code></h3>
 <p>for version &lt; v1.0</p>
 <pre><code class="language-python"># Boolean on/off — still fine, not deprecated
@@ -217,7 +217,7 @@ httpx.get(url, headers=[(&quot;User-Agent&quot;, &quot;my-app&quot;)])          
 httpx.get(url, headers=httpx.Headers({&quot;User-Agent&quot;: &quot;my-app&quot;}))  # explicit Headers object
 </code></pre>
 <hr />
-<p>tl;dr Giving type system a handjob like Java</p>
+<p>tl;dr httpx v1.0 is trying to giving type system a handjob like Java</p>
 </article>
 
 <div class="comments">
