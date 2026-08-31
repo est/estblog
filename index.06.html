@@ -54,6 +54,66 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2025/stdout-10"  rel="bookmark" >
+              <h2 class="card-title">gzip 炸弹检测</h2>
+            </a>
+            <p class="card-text"><p>国内很多人说<a href="https://zhuanlan.zhihu.com/p/502265250">两句话就能检测 gzip 炸弹</a>，我翻了一下大概是这样</p>
+<pre><code class="language-python">import gzip
+import io
+import requests
+resp = requests.get(url, stream=True)
+
+decompressed = resp.raw.read()
+with gzip.open(io.BytesIO(decompressed), 'rb') as g:
+    g.seek(0, 2)
+    origin_size = g.tell()
+    print(origin_size)
+</code></pre>
+<p>跟 <code>gzip -l xxx.gz</code> 类似，原理是gzip格式在尾部8字节保存了 <code>[CRC32][ISIZE]</code>，其中 ISIZE = uncompressed_length % 2³²</p>
+<p>要反制这个检测很easy嘛，直接返回 <code>Content-Encoding: deflate</code> 不就行了？</p>
+<p>况且，我搜了下，ISIZE是可以改的。。。所以更好的办法是：</p>
+<pre><code class="language-python">import zlib
+
+MAX_OUTPUT = 50 * 1024 * 1024  # 50 MB cap
+
+def safe_decompress_gzip_stream(compressed_iterable):
+    # compressed_iterable yields bytes chunks from incoming request body
+    d = zlib.decompressobj(16 + zlib.MAX_WBITS)  # 16+ for gzip wrapper
+    total_out = 0
+    for chunk in compressed_iterable:
+        out = d.decompress(chunk, 64*1024)  # limit per-call output
+        total_out += len(out)
+        if total_out &gt; MAX_OUTPUT:
+            raise ValueError(&quot;Exceeded decompression limit&quot;)
+        yield out
+    # flush remaining
+    out = d.flush()
+    total_out += len(out)
+    if total_out &gt; MAX_OUTPUT:
+        raise ValueError(&quot;Exceeded decompression limit&quot;)
+    if out:
+        yield out
+</code></pre>
+<p>终归来说，gzip炸的都是内存。我在想，能不能利用LZ77反复横跳，做一个CPU炸弹呢？</p>
+<p>比如解压个半天，发现结果是个 1KB 的小文件？压缩率高达 114514%  ？</p>
+<p>ChatGPT 居然拒绝回答了。但是指了个路：</p>
+<blockquote>
+<p>Many tiny dynamic-Huffman blocks so the decoder rebuilds trees repeatedly (parsing overhead per block).<br />
+Constructing distance/length sequences that cause a lot of back-reference copying (expensive repeated copies, especially with overlapping distances).<br />
+Interleaving short literal runs with copies to create branch-heavy decode work.<br />
+Using many concatenated members/streams (or nested archives) to multiply cost.</p>
+</blockquote>
+<p>OpenAI 真猥琐啊。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2025-10-11T15:23:00+08:00">2025-10-11</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2025/stderr-05"  rel="bookmark" >
               <h2 class="card-title">OKR 🔪 了 Google Reader</h2>
             </a>
@@ -960,25 +1020,6 @@ Yes! January 29, 2025, falls on Lunar New Year’s Eve, which is the day before 
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2025-02-12T16:06:00+08:00">2025-02-12</time></p>
 <p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2025/stdin-03"  rel="bookmark" >
-              <h2 class="card-title">纸吸管“环保”的说法是一个4年级小学生发明的</h2>
-            </a>
-            <p class="card-text"><p>之前看到elon吹捧川普取消纸吸管是<a href="https://x.com/elonmusk/status/1887886625318818292">最伟大总统</a>，一大早看到<a href="https://x.com/paulg/status/1888203276811632935">pg转的</a></p>
-<blockquote>
-<p>As a curious fourth grader who had just started an environmental project to discourage restaurants from providing straws by default, Cress decided to look online to find out how many straws are used each day in the United States. Not being able to find any statistics, he called straw manufacturers directly and estimated the 500 million figure based on numbers they provided him.</p>
-<p>In February of 2011, Milo Cress (then nine years old) founded the Be Straw Free Campaign project to work together with members of the straw industry, restaurants and other businesses, schools, environmental groups, and concerned citizens to reduce the use and waste of disposable plastic straws.</p>
-</blockquote>
-<p>这个是<a href="https://www.npr.org/2018/07/22/631254978/one-childs-outsized-influence-on-the-debate-over-plastic-waste">npr报道的</a>，还是比较权威的。很多饮料是塑料杯子，然后吸管给你搞成纸质；或者纸质吸管外面用塑料包一层。只能说欧美搞这些也挺草台班子的。想起之前那个how dare you小学生，感觉是这个风气。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2025-02-09T10:51:00+08:00">2025-02-09</time></p>
-<p>stdin</p>            </div>
           </article>
         </div>
 

@@ -54,6 +54,186 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-35"  rel="bookmark" >
+              <h2 class="card-title">httpx 1.0</h2>
+            </a>
+            <p class="card-text"><p>In case you weren't aware, there's quite a debate over <code>httpx</code> Python library, especially maintainer of both <code>openai-python</code> and <code>anthropic-sdk-python</code> showed up and decided to switch to <code>httpx2</code>, a fork of <code>httpx</code> that maintains v0.28 styles</p>
+<p><code>httpx</code> is a library that can handle both sync/async http, replacing <code>requests</code> (sync-only) and <code>aiohttp</code> (async-opnly).</p>
+<h3>1. <code>verify=</code> and <code>cert=</code> → explicit <code>ssl.SSLContext</code></h3>
+<p>for version &lt; v1.0</p>
+<pre><code class="language-python"># Boolean on/off — still fine, not deprecated
+httpx.Client(verify=True)   # default: verify using certifi's CA bundle
+httpx.Client(verify=False)  # danger: accept any certificate
+
+# String path — NOW DEPRECATED, raises a warning
+httpx.Client(verify=&quot;/path/to/custom-ca-bundle.pem&quot;)
+
+# cert= for a client certificate (mutual TLS) — NOW DEPRECATED
+httpx.Client(cert=(&quot;/path/to/client.pem&quot;, &quot;/path/to/client.key&quot;))
+</code></pre>
+<p>v1.0</p>
+<pre><code class="language-python">import ssl, certifi, httpx
+
+# Equivalent to default verify=True
+ctx = ssl.create_default_context(cafile=certifi.where())
+httpx.Client(verify=ctx)
+
+# Custom CA bundle
+ctx = ssl.create_default_context(cafile=&quot;/path/to/custom-ca-bundle.pem&quot;)
+httpx.Client(verify=ctx)
+
+# Client certificate (mutual TLS) is now loaded onto the context itself
+ctx = ssl.create_default_context(cafile=certifi.where())
+ctx.load_cert_chain(&quot;/path/to/client.pem&quot;, &quot;/path/to/client.key&quot;)
+httpx.Client(verify=ctx)
+</code></pre>
+<h3>2. <code>proxies=</code> → <code>proxy=</code> / <code>mounts=</code></h3>
+<p>Before:</p>
+<pre><code class="language-python"># Old dict-based per-scheme mapping
+httpx.Client(proxies={&quot;http://&quot;: &quot;http://localhost:8030&quot;, &quot;https://&quot;: &quot;http://localhost:8031&quot;})
+</code></pre>
+<p>After:</p>
+<pre><code class="language-python"># Single proxy for everything
+httpx.Client(proxy=&quot;http://localhost:8030&quot;)
+
+# Per-scheme routing via mounts (a dict of URL-pattern -&gt; Transport)
+httpx.Client(mounts={
+    &quot;http://&quot;: httpx.HTTPTransport(proxy=&quot;http://localhost:8030&quot;),
+    &quot;https://&quot;: httpx.HTTPTransport(proxy=&quot;http://localhost:8031&quot;),
+})
+</code></pre>
+<h3>3. <code>app=</code> shortcut → explicit <code>transport=</code></h3>
+<p>What <code>app=</code> was for: letting you point a <code>Client</code> directly at a WSGI or ASGI Python callable instead of a URL, so you could test your web app without spinning up a real server.</p>
+<p>Before:</p>
+<pre><code class="language-python">httpx.Client(app=my_asgi_app, base_url=&quot;http://testserver&quot;)
+</code></pre>
+<p>After:</p>
+<pre><code class="language-python">httpx.Client(transport=httpx.ASGITransport(app=my_asgi_app), base_url=&quot;http://testserver&quot;)
+# or for WSGI:
+httpx.Client(transport=httpx.WSGITransport(app=my_wsgi_app), base_url=&quot;http://testserver&quot;)
+</code></pre>
+<h3>4. <code>allow_redirects=</code> → <code>follow_redirects=</code>, default flipped to <code>False</code></h3>
+<p>What changed: in the 0.20 release, redirects stopped being followed automatically by default.</p>
+<p>Before (pre-0.20 behavior, and the old kwarg name):</p>
+<pre><code class="language-python">httpx.get(&quot;http://api.github.com/&quot;)  
+# silently redirects http -&gt; https, meaning every request was actually sent twice
+</code></pre>
+<p>After:</p>
+<pre><code class="language-python">httpx.get(&quot;http://api.github.com/&quot;, follow_redirects=True)  # opt-in explicitly
+# or
+httpx.Client(follow_redirects=True)  # opt-in for the whole client
+</code></pre>
+<p>The maintainers gave a concrete example — a client configured for <code>http://api.github.com/</code> was silently sending <em>every single request twice</em> (once to get redirected, once to the real HTTPS URL), wasting a round-trip nobody asked for. They decided implicit redirect-following causes more surprise bugs (accidentally hitting an endpoint twice, e.g. a payment POST) than it saves typing, so it became opt-in. This was explicitly flagged as "no universally right answer, just a trade-off" in their own release notes.</p>
+<h3>5. Compact JSON request bodies</h3>
+<p>Before: <code>json={"a": 1, "b": 2}</code> serialized with the stdlib default spacing → <code>{"a": 1, "b": 2}</code> (space after <code>:</code> and <code>,</code>).</p>
+<p>After: same call now serializes to <code>{"a":1,"b":2}</code> (no extra spaces).</p>
+<p>This is a good change!</p>
+<h3>6. Query-string percent-encoding rules changed</h3>
+<p>Before: spaces in query params encoded as <code>+</code>, and <code>/</code> inside a query value encoded as <code>%2F</code> (this is the old <code>application/x-www-form-urlencoded</code>-style behavior, same as <code>requests</code>).</p>
+<p>After: spaces encoded as <code>%20</code>, and <code>/</code> left unescaped in the query portion (matches how Chrome/Safari/Firefox actually build URLs, per the WHATWG spec rather than the older RFC 3986 reading).</p>
+<pre><code class="language-python"># requests-style / old httpx:
+&quot;?q=hello+world&amp;path=a%2Fb&quot;
+# new httpx:
+&quot;?q=hello%20world&amp;path=a/b&quot;
+</code></pre>
+<p>This is a case where IETF RFC3986 vs. WHATWG's disagree, and real browsers follow WHATWG.</p>
+<h3>7. Automatic <code>.netrc</code> handling → explicit <code>httpx.NetRCAuth()</code></h3>
+<p>Before: if you had a <code>~/.netrc</code> file, httpx would silently pick up and use those credentials on any matching request.</p>
+<p>After:</p>
+<pre><code class="language-python">httpx.get(url, auth=httpx.NetRCAuth())
+</code></pre>
+<p>Silently reading a credentials file from disk shouldn't be done by default.</p>
+<h3>8. <code>response.iter_lines()</code> behavior</h3>
+<p>Before: yielded lines including trailing newline characters (<code>"line one\n"</code>).</p>
+<p>After: matches Python's own <code>str.splitlines()</code> / file-iteration convention — newlines stripped (<code>"line one"</code>), and a related performance bug fixed.</p>
+<p>Matching stdlib conventions (<code>for line in file:</code> style) is less surprising than inventing your own line-splitting semantics.</p>
+<h3>9. <code>QueryParams</code> became immutable</h3>
+<p>Before (implied by the old API): <code>client.params.update(...)</code> mutated in place.</p>
+<p>After:</p>
+<pre><code class="language-python">client.params = client.params.merge({&quot;key&quot;: &quot;value&quot;})
+# or the more granular:
+params.set(&quot;key&quot;, &quot;value&quot;)
+params.add(&quot;key&quot;, &quot;value&quot;)     # allow duplicate keys
+params.remove(&quot;key&quot;)
+</code></pre>
+<p>Mutable shared state (like a dict) attached to a client is a classic source of bugs</p>
+<h3>10. Sync and async split into two separate installable packages</h3>
+<p>Background: today, one package gives you both a blocking (<code>Client</code>) and non-blocking (<code>AsyncClient</code>) interface, because under the hood both share the same code via a code-generation trick (<code>unasync</code>) that turns the async source into the sync version automatically at build time.</p>
+<p>Before:</p>
+<pre><code class="language-python">import httpx
+r = httpx.get(&quot;https://example.org&quot;)          # sync
+
+async def main():
+    async with httpx.AsyncClient() as cli:
+        r = await cli.get(&quot;https://example.org&quot;)   # async
+</code></pre>
+<p>After (previewed):</p>
+<pre><code class="language-python"># pip install httpx
+import httpx
+r = httpx.get(&quot;https://example.org&quot;)           # sync only
+
+# pip install ahttpx   &lt;-- a *different* package
+import ahttpx
+r = await ahttpx.get(&quot;https://example.org&quot;)    # async only
+</code></pre>
+<p>The maintainers reasoned that if you only ever use the sync client, you're still forced to install <code>anyio</code> and <code>sniffio</code> (async-support dependencies) that you never touch. Splitting the packages lets sync-only users have a genuinely smaller dependency tree, and removes the slightly awkward <code>Client</code>/<code>AsyncClient</code> naming duplication in favor of one name per package.</p>
+<p>The controversy (worth knowing about): this is the most contested item in the whole redesign. Simon Willison and several SDK maintainers (including Anthropic's and OpenAI's own Python SDK maintainers, both of which depend on <code>httpx&lt;1</code>) argued in the public discussion that Python's inability to install two versions of the same package side-by-side means a hard breaking split could fragment the ecosystem for a long transition window, similar to what happened with Pydantic 1→2. Proposed alternatives floated in that thread include shipping the new design under a different name entirely (<code>httpx2</code>) or keeping both old and new APIs inside one package under a versioned namespace (<code>httpx.v1</code>). None of this is resolved as of the latest visible discussion activity.</p>
+<p>My take: The whole reason why ppl chose httpx over aiohttp is because it can handle both.</p>
+<h3>11. <code>json=</code>, <code>data=</code>, <code>files=</code> shortcuts replaced by typed <code>content=</code> objects</h3>
+<p>Background: today httpx (like <code>requests</code> before it) offers three different keyword arguments depending on what kind of body you're sending, and picks the right <code>Content-Type</code> header for you based on which one you used.</p>
+<p>Before:</p>
+<pre><code class="language-python">client.post(url, json={&quot;key&quot;: &quot;value&quot;})                       # application/json
+client.post(url, data={&quot;key&quot;: &quot;value&quot;})                       # form-urlencoded
+client.post(url, files={&quot;upload&quot;: open(&quot;report.pdf&quot;, &quot;rb&quot;)})  # multipart/form-data
+client.post(url, data={&quot;name&quot;: &quot;a&quot;}, files={&quot;upload&quot;: f})      # mixed form + file
+</code></pre>
+<p>After (previewed):</p>
+<pre><code class="language-python">client.post(url, content=httpx.JSON({&quot;key&quot;: &quot;value&quot;}))
+client.post(url, content=httpx.Form({&quot;key&quot;: &quot;value&quot;}))
+client.post(url, content=httpx.Files({&quot;upload&quot;: httpx.File(&quot;report.pdf&quot;)}))
+client.post(url, content=httpx.MultiPart(
+    form={&quot;name&quot;: &quot;a&quot;},
+    files={&quot;upload&quot;: httpx.File(&quot;report.pdf&quot;)},
+))
+</code></pre>
+<p>Java boi's fantacy to please the type checker.</p>
+<h3>12. Stricter typing on flexible parameters (discussed, not fully decided)</h3>
+<p>Background: currently <code>timeout=</code> accepts a bare float, a tuple of floats, or a <code>Timeout</code> instance; <code>proxy=</code> accepts a string, a <code>URL</code>, or a <code>Proxy</code> instance; similar flexibility exists for <code>auth=</code> and <code>headers=</code>.</p>
+<p>The design-call notes floated constraining these to fewer accepted shapes for clarity, but a maintainer pushed back in the same conversation that "it's not clear tightening the API types is a better user experience and could cause churn" — so this one is explicitly unresolved, not a committed change.</p>
+<h3>13. other type-checking</h3>
+<pre><code class="language-python">
+# `proxy=` → `ProxyTypes`
+httpx.Client(proxy=&quot;http://localhost:8030&quot;)                 # plain string
+httpx.Client(proxy=httpx.URL(&quot;http://localhost:8030&quot;))       # URL object
+httpx.Client(proxy=httpx.Proxy(&quot;http://localhost:8030&quot;))     # Proxy object, needed if you
+                                                              # also want proxy auth/headers
+# `timeout=` → `TimeoutTypes`
+httpx.Client(timeout=10.0)                 # single float applied to connect/read/write/pool
+httpx.Client(timeout=None)                 # disable timeouts entirely
+httpx.Client(timeout=httpx.Timeout(connect=5.0, read=30.0, write=10.0, pool=5.0))  # explicit object
+
+# `auth=` → `AuthTypes`
+httpx.get(url, auth=(&quot;username&quot;, &quot;password&quot;))   # 2-tuple -&gt; Basic auth
+httpx.get(url, auth=httpx.DigestAuth(&quot;username&quot;, &quot;password&quot;))  # explicit Auth subclass
+httpx.get(url, auth=my_callable)                 # any callable(request) -&gt; request, via FunctionAuth
+
+# `headers=` → `HeaderTypes`
+httpx.get(url, headers={&quot;User-Agent&quot;: &quot;my-app&quot;})              # plain dict
+httpx.get(url, headers=[(&quot;User-Agent&quot;, &quot;my-app&quot;)])             # list of tuples (allows duplicate keys)
+httpx.get(url, headers=httpx.Headers({&quot;User-Agent&quot;: &quot;my-app&quot;}))  # explicit Headers object
+</code></pre>
+<hr />
+<p>tl;dr Giving type system a handjob like Java</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-08-31T11:35:00+08:00">2026-08-31</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-34"  rel="bookmark" >
               <h2 class="card-title">Mimocode/Opencode 的 Responses API 支持</h2>
             </a>
@@ -2764,90 +2944,6 @@ end run
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-06-14T00:13:00+08:00">2026-06-14</time></p>
 <p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2026/stdout-22"  rel="bookmark" >
-              <h2 class="card-title">基于 git 的零拷贝静态web服务器</h2>
-            </a>
-            <p class="card-text"><p>无聊，产生了个crazy的想法。</p>
-<p>git 内部用 zlib 压缩文件内容</p>
-<p>Content-Encoding: gzip 也是</p>
-<p>如果web服务器输出 .git 里的 静态 内容，是不是可以减一个二次解压/压缩步骤？？？</p>
-<p>blob sha1 直接当etag？</p>
-<p>跟AI较量了几轮，一开始它说做不到。因为 blob 的格式比较变态。因为</p>
-<p><code>hello world...</code></p>
-<p>在 .git/objects/ab/cdef... 里的东西是这么存的</p>
-<p><code>zlib(blob 1234\0hello world...)</code></p>
-<p>I was like</p>
-<p>？？？日他妈真变态啊。这前面是写死了 <code>blob &lt;size&gt;\0</code> 然后把文件内容放在一起，再压缩的。</p>
-<p>.git 这设计脑子有病啊。。。为啥不是原始文件gz而是加个头去gz。。。</p>
-<p>此路不通！结束</p>
-<hr />
-<p>然后AI嘴瓢了，说</p>
-<blockquote>
-<p>先别急着吐槽 Linus，这个设计不仅没病，反而是 Git 能成为现代“内容寻址数据库”的精髓所在。<br />
-当 Git 从磁盘读取一个松散对象时，它是个流（Stream）。Git 只需要解压出最开始的几个字节，读到 blob 4096\0，内核就可以立刻执行 malloc(4096) 分配精准的内存。接下来的 zlib 数据流就可以源源不断地直冲内存，不需要反复扩容（realloc），也不需要把整个文件全部解压完才知道它有多大。<br />
-况且，这里有一个长久的误解：你吐槽的那个把 blob <size>\0 塞进 zlib 的逻辑，其实只存在于松散对象（Loose Object）中。在真正的 Packfile 里，这个文本格式的头早就被干掉了。</p>
-</blockquote>
-<p>【松散对象 Loose Object】</p>
-<pre><code>+-------------------------------------------------------+
-| zlib 压缩包: [ &quot;blob 1024\0&quot; + 原始文件纯数据 ]           |
-+-------------------------------------------------------+
-</code></pre>
-<p>【包文件 Packfile 内部的一条记录】</p>
-<pre><code>+---------------------------------------------------------+
-| [3-bit 类型] + [变长 Varint 表达的 Size] + [纯 zlib 数据流] |
-+---------------------------------------------------------+
-</code></pre>
-<p>我去，这么好的东西，你怎么不早点告诉我！</p>
-<p>然后AI给我泼一盆冷水：</p>
-<ul>
-<li>Git Packfile 内部的流是zlib 格式 (RFC 1950)，头部 2 字节 (CMF/FLG)，校验算法 Adler-32 (追求极速快照比对)</li>
-<li>HTTP Content-Encoding: gzip 期待的流 gzip格式 (RFC 1952)，头部 10 字节 (Magic Number, CM, FLG, Time 等)，校验算法CRC32 (追求网络传输抗干扰)</li>
-</ul>
-<p>不！兼！容！</p>
-<p>要正确的CRC32你得把文件全部读一遍，那不就等于解压一遍了。白费力气。完结！</p>
-<hr />
-<p>嘿，得亏我早年玩 IIS 长大的。我记得有个偏方，<code>Content-Encoding: deflate</code>，尾部crc32直接丢了</p>
-<p>AI：</p>
-<blockquote>
-<p>恭喜你，这是Web 历史上著名的 “Deflate 格式混乱案”<br />
-RFC 2616 (HTTP/1.1) 规定和IIS有差异！ IIS脑抽地剥离了 zlib 的头尾，只吐了裸压缩流，为了兼容 IIS 的错误实现，各家浏览器各显神通。有的浏览器严格按 RFC 执行，有的浏览器看到 zlib 头会报错，必须看内核的容错机制。<br />
-真正的zlib 格式 (RFC 1950) 是要求包含 2 字节头 + DEFLATE 压缩流 + 4 字节 Adler-32 尾</p>
-</blockquote>
-<p>等等，你说啥？Adler-32？这不就又对上了嘛！！！</p>
-<p>那么开始 Vibe！！！</p>
-<blockquote>
-<p>Git Packfile 的终极大 Boss：差分存储（Delta Compression）<br />
-即便你搞定了上面的所有协议头和校验和，Git 的终极形态——Packfile 还会给你最后一击。你假设的场景是：Git 里的 Blob 都是一个个完整的、独立的压缩包。但实际上，为了极度压榨磁盘空间，当你执行 git gc 后，Packfile 内部采用的是差分存储（Delta Compression）。</p>
-</blockquote>
-<p>啊这？？我于是问，能在配置里禁用掉吗？</p>
-<pre><code># 将比对窗口设为 0，彻底禁用 Delta 差分计算
-git config --global pack.window 0
-
-# 强制打包所有对象，并立刻、无条件地清除所有 Loose 文件（无视 2 周保护期）
-git gc --prune=now --aggressive
-
-# -a 表示把所有对象打包进一个全新的 pack
-# -d 表示打包成功后，立刻删除原本的 loose 对象和旧的 pack 文件
-git repack -a -d
-</code></pre>
-<p>哎，你tmd不早说。这不就闭环了嘛！！！</p>
-<p>你觉得这几个命令难的记？ <code>git clone --depth=1</code> 就行。这只有一个 depth 必须自动pack。</p>
-<p>如果你存的是 .jpg 之类的二进制，那么git会直接放弃 delta 。</p>
-<p>于是最后，通过 OpenCode Zen 免费的 MiMo V2.5 Free </p>
-<p><a href="https://github.com/est/git2www-zerocopy">https://github.com/est/git2www-zerocopy</a></p>
-<p>本地自测是OK的</p>
-<p>我也算是写过 zero-copy 的人了 🤣（assert AI会写 === 我也会写）</p>
-<p>必须严肃吐槽一下AI这回答一板一眼，不思考完整，拷打一下挤一点。如果不是我知道 IIS 这个坑可能就放弃这个想法了。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2026-06-10T23:21:00+08:00">2026-06-10</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>httpx 1.0 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="httpx 1.0" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stdout-35" />
+    <meta property="og:url" content="https://blog.est.im/2026/stdout-35">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="httpx 1.0">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">httpx 1.0</h2>
+    <p class="post-date">Posted <time datetime="2026-08-31T11:35:00+08:00">2026-08-31</time> | <span>stdout</span></p>
+  </header>
+
+  
+  <p>In case you weren't aware, there's quite a debate over <code>httpx</code> Python library, especially maintainer of both <code>openai-python</code> and <code>anthropic-sdk-python</code> showed up and decided to switch to <code>httpx2</code>, a fork of <code>httpx</code> that maintains v0.28 styles</p>
+<p><code>httpx</code> is a library that can handle both sync/async http, replacing <code>requests</code> (sync-only) and <code>aiohttp</code> (async-opnly).</p>
+<h3>1. <code>verify=</code> and <code>cert=</code> → explicit <code>ssl.SSLContext</code></h3>
+<p>for version &lt; v1.0</p>
+<pre><code class="language-python"># Boolean on/off — still fine, not deprecated
+httpx.Client(verify=True)   # default: verify using certifi's CA bundle
+httpx.Client(verify=False)  # danger: accept any certificate
+
+# String path — NOW DEPRECATED, raises a warning
+httpx.Client(verify=&quot;/path/to/custom-ca-bundle.pem&quot;)
+
+# cert= for a client certificate (mutual TLS) — NOW DEPRECATED
+httpx.Client(cert=(&quot;/path/to/client.pem&quot;, &quot;/path/to/client.key&quot;))
+</code></pre>
+<p>v1.0</p>
+<pre><code class="language-python">import ssl, certifi, httpx
+
+# Equivalent to default verify=True
+ctx = ssl.create_default_context(cafile=certifi.where())
+httpx.Client(verify=ctx)
+
+# Custom CA bundle
+ctx = ssl.create_default_context(cafile=&quot;/path/to/custom-ca-bundle.pem&quot;)
+httpx.Client(verify=ctx)
+
+# Client certificate (mutual TLS) is now loaded onto the context itself
+ctx = ssl.create_default_context(cafile=certifi.where())
+ctx.load_cert_chain(&quot;/path/to/client.pem&quot;, &quot;/path/to/client.key&quot;)
+httpx.Client(verify=ctx)
+</code></pre>
+<h3>2. <code>proxies=</code> → <code>proxy=</code> / <code>mounts=</code></h3>
+<p>Before:</p>
+<pre><code class="language-python"># Old dict-based per-scheme mapping
+httpx.Client(proxies={&quot;http://&quot;: &quot;http://localhost:8030&quot;, &quot;https://&quot;: &quot;http://localhost:8031&quot;})
+</code></pre>
+<p>After:</p>
+<pre><code class="language-python"># Single proxy for everything
+httpx.Client(proxy=&quot;http://localhost:8030&quot;)
+
+# Per-scheme routing via mounts (a dict of URL-pattern -&gt; Transport)
+httpx.Client(mounts={
+    &quot;http://&quot;: httpx.HTTPTransport(proxy=&quot;http://localhost:8030&quot;),
+    &quot;https://&quot;: httpx.HTTPTransport(proxy=&quot;http://localhost:8031&quot;),
+})
+</code></pre>
+<h3>3. <code>app=</code> shortcut → explicit <code>transport=</code></h3>
+<p>What <code>app=</code> was for: letting you point a <code>Client</code> directly at a WSGI or ASGI Python callable instead of a URL, so you could test your web app without spinning up a real server.</p>
+<p>Before:</p>
+<pre><code class="language-python">httpx.Client(app=my_asgi_app, base_url=&quot;http://testserver&quot;)
+</code></pre>
+<p>After:</p>
+<pre><code class="language-python">httpx.Client(transport=httpx.ASGITransport(app=my_asgi_app), base_url=&quot;http://testserver&quot;)
+# or for WSGI:
+httpx.Client(transport=httpx.WSGITransport(app=my_wsgi_app), base_url=&quot;http://testserver&quot;)
+</code></pre>
+<h3>4. <code>allow_redirects=</code> → <code>follow_redirects=</code>, default flipped to <code>False</code></h3>
+<p>What changed: in the 0.20 release, redirects stopped being followed automatically by default.</p>
+<p>Before (pre-0.20 behavior, and the old kwarg name):</p>
+<pre><code class="language-python">httpx.get(&quot;http://api.github.com/&quot;)  
+# silently redirects http -&gt; https, meaning every request was actually sent twice
+</code></pre>
+<p>After:</p>
+<pre><code class="language-python">httpx.get(&quot;http://api.github.com/&quot;, follow_redirects=True)  # opt-in explicitly
+# or
+httpx.Client(follow_redirects=True)  # opt-in for the whole client
+</code></pre>
+<p>The maintainers gave a concrete example — a client configured for <code>http://api.github.com/</code> was silently sending <em>every single request twice</em> (once to get redirected, once to the real HTTPS URL), wasting a round-trip nobody asked for. They decided implicit redirect-following causes more surprise bugs (accidentally hitting an endpoint twice, e.g. a payment POST) than it saves typing, so it became opt-in. This was explicitly flagged as "no universally right answer, just a trade-off" in their own release notes.</p>
+<h3>5. Compact JSON request bodies</h3>
+<p>Before: <code>json={"a": 1, "b": 2}</code> serialized with the stdlib default spacing → <code>{"a": 1, "b": 2}</code> (space after <code>:</code> and <code>,</code>).</p>
+<p>After: same call now serializes to <code>{"a":1,"b":2}</code> (no extra spaces).</p>
+<p>This is a good change!</p>
+<h3>6. Query-string percent-encoding rules changed</h3>
+<p>Before: spaces in query params encoded as <code>+</code>, and <code>/</code> inside a query value encoded as <code>%2F</code> (this is the old <code>application/x-www-form-urlencoded</code>-style behavior, same as <code>requests</code>).</p>
+<p>After: spaces encoded as <code>%20</code>, and <code>/</code> left unescaped in the query portion (matches how Chrome/Safari/Firefox actually build URLs, per the WHATWG spec rather than the older RFC 3986 reading).</p>
+<pre><code class="language-python"># requests-style / old httpx:
+&quot;?q=hello+world&amp;path=a%2Fb&quot;
+# new httpx:
+&quot;?q=hello%20world&amp;path=a/b&quot;
+</code></pre>
+<p>This is a case where IETF RFC3986 vs. WHATWG's disagree, and real browsers follow WHATWG.</p>
+<h3>7. Automatic <code>.netrc</code> handling → explicit <code>httpx.NetRCAuth()</code></h3>
+<p>Before: if you had a <code>~/.netrc</code> file, httpx would silently pick up and use those credentials on any matching request.</p>
+<p>After:</p>
+<pre><code class="language-python">httpx.get(url, auth=httpx.NetRCAuth())
+</code></pre>
+<p>Silently reading a credentials file from disk shouldn't be done by default.</p>
+<h3>8. <code>response.iter_lines()</code> behavior</h3>
+<p>Before: yielded lines including trailing newline characters (<code>"line one\n"</code>).</p>
+<p>After: matches Python's own <code>str.splitlines()</code> / file-iteration convention — newlines stripped (<code>"line one"</code>), and a related performance bug fixed.</p>
+<p>Matching stdlib conventions (<code>for line in file:</code> style) is less surprising than inventing your own line-splitting semantics.</p>
+<h3>9. <code>QueryParams</code> became immutable</h3>
+<p>Before (implied by the old API): <code>client.params.update(...)</code> mutated in place.</p>
+<p>After:</p>
+<pre><code class="language-python">client.params = client.params.merge({&quot;key&quot;: &quot;value&quot;})
+# or the more granular:
+params.set(&quot;key&quot;, &quot;value&quot;)
+params.add(&quot;key&quot;, &quot;value&quot;)     # allow duplicate keys
+params.remove(&quot;key&quot;)
+</code></pre>
+<p>Mutable shared state (like a dict) attached to a client is a classic source of bugs</p>
+<h3>10. Sync and async split into two separate installable packages</h3>
+<p>Background: today, one package gives you both a blocking (<code>Client</code>) and non-blocking (<code>AsyncClient</code>) interface, because under the hood both share the same code via a code-generation trick (<code>unasync</code>) that turns the async source into the sync version automatically at build time.</p>
+<p>Before:</p>
+<pre><code class="language-python">import httpx
+r = httpx.get(&quot;https://example.org&quot;)          # sync
+
+async def main():
+    async with httpx.AsyncClient() as cli:
+        r = await cli.get(&quot;https://example.org&quot;)   # async
+</code></pre>
+<p>After (previewed):</p>
+<pre><code class="language-python"># pip install httpx
+import httpx
+r = httpx.get(&quot;https://example.org&quot;)           # sync only
+
+# pip install ahttpx   &lt;-- a *different* package
+import ahttpx
+r = await ahttpx.get(&quot;https://example.org&quot;)    # async only
+</code></pre>
+<p>The maintainers reasoned that if you only ever use the sync client, you're still forced to install <code>anyio</code> and <code>sniffio</code> (async-support dependencies) that you never touch. Splitting the packages lets sync-only users have a genuinely smaller dependency tree, and removes the slightly awkward <code>Client</code>/<code>AsyncClient</code> naming duplication in favor of one name per package.</p>
+<p>The controversy (worth knowing about): this is the most contested item in the whole redesign. Simon Willison and several SDK maintainers (including Anthropic's and OpenAI's own Python SDK maintainers, both of which depend on <code>httpx&lt;1</code>) argued in the public discussion that Python's inability to install two versions of the same package side-by-side means a hard breaking split could fragment the ecosystem for a long transition window, similar to what happened with Pydantic 1→2. Proposed alternatives floated in that thread include shipping the new design under a different name entirely (<code>httpx2</code>) or keeping both old and new APIs inside one package under a versioned namespace (<code>httpx.v1</code>). None of this is resolved as of the latest visible discussion activity.</p>
+<p>My take: The whole reason why ppl chose httpx over aiohttp is because it can handle both.</p>
+<h3>11. <code>json=</code>, <code>data=</code>, <code>files=</code> shortcuts replaced by typed <code>content=</code> objects</h3>
+<p>Background: today httpx (like <code>requests</code> before it) offers three different keyword arguments depending on what kind of body you're sending, and picks the right <code>Content-Type</code> header for you based on which one you used.</p>
+<p>Before:</p>
+<pre><code class="language-python">client.post(url, json={&quot;key&quot;: &quot;value&quot;})                       # application/json
+client.post(url, data={&quot;key&quot;: &quot;value&quot;})                       # form-urlencoded
+client.post(url, files={&quot;upload&quot;: open(&quot;report.pdf&quot;, &quot;rb&quot;)})  # multipart/form-data
+client.post(url, data={&quot;name&quot;: &quot;a&quot;}, files={&quot;upload&quot;: f})      # mixed form + file
+</code></pre>
+<p>After (previewed):</p>
+<pre><code class="language-python">client.post(url, content=httpx.JSON({&quot;key&quot;: &quot;value&quot;}))
+client.post(url, content=httpx.Form({&quot;key&quot;: &quot;value&quot;}))
+client.post(url, content=httpx.Files({&quot;upload&quot;: httpx.File(&quot;report.pdf&quot;)}))
+client.post(url, content=httpx.MultiPart(
+    form={&quot;name&quot;: &quot;a&quot;},
+    files={&quot;upload&quot;: httpx.File(&quot;report.pdf&quot;)},
+))
+</code></pre>
+<p>Java boi's fantacy to please the type checker.</p>
+<h3>12. Stricter typing on flexible parameters (discussed, not fully decided)</h3>
+<p>Background: currently <code>timeout=</code> accepts a bare float, a tuple of floats, or a <code>Timeout</code> instance; <code>proxy=</code> accepts a string, a <code>URL</code>, or a <code>Proxy</code> instance; similar flexibility exists for <code>auth=</code> and <code>headers=</code>.</p>
+<p>The design-call notes floated constraining these to fewer accepted shapes for clarity, but a maintainer pushed back in the same conversation that "it's not clear tightening the API types is a better user experience and could cause churn" — so this one is explicitly unresolved, not a committed change.</p>
+<h3>13. other type-checking</h3>
+<pre><code class="language-python">
+# `proxy=` → `ProxyTypes`
+httpx.Client(proxy=&quot;http://localhost:8030&quot;)                 # plain string
+httpx.Client(proxy=httpx.URL(&quot;http://localhost:8030&quot;))       # URL object
+httpx.Client(proxy=httpx.Proxy(&quot;http://localhost:8030&quot;))     # Proxy object, needed if you
+                                                              # also want proxy auth/headers
+# `timeout=` → `TimeoutTypes`
+httpx.Client(timeout=10.0)                 # single float applied to connect/read/write/pool
+httpx.Client(timeout=None)                 # disable timeouts entirely
+httpx.Client(timeout=httpx.Timeout(connect=5.0, read=30.0, write=10.0, pool=5.0))  # explicit object
+
+# `auth=` → `AuthTypes`
+httpx.get(url, auth=(&quot;username&quot;, &quot;password&quot;))   # 2-tuple -&gt; Basic auth
+httpx.get(url, auth=httpx.DigestAuth(&quot;username&quot;, &quot;password&quot;))  # explicit Auth subclass
+httpx.get(url, auth=my_callable)                 # any callable(request) -&gt; request, via FunctionAuth
+
+# `headers=` → `HeaderTypes`
+httpx.get(url, headers={&quot;User-Agent&quot;: &quot;my-app&quot;})              # plain dict
+httpx.get(url, headers=[(&quot;User-Agent&quot;, &quot;my-app&quot;)])             # list of tuples (allows duplicate keys)
+httpx.get(url, headers=httpx.Headers({&quot;User-Agent&quot;: &quot;my-app&quot;}))  # explicit Headers object
+</code></pre>
+<hr />
+<p>tl;dr Giving type system a handjob like Java</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>
