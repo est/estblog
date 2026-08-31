@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Mon, 31 Aug 2026 11:35:00 +0800</lastBuildDate><item><title>The httpx 1.0 situation</title><link>https://blog.est.im/2026/stdout-35</link><description>&lt;p&gt;In case you weren't aware, there's quite a debate over &lt;code&gt;httpx&lt;/code&gt; v1.0 release, especially maintainer of both &lt;code&gt;openai-python&lt;/code&gt; and &lt;code&gt;anthropic-sdk-python&lt;/code&gt; showed up and decided to switch to &lt;code&gt;httpx2&lt;/code&gt;, a fork of &lt;code&gt;httpx&lt;/code&gt; that maintains v0.28 styles&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;httpx&lt;/code&gt; is a Python library that can handle both sync/async http, replacing &lt;code&gt;requests&lt;/code&gt; (sync-only) and &lt;code&gt;aiohttp&lt;/code&gt; (async-opnly).&lt;/p&gt;
+&lt;p&gt;You can view original discussion starting here &lt;a href="https://github.com/encode/httpx/discussions/3344"&gt;https://github.com/encode/httpx/discussions/3344&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The maintainer &lt;a href="https://github.com/encode/httpx/discussions/3784"&gt;closed discussion and issues&lt;/a&gt; &lt;/p&gt;
 &lt;h3&gt;1. &lt;code&gt;verify=&lt;/code&gt; and &lt;code&gt;cert=&lt;/code&gt; → explicit &lt;code&gt;ssl.SSLContext&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;for version &amp;lt; v1.0&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-python"&gt;# Boolean on/off — still fine, not deprecated
