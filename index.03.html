@@ -54,6 +54,29 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-14"  rel="bookmark" >
+              <h2 class="card-title">浏览器通过WebGPU上做AI推理</h2>
+            </a>
+            <p class="card-text"><p>先说结论，在2026Q2这个时间点，通过浏览器webgpu 做 AI 不值得。</p>
+<p>本来看<a href="https://huggingface.co/spaces/Xenova/kokoro-web">官方demo</a>跑得好好的，自己搓下来也觉得没啥，就一个小问题，fp32的模型有点大，最好换 q8 的。</p>
+<p>q8的不能在 webgpu上跑，wasm也凑合用。原因是缺少一些矩阵乘法算子。开源库嘛，也理解。只是速度就慢了一点。</p>
+<p>本来前几个月就这样平安无事，结果 transformers.js 升级到 v4，支持 q8 跑webgpu了，甚至 q4 q2 bitnet 这种高级货都支持了。满心欢喜的切过去，结果 webgpu 跟 wasm 一样慢？</p>
+<p>于是就不甘心了。一路折腾，发现这个不仅跟算子有关，还跟硬件有关。甚至老掉牙的硬件不支持 <code>shader-f16</code> 。简单的说其实 GPU 原生支持最好的就 IEEE 754 fp32，f16 i8 这种属于要么新一点的硬件才支持，要么就是靠各种算子在软件层奇技淫巧去模拟。</p>
+<p>我甚至脑洞大开让AI去搓一个 q8 dequant 到 fp32 ，发现模型也是不好惹的，太多坑了。HF官方甚至也自己搞了一套 q8f16 q4f16，然而 HF 自己的 transformers.js 都支持得不完善。</p>
+<p>压死骆驼最后的稻草是，我在macbook上开发完成，最长9s，能忍受的极限，拿出手机、pad，win10台式机一测，发现webgpu大多数不支持，然后wasm推理需要 20s。微软甚至不准备在win100承诺支持WebGPU，因为依赖的 DirectX 12 只会面向win11更新了；高通，联发科这边的 WebGPU 稀碎。要说生态好，还得是Apple。</p>
+<p>那还玩个蛋啊。怪不得现在AI几乎都是云上面跑，端上的问题太多了。</p>
+<p>国产AI芯片，NPU什么的现在觉得得可以洗洗睡了。CUDA生态不是简单的堆算力问题，transformer模型推理本质上就是矩阵乘法，但是坑就坑在layer的结果需要进一步传播，叠加，汇总。但凡做个 fusion 就很考验对硬件的理解了。</p>
+<p>啊啊啊啊，头痛，坑。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-04-25T16:53:00+08:00">2026-04-25</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdin-11"  rel="bookmark" >
               <h2 class="card-title">Indent Is All You Need</h2>
             </a>
@@ -1076,52 +1099,6 @@ tmux new-session -d -s opus <br />
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-03-03T05:03:00+08:00">2026-03-03</time></p>
 <p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2026/stderr-06"  rel="bookmark" >
-              <h2 class="card-title">巴别塔，Vibe Coding和Lisp之咒</h2>
-            </a>
-            <p class="card-text"><p>西方世界有个「巴别塔」故事，传当年人类强盛至极，统一了语言，上达天听，下释万物，惊动了创世神，创世神就出奸计让人们说不同的语言，人们开始互相不理解，各自为战，世俗的力量就被消减了</p>
-<p>当然我说这个版本是去掉神秘学的一个引子。2026年了，全世界都被AI这迷人的玩意给勾引了，数据飞轮使得天下语料大同，似乎人类又可以相互理解，同样的概念embedding有几乎雷同的相似度，可以看成同一个语言又统一了。</p>
-<p>在这种统一带来惊人的生产力，甚至可以说是「神力」。</p>
-<p>我记得高中大学听闻上古大神编写代码，是拿纸和笔在大脑模拟，然后上机一次性敲入代码，一次性编译成功。膜拜不已</p>
-<p>自己写代码，得跟IDE斗智斗勇，遇到编译器警告还急得抓耳挠腮；所以我比较喜欢脚本语言REPL，反正都是试。</p>
-<p>以上种种，虽然说是脑力工作者，但是本质上就是一种体力活儿，而且语言高低之分，类型强弱有别，C/Go/Python/JS各自有擅长的一块保留地。</p>
-<p>现在 Vibe Coding 则不一样了，你只需要「许愿」，就能能「实现」。以前精灵壶还只应许3个愿望，现在只要充钱就能不限数量7x24许愿。</p>
-<p>似乎，人类又建立起来了「巴别塔」，可以和创世神一较高下了。</p>
-<p>今天对「巴别塔」迷思的时候，突然想到一个古老的诅咒 <a href="https://winestockwebdesign.com/Essays/Lisp_Curse.html">The Lisp Curse</a>。这玩意超级经典，被HN反复吟唱<a href="https://news.ycombinator.com/item?id=2450973">2011</a> <a href="https://news.ycombinator.com/item?id=3808194">2012</a> <a href="https://news.ycombinator.com/item?id=11174946">2016</a> <a href="https://news.ycombinator.com/item?id=14480157">2017</a> <a href="https://news.ycombinator.com/item?id=20919819">2019</a> <a href="https://news.ycombinator.com/item?id=30800520">2022</a></p>
-<p>这个诅咒讲了个什么事呢，说来也巧，符号主义门下出了个天纵奇才的语言—— Lisp，把80年代的AI泡沫推向顶峰。这玩意不同于其他语言，为AI而生，数据和代码同构，正如当今LLM控制面和数据面。LLM本质是 predict next token，也就是说 <code>MOV</code> 指令是上一轮的数据催生的，更具体的说，Lisp这个魔丸生下来就把祖师爷图灵的法宝——图灵机的纸 和 笔 给融合了。这种反射和元编程的威力，比模板啊，宏啊，codegen这种二流兵器大得多。可以说Lisp就是the chosen one </p>
-<p>然而Lisp 并没有打败其他编程语言，相反，它是分裂得最离谱的。我第一次听说编程语言还有「方言」这事儿就是从Lisp这儿来的。什么 scheme，Chez，emacs lisp 不一而足</p>
-<p>「Lisp诅咒」就是这么来的——Lisp 的力量本身就是最大的敌人。</p>
-<p>Lisp巨大的原始威力，以至于其他编程中出现的技术问题 语言在Lisp中是社会问题。</p>
-<p>「Lisp诅咒」举了的知名例子，让Scheme支持 面向对象(OOP) 如此容易，就像课后习题一样，许多Scheme黑客都会。更重要的是，<em>太多</em> Scheme黑客都这么做过。这导致了一个恶果：The Paradox of Choice，即「选择困难症」，没有一个最好的OOP方案能胜出。每个 Scheme 黑客都只拿自己的痛点隔靴搔痒。</p>
-<p>也就是说，每个人都可以许愿，每个人都能拥有神力，谁也不服谁。</p>
-<p>我突然觉得，Vibe Coding 也是一样的终局。其实这个观点我已经在《<a href="https://blog.est.im/2026/stderr-03">计算机科学里哪些极难的事</a>》里写过了。</p>
-<p>你做 frontmatter，做skills，做 spec，做 harness，做着做着就会发现，你自己搞了一套DSL。</p>
-<p>或者你自己 SFT，甚至你可以pretrain，直接把能力固化到模型内部。为了极限省token和上下文，你甚至可以把你的风格预设固化成一个token。</p>
-<p>将来一个：</p>
-<ul>
-<li>懂？</li>
-<li>懂！</li>
-</ul>
-<p>就跟模型达成了默契。</p>
-<p>自定义上下文到极致，不就是发明一套DSL吗？DSL多了，不就成了方言，其他人看不懂了么。</p>
-<p>我想，巴别塔就是这样倒掉的。很多 one man army ，全栈，产品设计开发一把梭的做法，看似效率更高，产出更旺盛，实际上这是对神力的透支。因为你手上的东西不具有社会性了。巴别塔倒掉之后，人人只会说方言，无法理解对方了。</p>
-<p>我不知道这是好是坏，但是我觉得这必然是终局之一。</p>
-<hr />
-<p>以上为手搓而成，没有token遭到烧毁。</p>
-<p>以下为AI给出的点评，我觉得有启发。值得一读：</p>
-<p>为什么社会性重要？软件工程的本质是“管理复杂性”，而管理复杂性的手段是“契约（Contract）”。Vibe Coding 抛弃了契约，选择了默契。当代码从群体契约退化为私人咒语，知识的迭代将失去复利效应。每个人都在重复造轮子，因为理解别人的轮子比自己许愿造一个更难。</p>
-<p>Token 让语言统一了， DSL 让语言分裂了。我们在符号层（Syntax）达成了前所未有的统一，却在语义层（Semantics）陷入了前所未有的混乱。 这就是「巴别塔」的新死法——大家用着同样的字符，却在聊着只有自己和 AI 懂的黑话。</p>
-<p>人类历史上最强大的工具，往往不是让我们走得更近，而是让我们发现，原来我们根本不需要彼此。巴别塔不是倒在语言不通，而是倒在“我不需要听你的”。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2026-02-28T22:09:00+08:00">2026-02-28</time></p>
-<p>stderr</p>            </div>
           </article>
         </div>
 

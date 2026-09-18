@@ -54,6 +54,37 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2025/stdout-11"  rel="bookmark" >
+              <h2 class="card-title">再也不愁 favicon 了，直接 inline SVG</h2>
+            </a>
+            <p class="card-text"><p>每次在一个网页里， F12 或 Cmd+Opt+I 最痛苦的是什么？</p>
+<blockquote>
+<p>/favicon.ico:1   GET favicon.ico 404 (Not Found)</p>
+</blockquote>
+<p>简直逼死强迫症～前段时间折腾SVG，觉得用 xml 写一组 favicon.svg 或许不错。今天撸AI它丫的直接给我个最粗暴简单的：</p>
+<pre><code class="language-html">&lt;link rel=&quot;icon&quot; href=&quot;data:image/svg+xml,&lt;svg xmlns='http://w3.org/2000/svg' viewBox='0 0 19 19'&gt;&lt;text y=16&gt;🤣&lt;/text&gt;&lt;/svg&gt;&quot;&gt;
+</code></pre>
+<p>预览一下这个SVG：</p>
+<div style="display:block;width:128px;height:128px">
+  <svg xmlns='http://w3.org/2000/svg' viewBox='0 0 19 19'><text y=16>🤣</text></svg>
+</div>
+
+<p>精简的地方：<br />
+1. www.w3.org 去掉 www<br />
+2. y=16去掉引号<br />
+3. viewBox 为19而 y=16 是因为该死的拉丁字母显示有个 baseline 问题。随便调整下懒得管了。<br />
+4. 节约了 font-size="16" 因为 默认就16px</p>
+<p>直接用 emoji 作为 favicon。我贴这个版本应该是全网最精简最易读的，挑战有没有大神能进一步缩短这个 favicon 写法。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2025-10-18T21:35:00+08:00">2025-10-18</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2025/stdin-10"  rel="bookmark" >
               <h2 class="card-title">Hinton 一句话总结了教育的本质</h2>
             </a>
@@ -944,31 +975,6 @@ WshShell.Run("RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters")
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2025-03-24T09:40:00+08:00">2025-03-24</time></p>
 <p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2025/stdout-02"  rel="bookmark" >
-              <h2 class="card-title">正则获得国际电话前缀</h2>
-            </a>
-            <p class="card-text"><p><a href="https://blog.est.im/post/48751778838">2013年</a>的时候喷过ITU这个国际电话号码，前缀是变长的问题</p>
-<p>今天遇到问题，需要按国际区号初步分析归属地和供应商，<a href="https://stackoverflow.com/questions/2113908/">stackoverflow</a>和AI给的都很渣，写了个正则：</p>
-<pre><code>re.compile(r"""\+
-    (1  # north america
-    |(?:  # 3 digits
-        21|22|23|24|25|26|29|35|37|38|42|
-        50|59|67|68|69|80|85|87|88|96|97|99)\d
-    |[2-9]\d)  # two digits
-""", re.VERBOSE)
-</code></pre>
-<p><code>+1</code> 开头的是北美，然后依次寻找3位的，再匹配2位的。</p>
-<p><code>+7</code> 本来是苏联的，现在给 哈萨克斯坦 和 俄罗斯 了，就当成两位的判定吧。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2025-02-25T11:38:00+08:00">2025-02-25</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 
