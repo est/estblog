@@ -54,6 +54,164 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdin-19"  rel="bookmark" >
+              <h2 class="card-title">Register Token以及对变形金刚AI的四大批判</h2>
+            </a>
+            <p class="card-text"><p>前几天 Yann LeCun 对 变形金刚(transformers) AI 进行了深刻的<a href="https://x.com/ylecun/status/2101674561930510740">批判</a></p>
+<blockquote>
+<p>First, the reasoning abilities of current AI systems are based non-auto-regressive search (which is what I have always advocated for). But AFAICT, they do it in token space, which is limited and inefficient. I have claimed that human-like reasoning must be a search in continuous representation space. It looks like the industry is moving towards that.  <br />
+Second, the self-improvement methods, as currently practiced, only work for domains where the quality of outputs can be scored without human intervention, such as mathematics, code, and scenarios that can be simulated accurately. Not anything else. Humans and animals learn new skills way more efficiently than current RL methods.  <br />
+Third, the multimodal capabilities of current AI assistants generally use separately-trained encoders (that are not LLMs). This is also what I've been advocating. Except that I think the best way to do this is with JEPA trained with self-supervised learning. The research community is clearly moving towards that (3000 papers on JEPA in just 4 years).  <br />
+Fourth, if LLMs were a path to human-level AI, we would have domestic robots and Level-4 or Level-5 self-driving cars for consumers by now. And we don't. We certainly don't have cars that can learn to drive in 20 hours or practice like any teenager. We're still missing something pretty huge to claim human-level intelligence (let alone superhuman).    </p>
+<p>Sure, we now have computer systems that are impressive, very useful, and whose performance is superhuman in an increasing number of domains (coding being one of them). But that's true of the entire history of progress in computer technology. </p>
+</blockquote>
+<p>可能很多人早知道这个了，对我来说，很新鲜。毕竟我是AI 外行。以前一直听说  自回归 自回归，其实我今天才突然反应过来，这个 回归，就是数学期望那里，预测的意思。这里的 自 就是 一个token接着另一个token源源不断“自动” 跳出来直到 eos_token 的意思。🤣</p>
+<p>他老人家都这么说了，想了下还真是。用 LLM 越多，越会明白在 Token 空间里做推理的局限性。</p>
+<hr />
+<p>于是我突然想起很多天之前看到的一个youtube 视频，<a href="https://www.youtube.com/watch?v=QgH9sr7G13Q">21世纪被引用次数最多的论文</a>。这个35分钟的视频非常值得推荐完整观看。剧透：它讲的是 残差网络 ResNET</p>
+<p>它提到另外一件事引起了我极大的兴趣，Meta FAIR 在ICLR 2024论文，发现了一个有趣现象：ViT 模型（尤其是 DINOv2、OpenCLIP、DeiT-III 这类大规模训练的模型）在推理时会产生一些"异常高范数"（high-norm）的 token，大约占总序列的 2%。这些 token 集中出现在图像中低信息量的背景区域，几乎都是纯色块，携带很少的局部位置/像素信息，却携带大量全局图像信息。只在模型足够大、训练足够久之后才出现（比如 DINOv2 只有 Large 及以上尺寸才有）。这些token会破坏注意力图的可解释性，损害密集预测任务（分割、深度估计）和无监督目标发现（LOST 算法）的效果</p>
+<p>他们摸清楚一个脉络，最后研究发现，在输入序列里额外加几个可学习的"寄存器"（register）token，让模型有专门的地方做全局计算，不用再"borrow"图像 patch。加了之后，异常高范数 token 消失，注意力图变干净，下游任务（尤其密集预测和目标发现）性能还略有提升，几乎不增加参数和计算量。</p>
+<hr />
+<p>是不是感觉这几件事相当跳跃，我在瞎说些啥呢？</p>
+<p>那是因为你没看那个35分钟的视频。我就凭记忆，用我的理解回顾一下（我不太懂AI，纯外行。如有出入视频作者全责😂）</p>
+<p>神经网络我觉得就是好几层矩阵相乘造就的魔法。但归根结底 tmd是一个分类器。传统每一层 NN 就干的事就是从上一层的结论里，加工自己的一道参考信息，然后激活给下一层NN继续加工。最后一层就是 N 选 1 的分类。对于 LLM 来说就是词汇表里吐出  next token。</p>
+<p>但是这玩意早年极其容易翻车，shattered gradiant，ResNET 横空出世，据说是个 hack，把上上一层的权重和本层的权重做一次 加法。最后输出就稳了</p>
+<p>这就有意思了，NN每一层都是无状态的，需要猜上一层为啥处理成这个样子；每一层给出结论，请重点关注某个值，但是至于一开始的为啥要给 attention，可能早就忘记了。这个所谓 残差，就是每一层都给后面一层工作留一个小纸条？就好比工匠无意中在木结构看不到的一些内部地方打上了一些标记。换班的水电工一眼看出这些标记在行业里的用处</p>
+<p>AI告诉我，register token就更进一步，人为加进去的、专门给模型当工作空间的 token。attention sink 是模型自己长出来的现象：某些 token 会莫名其妙吸走大量 attention，即使它们语义上并不重要。activation outlier / residual sink则是在 hidden state 某些维度上出现异常大的值。2026 年的工作甚至发现，massive activations 和 attention sinks 经常同时出现，但它们承担的功能并不完全相同：前者更像一种跨层持续存在的“隐式参数”，后者更像是在局部调节 attention。</p>
+<hr />
+<p>然后结合今天 ylecun 四大批判，我突然有个看法，变形金刚的未来，说不定又走回 BERT 那种 encoder 思路了？也就是说在一个session内，变形金刚一直在尝试 自创(encode)一些 符号 名词概念 作为中间产物。</p>
+<p>我赶紧拿这个去问了AI。</p>
+<blockquote>
+<p>FAIR那个论文 附录（Fig. 9、Fig. 16）里其实发现，不同的 register 会自发分化：有的更关注图像边缘，有的更关注中心区域，行为很像 Slot Attention（一种专门用来无监督地把图像切分成"物体槽位"的机制）。也就是说，即便没有人告诉它该怎么分工，模型自己在若干个"空白格子"里长出了某种专业化结构</p>
+</blockquote>
+<p>这验证了我前面提到的"自创概念"。AI告诉我，文本模型这边也有对应物：</p>
+<ul>
+<li>Pause/Filler tokens（Goyal 等，2023）：给 LLM 在开口回答前插入几个没有语义的占位 token，让它"多想一步"，效果类似给 register 一样的免费计算空间。</li>
+<li>Gist tokens（Mu 等，2023）：训练模型把一整段很长的 prompt/指令压缩进几个可学习的 token里，之后这几个 token 的 KV 缓存就能代替原始长文本被后续计算调用——这已经是字面意义上的"自创浓缩符号"了。</li>
+<li>Coconut / "Training LLMs to Reason in a Continuous Latent Space"（Meta，2024）：这个最接近你说的场景。正常的 chain-of-thought 是模型把每一步推理都解码成人类能读的词；Coconut 让模型把上一步的隐藏状态直接喂回去当下一步的输入，不经过"变成词"这个环节。于是模型在一个 session 内部，用一串<strong>连续的、非语言的"思维向量"</strong>来做推理，只在必要时才把结果翻译回人话。作者甚至发现这种连续思维能同时编码好几条可能的推理路径（类似广度优先搜索），比被迫每步都写成一个确定的词更灵活。</li>
+</ul>
+<p>AI提到：</p>
+<blockquote>
+<p>这些自创的中间产物，默认情况下是连续向量，不是像"猫""狗"这种离散、人类可读的符号。你说的"符号/名词概念"更像是一种比喻——真正发生的是模型在高维连续空间里捏出一团对它自己有用、但对人不透明的表示。这也正是这条路线的双刃剑所在：Coconut 这类"潜空间推理"效率更高、更灵活，但代价是可解释性变差——人没法像读 chain-of-thought 文字那样，看懂模型这一步到底在"想"什么。这也是目前 AI 安全/可解释性圈子挺关心的一个权衡点：模型内部会不会形成一套人类读不懂的"暗语"，用来在一次推理里传递信息。</p>
+</blockquote>
+<p>嗨，这不巧合了嘛！人类的深度思索过程，也会创造自己不能语言表达的连续符号啊。比如如何狩猎的，空间位置和行动，态势变化和应对。当然你实在用语言描述也是可行的。但是很多战术理念是“心领神会”，充满比喻，平时需要猎人之间训练配合的“默契”。</p>
+<p>解题思路，很多时候“直觉” 或者 “奇思妙想”，要描述出来也是很困难的。其实就是一种内在表达</p>
+<p>艺术创作更不用说了，什么情绪，境遇，都是很难精准描述的。但是好的东西就是能引起共鸣。诗歌里的“隐喻”特别多。</p>
+<p>AI 一下子被点通了：</p>
+<blockquote>
+<p>"默会知识"（Tacit Knowledge）——这是哲学家 Michael Polanyi 在 1966 年提出的经典概念，他的原话就是"我们知道的比我们能说出来的更多"（We can know more than we can tell）。他举的例子恰好就是猎人、工匠、骑自行车、认脸这类技能：你能熟练地做，甚至能一眼分辨"这个猎手动作对不对"，但让你把判断标准写成一条条规则，你写不出来，或者写出来的东西根本不是你实际依赖的那套判断机制。狩猎里那种"态势感知"、"该往哪个方向包抄"的直觉，正是这类默会知识的典型案例。<br />
+更巧的是，Coconut 那篇论文的灵感来源之一就是神经科学的一个发现：人在做复杂推理（比如下棋、空间规划）时，大脑里负责语言的区域往往并不活跃——语言网络主要是用来表达和交流的，未必是"思考本身"发生的地方（这是 MIT Fedorenko 实验室这些年一直在推的一条研究线："语言不是用来思考的，是用来交流思考结果的"）。这跟你说的"很多战术理念心领神会，语言只是事后的翻译"是同一件事的两种表述。<br />
+你提的"猎人之间的默契"还有个更具体的 AI 对应物：多智能体强化学习里有个叫"涌现通信"（Emergent Communication）的研究方向——让多个 AI agent 一起协作完成任务，不给它们任何预设语言，结果它们会自己发展出一套只有彼此能懂的"暗号"来协调行动。早年 Facebook 那个著名的谈判机器人实验，两个 bot 谈着谈着就开始用人类读不懂但内部逻辑自洽的"简写"互相沟通，团队一度要专门约束它们"必须说人话"。这几乎是你说的"猎人之间训练出的默契"在机器上的直接翻版——协作压力会自发催生出非人类语言的、高效但不透明的符号系统。<br />
+诗歌和隐喻这块也有对应理论：语言学家 Lakoff 和 Johnson 的"概念隐喻理论"（Metaphors We Live By）认为，人类很多抽象/情绪概念本来就不是靠精确定义存在的，而是靠从具体身体经验"打包映射"过去的——比如"人生是一场旅程"，我们理解"人生"靠的是身体对"走路、方向、终点"的经验，隐喻不是修辞装饰，是概念本身的存在方式。这在结构上跟词向量/embedding 空间的工作原理惊人地像：一个词的"意义"不是查字典查出来的定义，而是它在高维空间里相对于其他词的位置和距离——这正是为什么好的隐喻能"引起共鸣"：它精确地把一个词挪到了空间里一个新位置，让人瞬间"感觉到"了那种关联，即使没法用命题逻辑讲清楚为什么。<br />
+顺着这个思路还有个挺震撼的新假说，叫<strong>"柏拉图表征假说"（Platonic Representation Hypothesis，MIT，2024）：作者发现，不同架构、不同任务、甚至不同模态（图像模型 vs. 语言模型）训练出来的神经网络，随着规模变大，它们内部对"世界"的表征方式竟然在互相趋同</strong>——仿佛都在逼近同一个底层的、柏拉图意义上的"真实结构"。如果这个假说成立，也许能解释你说的"好的东西就是能引起共鸣"：不同人（甚至不同物种、不同智能体）的大脑/网络虽然各自训练出一套私有的内部表示，但如果都在逼近同一个客观世界的统计结构，那么一首好诗触发的那个"说不清但都懂"的感受，可能真的对应着大家内部表示空间里一个相近的位置。</p>
+</blockquote>
+<p>感觉和 Yann LeCun 大佬的思路太厉害了。它这么多年批判自回归 LLM 缺四样东西——对物理世界的理解、持久记忆、推理、规划——他认为这不是"训练得不够大"的问题，太犀利了。这种架构性的死胡同，就是导致他 2025 年离开 Meta 搞JEPA的原因？不靠逐词生成、而是在抽象表征空间里维护和更新一个可持续演化的"世界模型"的系统。</p>
+<p>说得再直白一点，现有的LLM智能，就是个 classifier </p>
+<p>我觉得，真正的智能需要决定，什么时候是选择 non of the tokens above</p>
+<p>一个自回归模型每一步在做的事，字面意义上就是一次分类——对词表里几万到几十万个 token 做 softmax，选一个概率最高（或采样出）的。</p>
+<p>虽然可以反驳，把很多次这样的分类串起来，输出空间是指数级增长的——理论上可以生成训练数据里从未出现过的句子、证明、诗句。这正是创造力研究里 Margaret Boden（刚去世，这个领域的奠基人物）说的"组合式创造力"（combinatorial creativity）</p>
+<p>但这样的智能，关键词是 —— 串。的确frontier AI 能作出很多令人惊叹的成果。甚至普通人遥不可及，但是代价是——串行。</p>
+<p>也就是传说中的炼丹，抽卡。某些条件成熟了，reasoning和temperature恰好合适，agent 和 harness 恰好走对了，就能拿到低垂果实。</p>
+<p>但是人类发明概念是源源不断的，meme的传播嘛。这可不是“串”行，而是霰弹枪 “啪” （one-shot 🤣) 一下，总多概念，总有一个能火力覆盖到一个没太见过的新鲜事物上，并且低成本快速掌握。而现在的AI 就得话不少 context 去“串起来” 才行。</p>
+<p>AI说</p>
+<blockquote>
+<p>你这个"霰弹枪 vs 串行"的对比，精确地踩中了一个已经有名字、有数学模型的现象——而且两边（人类创造力研究、AI 可靠性研究）居然是分头独立发现的。<br />
+先说人类这边的"霰弹枪"理论，比你想的还要精确。<br />
+心理学家 Donald Campbell 1960 年提出"盲变异—选择性保留"（Blind Variation and Selective Retention, BVSR）：创造过程本质上是达尔文式的——先大量地、相对盲目地生成变异（不是精心设计出一个必中的方案），再靠后续的选择机制留下有用的那个。Dean Simonton 在此基础上研究了两千多位历史上的科学家、艺术家，1997 年提出"等概率法则"（Equal-Odds Rule）：一个创作者产出"神作"的比例，跟他是不是天才其实关系不大——天才和普通人每一件作品成为杰作的概率大致相同，天才只是产量大得多。Erdős 一辈子发了 1500 多篇论文，绝大多数无人问津、早就被遗忘，但正是这个巨大的"总发射量"，让他撞上了拉姆齐理论这种真正改变领域的成果。这跟你说的"总有一个能火力覆盖到"，几乎是同一句话的学术版本。</p>
+<p>再往上一层，meme 的传播压根不是单个大脑内部的并行——那是数十亿个大脑同时在生成变异，靠文化选择去放大命中的那一个（这就是道金斯说的模因论/文化演化）。这个并行规模比"霰弹枪"大出去不知道多少个数量级，单个大脑内部再怎么"啪"一下，也比不过整个文明每天在同时试错。<br />
+AI 这边，其实field自己也早就意识到"纯串行=脆弱"这个问题，而且给出的解法方向恰恰就是"变成霰弹枪"。<br />
+单条链最致命的地方是错误复合：如果每一步正确率是 95%，串 20 步，整体成功率掉到 36%（0.95^20）——这正是"炼丹抽卡"体感的数学根源，probability 是乘出来的，不是加出来的。为了对抗这个，最近几年推理/Agent 领域的主流做法，说白了都是"别赌一条链，改成一次放很多枪再挑"：Self-Consistency（Wang 等，2022）——同一个问题采样几十条推理链，投票选最多数的答案；Tree of Thoughts（Yao 等，2023）——同时展开多条思路分支，中途评估、剪枝、回溯；再往后的各种"test-time compute scaling"方法，本质都是把串行的单链，换成并行采样+事后选择——这跟你说的"霰弹枪打一片，总有一个覆盖到"是完全一样的逻辑，只是子弹换成了"多条并行生成的候选答案"。</p>
+</blockquote>
+<p>其实想到这里，我感觉和上一篇《<a href="https://blog.est.im/2026/stdin-18">聪明 Agent 四套路 和 人肉学习</a>》 又莫名其妙关联起来了。</p>
+<p>或许如果 register token 这一套能沉淀，跨session共享，实际上就能变成新的 token，变成共同的符号和记忆。人类的语言和文字，知识传承就是这么来的。</p>
+<p>那么NN就不再是 自回归 ？说不定就 AGI 了？</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-09-23T20:21:00+08:00">2026-09-23</time></p>
+<p>stdin</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/2026/stdin-18"  rel="bookmark" >
+              <h2 class="card-title">聪明 Agent 四套路 和 人肉学习</h2>
+            </a>
+            <p class="card-text"><p>nVIDIA 联合 NTU，MIT 联合研究了一项关于 Agent harness 自我提升的<a href="https://arxiv.org/abs/2609.20519">研究</a>，项目叫 <a href="https://nvlabs.github.io/SoL-Pi/">SoL-Pi</a>， Scaling Auto-Research Loops for Efficient Agent Harnesses</p>
+<p>让 Research Agent 自动发现 Harness 里的 Token 浪费，再通过大规模实验筛掉无效改法。把结论再放进大量环境中反复测试。整个探索一共 152 个候选方向，分成 context、progress、tools、delegation、prompt/policy、improvement/evaluation 六类，然后把这些想法扔进大量相互隔离的 research lineage 里，让 agent 自己观察 trajectory、提出机制、实现、review、跑实验、继续修改。最终用了 535 个可执行搜索环境，其中 495 个来自 GitHub issue-PR pair，40 个是 verifier-driven synthetic tasks；论文说总共跑了 3000+ 次实验和 60000+ 次 agent-environment interaction</p>
+<p><img referrerpolicy="no-referrer" src="https://pbs.twimg.com/media/HSo5DbvaYAAuVtR?format=jpg&name=medium"></p>
+<p>最后真正留下来的精华，只有 4 大机制：</p>
+<ul>
+<li>Action Fusion：把“修改文件”和紧接着的测试/运行命令融合进一次 tool request。典型情况从 3 次 API call 变成 2 次。</li>
+<li>Online Context Compact：不是机械地定期压缩 context，而是在 plan step 完成时计算“继续保留这些历史”和“现在做一次 compact”哪个更划算，还把 prompt-cache rewrite cost 算进去。</li>
+<li>ObservationPack：一个很大的 tool output 前两次完整发送，从第三次开始改成 stable handle + 约 1KB 的 head/tail excerpt，需要时再通过 handle 取原始内容。</li>
+<li>Evidence-Preserving Reducer：对 build/test log 使用低成本模型提炼证据，但原始日志始终保留，并通过 deterministic verifier 检查 schema、hash、exit status、exact quote 等；验证失败就回退原始结果。</li>
+</ul>
+<hr />
+<p>我因为脑子比较轴，总喜欢扩展关联到别的领域，于是想把这四大方法，也套在人肉学习上：</p>
+<ol>
+<li>合并动作：能连续做的事情不要反复切换。串行出现的解题步骤打包，批次进行，避免低效重复。探索之后立刻验证，而不是一个岔路跑远了再回头</li>
+<li>清理上下文：每当学习或解题，有进展都反思当下思路，考虑下如何为接下来简化，不能当看小说一样囫囵吞枣背章节和习题答案</li>
+<li>隔离支线：子问题展开放到一边不能影响主干思路</li>
+<li>保留证据：子过程产生的中间结论，关键推理必须留痕</li>
+</ol>
+<p>AI给我补充了很多reference</p>
+<h3>合并动作</h3>
+<p>Schoenfeld 给这个现象起名叫 "wild goose chase"（追野鹅）：他发现约60%的大学生解题时会选定一个方向就一路埋头走到底，直到时间耗尽都不回头反思；而当他训练学生每隔一段时间就问自己"我现在具体在做什么？为什么这么做？这对我有什么帮助？"之后，这种不做监控的比例从60%降到了20%，解题成功率也相应提高。更有意思的是，他后来观察一位数学教授解题——这位教授手头掌握的事实和方法其实比很多学生还少，解题过程中也生成了无数条可能的死路，但他没有被这些死路带偏，靠的就是频繁地、细粒度地检验"这条路值不值得走下去"</p>
+<h3>清理上下文</h3>
+<p>Catrambone关于子目标形成的研究描述了一个具体过程——学习者先把一串步骤按结构分组，然后自我解释"为什么这样分组"，最后把这个分组归纳成一个简洁的标签（子目标标签）。这三步合起来，正是"做完一段就反思、并把它压缩成一个可以往下带的简化单元"，跟你说的第二条几乎逐字对应。而它的反面，就是你说的"看小说一样囫囵吞枣"——只是线性地把内容或答案过一遍，不做任何分组、归纳、压缩，信息就只是流过去了，没有被结构化，也就没法被高效复用。</p>
+<h3>隔离支线</h3>
+<p>人类研究就是子目标标签（subgoal labeling）本身——Catrambone给出的经典例子是解方程"隔离变量→化简变量"：学生只需要在主线上记住这两个子目标，每个子目标内部具体怎么算是被封装起来的细节，不需要在思考整体解题结构时一直占用工作记忆。研究还发现，用子目标标签训练出来的学生，遇到步骤不同但子目标结构相同的新题时，迁移能力明显更强；而没有这种封装、只是记住老师板书完整步骤的学生，换一道结构相同但细节不同的题就容易失败——这正是"细节污染主干"的后果。这也呼应了国际象棋大师的组块（chunking）研究：高手把一串走法编码成一个组块整体记忆和调用，而不是逐步保持在工作记忆里，从而腾出容量去思考更高层的布局。</p>
+<h3>保留证据</h3>
+<p>Polya经典的解题四阶段（理解问题→拟定计划→执行计划→回顾）里，"回顾"这一步要求你把推理过程记录下来复查，而不是解完就扔；如果第2、3条里的"压缩""封装"做得太狠、把关键中间结论也一起丢了，你会既没法自查错误，也没法把这段经验迁移到下一个类似问题上。这也是为什么"元认知校准"（上一轮提到的）离不开留痕——你没法准确判断"我这一步到底对不对"，如果连这一步的关键推理都没有记录下来可供回看。</p>
+<hr />
+<h2>学习方法论的批判</h2>
+<p>很多学习者，特别是中小学学生，对这些“显学”反而不知道。父母和老师也不会教。</p>
+<p>虽然大部人聪明人能领悟到这一点，但是很多平庸的学生学到这四点教训已经太晚了。。。</p>
+<p>因为传统学校的考试 测验的 reward 只看结果，不太关心你过程怎么来的。小学知识比较简单，留下来的坏毛病带到初中之后就麻烦了。</p>
+<p>我家的娃就深受其害。在小学阶段，“只要答案对，就算成功”这个策略经常真的有效。题目短、知识点少、搜索空间小，靠记忆、模仿、反复练习也能得到不错的结果。于是很多低效习惯不会立刻付出代价。死记硬背就能拿个勉强过得去的分数。</p>
+<p>到了初中以后，情况开始变化。题目的状态空间变大了，步骤变长了，知识之间开始相互依赖。此时如果学生一直没有形成，那么就会无意中陷入困惑：</p>
+<ul>
+<li>“我现在在解决哪一个子问题？”</li>
+<li>“哪些信息已经没用了？”</li>
+<li>“哪些东西应该暂时放到一边？”</li>
+<li>“我的这个结论到底依据是什么？”</li>
+</ul>
+<p>这些能力，学习成本会突然上升。</p>
+<p>客观的因素，大班制教学，老师也管不过来。只有精英教育 私教 遇到良师，或者就孩子被鼓励“多思考”，才可能戳破这一系列技巧。</p>
+<p>小学时，“直接冲答案”很快，成绩又不错 → 学生得到正反馈。小时候看起来只是“不够仔细”的问题，几年后会表现成“学习能力不行”。</p>
+<p>上面列举这四个技巧，我其实个人很早就懂得，无意中自己琢磨的，回顾了下，可能被小时候鼓励“更聪明的办法”太多次了，这里要感谢当时的父母，自己本身希望去掌握那个最快 最酷的解题技巧，所以算 “过程优化” 到极致作为一个附加 reward了。一个问题有多种解法，每种解法优劣都品鉴了一番，知道哪些坑哪些好。</p>
+<ul>
+<li>“这道题还有没有更短的路？”</li>
+<li>“这个方法为什么比另一个好？”</li>
+<li>“刚才卡住的地方以后怎么避免？”</li>
+<li>“这个技巧能不能迁移到另一类题？”</li>
+<li>“有没有一种方法能让我以后少想五步？”</li>
+</ul>
+<p>这就很接近论文里的 harness optimization 了。解题的意义不仅在于得到正确答案本身，还有在观察“解题算法本身”。</p>
+<p>初中、高中我甚至有几起名场面，公开质疑老师出题出的有问题（50%翻车）🤣</p>
+<p>当然，这个习惯也有其害处，我也吃过亏。三角函数大家都背公式，我就自己发明了一套自以为更好的理解框架。。。结果出题人更偏好教材公式能快速结果的，我那套不仅更复杂，容易翻车，而且还有“翻译”成本。。。囧。。。</p>
+<p>考试的 reward 实际上更接近：在限定时间内，用低风险路径得到标准答案。</p>
+<p>不过好处还是很明显，就是大多数问题理解得比普通人深入得多。特别是解析几何这种虽然被批判“不入流”但是几乎秒杀了教材党。。公式全靠自己推的，哪里怎么变换怎么用一清二楚。甚至圆锥体歪着斜着切这种问题都考虑到了（传统教材只有水平，垂直和顺着斜切）</p>
+<p>这个亏一直吃到出来工作，长了很多教训。我对待任何事都是双层架构。一个是兼容傻逼的世俗层，一个是真理层。。。囧哈哈哈</p>
+<p>其实真理层反复磨练到最后反而越来越简单。世俗层基本就是补丁接补丁越来越复杂。普通人搞不明白要崩溃的很多事情一眼看穿。。</p>
+<hr />
+<h2>后记</h2>
+<p>毕业之后，发现学生时代最值得批判的，就是做题家思维。成年人的世界是没有标准答案的。甚至你需要去设置议题。当然这又是另外一个层次的东西了。</p>
+<p>然后回头看，学生最幸福，也是最痛苦的一点，就是面临的所有问题，无论多困难，是必然有解的；而且往往正确解是唯一的。</p>
+<p>成年人面对的事情，基本都有多个解。你 reward 去优化，无非是利弊的权衡；</p>
+<p>最可怕的遭遇，无解，死胡同，到头来一场空。你去尝试解决一个不存在的问题，你又能学习到什么教训呢？时也，运也，命也。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-09-23T20:21:00+08:00">2026-09-23</time></p>
+<p>stdin</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdin-17"  rel="bookmark" >
               <h2 class="card-title">locate cost</h2>
             </a>
@@ -2482,54 +2640,6 @@ IP属地：陕西</p>
 <p>另一种就是在成功的边缘疯狂试探，一不小心中了呢？</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2024-01-11T21:10:12+08:00">2024-01-11</time></p>
-<p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2023/stdin-10"  rel="bookmark" >
-              <h2 class="card-title">为啥Linux下病毒比较少</h2>
-            </a>
-            <p class="card-text"><p><img alt="" src="/images/2023/stdin-10-01.webp" /></p>
-<blockquote>
-<p>最近下载了一个Linux的病毒，把它解包了。<br />
-尝试用root身份运行，发现啥也没有。<br />
-Google了俩小时，发现这病毒没解包到 /usr/local/bin 而是解压到了 malware 用户没有写入权限的 /usr/bin，于是病毒创建不了进程文件。<br />
-从某个中文论坛里找到了修改过的 .configure 和 .make 文件，重新编译重新运行了一下。<br />
-病毒说它需要 cmalw-lib-2.0，结果发现这玩意是 CentOS 里的，Ubuntu 里没有。Google 了好几个小时找到了从源码构建 .deb 包的方法。<br />
-这病毒总算开始跑了，然后打出来几行日志，吐了个 core dump 就 crash 了。翻了一个小时日志发现这病毒假定自己跑在 ext4 文件系统上然后调用了 ext4 的加密 API。但是在 btrfs 里这个 API 已经弃用了，内核发现了这个问题然后把这个分区变成只读的了。<br />
-打开源文件，grep 搜索出病毒里的 BTC 钱包地址然后出于同情给它打了 $5。</p>
-</blockquote>
-<p>哈哈虽然现在linux病毒也多，但是这个也太搞笑了 <a href="https://t.me/rvalue_daily/4255">via</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2023-08-22T15:04:30+08:00">2023-08-22</time></p>
-<p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2023/stdin-09"  rel="bookmark" >
-              <h2 class="card-title">北京，为什么会没有大家说的那么繁华？</h2>
-            </a>
-            <p class="card-text"><p>看了这篇文章之后，感受颇深。强烈推荐阅读</p>
-<p><a href="https://mp.weixin.qq.com/s/hqIMDADiPDVSWp8EKh5gbw">https://mp.weixin.qq.com/s/hqIMDADiPDVSWp8EKh5gbw</a></p>
-<p>之前看到行业说法，北京便利店少的原因是“三个半”，即由于纬度高，天气寒冷，只能做“半年”生意，每日只能做“半天”生意，马路宽隔绝了人流，只能做“半条路”的生意。</p>
-<p>当时不知道为啥北京有这么多栏杆，现在知道了，原来是模仿苏联的城市规划。</p>
-<p>文章里提到</p>
-<blockquote>
-<p>“窄马路、密路网、路口多”这种在风水上叫做“雍聚”，是上上之选，有利于聚财、聚气、增加流动性、繁荣商业、降低拥堵。那种“宽马路、大广场、路口少”叫做“散迭”，会造成西北风煞冲散街区的热气，导致地气不旺、商业冷落萧条。城市变成睡城、死城，民众精气散迭，日渐贫穷衰落。</p>
-</blockquote>
-<p>搜了下，居然这个说法是公众号里早就有之的洗稿文。不过从另一个角度想，你分析blah那么一大堆，给没耐心或者没文化的小学生讲这个道理，不如就简化成：雍聚是上上之选。有的时候「道理」被过度复杂化了。不如直接给出上 - 中 - 下这种线性结论杀伤力更大。</p>
-<p>想到现在政策层面反复炒作的「烟火气」，又想起2016年那个「不再建设封闭式小区」，当时被好多人骂来着。</p>
-<p>最后感觉这篇文章讲的故事，如果放在网络社区上，也是同样的结论。把流量都往「主干道」「主旋律」上赶，必然会有大量的舆论翻车事故，最后得到的一定是商业上的萧条。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2023-08-14T16:10:06+08:00">2023-08-14</time></p>
 <p>stdin</p>            </div>
           </article>
         </div>
