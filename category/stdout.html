@@ -54,6 +54,60 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-36"  rel="bookmark" >
+              <h2 class="card-title">Node.js、浏览器和 Cloudflare Workers 的wasm引入问题</h2>
+            </a>
+            <p class="card-text"><p>最近在鼓捣 WebAssembly，这玩意没啥神秘的，可以看出一坨二进制的 .js 库文件</p>
+<p>它本身的export和调用方式是统一的，但如今天我才知道，在不同 JavaScript 运行环境加载 <code>.wasm</code> 方式并不完全一样。</p>
+<p>例如 <a href="https://developers.cloudflare.com/workers/runtime-apis/webassembly/javascript/#use-from-javascript">Cloudflare Workers</a> 可以直接：</p>
+<pre><code class="language-js">import wasm from &quot;./simple.wasm&quot;;
+
+const { instance } = await WebAssembly.instantiate(wasm, imports);
+</code></pre>
+<p>Cloudflare 会把 <code>.wasm</code> 模块作为 <code>WebAssembly.Module</code> 提供给代码。</p>
+<p>浏览器通常则是通过 <code>fetch()</code> 获取 Wasm，再使用 <code>WebAssembly.instantiateStreaming()</code>：</p>
+<pre><code class="language-js">const { instance } = await WebAssembly.instantiateStreaming(
+  fetch(&quot;./simple.wasm&quot;),
+  imports,
+);
+</code></pre>
+<p>Node.js 则通过文件系统读取 <code>.wasm</code> 二进制，然后初始化。</p>
+<p>.instantiate() 第一参数必须是 <code>typed array</code> 或者 <code>ArrayBuffer</code></p>
+<p>我自己<a href="https://github.com/est/zig-wasm-git">写了个 Wasm 库</a>，AI 为 Node、浏览器、Cloudflare Workers 分别写一套初始化代码，8个 .mjs 文件。给我搞懵了。</p>
+<p>提了个简化思路：让初始化函数只接受两种东西：string 表示路径，或者cf那种 WebAssembly.Module 对象</p>
+<p>然后搞的时候发现，为了兼容 nodejs，必须 <code>import "node:fs"</code> ，才能读 .wasm 文件嘛</p>
+<p>然后逆天的 js 引入必须在 top-level ，在 cf 和浏览器侧就必挂。你 <code>typeof process</code> 提前判断一下环境都不行。</p>
+<p>不过AI这时候想到一个聪明办法</p>
+<pre><code class="language-js">if (process?.getBuiltinModule) {
+  const fs = process.getBuiltinModule(&quot;fs&quot;);
+
+  const bytes = await fs.promises.readFile(source);
+  return WebAssembly.compile(bytes);
+}
+</code></pre>
+<p>卧槽，有这么好的办法，你为啥不早点告诉我。</p>
+<p>于是使用方式统一成：</p>
+<p>Cloudflare Workers</p>
+<pre><code class="language-js">import wasm from &quot;./simple.wasm&quot;;
+import { init } from &quot;./foo.mjs&quot;;
+
+const foo = await init(wasm);
+</code></pre>
+<p>Browser / Node.js</p>
+<pre><code class="language-js">import { init } from &quot;./foo.mjs&quot;;
+
+const foo = await init(&quot;./simple.wasm&quot;);
+</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-09-26T22:51:00+08:00">2026-09-26</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-35"  rel="bookmark" >
               <h2 class="card-title">The httpx 1.0 situation</h2>
             </a>
@@ -4049,58 +4103,6 @@ print(my_func(httpx.get, 'https://est.im'))
 <p>A sidenote, I am not sure if this method affects async schedulers and blocks something maybe? Like the <code>while True</code> might be a new kind of GIL. Also i haven't looked at problems with contextvars.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2025-05-14T14:35:00+08:00">2025-05-14</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2025/stdout-03"  rel="bookmark" >
-              <h2 class="card-title">Windows 自动设置开机锁屏壁纸 V3</h2>
-            </a>
-            <p class="card-text"><p>之前也写过，Windows下自动设置墙纸 <a href="/202104/stdout-005">V1</a>，<a href="/2021/stdout-024">V2</a>，今天发现两种方法都失效了。</p>
-<p>于是一气之下搞了个 Bing Image of the Day 版本的。</p>
-<p>保存为 change_wallpaper.bat 双击执行。加入自启动或者定时触发。</p>
-<pre><code>@if (@X)==(@Y) @end /* set Win10 wallpaper to Bing Image of The Day. By est.im
-@echo off
-cscript //Nologo //U //E:JScript "%~F0"
-exit /b %errorlevel%
-*/
-
-function http_get(url){
-  var xhr = new ActiveXObject("MSXML2.XMLHTTP")
-  xhr.open("GET", url, false)
-  xhr.setRequestHeader("Accept-Encoding", "identity")
-  xhr.send()
-  return xhr
-}
-
-var rss_req = http_get('https://www.bing.com/HPImageArchive.aspx?format=rss&amp;idx=0&amp;n=1&amp;mkt=en-US')
-// WScript.Echo(rss_req.getAllResponseHeaders())
-var img_url = 'https://www.bing.com' + rss_req.responseXML.selectSingleNode("//rss/channel/item/link").text
-WScript.echo(img_url)
-var fso = new ActiveXObject("Scripting.FileSystemObject")  // shit cant handle binary data
-var stream = new ActiveXObject("ADODB.Stream")
-var img_path = fso.GetSpecialFolder(2)+"\\bing_iotd.jpg"
-WScript.echo(img_path)
-stream.Open()
-stream.Type = 1
-var img_req = http_get(img_url)
-stream.Write(img_req.responseBody)
-stream.SaveToFile(img_path, 2)
-stream.Close()
-
-var WshShell = new ActiveXObject("WScript.Shell")  
-WshShell.RegWrite("HKEY_CURRENT_USER\\Control Panel\\Desktop\\Wallpaper", img_path, "REG_SZ")
-WshShell.Run("RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters")
-</code></pre>
-<p>其中 <code>format=rss</code> 可以改成 <code>=js</code> 或者 <code>=xml</code> 本来想解析 json 但是发现老的 IE6 引擎不能支持双引号这种JSON，而且只能用 <code>eval()</code> 就放弃了。还好有 xpath 还挺方便。</p>
-<p>要用 .bat 套一层是因为 win10 貌似禁止 <code>.js</code> 或者 <code>.vbs</code> 双击执行了。病毒木马太多了。这种一份源码同时被两种语言解析还有点<a href="/cnblogs/600416">技巧</a>可以参考下。</p>
-<p>很久没写 .jscript 了用了 ChatGPT 这个 vibe coding 真爽。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2025-04-25T23:49:00+08:00">2025-04-25</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

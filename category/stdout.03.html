@@ -54,6 +54,75 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2022/stdout-10"  rel="bookmark" >
+              <h2 class="card-title">JS播放 DTMF</h2>
+            </a>
+            <p class="card-text"><p>玩 WebRTC 的时候发现它居然内置<a href="https://hacks.mozilla.org/2015/11/webrtc-sending-dtmf-in-firefox/">支持了 DTMF 拨号音</a>。</p>
+<p>这里就简单科普一下，DTMF 就是手机电话拨号音，数字按键按下去嘟嘟嘟响那个。具体就2个频率调谐：</p>
+<table>
+<thead>
+<tr>
+<th>DTMF</th>
+<th>1209Hz</th>
+<th>1336Hz</th>
+<th>1477Hz</th>
+<th>1633Hz</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>697Hz</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>A</td>
+</tr>
+<tr>
+<td>770Hz</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>B</td>
+</tr>
+<tr>
+<td>852Hz</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>C</td>
+</tr>
+<tr>
+<td>941Hz</td>
+<td>*</td>
+<td>0</td>
+<td>#</td>
+<td>D</td>
+</tr>
+</tbody>
+</table>
+<p>于是兴趣来了想做一个 demo 玩玩，写了半天调试不通，报错</p>
+<blockquote>
+<p>VM987:1 Uncaught DOMException: Failed to execute 'insertDTMF' on 'RTCDTMFSender': The 'canInsertDTMF' attribute is false: this sender cannot send DTMF.</p>
+</blockquote>
+<p>仔细研究了下<a href="https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Using_DTMF">这玩意</a>，原来 WebRTC 不直接传音频，而是发一个控制信号，由接收方播放出音频，所以你需要本地创建一个真实的双工 RTC 并打开麦克风权限，才能播放DTMF音频。</p>
+<blockquote>
+<p>WebRTC doesn't send DTMF codes as audio data. Instead, they're sent out-of-band, as RTP payloads. Note, however, that although it's possible to send DTMF using WebRTC, there is currently no way to detect or receive incoming DTMF. WebRTC currently ignores these payloads;</p>
+</blockquote>
+<p>这样就走远了。于是又手痒用 <code>AudioContext()</code> 糊了一个。一共不到1000字节。</p>
+<p><a href="https://lab.est.im/dtmf">https://lab.est.im/dtmf</a> <a href="https://github.com/est/snippets/blob/master/dtmf/index.html">源码</a></p>
+<p>嗯。就挺简单的。特别是那个 oscillator有个 <code>.stop(0.2)</code> 参数可以避免 <code>setTimeout</code> 的麻烦。网上很多教程整复杂了。</p>
+<p>btw 把一些老脚本挂在 lab 域名下。<br />
+btw2 把 RSS 改成全文输出了。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2022-10-30T19:20:49+08:00">2022-10-30</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2022/stdout-09"  rel="bookmark" >
               <h2 class="card-title">Cloudflare worker 返回浏览器ip:端口</h2>
             </a>
@@ -2090,27 +2159,9 @@ A: 我又不是保安。。。。哲学三大问题是：终极存在是什么�
           </article>
         </div>
 
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/201903/stdout-001"  rel="bookmark" >
-              <h2 class="card-title">Jinja2 不能覆盖 include 里的 block</h2>
-            </a>
-            <p class="card-text"><p>记录一下</p>
-<p>https://github.com/pallets/jinja/issues/169</p>
-<p>https://github.com/pallets/jinja/issues/243</p>
-<p>开发这个主题 <a href="https://github.com/est/aether-pelican">https://github.com/est/aether-pelican</a> 时候遇到的。</p>
-<p>btw 还有好多 css 问题需要改。有问题可以 <a href="https://github.com/est/estblog/issues">提issue</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2019-03-31T23:51:56+08:00">2019-03-31</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
     </main>
     <nav class="pagination-nav side-padding">
-<a href="/category/stdout.02.html" class="pagination-newer">&lt; Newer Posts</a>    </nav>
+<a href="/category/stdout.02.html" class="pagination-newer">&lt; Newer Posts</a><a href="/category/stdout.04.html" class="pagination-older">Older Posts &gt;</a>    </nav>
 
 
   </body>
