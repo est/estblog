@@ -58,7 +58,6 @@
               <h2 class="card-title">preconnect 走 http3</h2>
             </a>
             <p class="card-text"><p>想让 <code>&lt;link rel="preconnect"&gt;</code> 强制走 HTTP/3，能做到吗？</p>
-<p>答案是：HTML 层面没有任何办法声明"这个 preconnect 要走 h3"。能不能走 h3 完全由网络栈根据服务端信息和本地配置自动决定。你能控制的只有两个旋钮：响应头 <code>Alt-Svc</code> 和 DNS 的 HTTPS(SVCB) 记录。</p>
 <h3>preconnect 是什么</h3>
 <pre><code class="language-html">&lt;link rel=&quot;preconnect&quot; href=&quot;https://example.com&quot;&gt;
 </code></pre>
@@ -70,8 +69,9 @@
 <li>保持连接并等着，不发送任何请求正文</li>
 </ol>
 <p>等真正要请求资源时，这个连接已经热好了。这就是 提前连接 preconnect</p>
-<p>这个连接最终用什么协议，HTTP/1.1、HTTP/2、HTTP/3，浏览器有一系列决定流程</p>
 <p>HTTP/3 跑在 UDP 上（QUIC 协议），HTTP/1.1 和 HTTP/2 跑在 TCP 上。</p>
+<p>HTML 层面没有任何办法声明"这个 preconnect 要走 h3"。</p>
+<p>这个连接最终用什么协议，HTTP/1.1、HTTP/2、HTTP/3，浏览器有一系列决定流程</p>
 <h3>触发 h3 preconnect 的三个条件</h3>
 <p>网络层有两条实现路径（Chromium 正在迁移，两条并存）</p>
 <h4>条件 ①：浏览器缓存了这个站点的 Alt-Svc</h4>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Thu, 01 Oct 2026 20:33:00 +0800</lastBuildDate><item><title>preconnect 走 http3</title><link>https://blog.est.im/2026/stdout-38</link><description>&lt;p&gt;想让 &lt;code&gt;&amp;lt;link rel="preconnect"&amp;gt;&lt;/code&gt; 强制走 HTTP/3，能做到吗？&lt;/p&gt;
-&lt;p&gt;答案是：HTML 层面没有任何办法声明"这个 preconnect 要走 h3"。能不能走 h3 完全由网络栈根据服务端信息和本地配置自动决定。你能控制的只有两个旋钮：响应头 &lt;code&gt;Alt-Svc&lt;/code&gt; 和 DNS 的 HTTPS(SVCB) 记录。&lt;/p&gt;
 &lt;h3&gt;preconnect 是什么&lt;/h3&gt;
 &lt;pre&gt;&lt;code class="language-html"&gt;&amp;lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://example.com&amp;quot;&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
@@ -12,8 +11,9 @@
 &lt;li&gt;保持连接并等着，不发送任何请求正文&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;等真正要请求资源时，这个连接已经热好了。这就是 提前连接 preconnect&lt;/p&gt;
-&lt;p&gt;这个连接最终用什么协议，HTTP/1.1、HTTP/2、HTTP/3，浏览器有一系列决定流程&lt;/p&gt;
 &lt;p&gt;HTTP/3 跑在 UDP 上（QUIC 协议），HTTP/1.1 和 HTTP/2 跑在 TCP 上。&lt;/p&gt;
+&lt;p&gt;HTML 层面没有任何办法声明"这个 preconnect 要走 h3"。&lt;/p&gt;
+&lt;p&gt;这个连接最终用什么协议，HTTP/1.1、HTTP/2、HTTP/3，浏览器有一系列决定流程&lt;/p&gt;
 &lt;h3&gt;触发 h3 preconnect 的三个条件&lt;/h3&gt;
 &lt;p&gt;网络层有两条实现路径（Chromium 正在迁移，两条并存）&lt;/p&gt;
 &lt;h4&gt;条件 ①：浏览器缓存了这个站点的 Alt-Svc&lt;/h4&gt;
