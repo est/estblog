@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[python]解决django使用MySQLdb连接数据库中文出现InterfaceError at (0, &#39;&#39;)问题 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[python]解决django使用MySQLdb连接数据库中文出现InterfaceError at (0, &#39;&#39;)问题" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/625169" />
+    <meta property="og:url" content="https://blog.est.im/archives/625169">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[python]解决django使用MySQLdb连接数据库中文出现InterfaceError at (0, &#39;&#39;)问题">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[python]解决django使用MySQLdb连接数据库中文出现InterfaceError at (0, '')问题</h2>
+    <p class="post-date">Posted <time datetime="2008-03-16T12:35:48+08:00">2008-03-16</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>新建一个django工程</p>
+<p>设置数据库为一个普通的MySQL</p>
+<p>新建URL映射<br />
+from django.conf.urls.defaults import *</p>
+<p>urlpatterns = patterns('',<br />
+(r'^(?P<sql>[^/]*)','views.show_sql'),<br />
+)</p>
+<p>写一个简单的view：<br />
+from django.http import HttpResponse<br />
+from django.db import connection</p>
+<p>cursor=connection.cursor()</p>
+<p>def show_sql(request, sql):<br />
+print sql<br />
+global cursor<br />
+cursor.execute(sql)<br />
+r=cursor.fetchall()<br />
+print r<br />
+return HttpResponse(str(r))</p>
+<p>测试页面 <a href="http://127.0.0.1:8000/select%201">http://127.0.0.1:8000/select 1</a>这个简单页面，得到的返回是 ((1L,),) ，完全正常</p>
+<p>刷新一次，或则多次刷新，都要出错：<br />
+InterfaceError at /select 1/<br />
+(0, '')<br />
+Request Method: GET<br />
+Request URL: http://127.0.0.1:8000/select 1/<br />
+Exception Type: InterfaceError<br />
+Exception Value: (0, '')<br />
+Exception Location: C:\Python25\Lib\site-packages\MySQLdb\cursors.py<br />
+in execute, line 147<br />
+Python Executable: C:\Python25\python.exe<br />
+Python Version: 2.5.1</p>
+<p>Traceback (most recent call last):<br />
+File "C:\Python25\Lib\site-packages\django\core\handlers\base.py" in<br />
+_real_get_response<br />
+81. response = callback(request, <em>callback_args, </em>*callback_kwargs)<br />
+File "E:\Python\exercise\1\views.py" in show_sql<br />
+12. cursor.execute(sql)<br />
+File "C:\Python25\Lib\site-packages\django\db\backends\util.py" in<br />
+execute<br />
+19. return self.cursor.execute(sql, params)<br />
+File "C:\Python25\Lib\site-packages\MySQLdb\cursors.py" in execute<br />
+147. charset = db.character_set_name()</p>
+<p>InterfaceError at /select 1/<br />
+(0, '')</p>
+<p>折腾了几天，发现这样写view就不会出错了，而且中文也不会出错</p>
+<p>from django.http import HttpResponse<br />
+from django.db import connection</p>
+<p>def show_sql(request, sql):<br />
+print sql<br />
+cursor=connection.cursor()<br />
+cursor.execute(sql)<br />
+r=cursor.fetchall()<br />
+print r<br />
+return HttpResponse(str(r))</p>
+<p>也就是说把cursor的获得放在view内部就不会出错了，很奇怪。</p>
+<p>MySQLdb以前有<a href="http://d.hatena.ne.jp/unyaunya/20070201">不能正确中文等编码的bug</a>，不过现在修复了</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

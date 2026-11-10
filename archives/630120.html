@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[Python]让Last.FM显示歌词、发送正在播放的歌曲到GTalk和MSN状态[附LastFMProxy使用教程] – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[Python]让Last.FM显示歌词、发送正在播放的歌曲到GTalk和MSN状态[附LastFMProxy使用教程]" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/630120" />
+    <meta property="og:url" content="https://blog.est.im/archives/630120">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[Python]让Last.FM显示歌词、发送正在播放的歌曲到GTalk和MSN状态[附LastFMProxy使用教程]">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[Python]让Last.FM显示歌词、发送正在播放的歌曲到GTalk和MSN状态[附LastFMProxy使用教程]</h2>
+    <p class="post-date">Posted <time datetime="2008-07-16T01:43:00+08:00">2008-07-16</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>放假了，空虚了，没心思做事情了，发呆了。。。一开<a href="http://last.fm/">Last.FM</a>就是一整天。突然觉得这个<a href="http://cdn.last.fm/client/Win/Last.fm-1.5.1.30182.exe">桌面版本的LastFM</a>播放器很不爽</p>
+<pre><code>* 没法暂停
+* 没有全局静音热键，有的时候需要听一下其他程序的声音都没办法
+* 没法显示歌词。。我要学外语啊。。。没歌词真要命啊。。。
+* 没什么JB新功能还始终闹着要更新
+* 没法把我本地硬盘上的歌加入到[Audioscrobbler](http://www.audioscrobbler.net/)
+* 没法把我Now Playing的歌曲发送到GTak和Windows Live Messenger状态。（但是好像是支持Skype的）
+</code></pre>
+<p>那么我们自己动手丰衣足食嘛</p>
+<p>首先有一个非常牛B的开源项目：<a href="http://vidar.gimp.org/lastfmproxy">LastFMProxy</a></p>
+<p><a href="http://www.last.fm/group/LastFMProxy"><img alt="LastFMProxy" src="http://userserve-ak.last.fm/serve/160/1844230.png" /></a></p>
+<p>为什么说很牛B呢？因为40多KB的<a href="http://python.org">Python</a>程序就实现了一个<strong>完整</strong> 的LastFM客户端</p>
+<p>界面虽然是Web方式，但是功能一个不少，一点不含糊啊，连唱片cover都有。</p>
+<p>LastFMProxy的工作原理是：模拟LastFM客户端请求服务器，然后获取mp3字节流然后在本机上建立一个微型http服务器，这样，你就可以通过任何你喜欢的第三方媒体播放器来收听LastFM的音乐了。由于Python是跨平台的，所以LastFMProxy可以完美在Windows，Linux，Mac OS X上运行，甚至支持Python的PPC上都可以！（开放接口、开源的好处啊：Free Labour）</p>
+<p>使用很简单，首先用记事本等文本编辑器编辑config.py，把你的LastFM用户名和密码填到对应位置，双击<code>main.py</code>即可。管理方式是Web，在浏览器打开<a href="http://localhost:1881/">http://localhost:1881/</a>就行了。</p>
+<p><img alt="14.jpg" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2008/07/14.jpg" /></p>
+<p>用你自己喜欢的媒体播放器打开<a href="http://localhost:1881/lastfm.m3u">http://localhost:1881/lastfm.m3u</a>就可以听歌了。</p>
+<p>实际上，直接从LastFM服务器请求返回的.mp3是非常原始的，没有任何ID3 tag信息，需要自己DIY才能加上ID3信息。</p>
+<p>我知道在这里解释过多的代码是没有用的。这里下载<a href="http://lastfmproxy.googlecode.com/issues/attachment?aid=-3726863709078836749&amp;name=main.py">main.py</a>覆盖同名文件就可以了。</p>
+<p>我当时研究这个还是比较痛苦的，因为mp3是字节流存在于内存里的，而且mp3是二进制格式。这是我第一次和字节、位、struct之类的东西打交道，很囧。其中有一个<a href="http://jicyshout.sourceforge.net/oreilly-article/java-streaming-mp3-pt2/java-streaming-mp3-pt2.html">synchsafe integers</a>算法：<br />
+<img alt="ID3 tagframes" src="http://jicyshout.sourceforge.net/oreilly-article/java-streaming-mp3-pt2/id3v23-frame-header.png" /></p>
+<p><code>def dec2sstr(n):
+"""algorithm for ID3v2 header size"""
+r = (n &lt;&lt; 1) - (n &amp; 127)
+r = (r &lt;&lt; 1) - (r &amp;&amp; 32767)
+r = (r &lt;&lt; 1) - (r &amp;&amp; 8388607)
+r = (r &lt;&lt; 1) - (r &amp;&amp; 2147483647)
+return struct.pack("!l", r)</code></p>
+<p>我自己觉得还是很囧的。这几行简单代码我想了3个小时。。。。笨啊笨。。。</p>
+<p>est自己DIY的这个MODDING版本当然还是有bug的，研究这个东西的时候，需要涉及到HTTP mp3 Streaming的一些知识，但是很囧的是，.mp3的ID3metadata头本来就是个 <em>de facto</em> 标准，ID3 v1把东西粘到mp3文件尾部直接造成不可steaming，v2吧放到头部，但是也有问题。就例如LastFMProxy这样的微型服务器，多个mp3文件是当成一个不间断的留输出的，WMP播放的时候，第一次读取了ID3，可是第二次换歌了之后ID3信息居然不刷新，永久停留在第一首歌。。。囧啊囧</p>
+<p>我的临时解决办法是：在播放列表里重复一次mp3请求，也就是：</p>
+<p>`</p>
+<h1>EXTM3U</h1>
+<p>http://localhost:1881/lastfm.mp3<br />
+http://localhost:1881/lastfm.mp3<br />
+`</p>
+<p>也就是说，你不能用LastFM Web界面来skip歌曲了，直接用播放器的“下一首”功能即可。</p>
+<p>说说歌词。歌词可以试试WMP的歌词插件：<a href="http://www.crintsoft.com/minilyrics.htm">Minilyrics</a>。当然WINAMP和foobar2000的歌词插件是一打一打的。</p>
+<p>GTalk和MSN状态就简单了，只要WMP在放歌，GTalk和MSN都会自动改变status。很有意思。呵呵</p>
+<p>目前还在研究HTTP的2个流媒体服务协议Icecast和Shoutcast有没有解决办法。其实这也是2个de facto的Live HTTP Streaming协议</p>
+<p>最后，要严重鄙视一下微软同学，万恶的Windows Live Messenger居然拒绝在我的Server 2008上安装。。。当然我直接找了个<a href="http://roebin.spaces.live.com/blog/cns!C62E6EE40CDABD68!214.entry">便携版本</a>用上了。当然这样安装的WLM没法和WMP同步正在播放歌曲列表的。当然我也找到了解决办法。启用Windows Media Player插件的方法是：在WLM安装目录运行：<code>regsvr32 psmsong.8.5.1302.1018.dll</code></p>
+<p>来张截图：</p>
+<p><img alt="13.jpg" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2008/07/13.jpg" /></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

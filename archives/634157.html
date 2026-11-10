@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google GeoLocation API：通过IP得到经纬度 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Google GeoLocation API：通过IP得到经纬度" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/634157" />
+    <meta property="og:url" content="https://blog.est.im/archives/634157">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Google GeoLocation API：通过IP得到经纬度">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Google GeoLocation API：通过IP得到经纬度</h2>
+    <p class="post-date">Posted <time datetime="2012-03-16T05:17:38+08:00">2012-03-16</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>Google搜集得还是非常准确的～～～</p>
+<pre><code>POST /loc/json HTTP/1.1
+Host: www.google.com
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; zh-CN; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: zh-cn,zh;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: gb2312,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Connection: keep-alive
+Cache-Control: no-cache, no-cache
+Pragma: no-cache, no-cache
+Content-Length: 106
+Content-Type: text/plain
+
+{ &quot;host&quot; : &quot;_null_.localdomain&quot;, &quot;radio_type&quot; : &quot;unknown&quot;, &quot;request_address&quot; : false, &quot;version&quot; : &quot;1.0&quot; }
+</code></pre>
+<p>测试代码：</p>
+<pre><code>C:\Users\Administrator&gt;python
+ActivePython 2.5.2.2 (ActiveState Software Inc.) based on
+Python 2.5.2 (r252:60911, Mar 27 2008, 17:57:1   [MSC v.1310 32 bit (Intel)] on
+win32
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; import urllib2
+&gt;&gt;&gt; r=urllib2.Request(&quot;http://www.google.com/loc/json&quot;, '{ &quot;host&quot; : &quot;_null_.loca
+ldomain&quot;, &quot;radio_type&quot; : &quot;unknown&quot;, &quot;request_address&quot; : false, &quot;version&quot; : &quot;1.0&quot;
+ }')
+&gt;&gt;&gt; print urllib2.urlopen(r).read()
+{&quot;location&quot;:{&quot;latitude&quot;:30.655556,&quot;longitude&quot;:104.0625,&quot;horizontal_accuracy&quot;:166
+000}}
+&gt;&gt;&gt;
+</code></pre>
+<p>我在万人坑公寓测试的结果是<a href="http://maps.google.com/maps?f=q&amp;hl=en&amp;geocode=&amp;q=30.655556,104.0625&amp;ie=UTF8&amp;t=h&amp;z=16&amp;g=30.655556,104.0625&amp;iwloc=addr">30.655556,104.0625</a>成都市中心哈～～～</p>
+<p>还有一个是<a href="http://hourlyapps.blogspot.com/2008/09/google-android-reverse-geocoder-hack.html">Android里面发现的</a>，地址是<code>http://www.google.com/loc/m/api</code></p>
+<p>过几天我就把<a href="http://ditu.google.cn/mobile/gmm/index.html">谷歌地图</a>Windows Mobile的GMS基站定位原理弄出来看看哈～～现在在考虑是vxSniffer抓包好呢，还是PC架WAP代理网关好。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>stackless, threads, stack, whatever – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="stackless, threads, stack, whatever" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/624293" />
+    <meta property="og:url" content="https://blog.est.im/archives/624293">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="stackless, threads, stack, whatever">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">stackless, threads, stack, whatever</h2>
+    <p class="post-date">Posted <time datetime="2008-02-26T00:00:00+08:00">2008-02-26</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>再写一个comet-like Web app的时候，无意中翻到了上古神器<a href="http://code.google.com/p/eurasia/">Eurasia3</a>，也翻到了stackless，每次碰到stackless就小小的震撼一下，就像阳光照不到的阴暗角落，不知道哪里有什么样稀奇古怪的东西。还是在IBM developerWorks上翻到了一点支离破碎的东西（<a href="http://www-128.ibm.com/developerworks/cn/linux/sdk/python/python-7/">中文</a> | <a href="http://www.ibm.com/developerworks/library/l-pyth7.html">英文</a>）：</p>
+<blockquote>
+<p>Mertz：Stackless Python 确切来说是什么？有什么初学者可以理解的概念能够解释有关 Stackless 的不同之处？</p>
+<p>Tismer：Stackless Python 是一种不在 C 堆栈上保存状态的 Python 实现。它的确有堆栈 -- 要多少有多少 -- 但这些是 Python 堆栈。</p>
+<p>C 堆栈不能从例如 C 这样的语言以干净的方式进行修改，除非以预期的顺序进行。它对您施加了很大限制：您必须回到这里，与您离开的方向正好相反。</p>
+<p>“普通的”程序员一开始不会认为这是个限制。他们必须从开始就要学会将想法转向堆栈。堆栈没有什么坏处，并且通常它们施加的执行顺序就是实际上的顺序，但这并不意味着我们必须等待一个这样的堆栈序列完成才能运行另一序列。</p>
+<p>程序员在必须执行非阻塞调用和回调时意识到这一点。堆栈突然挡住去路，我们必须使用线程，或将状态明确存储在对象中，或者构建显式的可切换堆栈等等。Stackless 的目的是帮助程序员避免这些问题。</p>
+<p>Mertz: Exactly what is Stackless Python? Is there something a beginner can get his or her mind around that explains what is different about Stackless?</p>
+<p>Tismer: Stackless Python is a Python implementation that does not save state on the C stack. It does have stacks -- as many as you want -- but these are Python stacks.</p>
+<p>The C stack cannot be modified in a clean way from a language like C, unless you do it in the expected order. It imposes a big obligation on you: You will come back, exactly here, exactly in the reverse way as you went off.</p>
+<p>"Normal" programmers do not see this as a restriction in the first place. They have to learn to push their minds onto stacks from the outset. There is nothing bad about stacks, and usually their imposed execution order is the way to go, but that does not mean that we have to wait for one such stack sequence to complete before we can run a different one.</p>
+<p>Programmers realize this when they have to do non-blocking calls and callbacks. Suddenly the stack is in the way, we must use threads, or explicitly store state in objects, or build explicit, switchable stacks, and so on. The aim of Stackless is to deliver the programmer from these problems.</p>
+</blockquote>
+<p>还是一片空白啊。但是感觉HTML - CGI - AJAX这一些东西一路过来，可能对并发编程有相当大的促进吧？加上现在的comet，简直是颠覆性的东西。</p>
+<p>顺便看了一下文章发表的时间：<br />
+David Mertz (mertz@gnosis.cx), President, Gnosis Software, Inc.</p>
+<p><strong>01 Oct 2000</strong></p>
+<p>瞬间觉得自己超级渺小。8年前我在做什么？跟老师在昏暗沉闷的微机室学习DOS, WPS……Guido在1989圣诞节无聊写了个python出来。Tismer在1999无聊写了个stackless</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

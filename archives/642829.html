@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dreamhost screen irssi – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Dreamhost screen irssi" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/642829" />
+    <meta property="og:url" content="https://blog.est.im/archives/642829">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Dreamhost screen irssi">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Dreamhost screen irssi</h2>
+    <p class="post-date">Posted <time datetime="2009-09-30T00:00:00+08:00">2009-09-30</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>参考<a href="http://kylefuller.co.uk/posts/2009/feb/24/how-install-irssi-dreamhost/">这里</a></p>
+<p>export PATH=$PATH:$HOME/bin<br />
+export PKG_CONFIG_PATH=$HOME/lib/pkgconfig<br />
+export LD_LIBRARY_PATH=$HOME/lib:/usr/local/lib:../lib:$LD_LIBRARY_PATH</p>
+<p>cd ~/tmp<br />
+wget http://ftp.gnome.org/pub/gnome/sources/glib/2.22/glib-2.22.0.tar.gz<br />
+tar -xvzf glib-2.19.8.tar.gz<br />
+cd glib-2.19.8<br />
+./configure --prefix=$HOME<br />
+make<br />
+make install</p>
+<p>cd ~/tmp<br />
+wget http://irssi.org/files/irssi-0.8.12.tar.gz<br />
+tar -xvvzf irssi-0.8.12.tar.gz<br />
+cd irssi-0.8.12<br />
+./configure --prefix=$HOME<br />
+make<br />
+make install</p>
+<p>rm -rf ~/tmp/</p>
+<p>后来发现glib其实没有必要编译，因为/usr/lib下面已经有了。不过似乎需要include的东西。</p>
+<p>screen是个好东西。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

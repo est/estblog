@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>vbs/js互相调用：MSScriptControl – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="vbs/js互相调用：MSScriptControl" />
+
+    <link rel="canonical" href="https://blog.est.im/nu/10758" />
+    <meta property="og:url" content="https://blog.est.im/nu/10758">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="vbs/js互相调用：MSScriptControl">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">vbs/js互相调用：MSScriptControl</h2>
+    <p class="post-date">Posted <time datetime="2006-09-27T12:41:00+08:00">2006-09-27</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>js、vbs各有优点。vbs可以 inputbox msgbox 等，交互能力强，还可以很规范的写class（js那个用function()来prototype太不专业了）。js的异常控制比vbs好（貌似vbs只能On Error Resume Next），还可以很方便地 encode encodeURI encodeURIConponent， 如果能把两者结合起来就爽了，其实这个是可以实现的，前提是：你安装了 Microsoft Script Control 1.0</p>
+<p>vbs:</p>
+<pre><code class="language-vbs">set oJS = CreateObject(&quot;MSScriptControl.ScriptControl&quot;)
+oJS.Language=&quot;javascript&quot;
+msgbox oJS.Eval(&quot;encodeURIComponent('https://est.im')&quot;)
+</code></pre>
+<p>js:</p>
+<pre><code class="language-jscript">var oVBS= new ActiveXObject(&quot;MSScriptControl.ScriptControl&quot;);
+oVBS.Language=&quot;VBScript&quot;;
+WScript.Echo(oVBS.Eval('inputbox(&quot;&quot;,&quot;&quot;,&quot;&quot;)'));
+</code></pre>
+<p>其实这个好东东可以用到编程中，比如说：要写一个函数作图，需要读取一个 表达式 的值，例如 <code>2+3*5^8</code> 如果自己写字符串解析器就及其痛苦了，而且效率不高。可以直接在工程里添加一个 MSScriptControl.ScriptControl 的引用，然后一个 vbs 的 Eval ，就可以轻松获得接个表达式的值。</p>
+<p>这个好东东还有很多特性，比如调用js/vbs的一个函数：</p>
+<p><code>ScriptControl.Run("Name", arg1, arg2, ... argn);</code></p>
+<p>Microsoft Script Control 1.0 不是 Windows 自带的组件，需要安装。貌似 Office 安装 VBA 的时候会把这个组件带上，好像 IIS 也是。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

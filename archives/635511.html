@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>导出Sandboxie沙盒的注册表 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="导出Sandboxie沙盒的注册表" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/635511" />
+    <meta property="og:url" content="https://blog.est.im/archives/635511">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="导出Sandboxie沙盒的注册表">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">导出Sandboxie沙盒的注册表</h2>
+    <p class="post-date">Posted <time datetime="2009-01-09T02:03:05+08:00">2009-01-09</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p><a href="http://www.sandboxie.com/">Sandboxie</a>我的电脑上，是使用率仅次于<a href="http://legroom.net/software/uniextract">UniExtract</a>的一款超酷软件。我经常用来提取软件的绿色版，哈～</p>
+<p>在一个沙盒sandbox上点击右键，<strong>Explore Contents</strong> ，可以浏览沙盒里的文件系统，但是沙盒的注册表怎么浏览呢？嘿嘿。</p>
+<p>其实<code>RegEdit.exe</code>有这样几个功能：</p>
+<pre><code>* 编辑系统注册表
+* 编辑任意位置的二进制注册表实体文件，术语叫做Registry Hive
+* 通过IPC$编辑远程Windows上的注册表
+</code></pre>
+<p>第二点功能十分隐蔽。</p>
+<p>今天<a href="https://bbs.et8.net/bbs/showthread.php?p=10011973">CCF上一个帖子</a>提醒了我，现在有办法编辑Sandboxie沙盒里的虚拟注册表啦～～～步骤见<a href="http://technet.microsoft.com/zh-cn/library/cc759303.aspx">微软官方教程：将配置单元加载到注册表</a></p>
+<p>这样的好处就是，Sandboxie完全可以当成一个注册表+文件系统监视工具来使用，我们可以超方便制作任意软件的绿色免安装版啦～～～wakaka～～～</p>
+<p>我在想是不是弄个批处理之类的自动转换工具呢～～</p>
+<p>Update 2008-12-24 20:01<br />
+做了个<a href="http://zxn0.googlecode.com/svn/winutil/hiv2reg.js">hiv2reg.js</a>，把Sandboxie的RegHive拖拽到hiv2reg.js上就可以得到RegHive.reg。祝大家平安夜快乐。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

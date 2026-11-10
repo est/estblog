@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Microsoft NCSI：Vista是如何知道你可以访问公网/内网的 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Microsoft NCSI：Vista是如何知道你可以访问公网/内网的" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/633034" />
+    <meta property="og:url" content="https://blog.est.im/archives/633034">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Microsoft NCSI：Vista是如何知道你可以访问公网/内网的">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Microsoft NCSI：Vista是如何知道你可以访问公网/内网的</h2>
+    <p class="post-date">Posted <time datetime="2009-03-20T23:40:14+08:00">2009-03-20</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>抓包的时候无意中发现了这个请求：</p>
+<pre><code>GET /ncsi.txt HTTP/1.1
+
+User-Agent: Microsoft NCSI
+
+Host: www.msftncsi.com
+
+Connection: Close
+
+HTTP/1.1 200 OK
+
+Cache-Control: max-age=30,must-revalidate
+
+Content-Length: 14
+
+Content-Type: text/plain
+
+Last-Modified: Thu, 02 Nov 2006 00:13:24 GMT
+
+Accept-Ranges: bytes
+
+ETag: &quot;cee63cb613fec61:62a&quot;
+
+Server: Microsoft-IIS/6.0
+
+P3P: CP=&quot;BUS CUR CONo FIN IVDo ONL OUR PHY SAMo TELo&quot;
+
+X-Powered-By: ASP.NET
+
+Date: Sun, 05 Oct 2008 17:26:52 GMT
+
+Connection: close
+
+Microsoft NCSI
+</code></pre>
+<p><a href="http://technet.microsoft.com/en-us/library/cc766017.aspx">Technet上文章Appendix K: Network Connectivity Status Indicator and Resulting Internet Communication in Windows Vista</a>告诉我们，这个就是Vista网络连接如何知道你能上外网的秘密。</p>
+<blockquote>
+<p>Windows Vista includes a feature called Network Connectivity Status Indicator (NCSI), which is part of a broader feature called Network Awareness. Network Awareness collects network connectivity information and makes it available through an application programming interface (API) to services and applications on a computer running Windows Vista. With this information, services and applications can filter networks (based on attributes and signatures) and choose the networks best suited to their tasks. Network Awareness notifies services and applications of changes in the network environment, thus enabling applications to dynamically update network connections.</p>
+<p>Type of Request that NCSI Sends What NCSI Expects to Receives if Connectivity Exists<br />
+ A request for http://www.msftncsi.com/ncsi.txt<br />
+ Page called ncsi.txt containing the following line of text with no terminating new line or other non-printing characters:</p>
+<table>
+<thead>
+<tr>
+<th>Type of Request that NCSI Sends</th>
+<th>What NCSI Expects to Receives if Connectivity Exists</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A request for http://www.msftncsi.com/ncsi.txt</td>
+<td>Page called ncsi.txt containing the following line of text with no terminating new line or other non-printing characters: <strong>Microsoft NCSI</strong> (Page headers disable caching.)</td>
+</tr>
+<tr>
+<td>A request for DNS name resolution of <strong>dns.msftncsi.com</strong></td>
+<td>Resolution of the DNS name to: <strong>131.107.255.255</strong></td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<p>禁用方法：<br />
+<strong>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NlaSvc\Parameters\Internet</strong><br />
+在Internet子键下，双击EnableActiveProbing，属性填 0 。默认值是 1</p>
+<p>ps MSFT是微软股票代码。<a href="http://www.msfn.org/">MSFN</a>是一个讨论Windows技巧和tweak的站点。相当赞。其中解包unpack无敌手<a href="http://www.msfn.org/board/index.php?showforum=159">UniExtract</a>就是委托这个MSFN作为交流社区的。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

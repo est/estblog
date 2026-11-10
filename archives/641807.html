@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>几个微软自家的HTTP/SSL抓包工具 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="几个微软自家的HTTP/SSL抓包工具" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/641807" />
+    <meta property="og:url" content="https://blog.est.im/archives/641807">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="几个微软自家的HTTP/SSL抓包工具">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">几个微软自家的HTTP/SSL抓包工具</h2>
+    <p class="post-date">Posted <time datetime="2009-08-03T20:20:09+08:00">2009-08-03</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p><a href="http://news.ycombinator.com/item?id=740132">HN上</a>看到工具贴了。没想到老外抓ssl的包也是这么土鳖和繁琐。</p>
+<p>第一个是<a href="http://www.microsoft.com/downloadS/details.aspx?FamilyID=d25ba362-c17b-4d80-a677-1faff862e629&amp;displaylang=en">HTTPREPLAY/SOCKTRC</a>，用于重放http，</p>
+<blockquote>
+<p>HTTPREPLAY is a SOCKTRC plugin allowing to analyze and replay HTTP traffic from STRACE or WININET log. You can use this tool to "replay a web server" without needing to setup IIS. The main goal of this tool is to help building a repro scenario when customer can't provide one.</p>
+</blockquote>
+<p>基于WININETLOG的。比较麻烦。而且log我的Firefox 3.5失败了。囧。。。</p>
+<p>下载<a href="http://download.microsoft.com/download/4/5/7/45741BC6-1116-4B62-9133-A44036B9B9F0/httpreplay.msi">HTTPREPLAY.MSI</a></p>
+<p>第二个是<a href="http://www.microsoft.com/downloads/details.aspx?familyid=F5EC767F-27F2-4FB3-90A5-4BF0D5F4810A&amp;displaylang=en">STRACE</a></p>
+<blockquote>
+<p>STRACE is a socket/SSL tracer that is based on the "detours" utility. The tool has been specificaly designed to generate LOG for Internet Explorer but it can be used with many other applications.</p>
+</blockquote>
+<p>这个玩意儿还是比较强大的，连LSASS都敢hook。基于detours的。下载<a href="http://download.microsoft.com/download/9/A/4/9A48E0BD-71DE-45B6-824F-7BFA6688DC69/strace.msi">strace.msi</a></p>
+<p>第三个推荐的就是<a href="http://research.microsoft.com/en-us/projects/detours/">detours</a>了。hook任意系统函数调试用的。下载<a href="http://ftp.research.microsoft.com/downloads/d36340fb-4d3c-4ddd-bf5b-1db25d03713d/DetoursExpress.msi">DetoursExpress.msi</a></p>
+<p>第四个是<a href="http://www.codeplex.com/easyhook">EasyHook</a>，hook了任意系统API之后，可以用C/C++，Managed Code甚至IPC来进行控制。下载<a href="http://download.codeplex.com/Project/Download/FileDownload.aspx?ProjectName=easyhook&amp;DownloadId=61309&amp;FileTime=128810691555630000&amp;Build=15399">EasyHook 2.6 Binaries.zip</a></p>
+<p>看来嗅SSL也无非那么几个方法了，一个是hook系统的WinSock SSL函数或者WinINET的，或者做LSP，另一个是截获/提取系统私钥解密。我觉得Wireshark基于IP那些过滤是很麻烦的。</p>
+<p>不过从平时使用来看，这些工具都不是很好使，因为嗅http最需要的功能还是gzip流解压，和基于MIME把gif，jpg，css等无关过滤掉。目前看来还是HTTPAnalyzer和HTTPDebugger王道。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>文档～～～～（更新测试～） – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="文档～～～～（更新测试～）" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/635484" />
+    <meta property="og:url" content="https://blog.est.im/archives/635484">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="文档～～～～（更新测试～）">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">文档～～～～（更新测试～）</h2>
+    <p class="post-date">Posted <time datetime="2009-01-19T19:47:18+08:00">2009-01-19</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>拽一个函数过来看看</p>
+<p>set( <em>iterabl</em> e)</p>
+<p>Return a <strong>set</strong> whose elements are taken from iterable. The elements must be immutable. To represent sets of sets, the inner sets should be frozenset objects. If iterable is not specified, returns a new empty set, set([]). New in version 2.4.</p>
+<p>假如一个超级初学者来看这段文字，他是绝对不会知道set可以用来<a href="http://spark.twomouth.com/2008/12/python-list-to-remove-duplicate-data-performance-optimization">过滤 <em>iterable</em> 里的重复项</a>的。。。。Python（不仅仅是Python）文档还有非常多的改进空间。</p>
+<p><em>Update 2008-12-24 18:28：</em><br />
+性能测试：<br />
+测试数据：<a href="http://bbs.chinaunix.net/attachment.php?checkdownload=ok&amp;aid=307493">几万条email地址</a><br />
+程序1：</p>
+<pre><code>def foo(alist):
+    d = dict()
+    sd = dict()
+    for i in alist:
+        if id(i) not in d:
+            d[id(i)] = ''
+        else:
+            sd[i] = ''
+    return sd.keys()
+
+import time
+a=time.time()
+open('out.txt', 'w').write(''.join(foo(open('noname.txt'))))
+print time.time()-a
+</code></pre>
+<p>程序2：</p>
+<pre><code>import time
+a=time.time()
+open('out.txt', 'w').write(''.join(set(open('noname.txt'))))
+print time.time()-a
+</code></pre>
+<p>测试结果：<br />
+1.py<br />
+0.0699999332428<br />
+2.py<br />
+0.0369999408722</p>
+<p>猜也能猜到。。。Python过程实现的Hash判断重复和CPython内置的，肯定CPython的快多了。。。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

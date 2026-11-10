@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>全角半角，漏洞？bug？Vulnerability？ – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="全角半角，漏洞？bug？Vulnerability？" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/564484" />
+    <meta property="og:url" content="https://blog.est.im/archives/564484">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="全角半角，漏洞？bug？Vulnerability？">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">全角半角，漏洞？bug？Vulnerability？</h2>
+    <p class="post-date">Posted <time datetime="2007-12-01T00:00:00+08:00">2007-12-01</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>发现SQL Server 2000/2005一个“特性”：不区分半角全角。</p>
+<p>用默认的数据库Northwind为例：</p>
+<p>select * From Customers Where CompanyName like ‘Ａ%’<br />
+select * From Customers Where CompanyName like ‘A%’</p>
+<p>这两条语句的结果是一样滴。</p>
+<p>想象一下用户登录，<br />
+select password From Users Where username=’est’<br />
+select password From Users Where username=’ｅｓｔ’<br />
+select password From Users Where username=’eｓｔ’<br />
+是等效的。</p>
+<p>但是在业务逻辑层、表现层，username是不固定的，这造成了用户ID的不唯一性。</p>
+<p>由于我开发数据库的经验还不足，还不能深刻的看出这个bug的影响范围，但是可以肯定这个bug肯定有很大的利用价值。</p>
+<p>同理，在正则表达式里，<code>\d</code>并不代表 [0-9]，而是[0-9０-９]。在MSDN中说道：</p>
+<blockquote>
+<p>\d 与任何十进制数字匹配。对于 Unicode 类别的 ECMAScript 行为，等效于 \p{Nd}，对于非 Unicode 类别的 ECMAScript 行为，等效于 [0-9]。</p>
+</blockquote>
+<p>那么所有基于CLR的语言，例如VB.NET, C#, Managed C++, IrconPython等等都要受到这个特性的影响。</p>
+<p>但是符合ECMA标准的Javascript并没有这个“特性”。在浏览器地址栏输入<br />
+<code>javascript:alert('test'.match(/ｔ/));</code><br />
+返回null</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

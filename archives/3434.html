@@ -53,21 +53,15 @@
 
   
   <p>前几天<a href="http://blog.est.im/archives/3375">改用php-fpm</a>后发现这玩意儿问题还没完，因为VPS的256MB内存很快就被几十个php-fpm进程占用光了。一些搜索结果的建议说放弃eAccelerator改用APC，真是链式问题啊。懒得折腾了，换回spawn-fcgi了。但是老是挂掉，怎么办呢？根据<a href="http://en.wikiquote.org/wiki/Rasmus_Lerdorf">php创始人的理念</a>：</p>
-
 <blockquote>
-  <p>I'm not a real programmer. I throw together things until it works then I move on. The real programmers will say "yeah it works but you're leaking memory everywhere. Perhaps we should fix that." I'll just restart apache every 10 requests.</p>
+<p>I'm not a real programmer. I throw together things until it works then I move on. The real programmers will say "yeah it works but you're leaking memory everywhere. Perhaps we should fix that." I'll just restart apache every 10 requests.</p>
 </blockquote>
-
 <p>重启就重启吧。找了个shellscript，<code>tail -f</code>监控nginx的日志文件，发现<code>[error]</code>就重启。但是运行了几天发现有个问题，nginx的日志文件会定期（或者每文件大小？）压缩成.gz，而这个<code>tail -f</code>会一直监控老的file descriptor，所以文件更新了就不知道。在#gentoo-cn上学习到了<code>logrotate</code>这玩意儿。</p>
-
 <p>用<code>vim /etc/logrotate.conf</code>修改配置文件，在nginx的上下文里增加一行</p>
-
 <pre><code>postrotate
     /home/est/respawn-spawn-fcgi.sh &amp;
 </code></pre>
-
 <p>然后写个<code>/home/est/respawn-spawn-fcgi.sh</code>脚本：</p>
-
 <pre><code>if [ -f /home/est/$0.pid ]
 then
     kill `cat /home/est/$0.pid`
@@ -84,13 +78,9 @@ while read line ; do
   fi
 done
 </code></pre>
-
 <p>希望这个问题就被我搞定了。</p>
-
-<p><ins>更新：</ins></p>
-
+<p>更新：</p>
 <p>发现了<code>tail --follow=name</code>参数，就不用修改<code>/etc/logrotate.conf</code>了。直接写一个脚本</p>
-
 <pre><code>tail -n0 --follow=name &quot;/var/log/nginx/blog.est.im.error_log&quot; | \
 while read line ; do
   echo &quot;$line&quot; | grep -e &quot;\[error\].*blog_est_im-1.*111: Connection refused&quot; &gt; /dev/null
@@ -101,8 +91,7 @@ while read line ; do
   fi
 done
 </code></pre>
-
-<p>然后  <code>./respawn-spawn-fcgi.sh &amp;</code> 就OK了。</p>
+<p>然后 <code>./respawn-spawn-fcgi.sh &amp;</code> 就OK了。</p>
 </article>
 
 <div class="comments">

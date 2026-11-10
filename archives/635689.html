@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>hoekey实现一键切换当前程序窗口大小为1024x768 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="hoekey实现一键切换当前程序窗口大小为1024x768" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/635689" />
+    <meta property="og:url" content="https://blog.est.im/archives/635689">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="hoekey实现一键切换当前程序窗口大小为1024x768">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">hoekey实现一键切换当前程序窗口大小为1024x768</h2>
+    <p class="post-date">Posted <time datetime="2008-12-29T00:00:00+08:00">2008-12-29</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>以前做Web前端的时候，经常希望看看在1024x768分辨率下页面效果。</p>
+<p>改分辨率当然是最笨的办法</p>
+<p>用<a href="https://addons.mozilla.org/en-US/firefox/addon/3287">Firefox插件ResizeIT</a>改变Firefox窗口大小，却没法在IE、Opera、Chrome上玩。</p>
+<p>IE7下可以直接地址栏输入<code>javascript:resizeTo(1024,76 ![8\)](http://extra-001.yo2cdn.com/wp-includes/images/smilies/icon_cool.gif) ;</code>来实现，但是Chrome不支持这么做。</p>
+<p><a href="http://smailfish.yo2.cn/">fish</a>还问我要过这类软件，本来想用nircmd写一个，麻烦了。</p>
+<p>今天又遇到这个问题，都准备用<a href="http://msdn.microsoft.com/en-us/library/ms674887(VS.85).aspx">Win32 API</a>搞了。突然发现<a href="http://www.bcheck.net/apps/hoekey.htm#Move">hoekey的<code>move</code>函数</a>：</p>
+<blockquote>
+<p><code>Move|WindowClass|left|top|width|height</code><br />
+ * Move current or selected window.<br />
+ * Negative left moves window relative to right side of screen, etc.<br />
+ * Negative width resizes relative to screen.</p>
+</blockquote>
+<p><code>~_E=Move||||1024|768</code></p>
+<p>这样Win+Shift+E就可以把当前窗口大小设置成1024x768啦。</p>
+<p>赞啊赞。</p>
+<p><a href="http://www.bcheck.net/apps/HoeKey.exe">hoekey官方下载</a>(19KiB) | <a href="https://groups.google.com/group/hoekey">讨论组</a></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

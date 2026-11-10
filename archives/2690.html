@@ -52,11 +52,9 @@
   </header>
 
   
-  <pre><code>id=&quot;oHg5SJYRHA0&quot;; curl -L &quot;http://www.youtube.com/get_video?asv=&amp;fmt=18&amp;video_id=$id&amp;t=$(curl -s http://www.youtube.com/watch?v=$id | sed -n &#39;s/.*, &quot;t&quot;: &quot;\([^&quot;]*\)&quot;, .*/\1/p&#39;)&quot; &gt; 1.mp4
+  <pre><code>id=&quot;oHg5SJYRHA0&quot;; curl -L &quot;http://www.youtube.com/get_video?asv=&amp;fmt=18&amp;video_id=$id&amp;t=$(curl -s http://www.youtube.com/watch?v=$id | sed -n 's/.*, &quot;t&quot;: &quot;\([^&quot;]*\)&quot;, .*/\1/p')&quot; &gt; 1.mp4
 </code></pre>
-
 <p>其中 <code>fmt=18</code> 表示360p清晰度。主要遇到2个问题，一个是URL里必须有 <code>asv=</code> 才能成功，二是sed的p模式还第一次遇到，而且group匹配括号前后必须有东西才能只输出括号内容，而不是整行内容。sed不适合我啊。。。</p>
-
 <p>参考<a href="http://www.commandlinefu.com/commands/view/3006/stream-youtube-url-directly-to-mplayer#comment">1</a>, <a href="http://bitbucket.org/rg3/youtube-dl/src/tip/youtube-dl">2</a>。感谢#ubuntu-cn和#linuxfire频道。</p>
 </article>
 

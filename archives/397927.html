@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>3年过后，重新开始用Firefox – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="3年过后，重新开始用Firefox" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/397927" />
+    <meta property="og:url" content="https://blog.est.im/archives/397927">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="3年过后，重新开始用Firefox">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">3年过后，重新开始用Firefox</h2>
+    <p class="post-date">Posted <time datetime="2007-09-16T00:00:45+08:00">2007-09-16</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>由于<a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=e59c3964-672d-4511-bb3e-2d5e1db91038&amp;displaylang=en">IE下</a>没有很好的xHTML/DOM/JS调试工具，所以不得不安装了一个<a href="href=">Firefox 2.0.0.6</a>。记得最第一次用Firefox的时候，Firefox还叫<a href="http://www.mozilla.org/projects/phoenix/phoenix-release-notes.html">Pheonix Browser</a>，跟Opera一个级别的。后来慢慢地发现Firefox1.0 兼容性问题太多，于是弃之不用。加上重装系统后Firefox的配置文档就丢了，很不爽，后来一直用Maxthon，目前用的是TheWorld2。</p>
+<p>其实安装完毕Firefox后不要立即启动Firefox，先打开cmd，跳到Firefox的安装目录，运行这个命令：<br />
+<code>D:\浏览器及工具\Firefox&gt;firefox.exe -p</code><br />
+或者这个命令：<br />
+<img alt="21.jpg" src="/images/archive/2007/397927_01.jpg" /><br />
+<code>D:\浏览器及工具\Firefox&gt;firefox.exe -profilemanager</code><br />
+这里可以设定你的 Firefox profile 放到非系统分区<br />
+<img alt="firefox profile manager" src="/images/archive/2007/397927_02.jpg" /><br />
+这样可以重装系统，甚至跨Windows/Linux共用一个Firefox配置文档。</p>
+<p>第二部是安装<a href="http://fpdownload.macromedia.com/get/flashplayer/xpi/current/flashplayer-win.xpi">Flash插件</a>，我把这个xpi的地址<a href="http://fpdownload.macromedia.com/get/flashplayer/xpi/current/flashplayer-win.xpi">嗅探出来了，用迅雷下载比Firefox速度快得多。</a></p>
+<p>接下来是tweak一下Firefox的UI，打开<code>_Firefox配置文件路径_ /chrome/userChrome.CSS</code><br />
+比如我的是<code>D:\浏览器及工具\Firefox\est_profile\chrome\userChrome.CSS</code><br />
+写入：</p>
+<pre><code>#helpMenu{
+    display: none;
+}
+
+#edit-menu{
+    display: none;
+}
+
+#file-menu{
+    display: none;
+}
+</code></pre>
+<p>这样可以隐藏 文件、编辑、帮助 三个鸡肋菜单，然后把工具条全部弄到第一行去，大大的节省了浏览的空间，哈哈。</p>
+<p>网上的教程都是通过插件实现的，没有这个来得简洁和直接。其实用户可以去编辑<code>_Firefox安装路径_ \chrome\browser.jar\content\browser\browser.xul</code>把多个菜单合并成一个。</p>
+<p>然后装了一些插件，不在多在于精。多了Firefox会非常非常的慢！<br />
+<img alt="14.jpg" src="http://wpcache.yo2.cn/wp-content/uploads/74/7487/2007/09/14.jpg" /><br />
+3年过去了，Firefox改进了很多，越来越人性化了，但是基于XUL、XPCOM、XML的程序必定很占用内存，速度很慢，还是native binary的IE快点，呵呵。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

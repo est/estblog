@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[GTalk机器人]在jabber.py, xmpppy, pyxmpp, TwistedWord之间选择 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[GTalk机器人]在jabber.py, xmpppy, pyxmpp, TwistedWord之间选择" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/457652" />
+    <meta property="og:url" content="https://blog.est.im/archives/457652">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[GTalk机器人]在jabber.py, xmpppy, pyxmpp, TwistedWord之间选择">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[GTalk机器人]在jabber.py, xmpppy, pyxmpp, TwistedWord之间选择</h2>
+    <p class="post-date">Posted <time datetime="2007-10-12T04:50:59+08:00">2007-10-12</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p><a href="http://talk.google.com/">Google Talk</a>是在geek中相当流行的一款IM客户端，其采用了<a href="http://www.jabber.org">jabber</a>的开放式协议<a href="http://www.xmpp.org/">XMPP</a>，使得第三方开发非常方便。</p>
+<pre><code>* [jabber.py](http://jabberpy.sourceforge.net/)早已经被废弃，不推荐
+* [xmpppy](http://xmpppy.sourceforge.net)是jabber.py的继承者，使用方便简单，有彩色debug输出（如果你的shell支持彩色的话）
+* xmpppy适合轻量级的开发，不需要依赖其他python库
+* [pyxmpp](http://pyxmpp.jajcus.net)是最符合XMPP和jabber协议的库，作者本身就是Jabber标准组的成员之一
+* [pyxmpp的安装](http://initiative.yo2.cn/archives/406223)比xmpppy麻烦的多。需要libxml2、dnspython和M2Crypto，可惜不支持Win32
+* [TwistedWords](http://twistedmatrix.com/trac/wiki/TwistedWords)提供异步IO等强大的功能，但是其Java式的复杂体系结构遭到不少Pythonic程序员的唾弃
+</code></pre>
+<p>据<a href="http://groups.google.com/group/django-users/">Django邮件列表</a>上<a href="http://groups.google.com/group/django-users/msg/0640a47ff0aee399">一位高人说</a>：</p>
+<blockquote>
+<p>If you insist on integratin Jabber/XMPP into your site, I'd suggest<br />
+<em>NOT USING</em> xmpppy. This library is flawed in many ways and do not<br />
+ conform many standards published in XMPP RFC. Use pyxmpp (http://<br />
+ pyxmpp.jajcus.net/) instead. It is written by a member of Jabber board<br />
+ and is more compatible with official XMPP standard.</p>
+</blockquote>
+<p>总体来说，我选择pyxmpp <img alt=":-)" src="http://wpcache.yo2.cn/wp-includes/images/smilies/icon_smile.gif" /></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

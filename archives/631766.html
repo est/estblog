@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Chrome入手深度探究 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Google Chrome入手深度探究" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/631766" />
+    <meta property="og:url" content="https://blog.est.im/archives/631766">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Google Chrome入手深度探究">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Google Chrome入手深度探究</h2>
+    <p class="post-date">Posted <time datetime="2011-08-02T02:06:03+08:00">2011-08-02</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>Google Chrome入手深度探究</p>
+<pre><code>1. &lt;http://gears.google.com/chrome/?hl=en&gt; 和 &lt;http://www.google.com/chrome&gt; ，2个网站的设计和定位貌似都不同。
+2. &lt;http://gears.google.com/chrome/intl/en/why.html?hl=en#&gt;这页面还可以自动显示
+</code></pre>
+<p>---------------------------<br />
+Windows Internet Explorer<br />
+---------------------------<br />
+Internet Explorer cannot open the Internet site http://gears.google.com/chrome/intl/en/why.html?hl=en.</p>
+<p>Operation aborted</p>
+<p>---------------------------<br />
+OK<br />
+---------------------------</p>
+<pre><code>3. &lt;http://www.chromium.org/&gt; Google旗下的一个项目，旨在开发更加开放、高性能的Web
+4. [Chrome的User-Agent](http://gears.google.com/chrome/intl/en/webmasters-faq.html#useragent)是`Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.X.Y.Z Safari/525.13.`
+5. Chrome支持自动看源代码的协议，scheme为 [view-source:http://www.g.cn/](view-source:http://www.g.cn/)
+6. 控制当前页 - 开发人员 - Javascript控制台 可以调试JS，值得一提的是，支持类似Visual Studio的自动补全。爽YY啦。![11.jpg](http://olds.blogcn.com/wp-content/uploads/74/7487/2008/09/11.jpg)
+7. [chrome-resource://inspector/inspector.html](chrome-resource://inspector/inspector.html)这个内置的schema应该是exploit的入口，值得研究！
+8. Chrome的特色之一就是在桌面建立Application的快捷方式。这里[可以自定义](http://gears.google.com/chrome/intl/en/webmasters-faq.html#customshortcuts)，在&lt;head&gt;加入一些特殊的头，例如
+</code></pre>
+<p><head><br />
+<meta name="application-name" content="Gmail"/><br />
+<meta name="description" content="Google's approach to email"/><br />
+<meta name="application-url" content="http://www.gmail.com"/><br />
+<link rel="icon" href=gmail_32x32.png sizes="32x32"/><br />
+<link rel="icon" href=gmail_48x48.png sizes="48x48"/><br />
+</head><br />
+  9. 和IE, FF不同的是，Theworld2是多线程（multi-threaded, one tab one thread），而Google Chrome是多进程（Multi-process）模式的浏览器，默认打开的新tab，指向null，用的是主进程，但是新tab<a href="http://gears.google.com/chrome/intl/en/webmasters-faq.html#newtab">一旦载入网页就是独立的进程</a>了。可以进行很好的崩溃控制。但是网站内部Javascriptinvoke的弹窗（pop-up），则是同一进程的<strong>多线程</strong> 模式，但是下列情况则会在<strong>新进程</strong> 中打开pop-up。假如原来的网址是http://www.example.com/，如果pop-up地址为下列之一：</p>
+<p>http://www.example<strong>.org</strong></p>
+<p>http://www.example.com:8080</p>
+<p>https://www.example.com</p>
+<p>Chrome则会使新的pop-up和旧的tab隔离，也就是独立的进程。下面的javascript示例：</p>
+<pre><code>var w = window.open();
+w.opener = null;
+w.document.location = &quot;http://differentsite.com/index.html&quot;;
+</code></pre>
+<pre><code>10. 可以在搜索栏搜索网站，但是如果在地址栏直接输入单词，Google会用设定的搜索引擎打开这个单词，但是**同时** 会用HTTP的**HEAD** 去试探这个网站是否存在。如果返回的是2xx结果，那么提示用户是否打开这个网站。
+11. 搜索栏的搜索支持[OpenSearch description document (OSDD)](http://www.opensearch.org/Home)
+12. Google Chrome的开发社区项目：**铬** Chromium，很奇怪的是Chromium的网站([Chromium.org](http://www.google.com/search?hl=en&amp;q=site%3AChromium.org))跳转到了&lt;http://code.google.com/chromium/&gt;
+13. 无意中找到了Chrome的源码？&lt;http://src.chromium.org/svn/&gt;
+14. Chromium被Google屏蔽的网站貌似有[Google Groups](http://dev.chromium.org/developers/discussion-groups)，但是域名是自定义的。难道说Google Apps可以深度整合到自己的域名下了？期待ing。。。不过现在已[经转移到Google Groups上](http://groups.google.com/group/chromium-dev/)了
+15. [**劲爆隐藏功能**](http://www.reddit.com/r/programming/comments/6zb8u/secret_chrome_functionality_network_seems/)！地址栏输入`about:network`可以进入一个网络性能界面？输入`about:stats`可以看到一些统计数据（这里下来还要仔细研究）；输入`about:cache`可以得到近期访问的网站列表？输入`about:histograms`可以得到？输入`about:plugins`可以看插件。没错！**Google Chrome支持Active X** ！
+</code></pre>
+<p><img alt="Google Plugin" src="http://olds.blogcn.com/wp-content/uploads/74/7487/2008/09/12.jpg" /><br />
+输入about:dns貌似可以看DNS缓存。大大提高打开www.google.cn, www.google.com, clients1.google.cn的速度啊。输入about:version可以看版本<br />
+  16. <a href="http://lists.grok.org.uk/pipermail/full-disclosure/2008-September/064203.html">第一个</a>使Chrome崩溃的<a href="http://evilfingers.com/advisory/google_chrome_poc.php">exploit</a>：地址栏输入<a href="evil:%">evil:%</a>这个崩溃是全局的，无论你打开的是哪个进程<br />
+  17. Shift+Esc可以打开Google Chrome的任务管理器<br />
+  18. 输入<code>[about:internets](about:internets)</code>，标题栏显示“The Tubes are Clogged”？？<br />
+  19. 更新：cnBeta已经登出来了很多隐藏scheme：<br />
+about:version - 显示当前版本 也可以是chrome-resource://about/<br />
+about:plugins - 显示已安装插件<br />
+about:histograms - 显示历史记录<br />
+about:dns - 显示DNS状态<br />
+about:cache, 重定向到 view-cache: 显示缓存页面<br />
+view-cache:stats - 缓存状态<br />
+about:stats - 显示状态<br />
+about:network - 很酷的网络工具<br />
+about:internets - 这应该算是一个彩蛋<br />
+chrome-resource://new-tab/ - 新标签页<br />
+chrome-resource://favicon/ - 这个在我的chrome上无法访问。。。<br />
+  20. <a href="http://www.cnbeta.com/articles/63732.htm">cnBeta上</a>的独立安装包（不是下载几个几百K的bootstrapper）：<a href="http://cache.pack.google.com/chrome/install/149.27/chrome_installer.exe">Google Chrome v0.2.149.27 Beta 独立安装程序</a>；<a href="http://www.reddit.com/r/programming/comments/6z9op/chrome_is_here/c059pzn">reddit公布的</a>新cache地址：<a href="http://cache.googlevideo.com/chrome/install/149.27/chrome_installer.exe">http://cache.googlevideo.com/chrome/install/149.27/chrome_installer.exe</a><br />
+  21. 新标签页Ctrl+T, 关闭标签Ctrl+W, 新窗口Ctrl+N, 新“porn mode”窗口 Ctrl+Shift+N<br />
+  22. <a href="about:memory"><code>about:memory</code></a>可以查看内存和进程占用。也可以Shift+ESC，点击Statistics for nerds<br />
+  23. 新的exp来了。<a href="http://raffon.net/research/google/chrome/carpet.html">http://raffon.net/research/google/chrome/carpet.html</a>。来自Aviv Raff。。。我日。。。自动弹了个Java。太危险了。赶快把JRE卸载了。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

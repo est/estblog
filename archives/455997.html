@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Nokia Tune 诺基亚的短信铃声[乐谱 ove五线谱 midi python源码下载] – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Nokia Tune 诺基亚的短信铃声[乐谱 ove五线谱 midi python源码下载]" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/455997" />
+    <meta property="og:url" content="https://blog.est.im/archives/455997">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Nokia Tune 诺基亚的短信铃声[乐谱 ove五线谱 midi python源码下载]">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Nokia Tune 诺基亚的短信铃声[乐谱 ove五线谱 midi python源码下载]</h2>
+    <p class="post-date">Posted <time datetime="2007-10-11T11:27:01+08:00">2007-10-11</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>无聊，玩了下<a href="http://en.wikipedia.org/wiki/Nokia_tune">Nokia Tune</a>，用<a href="http://www.geniesoft.com/products/overture/overture.htm">Overture</a>做了个五线谱。</p>
+<blockquote>
+<p>诺基亚标志性的铃声“<a href="http://www.nokia.com/A4303013">Nokia tune</a>”实际上是改编自19世纪的吉他作品《<a href="http://www.nokia.com/NOKIA_COM_1/About_Nokia/Company/In_Focus/IF_Technology/zz_Ringing_the_changes/granvals_26s1-180kb.wav">GranVals</a>》，作者是西班牙音乐家Francisco Tárrega。这个 铃声 在诺基亚手机中最早名为“Grande Valse”。在1998年,这支铃声已经广为人知并被称做“Nokia Tune”，诺基亚将其改名并沿用至今。</p>
+</blockquote>
+<p>顺便说一下，我发现Wikipedia上<a href="http://en.wikipedia.org/wiki/Nokia_tune">Nokia Tune</a>的<a href="http://upload.wikimedia.org/wikipedia/commons/3/37/Nokia_tune.png">曲谱</a>是错误的，第五个音符应该是C#。由于我用的是PlanetLab代理翻墙上的Wikipedia，在<a href="http://en.wikipedia.org/wiki/Open_proxy">Open Proxy List</a>范围里，所以不能修改Wikipedia了。</p>
+<h3>Nokia Tune乐谱</h3>
+<p><a href="http://wpcache.yo2.cn/wp-content/uploads/74/7487/2007/10/nokia-tune.rar">本地下载</a><br />
+请用Overture 4（汉化版<a href="http://down.popiano.com/down/Ovr402-chs.zip">下载</a>）打开</p>
+<h3>Nokia Tune五线谱</h3>
+<p><img alt="Nokia Tune" src="http://wpcache.yo2.cn/wp-content/uploads/74/7487/2007/10/11.jpg" /></p>
+<h3>NokiaTune MIDI</h3>
+<p><a href="http://simplythebest.net/sounds/Midi/Midi_files/commercial_Midi_files/nokia_tune.mid">来自 simplythebest.net 的下载</a></p>
+<h3>Nokia Tune with Python</h3>
+<p>最后给出Play Nokia Tune with Python的源码，调用了 winmm.dll 里 midiOutShortMsg() 这个API（需要Win32 和 DirectX 环境）</p>
+<pre><code>#coding:cp936
+From ctypes import windll, c_long, byref; From time import sleep
+mh=c_long()
+md=windll.winmm
+md.midiOutOpen(byref(mh), -1, 0,0,0)
+nb=0x3c;nv=0x7F;nc=0x0;# 0x0 for piano
+def p(s):
+    for n in s:
+        md.midiOutShortMsg(mh, 0x90+((nb+n[0])*0x100)+(nv*0x10000)+nc)
+        sleep(n[1])
+        md.midiOutShortMsg(mh, 0x80 + ((nb+n[0])*0x100)+nc)
+    md.midiOutClose(mh)
+
+p((
+(28,0.15),
+(26,0.15),
+(18,0.3),
+(20,0.3),
+
+(25,0.15),
+(23,0.15),
+(14,0.3),
+(16,0.3),
+
+(23,0.15),
+(21,0.15),
+(13,0.3),
+(16,0.3),
+(21,0.9),
+))
+</code></pre>
+<p>可以去Google Groups参与对<a href="http://groups.google.com/group/python-cn/browse_thread/thread/fdeaee6e5693da35/02fea70f951f54eb">Python代码的讨论</a>。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

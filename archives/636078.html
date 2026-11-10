@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[sqlite]压缩你的Firefox数据库 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[sqlite]压缩你的Firefox数据库" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/636078" />
+    <meta property="og:url" content="https://blog.est.im/archives/636078">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[sqlite]压缩你的Firefox数据库">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[sqlite]压缩你的Firefox数据库</h2>
+    <p class="post-date">Posted <time datetime="2009-09-01T15:47:58+08:00">2009-09-01</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>我试了下，<code>urlclassifier3.sqlite</code>是最大的。</p>
+<p>Linux：<br />
+<code>for f in ~/.mozilla/firefox/*/*.sqlite; do sqlite3 $f 'VACUUM;';</code></p>
+<p>Windows：<br />
+<code>cmd /cfor %f in (*.sqlite) do [sqlite3.exe](http://www.sqlite.org/sqlite-3_6_7.zip) %f "vacuum;"</code></p>
+<p>Powershell和Mac下的压缩方法见<a href="http://www.reddit.com/r/linux/comments/7nri6/compact_your_firefox_sqlite_databases_for_f_in/">原帖</a>。有人<a href="http://www.reddit.com/r/linux/comments/7nri6/compact_your_firefox_sqlite_databases_for_f_in/bhhc">节省了50MB的硬盘空间</a>。可观哦。</p>
+<p>其实很多用了sqlite的软件都可以这么干。例如Google Gears和Chrome。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

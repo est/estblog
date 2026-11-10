@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>有点怕Chrome了。。。 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="有点怕Chrome了。。。" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/641307" />
+    <meta property="og:url" content="https://blog.est.im/archives/641307">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="有点怕Chrome了。。。">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">有点怕Chrome了。。。</h2>
+    <p class="post-date">Posted <time datetime="2009-07-14T00:00:00+08:00">2009-07-14</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>为了测试一个东西用ProcMon跑了一下Chrome，结果很吓人。。。。</p>
+<p>刷新（不是完全刷新）我的blog首页（<a href="http://initiative.yo2.cn/">initiative.yo2.cn</a>），产生了3716个IO操作</p>
+<p><img alt="" src="http://olds.blogcn.com/wp-content/uploads/74/7487/2009/07/19.jpg" /></p>
+<p>其中包含1558个文件操作，1784个注册表操作。感觉文件操作都是极大量文件小规模碎片读写。因为在另一次测试中，我统计了8389个文件写操作，有223次1byte文件写入，225次2byte，1728次4byte写入，小于1024byte的写入操作一共有4593个。。。。。。就连鼠标放到地址栏那一瞬间，都产生了7个文件操作，2个打开2个关闭3个写。。。</p>
+<p>相比之下，Theworld2要温柔得多，刷新（不是完全刷新）我blog首页，产生了1031个注册表操作（汗。。。），3个文件操作，是探测IE临时文件夹下的desktop.ini是否存在</p>
+<p>注册表其实可以理解为Windows系统里的一个储存大量配置信息SQLite数据库，我想Windows系统经过这么多年升级，注册表已经设计得非常健壮非常缓存优化，磁盘磨损比一般文件IO低很多了。</p>
+<p>Chrome会不会像当年BitTorrent才出来那样，大量碎片文件操作，伤硬盘呢？</p>
+<p>Chromium有3个<a href="http://src.chromium.org/svn/trunk/src/chrome/common/chrome_switches.cc">参数</a>可以指定缓存位置和大小，他们分别是：<br />
+<code>--disk-cache-dir
+// Use a specific disk cache location, rather than one derived from the UserDatadir.</code></p>
+<p><code>--disk-cache-size
+// Forces the maximum disk space to be used by the disk cache, in bytes.</code></p>
+<p><code>--media-cache-size
+// Forces the maximum disk space to be used by the media cache, in bytes.</code></p>
+<p>所以我现在把Chrome的几个反复读写的文件（History Index 2009-07，History Index 2009-07-journal，Cache\data_0和Current Session）Hardlink到内存分区了，然后把上面3个参数设定在50MB，感觉安全多了。。。</p>
+<p>加上V8那么烧CPU，电池模式还是不敢用Chromium了。。。。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

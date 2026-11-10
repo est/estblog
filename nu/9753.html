@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[原创]bat写的ViewNfo – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[原创]bat写的ViewNfo" />
+
+    <link rel="canonical" href="https://blog.est.im/nu/9753" />
+    <meta property="og:url" content="https://blog.est.im/nu/9753">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[原创]bat写的ViewNfo">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[原创]bat写的ViewNfo</h2>
+    <p class="post-date">Posted <time datetime="2006-07-18T14:10:00+08:00">2006-07-18</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>先看代码：</p>
+<pre><code class="language-vbs">::ViewNFO2.cmd Version 2.0
+::
+:: By est
+:: CHiNA DOS UNiON, [url]www.cn-dos.net[/url]
+
+@echo off
+
+if [%1] == [] goto RegViewNfo
+
+color f0
+chcp 437
+cls
+title %~n1%~x1 - ViewNfo.cmd by est V2.0
+type %1
+&gt; nul pause
+exit
+
+:RegViewNfo
+assoc .nfo=nfofile&gt;nul
+ftype nfofile=&quot;%~d0%~p0ViewNfo2.cmd&quot; &quot;%%1&quot;&gt;nul
+echo the .nfo file type was registered successfully.
+pause&gt; nul
+</code></pre>
+<p>先把代码存成ViewNfo2.cmd，放到一个装程序的目录下，如：D:\Program Files\ViewNfo\，双击执行ViewNfo2.cmd就会自动注册 .nfo 文件的关联。以后下载了Warez的东东看 .nfo 的时候双击就会自动用 ViewNFO.bat打开。如果你不想关联.nfo文件类型，每次看.nfo的时候把.nfo文件拖到ViewNfo2.cmd上就可以了</p>
+<p>旧版本卸载：</p>
+<pre><code>more +4 &lt; %~f0 &gt;%temp%\UninstallViewNfo2.reg
+regedit -s %temp%\UninstallViewNfo2.reg
+exit
+
+Windows Registry Editor Version 5.00
+
+[-HKEY_CLASSES_ROOT\nfofile]
+
+[HKEY_CLASSES_ROOT\\.nfo]
+@=&quot;MSInfo.Document&quot;
+</code></pre>
+<p>把代码存成UninstallViewNfo2.cmd，双击执行即可以卸载掉.nfo文件关联功能～</p>
+<p>网上有很多查看 .nfo 和 ASCII Art 的软件，但是几乎都没有处理好中文乱码的问题。但是cmd下有得天独厚的 codepage环境，可以方便地切换到纯ASCII环境。所以我有了写这个小程序的想法。还有很多不足，希望大家多多提建议。</p>
+<p>这张图是旧版本的哈～～只是展示一下显示效果～～<br />
+<img alt="" src="/Blog/Attachment/625" /></p>
+<p>[内有附件]</p>
+<p>附件:<br />
+<a href="/Blog/Attachment/625">1.JPG</a></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

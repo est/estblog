@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Firefox下table元素的col/colgroup没效果 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Firefox下table元素的col/colgroup没效果" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/631441" />
+    <meta property="og:url" content="https://blog.est.im/archives/631441">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Firefox下table元素的col/colgroup没效果">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Firefox下table元素的col/colgroup没效果</h2>
+    <p class="post-date">Posted <time datetime="2011-12-06T16:10:02+08:00">2011-12-06</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>Mozilla的浏览器才TMD不符合标准呢。</p>
+<p>假如想把一个table第一列文字改成红色，那么一种方法是在所有 td 上写上 class='first_column' 。当然IE下有更加精简的方法。直接用<a href="http://www.w3schools.com/TAGS/tag_col.asp">COL/COLGROUP</a>来指定：</p>
+<p>`<table rules="group"></p>
+<colgroup style="color:red;">
+</colgroup>
+<colgroup >
+</colgroup>
+<tr><td>用户名:</td><td><input type="text" name="user_id" maxlength="32" /></td></tr>
+<tr><td>Email:</td><td><input type="text" name="email" /></td></tr>
+<tr><td>密码:</td><td><input type="text" name="password" /></td></tr>
+<tr><td>验证码:</td><td><input type="text" name="captcha" /></td></tr>
+<tr><td></td><td><input type="submit" value="注册" /></td></tr>
+<p></table>`</p>
+<p>请看标准：</p>
+<p><a href="http://www.w3.org/TR/html401/struct/tables.html#edef-COLGROUP">http://www.w3.org/TR/html401/struct/tables.html#edef-COLGROUP</a></p>
+<p>IE可以正常渲染<a href="http://www.w3.org/TR/html401/">HTML 4.01</a>的。Firefox下的解决办法是<a href="http://groups.google.co.uk/group/alt.html/browse_thread/thread/e4b2a487ec8e02b4">用CSS2的选择器</a></p>
+<p>Mozilla<a href="http://initiative.yo2.cn/archives/629662">就是个JB</a></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

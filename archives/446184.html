@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Windows其实自带了局域网续传工具 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Windows其实自带了局域网续传工具" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/446184" />
+    <meta property="og:url" content="https://blog.est.im/archives/446184">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Windows其实自带了局域网续传工具">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Windows其实自带了局域网续传工具</h2>
+    <p class="post-date">Posted <time datetime="2007-10-07T00:00:00+08:00">2007-10-07</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>办公室里的Samba服务器硬盘弄好了，传了几个<a href="http://lib.verycd.com/2006/03/21/0000095198.html">720p的电影</a>上去，可惜不争气的Vista复制到一半提示：“无法读取源文件”……</p>
+<p>遇到这种情况，只有重来。网上<a href="http://www.baidu.com/baidu?word=%BE%D6%D3%F2%CD%F8+%D0%F8%B4%AB">搜索</a>了一下，都是用<a href="http://ranvik.net/totalcopy/">第三方软件</a>实现的断点续传。其实Windows自带了一个用于Windows局域网文件共享的复制命令，并且支持断点续传。那就是传说中的copy命令</p>
+<pre><code>C:\Users\est&gt;copy /?
+将一份或多份文件复制到另一个位置。
+
+COPY [/D] [/V] [/N] [/Y | /-Y] [/Z] [/L] [/A | /B ] source [/A | /B]
+     [+ source [/A | /B] [+ ...]] [destination [/A | /B]]
+
+  source       指定要复制的文件。
+  /A           表示一个 ASCII 文本文件。
+  /B           表示一个二进位文件。
+  /D           允许解密要创建的目标文件
+  destination  为新文件指定目录和/或文件名。
+  /V           验证新文件写入是否正确。
+  /N           复制带有非 8dot3 名称的文件时，
+               尽可能使用短文件名。
+  /Y           不使用确认是否要覆盖现有目标文件
+               的提示。
+  /-Y          使用确认是否要覆盖现有目标文件
+               的提示。
+  /Z           用可重新启动模式复制已联网的文件。
+  /L           如果源是符号链接，请将链接复制
+               到目标而不是源链接指向的实际文件。
+
+命令行开关 /Y 可以在 COPYCMD 环境变量中预先设定。
+这可能会被命令行上的 /-Y 替代。除非 COPY
+命令是在一个批处理脚本中执行的，默认值应为
+在覆盖时进行提示。
+
+要附加文件，请为目标指定一个文件，为源指定
+数个文件(用通配符或 file1+file2+file3 格式)。
+</code></pre>
+<p>那么命令就是：</p>
+<pre><code>copy /z &quot;D:Downloads[BBC.行星地球].BBC.Planet.Earth.11of11.Ocean.Deep.720p.Xvid.Ac3.avi&quot; \host\Xshare电影共享区BBC.Planet.Earth.行星地球.720p
+</code></pre>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

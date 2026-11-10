@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>XMPP/Jabber/GTalk协议概览 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="XMPP/Jabber/GTalk协议概览" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/498106" />
+    <meta property="og:url" content="https://blog.est.im/archives/498106">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="XMPP/Jabber/GTalk协议概览">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">XMPP/Jabber/GTalk协议概览</h2>
+    <p class="post-date">Posted <time datetime="2007-10-31T00:00:00+08:00">2007-10-31</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>万圣节前夜，嘎嘎，写一篇XMPP的文章，主要来自Jabber官方的<a href="http://www.jabber.org/about/techover.shtml">Technical Overview</a>。</p>
+<h3>Overview</h3>
+<p><a href="http://www.xmpp.org/">XMPP</a>由<a href="http://www.jabber.org/">Jabber软件基金会</a>开发，最早在Jabber上实现。Jabber项目由Jeremie Miller在1998年开始的一个免费、开源的项目，用于提供给MSN、Yahoo！的IM服务。由于XMPP是一种基于XML架构的开放式协议，在IM通讯中被广泛采用，已经得到了互联网工程任务组(IETF)的批准（<a href="http://www.ietf.org/rfc/rfc3920.txt">RFC 3920</a>|<a href="http://www.ietf.org/rfc/rfc3921.txt">RFC 3921</a>）。</p>
+<h3>IQ</h3>
+<p>即Information Query，是XMPP协议中一个类似HTTP的GET、POST的动词。比如说修改Jabber密码：<br />
+<code>&lt;iq type='set' to='jabber.org'&gt;
+&lt;query xmlns='jabber:iq:register'&gt;
+&lt;username&gt;username&lt;/username&gt;
+&lt;password&gt;newpassword&lt;/password&gt;
+&lt;/query&gt;
+&lt;/iq&gt;</code></p>
+<h3>JID</h3>
+<p>即Jabber ID，格式为：<br />
+<code>[node@]domain[/resource]</code><br />
+node是用户名，domain是域；如果是Google Talk的话域就是 gmail.com；resource表示工作状态，Jabber允许在不同的地方同时登陆一个Jabber账号，用resource来表示不同的状态，可以自定义，GTalk目前版本定义的resource就是 Talk.v104C0F37955<br />
+例如：estbot@googlemail.com/AtWork</p>
+<h3>Disco</h3>
+<p>Service Discovery，一个Jabber服务器可能不止提供了IM服务，还提供了和其它IM互通网关、群聊等特性。</p>
+<h3>Stanza</h3>
+<p>一个XML片段</p>
+<h3>Roster</h3>
+<p>联系人名单</p>
+<h3>Presence</h3>
+<p>即隐身功能，把你的在线/离线状态只告诉一部分联系人</p>
+<h3>Subscription</h3>
+<p>订阅一个联系人的在线状态，通俗的讲就是添加好友。A给服务器发送一个presence消息，要subscribe B，那么相当于A要添加B为好友。</p>
+<h3>show</h3>
+<p>忙碌状态<br />
+away――在线，但不能马上联系上<br />
+chat――在线并有兴趣聊天<br />
+dnd――在线，但不想被打扰（“dnd”表示“do not disturb”）<br />
+xa――在线，但已经离开很长时间了（“xa”表示“extended away”）<br />
+GTalk里，绿色图标表示<show />，没有任何show的值，如果是红色图标则是<show>dnd</show>，只有这两种状态</p>
+<h3>status</h3>
+<p>好友的个性签名。好友的头像是通过X标签来获得的</p>
+<h3>vCard</h3>
+<p>联系人名片，见 <a href="http://rfc.net/rfc2426.html">RFC 2426</a></p>
+<h3>Jingle</h3>
+<p>Google定义的Jabber扩展，包含了p2p、语聊、文件传输、穿防火墙/NAT/Proxy等高级功能。例如<a href="http://code.google.com/apis/talk/libjingle/file_share.html">File Transfer模块</a>：<br />
+<img alt="libjingle file transfer" src="http://code.google.com/apis/talk/libjingle/images/tcp_application.gif" /></p>
+<p>剩下的想起来了再添加，看<a href="http://www.xmpp.org/rfcs/">RFC</a>真是一件超级麻烦的事情，CSDN上还有<a href="http://blog.csdn.net/kunp/archive/2004/06/30/30465.aspx">Jabber协议的中文版本</a> <img alt=":-)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_smile.gif" /></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

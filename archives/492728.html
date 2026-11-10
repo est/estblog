@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[JScript]批量导出Kerio Mail的帐号 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[JScript]批量导出Kerio Mail的帐号" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/492728" />
+    <meta property="og:url" content="https://blog.est.im/archives/492728">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[JScript]批量导出Kerio Mail的帐号">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[JScript]批量导出Kerio Mail的帐号</h2>
+    <p class="post-date">Posted <time datetime="2007-10-28T00:00:00+08:00">2007-10-28</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>最近忙着把邮件服务从Kerio Mail Server转移到<a href="http://www.google.com/a/">Google Apps</a>以体验谷歌企业套件的强大协作功能，遇到一个小问题就是大量的Email帐号需要批量导入Google Apps，于是写了一个JS脚本来完成这个工作。</p>
+<p>使用方法：找到Kerio Mail Server的安装目录，把users.cfg复制出来，然后把下列代码保存为export.js放置到users.cfg同一个目录下。运行export.js即可。</p>
+<p>[code:javascript]<br />
+/<strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><br />
+Export Kerio Mail Server users to CSV file, version 1.2, 2007-10-28<br />
+Written by est<br />
+/<strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong>*</strong>*/</p>
+<p>//Default password for each account<br />
+DEFAULT_PASSWORD = default<br />
+OUTPUT_FILE = 'out.csv'</p>
+<p>var xmlDoc = new ActiveXObject("Msxml2.DOMDocument")<br />
+xmlDoc.async = false<br />
+//You should locate users.cfg file, which is always in Kerio Mail installation directory<br />
+xmlDoc.load("users.cfg")</p>
+<p>var users = xmlDoc.selectNodes("//config/list/listitem/variable[@name='Name']")<br />
+var names = xmlDoc.selectNodes("//config/list/listitem/variable[@name='Fullname']")</p>
+<p>str='"username","first name","last name","password"\n'<br />
+for(i=0;i<a href="http://msdn2.microsoft.com/en-us/library/ms756987.aspx">xmlDoc对象</a>和XPath（<a href="http://www.zvon.org/xxl/XPathTutorial/General_chi/examples.html">教程</a>），呵呵。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

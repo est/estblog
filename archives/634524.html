@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Nodebox的GTK克隆：Shoebot – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Nodebox的GTK克隆：Shoebot" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/634524" />
+    <meta property="og:url" content="https://blog.est.im/archives/634524">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Nodebox的GTK克隆：Shoebot">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Nodebox的GTK克隆：Shoebot</h2>
+    <p class="post-date">Posted <time datetime="2008-11-26T00:00:00+08:00">2008-11-26</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>最近<a href="http://planet.python.org/">Python Planet</a>里刮起了一股show自己Social Software Graph的热潮，其中<a href="http://arthurkoziel.com/2008/11/23/social-software-graph/">Arthur Koziel的这一篇</a>，图形最帅气。</p>
+<p><img alt="Social Software Graph using Nodebox" src="http://media.arthurkoziel.com/img/nodebox_graph.png" /></p>
+<p>这个非常cool的图形不是Visio做的，也不是<a href="http://www.omnigroup.com/applications/OmniGraffle/">OmniGraffle</a>做的，而是<a href="http://nodebox.net/">Nodebox</a>的<a href="http://nodebox.net/code/index.php/Graph">Graph库</a>用<a href="http://arthurkoziel.com/2008/11/23/social-software-graph/"><strong>Python代码</strong></a>画出来的。</p>
+<blockquote>
+<p><img alt="Nodebox" src="http://nodebox.net/code/data/media/nodebox-screenshot-1.9.3.jpg" /></p>
+<p>NodeBox is a Mac OS X application that lets you create 2D visuals (static, animated or interactive) using Python programming code and export them as a PDF or a QuickTime movie. NodeBox is free and well-documented.</p>
+</blockquote>
+<p>Nodebox是Mac OS X上，基于Cocoa，Python编写的，用于创建2维静态/动画/交互式visuals（这个visuals实在不好翻译。。。<a href="https://www.ohloh.net/tags/graphics/visualization">visualization</a>的意思是可视化。）工具，可以输出为pdf或者Quicktime格式。Nodebox是免费的而且文档齐全。你可以理解为新时代的Logo语言，或者<a href="http://processing.org/">processing</a>（最近刚好1.0）的Python版。</p>
+<p>其实我很想不通，为什么<a href="http://nodebox.net/code/index.php/Gallery">酷酷的东西</a>总是Mac上最先出现？为什么Windows总是最受歧视的？Nodebox也推出过一个<a href="http://research.nodebox.net/index.php/NodeBoxDev">NodeBox 2.0b1 for Windows</a>版本，基于Jython的，可以用，但是最恼火一点就是不支持上面提到的Graph这个库。Nodebox官方的态度也和大多数Mac only<a href="http://macromates.com/">装逼软件</a>类似，拒绝向Linux或者Win32移植。</p>
+<p>不过现在好了。几个月前，已经有按耐不住的人Ricardo Lafuente开始把Nodebox克隆到GTK环境，用<a href="http://www.cairographics.org/">Cairo图形引擎</a>了。名字叫Shoebot</p>
+<p><a href="http://tinkerhouse.net/shoebot/"><img alt="Shoebot" src="http://tinkerhouse.net/shoebot/pub/skins/wikilove/logo.png" /></a></p>
+<p>名字来自<a href="http://www.drawbot.com/">Drawbot（Nodebox也源自于</a><a href="http://letterror.com/">Just van Rossum</a>的这个项目）和<a href="http://hackety.org/press/nks.html">Shoes（Ruby的Nodebox）</a>，跨平台（OS X/Win/Linux），可以导出到<a href="http://www.inkscape.org/">Inkscape</a>，看起来非常不错。</p>
+<p>主页：<a href="http://tinkerhouse.net/shoebot/">http://tinkerhouse.net/shoebot/</a><br />
+Hg源码托管：<a href="http://freehg.org/u/rlafuente/shoebot-ng/">http://freehg.org/u/rlafuente/shoebot-ng/</a> <a href="https://code.goto10.org/hg/shoebot">https://code.goto10.org/hg/shoebot</a><br />
+下载：<a href="http://tinkerhouse.net/shoebot/Docs/Install">http://tinkerhouse.net/shoebot/Docs/Install</a> 很可惜的是，Windows版本仍然在开发中。等吧。<br />
+更新微博（identi.ca）：<a href="http://identi.ca/shoebot">http://identi.ca/shoebot</a><br />
+Shoebot-devel邮件列表：<a href="http://lists.tinkerhouse.net/listinfo.cgi/shoebot-devel-tinkerhouse.net">http://lists.tinkerhouse.net/listinfo.cgi/shoebot-devel-tinkerhouse.net</a></p>
+<p>非官方编译的library：<a href="http://hv-a.com/shoebot/libraries/">http://hv-a.com/shoebot/libraries/</a> 包括那个graph库。赞啊赞</p>
+<p>NND，如今这世道也太欺负人了。工作之后一定买一个苹果本本。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

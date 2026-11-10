@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>再探史上最强验证码 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="再探史上最强验证码" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/251541" />
+    <meta property="og:url" content="https://blog.est.im/archives/251541">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="再探史上最强验证码">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">再探史上最强验证码</h2>
+    <p class="post-date">Posted <time datetime="2007-06-22T00:00:00+08:00">2007-06-22</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>再探史上最强验证码</p>
+<p>在 <a href="http://www.blueidea.com/">蓝色理想</a> 的 <a href="http://www.blueidea.com/common/shoutbox/redir.asp?id=4459">会员叫喊</a> 里看到了 网上流传已久的 <a href="http://in.daqi.com/ztnew/240741/5/index.html">史上最强验证码</a> 的讨论，于是再次到那个 <a href="http://www.kawise.com/reg/User_Reg1.asp?Action=apply&amp;PE_ComeUrl=%3C%25%3DComeUrl%25%3E&amp;btnSubmit=+%CE%D2%CD%AC%D2%E2+">卡维注册页面</a> 参观了一下，发现了这个传说中 最强 验证码 的一些纰漏</p>
+<p>右键点击验证码图片 属性，发现链接到</p>
+<p><a href="http://www.kawise.com/Reg/Reg_Code.asp">http://www.kawise.com/Reg/Reg_Code.asp</a></p>
+<p>用Maxthon打开这个链接，发现居然是客户端跳转～～那么图片的地址为：</p>
+<p><img alt="" src="http://www.kawise.com/images/YzCode/1.gif" /><br />
+<a href="http://www.kawise.com/images/YzCode/1.gif">http://www.kawise.com/images/YzCode/1.gif</a></p>
+<p><img alt="" src="http://www.kawise.com/images/YzCode/2.gif" /><br />
+<a href="http://www.kawise.com/images/YzCode/2.gif">http://www.kawise.com/images/YzCode/2.gif</a></p>
+<p><img alt="" src="http://www.kawise.com/images/YzCode/3.gif" /><br />
+<a href="http://www.kawise.com/images/YzCode/3.gif">http://www.kawise.com/images/YzCode/3.gif</a></p>
+<p><img alt="" src="http://www.kawise.com/images/YzCode/4.gif" /><br />
+<a href="http://www.kawise.com/images/YzCode/5.gif">http://www.kawise.com/images/YzCode/5.gif</a></p>
+<p><img alt="" src="http://www.kawise.com/images/YzCode/6.gif" /><br />
+<a href="http://www.kawise.com/images/YzCode/6.gif">http://www.kawise.com/images/YzCode/6.gif</a></p>
+<p>其实这样的验证码只能用来取笑，并不能用来防止恶意注册，很简单，因为验证码的数量是有限的，可以人工知道每个验证码的答案。真正的验证码应该程序随机生成内容，并且有一个固定的URL使用Response.BinaryWrite()来输出图片二进制留，取消客户端缓存，并且刷新一次变一次，多次验证码错误还要强行禁止注册一段时间～～</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

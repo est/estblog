@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>锟斤拷锟斤拷 - 经典Unicode乱码 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="锟斤拷锟斤拷 - 经典Unicode乱码" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/634636" />
+    <meta property="og:url" content="https://blog.est.im/archives/634636">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="锟斤拷锟斤拷 - 经典Unicode乱码">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">锟斤拷锟斤拷 - 经典Unicode乱码</h2>
+    <p class="post-date">Posted <time datetime="2009-11-02T02:15:16+08:00">2009-11-02</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>锟斤拷是什么？我也是最近才搞明白的。</p>
+<p><a href="http://www.baidu.com/baidu?word=%EF%BF%BD%EF%BF%BD">http://www.baidu.com/baidu?word=%EF%BF%BD%EF%BF%BD</a></p>
+<p><a href="http://www.google.com/search?hl=en&amp;q=%E9%94%9F%E6%96%A4%E6%8B%B7">http://www.google.com/search?hl=en&amp;q=%E9%94%9F%E6%96%A4%E6%8B%B7</a></p>
+<p>我考证了一下，这个乱码的原因来源相当经典。</p>
+<p>Unicode和老编码体系的转化过程中，肯定有一些字，用Unicode是没法表示的，Unicode官方用了一个占位符来表示这些文字，这就是：U+FFFD REPLACEMENT CHARACTER</p>
+<p>那么U+FFFD的UTF-8编码出来，恰好是 '\xef\xbf\xbd'。</p>
+<p>如果这个'\xef\xbf\xbd'，重复多次，例如 '\xef\xbf\xbd\xef\xbf\xbd'，然后放到GBK/CP936/GB2312/GB18030的环境中显示的话</p>
+<p>一个汉字2个字节，最终的结果就是：<strong>锟斤拷</strong> 哈哈。。。</p>
+<p>Python代码：</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>u'\uFFFD'.encode('utf-8')*2<br />
+'\xef\xbf\xbd\xef\xbf\xbd'</p>
+<p>print u'\uFFFD'.encode('utf-8')*2<br />
+锟斤拷</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>例如<a href="http://www.rencaijob.com/person/search/pzwshow.php?comid=58130">这个招聘</a>就非常经典：</p>
+<blockquote>
+<p>单位性质： 外商独资企业 所属行业： 线缆<br />
+ 单位规模： 100 - 499人 注册资金： 1299<br />
+ 联 系 人： 锟斤拷锟斤拷 联系人职位： 锟斤拷锟斤拷<br />
+ 传 真： 021-69178632 联系电话：<br />
+ 电子信箱： xuan_guo@walsin.com<br />
+ 通信地址：<br />
+ 邮 编：<br />
+ 单位网址：<br />
+ 单位介绍： 台锟斤拷锟斤拷业锟斤拷台锟斤拷锟斤拷锟侥碉拷f锟斤拷锟斤拷锟斤拷锟?锟斤拷锟斤拷/锟斤拷锟斤拷<br />
+ 招聘职位：锟斤拷锟斤拷 人数：20人<br />
+ 发布日期： 2007-07-17<br />
+ 联系人： 锟斤拷锟斤拷</p>
+</blockquote>
+<p>编码问题真是个TMD烦人的问题。例如：<img alt="15.jpg" src="http://olds.blogcn.com/wp-content/uploads/74/7487/2008/09/15.jpg" /></p>
+<p>最后我在wikipedia上开了一个 <a href="http://zh.wikipedia.org/wiki/%E9%94%9F%E6%96%A4%E6%8B%B7">锟斤拷</a> 的页面。瓦咔咔。。瓦咔咔。。。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[Original]Proof of Concept: Bat &amp; Vbs Hybrid Programming – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[Original]Proof of Concept: Bat &amp; Vbs Hybrid Programming" />
+
+    <link rel="canonical" href="https://blog.est.im/nu/11901" />
+    <meta property="og:url" content="https://blog.est.im/nu/11901">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[Original]Proof of Concept: Bat &amp; Vbs Hybrid Programming">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[Original]Proof of Concept: Bat & Vbs Hybrid Programming</h2>
+    <p class="post-date">Posted <time datetime="2006-12-01T23:51:00+08:00">2006-12-01</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>Proof of Concept: Bat &amp; Vbs Hybrid Programming</p>
+<p>By est, electroniXtar (from) GMail.com</p>
+<p>vbs.bat</p>
+<pre><code>:On Error Resume Next
+Sub bat
+echo Batching_codez_here_following_vbs_rules &amp; pause
+start wscript -e:vbs &quot;%~f0&quot;
+Exit Sub
+End Sub
+MsgBox &quot;This is vbs&quot;
+</code></pre>
+<p>Save the code above as vbs.bat, double click it, and you'll find a Batch echo:<br />
+Batching_codez_here_following_vbs_rules<br />
+and after press any key, you'll find a vbs prompt saying "This is vbs"<br />
+These little code costed me a whole night &gt;_&lt; So I think it's worth commentating.</p>
+<p>:On Error Resume Next<br />
+In batching, any character that follows the colon : will be neglected. So the first line means same as<br />
+rem On Error Resume Next<br />
+But this line fucking useful for the 6 lines bellow.</p>
+<p>start wscript -e:vbs "%~f0"<br />
+First I thought about<br />
+wscript //e:vbscript ~%f0"<br />
+And the vbscript interpreter could not recognize // even I "Resume Next". So after many trials and errors, finally I got this line both right for cmd.exe and wscript.exe. For cmd.exe, it launched the batch file itself, "%~f0". Instead of using %0, I choose %~f0. For example, you save this vbs.bat in directory D:\test, then you type these commands in cmd.exe<br />
+D:<br />
+cd test<br />
+vbs<br />
+Stop! Now, %0 is vbs , and for %~f0 is D:\test\vbs.bat ! wscript.exe will not start vbs.bat if you just run<br />
+wscript -e:vbs vbs<br />
+Another problem, if I save this vbs.bat in a directory like C:\Documents and Settings\Administrator\Desktop\vbs.bat, quotes are needed to make "Documents and Settings" complete string.</p>
+<p>So what may wscript.exe regard this line?<br />
+start wscript -e:vbs "%~f0"<br />
+"start" here possibly means a undefined Function() or Sub(), it's called with the variant named wscript, after this Function(), it's return value substract "e", "e" here is, maybe, another undefined variant like "wscript". The following : is a colon separating two statements in vbs grammar. The statement on the right of the colon : asks wscript.exe to call a function named "vbs" the the parameter "%~f0". After all, our dear wscript.exe is cheated, and cmd.exe is fooled!</p>
+<p>Now this little code is using wscript to call itself to run like a real vbs, but, on the other hand, cmd.exe is trying to understand every line of the fake bat file. I have to do something to stop that, using "exit", but in vbs exit is a keyword, you must exit Exit Do, Exit For, Exit Function, Exit Property, or Exit Sub. And to me, Exit Sub looks good, so in the second line of my code I wrote<br />
+Sub bat<br />
+cmd.exe may look for a external program called sub.exe, and normally this program does not exist, so go on, after<br />
+start wscript -e:vbs "%~f0"<br />
+we<br />
+Exit Sub<br />
+To cmd.exe, the batch quits. To wscript.exe, the Sub() exits. And after that<br />
+End Sub<br />
+cmd.exe is over now, so wscript will just regard an end of a usual Sub(), but as a bat file, it succesfully launched itself just like a vbs.</p>
+<p>You may ask: why must I do this after all? I just use a bat to "echo" out a genuine <code>*.vbs</code> file, and wscript that <code>*.vbs</code> and that's all? Truely this is the normal ways people call scripts between bat and vbs. But think about an extra large vbs? I have an experience here. I wrote a vbs that can spawn a 400KB file, the vbs itself is 600KB, and I tried to "echo" out the vbs in a 700KB bat file, what happened? My XP SP2 rush up to 1.5GB memroy cost for 1 minute, and failed to spawn that 400KB file saying: "vbs error in line (2,7): Not enough memory to create a string". If I use the little codez above, wscript will run quite well just like a real vbs. Another advantage of my code is, no tmp file needed for switching between two languages. simply write batch code above<br />
+<code>start wscript -e:vbs "%~f0"</code><br />
+and write vbs code below it!</p>
+<p>Hope everyone can find extra usage of my code. Thanks for taking time reading my article. If you have any better ideas, please let me know.</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

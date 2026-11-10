@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>谷歌浏览器里牛逼的中文分词 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="谷歌浏览器里牛逼的中文分词" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/640309" />
+    <meta property="og:url" content="https://blog.est.im/archives/640309">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="谷歌浏览器里牛逼的中文分词">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">谷歌浏览器里牛逼的中文分词</h2>
+    <p class="post-date">Posted <time datetime="2009-05-28T00:00:00+08:00">2009-05-28</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>谷歌浏览器里牛逼的中文分词</p>
+<p>用过vim的都知道w和b键的功能。<br />
+深入Windows的都知道，通用文本框控件里，可以通过Ctrl+Left, Ctrl+Right来实现类似vim里w和b键的功能</p>
+<p>但是大家都知道，这个小技巧对于中文是无效的。</p>
+<p>但是今天突然发现谷歌浏览器（chrome/chromium）居然实现了中文词语之间的跳转</p>
+<p>举个例子，一个文本框里放一句英文：（这里用了一个<code>input</code>，RSS阅读器里可能看不到这个HTML元素，请到<a href="http://initiative.yo2.cn/archives/640309">博客原文</a>围观）</p>
+<p>在文本框里，按 left 和 right 键，光标只会一个字一个字的左移或者右移；Ctrl+left和Ctrl+right，光标会一个<strong>词</strong> 一个<strong>词</strong> 的移动。shift的作用是选择，那么Ctrl+Shift+Right就会直接选定一个词语。</p>
+<p>再放一段中文：</p>
+<p>在文本框里，按 left 和 right 键，光标只会一个字一个字的左移或者右移；Ctrl+left和Ctrl+right，依然只会一个字一个字，而不是一个词一个词的移动。</p>
+<p>为什么呢？很明显Windows没有自带中文分词功能。</p>
+<p>但是很牛逼的是，谷歌浏览器（chrome/chromium）带了这个功能。上面那个中文例子，假如我的光标在句首，那么Ctrl+Right之后，光标会在 爱因斯坦 的 坦 字后面，说 字前面；如果光标在第一个双引号前面，按下Ctrl+Right之后，光标会跳转到 想像力 的 力 字之后。实现了中文跨词语跳转。这给我们在文本框里做文字编辑提供了非常大的灵活性和方便。</p>
+<p>中文分词比英文分词麻烦多了。很明显英文基于词语的跳转就是跳转到下一个空白字符，而中文很麻烦的一点是二义性。举一个<a href="http://www.googlechinablog.com/2006/04/blog-post_10.html">谷歌中国黑板报的例子</a>，发展中国家 是分词为 发展 中国 家 好呢，还是 发展中 国家 好？这个纯粹靠上下文和概率算了。</p>
+<p><a href="http://www.catonmat.net/blog/code-reuse-in-google-chrome-browser/">深入</a>研究了一下这个有趣的功能，发现是<a href="http://www-01.ibm.com/software/globalization/icu/index.jsp">IBM的ICU库</a>提供的，每个Chrome安装文件夹下面都有一个<a href="http://build.chromium.org/buildbot/continuous/LATEST/chrome-win32.test/icudt38.dll">icudt38.dll</a>，这里面包含了一份<a href="http://src.chromium.org/viewvc/chrome/trunk/deps/third_party/icu38/source/data/brkitr/cc_cedict.txt">中文词语表</a>。基于<a href="http://us.mdbg.net/chindict/chindict.php?page=cedict">CC-CEDICT</a>那个版本</p>
+<p>不得不佩服Google工程师们做i18n的敬业和牛逼。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

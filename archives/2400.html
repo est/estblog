@@ -53,16 +53,13 @@
 
   
   <p><em>Be cautious to prevent fire, theft and ChinaNET police.</em></p>
-
 <p>Here's how to <a href="http://www.google.com/support/webmasters/bin/answer.py?answer=61050">noindex</a> a single post in wordpress without install any plugin or edit <code>robots.txt</code> file</p>
-
-<ol>
-<li>open <code>http://your-site.com/wp-admin/theme-editor.php</code>, and choose to edit the <code>header.php</code></li>
-<li>add this line after a bunch of <code>&lt;meta&gt;</code> tags:<br>
-<code>&lt;?php if (in_array($post-&gt;ID, array(&#39;2323&#39;, &#39;2424&#39;, &#39;2525&#39;))) {echo &#39;&lt;meta name=&quot;robots&quot; content=&quot;noindex&quot;&gt;&#39;;} ; ?&gt;</code><br>
-In the above example we block wordpress posts with id 2323, 2424 and 2525.</li>
-<li>Open Google Webmaster tool <a href="https://www.google.com/webmasters/tools/crawl-access?hl=en&amp;siteUrl=http://your-site.com/&amp;tid=removal-list">1</a> or <a href="https://www.google.com/webmasters/tools/removals">2</a>, and remove your search record &amp;amp&#39; cache from Google</li>
-</ol>
+<pre><code>1. open `http://your-site.com/wp-admin/theme-editor.php`, and choose to edit the `header.php`
+2. add this line after a bunch of `&lt;meta&gt;` tags:
+</code></pre>
+<p><code>&lt;?php if (in_array($post-&gt;ID, array('2323', '2424', '2525'))) {echo '&lt;meta name="robots" content="noindex"&gt;';} ; ?&gt;</code><br />
+In the above example we block wordpress posts with id 2323, 2424 and 2525.<br />
+  3. Open Google Webmaster tool <a href="https://www.google.com/webmasters/tools/crawl-access?hl=en&amp;siteUrl=http://your-site.com/&amp;tid=removal-list">1</a> or <a href="https://www.google.com/webmasters/tools/removals">2</a>, and remove your search record &amp;amp' cache from Google</p>
 </article>
 
 <div class="comments">

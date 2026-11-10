@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Why Google Reader survived the 2nd June ban of GFW and what can you learn from it – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Why Google Reader survived the 2nd June ban of GFW and what can you learn from it" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/640553" />
+    <meta property="og:url" content="https://blog.est.im/archives/640553">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Why Google Reader survived the 2nd June ban of GFW and what can you learn from it">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Why Google Reader survived the 2nd June ban of GFW and what can you learn from it</h2>
+    <p class="post-date">Posted <time datetime="2009-06-03T00:00:00+08:00">2009-06-03</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>GFW is the national firewall implemented in backbone Internet of China. It has four types of block:</p>
+<pre><code>* URL block: ie. if twitter.com is blocked, any HTTP request that has a `twitter.com` string appears between `GET` and `\r\n\r\n` is blocked. GFW will try RST to both you and the server many times.
+* DNS pollution. All UDP port 53 are censored in China. Your domain will resolve to fake IPs if polluted. Currently known fake IPs include:
+</code></pre>
+<blockquote>
+<p>202.106.1.2, 211.95.129.161, 211.94.66.147, 220.250.64.23, 216.234.179.13, 4.36.66.178</p>
+</blockquote>
+<pre><code>* IP ban.
+* content filter. All unencrypted TCP/UDP data are monitored. You might trigger a shit load of keywords during your daily surfing without knowing anything. Like URL block, GFW will try RST to both you and the server many times if your keywords matches a certain level and quantity. And your IP &amp; client info will be logged for further investigation if needed.
+</code></pre>
+<p>During the <a href="uk.techcrunch.com/2009/06/02/china-shuts-down-twitter-and-bing-in-lead-up-to-tiananmen-anniversary/">great ban of 2009-06-02</a>, <em>.live.com, bing.com, twitter.com, flickr.com, hotmail.com, along with previous banned youtube,com and </em>.blogspot.com, are no longer accessible within China directly. But <a href="https://www.google.com/reader/">Google Reader</a>, one of the main anti-☭ propaganda source, survived. Why?</p>
+<p>Let's look at one of the typical Google Reader HTTP request:</p>
+<p><code>https://www.google.com/reader/api/0/stream/contents/user%2F1338082....
+| | |
+| +-----+------+
+| |
+| +--- DNS pollution and IP ban are unlikely,
+| unless GFW totally bans all www.google.com
+|
++--- https, means data transfer between your IP
+and www.google.com IP (64.233.189.99) are encrypted,
+thus URL block and content filter are useless,
+except GFW implements some sort of MITM attack which is too costly</code></p>
+<p>So what can we learn from it?</p>
+<pre><code>* The bigger your website are, the sooner your website get _unblocked_. If your little known sites get blocked, who cares?
+* Don't use HTTP GET since it's very easily URL-blocked. This also helps reduce XSS &amp; XSRF
+* Make your URL jumping httpS compatible. Even static files.
+* Use RFC 2068 compatible CDNs like squid. So you can route all your other nodes' traffic to a node where your clients could access(ie. youtube could be accessed within China if your proxy all your www.youtube.com/* requests to www.google.cn IP). But you have to make sure your CDN can deliver content accross GFW.
+* Use as few as subdomains as possible. This reduce DNS pollution damage if you just have dozens to recover instead of thousands. If Google Reader's URL is something like reader.google.com, it's very possible to get banned years ago.
+</code></pre>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

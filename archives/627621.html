@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>I am preparing to code a long-running project – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="I am preparing to code a long-running project" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/627621" />
+    <meta property="og:url" content="https://blog.est.im/archives/627621">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="I am preparing to code a long-running project">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">I am preparing to code a long-running project</h2>
+    <p class="post-date">Posted <time datetime="2008-05-07T16:05:39+08:00">2008-05-07</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>上次说了要写一个<a href="http://initiative.yo2.cn/archives/626850">社论坛</a>，要做有什么新的特色和独特的功能呢？</p>
+<pre><code>* 采用[django](http://www.djangoproject.com) ORM/MVC开发，extra部件[WSGI](http://www.python.org/dev/peps/pep-0333/)兼容
+* 系统在空间和时间上都是scalable的
+* 不是平面/列表的信息堆积，而是结构化、流程化的
+* 承上条，避免环路
+* 多种Web I/O接口
+* 对一个具体的东西支持[metadata](http://en.wikipedia.org/wiki/Metadata)
+* 界面接单化，输出模板化、操作傻瓜化、用户体念一定要门槛低、0时间上手，不需要manual
+</code></pre>
+<p>形而上的东西YY完了，YY下具体timeline和技术细节</p>
+<p>参照<a href="http://www.livid.cn/">Livid</a>的<a href="http://code.google.com/p/project-babel/">Project Babel</a>，和<a href="http://killkeeper.dreamhosters.com/">Killkeeper</a>的<a href="http://www.flatgrid.com/">flatGrid</a></p>
+<pre><code>* SEO
+* 热插拔模块
+* 和n多东西mash-up
+* 不仅仅支持文本、还支持文件、图片、视频。帖子也支持交易、投票、辩论、versioning、concurrent authoring、collaborative creation等等。如果等等太多就用widget实现
+* 傻瓜化的安装过程（[easy_install](http://peak.telecommunity.com/dist/ez_setup.py)）
+* 基于[comet](http://en.wikipedia.org/wiki/Comet_\(programming\))的事件流(events flow)和 real-time life-streaming
+* 分离的authentication和用户系统，和XMPP结合的contact list。其实所有模块都是分离的。所谓分离，就是一个模块可以无需任何附加配置就可以移植到不同地方的同一系统；一个模块挂了不影响另外一个模块
+* 一个online IDE，在线 contribute code &amp; debugging。也就是[pastebin](http://en.wikipedia.org/wiki/Pastebin)的一个进化
+* 基于[fastcgi](http://www.fastcgi.com/)的架构，支持apache, lighttpd和IIS
+* 一个支持terminal转义的console，基于comet与服务器IO，甚至实现Web p2p。。。。。囧
+* 完美的access-key支持～～堪比GMail和[GReader](https://www.google.com/reader/)，一个类似launchy的启动条，整合搜索和命令行功能（例如awk, sort, more, find, 管道等等）。也算是WebOS一个prototype的尝试吧～～再加上一个AI自动对话？自然语言处理？图像拖拽？Voice Command？摄像头互动？？？？囧囧囧～～～
+</code></pre>
+<p>伟大的构想需要伟大的Doer去实现。那么shutup, shutdown Internet &amp; begin CODING!</p>
+<p>预计五月份把metadata实现，做一个简陋的 Project Babel Clone出来再说～～～</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

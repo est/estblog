@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Javascript判断你是男的还是女的 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Javascript判断你是男的还是女的" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/630650" />
+    <meta property="og:url" content="https://blog.est.im/archives/630650">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Javascript判断你是男的还是女的">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Javascript判断你是男的还是女的</h2>
+    <p class="post-date">Posted <time datetime="2008-07-30T00:00:00+08:00">2008-07-30</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>目前只对<strong>经常</strong> 上国外网站的用户有效。。。。很简单。。。点击下面的按钮就行了：（如果是RSS阅读器里看到这篇blog请<a href="http://initiative.yo2.cn/archives/630650">点击这个链接</a>在新窗口打开本篇博文）</p>
+<p><code>&lt;iframe frameborder="0" height="300" id="analyze" marginheight="0" marginwidth="0" name="analyze" scrolling="yes" src="http://www.mikeonads.com/gender/working.php" style="display:none; margin: 10px; border: 1px solid #ccc; margin-bottom: 5px;" width="600"&gt;&lt;/iframe&gt;</code></p>
+<p>如果你在国外网站、特别是新兴Web 2.0网站混得相当多的话，这个结果还是非常准确的。转载至<a href="http://www.mikeonads.com/">Mike On Ads</a>的博文<a href="http://www.mikeonads.com/2008/07/13/using-your-browser-url-history-estimate-gender/">Using your browser URL history to estimate gender</a>。大概原理是：在你访问过的常见网站中，有一个男女比率，例如thepiratebay.org是个非常男性的网站，男女比是2.13；而facebook的男女比是0.83。然后用<a href="http://www.quantcast.com/top-sites-1">Quantcast统计的top 10k网站男女比例</a>，算出你是男是女的可能性。也就是利用浏览器的历史记录来分析你的性别。你可能会问：“Javascript能直接访问我浏览器的历史记录么？”</p>
+<p>其实是<a href="http://azarask.in/blog/post/socialhistoryjs/">SocialHistory.js</a>在起作用。这是一个可以得知是否访问过一个网站的Javascript库。原理是什么呢？一般来说，我们的浏览器或者CSS会以颜色区分未访问的链接和访问过的链接。那么我们可以iframe一个页面，包含一个链接例如 www.dormforce.net。然后用js获得这个链接的颜色，就知道你是否访问过www.dormforce.net这个网站了。（强大吧。。。而且跨所有浏览器，包括IE、FF）。这个原理好囧啊。跟用mmmmmmmmmmmmmmmmmmm这一串字符的<strong>像素长度</strong> 判断你电脑上是否安装某一个<strong>字体</strong> 的那个js库 <a href="http://www.lalit.org/lab/javascript-css-font-detect">JavaScript/CSS Font Detector</a> 一样。都是很囧的js技术</p>
+<p>对您的性别是否判断准确呢？欢迎<a href="http://initiative.yo2.cn/archives/630650#respond">在下面评论</a>，或者到<a href="http://www.mikeonads.com/2008/07/13/using-your-browser-url-history-estimate-gender/">原作者的blog</a>、<a href="http://www.reddit.com/r/programming/comments/6u1za/using_your_browser_url_history_to_estimate_gender/">reddit</a>、<a href="http://digg.com/programming/Guessing_gender_by_analyzing_browser_history">digg</a>去看看其他人是怎么看的。</p>
+<p>摘录囧评几条：</p>
+<pre><code>* WTF Im 76% likely to be a female? Good thing I'm on my mom's computer..
+* i find its more accurate to spread my visitors' legs and look at their genitals. it works most of the time. 大意就是这js还不如直接看JJ来的快。。。
+* I was surprised to see that the most female site that I'd visited was barackobama.com. 0.68 : 1, was not expecting that.
+* Trust me, if you clicked on that link, you are a guy. no algorithm needed. （如果你被javascript关键字骗进来，并且点击了那个按钮，那么就不用测了。你100%是个男的。。。。）
+</code></pre>
+<p>其实呢。。我们也可以在搞一个天朝版的啊。。。Qzone男女比：0.65；xiaonei：0.7；J5团：0.8；tianya：1.1；Ubuntu.org.cn：2。。。哈哈。。数据是我乱写的。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

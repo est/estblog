@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>终于折腾出来了djangoproject.com源码里update_feeds.py的玩法 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="终于折腾出来了djangoproject.com源码里update_feeds.py的玩法" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/441785" />
+    <meta property="og:url" content="https://blog.est.im/archives/441785">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="终于折腾出来了djangoproject.com源码里update_feeds.py的玩法">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">终于折腾出来了djangoproject.com源码里update_feeds.py的玩法</h2>
+    <p class="post-date">Posted <time datetime="2007-10-06T00:00:00+08:00">2007-10-06</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>这几天一直在玩弄 <a href="http://www.djangoproject.com">djangoproject.com</a> 的源码，对里边的那个RSS Aggregator很感兴趣，一直想知道它的实现原理，结果是crontab每小时执行一次 @.@ 在Windows下要跑起来似乎对于我这种菜鸟有点困难，折腾了几天终于摸清楚了这个 update_feeds.py 的玩法。</p>
+<h2>简介</h2>
+<pre><code>* [Django](http://www.djangoproject.com/)是一个免费的开源[Python](http://www.python.org/) Web框架
+* [djangoproject.com](http://www.djangoproject.com) 是Django的官方网站，网站源码可以在 &lt;http://code.djangoproject.com/svn/djangoproject.com/&gt;下载到。
+* djangoproject.com源码里有一个[Community](http://www.djangoproject.com/community/)栏目，是一个RSS Aggregator，可以同步多个RSS源，每小时更新一次。
+* djangoproject.com用的是PostgreSQL，我把它修改成了Python 2.5默认支持的SQLite3，数据库放在`E:\Python\reference\djangoprojectwebsite\django_website\djangoproject`
+* 我把SVN Checkout的源码放在 `E:\Python\reference\djangoprojectwebsite`，那个自动更新RSS聚合的python在 `E:\Python\reference\djangoprojectwebsite\django_website\apps\aggregator\bin\update_feeds.py`
+</code></pre>
+<h2>No module named django_website.apps.aggregator.models</h2>
+<p>起初没弄成功，出现的错误提示是：</p>
+<pre><code>Traceback (most recent call last):
+  File &quot;E:\Python\reference\djangoprojectwebsite\django_website\apps\aggregator\
+bin\update_feeds.py&quot;, line 57, in
+    update_feeds()
+  File &quot;E:\Python\reference\djangoprojectwebsite\django_website\apps\aggregator\
+bin\update_feeds.py&quot;, line 13, in update_feeds
+    From django_website.apps.aggregator.models import Feed, FeedItem
+ImportError: No module named django_website.apps.aggregator.models
+</code></pre>
+<p>这个错误的原因是没有在系统环境变量里定义 PYTHONPATH 指向当前工程的路径。</p>
+<h2>Environment variable DJANGO_SETTINGS_MODULE is undefined.</h2>
+<pre><code>Traceback (most recent call last):
+  File &quot;E:\Python\reference\djangoprojectwebsite\django_website\apps\aggregator\
+bin\update_feeds.py&quot;, line 57, in
+    update_feeds()
+  File &quot;E:\Python\reference\djangoprojectwebsite\django_website\apps\aggregator\
+bin\update_feeds.py&quot;, line 13, in update_feeds
+    From django_website.apps.aggregator.models import Feed, FeedItem
+  File &quot;E:\Python\reference\djangoprojectwebsite\django_website\..\django_websit
+e\apps\aggregator\models.py&quot;, line 1, in
+    From django.db import models
+  File &quot;C:\Python25\Lib\site-packages\django\db\__init__.py&quot;, line 7, in
+    if not settings.DATABASE_ENGINE:
+  File &quot;C:\Python25\Lib\site-packages\django\conf\__init__.py&quot;, line 28, in __ge
+tattr__
+    self._import_settings()
+  File &quot;C:\Python25\Lib\site-packages\django\conf\__init__.py&quot;, line 53, in _imp
+ort_settings
+    raise EnvironmentError, &quot;Environment variable %s is undefined.&quot; % ENVIRONMEN
+T_VARIABLE
+EnvironmentError: Environment variable DJANGO_SETTINGS_MODULE is undefined.
+</code></pre>
+<p>这里需要定义 DJANGO_SETTINGS_MODULE 系统环境变量，也可以通过 update_feeds.py --settings=django_website.settings 来指定。</p>
+<h2>no such table: aggregator_feeds</h2>
+<pre><code>Traceback (most recent call last):
+  File &quot;E:\Python\reference\djangoprojectwebsite\django_website\apps\aggregator\
+bin\update_feeds.py&quot;, line 57, in
+    update_feeds()
+  File &quot;E:\Python\reference\djangoprojectwebsite\django_website\apps\aggregator\
+bin\update_feeds.py&quot;, line 14, in update_feeds
+    for feed in Feed.objects.filter(is_defunct=False):
+  File &quot;C:\Python25\Lib\site-packages\django\db\models\query.py&quot;, line 108, in _
+_iter__
+    return iter(self._get_data())
+  File &quot;C:\Python25\Lib\site-packages\django\db\models\query.py&quot;, line 470, in _
+get_data
+    self._result_cache = list(self.iterator())
+  File &quot;C:\Python25\Lib\site-packages\django\db\models\query.py&quot;, line 183, in i
+terator
+    cursor.execute(&quot;SELECT &quot; + (self._distinct and &quot;DISTINCT &quot; or &quot;&quot;) + &quot;,&quot;.join
+(select) + sql, params)
+  File &quot;C:\Python25\Lib\site-packages\django\db\backends\util.py&quot;, line 12, in e
+xecute
+    return self.cursor.execute(sql, params)
+  File &quot;C:\Python25\Lib\site-packages\django\db\backends\sqlite3\base.py&quot;, line
+93, in execute
+    return Database.Cursor.execute(self, query, params)
+sqlite3.OperationalError: no such table: aggregator_feeds
+</code></pre>
+<p>这个错误困扰我时间最长。最后发现是当前路径的问题：不能直接到 bin 目录去执行 update_feeds.py，需要到数据库所在的路径，通过相对路径来执行 update_feeds.py 才能成功执行。</p>
+<h2>正确执行 update_feeds.py 的步骤</h2>
+<pre><code>1. 首先在cmd里用cd命令切换到django_website目录，也就是djangoproject.com的源码跟目录
+</code></pre>
+<p><code>E:\&gt;**cd /d E:\Python\reference\djangoprojectwebsite\django_website**</code><br />
+  2. 然后设置 PYTHONPATH 和 DJANGO_SETTINGS_MODULE 环境变量<br />
+E:\Python\reference\djangoprojectwebsite\django_website&gt;<strong>set PYTHONPATH=E:\Python\reference\djangoprojectwebsite</strong><br />
+E:\Python\reference\djangoprojectwebsite\django_website&gt;<strong>set DJANGO_SETTINGS_MODULE=django_website.settings</strong><br />
+  3. 最后执行 update_feeds.py，注意用相对路径启动 update_feeds.py<br />
+<code>E:\Python\reference\djangoprojectwebsite\django_website&gt;**apps\aggregator\bin\update_feeds.py**</code></p>
+<p>终于开始更新了，嘎嘎</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

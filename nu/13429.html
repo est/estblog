@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[原]批处理与其他语言混合编程 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[原]批处理与其他语言混合编程" />
+
+    <link rel="canonical" href="https://blog.est.im/nu/13429" />
+    <meta property="og:url" content="https://blog.est.im/nu/13429">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[原]批处理与其他语言混合编程">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[原]批处理与其他语言混合编程</h2>
+    <p class="post-date">Posted <time datetime="2007-01-17T17:36:00+08:00">2007-01-17</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>批处理与其他语言混合编程</p>
+<p>难得改格式了，有兴趣的去这里看看：</p>
+<p><a href="http://www.cn-dos.net/mediawiki/index.php?title=hybird">http://www.cn-dos.net/mediawiki/index.php?title=hybird</a></p>
+<p>Wikipedia，自由的百科全书<br />
+目录 [显示隐藏]<br />
+1 综述</p>
+<p>2 与汇编集成</p>
+<p>2.1 传统的echo大法<br />
+2.2 方便的prompt大法<br />
+2.3 经典的more大法<br />
+2.4 强悍的ASCode</p>
+<p>3 与VBS集成</p>
+<p>3.1 传统的echo大法<br />
+3.2 经典的more大法<br />
+3.3 方便的mshta大法<br />
+3.4 精巧的bat/vbs混合编程</p>
+<p>4 与.NET集成</p>
+<p>5 与其他语言集成</p>
+<p>6 附加信息</p>
+<h3>综述</h3>
+<p>脚本类语言作为21世纪的一种先进的高级语言，其特征是整合（glue），批处理有极强的其他语言整合能力，目前比较成熟的方案有下面所述几种，通过和其他计算机语言的整合，极大的扩展批处理的功能，使得原本用批处理不可能实现的工作，通过整合汇编/VBS/.NET可以轻松达到惊人的效果。</p>
+<h3>与汇编集成</h3>
+<p>传统的DOS和经典的CMD都支持一个外部命令debug所以使得批处理有了汇编方面的扩展能力，debug命令支持重定向输入代码，所以给了代码极大的灵活性</p>
+<h3>传统的echo大法</h3>
+<p>通过echo命令重定向标准输出到临时文件，然后用debug执行这个临时文件里的命令，这个方法比较通用，批处理输出文件都是用的这个方法，不足是需要产生临时文件 论坛讨论 (<a href="http://www.cn-dos.net/forum/viewthread.php?tid=23573">http://www.cn-dos.net/forum/viewthread.php?tid=23573</a>)</p>
+<pre><code>echo D C000:000&gt; v.dat
+echo D&gt;&gt;v.dat
+echo D&gt;&gt;v.dat
+echo Q&gt;&gt;v.dat
+Debug.exe  &lt; v.dat &gt;info.txt
+@echo off
+echo o 70 17 &gt;tmp.txt
+echo o 71 ff &gt;&gt;tmp.txt
+echo Q &gt;&gt;tmp.txt
+debug &lt;tmp.txt
+del tmp.txt
+</code></pre>
+<h3>方便的prompt大法</h3>
+<p>prompt命令支持一个特殊的参数 $_ ，改参数表示换行，所以在批处理中灵活应用可以写出紧凑的汇编代码 论坛讨论 (<a href="http://www.cn-dos.net/forum/viewthread.php?tid=26591">http://www.cn-dos.net/forum/viewthread.php?tid=26591</a>)</p>
+<p><code>echo exit|%ComSpec% /k prompt e 100 B4 00 B0 12 CD 10 B0 03 CD 10 CD 20 $_g$_q$_|debug&gt;nul</code></p>
+<h3>经典的more大法</h3>
+<p>more支持一个 +n 参数，表示从文件的指定行开始输出，我们利用这个参数把批处理本身尾部的一些汇编代码直接通过 | 管道直接输出到debug命令，该方法最早可能是论坛网友上[doscc (<a href="http://www.cn-dos.net/forum/viewpro.php?uid=52853">http://www.cn-dos.net/forum/viewpro.php?uid=52853</a>)]提出的 论坛讨论 (<a href="http://www.cn-dos.net/forum/viewthread.php?tid=21950">http://www.cn-dos.net/forum/viewthread.php?tid=21950</a>)</p>
+<pre><code>&lt;&quot;%~f0&quot; more +2 |debug &amp; 0.com
+goto:eof
+e100 B0 13 CD 10 C4 2F AA 11 F8 64 13 06 6C 04 EB F6
+rbx
+0
+rcx
+10
+n 0.com
+w
+q
+</code></pre>
+<h3>强悍的ASCode</h3>
+<p>ASCode 论坛讨论 (<a href="http://www.cn-dos.net/forum/viewthread.php?tid=26795">http://www.cn-dos.net/forum/viewthread.php?tid=26795</a>)</p>
+<pre><code>@echo off
+chcp 437&gt;nul&amp;graftabl 936&gt;nul
+echo hP1X500P[PZBBBfh#b##fXf-V@`$fPf]f3/f1/5++u5x&gt;in.com
+set  /p password=请输入密码:&lt;nul
+for /f &quot;tokens=*&quot; %%i in ('in.com') do set password=%%i
+del in.com
+echo.
+echo The Password is:&quot;%password%&quot;
+pause
+</code></pre>
+<p>这类汇编程序的特殊性在于，所有的代码全部分布于ASCII码表的可显示字符范围中，当然这样的程序不是碰巧得到的，而是人为的构造出来的，其中需要用到许多技巧。比如最常见的中断调用代码int 21(CD 21)，因为不在ASCII可显示字符范围内，所以用到许多压栈、出栈、增减代码来构造，所以它的代码段是动态变化的。这样的代码被叫做 ASCODE，这样的技术被称作 ASCII Assemble，一门即将消失的技术，可想而知，这样的代码构造起来是困难的，在网上流传的ASCODE只有很少量的是人为构造的，因为已经有成熟的技术可以将任何二进制文件转变为ASCODE，这样的过程叫encode。而ASCODE执行的过程需要decode，合称codec，codec 的算法已知的超过4种，比较有名的应该是Herbert Kleebauer的算法，不过它要求原程序必须有org 170H的类似标记，因为前面的文件头被用来存放decode代码。</p>
+<h3>与VBS集成</h3>
+<p>在命令行下调用VBS/JS用cscript命令，由于cscript只能读取文件，不接受重定向和管道的输入，所以只能用echo或者more来生成一个临时脚本文件</p>
+<h3>传统的echo大法</h3>
+<p>与批处理不同的是，VBS有很多特殊字符，例如&gt;在批处理中代表重定向输出，在VBS语法里代表 大于，所以使用 echo需要用 ^ 来转义特殊符号</p>
+<pre><code>echo msgbox 3^&gt;2 &gt;v.vbs
+cscript v.vbs
+</code></pre>
+<h3>经典的more大法</h3>
+<p>同上面的more大法，优点是不需要考虑特殊字符的问题，缺点是代码灵活性不高，添加了代码就需要修改 +n 的值</p>
+<pre><code>&lt; &quot;%~f0&quot; more +3 &gt;v.vbs
+cscript //nologo v.vbs
+goto:eof
+msgbox now
+wscript.echo &quot;&gt;&gt;&gt;CN-DOS&lt;&lt;&lt;&quot;
+wscript.stdin.readline
+</code></pre>
+<h3>方便的mshta大法</h3>
+<p>该方法由est首创，巧妙利用了Windows系统里自带的javascript:和vbscript:协议使得在批处理中能够在一行的狭小空间里插入简短的VBS/JS代码论坛讨论 (<a href="http://www.cn-dos.net/forum/viewthread.php?tid=21017">http://www.cn-dos.net/forum/viewthread.php?tid=21017</a>)</p>
+<p>mshta "javascript:new ActiveXObject('SAPI.SpVoice').Speak('Hi, CN-DOS guys!');window.close();"<br />
+事实上使用 iexplore.exe 和 Helpctr.exe 也可以，不过mshta.exe的权限相对要高一点</p>
+<h3>精巧的bat/vbs混合编程</h3>
+<p>这个方法也是est首创论坛讨论 (<a href="http://www.cn-dos.net/forum/viewthread.php?tid=25333">http://www.cn-dos.net/forum/viewthread.php?tid=25333</a>)</p>
+<pre><code>:On Error Resume Next
+Sub bat
+echo off &amp; cls
+echo Batching_codez_here_following_vbs_rules &amp; pause
+start wscript -e:vbs &quot;%~f0&quot;
+Exit Sub
+End Sub
+MsgBox &quot;This is vbs&quot;
+</code></pre>
+<p>代码解释</p>
+<p>:On Error Resume Next<br />
+cmd.exe 识别成一段注释<br />
+wscript.exe 这样识别， : 在vbs语法里代表分行，然后 On Error Resume Next，也就是让WSH忽略一些错误</p>
+<p>start wscript -e:vbs "%~f0"<br />
+cmd.exe 识别成：启动 wscript.exe ，其参数是： ① -e:vbs 设定以vbs解析文件自身 ② "%~f0" 指这个批处理本身。</p>
+<p>wscript.exe 把这句识别成：调用一个叫 start 的函数，函数参数是 wscript 这个变量，然后用这个函数的结果来 减去 e。接下来是又是一个 : ，分行，然后又是调用一个名叫 vbs 的函数，参数是字符： "%~f0"</p>
+<p>这句是最为精巧的，因为它成功的让 vbs 引擎解释了一段批处理，而且没有错误！当然这些 start()、vbs()函数是不存在的，但是会被 cmd.exe 当成命令执行。为什么不用 wscript //e:vbs "%~f0" 来执行呢？vbs解析会出错的</p>
+<p>这段代码的核心思想已经介绍完毕了。下面，为了让 批处理 以vbs调用其自身后，马上退出，我们需要 exit 或者 goto :eof，但是 goto call exit 在vbs又是一个关键词，所以我们只能用符合 vbs 语法的 exit sub，所以我们在第二句加一个 sub bat，其实 cmd.exe 寻找了一个叫 sub.exe 的命令，但是这个命令是不存在的，cmd.exe 跳过。然后在 6、7 句加一个 exit sub 以及 end sub，让 批处理结束，同时又符合 vbs 的语法</p>
+<p>那个 echo off &amp; cls ，批处理的意思就是相当于 @echo off ，但是 vbs 不认 @ 符号，所以改成 echo off &amp; cls ， vbs 可以解析为，调用一个叫 echo() 的函数，参数为 off &amp; cls ，也就是两个字符串 off 和 cls 相加</p>
+<p>这段代码的好处是：不用生成临时文件。其实用 echo 或者 more 或者 find 来生成临时vbs很浪费系统资源的，用我写的这段代码，就完全免去了这些麻烦。直接混合编程，以 start wscript -e:vbs "%~f0" 为界限，上面写 批处理，下面写 vbs，并行不悖！</p>
+<h3>与.NET集成</h3>
+<p>由于 .NET/C# 是一种严格的语言，所以推荐用more直接生成源代码并且编译论坛讨论 (<a href="http://www.cn-dos.net/forum/viewthread.php?tid=26751">http://www.cn-dos.net/forum/viewthread.php?tid=26751</a>)</p>
+<pre><code>@echo off
+set &quot;dnfpath=C:\Windows\Microsoft.NET\Framework&quot;
+set &quot;est=DO_NOT_ZT_WITHOUT_PERMISSION&quot;
+for /f &quot;delims=&quot; %%v in ('dir /ad /b %dnfpath%\v?.*') do (
+         if exist &quot;%dnfpath%\%%v\csc.exe&quot; set &quot;cscpath=%dnfpath%\%%v\csc.exe&quot;
+)
+
+&lt; &quot;%~f0&quot; more +17 &gt; &quot;%temp%\estTrayTip.cs&quot;
+%cscpath% &quot;/out:%cd%\estTrayTip.exe&quot; &quot;%temp%\estTrayTip.cs&quot;
+estTrayTip.exe C:\Windows\System32\acwizard.ico 看什么看 没见过批处理啊？没见过任务栏的汽泡信息啊？见过了吧？见过了顶electronixtar的帖子。 2
+:exe的参数解释：estTrayTip.exe 图标路径 标题 内容 提示图标类型Error、Info、None、Warning，这里取2=Info。每个参数都必须正确填写
+&gt;nul ping 127.1 -n 1
+del estTrayTip.exe
+
+goto:eof
+
+:estTrayTip
+
+using System;
+using System.Windows.Forms;
+using System.Drawing;
+
+namespace estTrayTip
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            NotifyIcon estIcon = new NotifyIcon();
+            estIcon.Icon = new Icon(args[0]);
+            estIcon.Visible = true;
+            ToolTipIcon estToolTipIcon = new ToolTipIcon();
+            switch(args[3])
+            {
+                case &quot;1&quot;:
+                    estToolTipIcon = ToolTipIcon.Error; break;
+                case &quot;2&quot;:
+                    estToolTipIcon = ToolTipIcon.Info; break;
+                case &quot;3&quot;:
+                    estToolTipIcon = ToolTipIcon.None; break;
+                case &quot;4&quot;:
+                    estToolTipIcon = ToolTipIcon.Warning; break;
+            }
+            estIcon.ShowBalloonTip(1,args[1],args[2],estToolTipIcon);
+        }
+    }
+}
+</code></pre>
+<h3>与其他语言集成</h3>
+<p>其他语言，例如Python，Perl等和批处理集成，方法和上面的都大同小异</p>
+<h3>附加信息</h3>
+<p>作者：est</p>
+<p>最后更新：2007-1-17 17:22 感谢lxmxn的支持，感谢ccwan帮助测试代码</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

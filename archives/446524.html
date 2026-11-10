@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>原来lighttpd 1.4.x不支持Expect: 100-continue – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="原来lighttpd 1.4.x不支持Expect: 100-continue" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/446524" />
+    <meta property="og:url" content="https://blog.est.im/archives/446524">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="原来lighttpd 1.4.x不支持Expect: 100-continue">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">原来lighttpd 1.4.x不支持Expect: 100-continue</h2>
+    <p class="post-date">Posted <time datetime="2007-10-07T00:00:00+08:00">2007-10-07</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>今天跟同学写一个WebService，我这边是用lighttpd+mod_fastcgi+django做的一个WebService服务，同学那边用C#来调用这个WebService。但是每次在Visual Studio 2005里调试的时候都显示</p>
+<pre><code>未处理 WebException
+远程服务器返回错误: (417) Expectation Failed。
+</code></pre>
+<p>我用Python的urllib2来POST这个WebService都是成功的，但是.NET里几个HTTP请求对象都不能调用。仔细对比抓包了2种语言的请求包，发现.NET的请求头多了一个<code>Expect: 100-continue</code>。</p>
+<p>起初我还怀疑是django不支持，后来查看了<a href="http://blog.csdn.net/li_xj/archive/2007/06/22/1661466.aspx">HTTP 1.1的文档</a>，最后发现，<a href="http://miketeo.net/wp/index.php/2007/08/21/lighttpd-expect-100-continue-workaround.html">lighttpd 1.4版本更本不会支持Expect: 100-continue</a>这个HTTP头。或者装 lighttpd 1.5.x 的开发版本，或者换apache。</p>
+<p>结合在<a href="http://topic.csdn.net/t/20060318/11/4622842.html">CSDN上的相关问题</a>，最终的解决办法是：在Http请求之前加上这一句：<code>System.Net.ServicePointManager.Expect100Continue = false;</code></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

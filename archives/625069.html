@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Gene6 ODBC连接外部MySQL数据库验证FTP登录攻略 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Gene6 ODBC连接外部MySQL数据库验证FTP登录攻略" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/625069" />
+    <meta property="og:url" content="https://blog.est.im/archives/625069">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Gene6 ODBC连接外部MySQL数据库验证FTP登录攻略">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Gene6 ODBC连接外部MySQL数据库验证FTP登录攻略</h2>
+    <p class="post-date">Posted <time datetime="2008-03-14T08:53:21+08:00">2008-03-14</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>折腾了一周多，最终把这个该死的Gene6配置起来了，想起来真是坎坷（主要是Gene6的文档太言简意赅了，shit～～～）</p>
+<p>首先扯谈FTP服务器软件的事情。Linux下FTP服务器如果需要用MySQL作为外部验证源方式很多，有专门的MySQL插件，也可以通过PAM来配置。Windows下Serv-U是老牌，但是及其丑陋！名义上支持通过ODBC连接外部数据库来进行FTP登录验证，但是Serv-U的开发人员脑子进水了，<strong>所有</strong> FTP配置必须和用户名、密码保存在同一张表里。支持SQL的目的就是灵活性，Serv-U这样做大大的限制了ODBC外部验证的用途。Xlight也是一个不错的选择，但是令人抓狂的是，它支持的表名是固定的：用户名、密码必须保存在一个名字为acct_table的表里。所以我觉得Xlight的开发人员脑子肯定被火药枪打过。好，现在不是流行用Gene6+FTPRush代替Serv-U+FlashFXP么，我们试试Gene6。</p>
+<p>文档里是这么说的：</p>
+<blockquote>
+<p>Connection string : ODBC connection string necessary to access the database (examples are preset in drop down list).<br />
+ Query : SQL query that will return the account name (example : 'SELECT account FROM ftp_auth WHERE uid=$LOGIN<br />
+ AND password=$PASSWORD' where '$LOGIN' and '$PASSWORD' are the submitted login and password replaced when the<br />
+ query is sent).</p>
+</blockquote>
+<p>我就根据DormForce ID系统的MySQL数据表写了这么一行查询语句：<br />
+<code>SELECT 'ftpuser' FROM dormid.dormuser WHERE LoginName=$LOGIN AND UserPassword=MD5($PASSWORD)</code></p>
+<p>其他的配置起来了，用一个数据表里的用户整死登录不成功！</p>
+<p>后来东晃晃西看看，在Gene6的官方论坛找到了<a href="http://www.g6ftpserver.com/forum/index.php?showtopic=2457">答案</a>：</p>
+<p>需要这么写：</p>
+<p><code>SELECT 'ftpuser' as account FROM dormid.dormuser WHERE LoginName=$LOGIN AND UserPassword=MD5($PASSWORD)</code></p>
+<p>原来Gene6只会识别account字段的返回，我晕！！！</p>
+<p>下面简单描述一下步骤。首先实现ODBC连接外部MySQL数据库验证FTP登录的目的：如果要实现一个帐号多处登录，那么authentication的数据层必定是独立出来的。如果FTP服务也通过这个统一的认证进行登录，就需要配置FTP服务器进行外部验证。Gene6实现这一功能有2大核心概念：authentication和user。其中，authentication只是验证一个登录名和密码，如果验证成功返回一个“用户名”（不是登录名），如果失败返回其他或则空。用户名是什么东西呢？用户名保存了FTP连接的主目录、限速、限流量、限IP的所有信息。作为普通FTP服务器来说，默认的用户就是匿名（anonymous），密码为任意字符。有的时候也指定了只能特定的user和密码才能浏览/上传/下载。如果采用外部authentication，多个authentication可以对应单个user，也可以一一对应。<br />
+那么我们打开G6FTPAdmin，连接到需要配置的服务器，新建一个域，点击域的属性，找到authentication，新建，method选择Database via ODBC，连接字串填写<br />
+<code>Driver={MySQL ODBC 3.51 Driver};Server=服务器IP;Port=3306;Database=数据库名称;Uid=用户名;Pwd=密码;</code><br />
+Query填写刚才提到的SQL查询语句<br />
+<code>SELECT 'ftpuser' as account FROM dormid.dormuser WHERE LoginName=$LOGIN AND UserPassword=MD5($PASSWORD)</code><br />
+点击OK确定，勾选Disable default authentication，也就是说Gene6的user的密码不参与验证登录密码。<br />
+然后在域下面的Users中添加一个用户ftpuser，配置好主目录，限速，限IP，我们的的FTP服务器就搭建好了。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

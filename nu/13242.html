@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>支持表达式的公式计算工具 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="支持表达式的公式计算工具" />
+
+    <link rel="canonical" href="https://blog.est.im/nu/13242" />
+    <meta property="og:url" content="https://blog.est.im/nu/13242">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="支持表达式的公式计算工具">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">支持表达式的公式计算工具</h2>
+    <p class="post-date">Posted <time datetime="2006-12-29T21:41:00+08:00">2006-12-29</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>昨天鸡腿同学说，写一个支持公式的计算工具还是挺复杂的。当时我就笑了，用C#写可能巨复杂，但是用脚本写就太简单了，于是偶就写了个，大家试试</p>
+<pre><code class="language-javascript">window.execScript\('pi=4*atn\(1\)\\ne=exp\(1\)\\nmsgbox\(eval\('+prompt\('Expression to calculate?','log\(e\)+sin\(pi\)/5-arccos\(.5\)'\).toLowerCase\(\).replace\(/\(arccos\)\\\(\(.+\)\\\)/g, 'pi/2-arcsin\($2\)'\).replace\(/\(arcsin\)\\\(\(.+\)\\\)/g, 'atn\($2/sqr\(1-$2*$2\)\)'\).replace\(/arctan/g, 'atn'\)+'\)\)','VBScript'\);
+</code></pre>
+<p>使用方法;</p>
+<p>支持运算：</p>
+<p>＋<br />
+－<br />
+×<br />
+÷<br />
+sin<br />
+cos<br />
+tan<br />
+arcsin<br />
+arccos<br />
+arctan<br />
+x^y x的y次方<br />
+exp(n) （自然对数e的n次方， e^n ）<br />
+log(x) （自然对数开方）<br />
+支持无穷级括号运算，全部用 () 英文的半角小括号</p>
+<p>支持常数：<br />
+pi=3.14159265358979<br />
+e=2.71828182845905</p>
+<p>当然了，可以使用正则增加对 sec csc ctg sh ch th等计算符号的支持。只不过偶懒得写罢了</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

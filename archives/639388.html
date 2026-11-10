@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google开始做游戏了 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Google开始做游戏了" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/639388" />
+    <meta property="og:url" content="https://blog.est.im/archives/639388">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Google开始做游戏了">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Google开始做游戏了</h2>
+    <p class="post-date">Posted <time datetime="2009-04-23T09:39:12+08:00">2009-04-23</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p><a href="http://o3d.googlecode.com/svn/trunk/samples/io/io.html"><img alt="" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/04/13.jpg" /></a> （刚写完blog这个svn的URL就更新了。看来应注明<a href="http://o3d.googlecode.com/svn-history/r29/trunk/samples/io/">revision</a>作为永久URL）</p>
+<p><a href="http://www.reddit.com/r/programming/comments/8eaim/google_has_released_a_new_open_source_browser/c090i6l">LOL</a>, this is really<a href="http://drawlogic.com/2009/04/21/google-relases-o3d-plugin-for-3d-in-browser-controlled-with-javascript/"> old school shit</a> like VRML &amp; DirectAnimation</p>
+<p>咋个说呢，<a href="http://www.microsoft.com/windows/WindowsMedia/">WMF</a>发来贺电，Silverlight发来贺电，Unity3D发来贺电，<a href="http://papervision3d.org/">P3D</a>发来贺电</p>
+<p>还是要问候谷歌工程师，我日你大爷的，老子下载535KB的O3DSetup.exe，满以为就这么小巧可爱了，结果是他妈<strong>下载</strong> 下来一个<strong>下载器</strong> ，然后下载器自己再去慢吞吞的单线程下载O3D的真实安装包 <a href="http://dl-prcsat.google.com/o3d/0.1.34.2/o3d.msi">http://dl-prcsat.google.com/o3d/0.1.34.2/o3d.msi</a>（1.74MB） 这种bootstrapper的设计者真他妈的是三<strong>。厂里的集体宿舍人满为患，后来的人无处容身，像我，就需要租间房子。这栋楼老太太有两层房，之前楼下住着她的儿子儿</strong> 鹿喝多了。其他的不说了，就单说这个o3d.msi，解压之后发现2个可疑文件，getextras.exe（估计就是推广Google Toolbar的）和driver_blacklist.txt，后者的内容如下：</p>
+<blockquote>
+<h1>This file contains the GUIDs of blacklisted drivers as unsigned ints in hex.</h1>
+<p># File format:<br />
+ # # comments out to the end of a line.<br />
+ # Lines should be no longer than 256 characters. Still, to keep things<br />
+ # simple, just put one GUID per line.<br />
+ # Whitespace is ignored except in that it separates GUIDs.<br />
+ # No other characters are legal.</p>
+<h1>Sample GUID [DO NOT UNCOMMENT THIS LINE]:</h1>
+<p># 0xd7b71e3e</p>
+<h1>Actual blacklisted drivers:</h1>
+</blockquote>
+<p>不过O3D在WinXP IE+Chromium还是很争气的弹了个错误对话框</p>
+<blockquote>
+<p>---------------------------<br />
+ Microsoft Internet Explorer<br />
+ ---------------------------<br />
+ Unsupported GPU device: \\.\DISPLAY1<br />
+ Press OK to continue anyway.<br />
+ ---------------------------<br />
+ 确定 取消<br />
+ ---------------------------</p>
+</blockquote>
+<p>最后我并不看好O3D。首先插件这个东西是见了就烦，虽然Google的品牌是个金字招牌了；其次地球上的3D平台已经充分多充分滥了。再次各种平台的支持也麻烦，例如手持设备。我个人觉得能够序列化在Web/RDP传输的<a href="http://www.opengl.org/">gl</a>指令流才是真正的3D王道。况且3D看似是2D平面的进步，实则进入了交互多媒体领域，要支持摇杆手柄LAN/WAN联机才好玩。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

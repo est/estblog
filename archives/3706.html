@@ -53,22 +53,20 @@
 
   
   <p>Just found Google's most generous proxy service.</p>
-
 <p>Some <a href="http://svn.apache.org/repos/asf/shindig/trunk/java/gadgets/src/main/java/org/apache/shindig/gadgets/servlet/ProxyHandler.java">core code</a> (in Java):</p>
-
 <pre><code>protected void setResponseContentHeaders(HttpResponseBuilder response, HttpResponse results) {
   // We're skipping the content disposition header for flash due to an issue with Flash player 10
   // This does make some sites a higher value phishing target, but this can be mitigated by
   // additional referer checks.
-  if (!isFlash(response.getHeader("Content-Type"), results.getHeader("Content-Type"))) {
-    response.setHeader("Content-Disposition", "attachment;filename=p.txt");
+  if (!isFlash(response.getHeader(&quot;Content-Type&quot;), results.getHeader(&quot;Content-Type&quot;))) {
+    response.setHeader(&quot;Content-Disposition&quot;, &quot;attachment;filename=p.txt&quot;);
   }
-  if (results.getHeader("Content-Type") == null) {
-    response.setHeader("Content-Type", "application/octet-stream");
+  if (results.getHeader(&quot;Content-Type&quot;) == null) {
+    response.setHeader(&quot;Content-Type&quot;, &quot;application/octet-stream&quot;);
   }
 }
 
-private static final String FLASH_CONTENT_TYPE = "application/x-shockwave-flash";
+private static final String FLASH_CONTENT_TYPE = &quot;application/x-shockwave-flash&quot;;
 
 /**
  * Test for presence of flash
@@ -82,27 +80,23 @@ private boolean isFlash(String responseContentType, String resultsContentType) {
       || StringUtils.startsWithIgnoreCase(resultsContentType, FLASH_CONTENT_TYPE);
 }
 </code></pre>
-
 <p>Or <a href="http://svn.apache.org/repos/asf/shindig/trunk/php/src/gadgets/ProxyHandler.php">PHP version</a>:</p>
-
 <pre><code>$isShockwaveFlash = false;
 
 foreach ($cleanedResponseHeaders as $key =&gt; $val) {
   header(&quot;$key: $val&quot;, true);
-  if (strtoupper($key) == &#39;CONTENT-TYPE&#39; &amp;&amp; strtolower($val) == &#39;application/x-shockwave-flash&#39;) {
-    // We&#39;re skipping the content disposition header for flash due to an issue with Flash player 10
+  if (strtoupper($key) == 'CONTENT-TYPE' &amp;&amp; strtolower($val) == 'application/x-shockwave-flash') {
+    // We're skipping the content disposition header for flash due to an issue with Flash player 10
     // This does make some sites a higher value phishing target, but this can be mitigated by
     // additional referer checks.
     $isShockwaveFlash = true;
   }
 }
-if (! $isShockwaveFlash &amp;&amp; !Config::get(&#39;debug&#39;)) {
-  header(&#39;Content-Disposition: attachment;filename=p.txt&#39;);
+if (! $isShockwaveFlash &amp;&amp; !Config::get('debug')) {
+  header('Content-Disposition: attachment;filename=p.txt');
 }
 </code></pre>
-
 <p>Here is what a proxy request looks like:</p>
-
 <pre><code>GET / HTTP/1.1
 User-Agent: Mozilla/5.0 (compatible) Feedfetcher-Google; (+http://www.google.com/feedfetcher.html)
 X-shindig-dos: on
@@ -111,7 +105,6 @@ Host: xxx.xxx.xxx
 X-Forwarded-For: xxx.xxx.xxx.xxx
 Accept-Encoding: gzip
 </code></pre>
-
 <p>One more note, you can use <code>&amp;rewriteMime=image/*&amp;</code> in your request to modify MIME.</p>
 </article>
 

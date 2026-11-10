@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>相对URL还可以这样写 //domain/path 忽略http: – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="相对URL还可以这样写 //domain/path 忽略http:" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/641914" />
+    <meta property="og:url" content="https://blog.est.im/archives/641914">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="相对URL还可以这样写 //domain/path 忽略http:">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">相对URL还可以这样写 //domain/path 忽略http:</h2>
+    <p class="post-date">Posted <time datetime="2009-08-10T09:09:37+08:00">2009-08-10</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>一般我们实现http和https无缝切换，都是用相对路径实现：</p>
+<p><img src='/pix/smiley.jpg' /><br />
+<img src='smiley.jpg' /></p>
+<p>但是如果是外部资源就郁闷了，因为写死了是http://，这个时候用https访问主站，IE之类的浏览器就会提示：即将载入混合内容页面是否继续。这个对话框点击“是”就可以跳过，但是会让用户很疑惑。假如我们嵌入的是一个外部图片：</p>
+<p><img src='http://another-site.com/mypic.jpg' /></p>
+<p>这个时候要做到无缝切换http和https（假如another-site.com也同时支持https的话）可以这样写：</p>
+<p><img src='//another-site.com/mypic.jpg' /></p>
+<p>注意这里和Windows的网上邻居的UNC还是有区别的，UNC是这样的： <code>\\domain\shared\</code></p>
+<p>也就是说，一个完整URL是这样的：</p>
+<p>scheme://username:password@hostname:port/path?parameter=value</p>
+<p>相对URL可以省略hostname<strong>或scheme:部分</strong> 。</p>
+<p>活学活用，在每一个Flash的地方我们可以这样写：</p>
+<object classid="clsid ![:D](http://static.blogcn.com/wp-includes/images/smilies/icon_biggrin.gif) 27CDB6E-AE6D-11cf-96B8-444553540000"
+codebase="//download.macromedia.com/pub/shockwave/cabs/flash/blah#blah"
+width="600" height="400"> ... >/object<
+
+frrom [Ned Batchelde](http://nedbatchelder.com/blog/200710/httphttps_transitions_and_relative_urls.html)r via [HN](http://news.ycombinator.com/item?id=753879)
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

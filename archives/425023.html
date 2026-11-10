@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>各个流行播放器HTTP请求头一览 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="各个流行播放器HTTP请求头一览" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/425023" />
+    <meta property="og:url" content="https://blog.est.im/archives/425023">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="各个流行播放器HTTP请求头一览">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">各个流行播放器HTTP请求头一览</h2>
+    <p class="post-date">Posted <time datetime="2007-09-28T00:00:00+08:00">2007-09-28</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>最近为 DF Music 和Media研发anti-leeching, viewing only机制，顺便抓包了几个支持media streaming的流行播放器HTTP headers，记下备用</p>
+<h2>Windows Media Player</h2>
+<pre><code>GET /1.avi HTTP/1.1
+Accept: */*
+User-Agent: Windows-Media-Player/11.0.6000.6336
+UA-CPU: x86
+Accept-Encoding: gzip, deflate
+Host: 222.197.188.x
+Connection: Keep-Alive
+Cookie: __utma=78507287.1103584299.1187456764.1189668525.1190966298.6; __utmz=78507287.1187456764.1.1.utmccn=(direct)|utmcsr=(direct)|utmcmd=(none)
+</code></pre>
+<p>可以说Windows Media Player是最没有特色的一个播放器了，HTTP请求头一点特征都没有。</p>
+<h2>Media Player Classic</h2>
+<p>MPC是著名的开源播放器，它会尝试2次HTTP请求</p>
+<pre><code>GET /1.rmvb HTTP/1.0
+User-Agent: Media Player Classic
+Host: 222.197.188.x
+Accept: */*
+</code></pre>
+<p>第二次</p>
+<pre><code>GET /1.rmvb HTTP/1.1
+Accept: */*
+UA-CPU: x86
+Accept-Encoding: gzip, deflate
+User-Agent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; SLCC1; .NET CLR 2.0.50727; Media Center PC 5.0; .NET CLR 3.0.590; .NET CLR 3.5.20706)
+Host: 222.197.188.x
+Connection: Keep-Alive
+Cookie: __utma=78507287.1103584299.1187456764.1189668525.1190966298.6; __utmz=78507287.1187456764.1.1.utmccn=(direct)|utmcsr=(direct)|utmcmd=(none)
+</code></pre>
+<h2>RealPlayer</h2>
+<p>RealPlayer是著名的播放器，广告暴多。</p>
+<pre><code>GET /1.rmvb HTTP/1.1
+Accept: */*
+User-Agent: RMA/1.0 (compatible; RealMedia)
+Icy-MetaData: 1
+Bandwidth: 393216
+ClientID: WinNT_5.1_6.0.12.1741_RealPlayer_R31CND_zh-CN_686
+Cookie: __utma=78507287.1103584299.1187456764.1189668525.1190966298.6; __utmz=78507287.1187456764.1.1.utmccn=(direct)|utmcsr=(direct)|utmcmd=(none)
+GUID: 00000000-0000-0000-0000-000000000000
+Language: zh-CN, zh, *
+PlayerCookie: ASP.NET_SessionId
+RegionData: 0
+SupportsMaximumASMBandwidth: 1
+Connection: Keep-Alive
+Host: 222.197.188.x
+Accept-Language: zh-CN, zh, *
+Accept-Encoding: gzip
+</code></pre>
+<h2>KMPlayer</h2>
+<pre><code>KMPlayer是传说中的全能播放器，会多次尝试多个HTTP请求
+首先是User-Agent: http_parser
+``` ```
+GET /1.rmvb HTTP/1.1
+User-Agent: http_parser
+Host: 222.197.188.x
+Cookie: __utma=78507287.1103584299.1187456764.1189668525.1190966298.6; __utmz=78507287.1187456764.1.1.utmccn=(direct)|utmcsr=(direct)|utmcmd=(none)
+``` ```
+然后添加了个Icy-MetaData:1，用于解析metaData
+``` ```
+GET /1.rmvb HTTP/1.0
+Icy-MetaData:1
+User-Agent: shoutcastsource
+Host: 222.197.188.x
+Accept: */*
+Connection: Keep-Alive
+``` ```
+没有User-Agent
+``` ```
+GET /1.rmvb HTTP/1.0
+Icy-MetaData:1
+Host: 222.197.188.x
+Accept: */*
+Connection: Keep-Alive
+``` ```
+尝试解析HTML
+``` ```
+GET /1.rmvb HTTP/1.1
+Content-Type: text/html
+Host: 222.197.188.x
+Accept: text/html, */*
+User-Agent: Mozilla/3.0 (compatible; Indy Library)
+Range: bytes=0-9
+``` ```
+模仿RealPlayer
+``` ```
+GET /1.rmvb HTTP/1.1
+Accept: */*
+User-Agent: RMA/1.0 (compatible; RealMedia)
+Icy-MetaData: 1
+Bandwidth: 524300
+ClientID: WinNT_6.0_10.0.0.0_play32_RN01_EN_686
+Cookie: __utma=78507287.1103584299.1187456764.1189668525.1190966298.6; __utmz=78507287.1187456764.1.1.utmccn=(direct)|utmcsr=(direct)|utmcmd=(none)
+GUID: 00000000-0000-0000-0000-000000000000
+Language: zh-CN
+RegionData: 0
+SupportsMaximumASMBandwidth: 1
+Connection: Keep-Alive
+Host: 222.197.188.x
+Accept-Language: zh-CN
+Accept-Encoding: gzip
+``` ```
+所以我们可以根据Icy-MetaData: 1这个请求头来限制某些静态HTTP资源只允许播放器打开，让下载工具和浏览器都不能leech服务器上的资源。（Orbit Downloader可以突破这些限制）
+</code></pre>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

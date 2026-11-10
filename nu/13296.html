@@ -52,32 +52,29 @@
   </header>
 
   
-  <p>打开一个文件夹比如说，E:\test ，空白处点右键，选择 属性，选择 自定义，然后可以给文件夹改个图标，这个可能地球人都知道了，不过Vista下有更好玩的东西，先随便给文件夹改个图标，点击 确定，然后，打开当前文件夹下的 desktop.ini（方法就很多了，最简单：直接在地址栏的当前路径后面接着输入 \desktop.ini 回车，当然，如果你启用了&ldquo;显示系统及隐藏文件&rdquo;的话，直接双击打开），记事本弹出来，加这么一句：</p>
-<p>LocalizedResourceName=Hacked By <a title="看看est的blog" href="http://www.dormforce.net/Blog/electronixtar" target="_blank">est</a></p>
+  <p>打开一个文件夹比如说，E:\test ，空白处点右键，选择 属性，选择 自定义，然后可以给文件夹改个图标，这个可能地球人都知道了，不过Vista下有更好玩的东西，先随便给文件夹改个图标，点击 确定，然后，打开当前文件夹下的 desktop.ini（方法就很多了，最简单：直接在地址栏的当前路径后面接着输入 \desktop.ini 回车，当然，如果你启用了“显示系统及隐藏文件”的话，直接双击打开），记事本弹出来，加这么一句：</p>
+<p>LocalizedResourceName=Hacked By est</p>
 <p>保存，关闭记事本。</p>
 <p>把 desktop.ini 改名成其他，例如 desktop.ini2，然后再改回来，然后，返回上一级文件夹（快捷键Backspace，晕，我在教入门知识～～），看看，文件夹的名字变成了什么？</p>
-<p>&nbsp;<img alt="" src="http://dormforce.net/Blog/Attachment/642"/></p>
-<p><img alt="" src="http://dormforce.net/Blog/Attachment/643"/></p>
+<p><img alt="" src="/Blog/Attachment/642" /></p>
+<p><img alt="" src="/Blog/Attachment/643" /></p>
 <p>继续好玩的，首先在刚才的文件夹下面新建一个子文件夹，例如我这里是 E:\test\subtest\ 再次打开刚才的 desktop.ini，添几行：</p>
-<p>&nbsp;</p>
-<p>[LocalizedFileNames]<br/>
-subtest=Another Name </p>
-<p>&nbsp; </p>
-<p>接下来，又是，保存，关闭记事本，把 desktop.ini 改成其他名字，如 desktop.ini2（这样做是为了使explorer刷新，重新应用 desktop.ini 的属性），然后改回来，按F5刷新当前文件夹，看看 subtest 文件夹的名字是不是变成了 Another Name？ </p>
-<p><img alt="" src="http://dormforce.net/Blog/Attachment/644"/></p>
-<p><img alt="" src="http://dormforce.net/Blog/Attachment/645"/></p>
-<p>事实上文件夹的名字改变没有呢？没有。不信，点一下 Vista 资源管理器的 地址栏，呵呵，如图。 </p>
-<p><img alt="" src="http://dormforce.net/Blog/Attachment/646"/></p>
-<p><img alt="" src="http://dormforce.net/Blog/Attachment/647"/></p>
-<p>这个 trick 有什么用呢？好处是，我可以建立一个缩写名字的文件夹，这样便于输入路径，然后用desktop.ini这么修改下，显示成全称，美观。往坏处想呢，我有个 trojan.exe，图标和Word文档的一样，放在一个名字叫 virus\ 的文件夹下，这个 virus\ 文件夹下面用一个 desktop.ini 把 trojan.exe 伪装成 letter.docx（Office 2003及以前是 .doc，2007就是 .docx 格式了），然后，社会工程学让用户点击这个文件&hellip;&hellip;普通用户会说，这个文件的名字是 letter.doc（不是 letter.doc.exe ），是安全的，可以打开，双击后&hellip;&hellip;一切都结束了。 </p>
-<p>图里面有两个文件，一个 fake letter.docx，其实是一个exe，双击可以直接运行，图标是用ResHacker伪装的Word2007的图标，另一个 Normal Word Document.docx 是真正的 Word 2007 文档。光凭外观，你能区分exe和docx么？ </p>
-<p><img alt="" src="http://dormforce.net/Blog/Attachment/648"/></p>
+<p>[LocalizedFileNames]<br />
+subtest=Another Name</p>
+<p>接下来，又是，保存，关闭记事本，把 desktop.ini 改成其他名字，如 desktop.ini2（这样做是为了使explorer刷新，重新应用 desktop.ini 的属性），然后改回来，按F5刷新当前文件夹，看看 subtest 文件夹的名字是不是变成了 Another Name？</p>
+<p><img alt="" src="/Blog/Attachment/644" /></p>
+<p><img alt="" src="/Blog/Attachment/645" /></p>
+<p>事实上文件夹的名字改变没有呢？没有。不信，点一下 Vista 资源管理器的 地址栏，呵呵，如图。</p>
+<p><img alt="" src="/Blog/Attachment/646" /></p>
+<p><img alt="" src="/Blog/Attachment/647" /></p>
+<p>这个 trick 有什么用呢？好处是，我可以建立一个缩写名字的文件夹，这样便于输入路径，然后用desktop.ini这么修改下，显示成全称，美观。往坏处想呢，我有个 trojan.exe，图标和Word文档的一样，放在一个名字叫 virus\ 的文件夹下，这个 virus\ 文件夹下面用一个 desktop.ini 把 trojan.exe 伪装成 letter.docx（Office 2003及以前是 .doc，2007就是 .docx 格式了），然后，社会工程学让用户点击这个文件……普通用户会说，这个文件的名字是 letter.doc（不是 letter.doc.exe ），是安全的，可以打开，双击后……一切都结束了。</p>
+<p>图里面有两个文件，一个 fake letter.docx，其实是一个exe，双击可以直接运行，图标是用ResHacker伪装的Word2007的图标，另一个 Normal Word Document.docx 是真正的 Word 2007 文档。光凭外观，你能区分exe和docx么？</p>
+<p><img alt="" src="/Blog/Attachment/648" /></p>
 <p>版权所有，转载请注明出处。</p>
-<p>&nbsp;</p>
 <p>我是怎么发现这个秘密的呢？在这里：</p>
-<p>%appdata%\Microsoft\Windows\Start Menu\desktop.ini<br/>
+<p>%appdata%\Microsoft\Windows\Start Menu\desktop.ini<br />
 %appdata%\Microsoft\Windows\Start Menu\Programs\Accessories\desktop.ini</p>
-<p>&nbsp;这可能是我期末考试前最后一篇blog了，这学期为了 .NET，Vista，Ubuntu欠了不少功课，郁闷啊～～</p>
+<p>这可能是我期末考试前最后一篇blog了，这学期为了 .NET，Vista，Ubuntu欠了不少功课，郁闷啊～～</p>
 </article>
 
 <div class="comments">

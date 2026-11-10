@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Windows Vista/Server 2008下无法使用ISTAP的IPv6故障解决 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Windows Vista/Server 2008下无法使用ISTAP的IPv6故障解决" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/632207" />
+    <meta property="og:url" content="https://blog.est.im/archives/632207">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Windows Vista/Server 2008下无法使用ISTAP的IPv6故障解决">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Windows Vista/Server 2008下无法使用ISTAP的IPv6故障解决</h2>
+    <p class="post-date">Posted <time datetime="2008-09-12T00:00:00+08:00">2008-09-12</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>大二就把IPv6的隧道弄起了，但是到大四才开始用。唉。。。</p>
+<p>使用方法：</p>
+<p><code>netsh interface ipv6 isatap set router x.x.x.x</code></p>
+<p>为什么没有效果呢？因为IP Helper服务没有启动。</p>
+<pre><code>sc config iphlpsvc start= auto
+net start iphlpsvc
+</code></pre>
+<p>好久没折腾Windows，很多troubleshooting的关键都忘记了。</p>
+<p>ps 我发现<a href="http://ipv6.google.com/">Google的IPv6首页</a>，<a href="http://ipv6.google.com/intl/en_ALL/images/logo.gif">logo</a>会跳动啊</p>
+<p><img alt="Google IPv6 Logo" src="http://ipv6.google.com/intl/en_ALL/images/logo.gif" /></p>
+<p>看不起的，我把扣下来了。IPv4应该也能看到</p>
+<p><img alt="Google IPv6 Logo" src="http://olds.blogcn.com/wp-content/uploads/74/7487/2008/09/1.gif" /></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[PyXMPP]echobot.py that works with GTalk – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[PyXMPP]echobot.py that works with GTalk" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/495736" />
+    <meta property="og:url" content="https://blog.est.im/archives/495736">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[PyXMPP]echobot.py that works with GTalk">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[PyXMPP]echobot.py that works with GTalk</h2>
+    <p class="post-date">Posted <time datetime="2007-10-30T00:00:00+08:00">2007-10-30</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>I am transferring my GTalkBot From <a href="http://xmpppy.sourceforge.net/">XMPPPy</a> to <a href="http://pyxmpp.jajcus.net/">PyXMPP</a>, but PyXMPP's <a href="http://pyxmpp.jajcus.net/trac/browser/trunk/examples/echobot.py">echobot.py</a> example does not work with <a href="http://talk.google.com">Google Talk</a>, I tried <a href="http://www.stillhq.com/google/gtalk/000001.html">Mikal's patch</a> and got it work!</p>
+<p>Here is the patched source for <a href="http://pyxmpp.jajcus.net/trac/browser/trunk/examples/echobot.py">echobot.py</a></p>
+<pre><code>#!/usr/bin/python -u
+#
+# This example is a simple &quot;echo&quot; bot
+#
+# After connecting to a jabber server it will echo messages, and accept any
+# presence subscriptions. This bot has basic Disco support (implemented in
+# pyxmpp.jabber.client.Client class) and jabber:iq:vesion.
+
+import sys
+import logging
+import locale
+import codecs
+
+From pyxmpp.all import JID,Iq,Presence,Message,StreamError
+From pyxmpp.jabber.client import JabberClient
+From pyxmpp import streamtls
+
+class Client(JabberClient):
+    &quot;&quot;&quot;Simple bot (client) example. Uses `pyxmpp.jabber.client.JabberClient`
+    class as base. That class provides basic stream setup (including
+    authentication) and Service Discovery server. It also does server address
+    and port discovery based on the JID provided.&quot;&quot;&quot;
+
+    def __init__(self, jid, password):
+
+        # if bare JID is provided add a resource -- it is required
+        if not jid.resource:
+            jid=JID(jid.node, jid.domain, &quot;Echobot&quot;)
+
+        # setup client with provided connection information
+        # and identity data
+        tls = streamtls.TLSSettings(require=True, verify_peer=False)
+        auth = [ 'sasl:PLAIN' ]
+
+        JabberClient.__init__(self, jid, password,
+            disco_name=&quot;PyXMPP example: echo bot&quot;, disco_type=&quot;bot&quot;,
+            tls_settings=tls, auth_methods=auth)
+
+        #        disco_name=&quot;PyXMPP example: echo bot&quot;, disco_type=&quot;bot&quot;)
+
+        # register features to be announced via Service Discovery
+        self.disco_info.add_feature(&quot;jabber:iq:version&quot;)
+
+    def stream_state_changed(self,state,arg):
+        &quot;&quot;&quot;This one is called when the state of stream connecting the component
+        to a server changes. This will usually be used to let the user
+        know what is going on.&quot;&quot;&quot;
+        print &quot;*** State changed: %s %r ***&quot; % (state,arg)
+
+    def session_started(self):
+        &quot;&quot;&quot;This is called when the IM session is successfully started
+        (after all the neccessery negotiations, authentication and
+        authorizasion).
+        That is the best place to setup various handlers for the stream.
+        Do not forget about calling the session_started() method of the base
+        class!&quot;&quot;&quot;
+        JabberClient.session_started(self)
+
+        # set up handlers for supported  queries
+        self.stream.set_iq_get_handler(&quot;query&quot;,&quot;jabber:iq:version&quot;,self.get_version)
+
+        # set up handlers for
+ stanzas
+        self.stream.set_presence_handler(&quot;available&quot;,self.presence)
+        self.stream.set_presence_handler(&quot;subscribe&quot;,self.presence_control)
+        self.stream.set_presence_handler(&quot;subscribed&quot;,self.presence_control)
+        self.stream.set_presence_handler(&quot;unsubscribe&quot;,self.presence_control)
+        self.stream.set_presence_handler(&quot;unsubscribed&quot;,self.presence_control)
+
+        # set up handler for
+        self.stream.set_message_handler(&quot;normal&quot;,self.message)
+
+    def get_version(self,iq):
+        &quot;&quot;&quot;Handler for jabber:iq:version queries.
+
+        jabber:iq:version queries are not supported directly by PyXMPP, so the
+        XML node is accessed directly through the libxml2 API.  This should be
+        used very carefully!&quot;&quot;&quot;
+        iq=iq.make_result_response()
+        q=iq.new_query(&quot;jabber:iq:version&quot;)
+        q.newTextChild(q.ns(),&quot;name&quot;,&quot;Echo component&quot;)
+        q.newTextChild(q.ns(),&quot;version&quot;,&quot;1.0&quot;)
+        self.stream.send(iq)
+        return True
+
+    def message(self,stanza):
+        &quot;&quot;&quot;Message handler for the component.
+
+        Echoes the message back if its type is not 'error' or
+        'headline', also sets own presence status to the message body. Please
+        note that all message types but 'error' will be passed to the handler
+        for 'normal' message unless some dedicated handler process them.
+
+        :returns: `True` to indicate, that the stanza should not be processed
+        any further.&quot;&quot;&quot;
+        subject=stanza.get_subject()
+        body=stanza.get_body()
+        t=stanza.get_type()
+        print u'Message From %s received.' % (unicode(stanza.get_from(),)),
+        if subject:
+            print u'Subject: &quot;%s&quot;.' % (subject,),
+        if body:
+            print u'Body: &quot;%s&quot;.' % (body,),
+        if t:
+            print u'Type: &quot;%s&quot;.' % (t,)
+        else:
+            print u'Type: &quot;normal&quot;.' % (t,)
+        if stanza.get_type()==&quot;headline&quot;:
+            # 'headline' messages should never be replied to
+            return True
+        if subject:
+            subject=u&quot;Re: &quot;+subject
+        m=Message(
+            to_jid=stanza.get_from(),
+            from_jid=stanza.get_to(),
+            stanza_type=stanza.get_type(),
+            subject=subject,
+            body=body)
+        self.stream.send(m)
+        if body:
+            p=Presence(status=body)
+            self.stream.send(p)
+        return True
+
+    def presence(self,stanza):
+        &quot;&quot;&quot;Handle 'available' (without 'type') and 'unavailable'
+.&quot;&quot;&quot;
+        msg=u&quot;%s has become &quot; % (stanza.get_from())
+        t=stanza.get_type()
+        if t==&quot;unavailable&quot;:
+            msg+=u&quot;unavailable&quot;
+        else:
+            msg+=u&quot;available&quot;
+
+        show=stanza.get_show()
+        if show:
+            msg+=u&quot;(%s)&quot; % (show,)
+
+        status=stanza.get_status()
+        if status:
+            msg+=u&quot;: &quot;+status
+        print msg
+
+    def presence_control(self,stanza):
+        &quot;&quot;&quot;Handle subscription control
+ stanzas -- acknowledge
+        them.&quot;&quot;&quot;
+        msg=unicode(stanza.get_from())
+        t=stanza.get_type()
+        if t==&quot;subscribe&quot;:
+            msg+=u&quot; has requested presence subscription.&quot;
+        elif t==&quot;subscribed&quot;:
+            msg+=u&quot; has accepted our presence subscription request.&quot;
+        elif t==&quot;unsubscribe&quot;:
+            msg+=u&quot; has canceled his subscription of our.&quot;
+        elif t==&quot;unsubscribed&quot;:
+            msg+=u&quot; has canceled our subscription of his presence.&quot;
+
+        print msg
+        p=stanza.make_accept_response()
+        self.stream.send(p)
+        return True
+
+    def print_roster_item(self,item):
+        if item.name:
+            name=item.name
+        else:
+            name=u&quot;&quot;
+        print (u'%s &quot;%s&quot; subscription=%s groups=%s'
+                % (unicode(item.jid), name, item.subscription,
+                    u&quot;,&quot;.join(item.groups)) )
+
+    def roster_updated(self,item=None):
+        if not item:
+            print u&quot;My roster:&quot;
+            for item in self.roster.get_items():
+                self.print_roster_item(item)
+            return
+        print u&quot;Roster item updated:&quot;
+        self.print_roster_item(item)
+
+# XMPP protocol is Unicode-based to properly display data received
+# _must_ convert it to local encoding or UnicodeException may be raised
+locale.setlocale(locale.LC_CTYPE,&quot;&quot;)
+encoding=locale.getlocale()[1]
+if not encoding:
+    encoding=&quot;us-ascii&quot;
+sys.stdout=codecs.getwriter(encoding)(sys.stdout,errors=&quot;replace&quot;)
+sys.stderr=codecs.getwriter(encoding)(sys.stderr,errors=&quot;replace&quot;)
+
+# PyXMPP uses `logging` module for its debug output
+# applications should set it up as needed
+logger=logging.getLogger()
+logger.addHandler(logging.StreamHandler())
+logger.setLevel(logging.INFO) # change to DEBUG for higher verbosity
+
+if len(sys.argv)&lt;3:      print u&quot;Usage:&quot;      print &quot;\t%s JID password&quot; % (sys.argv[0],)      print &quot;example:&quot;      print &quot;\t%s test@localhost verysecret&quot; % (sys.argv[0],)      sys.exit(1)    print u&quot;creating client...&quot;  c=Client(JID(sys.argv[1]),sys.argv[2])    print u&quot;connecting...&quot;  c.connect()    print u&quot;looping...&quot;  try:      # Component class provides basic &quot;main loop&quot; for the applitation      # Though, most applications would need to have their own loop and call      # component.stream.loop_iter() From it whenever an event on      # component.stream.fileno() occurs.      c.loop(1)  except KeyboardInterrupt:      print u&quot;disconnecting...&quot;      c.disconnect()    print u&quot;exiting...&quot;
+</code></pre>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

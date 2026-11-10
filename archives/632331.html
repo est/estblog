@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Vista x86 TCP/IP 连接数傻瓜化破解 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Vista x86 TCP/IP 连接数傻瓜化破解" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/632331" />
+    <meta property="og:url" content="https://blog.est.im/archives/632331">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Vista x86 TCP/IP 连接数傻瓜化破解">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Vista x86 TCP/IP 连接数傻瓜化破解</h2>
+    <p class="post-date">Posted <time datetime="2007-04-12T14:46:00+08:00">2007-04-12</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>写了个批处理玩玩</p>
+<pre><code>@echo Off
+
+:est@CN-DOS
+:TCP/IP Connection limit crack
+echo By est
+takeown /f %WinDir%\System32\drivers\tcpip.sys 1&gt;nul 2&gt;nul
+echo y|cacls %WinDir%\System32\Drivers\tcpip.sys /G %username%:F 1&gt;nul 2&gt;nul
+replace %WinDir%\System32\drivers\tcpip.sys &quot;%CD%&quot; 1&gt;nul 2&gt;nul
+netsh int tcp set global autotuninglevel=disable 1&gt;nul 2&gt;nul
+set /p ConnNum=输入你希望的TCP/IP连接数：
+reg add HKLM\System\CurrentControlSet\Services\Tcpip\Parameters /v TcpNumConnections /t REG_DWORD /d %ConnNum% /f 1&gt;nul 2&gt;nul
+echo 搞定。任意键退出
+
+pause 1&gt;nul
+</code></pre>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

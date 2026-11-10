@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pandion 2.5 Typelib Library – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Pandion 2.5 Typelib Library" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/578000" />
+    <meta property="og:url" content="https://blog.est.im/archives/578000">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Pandion 2.5 Typelib Library">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Pandion 2.5 Typelib Library</h2>
+    <p class="post-date">Posted <time datetime="2007-12-15T12:24:42+08:00">2007-12-15</time> | <span>archive</span></p>
+  </header>
+
+  
+  <pre><code>PandionLib;
+
+Interface IExternal;
+
+GUID={4D7F263B-EF63-4132-9264-109E4C874ED1};
+
+  function Init(__MIDL_0011:^void; __MIDL_0012:^void): HResult;
+
+  property-get wnd(out pDisp:^variant): HResult;
+
+  property-get mainWnd(out pDisp:^variant): HResult;
+
+  property-get windows(out pDisp:^variant): HResult;
+
+  property-get globals(out pDisp:^variant): HResult;
+
+  property-get ComCtrl(out pDisp:^variant): HResult;
+
+  function createWindow(name:BSTR; file:BSTR; params:^variant; bPopUnder:I4; out pDisp:^variant): HResult;
+
+  function shellExec(verb:BSTR; file:BSTR; params:BSTR; dir:BSTR; nShowCmd:UI4): HResult;
+
+  property-get cursorX(out retVal:^variant): HResult;
+
+  property-get cursorY(out retVal:^variant): HResult;
+
+  property-get newPopupMenu(out pDisp:^variant): HResult;
+
+  property-get notifyIcon(out pDisp:^variant): HResult;
+
+  property-get HTTPEngine(out pDisp:^variant): HResult;
+
+  property-get SASL(out pDisp:^variant): HResult;
+
+  property-get IPs(out pStr:^variant): HResult;
+
+  property-get CmdLine(out pStr:^variant): HResult;
+
+  function sleep(dwMilliseconds:UI4): HResult;
+
+  function file(path:BSTR; out pDisp:^variant): HResult;
+
+  function FileExists(path:BSTR; out bExists:^I4): HResult;
+
+  property-get Directory(out pDisp:^variant): HResult;
+
+  property-get XMPP(out pDisp:^variant): HResult;
+
+  function StringToSHA1(str:BSTR; out strSHA1:^BSTR): HResult;
+
+  function GetSpecialFolder(nFolder:INT; out path:^BSTR): HResult;
+
+  function RegRead(strHKey:BSTR; strKey:BSTR; value:BSTR; out vRetVal:^variant): HResult;
+
+  property-get Shortcut(out pDisp:^variant): HResult;
+
+  function UnZip(path:BSTR; targetDir:BSTR; out nSuccess:^INT): HResult;
+
+  function Base64ToString(b64String:BSTR; out UTF16String:^BSTR): HResult;
+
+  function StringToBase64(UTF16String:BSTR; out b64String:^BSTR): HResult;
+
+  function Fullscreen(out bFullscreen:^I4): HResult;
+
+Interface IPdnFile;
+
+GUID={FBD6DFDE-45DA-4FD3-94A2-BF211D925CD2};
+
+  function Create(strFileName:BSTR; dwAccess:UINT; dwShare:UINT; dwDisposition:UINT): HResult;
+
+  function Seek(fpLow:INT; fpHigh:INT; dwMethod:UINT): HResult;
+
+  function SetEOF: HResult;
+
+  function Read(out pBuffer:^UI1; nRead:UINT): HResult;
+
+  function Write(pBuffer:^UI1; nWrite:UINT): HResult;
+
+  function ReadLine(out strLine:^BSTR): HResult;
+
+  function WriteLine(strLine:BSTR): HResult;
+
+  function ReadBase64(out strBase64:^BSTR): HResult;
+
+  function WriteBase64(strBase64:BSTR): HResult;
+
+  property-get AtEnd(out bAtEnd:^I4): HResult;
+
+  property-get Size(out nSize:^UINT): HResult;
+
+  property-get FileName(out strFileName:^BSTR): HResult;
+
+  property-get SHA1(out strSHA1:^BSTR): HResult;
+
+  function Move(strTo:BSTR): HResult;
+
+  function Copy(strTo:BSTR; bOverWrite:I4; out retCopy:^^IPdnFile): HResult;
+
+  function Delete: HResult;
+
+  function Flush: HResult;
+
+  function Close: HResult;
+
+  property-get LastWriteTime(out vLastWriteTime:^variant): HResult;
+
+Interface IPdnDirectory;
+
+GUID={E8AC5D21-E54C-4401-B87E-DB242C6F83F2};
+
+  function Create(path:BSTR): HResult;
+
+  function Exists(path:BSTR; out bExists:^I4): HResult;
+
+  function ListDirs(path:BSTR; out list:^variant): HResult;
+
+  function ListFiles(path:BSTR; out list:^variant): HResult;
+
+  function Delete(path:BSTR): HResult;
+
+Interface IListEntry;
+
+GUID={A373BD14-D034-461C-9ADA-6B95B5C03A27};
+
+  property-get IsArchive(out b:^I4): HResult;
+
+  property-get IsCompressed(out b:^I4): HResult;
+
+  property-get IsDirectory(out b:^I4): HResult;
+
+  property-get IsEncrypted(out b:^I4): HResult;
+
+  property-get IsHidden(out b:^I4): HResult;
+
+  property-get IsNormal(out b:^I4): HResult;
+
+  property-get IsOffline(out b:^I4): HResult;
+
+  property-get IsReadOnly(out b:^I4): HResult;
+
+  property-get HasReparsePoint(out b:^I4): HResult;
+
+  property-get IsSparseFile(out b:^I4): HResult;
+
+  property-get IsSystem(out b:^I4): HResult;
+
+  property-get IsTemporary(out b:^I4): HResult;
+
+  property-get CreationTime(out str:^BSTR): HResult;
+
+  property-get LastAccessTime(out str:^BSTR): HResult;
+
+  property-get LastWriteTime(out str:^BSTR): HResult;
+
+  property-get FileSizeHigh(out dw:^UI4): HResult;
+
+  property-get FileSizeLow(out dw:^UI4): HResult;
+
+  property-get ReparseTag(out dw:^UI4): HResult;
+
+  property-get Reserved1(out dw:^UI4): HResult;
+
+  property-get name(out str:^BSTR): HResult;
+
+  property-get AlternateName(out str:^BSTR): HResult;
+
+Interface IPdnWnd;
+
+GUID={EAE0B241-A558-451D-9AF8-899F1FBA68F7};
+
+  function setTitle(Title:BSTR): HResult;
+
+  function setAOT(b:I4): HResult;
+
+  function minimize: HResult;
+
+  function maximize: HResult;
+
+  function Close: HResult;
+
+  function setSize(width:UI4; height:UI4): HResult;
+
+  function setPos(left:INT; top:INT): HResult;
+
+  function setIcon(IconPath:BSTR): HResult;
+
+  function hide(b:I4): HResult;
+
+  function flash(u:UI4): HResult;
+
+  function resizeable(b:I4): HResult;
+
+  function showMinBox(b:I4): HResult;
+
+  function showMaxBox(b:I4): HResult;
+
+  function showTitlebar(b:I4): HResult;
+
+  function translucent(percent:UI4): HResult;
+
+  function animate(flags:UI4; duration:UI4): HResult;
+
+  function Do(funcName:BSTR; params:^variant; nParams:UI4): HResult;
+
+  property-get params(out retVal:^variant): HResult;
+
+  function focus: HResult;
+
+  property-get left(out retVal:^variant): HResult;
+
+  property-get top(out retVal:^variant): HResult;
+
+  property-get width(out retVal:^variant): HResult;
+
+  property-get height(out retVal:^variant): HResult;
+
+  property-put minWidth(UI4): HResult;
+
+  property-put minHeight(UI4): HResult;
+
+  function isActive(out __MIDL_0013:^I4): HResult;
+
+  function pushFocus: HResult;
+
+  function popFocus: HResult;
+
+  function setMinHandler(__MIDL_0014:BSTR): HResult;
+
+  function setCloseHandler(__MIDL_0015:BSTR): HResult;
+
+  function setMenuHandler(__MIDL_0016:BSTR): HResult;
+
+  function setCmdLineHandler(__MIDL_0017:BSTR): HResult;
+
+  function setRestoreHandler(__MIDL_0018:BSTR): HResult;
+
+  function setActivationHandler(__MIDL_0019:BSTR): HResult;
+
+  property-get isMinimized(out __MIDL_0020:^I4): HResult;
+
+  property-get isMaximized(out __MIDL_0021:^I4): HResult;
+
+  property-get IsHidden(out __MIDL_0022:^I4): HResult;
+
+  function restore: HResult;
+
+  function FireEvent(handler:BSTR; parameters:^variant; nParams:UI4): HResult;
+
+  property-get menuBar(out pDisp:^variant): HResult;
+
+  function messageBox(modal:I4; text:BSTR; caption:BSTR; type:UI4; out retVal:^UI4): HResult;
+
+  property-get Handle(out pHandle:^UI4): HResult;
+
+Interface INotifyIcon;
+
+GUID={F207E028-1821-4837-A3CB-4CEB55F77BBA};
+
+  function show: HResult;
+
+  function remove: HResult;
+
+  function setText(__MIDL_0023:BSTR): HResult;
+
+  function setIcon(__MIDL_0024:BSTR; __MIDL_0025:INT): HResult;
+
+  function setHandler(__MIDL_0026:BSTR): HResult;
+
+  function update: HResult;
+
+Dispatch IPopupMenu;
+
+GUID={61E20ADF-74E3-4AD9-8C8F-C6B6065D88B6};
+
+  function QueryInterface(riid:^GUID; out ppvObj:^^void);
+
+  function AddRef: UI4;
+
+  function Release: UI4;
+
+  function GetTypeInfoCount(out pctinfo:^UINT);
+
+  function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);
+
+  function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);
+
+  function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);
+
+  function AddItem(bEnabled:I4; bChecked:I4; bRadio:I4; bDefault:I4; hSubMenu:UI4; label:BSTR; ID:UI4);
+
+  function show(x:UI4; y:UI4; fromTray:I4);
+
+  property-get Handle: variant;
+
+  property-get Choice: variant;
+
+  function Clear;
+
+  function AddSeparator;
+
+Dispatch IMenuBar;
+
+GUID={9543DAE7-DB3D-4233-8F07-1AFC4FDEA1C7};
+
+  function QueryInterface(riid:^GUID; out ppvObj:^^void);
+
+  function AddRef: UI4;
+
+  function Release: UI4;
+
+  function GetTypeInfoCount(out pctinfo:^UINT);
+
+  function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);
+
+  function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);
+
+  function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);
+
+  function AddItem(label:BSTR; pos:UI4; ID:UI4; subMenu:IDispatch);
+
+  function RemItem(ID:UI4);
+
+  function update;
+
+  property-get Items: UI4;
+
+  property-get Handle: variant;
+
+  property-put hwnd(UI4);
+
+Dispatch IEventRouter;
+
+GUID={0D70087F-57AD-4FFC-9AD3-C453A3CEDF95};
+
+  function QueryInterface(riid:^GUID; out ppvObj:^^void);
+
+  function AddRef: UI4;
+
+  function Release: UI4;
+
+  function GetTypeInfoCount(out pctinfo:^UINT);
+
+  function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);
+
+  function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);
+
+  function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);
+
+  function Subscribe(wnd:IDispatch);
+
+  function Unsubscribe(wnd:IDispatch);
+
+  function OnListening(Port:UI2);
+
+  function OnAccept(sessionID:UI4; remHost:BSTR; remPort:UI2; localPort:UI2);
+
+  function OnConnected(sessionID:UI4; remHost:BSTR; remPort:UI2; localPort:UI2);
+
+  function OnGetRequest(sessionID:UI4; fileID:UI4; URI:BSTR; localPath:BSTR);
+
+  function OnPostRequest(sessionID:UI4; URI:BSTR; out saveAs:^BSTR);
+
+  function OnTimeout(sessionID:UI4);
+
+  function OnSockErr(sessionID:UI4; err:UI4);
+
+  function OnHTTPErr(sessionID:UI4; err:UI4);
+
+  function OnFileErr(sessionID:UI4; err:UI4);
+
+  function OnTransferAborted(sessionID:UI4);
+
+  function OnTransferComplete(sessionID:UI4);
+
+Dispatch IHTTP;
+
+GUID={62AFF369-6F4F-43A2-84F4-7B60DE4C3F2A};
+
+  function QueryInterface(riid:^GUID; out ppvObj:^^void);
+
+  function AddRef: UI4;
+
+  function Release: UI4;
+
+  function GetTypeInfoCount(out pctinfo:^UINT);
+
+  function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);
+
+  function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);
+
+  function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);
+
+  function ShareFile(FileName:BSTR; URL:BSTR): UI4;
+
+  function UnShareFile(fileCookie:UI4);
+
+  function Listen(Port:UI2);
+
+  function StopListening(Port:UI2);
+
+  function Get(FileName:BSTR; URI:BSTR; offset:UI4; len:UI4; address:BSTR; Port:UI2): UI4;
+
+  function Post(FileName:BSTR; URI:BSTR; offset:UI4; len:UI4; address:BSTR; Port:UI2): UI4;
+
+  function SetProxyInfo(proxyAddress:BSTR; proxyPort:UI2; proxyUName:BSTR; proxyPass:BSTR);
+
+  function GetProgress(sessionID:UI4): UI4;
+
+  function GetLength(sessionID:UI4): UI4;
+
+  function Subscribe(wnd:IDispatch);
+
+  function Unsubscribe(wnd:IDispatch);
+
+  function Abort(sessionID:UI4);
+
+Dispatch IXMPP;
+
+GUID={AA1128C2-C1DD-40BE-9F04-CCAC37D9C576};
+
+  function QueryInterface(riid:^GUID; out ppvObj:^^void);
+
+  function AddRef: UI4;
+
+  function Release: UI4;
+
+  function GetTypeInfoCount(out pctinfo:^UINT);
+
+  function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);
+
+  function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);
+
+  function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);
+
+  function SetMainWnd(mainWnd:^void);
+
+  function Connect(server:BSTR; Port:UI2; useSSL:I4; ProxyMethod:UI4);
+
+  function StartTLS;
+
+  function StartSC;
+
+  function Disconnect;
+
+  function SendXML(pDisp:variant);
+
+  function SendText(strText:BSTR);
+
+  property-put ConnectedHandler(BSTR);
+
+  property-put DisconnectedHandler(BSTR);
+
+  property-put IQHandler(BSTR);
+
+  property-put MessageHandler(BSTR);
+
+  property-put PresenceHandler(BSTR);
+
+  property-put DocumentStartHandler(BSTR);
+
+  property-put DocumentEndHandler(BSTR);
+
+  property-put StreamHandler(BSTR);
+
+  property-put StartTLSSucceededHandler(BSTR);
+
+  property-put StartTLSFailedHandler(BSTR);
+
+  property-put StartSCSucceededHandler(BSTR);
+
+  property-put StartSCFailedHandler(BSTR);
+
+  property-get ConnectionIP: BSTR;
+
+  function SetProxyServer(server:BSTR; Port:UI2; username:BSTR; password:BSTR);
+
+  function SetProxyPollURL(pollURL:BSTR);
+
+Dispatch ISASL;
+
+GUID={4DA65D01-52FA-4305-8F87-3C2124F01FB1};
+
+  function QueryInterface(riid:^GUID; out ppvObj:^^void);
+
+  function AddRef: UI4;
+
+  function Release: UI4;
+
+  function GetTypeInfoCount(out pctinfo:^UINT);
+
+  function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);
+
+  function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);
+
+  function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);
+
+  function PlainGenerateResponse(jid:BSTR; username:BSTR; password:BSTR): BSTR;
+
+  function DigestGenerateResponse(username:BSTR; realm:BSTR; password:BSTR; nonce:BSTR; cnonce:BSTR; digest_uri:BSTR; nc:BSTR; qop:BSTR): BSTR;
+
+  function SSPIReset;
+
+  function SSPIGenerateResponse(Challenge:BSTR; out Continue:^I4): BSTR;
+
+Dispatch IShortcut;
+
+GUID={86F9CBA5-DFB1-452D-A79F-F22E0DCFE567};
+
+  function QueryInterface(riid:^GUID; out ppvObj:^^void);
+
+  function AddRef: UI4;
+
+  function Release: UI4;
+
+  function GetTypeInfoCount(out pctinfo:^UINT);
+
+  function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);
+
+  function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);
+
+  function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);
+
+  function Save(path:BSTR);
+
+  function Load(path:BSTR);
+
+  property-get Description: BSTR;
+
+  property-get IconLocation: BSTR;
+
+  property-get path: BSTR;
+
+  property-get Arguments: BSTR;
+
+  property-put Description(BSTR);
+
+  property-put IconLocation(BSTR);
+
+  property-put path(BSTR);
+
+  property-put Arguments(BSTR);
+
+Dispatch IComCtrl;
+
+GUID={E4F835D5-4787-4C89-8283-BD18715E6DA8};
+
+  function QueryInterface(riid:^GUID; out ppvObj:^^void);
+
+  function AddRef: UI4;
+
+  function Release: UI4;
+
+  function GetTypeInfoCount(out pctinfo:^UINT);
+
+  function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);
+
+  function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);
+
+  function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);
+
+  function SetWnd(pWnd:^IPdnWnd);
+
+  property-get ComDlg: IDispatch;
+
+Dispatch IComDlg;
+
+GUID={41392656-E8C6-40FE-9ACF-05C1EAD4ABFE};
+
+  function QueryInterface(riid:^GUID; out ppvObj:^^void);
+
+  function AddRef: UI4;
+
+  function Release: UI4;
+
+  function GetTypeInfoCount(out pctinfo:^UINT);
+
+  function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);
+
+  function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);
+
+  function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);
+
+  function SetWnd(pWnd:^IPdnWnd);
+
+  property-get GetFileName: IDispatch;
+
+  property-get ChooseFont: IDispatch;
+
+Dispatch IGetFileName;
+
+GUID={A1FA76F8-E23E-47C1-9081-9FC9DF992B90};
+
+  function QueryInterface(riid:^GUID; out ppvObj:^^void);
+
+  function AddRef: UI4;
+
+  function Release: UI4;
+
+  function GetTypeInfoCount(out pctinfo:^UINT);
+
+  function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);
+
+  function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);
+
+  function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);
+
+  function SetWnd(pWnd:^IPdnWnd);
+
+  property-put Filter(BSTR);
+
+  property-put FilterIndex(UI4);
+
+  property-get FilterIndex: UI4;
+
+  property-put FileName(BSTR);
+
+  property-get FileName: BSTR;
+
+  property-put InitDirectory(BSTR);
+
+  property-put Title(BSTR);
+
+  property-put flags(UI4);
+
+  property-put DefExt(BSTR);
+
+  function DisplayOpen: BSTR;
+
+  function DisplaySave: BSTR;
+
+Dispatch IChooseFont;
+
+GUID={4CC85506-A713-4896-A773-FA57B883EDA8};
+
+  function QueryInterface(riid:^GUID; out ppvObj:^^void);
+
+  function AddRef: UI4;
+
+  function Release: UI4;
+
+  function GetTypeInfoCount(out pctinfo:^UINT);
+
+  function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);
+
+  function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);
+
+  function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);
+
+  function SetWnd(pWnd:^IPdnWnd);
+
+  property-get FontHeight: I4;
+
+  property-put FontHeight(I4);
+
+  property-get FontWidth: I4;
+
+  property-put FontWidth(I4);
+
+  property-get FontEscapement: I4;
+
+  property-put FontEscapement(I4);
+
+  property-get FontOrientation: I4;
+
+  property-put FontOrientation(I4);
+
+  property-get FontWeight: I4;
+
+  property-put FontWeight(I4);
+
+  property-get FontItalic: UI1;
+
+  property-put FontItalic(UI1);
+
+  property-get FontUnderline: UI1;
+
+  property-put FontUnderline(UI1);
+
+  property-get FontStrikeOut: UI1;
+
+  property-put FontStrikeOut(UI1);
+
+  property-get FontCharSet: UI1;
+
+  property-put FontCharSet(UI1);
+
+  property-get FontOutPrecision: UI1;
+
+  property-put FontOutPrecision(UI1);
+
+  property-get FontClipPrecision: UI1;
+
+  property-put FontClipPrecision(UI1);
+
+  property-get FontQuality: UI1;
+
+  property-put FontQuality(UI1);
+
+  property-get FontPitchAndFamily: UI1;
+
+  property-put FontPitchAndFamily(UI1);
+
+  property-get FontFace: BSTR;
+
+  property-put FontFace(BSTR);
+
+  property-get PointSize: INT;
+
+  property-put PointSize(INT);
+
+  property-put flags(UI4);
+
+  property-put Color(UI4);
+
+  property-get Color: UI4;
+
+  property-get FontType: UI2;
+
+  property-put SizeMin(INT);
+
+  property-put SizeMax(INT);
+
+  function Display;
+</code></pre>
+<p>和<a href="http://talk.google.com/">Google Talk</a>类似，Pandion也是通过IE的控件做的，界面和内部消息调用机制通过dHTML和DOM实现。上面的Typelib就是Pandion的window.external接口。</p>
+<p>比如，在Pandion里 alert(window.external.IPs); 可以获得客户端NIC的IP地址列表</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

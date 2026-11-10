@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Debian下建立PPTP VPN – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Debian下建立PPTP VPN" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/625414" />
+    <meta property="og:url" content="https://blog.est.im/archives/625414">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Debian下建立PPTP VPN">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Debian下建立PPTP VPN</h2>
+    <p class="post-date">Posted <time datetime="2008-03-21T17:54:38+08:00">2008-03-21</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>PPTP VPN和OpenVPN的不同之处在于PPTP VPN支持Windows自带的VPN拨号器连接。</p>
+<p>apt-get install pptpd<br />
+vim /etc/pptpd.conf<br />
+修改<br />
+localip 10.5.1.3<br />
+remoteip 10.5.1.241-246<br />
+其中localip要保证和ifconfig里的结果一样<br />
+remoteip是一个网段，要保证被2整除。</p>
+<p>vim /etc/ppp/options<br />
+添加两个DNS<br />
+ms-dns 202.112.14.151<br />
+ms-dns 202.112.14.161</p>
+<p>vim /etc/ppp/chap-secrets<br />
+添加几个VPN帐户，例如这里的alice和bob<br />
+alice pptpd a-strong-password *<br />
+bob pptpd another-strong-password *</p>
+<p>允许forward VPN连接<br />
+vim /etc/sysctrl.conf<br />
+删除 #net.ipv4.conf.default.forwarding=1 这一行前面的 #<br />
+再 vim /etc/init.d/pptpd<br />
+在start后面加上<br />
+<code>echo 1 &gt; /proc/sys/net/ipv4/ip_forward</code><br />
+也就是：<br />
+<code>case "$1" in
+  start)
+    echo -n "Starting PPTP Daemon: "
+    echo 1 &gt; /proc/sys/net/ipv4/ip_forward
+    start-stop-daemon –start –quiet –pidfile $PIDFILE –exec $DAEMON \
+        – &lt; /dev/null &gt; /dev/null
+    echo "pptpd."
+    ;;</code></p>
+<p>最后 /etc/init.d/pptpd restart 好了，赶快试试你的VPN是否正常工作</p>
+<p>来源：<a href="http://pigtail.net/nicholas/pptp/">http://pigtail.net/nicholas/pptp/</a></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

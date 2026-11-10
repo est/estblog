@@ -53,11 +53,8 @@
 
   
   <p><a href="http://chikuyonok.ru/ambilight/">http://chikuyonok.ru/ambilight/</a></p>
-
 <p>效果很震撼！有电影院的感觉了。呵呵。</p>
-
 <p>看了下<a href="http://chikuyonok.ru/2010/03/ambilight-video/">代码</a>，依然是在一个<code>canvas</code>里嵌入<code>&lt;video&gt;</code>然后<code>getImageData</code></p>
-
 <pre><code>var canvas = document.createElement('canvas'),
     video = document.getElementsByTagName('video')[0],
     ctx = canvas.getContext('2d');
@@ -65,11 +62,8 @@
 var block_width = 50;
 var pixels = ctx.getImageData(0, 0, block_width, canvas.height);
 </code></pre>
-
-<p><img src="http://chikuyonok.ru/u/2010/03/get-color.png" alt=""></p>
-
+<p><img alt="" src="http://chikuyonok.ru/u/2010/03/get-color.png" /></p>
 <p>CPU在50%左右，那个Chrome内存占用在130MB到160MB之间徘徊。</p>
-
 <p><a href="http://www.reddit.com/r/programming/comments/bcaro/ambilight_for_the_html5_video_tag_written/">via</a></p>
 </article>
 

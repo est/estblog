@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LDAP的MD5算法 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="LDAP的MD5算法" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/622281" />
+    <meta property="og:url" content="https://blog.est.im/archives/622281">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="LDAP的MD5算法">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">LDAP的MD5算法</h2>
+    <p class="post-date">Posted <time datetime="2008-01-12T15:30:06+08:00">2008-01-12</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>和php、MySQL的 md5() 函数不一样，LDAP里用户认证时候的md5算法有点不一样，留个记录。来源：<a href="http://www.openldap.org/lists/openldap-software/200507/msg00417.html">OpenLDAP邮件列表</a></p>
+<p>首先说说php和MySQL的md5函数，例如：<br />
+<code>md5("testing") = "ae2b1fca515949e5d54fb22b8ed95575";</code><br />
+这个和Python的 <code>hexdigest()</code> 函数结果是一样的<br />
+<code>&gt;&gt;&gt; md5(”testing”).hexdigest()
+‘ae2b1fca515949e5d54fb22b8ed95575′</code></p>
+<p>在LDAP里怎么表示的呢？<br />
+<code>dn: cn=md5user,dc=my,dc=example,dc=com
+objectClass: simpleSecurityObject
+objectClass: organizationalRole
+cn: md5user
+description: MD5USER
+userPassword: {MD5}CgIBDAUFBA4NBAsCCA0FBw==</code>]</p>
+<p>怎么得到的呢？</p>
+<p>我们研究 字符串 testing 的 MD5 字串：ae 2b 1f ca 51 59 49 e5 d5 4f b2 2b 8e d9 55 75<br />
+首先隔一个字符提取一个字符，得到一个新的字符串，例如：<br />
+<code>ae 2b 1f ca 51 59 49 e5 d5 4f b2 2b 8e d9 55 75</code><br />
+得到：<br />
+<code>a  2  1  c  5  5  4  e  d  4  b  2  8  d  5  7</code><br />
+那么把每一位看成十六进制，转换成对应的ASCII字符，例如第一位的 <code>a</code>，十六进制是 \x0A，也就是个回车：<code>\n</code>，把转换后的ASCII字符连起来，那么我们可以得到一串字符，不可显示的：<code>'\n\x02\x01\x0c\x05\x05\x04\x0e\r\x04\x0b\x02\x08\r\x05\x07'</code></p>
+<p>最后把这串不可打印的字符用base64编码之后，就可以得到LDAP标准的MD5字串，例如我们在Python里：<br />
+`</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>'\n\x02\x01\x0c\x05\x05\x04\x0e\r\x04\x0b\x02\x08\r\x05\x07'.encode('base64'<br />
+).strip()<br />
+'CgIBDAUFBA4NBAsCCA0FBw=='<br />
+`</p>
+</blockquote>
+</blockquote>
+<p>strip()是去掉一个没有用的回车符号。</p>
+</blockquote>
+<p>最后我们用Python实现这一算法：<br />
+`<br />
+ActivePython 2.5.1.1 (ActiveState Software Inc.) based on<br />
+Python 2.5.1 (r251:54863, May 1 2007, 17:47:05) [MSC v.1310 32 bit (Intel)] on<br />
+win32<br />
+Type "help", "copyright", "credits" or "license" for more information.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from md5 import md5</p>
+<p>mysql_md5 = md5("testing").hexdigest()<br />
+mysql_md5<br />
+‘ae2b1fca515949e5d54fb22b8ed95575′<br />
+binary_md5 = ”.join([ chr(int(mysql_md5[i:i+1],16)) for i in range(0,len(mysql_md5),2)])<br />
+binary_md5<br />
+‘\n\x02\x01\x0c\x05\x05\x04\x0e\r\x04\x0b\x02\x08\r\x05\x07′<br />
+ldap_md5 = binary_md5.encode(”base64″).strip()<br />
+ldap_md5<br />
+‘CgIBDAUFBA4NBAsCCA0FBw==’</p>
+<p>`</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>顺便说下，一个 <a href="http://www2.dormforce.net/dormid">single sign-on</a> 的系统设计还真麻烦。要实现一个password同步、LDAP认证，<a href="http://code.google.com/apis/accounts/AuthForWebApps.html">AuthSub</a>，等等，ho～～～累！</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

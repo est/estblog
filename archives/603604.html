@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[Debian Etch]SVN+Apache2.2+MySQL认证 配置指南[mod_authnz_external] – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[Debian Etch]SVN+Apache2.2+MySQL认证 配置指南[mod_authnz_external]" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/603604" />
+    <meta property="og:url" content="https://blog.est.im/archives/603604">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[Debian Etch]SVN+Apache2.2+MySQL认证 配置指南[mod_authnz_external]">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[Debian Etch]SVN+Apache2.2+MySQL认证 配置指南[mod_authnz_external]</h2>
+    <p class="post-date">Posted <time datetime="2007-12-22T16:41:19+08:00">2007-12-22</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>首先说，Apache2.2支持HTTP认证，来源有多种，但是支持第三方MySQL数据表认证的MOD就少了，<a href="http://modauthmysql.sourceforge.net/">mod_auth_mysql</a>是最著名的，也是最早烂的，我根本在etch上编译不起；其次是 <a href="http://packages.debian.org/stable/web/libapache2-mod-auth-pam">libapache2-mod-auth-pam</a> 加 <a href="http://packages.debian.org/libpam-mysql">libpam-mysql</a> ，这个也失败，因为PAM也停止开发了。</p>
+<p>经过我千辛万苦Google了大半个月，终于发现了最好的Apache2.2验证MOD：<a href="http://unixpapa.com/mod_auth_external.html">mod_authnz_external</a>。</p>
+<p>原理很简单，mod_auth_external会调用一个外部命令，如果命令以错误代码0退出，那么验证成功；如果以错误代码1等等退出，那么验证失败。OK，开始配置<br />
+<code>apt-get install apache2
+apt-get install subversion
+apt-get install libapache2-svn</code><br />
+编辑 <code>vim /etc/apache2/mods-enabled/dav_svn.conf</code><br />
+内容为</p>
+<pre><code>&lt;Location /svn&gt;
+  DAV svn
+  SVNPath /srv/svn
+
+  AuthName               &quot;Dormforce SVN&quot;
+  AuthType               Basic
+  AuthBasicProvider      external
+  AuthExternal           auth_dormid
+  require                valid-user
+
+&lt;/Location&gt;
+</code></pre>
+<p>现在你已经有一个没有authentication的SVN跑起来了，利用的是apache2的DAV模块。</p>
+<p>下载mod_auth_external for apache2.2的<a href="http://unixpapa.com/software/mod_authnz_external-3.1.0.tar.gz">源码包</a>。<br />
+<code>apt-get install build-essential
+apt-get install apache2-threaded-dev
+aot-get install apache2-prefork-dev</code><br />
+然后 <code>tar -xvf mod_authnz_external-3.1.0.tar.gz</code>，进入解压的目录<br />
+<code>apxs -c mod_authnz_external.c
+apxs -i -a mod_authnz_external.la</code><br />
+编译好了模块，接下来安装到Apache2，<code>vim /etc/apache2/mods-enabled/authnz_external.load</code>，输入<br />
+<code>LoadModule authnz_external_module /usr/lib/apache2/modules/mod_authnz_external.so</code></p>
+<p>好了，我们编辑Apache2主配置文件<code>vim /etc/apache2/apache2.conf</code><br />
+在最后加上<br />
+<code>AddExternalAuth auth_dormid /srv/auth_dormid/auth_dormid.py
+SetExternalAuthMethod auth_dormid environment</code></p>
+<p>OK，自己编写一个小小的python程序，查询MySQL数据库，如果环境变量USER和环境变量PASS和数据库中查询结果是一致的，那么sys.exit(0)，否则sys.exit(1)</p>
+<p>测试一下，<code>/etc/init.d/apache2 restart</code>重启apache，看看你的网站 /svn 目录，应该可以访问SVN啦。</p>
+<p>下面我解释下配置文件里修改的内容对应的含义。<br />
+<strong>apache2.conf</strong><br />
+AddExternalAuth auth_dormid /srv/auth_dormid/auth_dormid.py<br />
+关键词 执行命令路径<br />
+SetExternalAuthMethod auth_dormid environment<br />
+关键词 通过系统环境变量传递认证值，同时可以设置为 pipe，管道</p>
+<p><strong>dav_svn.conf</strong><br />
+AuthName "Dormforce SVN" 这里是浏览器弹出的提示窗口的文字<br />
+AuthType Basic HTTP Basic认证，使用Basr64加密后传输<br />
+AuthBasicProvider external 认证来源是 mod_authnz_external<br />
+AuthExternal auth_dormid 上面设置的 关键词<br />
+require valid-user 需要成功认证的用户和密码才能访问页面</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

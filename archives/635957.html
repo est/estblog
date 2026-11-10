@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[Python]遗传算法入门 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[Python]遗传算法入门" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/635957" />
+    <meta property="og:url" content="https://blog.est.im/archives/635957">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[Python]遗传算法入门">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[Python]遗传算法入门</h2>
+    <p class="post-date">Posted <time datetime="2009-02-24T05:28:42+08:00">2009-02-24</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>本来想正规的发到yeeyan的，可惜偶不是那种严肃认真的淫。所以写到自己blog里乱扯了。</p>
+<p>遗传算法（Genetic Algorithms），blah，blah，blah……反正知道现在 <a href="http://www.reddit.com/r/programming/">r/programming</a> 里这个东东很<a href="http://rogeralsing.com/2008/12/07/genetic-programming-evolution-of-mona-lisa/">火</a>就行了。<a href="http://lethain.com/author/will-larson/">Will Larson</a>给大家带来了一篇精彩的<a href="http://lethain.com/entry/2009/jan/02/genetic-algorithms-cool-name-damn-simple/">Genetic Algorithms: Cool Name &amp; Damn Simple</a>。前面吹牛的部分就略过了，直接进入正题。</p>
+<h3>定义需要进化的问题</h3>
+<p>N个数，使之加起来恰好为X<br />
+唉。麻烦了。这样说最直观：<br />
+5个数，使之加起来恰好为200</p>
+<p>例子：<br />
+<code>lst = [40,40,40,40,40]
+lst = [50,50,50,25,25]
+lst = [200,0,0,0,0]</code></p>
+<h3>遗传算法解题的成分</h3>
+<h4>individual</h4>
+<p><code>individual</code>这个东西理解起来就是 个体<br />
+`</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from random import randint<br />
+def individual(length, min, max):<br />
+... 'Create a member of the population.'<br />
+... return [ randint(min,max) for x in xrange(length) ]<br />
+...<br />
+individual(5,0,100)<br />
+[79, 0, 20, 47, 40]<br />
+individual(5,0,100)<br />
+[64, 1, 25, 84, 87]<br />
+`</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h4>population</h4>
+<p>这个可以理解为 群体 哇？<br />
+`</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>def population(count, length, min, max):<br />
+... """<br />
+... Create a number of individuals (i.e. a population).<br />
+...<br />
+... count: the number of individuals in the population<br />
+... length: the number of values per individual<br />
+... min: the min possible value in an individual's list of values<br />
+... max: the max possible value in an individual's list of values<br />
+...<br />
+... """<br />
+... return [ individual(length, min, max) for x in xrange(count) ]<br />
+...<br />
+population(3,5,0,100)<br />
+[[51, 55, 73, 0, 80], [3, 47, 18, 65, 55], [17, 64, 77, 43, 48]]<br />
+`</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h4>fitness</h4>
+<p>这个叫 <code>fitness</code> 函数。物竞天择，<strong>适者</strong> 生存。注意这个是针对<code>individual</code>的<br />
+`</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from operator import add<br />
+def fitness(individual, target):<br />
+... """<br />
+... Determine the fitness of an individual. Lower is better.<br />
+...<br />
+... individual: the individual to evaluate<br />
+... target: the sum of numbers that individuals are aiming for<br />
+... """<br />
+... sum = reduce(add, individual, 0)<br />
+... return abs(target-sum)<br />
+...<br />
+x = individual(5,0,100)<br />
+fitness(x,300)<br />
+65<br />
+`<br />
+fitness越小越好</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h4>grade</h4>
+<p>评分。和上面fitness function差不多，不过是针对 population 群体的<br />
+`</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>def grade(pop, target):<br />
+... 'Find average fitness for a population.'<br />
+... summed = reduce(add, (fitness(x, target) for x in pop), 0)<br />
+... return summed / (len(pop) * 1.0)<br />
+...<br />
+x = population(3,5,0,100)<br />
+target = 300<br />
+grade(x, target)<br />
+116<br />
+`</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h3>进化！</h3>
+<p>下面进入遗传算法的核心：进化。</p>
+<pre><code>1. 每一个individual用fitness来判断是否可以作为**下一代** 配种的父母。这样每一代里选择出最强的来配种
+2. 配种的方式是，各取自己的一半，组合成一个新的individual。例如：
+</code></pre>
+<p>`</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>father = [1,2,3,4,5,6]<br />
+mother = [10,20,30,40,50,60]<br />
+child = father[:3] + mother[3:]<br />
+child<br />
+[1,2,3,40,50,60]<br />
+<code>3. 新生individual和父母同时进入下一代竞争
+  4. 最后，每一代有少量的**突变（mutate）**</code><br />
+from random import random, randint<br />
+chance_to_mutate = 0.01<br />
+for i in population:<br />
+... if chance_to_mutate &gt; random():<br />
+... place_to_modify = randint(0,len(i))<br />
+... i[place_to_modify] = randint(min(i), max(i))<br />
+...<br />
+`</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h3>整合起来</h3>
+<p>最后综合得到的代码就是：</p>
+<pre><code>def evolve(pop, target, retain=0.2, random_select=0.05, mutate=0.01):
+    graded = [ (fitness(x, target), x) for x in pop]
+    graded = [ x[1] for x in sorted(graded)]
+    retain_length = int(len(graded)*retain)
+    parents = graded[:retain_length]
+
+    # randomly add other individuals to promote genetic diversity
+    for individual in graded[retain_length:]:
+        if random_select &gt; random():
+            parents.append(individual)
+
+    # mutate some individuals
+    for individual in parents:
+        if mutate &gt; random():
+            pos_to_mutate = randint(0, len(individual)-1)
+            # this mutation is not ideal, because it
+            # restricts the range of possible values,
+            # but the function is unaware of the min/max
+            # values used to create the individuals,
+            individual[pos_to_mutate] = randint(
+                min(individual), max(individual))
+
+    # crossover parents to create children
+    parents_length = len(parents)
+    desired_length = len(pop) - parents_length
+    children = []
+    while len(children) &lt; desired_length:          male = randint(0, parents_length-1)          female = randint(0, parents_length-1)          if male != female:              male = parents[male]              female = parents[female]              half = len(male) / 2              child = male[:half] + female[half:]              children.append(child)        parents.extend(children)      return parents
+</code></pre>
+<h3>测试一下</h3>
+<pre><code>&gt;&gt;&gt; target = 371
+&gt;&gt;&gt; p_count = 100
+&gt;&gt;&gt; i_length = 5
+&gt;&gt;&gt; i_min = 0
+&gt;&gt;&gt; i_max = 100
+&gt;&gt;&gt; p = population(p_count, i_length, i_min, i_max)
+&gt;&gt;&gt; fitness_history = [grade(p, target),]
+&gt;&gt;&gt; for i in xrange(100):
+...     p = evolve(p, target)
+...     fitness_history.append(grade(p, target))
+...
+&gt;&gt;&gt; for datum in fitness_history:
+...    print datum
+...
+</code></pre>
+<p>最后得到的结果是：<code>['76.06', '32.13', '26.34', '18.32', '15.08', '11.69', '14.05', '9.460', '4.950', '0.0', '0.0', '0.0', '0.0', '0.0', '0.800', '0.0', '0.239', '0.780', '0.0', '0.0', '0.0', '0.0', '1.48', '0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '0.149', '0.239', '0.12', '0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '0.149', '0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '4.200', '0.0', '2.049', '0.0', '0.200', '0.080', '0.0', '1.360', '0.0', '0.0', '0.0', '0.0', '1.399', '0.0', '0.0', '0.149', '1.389', '1.24', '0.0', '0.16', '0.0', '0.680', '0.0', '0.0', '1.78', '1.05', '0.0', '0.0', '0.0', '0.0', '1.860', '4.080', '3.009', '0.140', '0.0', '0.38', '0.0', '0.0', '0.0', '0.0', '0.0', '2.189', '0.0', '0.0', '3.200', '1.919', '0.0', '0.0', '4.950', '0.0', '0.0', '0.0', '0.0', '0.0', '0.0']</code><br />
+生存率是20%，变异率是1%，只花了9代就得到了比较完美的结果。</p>
+<h3>完整代码</h3>
+<pre><code>&quot;&quot;&quot;
+# Example usage
+from genetic import *
+target = 371
+p_count = 100
+i_length = 6
+i_min = 0
+i_max = 100
+p = population(p_count, i_length, i_min, i_max)
+fitness_history = [grade(p, target),]
+for i in xrange(100):
+    p = evolve(p, target)
+    fitness_history.append(grade(p, target))
+
+for datum in fitness_history:
+   print datum
+&quot;&quot;&quot;
+from random import randint, random
+from operator import add
+
+def individual(length, min, max):
+    'Create a member of the population.'
+    return [ randint(min,max) for x in xrange(length) ]
+
+def population(count, length, min, max):
+    &quot;&quot;&quot;
+    Create a number of individuals (i.e. a population).
+
+    count: the number of individuals in the population
+    length: the number of values per individual
+    min: the minimum possible value in an individual's list of values
+    max: the maximum possible value in an individual's list of values
+
+    &quot;&quot;&quot;
+    return [ individual(length, min, max) for x in xrange(count) ]
+
+def fitness(individual, target):
+    &quot;&quot;&quot;
+    Determine the fitness of an individual. Higher is better.
+
+    individual: the individual to evaluate
+    target: the target number individuals are aiming for
+    &quot;&quot;&quot;
+    sum = reduce(add, individual, 0)
+    return abs(target-sum)
+
+def grade(pop, target):
+    'Find average fitness for a population.'
+    summed = reduce(add, (fitness(x, target) for x in pop))
+    return summed / (len(pop) * 1.0)
+
+def evolve(pop, target, retain=0.2, random_select=0.05, mutate=0.01):
+    graded = [ (fitness(x, target), x) for x in pop]
+    graded = [ x[1] for x in sorted(graded)]
+    retain_length = int(len(graded)*retain)
+    parents = graded[:retain_length]
+    # randomly add other individuals to
+    # promote genetic diversity
+    for individual in graded[retain_length:]:
+        if random_select &gt; random():
+            parents.append(individual)
+    # mutate some individuals
+    for individual in parents:
+        if mutate &gt; random():
+            pos_to_mutate = randint(0, len(individual)-1)
+            # this mutation is not ideal, because it
+            # restricts the range of possible values,
+            # but the function is unaware of the min/max
+            # values used to create the individuals,
+            individual[pos_to_mutate] = randint(
+                min(individual), max(individual))
+    # crossover parents to create children
+    parents_length = len(parents)
+    desired_length = len(pop) - parents_length
+    children = []
+    while len(children) &lt; desired_length:          male = randint(0, parents_length-1)          female = randint(0, parents_length-1)          if male != female:              male = parents[male]              female = parents[female]              half = len(male) / 2              child = male[:half] + female[half:]              children.append(child)              parents.extend(children)      return parents
+</code></pre>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

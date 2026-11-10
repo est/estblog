@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>备忘：OSI 八层攻击一IP一票 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="备忘：OSI 八层攻击一IP一票" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/631312" />
+    <meta property="og:url" content="https://blog.est.im/archives/631312">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="备忘：OSI 八层攻击一IP一票">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">备忘：OSI 八层攻击一IP一票</h2>
+    <p class="post-date">Posted <time datetime="2008-08-16T00:00:00+08:00">2008-08-16</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>看到<a href="http://hi.baidu.com/delphis/blog/item/bd5af1244cfe42368744f9b9.html">个文章</a>，很是兴奋。。。。</p>
+<h3>物理层</h3>
+<p>把投票服务器网线拔了，硬盘拔出来，本地读写修改数据库</p>
+<h3>数据链路层</h3>
+<p>把汇聚层交换机的一个端口转发到自己机器上。。。。最后。。。连广播地址和网关地址都去投票了。</p>
+<h3>网络层</h3>
+<p>source IP伪造。</p>
+<h3>运输层、会话层</h3>
+<p>Socks、HTTP、VPN、SSH、TOR代理。</p>
+<h3>表示层、应用层</h3>
+<p>很多网站（特别是用了反向代理的大型网站）获得IP的函数有逻辑漏洞。利用X_FORWARDED_FOR可以伪造任意IP。<br />
+XSRF和一些客户端cookie hijack，隐形投票</p>
+<h3>人品层</h3>
+<p>这一层的攻击最为丰富<br />
+发动亲戚朋友<br />
+地下黑市买肉鸡投票服务<br />
+贿赂投票网站的管理员</p>
+<h3>其他方式</h3>
+<p>网站、甚至IDC自身漏洞</p>
+<p>btw 苦于没有好的py2exe GUI，苦于没有特好的抓包软件（支持gzip和https），苦于wxPython难于理解并且本身很丑陋，所以很多想法懒得做。。。例如基于<a href="http://www.secdev.org/projects/scapy/">scapy.py</a>的anti-arp和voting machine。。。还有IE Cookie Hack。。。。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

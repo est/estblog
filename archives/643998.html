@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>世界就是天才创造的, period – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="世界就是天才创造的, period" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/643998" />
+    <meta property="og:url" content="https://blog.est.im/archives/643998">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="世界就是天才创造的, period">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">世界就是天才创造的, period</h2>
+    <p class="post-date">Posted <time datetime="2009-11-27T12:08:18+08:00">2009-11-27</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>左岸的 <a href="http://www.zreading.cn/archives/1354.html">世界不是天才创造的</a> 很不错，但是我觉得这里面有一点实验导致的偏差。</p>
+<p>简单统计了下 <a href="http://home.wangjianshuo.com/scripts/php/genius.php?action=result">最近的1000个人的结果</a></p>
+<pre><code>1. 95.1%的人都输入的是整数
+2. 12.6%的人选择了大于66.6666666的数字，平均值是85.35。这是最有意思的结果。
+3. 很多人键入的数字都是两个连续的数字，例如11 22 33，这个占所有数据的27.1%。为什么？懒。
+4. 连续键入的数字都是小于5的，原因很简单，大家都是右撇子上网，右手拿着鼠标不方便输入。这个比例占79%。
+5. 输入时手指移动键位平均距离我没有计算，因为输入的时候不是一根指拇，而且每个人的键入习惯不一样。但是我相信人们的输入懒惰会极大影响自己想的最终数字的。
+6. 实验正确的做法是用一个可以拖拽的滑块让鼠标拖动的距离决定0-100之间的一个数。
+</code></pre>
+<p>就我自己而言，随便选了个个位数3。当然这个比较滑稽了。后来试图从数学期望的角度思考这个问题，后来觉得应该属于game theory了，wikipedia有篇介绍 <a href="http://en.wikipedia.org/wiki/Guess_2/3_of_the_average">Guess 2/3 of the average</a>，丹麦一家报纸的测试结果是21.6。但是这个Nash equilibrium跟参与者（行为、受教育程度和理性认知等）有很大关系，<a href="http://lesswrong.com/lw/109/the_aumanns_agreement_theorem_game_guess_23_of/">LessWrong这个探索rational的博客得到的结果就是8.82</a></p>
+<p>btw, 左岸最后提到的木桶原理，我也早就<a href="http://initiative.yo2.cn/archives/636089">批判</a>过了。</p>
+<p>如果你认为世界不是天才创造的，原因很简单，你还没有达到天才的标准。</p>
+<p>附Python简单统计源码：</p>
+<pre><code>&gt;&gt;&gt; a=open('output.csv').read().split('\n')[:-1]
+&gt;&gt;&gt; filter(lambda x:x.find('.')+1, a)
+
+['33.22', '22.22', '21.34', '61.8', '33.67', '20.61488889', '6.25', '22.2', '22.
+2', '22.22222222', '23.3', '1.5', '22.2', '33.3', '22.2222222', '19.9', '33.5',
+'22.2', '58.8642593', '22.2', '22.2', '22.17', '22.2222', '22.22', '15.33', '14.
+81481481', '14.666', '21.99740514', '13.1', '33.2', '19.7', '0.000001', '0.38673
+3', '16.88888889', '22.22222222', '21.33333333', '42.6', '22.22', '33.3', '23.19
+191919', '22.22', '33.3', '22.2', '22.3', '45.567', '11.1', '3.1415926', '14.5',
+ '22.22222222', '33.58323793']
+
+&gt;&gt;&gt; b=map(float, a)
+&gt;&gt;&gt; filter(lambda x:x&gt;66, b).__len__()
+126
+&gt;&gt;&gt; filter(lambda x:x%11==0, b).__len__()
+
+&gt;&gt;&gt; def left_input(n):
+...     n=str(n).replace('.', '')
+...     return filter(lambda d:int(d)&lt;6 and int(d)&gt;0, n).__len__()
+
+&gt;&gt;&gt; filter(left_input, a).__len__()
+790
+</code></pre>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

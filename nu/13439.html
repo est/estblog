@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>似乎Hotmail有未公开协议可以拿来利用写客户端 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="似乎Hotmail有未公开协议可以拿来利用写客户端" />
+
+    <link rel="canonical" href="https://blog.est.im/nu/13439" />
+    <meta property="og:url" content="https://blog.est.im/nu/13439">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="似乎Hotmail有未公开协议可以拿来利用写客户端">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">似乎Hotmail有未公开协议可以拿来利用写客户端</h2>
+    <p class="post-date">Posted <time datetime="2007-01-18T20:18:00+08:00">2007-01-18</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>今天下载了 Windows Live Mail Desktop，随便抓包分析了下，呵呵，典型的微软风格的程序，协议简单用的是XML，格式复杂，结构清晰，貌似主要用下面的地址：</p>
+<p><a href="http://mail.services.live.com/DeltaSync_v1.0.0/Sync.aspx">http://mail.services.live.com/DeltaSync_v1.0.0/Sync.aspx</a></p>
+<p><a href="http://mail.services.live.com/DeltaSync_v1.0.0/Settings.aspx">http://mail.services.live.com/DeltaSync_v1.0.0/Settings.aspx</a></p>
+<p><a href="http://mail.services.live.com/DeltaSync_v1.0.0/ItemOperations.aspx">http://mail.services.live.com/DeltaSync_v1.0.0/ItemOperations.aspx</a></p>
+<p>用了一种奇怪的HTTP请求动词：</p>
+<p>PROPFIND  <a href="mailto:bay117.oe.hotmail.com/cgi-bin/hmdata/xxxxxxxxxxx@live.cn/optionsroot/junk">bay117.oe.hotmail.com</a>/cgi-bin/hmdata/xxxxxxxxxxx@live.cn/optionsroot/junk</p>
+<p>在网上搜索了1下，汗，还真有人写出来了客户端，而且是XMLHTTP组件用C#写的，厉害啊，同时深深的B视下不求上进的 Foxmail 和 DreamMail</p>
+<p><a href="http://blog.csdn.net/Aresthor/archive/2006/01/09/574394.aspx">http://blog.csdn.net/Aresthor/archive/2006/01/09/574394.aspx</a></p>
+<p>HTTPMail协议实际上是一个标准的WebDAV服务，只不过尚未公开而已。</p>
+<p>为什么Hotmail不做POP3和SMTP呢？因为Hotmail的盈利主要考广告，所以提供了一个满是广告的Web界面。同时，Live Mail 也不支持 POP3/SMTP，但是有这个客户端软件Live Mail Desktop，因为Live Mail Desktop有很多广告，呵呵</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

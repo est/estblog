@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>发送昨天的WinOMeter统计数据到Twitter/Ping.fm – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="发送昨天的WinOMeter统计数据到Twitter/Ping.fm" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/640083" />
+    <meta property="og:url" content="https://blog.est.im/archives/640083">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="发送昨天的WinOMeter统计数据到Twitter/Ping.fm">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">发送昨天的WinOMeter统计数据到Twitter/Ping.fm</h2>
+    <p class="post-date">Posted <time datetime="2009-05-18T10:44:35+08:00">2009-05-18</time> | <span>archive</span></p>
+  </header>
+
+  
+  <h3>关于WinOMeter</h3>
+<p><a href="http://www.tjelinek.com/main.php?section=w">WinOMeter</a>的介绍参考小众：<a href="http://www.appinn.com/winometer/">WinOMeter - 鼠标键盘统计工具</a></p>
+<p><img alt="" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/05/4.jpg" /></p>
+<h3>起因</h3>
+<p>可以这样想像一下：每天开机的时候，把想昨天我的键盘按键次数、鼠标左中右键点击次数、鼠标移动的公里数和uptime发送到Twitter</p>
+<p>这就是PYYWS2.js的来历。全称Ping Your Yesterday's WinOMeter Statistics</p>
+<p>我一开始比较傻，还屁颠屁癫给WinOMeter作者Tomas写email恳请他给WinOMeter增加一个导出文本数据的命令行接口，作者也回复了，在<a href="http://tjelinek.com/main.php?section=wn">1.4版本</a>里增加了一个启动参数：</p>
+<p><code>winometer.exe /exporthistory "filename.csv"</code></p>
+<p>后来发现WinOMeter的数据都保存在注册表<code>HKEY_CURRENT_USER\Software\Tomas Jelinek\WinOMeter</code>里，所以我等于白麻烦Tomas同学了。</p>
+<h3>代码</h3>
+<p>在这里下载：<br />
+<a href="http://zxn0.googlecode.com/svn/winutil/PYYWS2.js">http://zxn0.googlecode.com/svn/winutil/PYYWS2.js</a></p>
+<p>使用方法：根据自己的情况配置代码，把PYYWS2.js拖拽到开始 - 启动菜单即可</p>
+<p>注意发送数据到Twitter，我的实现是通过<a href="https://ping.fm/">Ping.fm</a>进行的，如果直接发送到Twitter，或者发送到helloTXT请自己DIY，请修改<br />
+<code>function post_to_pingfm(text)
+{
+...
+}</code><br />
+函数。使用的是AJAX的<a href="http://www.w3.org/TR/XMLHttpRequest/">XmlHttpRequest</a></p>
+<p>自定义发送内容，见<a href="http://code.google.com/p/zxn0/source/browse/winutil/PYYWS2.js#84">84行的 //content to be sent to ping.fm/twitter</a></p>
+<p>最后大概就是<a href="http://twitter.com/est/status/1790212558">这个样子</a>：</p>
+<p><img alt="" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/05/5.jpg" /></p>
+<h3>后记</h3>
+<p>由于WinOMeter注册表里边Mouse Trajectory数据是二进制保存浮点，我还不知道是如何转换的，猜是<a href="http://en.wikipedia.org/wiki/IEEE_754">IEEE 754</a>，但是自己没能够trial成功，于是在<a href="irc://irc.freenode.net/#askreddit">#askreddit</a>里问了高人才知道，是big-endian的IEEE 754，最后还要除1000，囧。。。。那位高人还建议，千万不要自己去重复造IEEE 754的轮子，麻烦而且容易出错，网上就找了一个最minimal的js代码，来自Fair Oaks Labs的<a href="http://code.google.com/p/jspack/">jspack</a>，用Javascript实现类似<a href="http://docs.python.org/library/struct.html">Python的struct模块</a>，包括32 bit的<a href="http://code.google.com/p/jspack/source/browse/trunk/code/struct.js#60">float encode和decode为hex</a>的函数。。很牛～～～</p>
+<p>最后还是把<a href="http://wakoopa.com/">Wakoopa</a>和<a href="http://www.rescuetime.com/">RescueTime</a>卸载了，一来是这2个软件基本等于没用，二来隐私泄漏非常严重，三来没接口不开源没法自己DIY，no fun。希望尽快有很好很强大夸手机和Linux的开源替代出现，最好把<a href="http://www.growlforwindows.com/">Growl</a>和Current Music Track功能都集成了。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

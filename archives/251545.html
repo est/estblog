@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>【原】StarDict 2.4.8 绿色精简便携版 for Win32/Windows ，免GTK – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="【原】StarDict 2.4.8 绿色精简便携版 for Win32/Windows ，免GTK" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/251545" />
+    <meta property="og:url" content="https://blog.est.im/archives/251545">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="【原】StarDict 2.4.8 绿色精简便携版 for Win32/Windows ，免GTK">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">【原】StarDict 2.4.8 绿色精简便携版 for Win32/Windows ，免GTK</h2>
+    <p class="post-date">Posted <time datetime="2007-05-07T00:00:00+08:00">2007-05-07</time> | <span>archive</span></p>
+  </header>
+
+  
+  <h2>简介</h2>
+<p>StarDict is a Cross-Platform and international dictionary written in Gtk2.<br />
+It has powerful features such as "Glob-style pattern matching", "Scan selection word,"<br />
+"Fuzzy query," etc.</p>
+<p>StarDict是一个跨平台的开源国际化词典软件，用GTK2写成。是Linux平台下最流行的词典、翻译软件。</p>
+<h2>使用</h2>
+<p>我发布这个版本是整合了GTK+运行库的星际译王，是绿色软件，免安装，可以复制到U盘随身携带。直接运行压缩包里的StarDict.exe即可</p>
+<p>StarDict支持屏幕取词、模糊查询等功能，非常方便。</p>
+<p><img alt="" src="http://dormforce.net/blog/images/dormforce_net/electronixtar/639/o_WindowsLiveWriter_StarDict_BA9D_1[4].jpg" /></p>
+<h2>词典</h2>
+<p>为了减小压缩包的体积，没有添加任何词典，只添加了一部0.7MB的综合信息在附录里。自己添加词典可以到StarDict在<a href="http://stardict.sourceforge.net/Dictionaries_zh_CN.php">SourceForge上的官方网站</a>去下载。下载 tarbal 安装包，用WinRAR解压到 StarDict 的 dic\ 目录下即可。</p>
+<h2>制作</h2>
+<p>制作过程比较辛苦，由于需要人工找出 <a href="http://jaist.dl.sourceforge.net/sourceforge/gimp-win/gtk+-2.8.18-setup-1.zip">gtk+ 2.8.18</a>�的最小运行库，所以用 Depends 工具跟踪调试了 stardict.exe，最后得出需要的 GTK 运行库：</p>
+<p>freetype6.dll<br />
+iconv.dll<br />
+intl.dll<br />
+libatk-1.0-0.dll<br />
+libcairo-2.dll<br />
+libfontconfig-1.dll<br />
+libgdk-win32-2.0-0.dll<br />
+libgdk_pixbuf-2.0-0.dll<br />
+libglib-2.0-0.dll<br />
+libgmodule-2.0-0.dll<br />
+libgobject-2.0-0.dll<br />
+libgtk-win32-2.0-0.dll<br />
+libpango-1.0-0.dll<br />
+libpangocairo-1.0-0.dll<br />
+libpangoft2-1.0-0.dll<br />
+libpangowin32-1.0-0.dll<br />
+libpng12.dll<br />
+libpng13.dll<br />
+libxml2.dll<br />
+TextOutHook.dll<br />
+TextOutSpy.dll<br />
+xmlparse.dll<br />
+xmltok.dll<br />
+zlib1.dll<br />
+lib\gtk-2.0\2.4.0\loaders\libpixbufloader-png.dll<br />
+lib\gtk-2.0\2.4.0\immodules\im-ime.dll<br />
+lib\pango\1.5.0\modules\pango-basic-win32.dll</p>
+<p>从2007-5-6 日从9:00一直弄到凌晨3点，呜呜呜呜</p>
+<h2>鸣谢</h2>
+<p>StarDict的作者 <a href="mailto:huzheng_001@163.com">胡正</a>，所有<a href="http://stardict.sourceforge.net/Project_contacts.php">对StarDict做出贡献的人</a>，所有关心StarDict的朋友</p>
+<p>感谢<a href="http://www.dormforce.net/blog/electroniXtar">DormForce.NET blog</a>提供长期附件下载空间</p>
+<p><a href="http://sourceforge.net/project/project_donations.php?group_id=80679">给StarDict募捐</a></p>
+<h2>参考</h2>
+<p><a href="http://www.stardict.cn">http://www.stardict.cn</a></p>
+<p><a href="http://stardict.sourceforge.net/">http://stardict.sourceforge.net/</a></p>
+<p><a href="http://www.Google.com">http://www.Google.com</a></p>
+<h2>下载</h2>
+<p><a href="http://dormforce.net/Blog/Attachment/792">点击下载</a></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

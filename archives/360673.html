@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CGI原理 - 服务器环境变量 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="CGI原理 - 服务器环境变量" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/360673" />
+    <meta property="og:url" content="https://blog.est.im/archives/360673">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="CGI原理 - 服务器环境变量">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">CGI原理 - 服务器环境变量</h2>
+    <p class="post-date">Posted <time datetime="2008-09-15T09:20:15+08:00">2008-09-15</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>以前一直不清楚CGI具体是怎么工作的，只知道CGI是“向一个socket print”。今天玩了下IIS6的CGI，发现了环境变量，很多是标准HTTP头，还有Web基本IO的工作方式。</p>
+<p>首先是一个批处理，用来检测系统</p>
+<pre><code>@echo off
+more +5 &quot;%~f0&quot;&lt;nul
+set /p stdin=
+set
+exit
+HTTP/1.1 200 OK
+Content-Type: text/html; charset=gb2312
+
+&lt;form method=&quot;post&quot; action=&quot;1.bat?param1=%B2%E2%CA%D4111&quot;&gt;
+&lt;input name=&quot;param2&quot; type=&quot;text&quot; value=&quot;测试222&quot; /&gt;
+&lt;input type=&quot;submit&quot; /&gt;
+&lt;/form&gt;
+</code></pre>
+<p>得到的返回的是：</p>
+<pre><code>&lt;form method=&quot;post&quot; action=&quot;1.bat?param1=%B2%E2%CA%D4111&quot;&gt;
+&lt;input name=&quot;param2&quot; type=&quot;text&quot; value=&quot;测试222&quot; /&gt;
+&lt;input type=&quot;submit&quot; /&gt;
+&lt;/form&gt;
+ALLUSERSPROFILE=C:\\Documents and Settings\\All Users
+APP_POOL_ID=DefaultAppPool
+ClusterLog=C:\\WINDOWS\\Cluster\\cluster.log
+CommonProgramFiles=C:\\Program Files\\Common Files
+COMPUTERNAME=est-Vista
+ComSpec=C:\\WINDOWS\\system32\\cmd.exe
+FP_NO_HOST_CHECK=NO
+NetSamplePath=C:\\PROGRA~1\\MICROS~3\\SDK\\v2.0\\
+NUMBER_OF_PROCESSORS=1
+OS=Windows_NT
+Path=C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\Program Files\\Microsoft SQL Server\\80\\Tools\\BINN
+PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.VBS;.VBS
+PROCESSOR_ARCHITECTURE=x86
+PROCESSOR_IDENTIFIER=x86 Family 6 Model 8 Stepping 6, GenuineIntel
+PROCESSOR_LEVEL=6
+PROCESSOR_REVISION=0806
+ProgramFiles=C:\\Program Files
+PROMPT=$P$G
+stdin=param2=%B2%E2%CA%D4222
+SystemDrive=C:
+SystemRoot=C:\\WINDOWS
+TEMP=C:\\WINDOWS\\TEMP
+TMP=C:\\WINDOWS\\TEMP
+USERPROFILE=C:\\Documents and Settings\\Default User
+windir=C:\\WINDOWS
+HTTP_CACHE_CONTROL=no-cache
+HTTP_CONNECTION=Keep-Alive
+HTTP_CONTENT_LENGTH=22
+HTTP_CONTENT_TYPE=application/x-www-form-urlencoded
+HTTP_ACCEPT=image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, */*
+HTTP_ACCEPT_ENCODING=gzip, deflate
+HTTP_ACCEPT_LANGUAGE=zh-cn
+HTTP_AUTHORIZATION=Negotiate 这里是NTLMSSP验证的Base64字串
+HTTP_HOST=127.0.0.1:800
+HTTP_REFERER=http://127.0.0.1:800/1.bat
+HTTP_USER_AGENT=Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727)
+HTTP_UA_CPU=x86
+APP_POOL_ID=DefaultAppPool
+AUTH_TYPE=Negotiate
+AUTH_PASSWORD=
+AUTH_USER=est-Vista\\est
+CERT_COOKIE=
+CERT_FLAGS=
+CERT_ISSUER=
+CERT_SERIALNUMBER=
+CERT_SUBJECT=
+CONTENT_LENGTH=22
+CONTENT_TYPE=application/x-www-form-urlencoded
+GATEWAY_INTERFACE=CGI/1.1
+HTTPS=off
+HTTPS_KEYSIZE=
+HTTPS_SECRETKEYSIZE=
+HTTPS_SERVER_ISSUER=
+HTTPS_SERVER_SUBJECT=
+INSTANCE_ID=87257011
+LOCAL_ADDR=127.0.0.1
+LOGON_USER=est-Vista\\est
+PATH_INFO=/1.bat
+PATH_TRANSLATED=C:\\temp\\iis\\1.bat
+QUERY_STRING=param1=%B2%E2%CA%D4111
+REMOTE_ADDR=127.0.0.1
+REMOTE_HOST=127.0.0.1
+REMOTE_USER=est-Vista\\est
+REQUEST_METHOD=POST
+SCRIPT_NAME=/1.bat
+SERVER_NAME=127.0.0.1
+SERVER_PORT=800
+SERVER_PORT_SECURE=0
+SERVER_PROTOCOL=HTTP/1.1
+SERVER_SOFTWARE=Microsoft-IIS/6.0
+UNMAPPED_REMOTE_USER=est-Vista\\est
+</code></pre>
+<p>可以看出，HTTP GET的工作方式是系统环境变量QUERY_STRING，如果是HTTP POST，则数据从stdin标准输入读取。其他的HTTP请求头都是通过各种各样的环境变量来实现的。<br />
+原来Common Gateway Interface就是这么简单，把系统的stdin/stdout转换为Web的IO，很聪明。<br />
+不过从今天来看，这种方式已经绝对过时了，特别是Web2.0时代，WebFramework对各种HTTP行为要求很严格，比如说URL Rewrite，绝大多数网站都需要User friendly URL，所以像django这样的框架已经把URL重写做成了基本功能。还有缓存控制、AJAX的domain问题、REST标准等等。CGI实现这些还是too costy了一点。所以IIS有ISAPI，用dll来接管各种Web IO。apache则通过各种mod实现了更加丰富的功能。<br />
+不过CGI方式也有其优点，那就是IO效率很高，CGI could stand a high network load。用来实现Web File Distribution最好不过了，呵呵。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

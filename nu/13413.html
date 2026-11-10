@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>在Windows下安装Ubuntu！注意，是直接在Win32下安装 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="在Windows下安装Ubuntu！注意，是直接在Win32下安装" />
+
+    <link rel="canonical" href="https://blog.est.im/nu/13413" />
+    <meta property="og:url" content="https://blog.est.im/nu/13413">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="在Windows下安装Ubuntu！注意，是直接在Win32下安装">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">在Windows下安装Ubuntu！注意，是直接在Win32下安装</h2>
+    <p class="post-date">Posted <time datetime="2007-01-16T22:53:00+08:00">2007-01-16</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>很早就这么想，开源世界的 Linux 和 Windows 正面对抗是不现实的，那么我们可以作出一点好玩的事情来，这就是，把 Linux 当成一个很大的“Windows软件”安装到系统中，Linux直接发布成一个几百兆的 <strong>lin</strong> staller.exe，双击安装，在Windows下用Win32API实现磁盘分区，修改MBR挂Grub，然后解压安装包，复制系统文件的文件到分区，呵呵，这样安装Linux的时候也不至于那么无聊，至于Linux的在线升级也可以得到实施，例如电子科大的DrCom上网认证，因为 Ubuntu 是在 Windows 下直接安装的，那么 APT 源就可以不用通过代理直接通过DrCom拨号了，更惬意的是，可以一边安装 Linux 一边上网，听歌，it's super kool！</p>
+<p>这样做的令一个好处是：可以直接复制现有Windows系统理的 字体 和 解码包（Win32Codec）到Linux下，从而避免了版权方面的麻烦，这样做是符合 EULA 的。</p>
+<p>What are you waiting for? Check it out here:</p>
+<p><a href="http://www.ubuntuforums.org/showthread.php?t=338279">http://www.ubuntuforums.org/showthread.php?t=338279</a></p>
+<p>Now the screenshots and demo from ubuntuforums.org</p>
+<p><img alt="" src="/Blog/Attachment/663" /></p>
+<p><img alt="" src="/Blog/Attachment/664" /></p>
+<p><img alt="" src="/Blog/Attachment/665" /></p>
+<p>希望GNU/FOSS的精神能够做出更多有趣的东西出来！</p>
+<p>至于Ubuntu小组的具体实施，和我的想法有点不同，首先他们不修改MBR，直接修改boot.ini，（发本文为止，Vista下的BootManager还不支持），其次，这个项目是用 NullSoft <a href="http://nsis.sourceforge.net/BattleTorrent_plug-ins">Installation System</a> 做的，挂载了 BattleTorrent ，也就是说，一边下载一边安装。由于FAT格式的分区对大体积文件支持不好，所以这个安装程序并不支持Win95/98。</p>
+<p><strong>Windows based installer - testers and developers wanted</strong></p>
+<hr />
+<p>This thread is a continuation of the very long and unmanageable thread: <a href="http://www2.edn.cn/cache/http/index.php?q=http%3A%2F%2Fubuntuforums.org%2Fshowthread.php%3Ft%3D305109">http://ubuntuforums.org/showthread.php?t=305109</a></p>
+<p>We have a development version of a Windows based installer for Ubuntu which is designed to be:</p>
+<pre><code>* very simple to use
+* provide a no-risk installation
+* no repartitioning the hard disk
+* no changing the windows boot loader
+* Easy uninstallation.
+* Low risk
+* Doesn't use a virtual machine
+* Doesn't significantly reduce performance of the resulting installation
+* Resulting installation supports everything a normal install does.
+* Fast install
+</code></pre>
+<hr />
+<p><strong>Currently there is a prototype of the installer. see<a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2Fwiki.ubuntu.com%2Finstall.exe%2FPrototype">https://wiki.ubuntu.com/install.exe/Prototype</a> for download and install instructions.</strong></p>
+<hr />
+<p>The aim of this installer is to provide an easier way for a Windows user to install Ubuntu without having to know how to burn a cd iso, set the bios to boot from cd, repartition the disks, set up a multiboot system, etc. It will not replace any of the current Ubuntu installation options, and will not require that windows is installed prior to the installation of Ubuntu.</p>
+<p>The installer works by creating a disk image of a pre-installed ubuntu system on the hard disk (downloaded with a bittorrent downloader integrated into the installer, or a standard http download when we find mirrors), and then installing GRUB for windows, which can be chain loaded by the existing boot loader, and which then loads the linux kerner and initrd from the ntfs partition. The initrd is modified to support mounting the image file mentioned above as a root file system, and then continuing the boot process like a normal installation.</p>
+<p>This does not use a virtual machine to run linux on, so the performance of the resulting system will be similar to the performance of any other linux installation. The system will use ext3 in the image file, so users will get all the benefits of a linux filesystem.</p>
+<p><strong><em>Current progress</em></strong><br />
+A prototype has been made (see <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2Fwiki.ubuntu.com%2Finstall.exe%2FPrototype">https://wiki.ubuntu.com/install.exe/Prototype</a>) which works, however there are still a few unresolved issues:</p>
+<p>GUI Installer:</p>
+<pre><code>* UPNP
+* Advanced/Expert install
+* installation of other distributions (kubuntu, edubuntu, xubuntu etc.)
+* Langage support
+* slideshow during install
+* Disk space checks required
+* Support for installing on a secondary drive
+* Supporting installation of boot loader where the boot drive isn't c:\
+</code></pre>
+<p>First boot:</p>
+<pre><code>* Hardware Detection
+* Importing settings from config.ini file
+* Swap file
+</code></pre>
+<p>For more details, refer to the following links:</p>
+<p>Launchpad entry here: <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2Fblueprints.launchpad.net%2Fubuntu%2F%2Bspec%2Fwindows-installer">https://blueprints.launchpad.net/ubu...dows-installer</a><br />
+Specification here: <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2Fwiki.ubuntu.com%2Finstall.exe">https://wiki.ubuntu.com/install.exe</a><br />
+Comments here: <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2Fwiki.ubuntu.com%2Finstall.exe%2FComments">https://wiki.ubuntu.com/install.exe/Comments</a><br />
+Prototype here: <a href="http://www2.edn.cn/cache/http/index.php?q=https%3A%2F%2Fwiki.ubuntu.com%2Finstall.exe%2FPrototype">https://wiki.ubuntu.com/install.exe/Prototype</a></p>
+<p>[内有附件]</p>
+<p>附件:<br />
+<a href="/Blog/Attachment/663">3.jpg</a><br />
+<a href="/Blog/Attachment/664">6.jpg</a><br />
+<a href="/Blog/Attachment/665">8.jpg</a></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

@@ -53,22 +53,17 @@
 
   
   <p>来自<a href="http://lucumr.pocoo.org/2011/7/27/the-pluggable-pipedream/">pocoo.org</a></p>
-
-<ul>
-<li>'wsgi.input' is ill-specified but in practice it rarely causes troubles because a) half the servers are already extending WSGI and b) even though half the libraries are in violation it's only the edge cases that cause problems and those are rare.</li>
-<li>Headers cannot be streamed which might be a problem with responses that have a huge amount of headers.</li>
-<li>Trailers are not specified at all except for that “servers might do chunked responses”</li>
-<li>Chunked request data is totally unimplementable on top of the current specification due to the ill-specified WSGI input thing.</li>
-<li>WSGI can be hard to implement in an environment where you are running inside a server like Apache that is already doing request filtering that is outside of your control. WSGI assumes HTTP level access which inside a webserver you usually no longer have.</li>
-<li>WSGI extends CGI's environment and inherits the problem that paths are decoded which comes with loss of information.</li>
-<li>The start_response() machinery seems unnecessarily complex for the fact that barely anybody these days needs the exc_info or write() callable any more.</li>
-<li>The 'wsgi.file_wrapper' is complete garbage because it does not work in practice as soon as middlewares are involved that process responses.</li>
-</ul>
-
+<pre><code>* 'wsgi.input' is ill-specified but in practice it rarely causes troubles because a) half the servers are already extending WSGI and b) even though half the libraries are in violation it's only the edge cases that cause problems and those are rare.
+* Headers cannot be streamed which might be a problem with responses that have a huge amount of headers.
+* Trailers are not specified at all except for that “servers might do chunked responses”
+* Chunked request data is totally unimplementable on top of the current specification due to the ill-specified WSGI input thing.
+* WSGI can be hard to implement in an environment where you are running inside a server like Apache that is already doing request filtering that is outside of your control. WSGI assumes HTTP level access which inside a webserver you usually no longer have.
+* WSGI extends CGI's environment and inherits the problem that paths are decoded which comes with loss of information.
+* The start_response() machinery seems unnecessarily complex for the fact that barely anybody these days needs the exc_info or write() callable any more.
+* The 'wsgi.file_wrapper' is complete garbage because it does not work in practice as soon as middlewares are involved that process responses.
+</code></pre>
 <p>n年前在Web-SIG就对WSGI这玩意产生了厌恶。不支持异步服务器模型</p>
-
 <p>看来ZeroMQ+JSON才是未来架构的王道啊。</p>
-
 <p><a href="http://www.reddit.com/r/Python/comments/j28bp/wsgi_and_the_pluggable_pipe_dream/">via</a></p>
 </article>
 

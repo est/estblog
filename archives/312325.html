@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>python实现全屏截图(win32) – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="python实现全屏截图(win32)" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/312325" />
+    <meta property="og:url" content="https://blog.est.im/archives/312325">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="python实现全屏截图(win32)">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">python实现全屏截图(win32)</h2>
+    <p class="post-date">Posted <time datetime="2007-08-30T08:38:25+08:00">2007-08-30</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>在 <a href="http://groups.google.com/group/comp.lang.python">comp.lang.python</a> 转悠了一会儿终于写出了python用pythonwin实现全屏截图的代码</p>
+<pre><code class="language-python">#!/usr/bin/env python
+#coding:utf-8
+
+import time
+import os, win32gui, win32ui, win32con, win32api
+
+def window_capture():
+  hwnd = 0
+  hwndDC = win32gui.GetWindowDC(hwnd)
+  mfcDC=win32ui.CreateDCFromHandle(hwndDC)
+  saveDC=mfcDC.CreateCompatibleDC()
+  saveBitMap = win32ui.CreateBitmap()
+  MoniterDev=win32api.EnumDisplayMonitors(None,None)
+  w = MoniterDev[0][2][2]
+  h = MoniterDev[0][2][3]
+  print w,h
+  saveBitMap.CreateCompatibleBitmap(mfcDC, w, h)
+  saveDC.SelectObject(saveBitMap)
+  saveDC.BitBlt((0,0),(w, h) , mfcDC, (0,0), win32con.SRCCOPY)
+  bmpname=win32api.GetTempFileName(&quot;.&quot;,&quot;&quot;)[0]+’.bmp’
+  saveBitMap.SaveBitmapFile(saveDC, bmpname)
+  return bmpname
+
+os.system(window_capture())
+</code></pre>
+<p>还有一种方法是利用发送按键，读取剪贴板，由于比较麻烦所以就不写了<br />
+至于Linux下可以直接使用一些命<a href="http://tips.webdesign10.com/how-to-take-a-screenshot-in-linux-gnome-revisited">令来</a>达到目的。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

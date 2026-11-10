@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>【注意】中文版Google Talk是未加密明文传输聊天内容 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="【注意】中文版Google Talk是未加密明文传输聊天内容" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/642153" />
+    <meta property="og:url" content="https://blog.est.im/archives/642153">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="【注意】中文版Google Talk是未加密明文传输聊天内容">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">【注意】中文版Google Talk是未加密明文传输聊天内容</h2>
+    <p class="post-date">Posted <time datetime="2009-08-25T00:00:00+08:00">2009-08-25</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>在 <em>八卦小组</em> 看到一个令人震惊的消息：<strong>中文版</strong> Google Talk是明文传输聊天内容，我验证了一下，的确是明文，截图如下：</p>
+<p><img alt="" src="http://olds.blogcn.com/wp-content/uploads/74/7487/2009/08/16.jpg" /></p>
+<p>请各位Google Talk用户注意鉴别阉割版，老大哥在注视着你！</p>
+<p>记得以前<a href="http://en.wikipedia.org/wiki/Google_Talk#Encryption">wikipedia</a>说过，Google官方承认<a href="https://groups.google.com/group/Calls-Chats-and-Voicemail/browse_thread/thread/431d561bf7d6f7d6/e49343f783a06a1e?lnk=gst&amp;q=encryption&amp;rnum=1#e49343f783a06a1e">Google Talk~~的end-to-end的聊天是未加密的~~ 并不能保证一个终端到另一个终端都是加密的</a>。</p>
+<blockquote>
+<p>[...] that the connection between the Google Talk client and the Google Talk<br />
+ server is encrypted. This prevents others from seeing your mail<br />
+ notifications, Friends list, and other personal settings. The<br />
+ encryption also prevents others from seeing messages between your<br />
+ desktop and Google's servers. However, encryption is not end-to-end, so<br />
+ there is no guarantee that the messages are encrypted when sent to<br />
+ another user. IMs will not be encrypted in these scenarios:</p>
+<p>- Sender/recipient is using Gmail's chat features over HTTP<br />
+ - Sender/recipient is on a federated network that doesn't support<br />
+ encryption<br />
+ - Sender/recipient is behind IMLogic or another similar proxy</p>
+</blockquote>
+<p>~~具体什么是end-to-end，我猜应该是p2p的<a href="http://code.google.com/apis/talk/libjingle/index.html">libjingle</a>某些情况下是直接未加密传输的吧？~~ 也就是说，如果你用的是英文版的Google Talk，那么Google Talk从你桌面到Google服务器是加密的，但是从Google服务器出去，到你聊天对象那里加密与否，Google不能保证。</p>
+<p>其他未加密的情况有：通过http的Gmail测栏聊天；通过IMLogic等代理登录GTalk；你所在的XMPP federation不支持加密。</p>
+<p>下面具体说明一下我所知道的 GoogleTalk 各个版本加密与否情况：</p>
+<p>中文版 Google Talk（<a href="http://dl.google.com/googletalk/googletalk-setup-zh-CN.exe">安装文件URL</a>） 1.0.0.105，使用的<strong>未加密明文传输</strong> XMPP<br />
+<img alt="" src="http://olds.blogcn.com/wp-content/uploads/74/7487/2009/08/2.jpg" /></p>
+<p>繁体中文版 Google Talk （<a href="http://dl.google.com/googletalk/googletalk-setup-zh-TW.exe">安装文件URL</a>）1.0.0.105，同样是<strong>未加密</strong> 。<br />
+<img alt="" src="http://olds.blogcn.com/wp-content/uploads/74/7487/2009/08/15.png" /></p>
+<p>英文版 Google Talk（<a href="http://dl.google.com/googletalk/googletalk-setup.exe">安装文件URL</a>） 1.0.0.104 则是TLS加密，一般来说无法破解和嗅探<br />
+<img alt="" src="http://olds.blogcn.com/wp-content/uploads/74/7487/2009/08/3.jpg" /></p>
+<p>Google Talk Labs Edition（<a href="http://dl.google.com/googletalk/labsedition/1.0.267.233/GoogleTalkLabsEdition.msi">安装文件URL</a>）1.0.267.233，看了下，使用的也是<strong>明文</strong> 传输，不是通过XMPP协议，而是普通HTTP GET和HTTP POST，通讯网址是 http://talkgadget.google.com/talkgadget/msg<br />
+<img alt="" src="http://olds.blogcn.com/wp-content/uploads/74/7487/2009/08/4.jpg" /></p>
+<p><a href="http://mail.google.com/mail/help/chat.html">Gmail侧栏</a>和<a href="http://www.google.com/support/talk/bin/answer.py?hl=en&amp;answer=126293">iGoogle里嵌入</a>的Google Talk，以及<a href="http://googletalk.blogspot.com/2007/03/google-talk-gadget.html">Google Talk Gadget</a>和网站连接方式和网页制作设定有关。<strong>一般来说</strong> 网页是https://开头的就是加密的。普遍国内 Gmail 用户使用https的习惯还是有的吧？</p>
+<p>第三方XMPP客户端（例如pidgin）登录GTalk的，选择TLS就算加密。<br />
+<img alt="" src="http://olds.blogcn.com/wp-content/uploads/74/7487/2009/08/1.gif" /></p>
+<p>长期用英文版还没注意到这个严重的问题，直到有人说抓包发现Google Talk是明文。才发现中文版居然是未加密的。汗死！这一点谷歌算<strong>作恶</strong> 了吧？明明知道国内网络环境不太好的，居然还把加密取消了，也不说明一下。</p>
+<p>更新</p>
+<p>根据抓包的情况来看，有一个方法<strong>估计</strong> 可以屏蔽中文GTalk，Jabber ID（JID）是由 <code>node@domain/resource</code> 这个格式构成的，XMPP客户端可以尝试屏蔽（如果支持的话）以 <code>Talk.v105</code> 开头的resource。目前我也没有具体步骤，只是说这个可能实现的原理。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

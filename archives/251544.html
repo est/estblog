@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>命令行字体注册工具RegFont.vbs v1.0 [2007-5-7] – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="命令行字体注册工具RegFont.vbs v1.0 [2007-5-7]" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/251544" />
+    <meta property="og:url" content="https://blog.est.im/archives/251544">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="命令行字体注册工具RegFont.vbs v1.0 [2007-5-7]">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">命令行字体注册工具RegFont.vbs v1.0 [2007-5-7]</h2>
+    <p class="post-date">Posted <time datetime="2007-05-07T00:00:00+08:00">2007-05-07</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>运行环境：WinNT/Win2K/WinXP/Win2003<br />
++ 使用方法：命令行输入RegFont.vbs 字体文件名回车即可。(例如：RegFont.vbs FZ.TTF)程序<br />
+会自动移动FZ.TTF到系统的FONTS目录，并对字体进行注册，完成后即可<br />
+使用该字体。也可以在windows里头直接将某个TTF托拽到REGFONT进行注册。</p>
+<p>regfont xx.ttf 复制xx.ttf并注册<br />
+regfont xx.ttf /m 移动xx.ttf并注册<br />
+补充：<br />
+regfont xx.ttf /i 安装xx.ttf不复制，仅用快捷方式安装<br />
+regfont xx.ttf /r 安装xx.ttf，仅对本次会话有效，重启后注销。</p>
+<p>�</p>
+<pre><code>Set objShell=CreateObject(&quot;Shell.Application&quot;)
+Set objWSH=CreateObject(&quot;WScript.Shell&quot;)
+Set objFSO=CreateObject(&quot;Scripting.FileSystemObject&quot;)
+Set argv=WScript.Arguments
+set objFsoFontFile=objFSO.GetFile(argv(0))
+Set objFontFile=objShell.NameSpace(CStr(objFsoFontFile.ParentFolder)).ParseName(objFsoFontFile.Name)
+Set objSysFontsDir=objShell.NameSpace(&quot;shell:fonts&quot;)
+
+If argv.Length=1 Then
+    Call objSysFontsDir.CopyHere(objFontFile)
+ElseIf argv(1)=&quot;/i&quot; Then
+    strFontTitle=objCurrDir.GetDetailsOf(objFontFile,21)  '这个地方调用explorer获得字体标题，非Vista可能不是21
+    Call objWSH.RegWrite(&quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts\&quot; &amp; strFontTitle &amp; &quot; (TrueType)&quot;,objFontFile.Path)
+    '需要重启才能生效，vbs无法调用API，sigh～～或许rundll32可以？
+ElseIf argv(1)=&quot;/m&quot; Then
+    objSysFontsDir.MoveHere(objFontFile)
+ElseIf argv(1)=&quot;/r&quot; Then
+    WScript.Echo &quot;Not implemented&quot;
+Else
+    WScript.Echo &quot;RegFont.vbs V1.0&quot;
+End If
+</code></pre>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

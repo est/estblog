@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Thunderbird和Firefox涉嫌后台无条件发送用户隐私数据，Mozilla就是个B啊 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Thunderbird和Firefox涉嫌后台无条件发送用户隐私数据，Mozilla就是个B啊" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/629662" />
+    <meta property="og:url" content="https://blog.est.im/archives/629662">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Thunderbird和Firefox涉嫌后台无条件发送用户隐私数据，Mozilla就是个B啊">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Thunderbird和Firefox涉嫌后台无条件发送用户隐私数据，Mozilla就是个B啊</h2>
+    <p class="post-date">Posted <time datetime="2008-06-26T00:00:00+08:00">2008-06-26</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p><a href="http://www.reddit.com/info/6oz9u/comments/">reddit上</a>看到的。老外<a href="http://www.reddit.com/r/programming/info/6oz9u/comments/c04hand">回复</a>真有耐心和专业水准啊</p>
+<p><a href="http://www.reddit.com/info/6oz9u/comments/">Did you know Firefox and Thunderbird phone home once a day, even with updates disabled and can remotely disable any addon or plugin they wish?</a></p>
+<blockquote>
+<p>I found this out a few days after I decided to start using Thunderbird and created strict firewall rules as a precaution.</p>
+<p>I noticed that Thunderbird would, for no reason at all, sometimes try to contact a server over SSL. I looked up the ip address 63.245.213.32 and found it belonged to Mozilla.</p>
+<p>On researching the problem further I found that the cause of the connection is a feature that cannot be disabled from any menu, only the about:config configuration page.</p>
+<p>Look up extensions.blocklist.enabled for more information. It's present in Firefox also and is enabled even if all the options are disabled through the menus.</p>
+<p>What this tells Mozilla each day:</p>
+<ul>
+<li>IP address</li>
+<li>What time you were using the product</li>
+<li>What exact version number you were using</li>
+<li>If you are using any of the plugins or addons sent in the disabled list</li>
+<li>Total number of active users of their software<br />
+ This may not be that significant to most people but I think you should have a right to know when an application makes this sort of outbound connection without clearly informing you.</li>
+</ul>
+<p>Here is a list of all the unrequested connections Firefox makes: http://support.mozilla.com/fr/kb/Firefox+makes+unrequested+connections</p>
+<p>and that's excluding addons. Many addons will phone home each time Firefox or Thunderbird are launched.</p>
+<p>Please don't downmod this item without reason as I think it's important people have a chance to see what kind of policies Mozilla follows and what kind of database they could be building in the same way people should at least be aware of the potential for misuse if Google has access to your email and search queries.</p>
+</blockquote>
+<p>原文作者<a href="http://www.reddit.com/user/prelim/">prelim</a></p>
+<p>这里简单翻译下：</p>
+<blockquote>
+<p>大家知不知道，Firefox和Thunderbird每天都要跟Mozilla服务器通信一次？即使你把所有更新和插件更新选项禁止？</p>
+<p>我也是前几天才发现的。我刚装上Thunderbird，我有严格的防火墙规则。我发现Thunderbird，在没有任何提示没有任何征兆的情况下，某些时候会通过SSL连接一个服务器。IP是63.245.213.32，是Mozilla的服务器。</p>
+<p>后来我发现这个“功能”选项在任何菜单里都找8到，除非手工修改about:config配置</p>
+<p>键值是：extensions.blocklist.enabled</p>
+<p>这个选项在Firefox里也存在，同样也不可能从菜单里禁用掉。。。</p>
+<p>每天客户端向Mozilla发送这些信息：</p>
+<ul>
+<li>IP地址</li>
+<li>使用了他们的产品多长时间</li>
+<li>你的客户端版本</li>
+<li>你的插件列表，和禁用的插件列表</li>
+<li>软件所有活跃用户的数量</li>
+</ul>
+<p>这些信息不重要，但是重要的是，一个软件在外传任何数据的时候，应该<strong>明确通知用户</strong></p>
+<p>这里有一个网页，展示了Firefox的“非请求连接”列表<a href="http://support.mozilla.com/fr/kb/Firefox+makes+unrequested+connections">http://support.mozilla.com/fr/kb/Firefox+makes+unrequested+connections</a></p>
+<p>这还不包括各种插件内建的升级机制。很多插件在启动的时候要和自己的服务器联系一次。</p>
+<p>所以啊，下载任何软件/插件，要找够足够的理由先。重要的是Mozilla应该让用户知道他们的政策是什么？他们在数据库保存了哪些重要信息？</p>
+</blockquote>
+<p>est评论：<br />
+1. 他妈的FF fans不要来给老子扫盲plug-in、add-on和extension的区别。反正都不是什么好东西。你以为被插得越多还真他妈越爽啊？老子衷心祝愿FF像以前IE那样插件泛滥致死。<br />
+2. Mozilla也不是什么好鸟。<br />
+3. 欢迎健康开源软件<br />
+4. 老外非常重视隐私。非常！其实隐私很重要～～～至少可以防止<a href="http://en.wikipedia.org/wiki/Social_engineering_(security)">社工</a>和<a href="http://dzh2.mop.com/">肉搜</a><br />
+5. Mozilla的<a href="http://www.mozilla.com/en-US/legal/eula/firefox-en.html">EULA</a>里隐约提到了这件事情。真阴险啊。。。。其实我们装软件都不怎么看协议，都一路I Agree的说～～<br />
+6. 如果微软在IE干了这个事情。。。。哼哼。。。吼吼～～～～<br />
+7. 从官方<a href="http://kb.mozillazine.org/Extensions.blocklist.enabled">Extensions.blocklist.enabled</a>说明来看，这个功能貌似是防止恶意插件的</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

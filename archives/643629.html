@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SPDY，HTTP，安全以及IPv4地址数量 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="SPDY，HTTP，安全以及IPv4地址数量" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/643629" />
+    <meta property="og:url" content="https://blog.est.im/archives/643629">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="SPDY，HTTP，安全以及IPv4地址数量">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">SPDY，HTTP，安全以及IPv4地址数量</h2>
+    <p class="post-date">Posted <time datetime="2009-11-12T07:23:37+08:00">2009-11-12</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>今天<a href="http://google.org.cn/posts/google-spdy-2x-faster-web.html">Google发布的SPDY</a>已经满世界飞了，我就不多说了，但是<a href="http://news.ycombinator.com/item?id=938367">HN上的讨论</a>提到有意思的几个事情</p>
+<p>我们知道IPv4地址剩余不多是因为Internet的迅速发展，这其中主要是Web的增长推动的。</p>
+<pre><code>* 比现有Web更好的安全性，例如SSL，则必然破坏中间缓存 intermediate caching
+* SSL还破坏了virtual hosting。例如Dreamhost上虚拟主机连Shared SSL都不能买
+* 所以我们依然还有IPv4地址剩余
+</code></pre>
+<p>SPDY应该还是很有前瞻性的，不过我觉得限制死gzip不太好玩，应该开放一个服务器&amp;客户端插件接口让大家自己玩 alternative 加密啊，这样墙绝对要哭。</p>
+<p>还有就是我<a href="http://initiative.yo2.cn/archives/641683">前面提到的 Information Dispersal Algorithms</a>，这个可以用于large binary transfer的优化。因为SPDY传输JPEG这种已经压缩过的东西没用。其实我猜如果现有CDN架构升级到IDA体系的话，安全性应该不是很重要了。呵呵。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[python]ctypes调用comdlg32 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[python]ctypes调用comdlg32" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/353443" />
+    <meta property="og:url" content="https://blog.est.im/archives/353443">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[python]ctypes调用comdlg32">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[python]ctypes调用comdlg32</h2>
+    <p class="post-date">Posted <time datetime="2007-08-28T00:00:00+08:00">2007-08-28</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>最近迷上了Win32 UI编程，由于不会VC，所以用python过把瘾。<br />
+使用<code>ctypes.windll.comdlg32.GetOpenFileNameW</code>主要的障碍是构造一个<code>OPENFILENAME</code>的<code>struct</code><br />
+它的C语言原型是：</p>
+<pre><code class="language-C">typedef struct tagOFN {
+  DWORD lStructSize;
+  HWND hwndOwner;
+  HINSTANCE hInstance;
+  LPCTSTR lpstrFilter;
+  LPTSTR lpstrCustomFilter;
+  DWORD nMaxCustFilter;
+  DWORD nFilterIndex;
+  LPTSTR lpstrFile;
+  DWORD nMaxFile;
+  LPTSTR lpstrFileTitle;
+  DWORD nMaxFileTitle;
+  LPCTSTR lpstrInitialDir;
+  LPCTSTR lpstrTitle;
+  DWORD Flags;
+  WORD nFileOffset;
+  WORD nFileExtension;
+  LPCTSTR lpstrDefExt;
+  LPARAM lCustData;
+  LPOFNHOOKPROC lpfnHook;
+  LPCTSTR lpTemplateName;
+  #if (_WIN32_WINNT &gt;= 0x0500)
+  void * pvReserved;
+  DWORD dwReserved;
+  DWORD FlagsEx;
+  #endif // (_WIN32_WINNT &gt;= 0x0500)
+} OPENFILENAME, *LPOPENFILENAME;
+</code></pre>
+<p>转换成ctypes格式</p>
+<pre><code class="language-python">class OPENFILENAME(ctypes.Structure):
+  _fields_ = ((&quot;lStructSize&quot;, c_int),
+  (&quot;hwndOwner&quot;, c_int),
+  (&quot;hInstance&quot;, c_int),
+  (&quot;lpstrFilter&quot;, c_wchar_p),
+  (&quot;lpstrCustomFilter&quot;, c_char_p),
+  (&quot;nMaxCustFilter&quot;, c_int),
+  (&quot;nFilterIndex&quot;, c_int),
+  (&quot;lpstrFile&quot;, c_wchar_p),
+  (&quot;nMaxFile&quot;, c_int),
+  (&quot;lpstrFileTitle&quot;, c_wchar_p),
+  (&quot;nMaxFileTitle&quot;, c_int),
+  (&quot;lpstrInitialDir&quot;, c_wchar_p),
+  (&quot;lpstrTitle&quot;, c_wchar_p),
+  (&quot;flags&quot;, c_int),
+  (&quot;nFileOffset&quot;, c_ushort),
+  (&quot;nFileExtension&quot;, c_ushort),
+  (&quot;lpstrDefExt&quot;, c_char_p),
+  (&quot;lCustData&quot;, c_int),
+  (&quot;lpfnHook&quot;, c_char_p),
+  (&quot;lpTemplateName&quot;, c_char_p),
+  (&quot;pvReserved&quot;, c_char_p),
+  (&quot;dwReserved&quot;, c_int),
+  (&quot;flagsEx&quot;, c_int))
+
+def __init__(self, win, title):
+  ctypes.Structure.__init__(self)
+  self.lStructSize = ctypes.sizeof(OPENFILENAME)
+  self.nMaxFile = 1024
+  self.hwndOwner = win
+  self.lpstrTitle = title
+  self.Flags = OFN_HIDEREADONLY
+</code></pre>
+<p>上面的代码不是我写的，是参考了<a href="http://www.koders.com/python/fid9ADA4FD59A6487FA882F0867DBBCD3083E75062F.aspx">Scintilla</a>的源码。<br />
+还是写一个完整的调用common dialog的prototype吧</p>
+<pre><code class="language-python">#!/usr/bin/env python
+#coding:UTF-8
+
+import ctypes
+From ctypes import c_int, c_ulong, c_char_p, c_wchar_p, c_ushort
+
+OFN_HIDEREADONLY = 4
+filterText = u&quot;*.txt&quot;
+
+class OPENFILENAME(ctypes.Structure):
+  _fields_ = (
+    (&quot;lStructSize&quot;, c_int),
+    (&quot;hwndOwner&quot;, c_int),
+    (&quot;hInstance&quot;, c_int),
+    (&quot;lpstrFilter&quot;, c_wchar_p),
+    (&quot;lpstrCustomFilter&quot;, c_char_p),
+    (&quot;nMaxCustFilter&quot;, c_int),
+    (&quot;nFilterIndex&quot;, c_int),
+    (&quot;lpstrFile&quot;, c_wchar_p),
+    (&quot;nMaxFile&quot;, c_int),
+    (&quot;lpstrFileTitle&quot;, c_wchar_p),
+    (&quot;nMaxFileTitle&quot;, c_int),
+    (&quot;lpstrInitialDir&quot;, c_wchar_p),
+    (&quot;lpstrTitle&quot;, c_wchar_p),
+    (&quot;flags&quot;, c_int),
+    (&quot;nFileOffset&quot;, c_ushort),
+    (&quot;nFileExtension&quot;, c_ushort),
+    (&quot;lpstrDefExt&quot;, c_char_p),
+    (&quot;lCustData&quot;, c_int),
+    (&quot;lpfnHook&quot;, c_char_p),
+    (&quot;lpTemplateName&quot;, c_char_p),
+    (&quot;pvReserved&quot;, c_char_p),
+    (&quot;dwReserved&quot;, c_int),
+    (&quot;flagsEx&quot;, c_int))
+
+def __init__(self, win, title):
+  ctypes.Structure.__init__(self)
+  self.lStructSize = ctypes.sizeof(OPENFILENAME)
+  self.nMaxFile = 1024
+  self.hwndOwner = win
+  self.lpstrTitle = title
+  self.Flags = OFN_HIDEREADONLY
+
+ofx = OPENFILENAME(0, &quot;Open File&quot;)
+opath = u&quot;\0&quot; * 1024
+ofx.lpstrFile = opath
+ofx.lpstrFilter = filterText
+ctypes.windll.comdlg32.GetOpenFileNameW(ctypes.byref(ofx))
+
+print opath.replace(u&quot;\0&quot;, u&quot;&quot;)
+</code></pre>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Chrome Frame – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Google Chrome Frame" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/642723" />
+    <meta property="og:url" content="https://blog.est.im/archives/642723">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Google Chrome Frame">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Google Chrome Frame</h2>
+    <p class="post-date">Posted <time datetime="2009-09-24T02:26:43+08:00">2009-09-24</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>Ahhhhh, fuck. Google推出了Chrome Frame</p>
+<p>其实就是一个<a href="http://cache.pack.google.com/edgedl/chrome/install/211.7/chromeframe_installer.exe">特殊版本的Chrome</a>，里面包含了一个<code>npchrome_tab.dll</code></p>
+<p><img alt="" src="http://olds.blogcn.com/wp-content/uploads/74/7487/2009/09/13.jpg" /></p>
+<p>注册了一个<code>CF:</code>这样的<a href="http://msdn.microsoft.com/en-us/library/aa767743(VS.85).aspx">Asynchronous Pluggable Protocols</a>到IE，然后嵌入一个ActiveX的Chrome引擎代替IE来layout和javascript。目前还没有去测试cookie啊XSS啊XSRF特性，不过：</p>
+<p><code>cf:javascript:alert(/fuck chrome/)</code></p>
+<p>这个似乎没用。</p>
+<p>注意看上面的截图，地址栏里显示的是cf:http://g.cn。说明什么？说明我们很方便地址栏钓鱼了。因为301/302跳转显示没变。</p>
+<p>目前还发现一个问题就是cf:https://gmail.com 似乎没用。但是测试了下其他https网站似乎可用。</p>
+<p>Google官方给出了一个<a href="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.js">CFInstall.js</a>来探测Chrome Frame是否可用。</p>
+<p>大概就是<code>var obj = new ActiveXObject('ChromeTab.ChromeFrame');</code> 这一句了。</p>
+<p><code>npchrome_tab.dll</code>定义了几个导出函数：</p>
+<p>CfLaunchChrome<br />
+NP_GetEntryPoints<br />
+NP_Initialize<br />
+NP_Shutdown<br />
+RegisterNPAPIPlugin<br />
+UnregisterNPAPIPlugin</p>
+<p>测试了下 <code>rundll32 npchrome_tab.dll, CfLaunchChrome</code> 可以启动 Chrome。不过把NPAPI引入IE会导致n多安全问题吧？</p>
+<p>下面贴一个<code>npchrome_tab.dll</code>里的typelib：</p>
+<blockquote>
+<p><code>ChromeTabLib; // ChromeTab 1.0 Type Library</code></p>
+<p><code>Dispatch DIChromeFrameEvents;
+ GUID={A96B8A02-DD11-4936-8C0F-B2520289FABB};
+ function onload;
+ function onloaderror;
+ function onmessage(event:IDispatch);
+ function onreadystatechanged;
+ function onprivatemessage(event:IDispatch; target:BSTR);</code></p>
+<p><code>Class HtmlFilter;
+ GUID={BB1176EE-20DD-41DC-9D1E-AC1335C7BBB0};
+ function QueryInterface(riid:^GUID; out ppvObj:^^void): HResult;
+ function AddRef: UI4;
+ function Release: UI4;</code></p>
+<p><code>Class ChromeProtocol;
+ GUID={9875BFAF-B04D-445E-8A69-BE36838CDE3E};
+ function QueryInterface(riid:^GUID; out ppvObj:^^void): HResult;
+ function AddRef: UI4;
+ function Release: UI4;</code></p>
+<p><code>Class ChromeActiveDocument;
+ GUID={3E1D0E7F-F5E3-44CC-AA6A-C0A637619AB8};
+ function QueryInterface(riid:^GUID; out ppvObj:^^void);
+ function AddRef: UI4;
+ function Release: UI4;
+ function GetTypeInfoCount(out pctinfo:^UINT);
+ function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);
+ function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);
+ function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);
+ property-get src: BSTR;
+ property-put src(BSTR);
+ function postMessage(message:BSTR; [target:variant]);
+ property-get onload: variant;
+ property-put onload(variant);
+ property-get onloaderror: variant;
+ property-put onloaderror(variant);
+ property-get onmessage: variant;
+ property-put onmessage(variant);
+ property-get readyState: I4;
+ function addEventListener(event_type:BSTR; listener:IDispatch; [use_capture:variant]);
+ function removeEventListener(event_type:BSTR; listener:IDispatch; [use_capture:variant]);
+ property-get version: BSTR;
+ function postPrivateMessage(message:BSTR; origin:BSTR; target:BSTR);
+ property-get useChromeNetwork: bool;
+ property-put useChromeNetwork(bool);</code></p>
+<p><code>Dispatch IChromeFrame; // IChromeFrame Interface
+ GUID={B9F5EA20-C450-4F46-B70F-BFD3CA9A20C5};
+ function QueryInterface(riid:^GUID; out ppvObj:^^void);
+ function AddRef: UI4;
+ function Release: UI4;
+ function GetTypeInfoCount(out pctinfo:^UINT);
+ function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);
+ function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);
+ function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);
+ property-get src: BSTR;
+ property-put src(BSTR);
+ function postMessage(message:BSTR; [target:variant]);
+ property-get onload: variant;
+ property-put onload(variant);
+ property-get onloaderror: variant;
+ property-put onloaderror(variant);
+ property-get onmessage: variant;
+ property-put onmessage(variant);
+ property-get readyState: I4;
+ function addEventListener(event_type:BSTR; listener:IDispatch; [use_capture:variant]);
+ function removeEventListener(event_type:BSTR; listener:IDispatch; [use_capture:variant]);
+ property-get version: BSTR;
+ function postPrivateMessage(message:BSTR; origin:BSTR; target:BSTR);
+ property-get useChromeNetwork: bool;
+ property-put useChromeNetwork(bool);</code></p>
+<p><code>Class ChromeFrame;
+ GUID={E0A900DF-9611-4446-86BD-4B1D47E7DB2A};
+ function QueryInterface(riid:^GUID; out ppvObj:^^void);
+ function AddRef: UI4;
+ function Release: UI4;
+ function GetTypeInfoCount(out pctinfo:^UINT);
+ function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);
+ function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);
+ function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);
+ property-get src: BSTR;
+ property-put src(BSTR);
+ function postMessage(message:BSTR; [target:variant]);
+ property-get onload: variant;
+ property-put onload(variant);
+ property-get onloaderror: variant;
+ property-put onloaderror(variant);
+ property-get onmessage: variant;
+ property-put onmessage(variant);
+ property-get readyState: I4;
+ function addEventListener(event_type:BSTR; listener:IDispatch; [use_capture:variant]);
+ function removeEventListener(event_type:BSTR; listener:IDispatch; [use_capture:variant]);
+ property-get version: BSTR;
+ function postPrivateMessage(message:BSTR; origin:BSTR; target:BSTR);
+ property-get useChromeNetwork: bool;
+ property-put useChromeNetwork(bool);
+ function onload;
+ function onloaderror;
+ function onmessage(event:IDispatch);
+ function onreadystatechanged;
+ function onprivatemessage(event:IDispatch; target:BSTR);</code></p>
+<p><code>Class ChromeFrameBHO;
+ GUID={ECB3C477-1A0A-44BD-BB57-78F9EFE34FA7};
+ function QueryInterface(riid:^GUID; out ppvObj:^^void): HResult;
+ function AddRef: UI4;
+ function Release: UI4;</code></p>
+</blockquote>
+<p>问了下<a href="irc://irc.freenode.org/#chromium">#chromium</a>里的人，他们说源码还没公开。看得出来CF只是为了借<a href="http://googlewavedev.blogspot.com/2009/09/google-wave-in-internet-explorer.html">Wave推广Chrome</a>的一个小聪明。总体感觉Chrome Frame，想做到很安全，难。还是<code>regsvr32 /u npchrome_tab.dll</code>，早点卸了吧。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

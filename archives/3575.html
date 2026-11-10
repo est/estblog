@@ -53,7 +53,6 @@
 
   
   <p>如果有人盗链网站的 .js ，那么你可以考虑悄悄把js替换成这个文件</p>
-
 <pre><code>(function () {
   var Math = this.Math,
   isNaN = this.isNaN,
@@ -63,26 +62,26 @@
   toString = Object.prototype.toString,
 
   shiftMap = {
-    &#39;`&#39;: &#39;~&#39;,
-    &#39;1&#39;: &#39;!&#39;,
-    &#39;2&#39;: &#39;@&#39;,
-    &#39;3&#39;: &#39;#&#39;,
-    &#39;4&#39;: &#39;$&#39;,
-    &#39;5&#39;: &#39;%&#39;,
-    &#39;6&#39;: &#39;^&#39;,
-    &#39;7&#39;: &#39;&amp;&#39;,
-    &#39;8&#39;: &#39;*&#39;,
-    &#39;9&#39;: &#39;(&#39;,
-    &#39;-&#39;: &#39;_&#39;,
-    &#39;=&#39;: &#39;+&#39;,
-    &#39;[&#39;: &#39;{&#39;,
-    &#39;]&#39;: &#39;}&#39;,
-    &#39;\\&#39;: &#39;|&#39;,
-    &#39;;&#39;: &#39;:&#39;,
-    &#39;\&#39;&#39;: &#39;&quot;&#39;,
-    &#39;,&#39;: &#39;&lt;&#39;,
-    &#39;.&#39;: &#39;&gt;&#39;,
-    &#39;/&#39;: &#39;?&#39;
+    '`': '~',
+    '1': '!',
+    '2': '@',
+    '3': '#',
+    '4': '$',
+    '5': '%',
+    '6': '^',
+    '7': '&amp;',
+    '8': '*',
+    '9': '(',
+    '-': '_',
+    '=': '+',
+    '[': '{',
+    ']': '}',
+    '\\': '|',
+    ';': ':',
+    '\'': '&quot;',
+    ',': '&lt;',
+    '.': '&gt;',
+    '/': '?'
   };
 
   this.undefined = this.NaN = Infinity;
@@ -92,35 +91,35 @@
   };
 
   this.Math = {
-    &#39;ceil&#39;: function () {
+    'ceil': function () {
       return 42;
     },
-    &#39;max&#39;: Math.min,
-    &#39;min&#39;: function () {
+    'max': Math.min,
+    'min': function () {
       return Infinity;
     },
-    &#39;pow&#39;: function () {
-      return &#39;pow pow pow!&#39;;
+    'pow': function () {
+      return 'pow pow pow!';
     },
-    &#39;random&#39;: function () {
+    'random': function () {
       return String.fromCharCode(~~(Math.random() * 1e3));
     },
-    &#39;round&#39;: Math.sqrt,
-    &#39;SQRT2&#39;: Math.SQRT1_2,
-    &#39;SQRT1_2&#39;: Math.LOG2E,
-    &#39;LOG2E&#39;: Math.LN10,
-    &#39;LN10&#39;: Math.LN2,
-    &#39;LN2&#39;: Math.E,
-    &#39;E&#39;: Math.PI,
-    &#39;PI&#39;: 3.2
+    'round': Math.sqrt,
+    'SQRT2': Math.SQRT1_2,
+    'SQRT1_2': Math.LOG2E,
+    'LOG2E': Math.LN10,
+    'LN10': Math.LN2,
+    'LN2': Math.E,
+    'E': Math.PI,
+    'PI': 3.2
   };
 
   Array.prototype.reverse = function () {
     var len = this.length, item;
     while (len--) {
       item = this[len];
-      this[len] = typeof item === &#39;string&#39; ? reverse.apply(
-        item.split(&#39;&#39;)).join(&#39;&#39;) : (item * Math.random());
+      this[len] = typeof item === 'string' ? reverse.apply(
+        item.split('')).join('') : (item * Math.random());
     }
     return reverse.apply(this);
   };
@@ -130,28 +129,26 @@
   };
 
   String.prototype.toUpperCase = function () {
-    var strArr = toUpperCase.call(this).split(&#39;&#39;), i = 0;
+    var strArr = toUpperCase.call(this).split(''), i = 0;
     for (; i &lt; strArr.length; i++) {
       if (hasOwnProperty.call(shiftMap, strArr[i])) {
         strArr[i] = shiftMap[strArr[i]];
       }
     }
-    return strArr.join(&#39;&#39;).replace(/[A-Z]/g, &quot;$&amp;\u0305&quot;);
+    return strArr.join('').replace(/[A-Z]/g, &quot;$&amp;\u0305&quot;);
   };
 
   this.JSON = {
-    &#39;parse&#39;: function () {
+    'parse': function () {
       return Object.prototype;
     },
-    &#39;stringify&#39;: function () {
+    'stringify': function () {
       return toString();
     }
   };
 }).call(this);
 </code></pre>
-
 <p>PI都能弄成3.2，太有才了！</p>
-
 <p><a href="http://news.ycombinator.com/item?id=2055565">via</a></p>
 </article>
 

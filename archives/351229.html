@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>让Thunderbird跨越Ubuntu和Windows – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="让Thunderbird跨越Ubuntu和Windows" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/351229" />
+    <meta property="og:url" content="https://blog.est.im/archives/351229">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="让Thunderbird跨越Ubuntu和Windows">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">让Thunderbird跨越Ubuntu和Windows</h2>
+    <p class="post-date">Posted <time datetime="2007-08-27T00:00:00+08:00">2007-08-27</time> | <span>archive</span></p>
+  </header>
+
+  
+  <h2>Thunderbird简介</h2>
+<p><a href="http://www.mozilla.com/thunderbird/">Thunderbird</a>是一款跨平台、开源的电子邮件客户端软件。由开发Firefox的Mozilla基金会维护。功能强大，插件众多。</p>
+<h2>Why Thunderbird</h2>
+<p>我选中Thunderbird的主要原因就是</p>
+<pre><code>1. 可以在Windows、Ubuntu下运行
+2. 有一个支持[Windows Live Mail](http://mail.live.com/)的插件[Web Mail](http://webmail.mozdev.org/) \- [Hotmail Plugin](http://download.mozdev.org/webmail/hotmail-1-2-7.xpi)
+3. Windows下有 [portable](http://portableapps.com/apps/internet/thunderbird_portable) 版本
+4. 有过滤器 filter功能
+5. 比DreamMail方便快捷的搜索功能（但是比Live Mail Desktop差一点）
+6. [Gmail](https://mail.google.com/mail/)速度太慢。如果Gmail速度理想的话我想我会把我的十几个邮箱都通过Gmail的Getch POP3 Mail+Filter功能来管理的
+7. 我喜爱的[DreamMa](http://www.dreammail.org/)il长期不更新，成了化石软件了
+</code></pre>
+<h2>起源</h2>
+<p>那么一个新奇的idea产生了。我们可否通过tweak Thunderbird的设置，使我的Windows Vista下的Thunderbird和Ubuntu下的Thunderbird使用同一个帐号配置文件，同一套邮件数据库？在网上搜索了一下，果然在UbuntuForums找到了<a href="http://ubuntuforums.org/showthread.php?t=203524">Howto Thunderbird/Firefox profile share XP &amp; Dapper</a></p>
+<h2>准备</h2>
+<p>首先需要一个Windows+Ubuntu的双系统，然后呢，需要准备一个FAT32的分区，用于Windows和Ubuntu共享读写数据。其次，在Windows下把Thunderbird Portable安装到这个分区。比如说我的安装路径为：<code>D:\Networks\ThunderbirdPortable</code>。这里不用官方的Thunderbird而使用PortableApps.com第三方的ThunderbirdPortable，原因是 portable 版本可以把邮件数据放到非系统分区例如我的<code>D:\Networks\ThunderbirdPortable\Data</code>，而不是<code>C:\Users\est\AppData\Local\Thunderbird</code>。</p>
+<h2>配置Thunderbird</h2>
+<p>首先在Windows下配置好Thunderbird Portable，添加一切你的邮件帐号，安装好插件等等。然后启动到Ubuntu下。</p>
+<blockquote>
+<p>如果你没有安装Thunderbird请通过<br />
+<code>sudo apt-get install mozilla-thunderbird</code><br />
+ 来安装Mozilla Thunderbird。起初我弄成<code>sudo apt-get install thunderbird</code>始终不成功，郁闷了好久。</p>
+</blockquote>
+<p>打开终端，执行<code>mozilla-thunderbird -profilemanager</code>命令。可以说这篇文章的核心就是这个命令了，因为这个命令可以让用户选择配置文件保存的路径，也可以从路径读取已有的配置文件。<br />
+<img alt="newprofile.jpg" src="http://olds.blogcn.com/wp-content/uploads/74/7487/2007/08/newprofile.jpg" /><br />
+点击Create Profile<br />
+在配置文件名称和路径的时候注意，要选择Windows下的那个profile所在路径<br />
+<img alt="winthunderbirdprofilelocation.jpg" src="http://olds.blogcn.com/wp-content/uploads/74/7487/2007/08/winthunderbirdprofilelocation.jpg" /><br />
+完成配置，我们的Thunderbird已经和Windows同步了，点击Start Thunderbird开始使用吧</p>
+<h2>后记</h2>
+<p>写这篇文章的时候我是在虚拟机里跑的Ubuntu，虚拟磁盘直接读取的是D:盘的映射，所以弄虚拟机的时候老是出现这个窗口：<br />
+<img alt="vmwareerror.jpg" src="http://olds.blogcn.com/wp-content/uploads/74/7487/2007/08/vmwareerror.jpg" /><br />
+可能是Windows和VMware磁盘读写冲突了吧。<br />
+最后截图纪念。<br />
+<img alt="thunderbird.jpg" src="http://olds.blogcn.com/wp-content/uploads/74/7487/2007/08/thunderbird.jpg" /><br />
+为什么Linux下的Thunderbird图标比Windows下的好看呢 @.@ 嫉妒ing...</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

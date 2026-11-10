@@ -53,17 +53,13 @@
 
   
   <p>Wordpress有一个很脑残的功能，把半角引号自动替换成全角的。我一开始也以为是CSS做的。折腾了半天没结果。原来这个功能叫<a href="http://wordpress.org/tags/texturize">Texturize</a>，是在<code>wp-includes/formatting.php</code>里实现的</p>
-
 <p>网上找到<a href="http://www.ibjx.com/2009/11/%E9%98%B2%E6%AD%A2wordpress%E8%8B%B1%E6%96%87%E6%A0%87%E7%82%B9%E7%AC%A6%E5%8F%B7%E5%8D%8A%E8%A7%92%E8%BD%AC%E5%85%A8%E8%A7%92/">一篇教程</a>，如下修改代码：</p>
-
 <p>把</p>
-
-<pre><code>// static strings 
-$curl = str_replace($static_characters, $static_replacements, $curl); 
-// regular e-xpressions 
+<pre><code>// static strings
+$curl = str_replace($static_characters, $static_replacements, $curl);
+// regular e-xpressions
 $curl = preg_replace($dynamic_characters, $dynamic_replacements, $curl);
 </code></pre>
-
 <p>都注释掉就OK了。</p>
 </article>
 

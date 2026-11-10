@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HTML的form还可以这样写：mailto: – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="HTML的form还可以这样写：mailto:" />
+
+    <link rel="canonical" href="https://blog.est.im/nu/11220" />
+    <meta property="og:url" content="https://blog.est.im/nu/11220">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="HTML的form还可以这样写：mailto:">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">HTML的form还可以这样写：mailto:</h2>
+    <p class="post-date">Posted <time datetime="2006-10-31T16:09:00+08:00">2006-10-31</time> | <span>archive</span></p>
+  </header>
+
+  
+  <pre><code class="language-html">&lt;FORM ACTION=&quot;mailto:mtscf@microsoft.com&quot; METHOD=GET&gt;
+&lt;INPUT NAME=subject TYPE=hidden VALUE=&quot;InetSDK%20User%20Feedback&quot;&gt;
+Enter comments about this site:&lt;BR&gt;
+&lt;TEXTAREA NAME=body COLS=40&gt;
+InetSDK: http://msdn.microsoft.com/workshop/
+The InetSDK site is superlative!
+&lt;/TEXTAREA&gt;
+&lt;INPUT TYPE=submit VALUE=&quot;Send Feedback&quot;&gt;
+&lt;/FORM&gt;
+</code></pre>
+<p>今天才发现的。见微软的 MSDN 上：</p>
+<h1>mailto Protocol</h1>
+<hr />
+<p>Opens a client's e-mail system.</p>
+<p>Syntax <code>mailto:sAddress[sHeaders]</code></p>
+<p>Tokens</p>
+<blockquote>
+<p><em>sAddress</em><br />
+    One or more valid e-mail addresses separated by a semicolon. You must use Internet-safe characters. Use %20 for the space character.<br />
+<em>sHeaders</em><br />
+    Optional. One or more name-value pairs. The first pair should be prefixed by a "?" and any additional pairs should be prefixed by a "&amp;". The name can be one of the following strings.</p>
+<p>subject<br />
+    Text to appear in the subject line of the message.<br />
+body<br />
+    Text to appear in the body of the message.<br />
+CC<br />
+    Addresses to be included in the "cc" (carbon copy) section of the message.<br />
+BCC<br />
+    Addresses to be included in the "bcc" (blind carbon copy) section of the message.</p>
+</blockquote>
+<p>Remarks</p>
+<blockquote>
+<p>For more information on the mailto protocol, see <a href="http://ftp.isi.edu/in-notes/rfc2368.txt">RFC 2368</a> <img alt="World Wide Web link" src="ms-help://MS.MSDNQTR.2003FEB.2052/networking/workshop/graphics/leave-site.gif" />.</p>
+<p>Available as of Microsoft® Internet Explorer 3.0 or later.</p>
+</blockquote>
+<p>Examples</p>
+<blockquote>
+<p>The following example shows a mailto URL that will prepare an e-mail message when typed into the Internet Explorer address bar.</p>
+<p><code>mailto:mtscf@microsoft.com?subject=Feedback&amp;body=The InetSDK Site Is Superlative"</code></p>
+<p>The following example shows a link that will prepare an e-mail message.</p>
+<p><code>&lt;A HREF="mailto:mtscf@microsoft.com?subject=Feedback&amp;amp;body=The%20InetSDK%20Site%20Is%20Superlative"&gt;Click here to send feedback to the InetSDK.&lt;/A&gt;</code></p>
+<p>The following example shows a link that will prepare an e-mail message with multiple lines of text in the body.</p>
+<p><code>&lt;A HREF="mailto:mtscf@microsoft.com?subject=Feedback&amp;amp;body=The%0d%0aInetSDK%0d%0aSite%0d%0aIs%0d%0aSuperlative"&gt;Click here to send feedback to the InetSDK.&lt;/A&gt;</code></p>
+<p>The following example shows how to use an HTML form to create an e-mail message.<br />
+</p>
+</blockquote>
+<pre><code>&lt;FORM ACTION=&quot;mailto:mtscf@microsoft.com&quot; METHOD=GET&gt;
+&lt;INPUT NAME=subject TYPE=hidden VALUE=&quot;InetSDK%20User%20Feedback&quot;&gt;
+Enter comments about this site:&lt;BR&gt;
+&lt;TEXTAREA NAME=body COLS=40&gt;
+InetSDK: http://msdn.microsoft.com/workshop/
+The InetSDK site is superlative!
+&lt;/TEXTAREA&gt;
+&lt;INPUT TYPE=submit VALUE=&quot;Send Feedback&quot;&gt;
+&lt;/FORM&gt;
+</code></pre>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

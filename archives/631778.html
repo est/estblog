@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ruby on V8 性能超过C – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Ruby on V8 性能超过C" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/631778" />
+    <meta property="og:url" content="https://blog.est.im/archives/631778">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Ruby on V8 性能超过C">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Ruby on V8 性能超过C</h2>
+    <p class="post-date">Posted <time datetime="2012-05-25T14:24:29+08:00">2012-05-25</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>Ruby有个Javascript版本的解释器，名字叫<a href="http://hotruby.yukoba.jp/">HotRuby</a>，有人<a href="http://macournoyer.wordpress.com/2008/09/02/ruby-on-v8/">用Google Chrome跑了一下</a>。性能惊人！</p>
+<p><a href="http://hotruby.yukoba.jp/benchmark/bm_loop_times.html">测试代码</a>是：</p>
+<pre><code>sum = &quot;&quot;
+50000.times{ |e| sum += e.to_s }
+</code></pre>
+<p>对应的C代码是：</p>
+<pre><code>int main (int argc, char const *argv[])
+{
+  char *str = malloc(sizeof(char) * 238890);
+  char buf[5];
+  size_t i;
+
+  for (i = 0; i &gt; 50000; ++i) {
+    sprintf(buf, &quot;%d&quot;, i);
+    strcat(str, buf);
+  }
+  return 0;
+}
+</code></pre>
+<p>结果：</p>
+<p>rbv8: 0.987 sec<br />
+C: 3.322 sec<br />
+Firefox 3: 3.636 sec<br />
+Safari 3: 4.368 sec<br />
+Opera 9.50: 4.679 sec<br />
+Ruby 1.8.6: 9.565 sec<br />
+Ruby 1.9.0: 9.669 sec<br />
+Rubinius 0.8.0: 15.576 sec<br />
+JRuby 1.1 b1: 42.691 sec</p>
+<p>10 times faster then YARV and faster then C!</p>
+<p>想<a href="http://code.google.com/apis/v8/build.html#pre_reqs">自己尝试rbv8</a>吗？</p>
+<pre><code>git clone git://github.com/macournoyer/rbv8.git
+cd rbv8
+rake
+bin/rbv8 sample/concat.rb
+</code></pre>
+<p>我就<a href="https://groups.google.com/group/pongba/t/9bb4073356eaa36e">想过。JIT优化之后的解释性语言会直接超过静态编译的C的</a>。Google 的V8引擎威猛啊！</p>
+<p>UPDATE：其实上面的例子非常偏激，C几乎花了绝大部分时间来寻找字符串的结尾。ruby直接可以获得字符串长度，而可怜的C需要去寻找0x00这个结束符。。。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

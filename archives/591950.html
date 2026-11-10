@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[Java]Openfire插件开发心得：基于XMPP实现类Twitter功能 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[Java]Openfire插件开发心得：基于XMPP实现类Twitter功能" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/591950" />
+    <meta property="og:url" content="https://blog.est.im/archives/591950">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[Java]Openfire插件开发心得：基于XMPP实现类Twitter功能">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[Java]Openfire插件开发心得：基于XMPP实现类Twitter功能</h2>
+    <p class="post-date">Posted <time datetime="2011-07-28T08:29:31+08:00">2011-07-28</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>Openfire是XMPP协议最好的服务器软件。最近修改了一个插件实现了类Twitter功能，发出来分享</p>
+<h3>Get started</h3>
+<p>我用的是debian作为Openfire服务器<br />
+<a href="http://www.igniterealtime.org/downloads/download-landing.jsp?file=openfire/openfire_3_4_2.tar.gz">下载Openfire</a>，安装JRE（Jaav运行库），把Openfire跑起来<br />
+<a href="http://java.sun.com/javase/downloads/index_jdk5.jsp">下载JDK 1.5</a>，安装到<code>/opt/jdk1.5.0_14</code><br />
+下载<a href="http://www.igniterealtime.org/downloads/source.jsp">openfire源码</a>，准备编译。当时我安装的oenfire是3.4.1所以源码也下载的是<a href="http://www.igniterealtime.org/downloadServlet?filename=openfire/openfire_src_3_4_1.tar.gz">3.4.1版本</a>。用<code>tar -zxvf openfire_src_3_4_1.tar.gz</code>解压到<code>/opt/openfire_src</code></p>
+<p>配置系统环境，声明JDK的环境变量<code>export JAVA_HOME=/opt/jdk1.5.0_14/</code><br />
+下载ant编译工具，<code>apt-get install ant</code> 呵呵，debian就是爽。</p>
+<h3>编写Openfire插件</h3>
+<p>这是一个及其痛苦的过程，由于我不会Java，所以报了本《Thinking in Java》然后对照着SUN的官方文档边学边写，最后还是鼓捣出来了，呵呵<br />
+我的插件是基于Stefan Reuter的<a href="http://maven.reucon.com/projects/public/user-status/">userstatus</a>插件修改的</p>
+<blockquote>
+<p>User Status Plugin is a plugin for the Openfire XMPP server to save the user status to the database.</p>
+<p>This plugin automatically saves the last status (presence, IP address, logon and logoff time) per user and resource to userStatus table in the Openfire database.</p>
+<p>Optionally you can archive user status entries (IP address, logon and logoff time) for a specified time. History entries are stored in the userStatusHistory table. The settings for history archiving can be configured on the "User Status Settings" page that you'll find on the "Server" tab of the Openfire Admin Console.</p>
+</blockquote>
+<p>目录结构有些变化，我的修改版可以在这里下载 <a href="http://upload-001.yo2cdn.com/wp-content/uploads/74/7487/2007/12/userstatus.rar" title="userstatus.rar">userstatus.rar</a><br />
+目录结构是：</p>
+<pre><code>E:\\DORMFORCE\\NUTALK\\OPENFIRE\\EST\\USER-STATUS
+│  changelog.html
+│  plugin.xml
+│  readme.html
+│
+├─i18n
+│      user-status_i18n.properties
+│
+├─META-INF
+│  │  MANIFEST.MF
+│  │
+│  └─maven
+│      └─com.reucon.openfire.plugins
+│          └─user-status
+│                  pom.properties
+│                  pom.xml
+│
+├─src
+│  ├─database
+│  │      user-status_mysql.sql
+│  │
+│  ├─java
+│  │  └─com
+│  │      └─reucon
+│  │          └─openfire
+│  │              └─plugins
+│  │                  └─userstatus
+│  │                          UserStatusPlugin.java
+│  │
+│  └─web
+│          user-status-settings.jsp
+│
+└─web
+    │  user-status-settings.jsp
+    │
+    └─WEB-INF
+            web.xml
+</code></pre>
+<p>修改了<code>user-status_mysql.sql</code> ，在<code>userStatus</code>表增加一个字段<code>status TEXT,</code>，然后修改<code>UserStatusPlugin.java</code>的源码了<br />
+[code:java]<br />
+package com.reucon.openfire.plugins.userstatus;</p>
+<p>import org.jivesoftware.database.DbConnectionManager;<br />
+import org.jivesoftware.database.SequenceManager;<br />
+import org.jivesoftware.openfire.SessionManager;<br />
+import org.jivesoftware.openfire.XMPPServer;<br />
+import org.jivesoftware.openfire.container.Plugin;<br />
+import org.jivesoftware.openfire.container.PluginManager;<br />
+import org.jivesoftware.openfire.event.SessionEventDispatcher;<br />
+import org.jivesoftware.openfire.event.SessionEventListener;<br />
+import org.jivesoftware.openfire.session.ClientSession;<br />
+import org.jivesoftware.openfire.session.Session;<br />
+import org.jivesoftware.openfire.user.PresenceEventDispatcher;<br />
+import org.jivesoftware.openfire.user.PresenceEventListener;<br />
+import org.jivesoftware.util.*;<br />
+import org.xmpp.packet.Presence;<br />
+import org.xmpp.packet.JID;</p>
+<p>import java.io.File;<br />
+import java.net.UnknownHostException;<br />
+import java.sql.Connection;<br />
+import java.sql.PreparedStatement;<br />
+import java.sql.SQLException;<br />
+import java.util.Date;<br />
+import java.util.Map;<br />
+//by est<br />
+import java.net.URL;<br />
+import java.net.URLEncoder;<br />
+import java.net.HttpURLConnection;</p>
+<p>/*<em><br />
+* UserStatus plugin for Openfire. MOD by est<br />
+</em>/<br />
+public class UserStatusPlugin implements Plugin, PropertyEventListener, SessionEventListener, PresenceEventListener<br />
+{<br />
+private static final int SEQ_ID = 510;</p>
+<p>private static final String ADD_USER_STATUS =<br />
+"Insert INTO userStatus (username, resource, online, lastIpAddress, lastLoginDate) " +<br />
+"VALUES (?, ?, 1, ?, ?)";</p>
+<p>private static final String UPDATE_USER_STATUS =<br />
+"UPDATE userStatus SET online = 1, lastIpAddress = ?, lastLoginDate = ? " +<br />
+"Where username = ? AND resource = ?";</p>
+<p>private static final String SET_PRESENCE =<br />
+"UPDATE userStatus SET presence = ?, status = ? Where username = ? AND resource = ?"; //By est</p>
+<p>private static final String SET_OFFLINE =<br />
+"UPDATE userStatus SET online = 0, lastLogoffDate = ? Where username = ? AND resource = ?";</p>
+<p>private static final String SET_ALL_OFFLINE =<br />
+"UPDATE userStatus SET online = 0";</p>
+<p>private static final String ADD_USER_STATUS_HISTORY =<br />
+"Insert INTO userStatusHistory (historyID, username, resource, lastIpAddress," +<br />
+"lastLoginDate, lastLogoffDate) VALUES (?, ?, ?, ?, ?, ?)";</p>
+<p>private static final String DELETE_OLD_USER_STATUS_HISTORY =<br />
+"DELETE From userStatusHistory Where lastLogoffDate &lt; ?"; public static final String HISTORY_DAYS_PROPERTY = "user-status.historyDays"; public static final int DEFAULT_HISTORY_DAYS = -1; /** * Number of days to keep history entries.</p>
+<ul>
+<li>0 for now history entries, -1 for unlimited.<br />
+*/<br />
+private int historyDays = DEFAULT_HISTORY_DAYS;</li>
+</ul>
+<p>public static final String strSynXCallHubUrlFormat = "http://www2.dormforce.net/services/callhub.php?SynXPwd=___&amp;username=%s&amp;status=%s";</p>
+<p>public void initializePlugin(PluginManager manager, File pluginDirectory)<br />
+{<br />
+Connection con = null;<br />
+PreparedStatement pstmt = null;</p>
+<p>historyDays = JiveGlobals.getIntProperty(HISTORY_DAYS_PROPERTY, DEFAULT_HISTORY_DAYS);<br />
+PropertyEventDispatcher.addListener(this);</p>
+<p>try<br />
+{<br />
+con = DbConnectionManager.getConnection();<br />
+pstmt = con.prepareStatement(SET_ALL_OFFLINE);<br />
+pstmt.executeUpdate();<br />
+}<br />
+catch (SQLException e)<br />
+{<br />
+Log.error("Unable to clean up user status", e);<br />
+}<br />
+finally<br />
+{<br />
+DbConnectionManager.closeConnection(pstmt, con);<br />
+}</p>
+<p>for (ClientSession session : SessionManager.getInstance().getSessions())<br />
+{<br />
+sessionCreated(session);<br />
+}</p>
+<p>SessionEventDispatcher.addListener(this);<br />
+PresenceEventDispatcher.addListener(this);<br />
+}</p>
+<p>public void destroyPlugin()<br />
+{<br />
+PresenceEventDispatcher.removeListener(this);<br />
+SessionEventDispatcher.removeListener(this);<br />
+}</p>
+<p>public void sessionCreated(Session session)<br />
+{<br />
+Connection con = null;<br />
+PreparedStatement pstmt = null;<br />
+int rowsUpdated = 0;</p>
+<p>if (!XMPPServer.getInstance().getUserManager().isRegisteredUser(session.getAddress()))<br />
+{<br />
+return;<br />
+}</p>
+<p>try<br />
+{<br />
+con = DbConnectionManager.getConnection();<br />
+pstmt = con.prepareStatement(UPDATE_USER_STATUS);<br />
+pstmt.setString(1, getHostAddress(session));<br />
+pstmt.setString(2, StringUtils.dateToMillis(session.getCreationDate()));<br />
+pstmt.setString(3, session.getAddress().getNode());<br />
+pstmt.setString(4, session.getAddress().getResource());<br />
+rowsUpdated = pstmt.executeUpdate();<br />
+}<br />
+catch (SQLException e)<br />
+{<br />
+Log.error("Unable to update user status for " + session.getAddress(), e);<br />
+}<br />
+finally<br />
+{<br />
+DbConnectionManager.closeConnection(pstmt, con);<br />
+}</p>
+<p>if (rowsUpdated == 0)<br />
+{<br />
+try<br />
+{<br />
+con = DbConnectionManager.getConnection();<br />
+pstmt = con.prepareStatement(ADD_USER_STATUS);<br />
+pstmt.setString(1, session.getAddress().getNode());<br />
+pstmt.setString(2, session.getAddress().getResource());<br />
+pstmt.setString(3, getHostAddress(session));<br />
+pstmt.setString(4, StringUtils.dateToMillis(session.getCreationDate()));<br />
+pstmt.executeUpdate();<br />
+}<br />
+catch (SQLException e)<br />
+{<br />
+Log.error("Unable to Insert user status for " + session.getAddress(), e);<br />
+}<br />
+finally<br />
+{<br />
+DbConnectionManager.closeConnection(pstmt, con);<br />
+}<br />
+}<br />
+}</p>
+<p>public void sessionDestroyed(Session session)<br />
+{<br />
+Connection con = null;<br />
+PreparedStatement pstmt = null;<br />
+final Date logoffDate;</p>
+<p>if (!XMPPServer.getInstance().getUserManager().isRegisteredUser(session.getAddress()))<br />
+{<br />
+return;<br />
+}</p>
+<p>logoffDate = new Date();<br />
+try<br />
+{<br />
+con = DbConnectionManager.getConnection();<br />
+pstmt = con.prepareStatement(SET_OFFLINE);<br />
+pstmt.setString(1, StringUtils.dateToMillis(logoffDate));<br />
+pstmt.setString(2, session.getAddress().getNode());<br />
+pstmt.setString(3, session.getAddress().getResource());<br />
+pstmt.executeUpdate();<br />
+}<br />
+catch (SQLException e)<br />
+{<br />
+Log.error("Unable to update user status for " + session.getAddress(), e);<br />
+}<br />
+finally<br />
+{<br />
+DbConnectionManager.closeConnection(pstmt, con);<br />
+}</p>
+<p>// write history entry<br />
+if (historyDays != 0)<br />
+{<br />
+try<br />
+{<br />
+con = DbConnectionManager.getConnection();<br />
+pstmt = con.prepareStatement(ADD_USER_STATUS_HISTORY);<br />
+pstmt.setLong(1, SequenceManager.nextID(SEQ_ID));<br />
+pstmt.setString(2, session.getAddress().getNode());<br />
+pstmt.setString(3, session.getAddress().getResource());<br />
+pstmt.setString(4, getHostAddress(session));<br />
+pstmt.setString(5, StringUtils.dateToMillis(session.getCreationDate()));<br />
+pstmt.setString(6, StringUtils.dateToMillis(logoffDate));<br />
+pstmt.executeUpdate();<br />
+}<br />
+catch (SQLException e)<br />
+{<br />
+Log.error("Unable to add user status history for " + session.getAddress(), e);<br />
+}<br />
+finally<br />
+{<br />
+DbConnectionManager.closeConnection(pstmt, con);<br />
+}<br />
+}</p>
+<p>deleteOldHistoryEntries();<br />
+}</p>
+<p>public void anonymousSessionCreated(Session session)<br />
+{<br />
+// we are not interested in anonymous sessions<br />
+}</p>
+<p>public void anonymousSessionDestroyed(Session session)<br />
+{<br />
+// we are not interested in anonymous sessions<br />
+}</p>
+<p>public void availableSession(ClientSession session, Presence presence)<br />
+{<br />
+updatePresence(session, presence);<br />
+}</p>
+<p>public void unavailableSession(ClientSession session, Presence presence)<br />
+{<br />
+updatePresence(session, presence);<br />
+}</p>
+<p>public void presencePriorityChanged(ClientSession session, Presence presence)<br />
+{<br />
+updatePresence(session, presence);<br />
+}</p>
+<p>public void presenceChanged(ClientSession session, Presence presence)<br />
+{<br />
+updatePresence(session, presence);<br />
+}</p>
+<p>public void subscribedToPresence(JID subscriberJID, JID authorizerJID)<br />
+{<br />
+// we are not interested in subscription updates<br />
+}</p>
+<p>public void unsubscribedToPresence(JID unsubscriberJID, JID recipientJID)<br />
+{<br />
+// we are not interested in subscription updates<br />
+}</p>
+<p>public void propertySet(String property, Map params)<br />
+{<br />
+if (HISTORY_DAYS_PROPERTY.equals(property))<br />
+{<br />
+final Object value = params.get("value");<br />
+if (value != null)<br />
+{<br />
+try<br />
+{<br />
+historyDays = Integer.valueOf(value.toString());<br />
+}<br />
+catch (NumberFormatException e)<br />
+{<br />
+historyDays = DEFAULT_HISTORY_DAYS;<br />
+}<br />
+deleteOldHistoryEntries();<br />
+}<br />
+}<br />
+}</p>
+<p>public void propertyDeleted(String property, Map params)<br />
+{<br />
+if (HISTORY_DAYS_PROPERTY.equals(property))<br />
+{<br />
+historyDays = DEFAULT_HISTORY_DAYS;<br />
+deleteOldHistoryEntries();<br />
+}<br />
+}</p>
+<p>public void xmlPropertySet(String property, Map params)<br />
+{<br />
+// we don't use xml properties<br />
+}</p>
+<p>public void xmlPropertyDeleted(String property, Map params)<br />
+{<br />
+// we don't use xml properties<br />
+}</p>
+<p>private void updatePresence(ClientSession session, Presence presence)<br />
+{<br />
+Connection con = null;<br />
+PreparedStatement pstmt = null;<br />
+String presenceText="";<br />
+String statusText="";</p>
+<p>if (!XMPPServer.getInstance().getUserManager().isRegisteredUser(session.getAddress()))<br />
+{<br />
+return;<br />
+}</p>
+<p>if (Presence.Type.unavailable.equals(presence.getType()))<br />
+{<br />
+presenceText = presence.getType().toString();<br />
+}<br />
+else if (presence.getShow() != null)<br />
+{<br />
+presenceText = presence.getShow().toString();<br />
+}<br />
+else if (presence.isAvailable())<br />
+{<br />
+presenceText = "available";<br />
+}<br />
+else<br />
+{<br />
+return;<br />
+}</p>
+<p>try<br />
+{<br />
+statusText = presence.getStatus();<br />
+con = DbConnectionManager.getConnection();<br />
+pstmt = con.prepareStatement(SET_PRESENCE);<br />
+pstmt.setString(1, presenceText);<br />
+pstmt.setString(2, statusText); //By est, following numbers are added by 1.<br />
+pstmt.setString(3, session.getAddress().getNode());<br />
+pstmt.setString(4, session.getAddress().getResource());<br />
+pstmt.executeUpdate();</p>
+<p>/<em>SynX CallHub by est</em>/<br />
+URL url = new URL(String.format(strSynXCallHubUrlFormat,URLEncoder.encode( session.getAddress().getNode() ), URLEncoder.encode( statusText, "UTF-8" )));<br />
+HttpURLConnection httpUrl = (HttpURLConnection)url.openConnection();<br />
+httpUrl.connect();</p>
+<p>}<br />
+catch (Exception e)<br />
+{<br />
+Log.error("Unable to update presence for " + session.getAddress(), e);<br />
+}<br />
+finally<br />
+{<br />
+DbConnectionManager.closeConnection(pstmt, con);<br />
+}<br />
+}</p>
+<p>private void deleteOldHistoryEntries()<br />
+{<br />
+Connection con = null;<br />
+PreparedStatement pstmt = null;</p>
+<p>if (historyDays &gt; 0)<br />
+{<br />
+final Date deleteBefore;</p>
+<p>deleteBefore = new Date(System.currentTimeMillis() - historyDays * 24L * 60L * 60L * 1000L);</p>
+<p>try<br />
+{<br />
+con = DbConnectionManager.getConnection();<br />
+pstmt = con.prepareStatement(DELETE_OLD_USER_STATUS_HISTORY);<br />
+pstmt.setString(1, StringUtils.dateToMillis(deleteBefore));<br />
+pstmt.executeUpdate();<br />
+}<br />
+catch (SQLException e)<br />
+{<br />
+Log.error("Unable to delete old user status history", e);<br />
+}<br />
+finally<br />
+{<br />
+DbConnectionManager.closeConnection(pstmt, con);<br />
+}<br />
+}<br />
+}</p>
+<p>private String getHostAddress(Session session)<br />
+{<br />
+try<br />
+{<br />
+return session.getHostAddress();<br />
+}<br />
+catch (UnknownHostException e)<br />
+{<br />
+return "";<br />
+}<br />
+}<br />
+}<br />
+[/code]<br />
+代码中 <code>session.getAddress().getNode());</code> 的意思是获得当前的XMPP用户名。XMPP协议规定，用户名分三部份：<br />
+someone @ domain.tld / clientname<br />
+^ ^ ^<br />
+用户名node 域domain 客户端名字，又叫资源resource，用于区分一个ID多处同时登录</p>
+<p>也就是说，用户在XMPP客户端更新了自己的status，Openfire会调用<code>http://www2.dormforce.net/services/callhub.php?SynXPwd=___&amp;username=%s&amp;status=%s</code> 一次。可以把这个地址理解为一个WebService。例如我我们DormForce的官方客户端里更新我的状态<br />
+<img alt="14.jpg" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2007/12/14.jpg" /><br />
+Openfire收到后会自动调用这个网址：<code>http://www2.dormforce.net/services/callhub.php?SynXPwd=___&amp;username=est&amp;status=%E5%8F%AF%E4%BB%A5%E6%8A%8A%4E%55%54%61%6C%6B%E5%BD%93%74%77%69%74%74%65%72%E7%94%A8%E4%BA%86</code></p>
+<p>那么我们在<code>callhub.php</code>里编写任意代码了，比如我们可以自己实现一个类似Twitter的应用，也可以直接调用API把消息发送到真实的<a href="http://twitter.com/help/api">Twitter</a>或则国内的<a href="http://help.fanfou.com/api.html">fanfou</a></p>
+<h3>编译</h3>
+<p>首先删除 <code>/opt/openfire_src/src/plugins/</code>下的不需要的插件，然后把user-status文件夹上传到plugins目录下<br />
+把<code>user-status/WEB-INF</code> 复制到根 / 。也就是 /WEB-INF/ 。不要问我为什么，我也不知道为什么，反正不这么做就是编译不成功。<br />
+然后<code>cd /opt/openfire_src/build</code><br />
+<code>ant clean &amp;&amp; ant plugins</code></p>
+<p>几分钟过后如果显示BUILD SUCCESSFUL那么说明编译成功了！</p>
+<h3>部署插件</h3>
+<p>编译好的插件在哪里呢？在<code>/opt/openfire_src/target/openfire/plugins/user-status.jar</code><br />
+上传<code>user-status.jar</code>到openfire的安装目录下的<code>plugins</code>文件夹，到Openfire管理界面里看看，如果这个插件已经启用，那么说明我们的twitter平台已经搭建起来了</p>
+<h3>参考</h3>
+<p>基本是一些e文文档<br />
+Openfire接口文档 <a href="http://www.igniterealtime.org/builds/openfire/docs/latest/documentation/javadoc/index.html">http://www.igniterealtime.org/builds/openfire/docs/latest/documentation/javadoc/index.html</a><br />
+JavaDoc 1.5 <a href="http://java.sun.com/j2se/1.5.0/docs/api/">http://java.sun.com/j2se/1.5.0/docs/api/</a><br />
+user-status插件及其源码 <a href="http://maven.reucon.com/public/com/reucon/openfire/plugins/user-status/1.0.2/">http://maven.reucon.com/public/com/reucon/openfire/plugins/user-status/1.0.2/</a><br />
+Openfire开发指南 <a href="http://www.igniterealtime.org/projects/openfire/documentation.jsp">http://www.igniterealtime.org/projects/openfire/documentation.jsp</a></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

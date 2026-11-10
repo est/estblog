@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[Linux]用inittab实现进程异常退出则自动重启 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[Linux]用inittab实现进程异常退出则自动重启" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/632726" />
+    <meta property="og:url" content="https://blog.est.im/archives/632726">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[Linux]用inittab实现进程异常退出则自动重启">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[Linux]用inittab实现进程异常退出则自动重启</h2>
+    <p class="post-date">Posted <time datetime="2008-09-29T00:00:00+08:00">2008-09-29</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>写了个脚本，需要跑一个服务器，但是这个业务比较关键，不能down掉。怎么办呢？写一个daemon监视pid是否存在不存在则exec？daemon本身挂掉了怎么办？双进程互相监视？</p>
+<p>无意中查到了一个Linux现有机制可以很好的完成这个问题；<a href="http://www.netadmintools.com/html/5inittab.man.html">inittab</a></p>
+<p>使用很简单，编辑 <code>/etc/inittab</code> 文件在最后一行写自己的东西就行了。语法可以照抄，格式为：</p>
+<p><code>id:runlevels:action:进程名</code></p>
+<p>id是不能重复的一个唯一标志</p>
+<p>runlevel 就是进程运行级别。0是halt，1是单用户模式，6是重启。一般的程序在普通模式下的runlevel都是 2到5。Debian一般是2。可以参考<a href="http://en.wikipedia.org/wiki/Init#Default_runlevels">wikipedia上的定义</a></p>
+<p>action 就是采取的动作。分下面这么几种：</p>
+<blockquote>
+<p><strong>respawn</strong><br />
+ The process will be restarted whenever it terminates (e.g. getty).<br />
+<strong>wait</strong><br />
+ The process will be started once when the specified runlevel is entered and init will wait for its termination.<br />
+<strong>once</strong><br />
+ The process will be executed once when the specified runlevel is entered.<br />
+<strong>boot</strong><br />
+ The process will be executed during system boot. The runlevels field is ignored.<br />
+<strong>bootwait</strong><br />
+ The process will be executed during system boot, while init waits for its termination (e.g. /etc/rc). The runlevels field is ignored.<br />
+<strong>off</strong><br />
+ This does nothing.<br />
+<strong>ondemand</strong><br />
+ A process marked with an ondemand runlevel will be executed whenever the specified ondemand runlevel is called. However, no runlevel change will occur (ondemand runlevels are <code>a',</code>b', and `c').<br />
+<strong>initdefault</strong><br />
+ An initdefault entry specifies the runlevel which should be entered after system boot. If none exists, init will ask for a runlevel on the console. The process field is ignored.<br />
+<strong>sysinit</strong><br />
+ The process will be executed during system boot. It will be executed before any boot or bootwait entries. The runlevels field is ignored.<br />
+<strong>powerwait</strong><br />
+ The process will be executed when the power goes down. Init is usually informed about this by a process talking to a UPS connected to the computer. Init will wait for the process to finish before continuing.<br />
+<strong>powerfail</strong><br />
+ As for powerwait, except that init does not wait for the process's completion.<br />
+<strong>powerokwait</strong><br />
+ This process will be executed as soon as init is informormed that the power has been restored.<br />
+<strong>powerfailnow</strong><br />
+ This process will be executed when init is told that the battery of the external UPS is almost empty and the power is failing (provided that the external UPS and the monitoring process are able to detect this condition).<br />
+<strong>ctrlaltdel</strong><br />
+ The process will be executed when init receives the SIGINT signal. This means that someone on the system console has pressed the CTRL-ALT-DEL key combination. Typically one wants to execute some sort of shutdown either to get into single-user level or to reboot the machine.<br />
+<strong>kbrequest</strong><br />
+ The process will be executed when init receives a signal from the keyboard handler that a special key combination was pressed on the console keyboard.<br />
+ The documentation for this function is not complete yet; more documentation can be found in the kbd-x.xx packages (most recent was kbd-0.94 at the time of this writing). Basically you want to map some keyboard combination to the "KeyboardSignal" action. For example, to map Alt-Uparrow for this purpose use the following in your keymaps file:</p>
+<p>alt keycode 103 = KeyboardSignal</p>
+</blockquote>
+<p>貌似很有用～～～</p>
+<p><a href="http://initiative.yo2.cn/wp-admin/post.php?action=edit&amp;post=632726" title="编辑文章">Edit</a></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[python]django里flatpages其实应该这样安装 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[python]django里flatpages其实应该这样安装" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/524223" />
+    <meta property="og:url" content="https://blog.est.im/archives/524223">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[python]django里flatpages其实应该这样安装">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[python]django里flatpages其实应该这样安装</h2>
+    <p class="post-date">Posted <time datetime="2007-11-12T06:25:25+08:00">2007-11-12</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>在<a href="http://www.djangoproject.com/">Django</a>官方文档关于<a href="http://www.djangoproject.com/documentation/flatpages/">flatpages</a>上写到：</p>
+<blockquote>
+<p>Installation<br />
+ To install the flatpages app, follow these steps:</p>
+<p>Add 'django.contrib.flatpages' to your INSTALLED_APPS setting.<br />
+ Add 'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware' to your MIDDLEWARE_CLASSES setting.<br />
+ Run the command manage.py syncdb.</p>
+</blockquote>
+<p>这里官方文档写得不完整，其实应该有5步：</p>
+<pre><code>1. 在settings.py里添加'django.contrib.flatpages' 到 INSTALLED_APPS
+2. 把 'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware' 添加到 MIDDLEWARE_CLASSES
+3. 找到当前调试用的域名，修改settings.py里[SITE_ID](http://www.djangoproject.com/documentation/settings/#site-id)的值
+4. 在urls.conf最后添加上 `(r'', include('django.contrib.flatpages.urls')),`
+5. 运行 manage.py syncdb
+</code></pre>
+<p>缺少了任何一步，flatepages都不会成功。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

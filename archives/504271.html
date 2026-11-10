@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[Imap/Trash]Thunderbird下使用GMail的IMAP需要注意的一点 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[Imap/Trash]Thunderbird下使用GMail的IMAP需要注意的一点" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/504271" />
+    <meta property="og:url" content="https://blog.est.im/archives/504271">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[Imap/Trash]Thunderbird下使用GMail的IMAP需要注意的一点">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[Imap/Trash]Thunderbird下使用GMail的IMAP需要注意的一点</h2>
+    <p class="post-date">Posted <time datetime="2007-11-02T21:29:58+08:00">2007-11-02</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p><a href="http://lifehacker.com/">Lifehacker</a>上写了一片文章 <a href="http://lifehacker.com/software/geek-to-live/turn-thunderbird-into-the-ultimate-gmail-imap-client-314574.php">Geek To Live- Turn Thunderbird into the Ultimate Gmail IMAP Client</a>，里面提到了：为什么我用Thunderbird设置成GMail的IMAP客户端之后会多出一个 [Imap/Trash] 的标签？<br />
+<img alt="imap trash" src="http://lifehacker.com/assets/resources/2007/10/tbird%5BImap%5Dfolders.png" /><br />
+这些是Thunderbird默认生成的标签。根据这篇帖子后面<a href="http://lifehacker.com/software/geek-to-live/turn-thunderbird-into-the-ultimate-gmail-imap-client-314574.php#c2787510">牛人Vanl的评论</a>，我们可以把Thunderbird的Trash整合到Gmail的Trash文件夹里。方法是：</p>
+<p>配置好Server settings：<br />
+<img alt="thunderbird server settings" src="http://lifehacker.com/assets/resources/2007/10/tbird-setcopiesandfolders.png" /></p>
+<pre><code>1. 在Thunderbird 工具 / 选项 / 高级 / 常规 / 配置编辑器 (Tools menu, choose Options.
+</code></pre>
+<p>Go to the "Advanced" Option menu and the "General" tab. Hit the "Config Editor") 里打开Mozilla程序通用的“about:config”<br />
+  2. 输入 <strong>mail.server.server</strong> ，在得到的结果中根据 <strong>mail.server.serverX.name</strong> 找到你的Gmail帐号，其中X表示你的Gmail帐号是Thunderbird里帐号编号。记住X的值<br />
+  3. 右击，新建 / 字符串 (New-&gt;String)，输入 <strong>mail.server.serverX.trash_folder_name</strong> ，其中X是刚才记住的那个编号。点击OK，再次输入<strong>[Gmail]/Trash</strong> 。如图：<img alt="mail.server.server2.trash_folder_name" src="http://lifehacker.com/assets/resources/2007/10/tbirdconfig.png" /><br />
+  4. 保存所有设置，重启Thunderbird，现在你可以在Gmail 的Web界面里可以删除 <strong>[IMAP/Trash]</strong> 了</p>
+<p>同时Lifehacker里还详细的给出了关于IMAP、Gmail、Thunderbird的知识、技巧、原理、调整等等，更多的请参看原文：<a href="http://lifehacker.com/software/geek-to-live/turn-thunderbird-into-the-ultimate-gmail-imap-client-314574.php">http://lifehacker.com/software/geek-to-live/turn-thunderbird-into-the-ultimate-gmail-imap-client-314574.php</a></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

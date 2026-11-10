@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Firefox3提速大补丁 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Firefox3提速大补丁" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/641195" />
+    <meta property="og:url" content="https://blog.est.im/archives/641195">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Firefox3提速大补丁">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Firefox3提速大补丁</h2>
+    <p class="post-date">Posted <time datetime="2009-07-09T21:51:35+08:00">2009-07-09</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>本人亲自测试有明显效果。</p>
+<p>1. 用<a href="http://initiative.yo2.cn/archives/636078">sqlite <code>vacuum</code>命令</a><br />
+2. 把环境变量里的<a href="http://initiative.yo2.cn/archives/641181">临时文件和IE临时文件</a>目录指向一个空目录<br />
+3. 删除<a href="http://initiative.yo2.cn/archives/640372">不必要的.js</a><br />
+4. Linux下用<a href="http://www.reddit.com/r/programming/comments/7x8mz/even_wine_beats_linux_firefox/">打开PGO优化的编译版本</a>。Linux下Firefox很尴尬的一点就是用WINE跑Windows版本的Firefox效率都比Linux版的Firefox高。。。。<br />
+5. 关闭“告诉我正在访问的站点是否为攻击嫌疑站点”，卸载<a href="http://initiative.yo2.cn/archives/641139">不必要的扩展和插件</a></p>
+<p>上面4条都是常见的技巧，还有把Firefox挂载到内存，不过这不算，因为 <em>任意</em> 程序挂载到内存都可以极大提速。</p>
+<p>今天又学到一个<a href="http://www.reddit.com/r/software/comments/901em/increase_firefox_3_performance_by_optimizing_the/c0azicl">最新的优化方法</a>：</p>
+<p>1. 打开你的Firefox用户配置文件夹，<br />
+2. 删除urlclassifier2.sqlite， urlclassifier3.sqlite<br />
+3. 新建2个文件夹，名字叫 urlclassifier2.sqlite，urlclassifier3.sqlite。</p>
+<p>经过以上处理之后，Firefox在11个扩展情况下能够2秒钟打开。。。。。</p>
+<p>现在的问题是，Mozilla为什么不在Firefox出厂之前就把这些优化做好？？？？？</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

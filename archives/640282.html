@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>网通/联通的CDN太恶心了 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="网通/联通的CDN太恶心了" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/640282" />
+    <meta property="og:url" content="https://blog.est.im/archives/640282">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="网通/联通的CDN太恶心了">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">网通/联通的CDN太恶心了</h2>
+    <p class="post-date">Posted <time datetime="2009-05-27T21:43:07+08:00">2009-05-27</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>今天happydog跑过来玩，也谈到网通119.6.30.45:9203这个<a href="http://initiative.yo2.cn/archives/640241">超级恶心CDN</a>的问题。</p>
+<p>他用apt-get升级包的时候，经常提示服务器证书什么错误。这就是因为网通的CDN劫持了HTTP，把本来属于Ubuntu镜像的服务器<strong>主机名</strong> 强制HTTP/1.0 302 Found然后劫持到 Location: http://119.6.30.45:9203/xxxxx，很自然SSL之类的安全认证就要报错。</p>
+<p>今天发现了一个更加可恶的现象，这个CDN在某些情况只允许单线程下载，使得CDN之后的下载速度比原先直接多线程连接原始服务器的速度还要<strong>慢</strong> 。</p>
+<p><img alt="" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/05/23.jpg" /></p>
+<p>这就是为什么要强烈号召网络中立（<a href="http://en.wikipedia.org/wiki/Network_neutrality">Network neutrality</a>），无论你是好意，还是恶意的ISP，请不要流氓劫持互联网运作的基础设施。请不要破坏互联网公认协议。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

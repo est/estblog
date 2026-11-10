@@ -70,7 +70,7 @@
   &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
-<p>另外就是刚做的 <a href="https://est.github.io/play2mi/">play2mi</a> 有一个特立独行的想法：不让出现厂牌的关键字，一律用图标 <img height="16" src="https://www.mi.com/favicon.ico" /> 代替。</p>
+<p>另外就是刚做的 <a href="https://est.github.io/play2mi/">play2mi</a> 有一个特立独行的想法：不让出现厂牌的关键字，一律用图标 <img style="width:1em; height:1em;margin:0;" src="https://www.mi.com/favicon.ico" /> 代替。</p>
 <p>但是这个 <code>&lt;img height="16" src="https://www.mi.com/favicon.ico" /&gt;</code> 出现得次数太多，就很重复了。有没有 宏/macro 来节约呢？</p>
 <p>浑身不舒服。经过一番激烈拷打AI，最终结果：</p>
 <pre><code class="language-css">div.wrap param {display: inline; height: 1em; vertical-align: -.125em;}
@@ -88,6 +88,7 @@ param[mijia] { content: url(&quot;https://cdn.web-global.fds.api.mi-img.com/miji
 <li><code>&lt;track&gt;</code> 给视频或音频添加字幕、说明文字、章节等文本轨道。</li>
 <li><code>&lt;embed&gt;</code> 在页面中嵌入外部内容，例如某些 PDF 文档或浏览器支持的嵌入资源。</li>
 <li><code>&lt;br&gt;</code>  强制换行  第一行<code>&lt;br&gt;</code>第二行</li>
+<li><code>&lt;hr&gt;</code>  横线</li>
 <li><code>&lt;wbr&gt;</code> 建议浏览器可在此处换行 superlong<code>&lt;wbr&gt;</code>word</li>
 <li><code>&lt;col&gt;</code> 为表格的一列设置样式或属性 <code>&lt;col</code>class="numeric"&gt;</li>
 <li><code>&lt;input&gt;</code> 创建文本框、复选框、单选框、文件选择器等表单控件。</li>

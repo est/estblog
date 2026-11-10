@@ -53,17 +53,16 @@
 
   
   <p>Here’s a simple tutorial of how to setup a chained SSH tunnel with two SSH hosts.</p>
-
-<ol>
-<li>Open PuTTY and connect to your first (nearest to you) ssh node</li>
-<li>In the console, connect to your final ssh (which IP will be shown as an exit of chained tunnel) like this:<br><pre><code>ssh -CfNg -D 127.0.0.1:8787 <i>user</i>@<i>hostname</i></code></pre></li>
-<li>Right click putty title bar for context menu and click <code>Change settings</code>, like the following screenshot:<img src="http://blog.est.im/wp-content/uploads/2009/12/2.jpg" alt="putty config for chain ssh tunnel"><br>This settings means, PuTTY will listen on your local machine port 7777, and forward everything to 127.0.0.1:8787 on the first ssh server. Since in step #2 we have 127.0.0.1:8787 already there listening as a socks5 tunnel, the chain SSH tunnel is complete.</li>
-</ol>
-
-<p><img src="http://blog.est.im/wp-content/uploads/2009/12/1.png" alt="chain ssh tunnel structure"></p>
-
+<pre><code>1. Open PuTTY and connect to your first (nearest to you) ssh node
+2. In the console, connect to your final ssh (which IP will be shown as an exit of chained tunnel) like this:
+</code></pre>
+<pre><code>ssh -CfNg -D 127.0.0.1:8787 user@hostname
+</code></pre>
+<pre><code>3. Right click putty title bar for context menu and click `Change settings`, like the following screenshot:![putty config for chain ssh tunnel](http://blog.est.im/wp-content/uploads/2009/12/2.jpg)
+</code></pre>
+<p>This settings means, PuTTY will listen on your local machine port 7777, and forward everything to 127.0.0.1:8787 on the first ssh server. Since in step #2 we have 127.0.0.1:8787 already there listening as a socks5 tunnel, the chain SSH tunnel is complete.</p>
+<p><img alt="chain ssh tunnel structure" src="http://blog.est.im/wp-content/uploads/2009/12/1.png" /></p>
 <p>Picture provided by <a href="http://ditaa.org/ditaa/render?grid=+++++%2B---------------%2B+++%2B----------------%2B++++%2B----------%2B++++%2B----------%2B%0D%0A+++++%7C+++++++++++++++%2B---%2B+127.0.0.1+8787+%7C++++%7C++++++++++%2B---%3E%7C+%7Bs%7D++++++%7C%0D%0A+++++%7C+0.0.0.0:7777++%7C+++%2B----------------%2B++++%7CSSH+Socks5%7C++++%7C+Internet+%7C%0D%0A+++++%7C+++++++++++++++%7C+++%7C+++++%7Bd%7D++++++++%7C++++%7C++++++++++%7C++++%7C++++++++++%7C%0D%0A+++++%7C+++++%7Bd%7D+++++++%7C+++%7C+127.0.0.1+8787+%2B---%3E%7C+++%7Bd%7D++++%7C++++%7C++++++++++%7C%0D%0A+++++%2B------%2B--------%2B+++%2B----------------%2B++++%2B----------%2B++++%2B----------%2B%0D%0A+++++++++:++++++++++++++++++++++++++++++++++++++++++++++++++++++++++%5E%0D%0A+++++++++%7C++++++++++++++++++++++++chained+ssh+tunnel++++++++++++++++%7C%0D%0A+++++++++----------------------------------------------------------/%0D%0A&amp;scale=1&amp;timeout=100">ditaa.org</a> using a nice ASCII2Graph tool called <a href="http://ditaa.sourceforge.net/">ditaa</a></p>
-
 <p>If you understand how to chain SSH tunnel using two ssh nodes, it’s easy to expanding it to three or more.</p>
 </article>
 

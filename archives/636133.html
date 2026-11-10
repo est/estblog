@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>试试你的名字在PI的前40亿位中排名多少 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="试试你的名字在PI的前40亿位中排名多少" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/636133" />
+    <meta property="og:url" content="https://blog.est.im/archives/636133">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="试试你的名字在PI的前40亿位中排名多少">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">试试你的名字在PI的前40亿位中排名多少</h2>
+    <p class="post-date">Posted <time datetime="2009-11-24T22:16:54+08:00">2009-11-24</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>我的id是est，那么 'est' 这个字符用ASCII十六进制表示就是 0x65 0x73 0x74</p>
+<p>好。打开这个网址 <a href="http://pi.nersc.gov/">http://pi.nersc.gov/</a>，输入 657374 然后选择HEX，点击SEARCH</p>
+<p>得到的<a href="http://pi.nersc.gov/cgi-bin/pi.cgi?word=657374&amp;format=hex">结果</a>是：</p>
+<blockquote>
+<p>search string = "657374"<br />
+ 24-bit binary equivalent = 01100101 01110011 01110100</p>
+<p>search string found at binary index = <strong>3267948124</strong><br />
+ binary pi : 1000100101100101011100110111010000000110000001010010110010000010<br />
+ binary string: 011001010111001101110100<br />
+ hex pi : 6b9c2950f9c2cb52f57ad8965737406052c82ec88ec38c58<br />
+ hex string: 657374</p>
+</blockquote>
+<p>这个结果表示什么意思呢？把pi用二进制表示的话，01100101 01110011 01110100 （'est'的ASCII表示）出现在第 32,6794,8124 这个位置。32亿。。。嘿嘿。</p>
+<p>NERSC这个网站挺有意思的。而且是.gov的。万恶的资本主义gov网站，为什么不多放点领 <em>倒进河水，还在河边冲洗，用刷子擦，坚硬的塑料须擦着金属面，磨出笨拙的窸窣声，如同猫鼠在青瓦屋顶追逐，或者，已经</em> 导讲话上去呢？</p>
+<blockquote>
+<p>In 1996, NERSC Chief Technologist David H. Bailey, together with Canadian mathematicians Peter Borwein and Simon Plouffe, found a new formula for pi. This formula permits one to<strong>calculate the n-th binary or hexadecimal digits of pi, without having to calculate any of the preceding n-1 digits</strong>. This formula was discovered by a computer, using Bailey's implementation of Ferguson's PSLQ algorithm. More recently (2001), Bailey and colleague Richard Crandall of Reed College have shown that the existence of this new formula has significant implications for the age-old question: Are the digits of pi random?</p>
+</blockquote>
+<p>这个算法很牛B啊。可以算出PI的二进制第n位的结果，而不需要知道前面的n-1位。</p>
+<p>为什么要用二进制呢？一开始我也奇怪。后来恍然大悟。二进制可以非常方便的转换为其他任意进制。而且检索、存储也方便，运算效率高。</p>
+<p>而且二进制非常容易被<strong>感性</strong> 的接受。例如PI的二进制表示<a href="http://www.befria.nu/elias/pi/binpi.html">前几位</a>：</p>
+<blockquote>
+<p>11.<br />
+ 00100100 00111111 01101010<br />
+ 10001000 10000101 10100011<br />
+ 00001000 11010011 00010011<br />
+ 00011001 10001010 00101110<br />
+ 00000011 01110000 01110011<br />
+ 01000100 10100100 00001001<br />
+ 00111000 00100010 00101001<br />
+ ........</p>
+</blockquote>
+<p>把一个均分为4截的线段，最后一截，无限二等分，按顺序读二进制pi的每一位，如果是0就表示PI落在了二等分的前面半截，如果是1就表示PI落在了二等分的后面半截。无穷循环下去就可以得到PI的精确点。</p>
+<p><img alt="binary pi explained" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/01/binary-pi.jpg" /></p>
+<p>当然可以用一个python函数实现上面的步骤。支持中文id。</p>
+<pre><code>def string_in_pi(s):
+    &quot;&quot;&quot; Get index of a string found in binary PI
+        http://pi.nersc.gov/
+        Return -1 if not found
+    &quot;&quot;&quot;
+    if type(s) == unicode:
+        s = s.encode('gbk') #for Chinese strings
+    else:
+        s = str(s)
+    h = ''.join( '%X' % ord(x) for x in s)
+    import urllib2, re
+    c = urllib2.urlopen('http://pi.nersc.gov/cgi-bin/pi.cgi?word=%s&amp;format=hex' % h).read()
+    g = re.search(r'binary index =  (\d+)', c)
+    if g:
+        return int(g.groups()[0])
+    else:
+        return -1
+</code></pre>
+<p>不一定所有字符都会出现在二进制PI的前40亿位里。3个以内ASCII字符出现的概率几乎是100%，4个ASCII字符出现的概率是60%，5个是0.36%，如果你的ID超过6个，那么出现的概率在0.001%以下了。当然PI是无穷浮点数，如果把查询范围扩充到40亿位以后，我猜任何字符出现的概率应该是100%</p>
+<p>贴个很低俗的结果：</p>
+<p><img alt="disu in PI" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/01/pi-2.jpg" /></p>
+<p>有人说在PI的第n位之后，会有一个完整的莎士比亚全集文本，我深信不疑。哈哈</p>
+<p>以后可以告诉别人：登录XX网站的密码保存在二进制PI的第1279804452位。。。。。。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>取消 web.config 的继承 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="取消 web.config 的继承" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/607014" />
+    <meta property="og:url" content="https://blog.est.im/archives/607014">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="取消 web.config 的继承">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">取消 web.config 的继承</h2>
+    <p class="post-date">Posted <time datetime="2007-12-24T01:10:23+08:00">2007-12-24</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>以往栋力无限的首页是 http://www.dormforce.net/homepage，一直很奇怪为什么不直接弄成 http://www.dormforce.net。今天才知道是根路径的 web.config “污染”了下级asp.net程序，所以跳转到一个单独的目录。</p>
+<p>网上搜索了下，可以取消web.config的集成，方法是在编辑最顶级web.config的XML文件，把</configSections>后面的所有XML元素用<br />
+<location path="." allowOverride="false" inheritInChildApplications="false"></p>
+<p></location><br />
+括起来！</p>
+<p>注意，asp.net 1.1和asp.net 2.0不兼容！所以如果在全站asp.net 2.0跑一个 asp.net 1.1的二级路径程序，是不可能配置成功的！微软说这不是一个<a href="https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=102118">bug</a>，这是一种“设计”，哈哈～～～</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

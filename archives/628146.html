@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>0x11的Unicode脑残体引起Msxml2解析XML出现-1072896760错误 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="0x11的Unicode脑残体引起Msxml2解析XML出现-1072896760错误" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/628146" />
+    <meta property="og:url" content="https://blog.est.im/archives/628146">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="0x11的Unicode脑残体引起Msxml2解析XML出现-1072896760错误">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">0x11的Unicode脑残体引起Msxml2解析XML出现-1072896760错误</h2>
+    <p class="post-date">Posted <time datetime="2008-12-05T05:02:56+08:00">2008-12-05</time> | <span>archive</span></p>
+  </header>
+
+  
+  <pre><code>源文件：    file:///E:/script/xmlhttp/demo.xml
+文件位置：   48
+行：    3
+列:    2
+原因：   An invalid character was found in text content.
+
+错误代码： -1072896760
+源文本：    ab
+</code></pre>
+<p>一段很简单的XML：</p>
+<p><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;rss&gt;
+ab
+&lt;/rss&gt;</code></p>
+<p>用下面的代码检测错误：</p>
+<p><code>var oXml = new ActiveXObject("Msxml2.DOMDocument");</code></p>
+<p>oXml.load("disc.xml");<br />
+oXml.async=false;<br />
+oXml.resolveExternals=false;</p>
+<p>with(oXml.parseError)<br />
+{<br />
+WScript.Echo(<br />
+"源文件： " + url + "\n" +<br />
+"文件位置： " + filepos + "\n" +<br />
+"行： " + line+ "\n" +<br />
+"列: " + linepos + "\n" +<br />
+"原因： " + reason + "\n" +<br />
+"错误代码： " + errorCode + "\n" +<br />
+"源文本： " + srcText<br />
+)<br />
+}</p>
+<p>出错。因为0x11这个不可打印字符不能被XML解析器解析。今天玩douban的时候发现的。因为<a href="http://www.douban.com/people/Mr.Mcdull/">一个人的ID</a>是脑残体。</p>
+<p>用这个BUG不知道能找到好多网页的出错页面哦～～～</p>
+<p>ps XmlHttp的method居然分大小写，也就是说"get"请求和"GET"是两个不同的请求，囧<br />
+pps douban为了防止机器人，居然提交按钮必须为 rev_submit=%E5%A5%BD%E4%BA%86%EF%BC%8C%E5%8F%91%E8%A8%80</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

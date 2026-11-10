@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dreamhost ftp踢人 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Dreamhost ftp踢人" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/640810" />
+    <meta property="og:url" content="https://blog.est.im/archives/640810">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Dreamhost ftp踢人">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Dreamhost ftp踢人</h2>
+    <p class="post-date">Posted <time datetime="2009-06-18T06:44:32+08:00">2009-06-18</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>折腾Dreamhost虚拟主机的时候发现FTP客户端老提示<br />
+<code>530 Sorry, the maximum number of connections (10) for your host are already connected.</code><br />
+以为过一会儿就排队挤上去了，吃饭回来发现仍然在重试。冒火了。还以为是我这个IP连接数过多，查了下本机没有任何网络异常，估计就是Dreamhost服务器里WAIT的FTP连接过多了。因为大陆糟糕的互联网质量，FTP客户端超时自动重连是经常的事情。Google了一下惊人的发现<a href="http://forum.dreamhosters.com/troubleshooting/28093-FTP-Timeout.htm">Dreamhost服务器端设置的FTP超时是<strong>18个小时</strong></a>。。。。。。。囧。。。。。于是就想上ssh去踢人。</p>
+<p>发现<code>ftpdctl</code>不好使，因为<code>action</code>是在编译的时候指定的。</p>
+<p>最后还是ftpwho+kill方便</p>
+<p><code>kill</code>ftpwho | awk '/username/{print $1}'``</p>
+<p>于是所有username用户的FTP session都被踢了。客户端果然又连上了。</p>
+<p>更新：</p>
+<p>状况实在糟糕，在网络高峰期，半个小时内的重新连接就超过了10次。不得不写一个cron自动踢人了。方法是在panel里添加一个Cron Jobs，每10分钟一次，命令行为</p>
+<p><code>kill</code>ftpwho|awk '/username/{if($3=="["){split($4,o,"m")}else{split(substr($3,2),o,"m")};if(o[1]&gt;15)print $1}'``</p>
+<p>每10分钟杀死一次连接时间超过15分钟的FTP连接。。。对于平时小规模文件上传应该足够用了。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

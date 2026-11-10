@@ -62,18 +62,16 @@ Location: http://www.filesonic.com/
 Age: 0
 Via: HTTP/1.1 webcache1-know.server.virginmedia.net (Traffic-Server/5.7.0-59705 [cMs f ])
 </code></pre>
-
 <p>几点：</p>
+<pre><code>1. The IWF are the _quan﻿go_ who have taken it upon themselves to filter bits of the Internet in the UK. ISPs then subscribe to a list of blocked domains and individual URLs.
 
-<ol>
-<li><p>The IWF are the <em>quan﻿go</em> who have taken it upon themselves to filter bits of the Internet in the UK. ISPs then subscribe to a list of blocked domains and individual URLs.</p></li>
-<li><p>the IWF want to only block individual URLs. Unfortunately, this can only be done at the HTTP layer since URLs exist at this layer, which means its necessary to proxy all traffic through a HTTP proxy. This is done by your ISP routing any packets addressed to, say Fileserve’s IP address, to their <strong>own proxy</strong> instead of to Fileserve’s servers. Your ISP’s proxy then checks to see if the url is blocked. If it is, several different things may happen depending on your ISP. In some cases the connection is dropped. In others a 404 File Not Found (dishonest) or a 403 Forbidden (honest) is returned. If the URL isn’t blocked, the ISP’s proxy will make the request on your behalf to Fileserve and respond with Fileserve’s response.</p></li>
-<li><p>IWF这货在2008年就<a href="http://en.wikipedia.org/wiki/Internet_Watch_Foundation_and_Wikipedia">跟wikipedia干上了</a>。Scorpions的<em>Virgin Killer</em>又中枪了。</p></li>
-<li><p>当然，IWF官方也是很冠冕堂皇的说，我们<a href="http://www.iwf.org.uk/hotline/the-laws">只封XX内容</a>。</p></li>
-</ol>
+2. the IWF want to only block individual URLs. Unfortunately, this can only be done at the HTTP layer since URLs exist at this layer, which means its necessary to proxy all traffic through a HTTP proxy. This is done by your ISP routing any packets addressed to, say Fileserve’s IP address, to their **own proxy** instead of to Fileserve’s servers. Your ISP’s proxy then checks to see if the url is blocked. If it is, several different things may happen depending on your ISP. In some cases the connection is dropped. In others a 404 File Not Found (dishonest) or a 403 Forbidden (honest) is returned. If the URL isn’t blocked, the ISP’s proxy will make the request on your behalf to Fileserve and respond with Fileserve’s response.
 
+3. IWF这货在2008年就[跟wikipedia干上了](http://en.wikipedia.org/wiki/Internet_Watch_Foundation_and_Wikipedia)。Scorpions的 _Virgin Killer_ 又中枪了。
+
+4. 当然，IWF官方也是很冠冕堂皇的说，我们[只封XX内容](http://www.iwf.org.uk/hotline/the-laws)。
+</code></pre>
 <p>我觉得这种ISP级别的全局代理是最贱的。天底下操蛋的东西都一个德行。</p>
-
 <p><a href="http://news.ycombinator.com/item?id=2455871">via</a></p>
 </article>
 

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>破解X-文件锁 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="破解X-文件锁" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/256271" />
+    <meta property="og:url" content="https://blog.est.im/archives/256271">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="破解X-文件锁">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">破解X-文件锁</h2>
+    <p class="post-date">Posted <time datetime="2007-07-24T00:00:00+08:00">2007-07-24</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>听朋友介绍<a href="http://www.unnoo.com/">大成天下</a>这公司有<a href="http://www.xfocus.net/">安焦</a>、<a href="http://groups.google.com/group/ph4nt0m/">幻影</a>的背景，技术实力不错，于是去他们的论坛溜达了一转，发现了一个 <a href="http://bbs.dswlab.com/thread-8-1-1.html">X-文件锁</a>，貌似不错的样子，试了下，恩，果然不错，1分钟不到就被我破解了……</p>
+<p>下载<a href="http://wap.chinaz.com/x/xlock/UND-v1.0.0-Setup.exe">UND-v1.0.0-Setup.exe</a>（758KB，Null的安装包），解压得到2个文件，UndMaker.exe和UndViewer.exe。使用UndMaker.exe，打开了一个Word97-Word2003兼容格式保存的 1.doc （26KB） 文件，内容为 test，设定了一些加密，密码为123，只能看3次。点 确定 制作出来了一个 1.und（12K），用 UndViewer.exe 打开，显示出了Word的内容，是个很 白 的窗口。点击右键，突然消失，因该是被屏蔽了。用 Spy4win附带的IE查看工具，晕，源码出来了。</p>
+<p><img alt="1" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2007/07/1.jpg" /></p>
+<p>原来破解 X-文件锁 这么简单。-_-!</p>
+<p>仔细研究了下 X-文件锁加密和解密的原理，是先把Office的文件转换成 *.mht 格式，加密后保存为und格式，查看器就是一个exe，内嵌一个 WEBBROWSER，用于打开这个und格式。那么我们完全可以找到mht的在磁盘上的缓存位置。</p>
+<p>打开 FileMon，发现了文件保存的地方：C:\Windows\undat\ 。注意直接用资源管理器访问这个文件会受到 UndView.exe 的拦截并造成 explorer 的假死，正确的做法是用IceSword杀掉UndViewer.exe再慢慢打开这个 *.mht 欣赏……</p>
+<p>好了，可怜的 X-文件锁 被我们完全破解了。</p>
+<p>ps 我不是故意的……</p>
+<p>ps 最后发现国内n多黑站到处转载这篇文章，我晕啊，最先是 鬼仔's blog，然后是……不说了 <a href="http://www.google.cn/search?q=x%E6%96%87%E4%BB%B6%E9%94%81+%E7%A0%B4%E8%A7%A3">http://www.google.cn/search?q=x%E6%96%87%E4%BB%B6%E9%94%81+%E7%A0%B4%E8%A7%A3</a></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

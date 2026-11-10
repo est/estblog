@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>【原创】Google Chrome的单进程模式 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="【原创】Google Chrome的单进程模式" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/631781" />
+    <meta property="og:url" content="https://blog.est.im/archives/631781">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="【原创】Google Chrome的单进程模式">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">【原创】Google Chrome的单进程模式</h2>
+    <p class="post-date">Posted <time datetime="2012-08-07T23:29:06+08:00">2012-08-07</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>如果你觉得Google Chrome的多进程模式是内存消耗大户，那么可以试试它的单进程模式。命令行启动chrome.exe，加一个<code>--single-process</code>参数即可。例如修改桌面的“谷歌浏览器”快捷方式为<br />
+<code>C:\Users\Administrator\AppData\Local\Google\Chrome\Application\chrome.exe --single-process</code></p>
+<p>我是怎么知道的呢？看<a href="http://src.chromium.org/svn/trunk/src/chrome/common/chrome_switches.cc">chrome_switches.cc</a>的源码</p>
+<p>其实我svn checkout Chrome的源码多幸苦的。1GB多的源码，有500MB是测试代码，没有任何价值，有200MB是cygwin，还有几百MB是过期的webkit源码。我日。</p>
+<p><img alt="Google Chrome single-process mode" src="http://olds.blogcn.com/wp-content/uploads/74/7487/2008/09/13.jpg" /></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

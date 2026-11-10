@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Linux下DrCom登录问题FAQ – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Linux下DrCom登录问题FAQ" />
+
+    <link rel="canonical" href="https://blog.est.im/nu/11741" />
+    <meta property="og:url" content="https://blog.est.im/nu/11741">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Linux下DrCom登录问题FAQ">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Linux下DrCom登录问题FAQ</h2>
+    <p class="post-date">Posted <time datetime="2006-11-25T14:11:00+08:00">2006-11-25</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>不断更新中，欢迎补充</p>
+<p>1. 登录的时候提示：drcomc: Connect: Connection refused<br />
+原因是你没有运行守护进程，DrCom-Client 1.31 请执行 drcomcd，DrCom-Client 1.32 请执行 drcomd，然后 drcomc login</p>
+<p>2. 运行 drcomc login 出新 Login failed Reason: 0怎么回事？<br />
+说明客户端配置有问题。请检查你的登录用户名、密码是否正确，IP地址、Mac地址是否无误。</p>
+<p>3. 下载的 drcom-1.3.2，编译不成功？<br />
+请认真阅读《Linux DrCom 安装指南》</p>
+<p>4. 登录了DrCom怎么就不能上学校内部的网站了？提示 Bad Request (Invalid Verb)<br />
+这是由于DrCom Client是网关型认证计费程序，所以在编译前需要排除内网地址。打开源码包里的  kmod/except/common.c，在源程序最后加上下面代码：</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

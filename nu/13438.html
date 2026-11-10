@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>修复消失的文件夹选项，查看系统和隐藏文件 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="修复消失的文件夹选项，查看系统和隐藏文件" />
+
+    <link rel="canonical" href="https://blog.est.im/nu/13438" />
+    <meta property="og:url" content="https://blog.est.im/nu/13438">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="修复消失的文件夹选项，查看系统和隐藏文件">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">修复消失的文件夹选项，查看系统和隐藏文件</h2>
+    <p class="post-date">Posted <time datetime="2007-01-18T20:01:00+08:00">2007-01-18</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>保存下面的代码为 estrepair.reg，双击导入</p>
+<p>资料来源：<a href="http://support.microsoft.com/kb/555640/zh-cn">http://support.microsoft.com/kb/555640/zh-cn</a></p>
+<p>Windows Registry Editor Version 5.00</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced]<br />
+"TaskbarSizeMove"=dword:00000000</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder]<br />
+"Type"="group"<br />
+"Text"="@shell32.dll,-30498"<br />
+"Bitmap"=hex(2):25,00,53,00,79,00,73,00,74,00,65,00,6d,00,52,00,6f,00,6f,00,74,\<br />
+  00,25,00,5c,00,73,00,79,00,73,00,74,00,65,00,6d,00,33,00,32,00,5c,00,53,00,\<br />
+  48,00,45,00,4c,00,4c,00,33,00,32,00,2e,00,64,00,6c,00,6c,00,2c,00,34,00,00,\<br />
+  00<br />
+"HelpID"="shell.hlp#51140"</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\ClassicViewState]<br />
+"Type"="checkbox"<br />
+"Text"="@shell32.dll,-30506"<br />
+"HKeyRoot"=dword:80000001<br />
+"RegPath"="Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced"<br />
+"ValueName"="ClassicViewState"<br />
+"CheckedValue"=dword:00000000<br />
+"UncheckedValue"=dword:00000001<br />
+"DefaultValue"=dword:00000000<br />
+"HelpID"="shell.hlp#51076"</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\ControlPanelInMyComputer]<br />
+"RegPath"="Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\HideMyComputerIcons"<br />
+"Text"="@shell32.dll,-30497"<br />
+"Type"="checkbox"<br />
+"ValueName"="{21EC2020-3AEA-1069-A2DD-08002B30309D}"<br />
+"CheckedValue"=dword:00000000<br />
+"UncheckedValue"=dword:00000001<br />
+"DefaultValue"=dword:00000001<br />
+"HKeyRoot"=dword:80000001<br />
+"HelpID"="shell.hlp#51150"</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\DesktopProcess]<br />
+"Type"="checkbox"<br />
+"Text"="@shell32.dll,-30507"<br />
+"HKeyRoot"=dword:80000001<br />
+"RegPath"="Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced"<br />
+"ValueName"="SeparateProcess"<br />
+"CheckedValue"=dword:00000001<br />
+"UncheckedValue"=dword:00000000<br />
+"DefaultValue"=dword:00000000<br />
+"HelpID"="shell.hlp#51079"</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\DesktopProcess\Policy]</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\DesktopProcess\Policy\SeparateProcess]<br />
+@=""</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\DisableThumbCache]<br />
+"Type"="checkbox"<br />
+"Text"="@shell32.dll,-30517"<br />
+"HKeyRoot"=dword:80000001<br />
+"RegPath"="Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced"<br />
+"ValueName"="DisableThumbnailCache"<br />
+"CheckedValue"=dword:00000001<br />
+"UncheckedValue"=dword:00000000<br />
+"DefaultValue"=dword:00000000<br />
+"HelpID"="shell.hlp#51155"</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\FolderSizeTip]<br />
+"Type"="checkbox"<br />
+"Text"="@shell32.dll,-30514"<br />
+"HKeyRoot"=dword:80000001<br />
+"RegPath"="Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced"<br />
+"ValueName"="FolderContentsInfoTip"<br />
+"CheckedValue"=dword:00000001<br />
+"UncheckedValue"=dword:00000000<br />
+"DefaultValue"=dword:00000001</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\FriendlyTree]<br />
+"Type"="checkbox"<br />
+"Text"="@shell32.dll,-30511"<br />
+"HKeyRoot"=dword:80000001<br />
+"RegPath"="Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced"<br />
+"ValueName"="FriendlyTree"<br />
+"CheckedValue"=dword:00000001<br />
+"UncheckedValue"=dword:00000000<br />
+"HelpID"="shell.hlp#51149"<br />
+"DefaultValue"=dword:00000001</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\Hidden]<br />
+;Copyed from dormforce.net/Blog/electroniXtar<br />
+"Text"="@shell32.dll,-30499"<br />
+"Type"="group"<br />
+"Bitmap"=hex(2):25,00,53,00,79,00,73,00,74,00,65,00,6d,00,52,00,6f,00,6f,00,74,\<br />
+  00,25,00,5c,00,73,00,79,00,73,00,74,00,65,00,6d,00,33,00,32,00,5c,00,53,00,\<br />
+  48,00,45,00,4c,00,4c,00,33,00,32,00,2e,00,64,00,6c,00,6c,00,2c,00,34,00,00,\<br />
+  00<br />
+"HelpID"="shell.hlp#51131"</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\Hidden\NOHIDDEN]<br />
+"RegPath"="Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced"<br />
+"Text"="@shell32.dll,-30501"<br />
+"Type"="radio"<br />
+"CheckedValue"=dword:00000002<br />
+"ValueName"="Hidden"<br />
+"DefaultValue"=dword:00000002<br />
+"HKeyRoot"=dword:80000001<br />
+"HelpID"="shell.hlp#51104"</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\Hidden\SHOWALL]<br />
+"RegPath"="Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced"<br />
+"Text"="@shell32.dll,-30500"<br />
+"Type"="radio"<br />
+"CheckedValue"=dword:00000001<br />
+"ValueName"="Hidden"<br />
+"DefaultValue"=dword:00000002<br />
+"HKeyRoot"=dword:80000001<br />
+"HelpID"="shell.hlp#51105"</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\HideFileExt]<br />
+"Type"="checkbox"<br />
+"Text"="@shell32.dll,-30503"<br />
+"HKeyRoot"=dword:80000001<br />
+"RegPath"="Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced"<br />
+"ValueName"="HideFileExt"<br />
+"CheckedValue"=dword:00000001<br />
+"UncheckedValue"=dword:00000000<br />
+"DefaultValue"=dword:00000001<br />
+"HelpID"="shell.hlp#51101"</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\NetCrawler]<br />
+"Type"="checkbox"<br />
+"Text"="@shell32.dll,-30509"<br />
+"HKeyRoot"=dword:80000001<br />
+"RegPath"="Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced"<br />
+"ValueName"="NoNetCrawling"<br />
+"CheckedValue"=dword:00000000<br />
+"UncheckedValue"=dword:00000001<br />
+"DefaultValue"=dword:00000000<br />
+"HelpID"="shell.hlp#51147"</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\NetCrawler\Policy]</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\NetCrawler\Policy\NoNetCrawling]<br />
+@=""</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\PersistBrowsers]<br />
+"Type"="checkbox"<br />
+"Text"="@shell32.dll,-30513"<br />
+"HKeyRoot"=dword:80000001<br />
+"RegPath"="Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced"<br />
+"ValueName"="PersistBrowsers"<br />
+"CheckedValue"=dword:00000001<br />
+"UncheckedValue"=dword:00000000<br />
+"HelpID"="shell.hlp#51152"<br />
+"DefaultValue"=dword:00000000</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\ShowCompColor]<br />
+"Type"="checkbox"<br />
+"Text"="@shell32.dll,-30512"<br />
+"HKeyRoot"=dword:80000001<br />
+"RegPath"="Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced"<br />
+"ValueName"="ShowCompColor"<br />
+"CheckedValue"=dword:00000001<br />
+"UncheckedValue"=dword:00000000<br />
+"DefaultValue"=dword:00000001<br />
+"HelpID"="shell.hlp#51130"</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\ShowFullPath]<br />
+"Type"="checkbox"<br />
+"Text"="@shell32.dll,-30504"<br />
+"HKeyRoot"=dword:80000001<br />
+"RegPath"="Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\CabinetState"<br />
+"ValueName"="FullPath"<br />
+"CheckedValue"=dword:00000001<br />
+"UncheckedValue"=dword:00000000<br />
+"DefaultValue"=dword:00000000<br />
+"HelpID"="shell.hlp#51100"</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\ShowFullPathAddress]<br />
+"Type"="checkbox"<br />
+"Text"="@shell32.dll,-30505"<br />
+"HKeyRoot"=dword:80000001<br />
+"RegPath"="Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\CabinetState"<br />
+"ValueName"="FullPathAddress"<br />
+"CheckedValue"=dword:00000001<br />
+"UncheckedValue"=dword:00000000<br />
+"DefaultValue"=dword:00000001<br />
+"HelpID"="shell.hlp#51107"</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\ShowInfoTip]<br />
+"Type"="checkbox"<br />
+"Text"="@shell32.dll,-30502"<br />
+"HKeyRoot"=dword:80000001<br />
+"RegPath"="Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced"<br />
+"ValueName"="ShowInfoTip"<br />
+"CheckedValue"=dword:00000001<br />
+"UncheckedValue"=dword:00000000<br />
+"DefaultValue"=dword:00000001<br />
+"HelpID"="shell.hlp#51102"</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\SimpleSharing]<br />
+"Type"="checkbox"<br />
+"Text"="@shell32.dll,-30518"<br />
+"HKeyRoot"=dword:80000002<br />
+"RegPath"="System\\CurrentControlSet\\Control\\LSA"<br />
+"ValueName"="ForceGuest"<br />
+"CheckedValue"=dword:00000001<br />
+"UncheckedValue"=dword:00000000<br />
+"HelpID"="shell.hlp#51154"<br />
+"DefaultValue"=dword:00000001</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\SuperHidden]<br />
+"Type"="checkbox"<br />
+"Text"="@shell32.dll,-30508"<br />
+"WarningIfNotDefault"="@shell32.dll,-28964"<br />
+"HKeyRoot"=dword:80000001<br />
+"RegPath"="Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced"<br />
+"ValueName"="ShowSuperHidden"<br />
+"CheckedValue"=dword:00000000<br />
+"UncheckedValue"=dword:00000001<br />
+"DefaultValue"=dword:00000000<br />
+"HelpID"="shell.hlp#51103"</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\SuperHidden\Policy]</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\SuperHidden\Policy\DontShowSuperHidden]<br />
+@=""</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\Thickets]<br />
+"Text"="管理 Web 页和文件夹对"<br />
+"Type"="group"<br />
+"Bitmap"="C:\\WINDOWS\\system32\\\\SHELL32.DLL,4"<br />
+"HelpID"="TBD"</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\Thickets\AUTO]<br />
+"RegPath"="Software\\Microsoft\\Windows\\CurrentVersion\\Explorer"<br />
+"Text"="作为单一文件显示和管理对"<br />
+"Type"="radio"<br />
+"CheckedValue"=dword:00000000<br />
+"ValueName"="NoFileFolderConnection"<br />
+"DefaultValue"=dword:00000000<br />
+"HKeyRoot"=dword:80000001<br />
+"HelpID"="TBD"</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\Thickets\NOHIDE]<br />
+"RegPath"="Software\\Microsoft\\Windows\\CurrentVersion\\Explorer"<br />
+"Text"="显示两部分但是作为单一文件进行管理"<br />
+"Type"="radio"<br />
+"CheckedValue"=dword:00000002<br />
+"ValueName"="NoFileFolderConnection"<br />
+"DefaultValue"=dword:00000000<br />
+"HKeyRoot"=dword:80000001<br />
+"HelpID"="TBD"</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\Thickets\NONE]<br />
+"RegPath"="Software\\Microsoft\\Windows\\CurrentVersion\\Explorer"<br />
+"Text"="显示两部分并分别进行管理"<br />
+"Type"="radio"<br />
+"CheckedValue"=dword:00000001<br />
+"ValueName"="NoFileFolderConnection"<br />
+"DefaultValue"=dword:00000000<br />
+"HKeyRoot"=dword:80000001<br />
+"HelpID"="TBD"</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\WebViewBarricade]<br />
+"Type"="checkbox"<br />
+"Text"="@shell32.dll,-30510"<br />
+"HKeyRoot"=dword:80000001<br />
+"RegPath"="Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced"<br />
+"ValueName"="WebViewBarricade"<br />
+"CheckedValue"=dword:00000001<br />
+"UncheckedValue"=dword:00000000<br />
+"HelpID"="shell.hlp#51148"<br />
+"DefaultValue"=dword:00000000</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

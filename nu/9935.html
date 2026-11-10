@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[原创]youtube下载完全攻略，原理（抓包＋引用页下载技巧） – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[原创]youtube下载完全攻略，原理（抓包＋引用页下载技巧）" />
+
+    <link rel="canonical" href="https://blog.est.im/nu/9935" />
+    <meta property="og:url" content="https://blog.est.im/nu/9935">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[原创]youtube下载完全攻略，原理（抓包＋引用页下载技巧）">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[原创]youtube下载完全攻略，原理（抓包＋引用页下载技巧）</h2>
+    <p class="post-date">Posted <time datetime="2006-07-31T14:27:00+08:00">2006-07-31</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p><a href="http://www.youtube.com">www.youtube.com</a> 是我所知道的地球上最好的视频下载网站，但是yourtube采用了Flash内嵌视频的技术来防止下载。但是考虑到国内在线看视频的那个龟速的话……我们就偏偏要来下载！</p>
+<p>凶器准备：</p>
+<p>1.WinSockExpert<br />
+<a href="http://www.newhua.com/soft/2816.htm">http://www.newhua.com/soft/2816.htm</a><br />
+抓HTTP包的好东东！用Http Watch等也可以</p>
+<p>2.FlashGet / 迅雷 等能够下载 <strong>引用页</strong> 的下载工具</p>
+<p>3.最好有：带ViewPage插件的Maxthon浏览器，没有也行</p>
+<p>下面是具体步骤</p>
+<p>1.比如说好友向我推荐了这个链接<br />
+http://www.youtube.com/watch?v=EbvmH41Gqvs&amp;mode=related&amp;search=<br />
+首先打开 IE 和 WSockExpert</p>
+<p>2.在 WSockExpert里点击这个<img alt="" src="/Blog/Attachment/349" />，选择进程 IEXPLORE.EXE ，即 IE 的进程，如图，点确定<br />
+<img alt="" src="/Blog/Attachment/346" /></p>
+<p>3.用 IE 打开 <a href="http://www.youtube.com/watch?v=EbvmH41Gqvs">http://www.youtube.com/watch?v=EbvmH41Gqvs</a> ，其实网址中第一个 &amp; 后面的可以统统不要，那个 EbvmH41Gqvs 其实就是该视频在 yourtube 上的唯一表示符。</p>
+<p>4.然后 可以发现 WSockExpert 里面出现了很多数据。注意看 WSockExpert 里面的一个关键 SEND 内容是 GET /get_video?video_id 马上按 暂停！<br />
+<img alt="" src="/Blog/Attachment/347" /></p>
+<p>5.打开下载工具，复制 GET 后面的地址，不包括最后的 HTTP/1.1 ，在前面加上 http://www.youtube.com/ 到 下载地址。<br />
+例如，第一行是</p>
+<p><img alt="" src="/Blog/Attachment/350" /></p>
+<p>那么视频的真实地址就是<br />
+<a href="http://www.youtube.com/get_video?video_id=EbvmH41Gqvs&amp;t=OEgsToPDskJfAq5ChZ9mVHqfpjsfA9E">http://www.youtube.com/get_video?video_id=EbvmH41Gqvs&amp;t=OEgsToPDskJfAq5ChZ9mVHqfpjsfA9E</a></p>
+<p>6.别急，有真实地址直接下载也不行，yourtube网站做了防盗链下载处理。所以还得复制一个关键的东西：引用页。在这里</p>
+<p><img alt="" src="/Blog/Attachment/351" /></p>
+<p>7.打开下载工具，填入两个URL地址！一定不能填错！</p>
+<p><img alt="" src="/Blog/Attachment/352" /></p>
+<p>在 重命名里面填上 temp.flv，只要是 flv 结尾就行</p>
+<p>8.开始下载了，应该是一个几 MB 的大东东。下载完成后用 暴风影音 打开。 flv 是 Adobe Flash（原 MacroMedia Flash）的一种内嵌视频格式，适合网上传输。</p>
+<p>9.开始在本地欣赏视频吧，不用忍受网上的龟速了。</p>
+<p><img alt="" src="/Blog/Attachment/354" /></p>
+<p>P.S.最后提醒一下，用 FireFox 的同学们有福气了，有一个专门下载 yourtube 和 Google Video 的插件叫 Video Downloader<br />
+<a href="https://addons.mozilla.org/firefox/2390/">https://addons.mozilla.org/firefox/2390/</a><br />
+可以直接下载，免去了上面的分析过程（同时也免去了DIY的乐趣，不是吗？）</p>
+<p>[内有附件]</p>
+<p>附件:<br />
+<a href="/Blog/Attachment/346">1.JPG</a><br />
+<a href="/Blog/Attachment/347">2.JPG</a><br />
+<a href="/Blog/Attachment/348">3.JPG</a><br />
+<a href="/Blog/Attachment/349">4.JPG</a><br />
+<a href="/Blog/Attachment/350">5.JPG</a><br />
+<a href="/Blog/Attachment/351">6.JPG</a><br />
+<a href="/Blog/Attachment/352">7.JPG</a><br />
+<a href="/Blog/Attachment/354">8.JPG</a></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

@@ -53,12 +53,10 @@
 
   
   <p>Here’s a way to have little fun with our robot friends.</p>
-
 <p>Edit the <code>wp-includes/functions.php</code> for the following function:</p>
-
 <pre><code>function do_robots() {
 
-    $rss_bot_ip_list = array(&#39;74.125.44.136&#39;, &#39;74.125.158&#39;, &#39;61.4.177.&#39;); 
+    $rss_bot_ip_list = array('74.125.44.136', '74.125.158', '61.4.177.');
     //IP for feedburner and feedsky
     $robots_allow = 0;
 
@@ -68,12 +66,11 @@
         }
     }
 
+    header( 'Content-Type: text/plain; charset=utf-8' );
 
-    header( &#39;Content-Type: text/plain; charset=utf-8&#39; );
+    do_action( 'do_robotstxt' );
 
-    do_action( &#39;do_robotstxt&#39; );
-
-    if ( &#39;0&#39; == $robots_allow ) {
+    if ( '0' == $robots_allow ) {
         echo &quot;User-agent: *\n&quot;;
         echo &quot;Disallow: /\n&quot;;
     } else {
@@ -89,7 +86,6 @@
     }
 }
 </code></pre>
-
 <p>This allows customized robots.txt for feed crawlers exclusively.</p>
 </article>
 

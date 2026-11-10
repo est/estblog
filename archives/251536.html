@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>取消本地html在IE中打开显示的黄色信息栏：为了有利于保护安全性，IE已限制此网页运行可以访问计算机的脚本或 ActiveX 控件。请单击这里获取选项... – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="取消本地html在IE中打开显示的黄色信息栏：为了有利于保护安全性，IE已限制此网页运行可以访问计算机的脚本或 ActiveX 控件。请单击这里获取选项..." />
+
+    <link rel="canonical" href="https://blog.est.im/archives/251536" />
+    <meta property="og:url" content="https://blog.est.im/archives/251536">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="取消本地html在IE中打开显示的黄色信息栏：为了有利于保护安全性，IE已限制此网页运行可以访问计算机的脚本或 ActiveX 控件。请单击这里获取选项...">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">取消本地html在IE中打开显示的黄色信息栏：为了有利于保护安全性，IE已限制此网页运行可以访问计算机的脚本或 ActiveX 控件。请单击这里获取选项...</h2>
+    <p class="post-date">Posted <time datetime="2007-06-27T00:00:00+08:00">2007-06-27</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>用Sharepoint Designer做网页，在IE里预览时，如果你的HTML包含javascript脚本，那么IE会在加载页面的时候在地址栏下面显示一个信息栏：</p>
+<p>为了有利于保护安全性，IE已限制此网页运行可以访问计算机的脚本或 ActiveX 控件。请单击这里获取选项...</p>
+<p>这个东西很烦人的。我班上一个同学发现了一种取消这个信息栏，直接加载脚本的方法：</p>
+<p>在 html 文件 !DOCTYPE 下面那行加上</p>
+<pre><code>&lt;!-- saved From url=(0022)http://blog.csdn.net/electroniXtar/ --&gt;
+</code></pre>
+<p>就行了。例如：</p>
+<pre><code class="language-html">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;
+&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+&lt;!-- saved From url=(0022)http://blog.csdn.net/electroniXtar/ --&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+&lt;title&gt;electroniXtar&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;script language=&quot;javascript&quot; type=&quot;text/javascript&quot;&gt;...
+&lt;!--
+alert('hello, world' ![;\)](http://extra-001.yo2cdn.com/wp-includes/images/smilies/icon_wink.gif) ;
+\--&gt;
+&lt;/script&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre>
+<p>这样的html保存在本地用IE打开不会有提示，脚本也能够顺利执行。</p>
+<p>目前还不知道url=(0022)中 0022 的含义。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

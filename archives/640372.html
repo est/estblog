@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>暴力优化Firefox，防卡 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="暴力优化Firefox，防卡" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/640372" />
+    <meta property="og:url" content="https://blog.est.im/archives/640372">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="暴力优化Firefox，防卡">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">暴力优化Firefox，防卡</h2>
+    <p class="post-date">Posted <time datetime="2009-05-31T00:00:00+08:00">2009-05-31</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>我用Firefox完全是用来上非常危险的0day站（带noscript）和使用Firebug</p>
+<p>但是Mozilla其实也是做bloatware的一个老 <em>莫道不消魂</em> 江湖骗子公司。最近我机器上的Firefox开始卡了，每启动一次就要卡2秒，十分不满意。所以不得不暴力手术</p>
+<p>优化方法，删除 <code>_Firefox安装文件夹_ /components</code> 路径下的</p>
+<p>FeedWriter.js<br />
+FeedConverter.js<br />
+FeedProcessor.js<br />
+nsLivemarkService.js<br />
+nsLoginInfo.js<br />
+nsLoginManager.js<br />
+nsLoginManagerPrompter.js<br />
+nsMicrosummaryService.js</p>
+<p>特别是 FeedProcessor.js 这个狗屁js，一点用处都没有，还浪费流量，还卡。我X。鉴于每次Firefox升级会重新安装这几个js，所以建议建立同名文件夹以防止被覆盖。</p>
+<p>Disclaimer: 本人自己使用的暴力优化方法，不对使用这种方法“优化”过后的Firefox任何问题负责，请作为选择性参考。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

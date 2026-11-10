@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>一键设置批处理：把Windows Server 2008打造成Workstation – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="一键设置批处理：把Windows Server 2008打造成Workstation" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/625015" />
+    <meta property="og:url" content="https://blog.est.im/archives/625015">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="一键设置批处理：把Windows Server 2008打造成Workstation">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">一键设置批处理：把Windows Server 2008打造成Workstation</h2>
+    <p class="post-date">Posted <time datetime="2008-03-13T04:58:01+08:00">2008-03-13</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>估计很多小白和我一样用Windows Server 2008做自己的桌面OS，因为传说Server 2008“<a href="http://www.cnbeta.com/article.php?sid=51097">比Vista SP1快</a>”，“<a href="http://blogs.itecn.net/blogs/alexis/archive/2008/02/18/_F295DD8B_-Windows-Client-_2600_-Windows-Server-_0DFF0854454EC55F065201300652454EC55F0854_.aspx">内核和Vista SP1完全一样</a>”，“<a href="http://www.vistafans.com/thread-224089-1-2.html">可以通过Vista的OEM激活</a>”，在MSDN Blog（<a href="http://blogs.msdn.com/vijaysk/archive/2008/02/11/using-windows-server-2008-as-a-super-desktop-os.aspx">上</a> <a href="http://blogs.msdn.com/vijaysk/archive/2008/02/20/using-windows-server-2008-as-a-super-workstation-os-cont-d.aspx">下</a>）上看到有人总结了一下安装完毕Server 2008之后改造Workstation的步骤，自己改写了一个批处理版本，双击直接搞定。</p>
+<p>核心内容：</p>
+<pre><code>1. 安装Windows特性：Telnet客户端、桌面体验、无线管理
+2. 开启Theme、Windows Audio、Superfetch
+3. 禁用关机理由，登录Ctrl+Alt+Del
+4. CPU优化为前台程序而不是后台服务（可能需要重启）
+5. 开启各种视觉效果
+6. 关闭自动播放
+7. 再不关闭IE Sec的情况下，把Internet区域的安全设定为Medium-high
+</code></pre>
+<p>代码采用GPL 2开源 -_-!<br />
+<code>:Windows Server 2008 转换为Workstation批处理设置工具 V1.0
+:By est
+:2008-3-12
+:可以自行在services.msc里启用Windows Image Acquisition(WIA)增加对摄像头的支持
+:需要手动自己关闭DEP
+:需要手动在GpEdit.msc里修改 Users 组可以关机
+:需要手动开启“防火墙屏蔽程序时通知我”
+:某些情况下需要手动编辑磁盘权限，给Users组加上可读写
+:可以使用powercfg -h on来开启休眠
+:需要手动更改主题为Windows Aero
+:至于DX9, DX10, Virtualization, 驱动, 音视频解码包需要用户手动安装</code></p>
+<p>:导入注册表设置<br />
+more +40 &lt; "%~f0" &gt; "%temp%\tmp.reg"<br />
+regedit /s "%temp%\tmp.reg"</p>
+<p>:安装telnet命令、桌面体验、无线支持<br />
+pkgmgr /iu:TelnetClient;DesktopExperience;WirelessNetworking</p>
+<p>:启用桌面主题<br />
+sc config Themes start= auto<br />
+sc start Themes</p>
+<p>:启用Windows声音<br />
+sc config MMCSS start= auto<br />
+sc start MMCSS<br />
+sc config AudioEndpointBuilder start= auto<br />
+sc start AudioEndpointBuilder<br />
+sc config Audiosrv start= auto<br />
+sc start Audiosrv</p>
+<p>:启用Superfetch<br />
+sc config SysMain start= auto<br />
+sc start SysMain</p>
+<p>:结束批处理设置<br />
+goto:eof</p>
+<p>Windows Registry Editor Version 5.00</p>
+<p>;禁用关机理由<br />
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Group Policy Objects\{EEB3B0FE-E195-40F9-B7E5-6A13CDFDC255}Machine\Software\Policies\Microsoft\Windows NT\Reliability]<br />
+"ShutdownReasonOn"=dword:00000000<br />
+"ShutdownReasonUI"=-</p>
+<p>;禁用登录Ctrl+Alt+Del<br />
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System]<br />
+"disablecad"=dword:00000001</p>
+<p>;允许Superfetch<br />
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters]<br />
+"EnablePrefetcher"=dword:00000003<br />
+"EnableSuperfetch"=dword:00000003</p>
+<p>;CPU优化为Programs而不是Backgrond Services<br />
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\PriorityControl]<br />
+"Win32PrioritySeparation"=dword:00000026</p>
+<p>;开启视觉效果<br />
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects]<br />
+"VisualFXSetting"=dword:00000001</p>
+<p>[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\AnimateMinMax]<br />
+"DefaultValue"=dword:00000000<br />
+"DefaultApplied"=dword:00000001</p>
+<p>[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\ComboBoxAnimation]<br />
+"DefaultValue"=dword:00000000<br />
+"DefaultApplied"=dword:00000001</p>
+<p>[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\ControlAnimations]<br />
+"DefaultValue"=dword:00000000<br />
+"DefaultApplied"=dword:00000001</p>
+<p>[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\CursorShadow]<br />
+"DefaultValue"=dword:00000000<br />
+"DefaultApplied"=dword:00000001</p>
+<p>[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\DragFullWindows]<br />
+"DefaultValue"=dword:00000000<br />
+"DefaultApplied"=dword:00000001</p>
+<p>[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\DropShadow]<br />
+"DefaultValue"=dword:00000000<br />
+"DefaultApplied"=dword:00000001</p>
+<p>[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\DWMEnabled]<br />
+"DefaultValue"=dword:00000000<br />
+"DefaultApplied"=dword:00000001</p>
+<p>[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\FontSmoothing]</p>
+<p>[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\ListBoxSmoothScrolling]<br />
+"DefaultValue"=dword:00000000<br />
+"DefaultApplied"=dword:00000001</p>
+<p>[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\ListviewAlphaSelect]<br />
+"DefaultValue"=dword:00000000<br />
+"DefaultApplied"=dword:00000001</p>
+<p>[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\ListviewShadow]<br />
+"DefaultValue"=dword:00000000<br />
+"DefaultApplied"=dword:00000001</p>
+<p>[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\ListviewWatermark]<br />
+"DefaultValue"=dword:00000000<br />
+"DefaultApplied"=dword:00000001</p>
+<p>[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\MenuAnimation]<br />
+"DefaultValue"=dword:00000000<br />
+"DefaultApplied"=dword:00000001</p>
+<p>[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\SelectionFade]<br />
+"DefaultValue"=dword:00000000<br />
+"DefaultApplied"=dword:00000001</p>
+<p>[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\TaskbarAnimations]<br />
+"DefaultValue"=dword:00000000<br />
+"DefaultApplied"=dword:00000001</p>
+<p>[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\Themes]</p>
+<p>[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\ThumbnailsOrIcon]<br />
+"DefaultValue"=dword:00000000<br />
+"DefaultApplied"=dword:00000001</p>
+<p>[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\TooltipAnimation]<br />
+"DefaultValue"=dword:00000000<br />
+"DefaultApplied"=dword:00000001</p>
+<p>[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\TransparentGlass]<br />
+"DefaultValue"=dword:00000000<br />
+"DefaultApplied"=dword:00000001</p>
+<p>[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\WebView]<br />
+"DefaultValue"=dword:00000000<br />
+"DefaultApplied"=dword:00000001</p>
+<p>;关闭自动播放<br />
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\AutoplayHandlers]<br />
+"DisableAutoplay"=dword:00000001</p>
+<p>:在不关闭IE Sec的情况下把Internet安全级别调整为Medium-High<br />
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3]<br />
+"2004"=dword:00000000<br />
+"2001"=dword:00000000<br />
+"CurrentLevel"=dword:00011500<br />
+"1001"=dword:00000001<br />
+"1200"=dword:00000000<br />
+"1400"=dword:00000000<br />
+"1402"=dword:00000000<br />
+"1405"=dword:00000000<br />
+"1407"=dword:00000001<br />
+"1601"=dword:00000000<br />
+"1604"=dword:00000000<br />
+"1606"=dword:00000000<br />
+"1608"=dword:00000000<br />
+"1800"=dword:00000001<br />
+"1802"=dword:00000000<br />
+"1803"=dword:00000000<br />
+"1804"=dword:00000001<br />
+"1A00"=dword:00020000<br />
+"1A02"=dword:00000000<br />
+"1A03"=dword:00000000<br />
+"1A04"=dword:00000003<br />
+"1A05"=dword:00000001<br />
+"1A06"=dword:00000000<br />
+"1C00"=dword:00010000<br />
+"1E05"=dword:00020000<br />
+"2000"=dword:00000000<br />
+"2100"=dword:00000000<br />
+"2101"=dword:00000000<br />
+"2300"=dword:00000001<br />
+"2400"=dword:00000000<br />
+"2401"=dword:00000000<br />
+"2402"=dword:00000000<br />
+"2600"=dword:00000000<br />
+"2007"=dword:00010000</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

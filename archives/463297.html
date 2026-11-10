@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[Python]Get flup working on Windows – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[Python]Get flup working on Windows" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/463297" />
+    <meta property="og:url" content="https://blog.est.im/archives/463297">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[Python]Get flup working on Windows">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[Python]Get flup working on Windows</h2>
+    <p class="post-date">Posted <time datetime="2007-10-14T16:11:48+08:00">2007-10-14</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>Python网络编程的几种方式是：<a href="http://www.modpython.org/">mod_python</a>, CGI, <a href="http://www.fastcgi.com/">FastCGI</a>, 几个Python Web Framework（<a href="http://www.djangoproject.com/">Django</a>, <a href="http://webpy.org/">web.py</a>）都需要用到一个组件：flup。但是flup在Windows下运行回出现错误：</p>
+<pre><code>Traceback (most recent call last):
+  File &quot;1.py&quot;, line 7, in
+    WSGIServer(myapp).run()
+  File &quot;C:\\Python25\\lib\\site-packages\\flup\\server\\fcgi.py&quot;, line 111, in run
+    sock = self._setupSocket()
+  File &quot;C:\\Python25\\lib\\site-packages\\flup\\server\\fcgi_base.py&quot;, line 976, in _s
+etupSocket
+    sock = socket.fromfd(FCGI_LISTENSOCK_FILENO, socket.AF_INET,
+AttributeError: 'module' object has no attribute 'fromfd'
+</code></pre>
+<p>网上搜索了下，得到<a href="http://groups.google.com/group/webpy/browse_thread/thread/67a8cfa5fdb1882b/">答案</a>：修改fcgi_base.py，找到975行把这几行注释掉</p>
+<pre><code>            sock = socket.fromfd(FCGI_LISTENSOCK_FILENO, socket.AF_INET,
+                                 socket.SOCK_STREAM)
+            try:
+                sock.getpeername()
+            except socket.error, e:
+                if e[0] == errno.ENOTSOCK:
+                    # Not a socket, assume CGI context.
+                    isFCGI = False
+                elif e[0] != errno.ENOTCONN:
+                    raise
+</code></pre>
+<p>然后把<code>isFCGI = True</code>改成<code>isFCGI = False</code>。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

@@ -53,34 +53,24 @@
 
   
   <p>Markdown is cool in general but doing a <code>&lt;br /&gt;</code> is PITA</p>
-
 <p>According to the <a href="http://daringfireball.net/projects/markdown/syntax#p">syntax</a> you have to</p>
-
 <blockquote>
-  <p>When you do want to insert a <code>&lt;br /&gt;</code> break tag using Markdown, you end a line with two or more spaces, then type return.<br>
-  Yes, this takes a tad more effort to create a <code>&lt;br /&gt;</code>, but a simplistic "every line break is a <code>&lt;br /&gt;</code>" rule wouldn’t work for Markdown. Markdown’s email-style blockquoting and multi-paragraph list items work best — and look better — when you format them with hard breaks.</p>
+<p>When you do want to insert a <code>&lt;br /&gt;</code> break tag using Markdown, you end a line with two or more spaces, then type return.<br />
+ Yes, this takes a tad more effort to create a <code>&lt;br /&gt;</code>, but a simplistic "every line break is a <code>&lt;br /&gt;</code>" rule wouldn’t work for Markdown. Markdown’s email-style blockquoting and multi-paragraph list items work best — and look better — when you format them with hard breaks.</p>
 </blockquote>
-
 <p>But I really want a <code>&lt;br /&gt;</code> whenever I press enter in wordpress. Especially copy a lot of text from elsewhere or quoting some text.</p>
-
-<p>I am using <a href="http://wordpress.org/extend/plugins/markdown-for-wordpress-and-bbpress/">Markdown for WordPress and bbPress</a> on this blog, I tried to convince <a href="http://michelf.com/projects/php-markdown/">the author</a> to add an option for enter-as-&lt;br /&gt;, the author seems reluctant to do it</p>
-
+<p>I am using <a href="http://wordpress.org/extend/plugins/markdown-for-wordpress-and-bbpress/">Markdown for WordPress and bbPress</a> on this blog, I tried to convince <a href="http://michelf.com/projects/php-markdown/">the author</a> to add an option for enter-as-<br />, the author seems reluctant to do it</p>
 <p>So let's DIY, open <code>/wp-content/plugins/markdown-for-wordpress-and-bbpress/markdown.php</code>, line 702</p>
-
 <p>change</p>
-
 <pre><code>function doHardBreaks($text) {
                 # Do hard breaks:
                 return preg_replace_callback('/ {2,}\n/',
 </code></pre>
-
 <p>to</p>
-
 <pre><code>function doHardBreaks($text) {
                 # Do hard breaks:
                 return preg_replace_callback('/\n/',
 </code></pre>
-
 <p>Done.</p>
 </article>
 

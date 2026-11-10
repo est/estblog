@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>分享下我的Thunderbird自动分拣filter - 激活信篇 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="分享下我的Thunderbird自动分拣filter - 激活信篇" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/301559" />
+    <meta property="og:url" content="https://blog.est.im/archives/301559">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="分享下我的Thunderbird自动分拣filter - 激活信篇">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">分享下我的Thunderbird自动分拣filter - 激活信篇</h2>
+    <p class="post-date">Posted <time datetime="2007-09-08T18:57:09+08:00">2007-09-08</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>用了1.5年的DreamMail，由于这个化石级软件长期不更新，加上我需要在Linux下用一个可以和Windows同步的邮件客户端，所以我选择了Thunderbird。</p>
+<p>其实平时我们用Email很大一部分邮件是各个论坛、网站的注册激活信，我一般把这些信件放在 激活信 文件夹里。并设定了一个filter 过滤器，让Thunderbird自动捡信分类。</p>
+<p>自动分检的原理很简单，只要邮件的标题包含下列关键词就分类到 激活信文件夹：</p>
+<p>Verif validate 激活 验证 帐号 activate 欢迎 account confirm regist welcome to 账户 password invit 密码 sign up 注册 member</p>
+<p>使用了<a href="/" title="/&quot;https://addons.mozilla.org/en-US/thunderbird/addon/2474//&quot;/">Message Filter Import/Export插件</a>的导出格式，需要的朋友直接保存下列文本为任意文件并执行 Tools -&gt; Import Filters 即可：</p>
+<p>[code:none]RootFolderUri=mailbox://est@pop3.126.split.netease.com<br />
+version="8"<br />
+logging="no"<br />
+name="激活信"<br />
+enabled="yes"<br />
+type="1"<br />
+action="Move to folder"<br />
+actionValue="RootFolderUri/%E6%BF%80%E6%B4%BB%E4%BF%A1"<br />
+condition="OR (subject,contains,Verif) OR (subject,contains,validate) OR (subject,contains,激活) OR (subject,contains,验证) OR (subject,contains,帐号) OR (subject,contains,activate) OR<br />
+(subject,contains,欢迎) OR (subject,contains,account) OR (subject,contains,confirm) OR (subject,contains,regist) OR (subject,contains,welcome to) OR (subject,contains,账户) OR (subject,contains,password)<br />
+OR (subject,contains,invit) OR (subject,contains,密码) OR (subject,contains,sign up) OR (subject,contains,注册) OR (subject,contains,member)"<br />
+[/code]</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

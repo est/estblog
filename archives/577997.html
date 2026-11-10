@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Talk API 1.0 Type Library – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Google Talk API 1.0 Type Library" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/577997" />
+    <meta property="og:url" content="https://blog.est.im/archives/577997">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Google Talk API 1.0 Type Library">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Google Talk API 1.0 Type Library</h2>
+    <p class="post-date">Posted <time datetime="2007-12-15T11:58:39+08:00">2007-12-15</time> | <span>archive</span></p>
+  </header>
+
+  
+  <pre><code>GoogleTalkAPILib; // Google Talk API 1.0 Type Library
+
+Dispatch ITalkAPI; // ITalkAPI Interface
+GUID={4A1527F6-C11F-4131-82BC-FE891D4E3B70};
+  function QueryInterface(riid:^GUID; out ppvObj:^^void);
+  function AddRef: UI4;
+  function Release: UI4;
+  function RegisterPlugin(plugin_guid:BSTR; plugin_name:BSTR; plugin_description:BSTR; plugin_url:BSTR; capability:BSTR): BSTR;
+  function UnregisterPlugin(plugin_guid_or_progid:BSTR);
+  function SendMessage(token:BSTR; user_id:BSTR; data:^UI1);
+  function SendTextMessage(token:BSTR; user_id:BSTR; message:BSTR);
+  function GetFriends(token:BSTR): ^variant;
+
+Dispatch IMUCTalkAPI; // IMUCTalkAPI Interface
+GUID={7A9D1480-C6A1-11DA-95AB-00E08161165F};
+  function QueryInterface(riid:^GUID; out ppvObj:^^void);
+  function AddRef: UI4;
+  function Release: UI4;
+  function RegisterPlugin(plugin_guid:BSTR; plugin_name:BSTR; plugin_description:BSTR; plugin_url:BSTR; capability:BSTR): BSTR;
+  function UnregisterPlugin(plugin_guid_or_progid:BSTR);
+  function SendMessage(token:BSTR; user_id:BSTR; data:^UI1);
+  function SendTextMessage(token:BSTR; user_id:BSTR; message:BSTR);
+  function GetFriends(token:BSTR): ^variant;
+  function OpenChatRoom(room_jid:BSTR; user_nickname:BSTR; user_resource:BSTR; user_app_capability:BSTR; user_app_presence:BSTR): ^IChatRoom;
+
+Dispatch IChatRoom; // IChatRoom Interface
+GUID={74C992C7-BA13-4E6A-A469-B43AE8FD557A};
+  function QueryInterface(riid:^GUID; out ppvObj:^^void);
+  function AddRef: UI4;
+  function Release: UI4;
+  function GetContacts: ^variant;
+  function SetUserNickname(nickname:BSTR);
+  function SetUserPresenceState(capability:BSTR; presence:BSTR);
+  function LeaveRoom;
+  function BroadcastMessage(token:BSTR; data:^UI1);
+
+Dispatch IMUCTalkPlugin; // IMUCTalkPlugin Interface
+GUID={4C9DC108-C73F-11DA-95AB-00E08161165F};
+  function QueryInterface(riid:^GUID; out ppvObj:^^void);
+  function AddRef: UI4;
+  function Release: UI4;
+  function OnNewContact(chatroom_contact:^IChatRoomContact);
+  function OnDeleteContact(chatroom_contact:^IChatRoomContact);
+  function OnPresenceUpdate(chatroom_contact:^IChatRoomContact);
+
+Dispatch IChatRoomContact; // IChatRoomContact Interface
+GUID={2C876D28-FB0C-11DA-9804-B622A1EF5492};
+  function QueryInterface(riid:^GUID; out ppvObj:^^void);
+  function AddRef: UI4;
+  function Release: UI4;
+  function GetNickname: BSTR;
+  function GetResource: BSTR;
+  function GetCapability: BSTR;
+  function GetPresenceState: BSTR;
+  function GetRoomJid: BSTR;
+
+Dispatch ITalkFriend; // ITalkFriend Interface
+GUID={38FDD2C4-9164-4EAF-8C74-24D764FF613E};
+  function QueryInterface(riid:^GUID; out ppvObj:^^void);
+  function AddRef: UI4;
+  function Release: UI4;
+  function GetName: BSTR;
+  function GetUserId: BSTR;
+  function GetCapabilities: ^BSTR;
+  function GetStatus: UI4;
+
+Dispatch ITalkPlugin; // ITalkPlugin Interface
+GUID={5A9FF74C-53D0-4513-9481-0F61EDEEFFE2};
+  function QueryInterface(riid:^GUID; out ppvObj:^^void);
+  function AddRef: UI4;
+  function Release: UI4;
+  function OnReceiveMessage(talk_friend:IUnknown; data:^UI1);
+  function OnDropDataOverFriend(talk_friend:IUnknown; token:BSTR);
+
+Dispatch ITalkTunnelExp; // ITalkTunnelExp Interface
+GUID={65D12388-C5E9-468C-83B9-60AEA2E658DF};
+  function QueryInterface(riid:^GUID; out ppvObj:^^void);
+  function AddRef: UI4;
+  function Release: UI4;
+  function RelayUrl(token:BSTR; user_id:BSTR; url:BSTR);
+
+Class TalkAPI; // TalkAPI Class
+GUID={0507EEDE-3AE7-49C7-BF37-0EB4A62D8638};
+  function QueryInterface(riid:^GUID; out ppvObj:^^void);
+  function AddRef: UI4;
+  function Release: UI4;
+  function RegisterPlugin(plugin_guid:BSTR; plugin_name:BSTR; plugin_description:BSTR; plugin_url:BSTR; capability:BSTR): BSTR;
+  function UnregisterPlugin(plugin_guid_or_progid:BSTR);
+  function SendMessage(token:BSTR; user_id:BSTR; data:^UI1);
+  function SendTextMessage(token:BSTR; user_id:BSTR; message:BSTR);
+  function GetFriends(token:BSTR): ^variant;
+  function OpenChatRoom(room_jid:BSTR; user_nickname:BSTR; user_resource:BSTR; user_app_capability:BSTR; user_app_presence:BSTR): ^IChatRoom;
+  function QueryInterface(riid:^GUID; out ppvObj:^^void);
+  function AddRef: UI4;
+  function Release: UI4;
+  function RegisterPlugin(plugin_guid:BSTR; plugin_name:BSTR; plugin_description:BSTR; plugin_url:BSTR; capability:BSTR): BSTR;
+  function UnregisterPlugin(plugin_guid_or_progid:BSTR);
+  function SendMessage(token:BSTR; user_id:BSTR; data:^UI1);
+  function SendTextMessage(token:BSTR; user_id:BSTR; message:BSTR);
+  function GetFriends(token:BSTR): ^variant;
+
+Class ChatRoom; // ChatRoom Class
+GUID={D33F3CED-D7D5-44F1-A9FE-6927DABB1934};
+  function QueryInterface(riid:^GUID; out ppvObj:^^void);
+  function AddRef: UI4;
+  function Release: UI4;
+  function GetContacts: ^variant;
+  function SetUserNickname(nickname:BSTR);
+  function SetUserPresenceState(capability:BSTR; presence:BSTR);
+  function LeaveRoom;
+  function BroadcastMessage(token:BSTR; data:^UI1);
+
+Class ChatRoomContact; // ChatRoomContact Class
+GUID={33B07FD4-5917-43E1-968D-4C79231836BF};
+  function QueryInterface(riid:^GUID; out ppvObj:^^void);
+  function AddRef: UI4;
+  function Release: UI4;
+  function GetNickname: BSTR;
+  function GetResource: BSTR;
+  function GetCapability: BSTR;
+  function GetPresenceState: BSTR;
+  function GetRoomJid: BSTR;
+  function QueryInterface(riid:^GUID; out ppvObj:^^void);
+  function AddRef: UI4;
+  function Release: UI4;
+  function RelayUrl(token:BSTR; user_id:BSTR; url:BSTR);
+
+Class TalkFriend; // TalkFriend Class
+GUID={A8F086C3-2497-4229-82FE-586F2D326F95};
+  function QueryInterface(riid:^GUID; out ppvObj:^^void);
+  function AddRef: UI4;
+  function Release: UI4;
+  function GetName: BSTR;
+  function GetUserId: BSTR;
+  function GetCapabilities: ^BSTR;
+  function GetStatus: UI4;
+</code></pre>
+<p>这个可能是网上最全面最官方的Google Talk API Docs了，用于Google Talk Windows客户端 1.0.0.104版本。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>PuTTY真是太脑残了 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="PuTTY真是太脑残了" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/643658" />
+    <meta property="og:url" content="https://blog.est.im/archives/643658">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="PuTTY真是太脑残了">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">PuTTY真是太脑残了</h2>
+    <p class="post-date">Posted <time datetime="2009-11-13T12:03:33+08:00">2009-11-13</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>我就不知道为什么<a href="http://initiative.yo2.cn/archives/631355">PuTTY这种烂软件</a>为啥那么多人捧？</p>
+<p><code>~/.ssh/authorized_keys</code>这个不输入密码登录ssh的方法，Linux上ssh命令通过私钥验证就不需要输入密码，为啥PuTTY登录就要Authenticating with public key xxx, Passphrase for key xxx？我怀疑是 .ppk这个垃圾格式导致的。</p>
+<p>私钥输入密码保存在Pageant这种垃圾托盘软件里，一个内存dump就得到<strong>解密的私钥</strong> 了。等于没用。</p>
+<p>私钥其实不能保证安全，特别是多人共用的计算机上。我觉得如果一个人安全意识差的话，私钥被人拷走的可能性比密码泄漏大。加密体系只能保证<strong>传输过程中</strong> 的安全，很多脑残教材党得知本地httpS也能被嗅探抓包的时候十分吃惊。</p>
+<p>还有就是SSH协议本身也脑残<a href="http://www.reddit.com/r/linux/comments/9x7uh/asklinux_any_ssh_client_out_there_that_requires/">，ssh的终端和scp, sftp居然要独自分别开session</a>，独自authenticate才能连通。既然都是基于ssh协议的，TMD设计成一次验证通过，就又可以敲命令又可以传文件不行啊？Linux相关很多东西其实设计得都很粗糙原始，<strong>能用</strong> ，但是用的不爽。比如PuTTY的输入Host地址的那个地方，就不能诞生出<a href="http://en.wikipedia.org/wiki/Quicksilver_(software)">quicksilver</a>那样的经典创意。</p>
+<p>工程师的诅咒么？</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

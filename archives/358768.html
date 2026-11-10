@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>IIS6上用cmd.exe架CGI – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="IIS6上用cmd.exe架CGI" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/358768" />
+    <meta property="og:url" content="https://blog.est.im/archives/358768">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="IIS6上用cmd.exe架CGI">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">IIS6上用cmd.exe架CGI</h2>
+    <p class="post-date">Posted <time datetime="2007-08-30T09:02:51+08:00">2007-08-30</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>最近无聊，忙了一个通宵，成功实现用cmd.exe作为CGI运行。可以用批处理来写server scripts，也可以作为一个微型免杀后门shell使用。</p>
+<h2>回顾</h2>
+<p>IIS的配置灰常复杂，先是在自己的Vista Ultimate+IIS7上<a href="http://initiative.yo2.cn/archives/358695">配置CGI失败</a>了，因为IIS7的界面和功能改动很大，跟网上全部的教程都不能对应；所以去<a href="http://groups.google.com/group/ph4nt0m/browse_thread/thread/c143a54118c5f91d">Ph4nt0m提问</a>，没人理；然后是满世界的Google，发现了<a href="http://www.microsoft.com/technet/prodtechnol/WindowsServer2003/Library/IIS/b686f5cf-f84f-44be-af43-33916de846a3.mspx"><code>cscript iisext.vbs /AddFile</code></a>这个命令，最后灵机一动找到了<a href="http://www.microsoft.com/technet/prodtechnol/WindowsServer2003/Library/IIS/a0ea8e51-fb2a-4e80-9d5a-7fe3ae246570.mspx?mfr=true">IIS的配置文件</a>。成功突破IIS6的限制实现了cmd.exe的CGI。</p>
+<h2>要点</h2>
+<p>IIS6上配置CGI有两个要点，我都背熟了。</p>
+<pre><code>1. 在 Internet信息服务 -&gt; Web服务扩展（简称WSE, **W** eb **S** ervice **E** xtension） -&gt; 右键 添加一个新的Web服务扩展 -&gt; 添加一个exe作为CGI的宿主程序。
+2. 在一个网站下 右键 属性 -&gt; 主目录 -&gt; 配置 -&gt; -&gt; 映射 -&gt; 添加 -&gt; 输入CGI的扩展名和命令行。
+</code></pre>
+<h2>障碍</h2>
+<p>添加Web服务扩展（WSE）最大的障碍就是：指定可执行文件的命令行不能有 ,|&lt;&gt;?/* 几个特殊字符。如果是python的CGI，命令行是 <code>C:\python25\python.exe -u "%s" "%s"</code>。不幸的是cmd.exe作为CGI跑批处理需要一个开关参数 cmd.exe /c test.bat。而 / 是不允许的。于是我想了好多办法想绕过这个限制。首先是不加 /c 参数，不行。什么都不添加，发现CGI会尝试解析“Microsoft Windows [版本 5.2.3790] (C) 版权所有 1985-2003 Microsoft Corp.”这几行cmd.exe的输出文字，返回“CGI Error The specified CGI application misbehaved by not returning a complete set of HTTP headers.”我用ResHacker修改cmd.exe去掉了这几行版权信息，CGI成功返回“C:\temp\iis&gt;”但是观察后台进程发现cmd.exe并没有正常终止掉，原因很简单cmd.exe没有被执行exit命令，看来一个批处理来控制CGI是势在必行的。那么批处理的问题又来了，如何让批处理用一个echo输出多行？尝试了几遍，写出来了一个批处理脚本</p>
+<pre><code>@echo(HTTP/1.1 200 OK^
+Date: Wed, 29 Aug 2007 21:04:22 GMT^
+Server: Microsoft-IIS/6.0^
+X-Powered-By: ASP.NET^
+X-AspNet-Version: 2.0.50727^
+Cache-Control: private^
+Content-Type: text/html; charset=gb2312^
+Content-Length: 13^
+^
+^&lt;h2^&gt;test^&lt;/h2^&gt;
+)
+@exit
+</code></pre>
+<p>每一行用^结束，转义一个回车，然后空一行，接着输出HTTP的返回头。好，那么剩下的问题是，没有 /c 参数，如何让这个批处理从优先于cmd.exe的版权信息输出？一个简单的想法是利用cmd.exe的AutoRun。通过修改<code>HKEY_CURRENT_USER\Software\Microsoft\Command Processor\AutoRun</code>实现。实验结果：cmd.exe的版权信息还是在前面。那么可否添加一个@cls来清屏呢？其实cls命令也有向stdout的输出，输出的是0x0C，也算一个字符，不信可以用cls&gt;D:\1.txt来查看。最后山穷水复疑无路的时候，想到了突破 Internet信息服务（IIS）管理器（简称<strong>inetmgr</strong> ）的限制，直接修改IIS的配置文件。</p>
+<h2>MetaBase.xml</h2>
+<p>IIS6的配置文件保存在 %windir%\system32\inetsrv\MetaBase.xml。是一个文本格式化的XML文件。首先在inetmgr里添加一个CGI，可执行文件全部用用特殊的<code>C:\temp\iis\est.exe</code>。保存之后，用<code>iisreset /stop</code>停止IIS，再用记事本打开<code>%windir%\system32\inetsrv\MetaBase.xml</code>，搜索est.exe，全部替换成<code>C:\windows\system32\cmd.exe /c &amp;quot;%s&amp;quot;</code>。Ctrl+S保存配置。好了，我们再次<code>iisreset /start</code>，在inetmgr里重启网站和CGI模块，然后在浏览器打开我们的测试页面http://127.0.0.1:800/1.bat。好啊，成功了！截图纪念：<br />
+<img alt="bat-cgi-it-works.jpg" src="http://olds.blogcn.com/wp-content/uploads/74/7487/2007/08/bat-cgi-it-works.jpg" /></p>
+<h2>后记</h2>
+<p>好困啊，吃个早饭睡觉去。开学补考看来又要挂了。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

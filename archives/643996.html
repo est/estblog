@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chromium 4.0.259.0 (r33218) 字体渲染太丑解决办法 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Chromium 4.0.259.0 (r33218) 字体渲染太丑解决办法" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/643996" />
+    <meta property="og:url" content="https://blog.est.im/archives/643996">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Chromium 4.0.259.0 (r33218) 字体渲染太丑解决办法">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Chromium 4.0.259.0 (r33218) 字体渲染太丑解决办法</h2>
+    <p class="post-date">Posted <time datetime="2009-11-27T10:09:41+08:00">2009-11-27</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>最新版Chromium 4.0.259.0 (r3321 <img alt="8)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_cool.gif" /> 字体渲染太丑</p>
+<p><img alt="" src="http://olds.blogcn.com/wp-content/uploads/74/7487/2009/11/18.jpg" /></p>
+<p>原因是某个脑残Google程序员把默认中文字体改成<strong>黑体</strong> 了。</p>
+<p>解决办法：</p>
+<p>打开自己的profile所在目录，用记事本打开 <code>Default\Preferences</code></p>
+<p>最后几行，改成：</p>
+<pre><code>   &quot;webkit&quot;: {
+      &quot;webprefs&quot;: {
+         &quot;default_fixed_font_size&quot;: 13,
+         &quot;default_font_size&quot;: 16,
+         &quot;developer_extras_enabled&quot;: true,
+         &quot;fixed_font_family&quot;: &quot;NSimSun&quot;,
+         &quot;inspector_settings&quot;: &quot;resourceTrackingEnabled:boolean:true\nlastActivePanel:string:elements\n&quot;,
+         &quot;sansserif_font_family&quot;: &quot;SimSun&quot;,
+         &quot;serif_font_family&quot;: &quot;SimSun&quot;
+      }
+   }
+</code></pre>
+<p>就跟老版一样了。</p>
+<p>升级这个版本是为了官方extensions和Bookmark Sync。这两个功能在垬朝都被封了。真杯具。</p>
+<p>ps 那个<a href="http://initiative.yo2.cn/archives/642056">Chrome Hotkey Patch</a>对最新版果然有问题，估计修正不了了。。。。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

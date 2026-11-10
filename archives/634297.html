@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HaXe and Jsyn – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="HaXe and Jsyn" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/634297" />
+    <meta property="og:url" content="https://blog.est.im/archives/634297">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="HaXe and Jsyn">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">HaXe and Jsyn</h2>
+    <p class="post-date">Posted <time datetime="2008-11-13T05:19:33+08:00">2008-11-13</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>HaXe快成processing杀手了。。。</p>
+<p>最近感觉HaXe的新闻越来越多了。</p>
+<p>首先是社区倡导(<a href="http://www.make-some-noise.info/">Make-Some-Noise.info</a>)Flash 10的sound特性得到了极大加强，新闻就接踵而至，例如最近的 <a href="http://yaxu.org/synth/synth.html">DSP in HaXe</a>，<a href="http://gamehaxe.com/2008/10/28/c-backend-for-haxe/">C++ backend for haXe</a></p>
+<p>Java的地位在逐渐被Flash取代</p>
+<p><a href="http://lists.motion-twin.com/pipermail/haxe/2008-February/014742.html">http://lists.motion-twin.com/pipermail/haxe/2008-February/014742.html</a></p>
+<blockquote>
+<p>For a beginner with programming skills (as opposed to graphic design skills)<br />
+ haXe is very well set up and economical. So yes, I feel like just jumping in<br />
+ with the examples of disemia. Only problem is exlaining how Flash is<br />
+ structured, there is hardly any documentation. The examples at disemia are<br />
+ good, but I feel somehow the haXe site could be improved by including a full<br />
+ roadmap for beginners wanting to compile flash from haXe like me. Maybe I am<br />
+ a minority or exception, I do not know, but maybe this is a trend that is on<br />
+ the rise.</p>
+<p>What do people in this forum think? Are artists / designers starting to<br />
+ code? Will coding prevail, or become an alternative vehicle for artistic<br />
+ creation? This is happening in the world of SuperCollider and Processing (<br />
+ processing.org). *Will haXe/neko be part of that? *</p>
+<p>Having seen Flash it seems to me much more powerful than the Java-based work<br />
+ with Processing.<br />
+ Processing is incomparably easier to start with and it proved to be the most<br />
+ popular entry point for my students in media arts, who are daunted by the<br />
+ freedom of SuperCollider. haXe is even more difficult.<br />
+<strong>While haXe is much superior to Processing in what it can do (after all<br />
+ Processing is just a Java library), it does not (yet) have the communication<br />
+ facilities of processing for <a href="http://opensoundcontrol.org/">OSC</a>, MIDI, sound (<a href="http://www.softsynth.com/jsyn/">Jsyn</a>). To put it bluntly, it<br />
+ is like comparing a lego kit (<a href="http://processing.org/">Processing</a>) to an engineers workshop<br />
+ (haXe/neko).</strong></p>
+</blockquote>
+<p><a href="http://lists.motion-twin.com/pipermail/haxe/2008-February/014752.html">http://lists.motion-twin.com/pipermail/haxe/2008-February/014752.html</a></p>
+<blockquote>
+<p>In all, my opinion is that <strong>haXe will be to Flash as wings are to<br />
+ aircraft</strong> - While it's proven you don't need them to get the job done,<br />
+ why would you not use them? <img alt=":-D" src="http://static.blogcn.com/wp-includes/images/smilies/icon_biggrin.gif" /> If haXe didn't have such belief in<br />
+ haXe, I'd not have invested so much time in it and the community.</p>
+<p>Lee</p>
+</blockquote>
+<p>这个世界变化真快。只要Flash10开始普及，互联网寒冬过去，RIA潮流就会很快袭来。</p>
+<p>其实想想也知道。多媒体PC说白了就是网络的一个node，只要浏览器（Web）能够完整底层控制设备IO和计算能力，存储能力，云计算不是不可能</p>
+<p>下面列的技术都是跨浏览器跨平台的开放技术，微软/iPhone之类的专有专利技术不算</p>
+<p>IO：</p>
+<pre><code>* 键入设备和定点设备：鼠标+键盘，浏览器直接可以响应
+* 摄像头、麦克风：Adobe Flash
+* 可以直接控制声音波形，在Flash 10
+* 适用Web，GPU加速的显示技术，例如Silverlight, Flash以及不得不提到的先行者牺牲品DirectAnimation（不跨平台），还有现在流行的OpenGL ES
+* comet技术可以作为未来Web世界的 _socket_ 标准，自动穿防火墙，过NAT这些特性都是非常有诱惑力的。
+* Flash 10里引入的P2P特性。
+</code></pre>
+<p>存储：</p>
+<pre><code>* 服务器上所谓的云存储
+* 浏览器Cookie，以及跨浏览器的，Flash里的[LSO](http://kb.adobe.com/selfservice/viewContent.do?externalId=tn_16194)
+* Google Gears的SQLite数据库
+</code></pre>
+<p>计算：</p>
+<pre><code>* Javascript，强大的（甚至超过静态编译C性能）引擎：V8, [SFX](http://webkit.org/blog/214/introducing-squirrelfish-extreme/), TraceMonkey
+* ActionScript。其实Javascript和Actionscript可以统称为ECMAScript
+</code></pre>
+<p>从这个趋势可以看出来，Google和Adobe是未来的巨头。微软由于对开源社区的态度，迟早会吃亏的。Adobe更是横跨出版平面媒体和Web媒体的超级航空母舰。Google可能要偏网络基础设施一点。</p>
+<p>以后大家就不要调侃B/S和RIA了。直接上云计算吧。哈哈。</p>
+<p>其实云计算最大的危险不在于不流行，而在于浏览器的稳定性，保密性和安全性。例如Ajax其实是一种Javascript的强力hack，现有的CSS也是各个浏览器之间千疮百孔打补丁。加上w3c这种<a href="http://ishtml5readyyet.com/">装13涨饭不做事的国际“牙防组”</a>机构（例如<a href="http://lists.whatwg.org/pipermail/whatwg-whatwg.org/2008-September/016225.html">HTML 5标准要到2022年才会发布</a>。。。），实在是对Web工业的未来构成了极大的威胁。</p>
+<p>安全性也是非常重要的。FF3里的SSL证书机制就被n多人攻击过。再一个例子就是，WebGame在中国绝对又是很烂的一个市场，因为针对浏览器、HTTP、Javascript开发一个外挂实在太容易了，技术难度比桌面游戏客户端exe打包加壳hook系统那种容易多了。</p>
+<p>The Next Ten Year's Big Thing. Are you ready?</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

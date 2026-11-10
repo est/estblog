@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Minimal WebRTC handshake – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Minimal WebRTC handshake" />
+
+    <link rel="canonical" href="https://blog.est.im/2026/stdin-20" />
+    <meta property="og:url" content="https://blog.est.im/2026/stdin-20">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Minimal WebRTC handshake">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Minimal WebRTC handshake</h2>
+    <p class="post-date">Posted <time datetime="2026-11-09T16:36:00+08:00">2026-11-09</time> | <span>stdin</span></p>
+  </header>
+
+  
+  <p>Author's note: drafted by Deepseek v4.1 Flash</p>
+<hr />
+<h3>The 23-Byte WebRTC Handshake</h3>
+<p><strong>How small can a browser-to-browser WebRTC handshake get? I spent a weekend measuring it in Chromium 157 (Microsoft Edge) and Safari 26.2. The short answer: 23 bytes per direction, if you're willing to make a few very specific assumptions.</strong></p>
+<hr />
+<h4>The 2015 answer was 106 characters</h4>
+<p>In 2015, Philipp Hancke wrote a great piece called <a href="https://webrtchacks.com/the-minimum-viable-sdp/">The Minimum Viable SDP</a>. The question was simple: how much do two browsers actually need to exchange before a DataChannel works?</p>
+<p>The answer was about 106 characters per direction:</p>
+<pre><code class="language-text">O,&lt;ufrag&gt;,&lt;pwd&gt;,&lt;base64-fingerprint&gt;,&lt;ip&gt;,&lt;port&gt;
+</code></pre>
+<p>That was a hack, and it came with caveats: a TURN relay, no trickle ICE, and a 30-second window to paste the answer. But the core insight was right: most of an SDP is boilerplate, not per-connection state.</p>
+<p>I wanted to know what that number looks like today, on current browsers, on a LAN, with no TURN server. So I built a small test harness and measured it.</p>
+<p>The result is a nice ladder:</p>
+<table>
+<thead>
+<tr>
+<th>What you send</th>
+<th style="text-align: right;">Per direction</th>
+<th>Assumptions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Full Chrome SDP</td>
+<td style="text-align: right;">~568 B</td>
+<td>none</td>
+</tr>
+<tr>
+<td>Full Safari SDP</td>
+<td style="text-align: right;">~587 B</td>
+<td>none</td>
+</tr>
+<tr>
+<td>Minimal SDP, SHA-256</td>
+<td style="text-align: right;"><strong>279 B</strong></td>
+<td>hand-written SDP, LAN IP known</td>
+</tr>
+<tr>
+<td>Minimal SDP, SHA-1</td>
+<td style="text-align: right;"><strong>241 B</strong></td>
+<td>same, SHA-1 (experiment only)</td>
+</tr>
+<tr>
+<td>Parameterized, raw, SHA-256</td>
+<td style="text-align: right;"><strong>55 B</strong></td>
+<td>shared template, LAN IP known, port only</td>
+</tr>
+<tr>
+<td>Parameterized, raw, SHA-1</td>
+<td style="text-align: right;"><strong>43 B</strong></td>
+<td>same, SHA-1</td>
+</tr>
+<tr>
+<td>Pre-shared certificate</td>
+<td style="text-align: right;"><strong>23 B</strong></td>
+<td>fingerprint pinned out-of-band</td>
+</tr>
+<tr>
+<td>Custom ICE stack</td>
+<td style="text-align: right;">2 B</td>
+<td>not browser WebRTC</td>
+</tr>
+</tbody>
+</table>
+<p>The interesting part is not the 23 bytes. It's <em>which</em> 23 bytes, and what you have to give up to get there.</p>
+<hr />
+<h4>What actually has to be exchanged</h4>
+<p>A WebRTC DataChannel is three layers stacked on top of each other:</p>
+<ol>
+<li><strong>ICE</strong> gives you a UDP path.</li>
+<li><strong>DTLS</strong> gives you encryption and identity.</li>
+<li><strong>SCTP over DTLS</strong> gives you the DataChannel.</li>
+</ol>
+<p>Each layer needs a small amount of per-connection state:</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>What must be exchanged</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ICE</td>
+<td><code>ice-ufrag</code>, <code>ice-pwd</code>, candidate (IP + port)</td>
+<td>STUN username and MESSAGE-INTEGRITY</td>
+</tr>
+<tr>
+<td>DTLS</td>
+<td>certificate fingerprint</td>
+<td>authenticate the peer's self-signed cert</td>
+</tr>
+<tr>
+<td>DTLS</td>
+<td><code>setup</code> role</td>
+<td>who is DTLS client/server</td>
+</tr>
+<tr>
+<td>SCTP</td>
+<td><code>sctp-port</code>, <code>max-message-size</code></td>
+<td>can be defaulted</td>
+</tr>
+<tr>
+<td>Signaling</td>
+<td>offer/answer role</td>
+<td>can be implied by message type</td>
+</tr>
+</tbody>
+</table>
+<p>Everything else in a normal SDP — codecs, <code>rtpmap</code>, <code>fmtp</code>, <code>extmap</code>, <code>msid</code>, <code>ssrc</code>, <code>rtcp-mux</code>, <code>b=AS</code>, BUNDLE, <code>c=</code> — is either irrelevant for a DataChannel or can be hardcoded.</p>
+<p>The per-connection random values are remarkably small:</p>
+<ul>
+<li><code>ufrag</code>: 4 characters (24 bits of randomness)</li>
+<li><code>pwd</code>: 24 characters in Chrome/Safari (144 bits)</li>
+<li>DTLS fingerprint: 32 bytes for SHA-256, 20 bytes for SHA-1</li>
+<li>candidate: 4 bytes IPv4 + 2 bytes port (or less, if the IP is known)</li>
+</ul>
+<p>That's the whole handshake, information-theoretically.</p>
+<hr />
+<h4>The test setup</h4>
+<p>I used:</p>
+<ul>
+<li><strong>Chrome/Edge 157</strong> (Chromium 157) headless, driven by Playwright. I used Microsoft Edge as the Chromium stand-in; the SDP and API behavior are the same as Chrome 157.</li>
+<li><strong>Safari 26.2</strong> on macOS, driven by AppleScript + a local page. No WebDriver permissions needed.</li>
+<li>A local Node HTTP server for signaling.</li>
+<li>A DataChannel <code>ping</code>/<code>pong</code> echo to prove the connection actually works.</li>
+<li>Two topologies: two <code>RTCPeerConnection</code>s in the same page, and Chrome page ↔ Safari page.</li>
+</ul>
+<p>One important detail: modern browsers hide host candidates behind mDNS:</p>
+<pre><code class="language-text">a=candidate:... 1 udp ... &lt;uuid&gt;.local 64062 typ host
+</code></pre>
+<p>Safari always did this in my tests. Chrome headless did too, unless I passed <code>--disable-features=WebRtcHideLocalIpsWithMdns</code>. A web page cannot turn mDNS off. So the "minimal SDP" numbers depend on whether you send the browser's <code>.local</code> candidate or reconstruct a raw <code>IP:port</code> candidate on the receiving side.</p>
+<p>For the LAN experiments, I did the latter: the signaling layer knows the peer's IP, so the candidate only needs the UDP port.</p>
+<hr />
+<h4>The SDP floor</h4>
+<p>The SDP parser is stricter than you'd think, but also more forgiving than the spec suggests.</p>
+<p><strong>Mandatory at session level:</strong></p>
+<pre><code class="language-text">v=0
+o=- 0 0 IN IP4 0
+s=-
+t=0 0
+</code></pre>
+<ul>
+<li><code>v=</code> must be first.</li>
+<li><code>o=</code> must have exactly six space-separated fields. The values are not validated.</li>
+<li><code>s=</code> must exist and be non-empty.</li>
+<li><code>t=</code> must exist.</li>
+<li>Lines must be in RFC order. Blank lines are fatal. The last line must end with a newline.</li>
+<li>LF and CRLF both work. LF saves one byte per line.</li>
+</ul>
+<p><strong>Mandatory per DataChannel m-line:</strong></p>
+<pre><code class="language-text">m=application 9 DTLS/SCTP x
+a=ice-ufrag:&lt;4+ chars&gt;
+a=ice-pwd:&lt;22+ chars&gt;
+a=fingerprint:sha-256 &lt;colon-hex&gt;
+</code></pre>
+<p>The <code>m=</code> line needs at least four fields. <code>DTLS/SCTP</code> is the shortest accepted protocol token. The fourth field can be any token; <code>x</code> is the shortest.</p>
+<p>That's basically it. You can delete:</p>
+<ul>
+<li><code>a=mid</code> — Chrome and Safari accept a single m-line without it; Chrome visibly synthesizes <code>a=mid:0</code> when parsing the remote SDP. (JSEP says include it; cross-browser code should.)</li>
+<li><code>a=sctp-port</code> — defaults to 5000.</li>
+<li><code>a=setup</code> — offer defaults to <code>actpass</code>, answer to <code>active</code>.</li>
+<li><code>a=group:BUNDLE</code> — optional with the default balanced policy.</li>
+<li><code>c=</code> — ICE never uses it.</li>
+<li><code>a=ice-options:trickle</code> — not required for <code>addIceCandidate</code>.</li>
+<li><code>a=max-message-size</code> — defaults to 64 KiB.</li>
+<li><code>a=end-of-candidates</code> — ignored by Chrome.</li>
+<li><code>a=msid-semantic</code>, <code>a=extmap-allow-mixed</code> — irrelevant for data.</li>
+</ul>
+<p>A working minimal SDP, SHA-256, LF, with a known LAN IP:</p>
+<pre><code class="language-sdp">v=0
+o=- 0 0 IN IP4 0
+s=-
+t=0 0
+m=application 9 DTLS/SCTP x
+a=candidate: 1 udp 1 &lt;LAN_IP&gt; &lt;PORT&gt; typ host
+a=ice-ufrag:&lt;UFRAG&gt;
+a=ice-pwd:&lt;PWD&gt;
+a=fingerprint:sha-256 &lt;SHA256_FP&gt;
+</code></pre>
+<p>That's <strong>279 bytes</strong> per direction. Swap SHA-256 for SHA-1 and it's <strong>241 bytes</strong>. Drop the candidate and trickle it later, and the first SDP is <strong>191 bytes</strong> (SHA-1).</p>
+<p>Both Chrome and Safari accepted this template. The Safari-specific surprises:</p>
+<ol>
+<li><strong><code>a=sctp-port</code> cannot be combined with <code>DTLS/SCTP x</code>.</strong> If you include <code>a=sctp-port</code>, the m-line must be <code>m=application 9 UDP/DTLS/SCTP webrtc-datachannel</code>, otherwise you get <code>sctp-port attribute can't be used with sctpmap.</code></li>
+<li><strong>Safari uses <code>.local</code> candidates by default.</strong> If you send the browser's candidate verbatim, the SDP is 308/270 bytes (SHA-256/SHA-1). If you reconstruct the candidate with the known LAN IP, it drops to 279/241 bytes.</li>
+<li><strong>Safari accepts SHA-1 fingerprints.</strong> It exposes the certificate DER via <code>getStats().base64Certificate</code>, so you can compute a SHA-1 fingerprint yourself. Don't use this in production.</li>
+</ol>
+<p>Chrome ↔ Safari works in both directions at 241 bytes with SHA-1, and 279 bytes with SHA-256.</p>
+<hr />
+<h4>Parameterized signaling: send only what's random</h4>
+<p>Once you know the SDP floor, the next step is obvious: don't send the SDP at all. Both sides share the same template, and the wire carries only the values that differ.</p>
+<pre><code>sender:
+  browser creates its normal local SDP (never modify it)
+  extract ufrag, pwd, fingerprint, candidate
+  encode them into a compact payload
+  send
+
+receiver:
+  decode
+  rebuild the remote SDP from the shared template
+  setRemoteDescription(rebuilt SDP)
+</code></pre>
+<p>This is the same idea as the 2015 article, and the same idea as libp2p's WebRTC Direct v2. It also sidesteps the modern SDP munging rules: you never touch the local SDP, so Chrome has nothing to reject.</p>
+<h5>Packing the values</h5>
+<p>The ICE alphabet is 64 characters, so each character is exactly 6 bits:</p>
+<ul>
+<li>4-char ufrag → 3 bytes</li>
+<li>24-char pwd → 18 bytes</li>
+<li>SHA-256 fingerprint → 32 bytes</li>
+<li>SHA-1 fingerprint → 20 bytes</li>
+<li>IPv4 candidate → 4 bytes IP + 2 bytes port</li>
+<li>port-only → 2 bytes</li>
+</ul>
+<p>A raw payload with no flags, no lengths, and no prefix is just:</p>
+<pre><code class="language-text">pack6(ufrag) || pack6(pwd) || fingerprint || candidate
+</code></pre>
+<h5>Measured sizes</h5>
+<p>With a generic header (flags + lengths + <code>p:</code> prefix), base64url text:</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th style="text-align: right;">SHA-256</th>
+<th style="text-align: right;">SHA-1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>full IPv4</td>
+<td style="text-align: right;">85 chars / 62 B</td>
+<td style="text-align: right;">69 chars / 50 B</td>
+</tr>
+<tr>
+<td>last two octets</td>
+<td style="text-align: right;">82 chars / 60 B</td>
+<td style="text-align: right;">66 chars / 48 B</td>
+</tr>
+<tr>
+<td>port only</td>
+<td style="text-align: right;">80 chars / 58 B</td>
+<td style="text-align: right;">64 chars / 46 B</td>
+</tr>
+<tr>
+<td>trickle (no candidate)</td>
+<td style="text-align: right;">77 chars / 56 B</td>
+<td style="text-align: right;">61 chars / 44 B</td>
+</tr>
+</tbody>
+</table>
+<p>Without the header/prefix (<code>raw</code>), assuming a fixed 4/24 profile:</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th style="text-align: right;">SHA-256</th>
+<th style="text-align: right;">SHA-1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>full IPv4</td>
+<td style="text-align: right;">79 chars / 59 B</td>
+<td style="text-align: right;">63 chars / 47 B</td>
+</tr>
+<tr>
+<td>last two octets</td>
+<td style="text-align: right;">76 chars / 57 B</td>
+<td style="text-align: right;">60 chars / 45 B</td>
+</tr>
+<tr>
+<td>port only</td>
+<td style="text-align: right;"><strong>74 chars / 55 B</strong></td>
+<td style="text-align: right;"><strong>58 chars / 43 B</strong></td>
+</tr>
+<tr>
+<td>trickle</td>
+<td style="text-align: right;">71 chars / 53 B</td>
+<td style="text-align: right;">55 chars / 41 B</td>
+</tr>
+</tbody>
+</table>
+<p>Every row in that table was verified with a real DataChannel <code>ping</code>/<code>pong</code> in Chrome, Safari, and Chrome ↔ Safari.</p>
+<p>If you're sending binary over a WebSocket or DataChannel, use the byte counts. If you're stuck with text, use the character counts.</p>
+<hr />
+<h4>The 23-byte handshake</h4>
+<p>The fingerprint is the biggest remaining item: 32 bytes for SHA-256. If both sides already know each other's certificate fingerprint, it doesn't need to be on the wire at all.</p>
+<p>Can you just hardcode a certificate in a static page? <strong>Not with the standard web API.</strong> I checked the API surface in Chrome 157:</p>
+<pre><code class="language-js">new RTCCertificate()
+// TypeError: Failed to construct 'RTCCertificate': Illegal constructor
+
+JSON.stringify(cert)
+// &quot;{}&quot;
+
+structuredClone(cert)
+// true
+
+new RTCPeerConnection({ certificates: [{ getFingerprints: () =&gt; [] }] })
+// TypeError: Failed to convert value to 'RTCCertificate'
+</code></pre>
+<p><code>RTCPeerConnection.generateCertificate()</code> is the only factory. There is no import API. You cannot put a PEM private key in a static page and hand it to <code>RTCPeerConnection</code>.</p>
+<p>What you <em>can</em> do is generate a certificate once per browser profile, store the <code>RTCCertificate</code> in IndexedDB, and reuse it:</p>
+<pre><code class="language-js">async function getOrCreateCert() {
+  const db = await openDb();
+  let cert = await idbGet(db, 'dtls');
+  if (!cert) {
+    cert = await RTCPeerConnection.generateCertificate({
+      name: 'ECDSA',
+      namedCurve: 'P-256'
+    });
+    await idbPut(db, 'dtls', cert);
+  }
+  return cert;
+}
+
+const cert = await getOrCreateCert();
+const pc = new RTCPeerConnection({ certificates: [cert] });
+pc.createDataChannel('x');
+</code></pre>
+<p><code>RTCCertificate</code> is structured-cloneable, so IndexedDB can store it. Chrome and Safari both keep the same fingerprint across page reloads. I did not separately test a full browser restart, but IndexedDB normally persists.</p>
+<p>The first pairing still has to exchange the fingerprint somehow: a QR code, a pairing code, a config file, or a normal first connection. After that, both sides cache <code>peerId -&gt; fingerprint</code> and omit it from the wire.</p>
+<p>The payload becomes:</p>
+<pre><code class="language-text">ufrag 3 B + pwd 18 B + port 2 B = 23 B
+</code></pre>
+<p>Or 31 characters as base64url.</p>
+<p>That's the floor for standard browser WebRTC: <strong>23 bytes per direction</strong>, under these assumptions:</p>
+<ul>
+<li>Both sides have a persistent certificate and a cached peer fingerprint.</li>
+<li>The LAN IP is known from signaling.</li>
+<li>The SDP template, <code>mid</code>, <code>sctp-port</code>, <code>setup</code>, and the role are shared/defaulted.</li>
+<li>ICE credentials are still generated by the browser, per connection.</li>
+</ul>
+<p>You cannot get to zero with standard browser APIs, because <code>ice-ufrag</code>, <code>ice-pwd</code>, and the UDP port are random for every <code>RTCPeerConnection</code>. Only a custom ICE stack can fix those too.</p>
+<h5>A note on shared certificates</h5>
+<p>You might be tempted to put one certificate/private key on every device in a "trusted LAN". Please don't.</p>
+<ul>
+<li>Anyone who can read the page or the device can impersonate every device.</li>
+<li>One compromised device invalidates the whole identity model.</li>
+<li>You can't distinguish devices or revoke one without breaking all of them.</li>
+<li>A copied browser profile may clone the identity anyway.</li>
+</ul>
+<p>The sane model is <strong>one persistent certificate per device</strong>, with fingerprints provisioned or pinned out-of-band. That still gets you the 23-byte handshake, without a single shared secret.</p>
+<hr />
+<h4>Where does the IP come from?</h4>
+<p>If the wire only carries a port, the receiver needs the peer's IP from somewhere else.</p>
+<p>The browser won't help: it hides local IPs behind mDNS. You need the signaling layer or the OS.</p>
+<p><strong>Best for a LAN: let the signaling server observe the source address.</strong></p>
+<pre><code class="language-js">function normalizeIp(addr) {
+  if (!addr) return null;
+  if (addr.startsWith('::ffff:')) return addr.slice(7);
+  if (addr === '::1') return '127.0.0.1';
+  return addr;
+}
+
+// HTTP: req.socket.remoteAddress
+// ws:   req.socket.remoteAddress
+</code></pre>
+<p>Relay that <code>peerIp</code> alongside the signaling message. The receiver rebuilds:</p>
+<pre><code class="language-text">a=candidate: 1 udp 1 &lt;peerIp&gt; &lt;port&gt; typ host
+</code></pre>
+<p>If the signaling server is in the cloud, it sees the peer's public NAT address, not the LAN IP. For a LAN-local signaling server (or direct peer-to-peer signaling), the source address is exactly what you want.</p>
+<p>Other options:</p>
+<ul>
+<li><strong>Direct LAN signaling</strong>: if one browser connects to the other over TCP/WebSocket, the remote address is the peer's LAN IP.</li>
+<li><strong>Same machine</strong>: use <code>127.0.0.1</code>.</li>
+<li><strong>mDNS</strong>: don't guess; send the <code>.local</code> candidate and let the browser resolve it. Costs ~30–42 characters.</li>
+<li><strong>STUN srflx</strong>: gives the address the STUN server sees; useful across NAT, not for discovering a LAN IP.</li>
+<li><strong>TURN relay</strong>: the relay IP is the TURN server's IP (known), only the relay port is dynamic. The "IP known, port only" trick works there too, and it works across NAT.</li>
+<li><strong>Subnet guessing</strong>: if both peers are on the same /24, send the last octet (1 byte) + port (2 bytes). Same /16: send two octets (2 bytes) + port. Unknown: send the full IPv4 (4 bytes) + port. Scanning 254 addresses is not recommended: slow, noisy, and often blocked.</li>
+<li><strong>Peer-reflexive</strong>: for browser-to-server, the server knows its own IP and learns the client's address from the first STUN binding request. The client can omit its candidate entirely. For browser-to-browser, at least one side must know the other's address to send the first packet.</li>
+</ul>
+<p>This is why "IP from signaling" isn't cheating: the signaling connection already exists, and its source address is free metadata. The WebRTC payload can therefore be 55 bytes (SHA-256, port-only) or 23 bytes (pre-shared certificate). If you want a self-contained payload with the IP included, add 4 bytes for a full IPv4 address (or 1–2 bytes if you only send a subnet suffix).</p>
+<hr />
+<h4>Cross-browser notes</h4>
+<p>Chrome and Safari agreed on more than I expected:</p>
+<ul>
+<li>Both accept the same minimal <code>m=application 9 DTLS/SCTP x</code> template.</li>
+<li>Both accept missing <code>a=mid</code>, <code>a=setup</code>, <code>c=</code>, and <code>a=group:BUNDLE</code> for a single m-line.</li>
+<li>Both accept SHA-1 fingerprints (but don't use SHA-1).</li>
+<li>Both can persist <code>RTCCertificate</code> in IndexedDB.</li>
+<li>Both connect with 241 B SDP (SHA-1) and 279 B (SHA-256) in both directions.</li>
+</ul>
+<p>The differences:</p>
+<ul>
+<li>Safari's host candidate is <code>.local</code>; Chrome's can be raw IP with the test flag.</li>
+<li><code>a=sctp-port</code> requires <code>UDP/DTLS/SCTP webrtc-datachannel</code> in Safari; <code>DTLS/SCTP x</code> + <code>a=sctp-port</code> is a parse error.</li>
+<li>Safari's <code>getStats()</code> exposes <code>base64Certificate</code>, which is how I computed SHA-1 fingerprints.</li>
+</ul>
+<p>If you want to be conservative (Firefox, future browser changes), keep <code>a=mid:0</code>, <code>a=sctp-port:5000</code>, and <code>a=setup:actpass</code>/<code>active</code>, and use <code>UDP/DTLS/SCTP webrtc-datachannel</code>. That's about 348 bytes per direction — still tiny compared to a full SDP.</p>
+<hr />
+<h4>Security reality check</h4>
+<p>The small numbers are fun, but the assumptions matter:</p>
+<ul>
+<li><strong>SHA-1 is not acceptable in production.</strong> It saves 12 bytes of binary / 36 bytes of text and buys you a collision attack. Use SHA-256.</li>
+<li><strong>The fingerprint is the trust anchor.</strong> If signaling is unauthenticated, an attacker can substitute it and MITM the DTLS connection. Use WSS/HTTPS, or sign the payload end-to-end.</li>
+<li><strong>Don't modify the local SDP's <code>ice-ufrag</code>/<code>ice-pwd</code>.</strong> Chrome 137+ rejects it. Generate locally, read the values, rebuild only the remote SDP.</li>
+<li><strong>Pre-shared fingerprints are certificate pinning.</strong> Protect the certificate store, rotate before <code>expires</code>, and authenticate the first pairing.</li>
+<li><strong>mDNS is a privacy feature.</strong> You can't turn it off from a web page. For a compact LAN payload, use the signaling layer's known IP; for the open internet, use STUN/TURN.</li>
+<li><strong>A shared private key is not a shortcut.</strong> Per-device certificates with pinned fingerprints give you the same 23 bytes without a single point of total compromise.</li>
+</ul>
+<hr />
+<h4>The takeaway</h4>
+<p>If you only remember one number: <strong>23 bytes per direction</strong> for a browser-to-browser DataChannel handshake on a LAN, with a persistent certificate and a pinned fingerprint.</p>
+<p>If you need to be practical:</p>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chrome/Safari, LAN, both ends controlled</td>
+<td>raw payload + known IP + port-only: <strong>55 B (SHA-256) / 74 chars</strong></td>
+</tr>
+<tr>
+<td>Same, with persistent certs</td>
+<td><strong>23 B / 31 chars</strong></td>
+</tr>
+<tr>
+<td>Must send SDP text, LAN</td>
+<td>minimal SDP + SHA-256: <strong>279 B</strong></td>
+</tr>
+<tr>
+<td>Cross-browser, conservative</td>
+<td>add <code>mid</code> + <code>sctp-port</code> + <code>setup</code>: <strong>~348 B</strong></td>
+</tr>
+<tr>
+<td>Across NAT</td>
+<td>srflx/relay candidate: at least 6 B candidate + 32 B fingerprint + 21 B ICE credentials</td>
+</tr>
+</tbody>
+</table>
+<p>The 2015 article's 106-character answer is still in the right ballpark. What changed is not the information content; it's the dialect (<code>sctpmap</code> → <code>sctp-port</code>), the privacy defaults (mDNS), the SDP munging rules, and the fact that Safari now plays in the same minimal-SDP sandbox.</p>
+<p>The most surprising part, to me, is that the browser's own certificate store and IndexedDB let you turn a per-connection DTLS identity into a per-device identity. That's what takes the handshake from 55 bytes to 23 bytes — and it's also the part that deserves the most security thought.</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

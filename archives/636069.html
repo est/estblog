@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>自定义修改 MSN 正在播放的音乐 状态文本 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="自定义修改 MSN 正在播放的音乐 状态文本" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/636069" />
+    <meta property="og:url" content="https://blog.est.im/archives/636069">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="自定义修改 MSN 正在播放的音乐 状态文本">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">自定义修改 MSN 正在播放的音乐 状态文本</h2>
+    <p class="post-date">Posted <time datetime="2009-08-18T13:38:36+08:00">2009-08-18</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>先解释一段东西：</p>
+<p><code>Client\0Music\0 _\01\0{1} by {0} from {2}\0Artist\0Title\0Album\0\0\0_</code></p>
+<p>以 <code>\0</code> 分割，有这么几个变量：<br />
+<strong>Client</strong> ，客户端名字。可以自己乱写<br />
+<strong>Music</strong> ，也可以写Office或者Game。图标会不一样。如图：<br />
+<img alt="MSN Status Variables Games/Office/Music" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/01/11.jpg" /><br />
+<strong>1</strong> 表示启用。<strong>0</strong> 表示不启用<br />
+<strong>{1} by {0} from {2</strong>}：格式。{0}表示Artist, {1}表示Title，{2}表示Album<br />
+<strong>Artist</strong> ：自定义歌手名字<br />
+<strong>Title</strong> ：自定义单曲名字<br />
+<strong>Album</strong> ：自定义专辑名字</p>
+<p>当然还有几个\0后面可能跟WMID，WMContentID，和MSNFormat几个值，不过没关系，我们暂时不管</p>
+<p>理解这个神奇的字符串后，我们就可以用各种编程语言（C/C++, VB, AHK, AutoIt, Python）来DIY MSN正在播放音乐的状态信息了。</p>
+<p>最终Python代码就是这样的：</p>
+<p><code>import ctypes
+WM_COPYDATA = 0x4A
+hWnd = ctypes.windll.User32.FindWindowA('MsnMsgrUIManager', None)
+s = u"est_client\\0Games\\01\\0测试一下\\0\\0\\0\\0\\0".encode('utf_16_le')</code></p>
+<p>class MsnData(ctypes.Structure):<br />
+<em>fields</em> = [("dwData", ctypes.c_int),<br />
+("cbData", ctypes.c_int),<br />
+("lpData", ctypes.c_char_p),<br />
+]<br />
+msndata = MsnData(0x547, 256, ctypes.c_char_p(s))<br />
+ctypes.windll.User32.SendMessageA(hWnd, WM_COPYDATA, 0, ctypes.byref(msndata))</p>
+<blockquote>
+<p>est友情提示：千万不要用ctypes里的c_wchar_p！在C这种非高级语言+Python动态类型语言混合编程的时候，在C里面使用Unicode或者WideChar简直就是一团浆糊。全部用byte数组来表示吧。所有Unicode先编码成UTF8/UCS2再处理。加上C语言字符串是以0x00结尾的。真是乱到家了。</p>
+</blockquote>
+<p>Windows内部Unicode编码是UCS2，也就是不带BOM的Little endian UTF-16编码。</p>
+<p>MSN/WML研究完了。接下来弄GTalk。以后再弄Skype、Fetion等等。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

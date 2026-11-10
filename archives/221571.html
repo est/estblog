@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ppt超级压缩工具 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="ppt超级压缩工具" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/221571" />
+    <meta property="og:url" content="https://blog.est.im/archives/221571">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="ppt超级压缩工具">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">ppt超级压缩工具</h2>
+    <p class="post-date">Posted <time datetime="2007-09-05T17:34:54+08:00">2007-09-05</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>最近忙期末复习，才发现老师的课件都是 20MB 一个一个的，暴汗。分析了下，发现很多嵌入式的声音，而这些声音都是wav格式的，所以ppt被撑暴了，很不爽，所以研究了半个小时 Powerpoint.Application 这个VBA COM对象，写了个 SoundButtonRipper.vbs。</p>
+<p>原理很简单，遍历一个ppt的所有形状（Presentation.Shapes），如果是自动绘图对象（AutoShape）并且类型是135（Sound Button），那么删除这个形状，最后另存为 原文件名_ripped.ppt</p>
+<p>Windows Vista Ultimate 32bit, Windows Script Host 5.7, Office 2007 with VBA 测试通过</p>
+<pre><code>'======================================
+'
+'SoundButtonRipper.vbs V1.0
+'
+'Author:  est
+'Modified:  14:36 2007/7/9
+'
+'======================================
+'全局变量
+Dim PptApp, PptPre
+Set PptApp=CreateObject(&quot;powerpoint.application&quot;)
+PptApp.Visible=True '必须为True否则出错
+PptApp.WindowState=1 '最小化以免影响视线
+WScript.Sleep 1000
+Function RipSndBtns(strFilePath)
+Set PptPre=PptApp.Presentations.Open(strFilePath) '必须是完整路径，出错就用 8.3 路径
+'Set PptPre=PptApp.ActivePresentation '测试用
+For Each PptSlide In PptPre.Slides
+  For Each PptShape In PptSlide.Shapes
+    'WScript.Echo PptSlide.SlideIndex &amp; &quot; &quot; &amp; PptShape.Type &amp; &quot; &quot; &amp; PptShape.Id &amp; &quot; &quot; &amp; PptShape.AutoShapeType 测试用
+    If PptShape.Type=1 And PptShape.AutoShapeType=135 Then
+        PptShape.Delete
+    End If
+  Next
+Next
+'分析ppt的路径，另存为 原文件名_ripped.ppt
+strPathPart=Split(strFilePath,&quot;\&quot;)
+strFileName=strPathPart(UBound(strPathPart))
+lenFileName=Len(strFileName)
+Call PptPre.Saveas(Left(strFilePath,Len(strFilepath)-lenFileName) &amp; Left(strfilename,lenFileName-4)&amp;&quot;_ripped.ppt&quot;)
+Call PptPre.Close()
+End Function
+Call RipSndBtns(WScript.Arguments(0))
+PptApp.Quit
+'&quot;E:\script\Powerpoint.Application\1.ppt&quot; '测试用
+
+</code></pre>
+<p>测试了一下，一个20MB的ppt被压缩成 613KB，再WinRAR一下300KB，爽。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

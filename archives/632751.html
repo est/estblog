@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Android里面的GB2312中文字体(TTF) – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Google Android里面的GB2312中文字体(TTF)" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/632751" />
+    <meta property="og:url" content="https://blog.est.im/archives/632751">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Google Android里面的GB2312中文字体(TTF)">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Google Android里面的GB2312中文字体(TTF)</h2>
+    <p class="post-date">Posted <time datetime="2009-03-10T19:11:44+08:00">2009-03-10</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>Google出手机了。大家都晓得</p>
+<p><img alt="Open Handset Alliance" src="http://www.ascendercorp.com/graphics/OHA-500.png" /></p>
+<p>Google 请Ascender Corporation（传说是国际字体公司<a href="http://www.ascendercorp.com/oha.html">巨头</a>）为Android设计了一套字体，叫droid family。里面有GB2312的字体哦</p>
+<blockquote>
+<p><img alt="Google Android Font" src="http://olds.blogcn.com/wp-content/uploads/74/7487/2008/09/111.jpg" /></p>
+<p>12.Nov.2007 1.07pm<br />
+ ELK GROVE VILLAGE, IL – November 12, 2007 – Ascender Corporation, a leading provider of advanced font products and innovative applications for mobile devices, today announced that it designed and engineered a new set of system User Interface (UI) fonts named “Droid” for the Android platform built by the Open Handset Alliance. The Android platform is a complete mobile phone software stack that will be made available under the Apache open source license. The fonts provided by Ascender ensure that users of handsets developed from the Android platform will enjoy highly legible text resulting in easy to use interfaces.</p>
+<p>The Droid family of fonts consists of Droid Sans, Droid Sans Mono and Droid Serif. Each contains extensive character set coverage including Western Europe, Eastern/Central Europe, Baltic, Cyrillic, Greek and Turkish support. The Droid Sans regular font also includes support for Simplified and Traditional Chinese, Japanese and Korean support for the GB2312, Big 5, JIS 0208 and KSC 5601 character sets respectively.</p>
+</blockquote>
+<p>如何得到这个字体呢？<a href="http://dl.google.com/android/android-sdk-windows-1.0_r1.zip">下载91MB的Android SDK</a>后发现，system.img是yaffs2文件系统，我也不会<a href="http://openhandsetalliance.org.cn/viewthread.php?tid=32">解压</a>，传说可以<a href="http://www.google.com/search?hl=en&amp;q=mount+%2Dt+yaffs2">mount -t yaffs2</a>。</p>
+<p>所以我直接下载<a href="http://benno.id.au/android/system.tar.gz">别人dump的system.tar.gz</a>（感谢<a href="http://benno.id.au/blog/2007/11/14/android-filesystems">Beeno</a>）。路径是system.tar.gz\system\fonts。有这么几个文件：<br />
+DroidSans-Bold.ttf<br />
+DroidSans.ttf<br />
+DroidSansFallback.ttf<br />
+DroidSansMono.ttf<br />
+DroidSerif-Bold.ttf<br />
+DroidSerif-BoldItalic.ttf<br />
+DroidSerif-Italic.ttf<br />
+DroidSerif-Regular.ttf</p>
+<p>对比微软雅黑一张图。不专业测评哈。（更新：SimHei 黑体 貌似<a href="http://www.ascenderfonts.com/font/simhei-simplified-chinese.aspx">同样也是Ascender这家公司做的</a>。。。囧）</p>
+<p><img alt="112.jpg" src="http://olds.blogcn.com/wp-content/uploads/74/7487/2008/09/112.jpg" /></p>
+<p>事实上Droid字体<a href="http://damieng.com/blog/2007/11/14/droid-sans-mono-great-coding-font">Droid Sans和Droid Serif用来编程</a>再爽不过啦。哦也</p>
+<p><img alt="Droid fixedwidth fonts for programming" src="http://images.damieng.com/blog/Droid9VibrantInk.png" /></p>
+<p>可以去<a href="http://damieng.com/blog/2007/11/14/droid-sans-mono-great-coding-font">damieng.com</a>（<a href="http://download.damieng.com/fonts/redistributed/DroidSansMono.zip">Droid Sans Mono</a> (47 KB)，<a href="http://download.damieng.com/fonts/redistributed/DroidFamily.zip">Droid Font Family</a>(1.8 MB)）下载。这种行为貌似是违法版权的。请在24小时之内删除并将其遗忘。</p>
+<p>示例：<br />
+Windows XP via WordPad<br />
+<img alt="droid font 1" src="http://images.damieng.com/blog/DroidPreviewWindows.png" /><br />
+Mac OS X 10.5 via TextEdit<br />
+<img alt="droid font 2" src="http://images.damieng.com/blog/DroidPreviewMac.png" /></p>
+<p>国内有高手把这套字体移植到s60了。大家自己<a href="http://www.google.com/search?hl=en&amp;q=android+%E5%AD%97%E4%BD%93">搜索下</a>吧。</p>
+<p>最后在<a href="http://www.ascenderfonts.com/">Ascender公司的网站</a>发现了一个字体图片生成工具。哈哈</p>
+<p><img alt="黑体" src="http://www.ascenderfonts.com/services/imaging.ashx?txt=%E4%B8%AD%E5%9B%BD&amp;em=24&amp;pid=8153" /></p>
+<p>方法是：</p>
+<p>http://www.ascenderfonts.com/services/imaging.ashx?txt=<em>这里是UTF-8编码的文字</em> &amp;em=<em>字号</em> &amp;pid=8153</p>
+<p>pid=8153的意思应该是采用黑体。<br />
+例如：</p>
+<p>http://www.ascenderfonts.com/services/imaging.ashx?txt=%E4%B8%AD%E5%9B%BD&amp;em=24&amp;pid=8153</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

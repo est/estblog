@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>超越color命令——ANSI彩色文字批处理 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="超越color命令——ANSI彩色文字批处理" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/251588" />
+    <meta property="og:url" content="https://blog.est.im/archives/251588">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="超越color命令——ANSI彩色文字批处理">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">超越color命令——ANSI彩色文字批处理</h2>
+    <p class="post-date">Posted <time datetime="2007-02-18T11:28:25+08:00">2007-02-18</time> | <span>archive</span></p>
+  </header>
+
+  
+  <pre><code>
+@echo off
+chcp 437&gt;nul&amp;&amp;graftabl 936&gt;nul
+ren %WinDir%\System32\config.nt config.nt.bak 2&gt;nul
+&lt;&quot;%~f0&quot; more +6 &gt;%WinDir%\System32\config.nt
+command /cecho [1;31mele[32mct[33mroni[35mX[36mtar[m
+pause&gt;nul&amp;exit
+DOSONLY
+dos=high, umb
+device=%SystemRoot%\system32\himem.sys
+DEVICE==%SystemRoot%\System32\ANSI.SYS /x
+files=40
+</code></pre>
+<p>参考帖子：<br />
+1. <a href="http://www.cn-dos.net/forum/viewthread.php?tid=16292">（已结）谁知道控制echo显示字串的颜色</a><br />
+2. <a href="http://www.cn-dos.net/forum/viewthread.php?tid=1272">转贴：ANSI.SYS程序的使用</a><br />
+推荐网站：<br />
+<a href="http://dmoz.org/Arts/Visual_Arts/ASCII_Art/Software/">ASCII Art Software</a><br />
+推荐软件：<br />
+<a href="http://fterm.zj001.net/show_hdr.php?xname=6DHH1U0&amp;dname=FUL09U0&amp;xpos=4"><img alt="" src="http://fterm.zj001.net/ifile.php?xname=6DHH1U0&amp;fname=1016177325.gif&amp;resize=600&amp;thumb=m" />Yet Another Ansi Editor</a> <a href="http://www.cn-dos.net/forum/attachment.php?aid=3497&amp;checkid=b4966&amp;download=1">下载</a><br />
+---------------------传说中的分割线-----------------------<br />
+被Timo Salmi 收录到TSCMD里了，呵呵<br />
+<a href="http://groups.google.com/group/alt.msdos.batch.nt/browse_frm/thread/6199e8abcd0c71db">http://groups.google.com/group/alt.msdos.batch.nt/browse_frm/thread/6199e8abcd0c71db</a><br />
+附：Timo Salmi 写的版本：完美备份了config.nt。</p>
+<pre><code>@echo off&amp;&amp;setlocal enableextensions
+   ::
+   :: The paths
+   set ConfigNT=%WinDir%\System32\config.nt
+   set ConfigNTbak=%WinDir%\System32\config.nt.bak
+   ::
+   :: Check that you have a backup or your original CONGIF.NT
+   if not exist &quot;%ConfigNTbak%&quot; (
+     echo.
+     echo Exiting %~f0
+     echo &quot;%ConfigNTbak%&quot;
+     echo File not found. Needed for restoring config.nt so first run
+     echo copy &quot;%ConfigNT%&quot; &quot;%ConfigNTbak%&quot;
+     goto :EOF
+     )
+   ::
+   :: Use a copy of the backup as a double safety
+   copy &quot;%ConfigNTbak%&quot; &quot;%temp%\CONFIG.NT&quot;&gt;nul
+   ::
+   :: Customize CONFIG.NT to use ANSI.SYS
+   &gt; &quot;%ConfigNT%&quot; echo DOSONLY
+   &gt;&gt;&quot;%ConfigNT%&quot; echo dos=high, umb
+   &gt;&gt;&quot;%ConfigNT%&quot; echo device=%%SystemRoot%%\system32\himem.sys
+   &gt;&gt;&quot;%ConfigNT%&quot; echo files=40
+   &gt;&gt;&quot;%ConfigNT%&quot; echo DEVICE=%WinDir%\System32\ANSI.SYS /x
+   ::
+   :: Choose the MS-DOS color
+   command /cecho [0;40;31;1mANSI.SYS turn on
+   ::
+   :: Restore the original CONFIG.NT
+   copy &quot;%temp%\CONFIG.NT&quot; &quot;%WinDir%\System32\&quot;&gt;nul
+   if exist &quot;%temp%\CONFIG.NT&quot; del &quot;%temp%\CONFIG.NT&quot;&gt;nul
+   endlocal &amp; goto :EOF 
+</code></pre>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

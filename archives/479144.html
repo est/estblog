@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[Python]更新twitter – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[Python]更新twitter" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/479144" />
+    <meta property="og:url" content="https://blog.est.im/archives/479144">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[Python]更新twitter">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[Python]更新twitter</h2>
+    <p class="post-date">Posted <time datetime="2007-10-23T17:23:33+08:00">2007-10-23</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>twitter官方提供了全面的<a href="http://groups.google.com/group/twitter-development-talk/web/api-documentation">API</a>，我们可以通过python来更新twitter的消息。但是官方的文档似乎相当的简单甚至模糊，研究了几分钟，成功。给出个代码。</p>
+<pre><code>#coding:utf-8
+#注意这里必须用UTF-8编码，否则不能发送中文消息。
+import urllib2
+
+user_name=”est” #这里即可以是用户ID也可以是登录Email
+user_password=”….” #密码就不写出来了哈～
+user_status=”测试更新，Update status text”
+req=urllib2.Request(’http://twitter.com/statuses/update.json’)
+req.add_header(’Authorization’, ‘Basic %s’ % (user_name + ‘:’ + user_password).encode(”base64″)[0:-1] )
+#我比较讨厌urllib2里蹩脚的add_password( realm, uri, user, passwd )封装，所以直接写出HTTP Basic Authenticate的代码了
+req.add_data(”status=%s” % user_status)
+#发送twitter更新状态，这里官方API说明用的是json格式，但是实际直接用status=text就行了
+r=urllib2.urlopen(req).read()
+</code></pre>
+<h1>得到返回 r，应该是个人信息的JSON数据</h1>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

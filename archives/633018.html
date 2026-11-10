@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>一行python获得常用汉字声母 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="一行python获得常用汉字声母" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/633018" />
+    <meta property="og:url" content="https://blog.est.im/archives/633018">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="一行python获得常用汉字声母">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">一行python获得常用汉字声母</h2>
+    <p class="post-date">Posted <time datetime="2009-03-31T13:11:13+08:00">2009-03-31</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>无聊写了<code>get_sm()</code>函数。sm表示sheng mu（声母）。。。汗。。。。</p>
+<h3>用法：</h3>
+<p><code>&gt;&gt;&gt; get_sm('汗')
+'h'</code></p>
+<p>目前只支持GB汉字编码中3755个一级常用汉字。不支持多音字。</p>
+<p><code>&gt;&gt;&gt; get_sm('重')
+'z'</code></p>
+<p>同时也不支持数字、符号的读音。例如 get_sm('，') 没法得到 'd'（逗号，<strong>d</strong> ou hao）</p>
+<h3>用途：</h3>
+<p>快速搜索一个contact list</p>
+<h3>源码：</h3>
+<pre><code>get_sm = lambda c:chr( len(filter(lambda x  &lt;reduce(lambda x,y  rd(x)*256+or
+d(y), c), [0xB0A1, 0xB0C5, 0xB2C1, 0xB4EE, 0xB6EA, 0xB7A2, 0xB8C1, 0xB9FE, 0x
+BBF7,  0xBBF7, 0xBFA6, 0xC0AC, 0xC2E8, 0xC4C3, 0xC5B6, 0xC5BE, 0xC6DA, 0xC8BB, 0
+xC8F6, 0xCBFA, 0xCDDA, 0xCDDA, 0xCDDA, 0xCEF4, 0xD1B9, 0xD4D1, 0xD8A1, ]))  + 96 )
+</code></pre>
+<p>恩。没错。我就是要把可读性降到最低。。。。。</p>
+<h3>原理：</h3>
+<p>国标码字符集<strong>GB2312</strong> -80收录了6763个常用汉字，其中<strong>一级汉字3755个</strong> ，二级汉字3008个。另外还收录了各种符号682个，合计7445个。<br />
+第一级汉字是常用汉字，计3755个，置于16～55区，<strong>按汉语拼音字母／笔形顺序排列</strong> ；第二级汉字是次常用汉字，计3008个，置于56～87区，按部首／笔画顺序排列</p>
+<h3>附带发现</h3>
+<p>Python里把一个str类型的汉字转换为数字的函数：<br />
+<code>mbord = lambda c:reduce(lambda x,y ![:o](http://static.blogcn.com/wp-includes/images/smilies/icon_surprised.gif) rd(x)*0xFF+ord(y), c)</code><br />
+mbord的全称是multibyte ordinal<br />
+例如：</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>mbord = lambda c:reduce(lambda x,y <img alt=":o" src="http://static.blogcn.com/wp-includes/images/smilies/icon_surprised.gif" /> rd(x)*256+ord(y), c)<br />
+mbord('我')<br />
+52946<br />
+hex(mbord('我'))<br />
+'0xced2'<br />
+'我'<br />
+'\xce\xd2'<br />
+</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>其实python的str和character两种类型是有bug。这个我已经吼了很多次了。n多人觉得我理解错了。</p>
+<pre><code>ActivePython 2.5.2.2 (ActiveState Software Inc.) based on
+Python 2.5.2 (r252:60911, Mar 27 2008, 17:57:1   [MSC v.1310 32 bit (Intel)] on
+win32
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; '囧'==u'囧'
+__main__:1: UnicodeWarning: Unicode equal comparison failed to convert both argu
+ments to Unicode - interpreting them as being unequal
+False
+</code></pre>
+<p>世界上唯一一门在执行 == 判断的时候要抛出一个 Warning 的语言，也只有Python了吧？</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

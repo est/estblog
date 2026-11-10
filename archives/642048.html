@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chrome, Chomium, dev channel和谷歌浏览器书签同步 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Chrome, Chomium, dev channel和谷歌浏览器书签同步" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/642048" />
+    <meta property="og:url" content="https://blog.est.im/archives/642048">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Chrome, Chomium, dev channel和谷歌浏览器书签同步">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Chrome, Chomium, dev channel和谷歌浏览器书签同步</h2>
+    <p class="post-date">Posted <time datetime="2009-08-18T13:33:26+08:00">2009-08-18</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>听说Chrome 4.0.201.1 r23222支持同步Bookmark了，立即升级了我的Chromium。发现<a href="http://bit.ly/chromium_win32_zip">最新的Chromium</a> 4.0.202.0 (23612) 使用了 --enable-sync 居然点击 Sync my bookmarks没有反映，于是检查了下log发现</p>
+<blockquote>
+<p><code>[2484:3988:20557765:ERROR:syncapi_stub.cc(222)] NOT IMPLEMENTED</code></p>
+</blockquote>
+<p>去官方问了下，<a href="https://groups.google.com/group/chromium-dev/msg/0c131b86477a54ae">官方回答说</a>只有Google Chrome才提供书签同步，原因是书签同步使用了一些Google内部私有代码（syncapi.dll），Chromium是支撑Chrome的背后开源项目，而Chrome才是谷歌的产品：谷歌浏览器。于是只有去屁颠屁癫老老实实下载Chrome Dev channel：</p>
+<p><a href="http://chromium.googlecode.com/files/chromechannel-2.0.exe">http://chromium.googlecode.com/files/chromechannel-2.0.exe</a></p>
+<p>我一向讨厌bootstrapper，所以抓包出来直接可以迅雷的地址了：</p>
+<p><a href="http://cache.pack.google.com/edgedl/chrome/install/201.1/chrome_installer.exe">http://cache.pack.google.com/edgedl/chrome/install/201.1/chrome_installer.exe</a></p>
+<p>用7zip两次解压chrome_installer.exe得到一堆程序，然后覆盖原来的Chromium，就可以用谷歌浏览器4.0.201.1 r23222 了</p>
+<p>如果是谷歌浏览器正式版用户，可以<a href="http://chromium.googlecode.com/files/chromechannel-2.0.exe">直接下载Channel切换工具</a>，切换到Dev版本来使用书签同步功能。</p>
+<p>另外我发现Google Update会自动下载<br />
+<a href="http://dl.google.com/o3d/extras/0.1.1.0/o3dextras.msi">http://dl.google.com/o3d/extras/0.1.1.0/o3dextras.msi</a><br />
+不知道是不是我已经安装了O3D的原因。Google Update要占用内存，还是禁用了好。打开<br />
+"%appdata%\..\Local Settings\Application Data\Google"<br />
+把update文件夹重命名为update1然后新建一个0字节的空<strong>文件</strong> 名字叫update，设置为只读即可。</p>
+<p>用了下Chrome，居然拼写检查功能也回来了。发现拼写检查的词典也是在线下载的：<br />
+http://cache.pack.google.com/edgedl/chrome/dict/en-us-1-2.bdic （跳转到http://dl.google.com/chrome/dict/en-us-1-2.bdic）<br />
+http://cache.pack.google.com/edgedl/chrome/dict/de-de-1-2.bdic<br />
+http://cache.pack.google.com/edgedl/chrome/dict/en-gb-1-1.bdic</p>
+<p>今天算是把<a href="http://blog.chromium.org/2008/10/google-chrome-chromium-and-google.html">Google Chrome和Chromium关系</a>搞清楚了。除了书签、词典两者有区别之外，Chromium的地址栏建议是可以定制为第三方的，而谷歌浏览器默认当然就是Google了；谷歌浏览器会向Google发送使用统计信息，当然你可以在选项里把这个功能关掉，Chromium根本没有这个功能，因为连rlz.dll这个文件都不存在；谷歌浏览器可以使用Google的各种服务，Chromium只能使用Google的各种公益服务，例如网络欺诈查询之类的；谷歌浏览器是通过Google Update安装的，Chromium是自己解压，虽然我也是绕过Google Update自己解压的。</p>
+<p>书签同步很好用，在Google Docs里也可以看到，推荐～～～不知道<a href="http://code.google.com/apis/documents/docs/2.0/developers_guide.html">Google Docs API</a>支持书签操作不。</p>
+<p>话说Google Docs几乎就是GDrive了吧？都有文件夹、快捷方式这些东西了。</p>
+<p><a href="https://groups.google.com/group/chromium-dev/browse_thread/thread/bdacc1bdf3c5cb6a/">谷歌浏览器的书签同步功能是通过XMPP协议实现的</a>，那么也就是说稍微hack一下就可以在谷歌浏览器里实现Gmail邮件提醒和GTalk功能了。哈。反正已经有一个登录的XMPP，需要浏览器来维持session了。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

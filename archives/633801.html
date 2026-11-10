@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>oAuth无痛入门指南 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="oAuth无痛入门指南" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/633801" />
+    <meta property="og:url" content="https://blog.est.im/archives/633801">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="oAuth无痛入门指南">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">oAuth无痛入门指南</h2>
+    <p class="post-date">Posted <time datetime="2008-10-30T15:37:40+08:00">2008-10-30</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>烂文章<a href="http://www.yeeyan.com/articles/view/freewizard/4418">#1（yeeyan上的）</a>, <a href="http://rollingcode.org/blog/f/oauth-core-1.0-final-cn.html">#2（rollingcode.org）</a>。读起来相当<strong>痛苦</strong> 。老子看了半天没明白。一是译得烂，二是技术说明不适合入门。</p>
+<p>决心写个入门指南，理清思路。当然，如果你真的要仔细研究下oAuth，请看<a href="http://oauth.net/core/1.0/">官方文档 http://oauth.net/core/1.0/</a> 。这里的东西最权威。也可以去<a href="https://groups.google.com/group/oauth/topics">oAuth邮件列表</a>讨论。</p>
+<h3>一句话oAuth</h3>
+<p>oAuth涉及到3大块的交互和通信。<strong>1. 用户</strong> ，<strong>2. 拥有用户资料/资源的服务器A</strong> ，<strong>3. 求资源的服务器B</strong> ，。</p>
+<h3>oAuth的典型应用场景（senario）</h3>
+<p>以前，<strong>用户</strong> 在 <strong>拥有资源</strong> 的的网站A有一大堆东西；现在用户发现了一个新的网站B，比较好玩，但是这个新的网站B想调用 拥有资源的网站A的数据。</p>
+<p>例如，</p>
+<pre><code>* 在线打印服务的网站，需要调用我的私人Flickr图片。
+* xiaonei.com之类的SNS在线社交网站需要从我的Hotmail导入联系人
+</code></pre>
+<p>那么有以下几个方法：</p>
+<pre><code>1. 需要转移的数据如果是一段文字的话，用户自己Ctrl+C, Ctrl+V。如果是图片呢？复制就麻烦了。
+2. 用户自己下载再上传。——麻烦
+3. 用户老老实实把自己账户ID和密码交上来，服务器自动去抓取。——这个等于把自己家的钥匙给别人来让别人借书一样。。。
+</code></pre>
+<h3>oAuth的方式</h3>
+<p>用户在 <strong>求资源的网站B</strong> 上，点击一个URL，跳转到 拥有 资源的网站A。<br />
+拥有资源的网站A提示：你需要把资源分享给B网站吗？Yes/No。<br />
+用户点击 <strong>Yes</strong> ，<strong>拥有资源的网站A</strong> 给 <strong>求资源的网站B</strong> 临时/永久 开一个通道，然后 求资源的网站 就可以来 拥有资源的网站 抓取所需的信息了。</p>
+<p>那么具体的说就有3个步骤：</p>
+<pre><code>1. 首先是2个服务器之间的。求资源的网站B向拥有资源的网站A发送一个请求。术语叫[Obtaining an Unauthorized Request Token](http://oauth.net/core/1.0/#auth_step1)。具体的作用，类似写了一个**“资源远程调用申请书”** 给 拥有资源的A网站
+2. 第二步是，用户在**拥有资源的网站A** 通过/允许这个请求。术语叫[Obtaining User Authorization](http://oauth.net/core/1.0/#auth_step2)。类比一下，就是用户给这个申请书**盖章** 通过啦。
+3. 最后一步仍然是服务器之间的通信。回到B网站，求资源的网站B临时/永久拥有了在A网站远程调用资源的权限，术语又叫[Obtaining an Access Token](http://oauth.net/core/1.0/#auth_step3)。就好比得到了一个**“黄金招牌(Access Token)”** 。只要每次带上这个“黄金招牌”，求资源的网站B 就可以大摇大摆去 拥有资源的网站A 抓取任意有权限可以被抓取的资源了。具体的技术细节，就是拥有资源的服务器A返回了类似这样的一个`application/x-www-form-urlencoded`字符串：`oauth_token_secret=ssssssssss&amp;oauth_token=ttttttttttttttt&amp;_other_parameters_ =1331775`，这个时候，oauth_token 就相当于用户的密码，你可以用这个oauth_token做任意权限之内的事情了。oauth_token_secret是私钥。other_parameters是服务器返回的其它可选参数。一般来说，你可以把这个oauth_token的值保存起来，下次接着用。而且一般来说一个用户和一个oauth_token是**一一对应** 的。
+</code></pre>
+<p><img alt="oAuth flow" src="http://oauth.net/core/diagram.png" /></p>
+<h3>传递oAuth参数</h3>
+<p>Technically。当然2个服务器之间传输数据的时候，这里面有一些秘密的oAuth参数以保障整套体系是安全可靠的。这些参数叫Consumer Request Parameters（在<a href="http://oauth.net/core/1.0/#consumer_req_param">oAuth 1.0规范5.2里</a>定义的）。具体的来说，传递oAuth参数有3种方法：</p>
+<pre><code>1. 通过HTTP GET，在URL里面，? 后面的一堆参数。个人不推荐这种方法，因为用一个iframe或者img就可以被XSS了。
+2. HTTP POST方法，参数Content-Type格式为`application/x-www-form-urlencoded`
+3. 通过`Authorization`这个HTTP头。传递的东西有一定的格式要求，叫[OAuth HTTP Authorization Scheme](http://oauth.net/core/1.0/#auth_header)
+</code></pre>
+<p>这套体系有个比较龌龊的特性，对开发人员十分麻烦，但是对保密性做得比较好，叫“签名”。而且这个特性不是可选的，是必须的。</p>
+<h3>签名</h3>
+<blockquote>
+<p>什么是 签名（Signature）<br />
+ 数字签名不是指将你的签名扫描成数字图像，或者用触摸板获取的签名，更不是你的落款。<br />
+ 数字签名在防止篡改，防止重放攻击，保证数据完整性，防止假冒签名，防止签名者抵赖方面更有效。在中国大陆，<a href="http://zh.wikipedia.org/wiki/数字签名">数字签名</a>是具法律效力的。</p>
+</blockquote>
+<p>目的：在保证安全（不泄漏密码，防止<a href="http://en.wikipedia.org/wiki/Man-in-the-middle_attack">中间人攻击</a>）的前提下，尽量简单的设计一套可靠“授权”体系。</p>
+<p><a href="http://oauth.net/core/1.0/#signing_process">oAuth官方定义</a>了3种方式，分别是<a href="http://oauth.net/core/1.0/#anchor16">HMAC-SHA1</a>, <a href="http://oauth.net/core/1.0/#anchor19">RSA-SHA1</a>和<a href="http://oauth.net/core/1.0/#anchor22">PLAINTEXT</a>。当然各个支持oAuth的服务器也可以自定定义一套体系。但是签名的大概过程都差不多。</p>
+<p>需要签名的数据依次是：</p>
+<pre><code>1. HTTP方法是GET, POST还是HEAD？
+2. [规范化表示](http://oauth.net/core/1.0/#rfc.section.9.1.2)的HTTP URL
+3. [编码合并过后的oAuth参数列表](http://oauth.net/core/1.0/#rfc.section.9.1.1)
+</code></pre>
+<p>这3部分需要用 &amp; 符号连接起来，然后交给hmac或者RSA加密。当然我讨厌这么麻烦的方式，所以我用最后一种，也是最简单，各个oAuth服务基本都支持的<strong>“签名”</strong> 方式：<a href="http://oauth.net/core/1.0/#anchor22">PLAINTEXT</a>。</p>
+<p>具体的很简单，每次请求的时候，oAuth参数包括一个<code>oauth_signature</code>就行了。值就是拥有资源服务器提供的secret key</p>
+<h3>再次讨论oAuth参数：术语解释</h3>
+<p><code>oauth_consumer_key</code><br />
+求资源的网站B的一个标识符。可以认为世界上有许许多多类似 网站B 这样的需求。每一个服务都给了一个唯一的标识符。这个东西哪里来的？自己去问 拥有资源的网站A。例如douban就提供了一个<a href="http://www.douban.com/service/apikey/">Douban API Key</a>，这里就填Douban API Key好啦。<br />
+<code>oauth_consumer_secret</code><br />
+上面那个东西的私钥。如果是Douban，就填API Key的私钥。<br />
+<code>oauth_token</code><br />
+oAuth进行到最后一步得到的一个“黄金招牌”。有了这个“黄金招牌”，<strong>求资源的网站B</strong> 就可以大摇大摆去 <strong>拥有资源的网站A</strong> 抓取任意有权限可以被抓取的资源了。<br />
+<code>oauth_token_secret</code><br />
+上面那个东西的私钥<br />
+<code>oauth_signature_method</code><br />
+签名方法。三选一：SHA1, RSA-SHA1或者PLAINTEXT。哦。不对。不是三选一，oAuth服务商可以自定义的。<br />
+<code>oauth_signature</code><br />
+签名值。这个得靠你自己把数据揉到一个加密函数里算出来。具体如何算<a href="http://oauth.net/core/1.0/#signing_process">看这里</a><br />
+<code>oauth_timestamp</code><br />
+时间戳。timestamp。不懂的自己google。<br />
+<code>oauth_nonce</code><br />
+这个就是一个临时值，只要保证每次请求，这个值都不一样就行了。一般随机生成一截数字。</p>
+<h3>实践</h3>
+<p>说了这么一大堆东西，还是应该弄<a href="http://oauth.net/code">一个library</a>来完成这一系列工作。哈哈。不要<a href="http://en.wikipedia.org/wiki/Reinventing_the_wheel">重复发明轮子</a>嘛。例如<a href="http://oauth.googlecode.com/svn/code/python/oauth/"><code>oauth-python</code></a>。我个人觉得很可惜的是，如果你有把这个库弄懂，会用那个精力，还不如自己实现一个库算了。汗。</p>
+<h3>oAuth的其他</h3>
+<p>oAuth在安全领域里，是一套相当有Web特征的“<a href="http://en.wikipedia.org/wiki/Authorization">授权(authorization)</a>”体系。</p>
+<p><a href="http://oauth.net/about/">oAuth</a>有个好处，就是认证不一定是基于Web的，假如你写了个桌面程序，或者说widget，或者说javascript webapps，也可以直接采用oAuth。其实est个人在想的话，如果采用各个浏览器的cookiejar文件解析 + Flash的<a href="http://www.adobe.com/support/flash/action_scripts/local_shared_object/">LSO</a>，加上oAuth，基本可以做到一次登录永久授权了。</p>
+<p>oAuth的诞生可以说是豪门云集啊。一出来的目标就是统一各个网络服务商的各自的登录/授权/认证API，例如Digg, Jaiku, Flickr, Ma.gnolia, Plaxo, Pownce, Twitter, Google, Yahoo, and others soon to follow。不服气的可以再去看看<a href="http://oauth.net/core/1.0/#anchor1">oAuth 1.0规范的作者列表</a>，那些email地址都是牛B闪闪的大公司大巨头牛人啊。</p>
+<p>国内的话，Douban采用的是oAuth，虽然用起来有点麻烦，但是支持oAuth应该算一个非常国际化标准化的举措了。</p>
+<h3>问题在哪里？</h3>
+<p>假如有一个网站，既扮演了<strong>求资源的服务器A</strong> 这个角色，又扮演了<strong>用户</strong> 角色。加上X技术Y方法Z漏洞。。。。。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

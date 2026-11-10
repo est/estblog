@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>C#调用Jabber-net登陆Google Talk – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="C#调用Jabber-net登陆Google Talk" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/632341" />
+    <meta property="og:url" content="https://blog.est.im/archives/632341">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="C#调用Jabber-net登陆Google Talk">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">C#调用Jabber-net登陆Google Talk</h2>
+    <p class="post-date">Posted <time datetime="2007-03-11T11:25:00+08:00">2007-03-11</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>最近手痒想整合各种IM实现服务，花时间研究了下<a href="http://www.google.com/talk/">Google Talk</a>，在 <a href="http://jabberstudio.org/">jabberstudio.org</a> 上发现了 jabber-net 的类库，写了个简单的登陆程序。</p>
+<p>在Visual Studio里新建一个WindowsApplication，添加 jabber-net 的引用</p>
+<p><img alt="" src="/Blog/Attachment/738" /></p>
+<p>输入以下代码。有注释就不解释了。</p>
+<pre><code>namespace WindowsApplication1
+{
+public partial class Form1 : Form
+{
+//全局Jabber客户端对象：jc
+jabber.client.JabberClient jc = new jabber.client.JabberClient();
+private void Form1_Load(object sender, EventArgs e)
+{
+jc.OnMessage += new jabber.client.MessageHandler(MyJabber_OnMessage);
+//用户 someone@gmail.com 登陆
+jc.User = &quot;someone&quot;;
+jc.Server = &quot;gmail.com&quot;;
+jc.Password = &quot;password&quot;;
+jc.NetworkHost = &quot;talk.google.com&quot;;
+jc.Port = 5223;
+jc.SSL = true;
+jc.PlaintextAuth = true;
+jc.AutoLogin = true;
+jc.AutoPresence = true;
+jc.AutoReconnect = 1;
+jc.AutoRoster = true;
+jc.Connect();
+}
+//收到消息啦
+void MyJabber_OnMessage(object sender, jabber.protocol.client.Message msg)
+{
+MessageBox.Show(msg.Body,msg.From.User);
+}
+//给一个JabberID发消息
+private void button1_Click(object sender, EventArgs e)
+{
+//这里的用法： Message(目标用户名, 消息内容)
+jc.Message(textBox1.Text,textBox2.Text);
+}
+}
+}
+``` ```
+
+</code></pre>
+<p>[内有附件]</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

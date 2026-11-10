@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[原创] telnet 收发邮件 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[原创] telnet 收发邮件" />
+
+    <link rel="canonical" href="https://blog.est.im/nu/11617" />
+    <meta property="og:url" content="https://blog.est.im/nu/11617">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[原创] telnet 收发邮件">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[原创] telnet 收发邮件</h2>
+    <p class="post-date">Posted <time datetime="2006-11-15T15:48:00+08:00">2006-11-15</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>收邮件 开始 运行 cmd 回车，OK, Let's go!</p>
+<p>telnet XXX.XXX.XXX.XXX 110<br />
+USER est<br />
+PASS 我的密码啦</p>
+<p>可以看到统计了，接下来</p>
+<p>STAT 可以查看统计</p>
+<p>LIST 看所有信件</p>
+<p>RETR 1 收第一封啦。可惜邮件是 Base64 编码的。不过习惯就对了，以后我们应聘的时候可以吹会第三门外语Base64呢，哇咔咔</p>
+<p>TOP 1 10 收最前面的1封的前10行内容</p>
+<p>DELE 1 删除第一封</p>
+<p>QUIT 断开连接，闪人鸟～</p>
+<p>发邮件 开始 运行 cmd 回车，OK, Let's go on!</p>
+<p>telnet XXX.XXX.XXX.XXX 25</p>
+<p>EHLO Multiversal 偶的电脑名字，双方协商呢，看来蛮友好的嘛。服务器返回：<br />
+250-mail.example.net<br />
+250-AUTH CRAM-MD5 PLAIN LOGIN DIGEST-MD5 NTLM<br />
+250-SIZE 10485760<br />
+250-STARTTLS<br />
+250-ENHANCEDSTATUSCODES<br />
+250-8BITMIME<br />
+250-PIPELINING<br />
+250-ETRN<br />
+250-DSN<br />
+250 HELP<br />
+可能列出了一些命令吧，继续，</p>
+<p>AUTH LOGIN 用一般登陆模式。从上面的服务器返回可以看到居然支持 AUTH CRAM-MD5 PLAIN LOGIN DIGEST-MD5 NTLM，爽啊，支持这么多 ^_^</p>
+<p>接下来服务器提问题了，偶不知道怎么回答了，待会儿再研究。午休先。</p>
+<p>回来了，翘课继续写。服务器返回，<br />
+AUTH LOGIN<br />
+334 VXNlcm5hbWU6<br />
+服务器问你用户名呢，不过是 Username: Base64编码后的字符<br />
+ZWxlY3Ryb25peHRhcg==<br />
+偶的用户名 Base64编码后，看来以后如果用 telnet 收邮件，得背用户名的Base64写法啊<br />
+334 UGFzc3dvcmQ6<br />
+回答是你的密码 Base64 加密后的字符串，这里偶就不敢写了。<br />
+235 2.0.0 Authentication successful</p>
+<p>然后开始写邮件啦。注意准备好Base64翻译器：</p>
+<p>MAIL FROM: <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#115;&#116;&#64;&#101;&#120;&#97;&#109;&#112;&#108;&#101;&#46;&#110;&#101;&#116;">&#101;&#115;&#116;&#64;&#101;&#120;&#97;&#109;&#112;&#108;&#101;&#46;&#110;&#101;&#116;</a> 发件人吧<br />
+250 2.1.0 Sender <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#115;&#116;&#64;&#101;&#120;&#97;&#109;&#112;&#108;&#101;&#46;&#110;&#101;&#116;">&#101;&#115;&#116;&#64;&#101;&#120;&#97;&#109;&#112;&#108;&#101;&#46;&#110;&#101;&#116;</a> ok</p>
+<p>RCPT TO: <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#115;&#116;&#64;&#101;&#120;&#97;&#109;&#112;&#108;&#101;&#46;&#99;&#111;&#109;">&#101;&#115;&#116;&#64;&#101;&#120;&#97;&#109;&#112;&#108;&#101;&#46;&#99;&#111;&#109;</a> 收件人吧<br />
+250 2.1.5 Recipient <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#115;&#116;&#64;&#101;&#120;&#97;&#109;&#112;&#108;&#101;&#46;&#99;&#111;&#109;">&#101;&#115;&#116;&#64;&#101;&#120;&#97;&#109;&#112;&#108;&#101;&#46;&#99;&#111;&#109;</a> ok (remote)</p>
+<p>DATA<br />
+然后就是正文了，符合 MIME 规范就可以了。贴一个例子：</p>
+<p>From: est@example.net<br />
+To: est@example.com<br />
+Subject: Hello From telnet<br />
+Mime-Version: 1.0<br />
+Content-Type: text/plain</p>
+<p>Hello!</p>
+<p>.</p>
+<p>最后结束，打一个回车，一个 句号 . 英文半角的，然后再一个回车，写信完毕！</p>
+<p>QUIT 断开连接，闪人。</p>
+<p>btw，今天抓包发现，DreamMail发邮件速度快的原因是采用了异步读取，真是NB啊～</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

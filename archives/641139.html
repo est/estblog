@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>有毛病的Firefox扩展列表，内存泄漏罪魁祸首 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="有毛病的Firefox扩展列表，内存泄漏罪魁祸首" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/641139" />
+    <meta property="og:url" content="https://blog.est.im/archives/641139">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="有毛病的Firefox扩展列表，内存泄漏罪魁祸首">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">有毛病的Firefox扩展列表，内存泄漏罪魁祸首</h2>
+    <p class="post-date">Posted <time datetime="2009-07-07T23:01:02+08:00">2009-07-07</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p><a href="http://www.reddit.com/r/technology/comments/8yy2v/i_am_getting_fed_up_with_the_memory_leaks_in_the/">reddit上</a>看到kb.mozillazine.org列出了<a href="http://kb.mozillazine.org/Problematic_extensions">Problematic extensions</a>，转帖</p>
+<table>
+<thead>
+<tr>
+<th>Extension</th>
+<th>Extension version affected</th>
+<th>Problem</th>
+<th>Workaround</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://toolbar.a9.com/">A9 Toolbar</a></td>
+<td>All</td>
+<td>Causes <a href="http://kb.mozillazine.org/Unresponsive_Script_Warning">Unresponsive Script Warning</a></td>
+<td>Uninstall A9 Toolbar</td>
+</tr>
+<tr>
+<td><a href="https://addons.mozilla.org/firefox/addon/10">Adblock</a></td>
+<td>All</td>
+<td>Having the OBJ_TABS setting enabled may interfere with the <a href="http://kb.mozillazine.org/Java">Java</a>, <a href="http://kb.mozillazine.org/Flash">Flash</a> or <a href="http://kb.mozillazine.org/Windows_Media_Player">Windows Media Player</a>plugins. Content requiring these plugins may not display unless this setting is disabled.</td>
+<td>If updating to Adblock 0.5.3.042 or later does not resolve the issue, keep the Adblock OBJ_TABS setting disabled.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Causes Google Gmail Chat to crash.</td>
+<td>?</td>
+</tr>
+<tr>
+<td><a href="https://addons.mozilla.org/firefox/addon/1865">Adblock Plus</a></td>
+<td>All ?</td>
+<td>Can interfere with <a href="http://kb.mozillazine.org/Flash">Flash</a> content, most often on Mac OS.</td>
+<td>Uncheck "Show Tabs on Flash and Java" in Adblock Plus options.</td>
+</tr>
+<tr>
+<td></td>
+<td>0.7.5.2</td>
+<td><a href="http://kb.mozillazine.org/Windows_error_opening_Internet_shortcut_or_local_HTML_file_-_Firefox">Windows error opening Internet shortcut or local HTML file - Firefox</a></td>
+<td>Update to Adblock Plus version 0.7.5.3 or later</td>
+</tr>
+<tr>
+<td><a href="https://addons.mozilla.org/firefox/12/">All-In-One Gestures</a></td>
+<td>All versions using Firefox 2?</td>
+<td>May cause <a href="http://kb.mozillazine.org/Firefox_crashes">Firefox crashes</a>. Also conflicts reported with spellchecker in Linux Mac OSX versions.</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://addons.mozilla.org/firefox/1027/">All-In-One Sidebar</a></td>
+<td>0.6.4 and prior</td>
+<td>New extensions will not install. Also occurs in version 0.6.4 if updated from an earlier version or if used together with the <a href="https://addons.mozilla.org/extensions/moreinfo.php?id=436">SessionSaver</a> extension.</td>
+<td>Uninstall, then (re)install version 0.6.4. Disable opening the Extensions window in the sidebar (Misc. -&gt; Extensions -&gt; Open in Sidebar).</td>
+</tr>
+<tr>
+<td><a href="https://addons.mozilla.org/firefox/addon/1468">Amazing Media Browser</a></td>
+<td>0.17</td>
+<td>The "Block all embedded objects" preference is set to "Yes" by default, causing embedded media normally handled by plugins to disappear, including Flash content. Also interferes with the <a href="https://addons.mozilla.org/extensions/moreinfo.php?id=1419">IE Tab</a>extension.</td>
+<td>Change the "Block all embedded objects" preference setting to "No".</td>
+</tr>
+<tr>
+<td><a href="https://addons.mozilla.org/firefox/671">Ask.com Toolbar</a>    Also available as: <a href="http://dl.ask.com/toolbar/moz/download.html">Ask Toolbar for Firefox</a>. May also be <a href="http://www.calendarofupdates.com/updates/index.php?act=calendar&amp;cal_id=1&amp;code=showevent&amp;event_id=44514">bundled with other software</a></td>
+<td>All?</td>
+<td>May cause <a href="http://kb.mozillazine.org/Unable_to_search_or_add_new_engines#Searches_being_redirected">redirected searches</a>, failed keyword searches and/or the "File not found" error, Firefox can't find the file at jar:file:///C:/Program Files/Mozilla Firefox/chrome/en-US.jar!/locale/browser-region/region.properties</td>
+<td>Disable or uninstall in Firefox via "Tools -&gt; Add-ons -&gt; Extensions". May need to uninstall via Windows Control Panel (see <a href="http://kb.mozillazine.org/Uninstalling_toolbars">Uninstalling toolbars</a>). May also need to <a href="http://kb.mozillazine.org/Resetting_preferences">reset preferences</a> related to Ask.com (such as <a href="http://kb.mozillazine.org/Keyword.URL">keyword.URL</a>) via<a href="http://kb.mozillazine.org/About:config">about:config</a>.</td>
+</tr>
+<tr>
+<td><a href="http://free.grisoft.com/">AVG Safe Search</a>   Installed with AVG 8 Free Anti-Virus (LinkScanner component).</td>
+<td>8.0</td>
+<td>Blocks use of ENTER key from the location bar.</td>
+<td><a href="http://free.grisoft.com/ww.faq.num-1253">Disable</a> in Firefox "Tools -&gt; Add-ons -&gt; Extensions" or update to AVG 8.5</td>
+</tr>
+<tr>
+<td></td>
+<td>All?</td>
+<td><a href="http://kb.mozillazine.org/Firefox_crashes">Crashes</a>, high <a href="http://kb.mozillazine.org/Firefox_CPU_usage">CPU usage</a>, cache is purged after restarting; <a href="http://kb.mozillazine.org/Firefox_hangs#Hang_at_exit">Firefox remains in the processes list at exit</a> causing <a href="http://kb.mozillazine.org/Profile_in_use">"already running but is not responding"</a> error when restarting Firefox.</td>
+<td>Disable in Firefox "Tools -&gt; Add-ons -&gt; Extensions" or remove the extension by reinstalling AVG 8 without the LinkScanner component (see <a href="http://free.avg.com/faq.num-1338#faq_1338">AVG faq# 1338)</a>.</td>
+</tr>
+<tr>
+<td><a href="https://addons.mozilla.org/firefox/addon/5579">Cooliris (formerly PicLens)</a></td>
+<td>All?</td>
+<td><a href="http://kb.mozillazine.org/Firefox_hangs#Hang_at_exit">Firefox may remain in the processes list at exit</a>, causing a <a href="http://kb.mozillazine.org/Profile_in_use">"Firefox is already running but is not responding"</a> error (or problems with bookmarks, history, and toolbar buttons due to a <a href="http://kb.mozillazine.org/Locked_or_damaged_places.sqlite">locked Places database</a>) when restarting Firefox.</td>
+<td>Disable or uninstall the extension. Note:A conflict with the anti-phishing component of Norton 360 2.0 or Norton Internet Security 2008.5, if installed, can cause the hang at exit and locked Places database. As a workaround, disable Phishing Protection in Norton's settings or remove the Norton toolbar from Firefox as detailed <a href="http://kb.mozillazine.org/Uninstalling_toolbars#Other_solutions">here</a>.</td>
+</tr>
+<tr>
+<td><a href="https://addons.mozilla.org/firefox/addon/201">DownThemAll</a></td>
+<td>1.0</td>
+<td>May cause web browsing to slow to a halt to the point that nothing loads.    Important: DownThemAll 1.0 changes certain "network.http" preferences that will need to be reset, even if you disable or uninstall the extension.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Update to version 1.0.1 and <a href="http://kb.mozillazine.org/Resetting_preferences">reset these preferences</a> via <a href="http://kb.mozillazine.org/About:config">about:config</a>:<br />
+  1. network.http.max-connections<br />
+  2. network.http.max-connections-per-server<br />
+  3. network.http.max-persistent-connections-per-proxy<br />
+  4. network.http.max-persistent-connections-per-server</p>
+<pre><code>|  All (?) since 1.0 |  May cause [Windows error opening Internet shortcut or local HTML file - Firefox](http://kb.mozillazine.org/Windows_error_opening_Internet_shortcut_or_local_HTML_file_-_Firefox) |  If updating DownThemAll to version 1.0.2 or later does not resolve the issue, disable or uninstall the extension.
+</code></pre>
+<p><a href="https://addons.mozilla.org/firefox/addon/3372">external IP</a> |  Prior to 0.9.9.3 |  Causes <a href="http://kb.mozillazine.org/Firefox_crashes">Firefox crashes</a> and authentication popups asking username/password for "Development Area" at <a href="http://www.crazzy.se">http://www.crazzy.se</a> |  Update to version 0.9.9.3 or above<br />
+<a href="https://addons.mozilla.org/firefox/addon/5721">Fast Dial</a> |  2.16 |  Adds "spam" links to the Bookmarks menu, adds the UserLogos search plugin and makes it the default search engine, searches may redirect. |  Update to version 2.18 or above (available from the <a href="http://userlogos.org/extensions/fastdial">Fast Dial Homepage</a>). If necessary, delete unwanted bookmarks and change to your preferred search engine in the Firefox<a href="http://kb.mozillazine.org/Search_Bar">Search Bar</a>.<br />
+  |  2.15 |  Conflicts with the IE Tab extension (broken/blank Location Bar) and the Tab Mix Plus extension (oversized tab bar) , adds "spam" links to the Bookmarks menu, adds the UserLogos search plugin and makes it the default search engine, searches may redirect. May interfere with toolbars from other extensions. |  Update to version 2.18 or above (available from the <a href="http://userlogos.org/extensions/fastdial">Fast Dial Homepage</a>). If necessary, delete unwanted bookmarks, <a href="http://kb.mozillazine.org/Toolbar_customization_-_Firefox">reset toolbar customizations</a> and change to your preferred search engine in the Firefox<a href="http://kb.mozillazine.org/Search_Bar">Search Bar</a>.<br />
+<a href="https://addons.mozilla.org/firefox/addon/1269">Fasterfox</a> |  1.0.x |  <a href="http://kb.mozillazine.org/Firefox_hangs">Hangs or slows down Firefox</a> |  Disable prefetching, select "Optimized" preset instead of "Turbo".<br />
+  |  All |  Changes made by Fasterfox can interfere with Web site access and persist after it is uninstalled. |  Reset options to defaults in Fasterfox before uninstalling it; otherwise, <a href="http://kb.mozillazine.org/Resetting_preferences">reset preferences</a> in Firefox to the defaults (or <a href="http://kb.mozillazine.org/Profile_Manager">create a new profile</a>).<br />
+<a href="http://www.pierceive.com/">Filterset.G Updater</a> |  Prior to 0.3.0.2 |  <a href="http://kb.mozillazine.org/Reducing_memory_usage_-_Firefox#Memory_leaks">Memory leak</a> when used in conjunction with FlashGot |  Update to version 0.3.0.2.<br />
+<a href="https://addons.mozilla.org/firefox/addon/1843">Firebug</a> |  All? |  May cause <a href="http://kb.mozillazine.org/Firefox_CPU_usage">excessive CPU usage</a>; <a href="http://kb.mozillazine.org/Firefox_hangs">Firefox may hang</a>when a pop-up window is accessed. |  Disable Firebug when you don't need to use it<br />
+  |  Prior to 1.3.2 |  <a href="http://kb.mozillazine.org/Firefox_crashes">Firefox crashes</a> on logout from Yahoo! Mail, reported in Firefox 2. Note: Firebug 1.3.2 (and above) requires Firefox 3. |  Disable Firebug when you don't need to use it.<br />
+<a href="https://addons.mozilla.org/firefox/2448/">Firefox Google Bookmarks</a> |  Prior to 0.2.1? |  Interferes with spell checking in Firefox version 2. |  Update to version 0.2.1. If that does not work, uninstall extension.<br />
+<a href="https://addons.mozilla.org/firefox/684/">FireFTP</a> |  All? |  Can cause <a href="http://kb.mozillazine.org/Firefox_CPU_usage">excessive CPU usage</a> with Firefox 2.0.0.1 |  Update Firefox to the latest version<br />
+<a href="https://addons.mozilla.org/firefox/addon/433">FlashBlock</a> |  All |  <a href="https://addons.mozilla.org/extensions/moreinfo.php?id=722">NoScript</a> blocks <a href="http://kb.mozillazine.org/JavaScript">JavaScript</a>, which is required by FlashBlock |  Do not use both FlashBlock and NoScript together (NoScript includes Flash-blocking functionality)<br />
+<a href="https://addons.mozilla.org/firefox/addon/220">FlashGot</a> |  Prior to 0.5.9.995 |  <a href="http://kb.mozillazine.org/Reducing_memory_usage_-_Firefox#Memory_leaks">Memory leak</a> when used in conjunction with Filterset.G Updater |  Update to FlashGot version 0.5.9.995 or later<br />
+<a href="http://forecastfox.mozdev.org/">ForecastFox</a> |  version 0.9.x and all satellite images versions? |  <a href="http://kb.mozillazine.org/Reducing_memory_usage_-_Firefox#Memory_leaks">Memory leak</a> |  Update or uninstall and install<a href="https://addons.mozilla.org/firefox/2024/">Forecastfox l10n</a>. There are unconfirmed reports that there are also memory problems with versions 0.9.3 and 0.9.4.<br />
+  |  Prior to 0.9.5.1 |  Causes <a href="http://kb.mozillazine.org/Firefox_CPU_usage">excessive CPU usage</a> with Firefox 2.0 and Firefox 2.0.0.1 |  Update to Firefox 2.0.0.2 and ForecastFox 0.9.5.1<br />
+<a href="http://www.freedownloadmanager.org/">Free Download Manager</a>  (Firefox extension) |  Prior to 1.3.4 |  The Free Download Manager application (FDM) installs an extension for Firefox integration which can cause <a href="http://kb.mozillazine.org/Firefox_crashes">Firefox crashes</a> when right-clicking a Web page. |  Download and install the latest version (FDM 2.5 build 758 will update the extension to v 1.3.4) . Note: The FDM extension (v 1.0 - 1.3.1) is on the <a href="https://www.mozilla.com/en-US/blocklist/">Add-ons Blocklist</a>; v 1.3.2 is not blocklisted but it also crashes Firefox.<br />
+<a href="http://www.google.com/tools/firefox/browsersync/">Google Browser Sync</a> |  All? |  Causes <a href="http://kb.mozillazine.org/Firefox_CPU_usage">excessive CPU usage</a> in general or with GIF animations |  Uninstall<br />
+  |   ? |  May cause notably increased disk usage (in gigabytes) by creating large log files. May cause periodic <a href="http://kb.mozillazine.org/Firefox_hangs">Firefox freezes</a>. |  Uninstall<br />
+<a href="https://addons.mozilla.org/firefox/addon/6249">Google Toolbar</a> Also available from the<a href="http://toolbar.google.com/firefox/index.html">"official" Google Toolbar home page</a>   Google toolbars are also <a href="http://www.calendarofupdates.com/updates/index.php?act=calendar&amp;cal_id=1&amp;code=showevent&amp;event_id=44514">bundled with other software</a> |   ? |  "Send with GMail" option overrides default mail client. If the Google Toolbar is uninstalled, mail links may stop working in Firefox |  If still installed, UNcheck "Send with GMail" in Google Toolbar Options. If uninstalled, use <a href="http://kb.mozillazine.org/About:config">about:config</a> to reset the preference network.protocol-handler.external.mailto to true(double-click will toggle).<br />
+  |  3.x (beta?) |  <a href="http://kb.mozillazine.org/Windows_error_opening_Internet_shortcut_or_local_HTML_file_-_Firefox">Windows error opening Internet shortcut or local HTML file - Firefox</a> |  Disable or uninstall<br />
+  |  3.1 |  New tab page option creates a thumbnail for each visit greatly increases size of places.sqlite |  Right click the Google logo in the Google toolbar &gt; Options &gt; Uncheck “Enable the Google new tab page”<br />
+<a href="https://addons.mozilla.org/extensions/moreinfo.php?id=748">Greasemonkey</a> |  All |  Greasemonkey scripts do not work on sites blocked by <a href="https://addons.mozilla.org/extensions/moreinfo.php?id=722">NoScript</a> |  Set NoScript to allow JavaScript on sites you wish to use Greasemonkey scripts on.<br />
+<a href="https://addons.mozilla.org/firefox/1379/">Hebrew Calendar</a> |  Prior to 1.0.4.36 |  Causes "ReferenceError: JEvent is not defined" |  Update to a newer version<br />
+<a href="https://addons.mozilla.org/extensions/moreinfo.php?id=1419">IE Tab</a> |  All |  <a href="http://kb.mozillazine.org/Reducing_memory_usage_-_Firefox#Memory_leaks">Memory leak</a> |  Uninstall IE Tab and install <a href="https://addons.mozilla.org/firefox/1429/">IE View Lite</a><br />
+<a href="https://addons.mozilla.org/firefox/3863/">iMacros</a> |  Prior to 0.5.0.4 |  Causes <a href="http://kb.mozillazine.org/Firefox_CPU_usage">excessive CPU usage</a> |  Update to a newer version<br />
+<a href="https://addons.mozilla.org/firefox/1672/">ImgLikeOpera</a> |  0.6.15 |  "Refresh images in tab on tab select" option causes<a href="http://kb.mozillazine.org/Firefox_CPU_usage">excessive CPU usage</a> on tab change and erratic text box behavior (i.e. losing caret after selection in google search text box). |  Turn off "Refresh images in tab on tab select" option.<br />
+<a href="https://addons.mozilla.org/extensions/moreinfo.php?id=425&amp;application=firefox">Linky</a> |  2.6 |  <a href="http://kb.mozillazine.org/Gray_bar_below_status_bar">Gray bar below the status bar</a> with red arrow. |  Uninstall Linky.<br />
+<a href="http://livehttpheaders.mozdev.org/">LiveHTTPHeaders</a> |  All? |  Uploading a file locks the file so it cannot be renamed, moved, or deleted. |  Uninstall LiveHTTPHeaders.<br />
+<a href="http://www.siteadvisor.com/download/ff_learnmore.html">McAfee SiteAdvisor</a> |   ? |  "onLookupFailed 55 1" alerts. |  Disable McAfee SiteAdvisor.<br />
+  |  22 |  Firefox may fail to open after installing or updating the SiteAdvisor extension, which also may be installed as part of a McAfee software suite.<a href="http://support.siteadvisor.com/support-center/index.php?mod_id=2&amp;id=168&amp;kb_rating=yes">This SiteAdvisor support article</a> describes the problem as a conflict between SiteAdvisor and automatic proxy configuration scripts in Firefox. |  Either follow the workaround in the SiteAdvisor support article or <a href="http://kb.mozillazine.org/Kill_application">end the firefox process</a> that remains in memory, start Firefox in <a href="http://kb.mozillazine.org/Safe_Mode">Safe Mode</a> and uninstall via Tools -&gt; Extensions. If SiteAdvisor is a McAfee suite component it can also be removed using the McAfee uninstaller.<br />
+  |  23 |  Causes <a href="http://kb.mozillazine.org/Firefox_crashes">Firefox to crash</a> with an error in Jar50.dll after installing or updating the SiteAdvisor extension or McAfee component. |  Uninstall the SiteAdvisor extension or, if SiteAdvisor is installed as part of a McAfee software suite, remove the SiteAdvisor component using the McAfee uninstaller.<br />
+<a href="https://addons.mozilla.org/firefox/addon/446">Media Player Connectivity</a> |  All? |  Can cause <a href="http://kb.mozillazine.org/Unresponsive_Script_Warning">Unresponsive Script Warning</a> |  Uninstall Media Player Connectivity<br />
+<a href="http://www.megaupload.com/toolbar/">MegaUpload Toolbar</a> |  All? |  Causes the error message, Trying to load a non-local URI. Also changes the <a href="http://kb.mozillazine.org/General_concepts#User_agent">user agent</a> by adding "MEGAUPLOAD 1.0" which causes some websites to tell you to update to a modern browser. |  <a href="http://kb.mozillazine.org/Uninstalling_toolbars">Uninstall the toolbar</a>. To restore the user agent, type <a href="http://kb.mozillazine.org/About:config">about:config</a> in the Location Bar and filter forgeneral.useragent. If thegeneral.useragent.extra.firefoxpreference shows a user set status, right-click it and select Reset.<br />
+<a href="https://addons.mozilla.org/firefox/addon/710">Menu Editor</a> |  1.2.4  (and 1.2.5?) |  Middle mouse button no longer opens new links from web pages |  Update to the latest version; if the issue persists, disable the extension<br />
+<a href="https://addons.mozilla.org/firefox/879/">Mouseless Browsing</a> |  All? |  Can cause <a href="http://kb.mozillazine.org/Firefox_CPU_usage">excessive CPU usage</a> |  Uninstall Mouseless Browsing<br />
+<a href="http://users.blueprintit.co.uk/~dave/web/firefox/nightly">Nightly Tester Tools</a> |  All |  Allows incompatible extensions and themes to run; these incompatible add-ons can cause problems |  Update your extensions and themes to those compatible with your version of Firefox<br />
+<a href="https://addons.mozilla.org/firefox/addon/722">NoScript</a> |  All |  Causes an illegal operation in the Windows Media Player plugin if it is blocking JavaScript on a page with embedded Windows Media |  Do not block websites that have embedded Windows Media if you want to be able to play the media<br />
+  |    |  <a href="https://addons.mozilla.org/firefox/addon/433">FlashBlock</a> requires JavaScript to work to block flash ads |  Do not use both FlashBlock and NoScript together (NoScript includes Flash-blocking functionality)<br />
+  |    |  <a href="https://addons.mozilla.org/firefox/addon/748">Greasemonkey</a> scripts require JavaScript |  Set NoScript to allow JavaScript on sites you wish to use Greasemonkey scripts on.<br />
+  |  All since 1.1.9.5 |  <a href="http://kb.mozillazine.org/Flash">Flash</a> and other plugin content is blocked by default on untrusted sites, even content from trusted sites (e.g. YouTube.com) if embedded on an untrusted site. |  Uncheck the option to forbid Flash or other plugins in NoScript's Options\Plugins pane or temporarily allow the content by clicking on its placeholder.<br />
+  |  All since 1.1.0 |  <a href="http://kb.mozillazine.org/Java">Java</a> is blocked by default on untrusted sites |  Uncheck "Forbid Java" in NoScript's Options\Plugins pane (Options\Advanced\Untrusted in earlier versions). In version 1.1.3 and later you can temporarily allow Java content by clicking on its placeholder.<br />
+  |  Prior to 1.8.1.3 |  Cannot log into eBay or other sites with NoScript "Automatic Secure Cookie Management" enabled. |  Update NoScript to the latest version.<br />
+"Numbered Links" |  All |  FormSpy (aka FireSpy) malware identifies itself as "Numbered Links". The real <a href="http://numberedlinks.mozdev.org/">Numbered Links</a>extension is harmless. See <a href="http://forums.mozillazine.org/viewtopic.php?t=443368">this forum topic</a> for more information. |  Uninstall the extension. Scan your system for viruses, particularly "FormSpy" and "Downloader-AXM".<br />
+<a href="https://addons.mozilla.org/en-US/firefox/addon/3655">onFocusReload</a> |   ? |  "Alert! Object Event" message. |  Uninstall onFocusReload.<br />
+<a href="https://addons.mozilla.org/firefox/addon/5579">PicLens</a> |    |  See above entry for <a href="http://kb.mozillazine.org/Problematic_extensions#Cooliris">Cooliris (formerly PicLens)</a> |<br />
+<a href="https://addons.mozilla.org/firefox/1803/">ProCon</a> |  Prior to 1.5.2 |  Replaces all words on webpages with asterisks (<strong>*</strong>*) if set to "censure" words. Fixed in version 1.5.2. |  Uninstall ProCon, restart Firefox, reset ProCon preferences in <a href="http://kb.mozillazine.org/About:config">about:config</a>, restart Firefox, reinstall.<br />
+<a href="http://www.real.com">RealPlayer</a>Browser Record Plugin    This extension is installed as an option when<a href="http://kb.mozillazine.org/RealPlayer">RealPlayer</a> is installed. |  1.0 |  May cause various issues including problems with form submission, embedded <a href="http://kb.mozillazine.org/Flash">Flash</a>, or images not loading after a refresh or revisit to the page. |  Try updating <a href="http://kb.mozillazine.org/RealPlayer">RealPlayer</a>, which will update the extension, or disable in Firefox via "Tools -&gt; Add-ons -&gt; Extensions". Note: the Uninstall button is "grayed-out", as this <a href="http://kb.mozillazine.org/Uninstalling_add-ons#Windows_Registry_extension">extension is installed via the Windows Registry</a>. To remove from Firefox, open RealPlayer, go to Tools -&gt; Preferences -&gt; Download &amp; Recording and uncheck "Enable Web Download &amp; Recording".<br />
+  |  ? |  May cause the Firefox 3 "Bookmark this Page" dialog to appear when clicking the Bookmarks menu item. |  Updating to Firefox 3.0.11 or above should resolve the issue. If the problem persists, disable the extension or remove it in RealPlayer preferences (see above)<br />
+<a href="https://addons.mozilla.org/firefox/addon/321">SearchStatus</a> |  All? |  Causes <a href="http://kb.mozillazine.org/Firefox_hangs">Firefox to hang</a> for short periods. |  Uninstall SearchStatus<br />
+<a href="http://www.skype.com">Skype</a> Extension for Firefox    This extension is installed as an<a href="http://support.skype.com/faq/FA804/Can-I-opt-out-of-installing-the-Skype-add-on-for-Internet-Explorer-or-Skype-extension-for-Firefox">option when Skype is installed</a>. |  All? |  Firefox may start with error messages and may run slowly. Google maps or other <a href="http://kb.mozillazine.org/Images_or_animations_do_not_load">images may not load</a>. Direct links to images or PDF files may cause the error, The image cannot be displayed because it contains errors. Web pages may continually refresh or stop loading. <a href="http://kb.mozillazine.org/Firefox_hangs">Firefox may stop responding</a> or<a href="http://kb.mozillazine.org/Firefox_hangs#Hang_at_exit">hang at exit</a>, resulting in an <a href="http://kb.mozillazine.org/Profile_in_use">"already running but is not responding"</a> error (or problems with bookmarks, history, and toolbar buttons due to a<a href="http://kb.mozillazine.org/Locked_or_damaged_places.sqlite">locked Places database</a>) when you next restart Firefox. |  Disable or uninstall the Skype extension in Firefox via "Tools -&gt; Add-ons -&gt; Extensions" (the extension is not needed to use the Skype application).    Note: If Norton 360 2.0 or Norton Internet Security 2008.5 is installed, a conflict with Norton's anti-phishing component can cause the hang at exit and locked Places database. As a workaround, either disable Phishing Protection in Norton or remove the Norton toolbar from Firefox (details <a href="http://kb.mozillazine.org/Uninstalling_toolbars#Other_solutions">here</a>).<br />
+<a href="https://addons.mozilla.org/extensions/moreinfo.php?id=125">SwitchProxy Tool</a> |  All |  Causes new Firefox windows to freeze for a few seconds |  Disable SwitchProxy's auto-update feature<br />
+<a href="http://extensionroom.mozdev.org/more-info/tbe">Tabbrowser Extensions (TBE)</a> |  All |  General slowdown, conflicts with other extensions, can cause Firefox to not work at all |  Uninstall TBE, use <a href="https://addons.mozilla.org/extensions/moreinfo.php?id=625">Tab Mix</a> or <a href="https://addons.mozilla.org/extensions/moreinfo.php?id=1122">Tab Mix Plus</a> instead<br />
+<a href="https://addons.mozilla.org/extensions/moreinfo.php?id=158">Tabbrowser Preferences (TBP)</a> |  All (for Firefox in some languages) |  <a href="http://kb.mozillazine.org/Gray_bar_below_status_bar">Gray bar below the status bar</a> at the bottom of the screen which reads: <button id="catTabbedButton" label="&tabprefs.label;" |  Uninstall TBP
+  |  1.2.8.4 |  Bar at the bottom of the screen which reads: %tabprefsDTD; |  Uninstall TBP and install it <a href="http://216.55.161.203/theonekea/tabprefs/">directly from the author's website</a>
+<a href="http://www-307.ibm.com/pc/support/site.wss/MIGR-64679.html#328091">ThinkVantage Password Manager Extension</a> |  2.0 |  May cause Firefox to freeze for up to a few seconds when a new window is opened. |  Disable or uninstall the ThinkVantage Password Manager extension in Firefox via Tools -> Add-ons -&gt; Extensions. (Note: The Uninstall option may be greyed out, if the <a href="http://kb.mozillazine.org/Uninstalling_add-ons#Windows_Registry_extension">extension was installed via a Windows Registry entry</a>).<br />
+  |  2.0 |  May cause a "Failure in chrome registration" error when starting Firefox.  Note: In Windows Vista, exiting Firefox, right clicking the Firefox icon and selecting "Run as administrator" may resolve the issue; if not, use the workaround. |  Disable or uninstall the extension (from Firefox <a href="http://kb.mozillazine.org/Safe_Mode">Safe Mode</a> if necessary) if you don't need it. Alternately, find the filetvtpwm_moz_xpi.xpi (usually in "C:\Program Files\Lenovo\Client Security Solution") and open it in Firefox to reinstall the extension.<br />
+  |  2.0 |  <a href="http://kb.mozillazine.org/Firefox_crashes">Firefox crashes</a> when opening a pop-up window. Caused by the latest Lenovo Client Security update. |  Disable the extension or reinstall it by opening the file tvtpwm_moz_xpi.xpi in Firefox (see above)<br />
+<a href="https://addons.mozilla.org/en-US/firefox/addon/2275">Torbutton</a> |   ? |  Interferes with cookie deletion. |  Check Torbutton options or uninstall Torbutton. Then recheck Firefox options. It may be necessary to "delete cookies-nontor.xml".<br />
+  |   ? |  Changes privacy and security settings. |  Check Torbutton options or uninstall Torbutton. Then recheck Firefox options. Repair or replace the Firefox profile if necessary.<br />
+  |   ? |  May cause Firefox performance problems. |  Check Torbutton options or uninstall Torbutton. Then recheck Firefox options. Repair or replace the Firefox profile if necessary.<br />
+<a href="https://addons.mozilla.org/firefox/2098/">Update Notifier</a> |   ? |  A prompt for a username and password from<a href="http://mozdev.elliptic.fr/">http://mozdev.elliptic.fr/</a> asking "Oui?" |  Uninstall Update Notifier<br />
+<a href="https://addons.mozilla.org/firefox/59">User Agent Switcher</a> |  <a href="http://chrispederick.com/work/firefox/useragentswitcher/documentation/faq/#faq6">Prior to 0.6.4</a> |  Reinstallation or update causes <a href="http://kb.mozillazine.org/Firefox_hangs">Firefox to hang</a> |  Uninstall previous version in <a href="http://kb.mozillazine.org/Safe_Mode">Safe Mode</a>before installing new version<br />
+<a href="https://addons.mozilla.org/firefox/1153/">VeryDelicious</a> |  All |  Software update screen on opening windows and downloading fiiles. |  Uninstall VeryDelicious<br />
+<a href="https://addons.mozilla.org/firefox/addon/4001">Web Analytics Solution Profiler/Debugger (WASP)</a> |  Prior to 1.0.9 |  On Mac OS, installing this extension sets the~/Library/Caches/TemporaryItems folder to non-writable, causing <a href="http://kb.mozillazine.org/Unable_to_install_themes_or_extensions_-_Firefox#Download_Error_-228">Download Error -228</a> and inability to install add-ons. |  Open the /Library/Caches/ folder for your Mac user account, context click (right-click) on the "TemporaryItems" folder, choose "Get Info" and, under "Sharing and Permissions", change permissions to "Read &amp; Write".<br />
+<a href="https://addons.mozilla.org/firefox/424">Wizz RSS News Reader</a> |  2.0.0 |  Update causes <a href="http://kb.mozillazine.org/Firefox_hangs">Firefox to hang</a> |  Uninstall previous version in <a href="http://kb.mozillazine.org/Safe_Mode">Safe Mode</a>then install the updated version.<br />
+<a href="https://addons.mozilla.org/firefox/addon/4458">Woot Watcher</a> |  1.0.1 (all?) |  Periodic <a href="http://kb.mozillazine.org/Firefox_hangs">Firefox hangs</a>, slowdowns, or <a href="http://kb.mozillazine.org/Firefox_CPU_usage">excessive CPU usage</a>, possibly related to Woot Off events. |  Disable or uninstall the Woot Watcher extension<br />
+<a href="http://www.explabs.com/products/">XPL LinkScanner</a> |  2.6 |  Causes <a href="http://kb.mozillazine.org/Firefox_crashes">Firefox to crash</a> when using Yahoo, Google, or MSN Search. This extension may be installed in Firefox as part of "System Suite 8" by AvanQuest. |  Disable or uninstall "XPL LinkScanner Firefox 2.6" via Tools -&gt; Add-ons -&gt; Extensions.<br />
+<a href="http://toolbar.yahoo.com/">Yahoo! Toolbar</a> |  All? |  Causes <a href="http://kb.mozillazine.org/Firefox_CPU_usage">excessive CPU usage</a> |  Uninstall via "Tools -&gt; Add-ons -&gt; Extensions" or use <a href="http://help.yahoo.com/l/us/yahoo/toolbar/troubleshootff/toolbar-55.html">these instructions</a>.</p>
+<p>里面比较搞笑的是，Fasterfox会Hangs or slows down Firefox。</p>
+<p>当然这份列表包含大多数常见扩展了，如果全部禁用。Firefox会很难用吧？至少没有Firebug的Firefox我是绝对不会用了。</p>
+<p>终于，Mozilla也踏上了当年BHO的不归路了。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

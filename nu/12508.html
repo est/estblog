@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[原]vbs 调用 Win32 API – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[原]vbs 调用 Win32 API" />
+
+    <link rel="canonical" href="https://blog.est.im/nu/12508" />
+    <meta property="og:url" content="https://blog.est.im/nu/12508">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[原]vbs 调用 Win32 API">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[原]vbs 调用 Win32 API</h2>
+    <p class="post-date">Posted <time datetime="2006-12-17T13:57:00+08:00">2006-12-17</time> | <span>archive</span></p>
+  </header>
+
+  
+  <pre><code>Option Explicit
+Dim UserWrap
+Set UserWrap = CreateObject(&quot;DynamicWrapper&quot;)
+
+' Call MessageBoxA(), first register the API function
+UserWrap.Register &quot;USER32.DLL&quot;, &quot;MessageBoxA&quot;, &quot;I=HsSu&quot;, _
+                 &quot;f=s&quot;, &quot;R=l&quot;
+' now call the function
+UserWrap.MessageBoxA Null, &quot;MessageBox (ANSI)&quot;, _
+        &quot;From DynaWrap Object&quot;, 3
+
+ Readme.txt
+</code></pre>
+<p>This is the dynacall.dll that I described as "bringing back the Declare<br />
+statement"  in VBScript. Basically it will allow you to call functions<br />
+in other dlls...like any of the win32 api functions. This will be my<br />
+only distribution.</p>
+<p>Many thanks to Ton Plooy and Jeff Stong who wrote the code and published<br />
+it in WDJ. And more thanks to William Epp for getting it to work with my<br />
+sample script ccupd.vbs using the GETPROFILESTRING function. However I<br />
+have another function in the sample that still doesn't work<br />
+GETPROFILESECTION. This is a work in progress but I think it is a handy<br />
+little feature. Hopefully by this distributions it will get where it<br />
+needs to be. Clarence and Ian have offered to post it on their sites so<br />
+further updates can be had at either WSH site. (anyone else call this<br />
+thing woosh? Hopefully it will perform this way).</p>
+<p>Basically you declare functions and other DLLS like this:</p>
+<p>'   Create the wrapper object for dynamic DLL function calling<br />
+Dim UserWrap<br />
+Set UserWrap = CreateObject("DynamicWrapper")<br />
+'   GetProcAddress for GetPrivateProfileStringA()<br />
+UserWrap.Register "kernel32.DLL", "GetPrivateProfileString", "i=ssssls",<br />
+"f=s", "r=l"</p>
+<p>The input parameters are:</p>
+<p>i=describes the number and data type of the functions parameters</p>
+<p>f=type of call <code>_stdcall</code> or <code>_cdecl</code>. So it can work with both MS C++ and<br />
+Borland C++. Default to <code>_stdcall</code>. If that doesn't work use <code>_cdecl</code>. If<br />
+that doesn't work good luck!</p>
+<p>r=return data type.</p>
+<p>Data types are:</p>
+<pre><code>const ARGTYPEINFO ArgInfo[] =
+{
+{'a', sizeof(IDispatch*),    VT_DISPATCH}, // a   IDispatch*
+{'c', sizeof(unsigned char), VT_I4},       // c   signed char
+{'d', sizeof(double),        VT_R8},       // d   8 byte real
+{'f', sizeof(float),         VT_R4},       // f   4 byte real
+{'k', sizeof(IUnknown*),     VT_UNKNOWN},  // k   IUnknown*
+{'h', sizeof(long),          VT_I4},       // h   HANDLE
+{'l', sizeof(long),          VT_I4},       // l   long
+{'p', sizeof(void*),         VT_PTR},      // p   pointer
+{'s', sizeof(BSTR),          VT_LPSTR},    // s   string
+{'t', sizeof(short),         VT_I2},       // t   short
+{'u', sizeof(UINT),          VT_UINT},     // u   unsigned int
+{'w', sizeof(BSTR),          VT_LPWSTR},   // w   wide string
+}
+</code></pre>
+<p>William Epp added anr 'r' for VT_BYREF (pass by reference)but is for<br />
+strings only. This made the GETPROFILESTRING function to work. But it<br />
+didn't work for the GETPROFILESECTION. If anyone gets it to work please<br />
+let me know.</p>
+<p>Attachments:</p>
+<p>stong.zip - original download from WDJ<br />
+DynaWrap.zip - the modified code, the DLL with modifications.<br />
+feature.htm - the feature article for this code by Jeff Stong. Only<br />
+thing I could find on WDJ. I couldn't find Ton's article.</p>
+<p><a href="http://cwashington.netreach.net/site/downloads.html">http://cwashington.netreach.net/site/downloads.html</a></p>
+<p><a href="http://www.mvps.org/scripting/">http://www.mvps.org/scripting/</a></p>
+<p>[内有附件]</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

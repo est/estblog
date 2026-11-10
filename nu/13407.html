@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>VBS创建eml mht文件 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="VBS创建eml mht文件" />
+
+    <link rel="canonical" href="https://blog.est.im/nu/13407" />
+    <meta property="og:url" content="https://blog.est.im/nu/13407">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="VBS创建eml mht文件">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">VBS创建eml mht文件</h2>
+    <p class="post-date">Posted <time datetime="2007-01-14T19:18:00+08:00">2007-01-14</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p><a href="http://www.goldb.org/goldblog/2007/01/10/VBScriptCreatingAMicrosoftWebArchiveMhtFileProgramatically.aspx">http://www.goldb.org/goldblog/2007/01/10/VBScriptCreatingAMicrosoftWebArchiveMhtFileProgramatically.aspx</a></p>
+<p>Here is a little VBScript for generating a Microsoft Web Archive (*.mht) file.  Web archives are a convenient way to pack a bunch of web files (HTML/CSS/JavaScript) into a single file that is viewable in your browser.  The downside is MHT files are only viewable in MS Internet Explorer (lame).</p>
+<p>Normally you would create an MHT by using the "Save As..." option in IE.  This script allows you to create one programatically.</p>
+<p>Sample Usage:</p>
+<p>for a remote html file:</p>
+<blockquote>
+<p>cscript mht_converter.vbs http://www.example.com/temp/foo.html foo.mht</p>
+</blockquote>
+<p>for a local html file:</p>
+<blockquote>
+<p>cscript mht_converter.vbs file:/temp/foo.html foo.mht</p>
+</blockquote>
+<p>... And now the code:</p>
+<hr />
+<p>'mht_converter.vbs</p>
+<p>Const adSaveCreateNotExist = 1<br />
+Const adSaveCreateOverWrite = 2<br />
+Const adTypeBinary = 1<br />
+Const adTypeText = 2</p>
+<p>Set args = WScript.Arguments</p>
+<p>if args.Count = 0 then<br />
+WScript.Echo "Usage: [CScript | WScript] mht_converter.vbs <html file> <mht filename>"<br />
+WScript.Quit 1<br />
+end if</p>
+<p>Set objMessage = CreateObject("CDO.Message")<br />
+objMessage.CreateMHTMLBody args.Item(0)<br />
+SaveToFile objMessage, args.Item(1)</p>
+<p>Sub SaveToFile(Msg, Fn)<br />
+Dim Strm, Dsk<br />
+Set Strm = CreateObject("ADODB.Stream")<br />
+Strm.Type = adTypeText<br />
+Strm.Charset = "US-ASCII"<br />
+Strm.Open<br />
+Set Dsk = Msg.DataSource<br />
+Dsk.SaveToObject Strm, "_Stream"<br />
+Strm.SaveToFile Fn, adSaveCreateOverWrite<br />
+End Sub</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

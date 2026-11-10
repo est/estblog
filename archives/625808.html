@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[python]解决xmpp.simplexml出现xml.parsers.expat.ExpatError: not well-formed – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[python]解决xmpp.simplexml出现xml.parsers.expat.ExpatError: not well-formed" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/625808" />
+    <meta property="og:url" content="https://blog.est.im/archives/625808">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[python]解决xmpp.simplexml出现xml.parsers.expat.ExpatError: not well-formed">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[python]解决xmpp.simplexml出现xml.parsers.expat.ExpatError: not well-formed</h2>
+    <p class="post-date">Posted <time datetime="2008-03-31T00:00:00+08:00">2008-03-31</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>编码问题一直是非纯Unicode编程语言的痛！</p>
+<p>做一个小东西的时候用到了 xmpppy，有一句代码是：<br />
+<code>oob = xmpp.simplexml.XML2Node( u'&lt;x xmlns="jabber ![:x](http://static.blogcn.com/wp-includes/images/smilies/icon_mad.gif) ![:o](http://static.blogcn.com/wp-includes/images/smilies/icon_surprised.gif) ob"&gt;&lt;url&gt;http://labs.dormforce.net/services/&lt;/url&gt;&lt;desc&gt;测试&lt;/desc&gt;&lt;/x&gt;' )</code></p>
+<p>调试的时候老是出现 'ascii' codec can't encode characters in position 65-66: ordinal not in range(12 <img alt="8)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_cool.gif" /></p>
+<p>调试了很久发现xmpp的库源码没有使用utf-8，打开 <code>_python_lib_path_ /xmpp/simplexml.py</code> ，在开头添加一句<code>#coding:utf-8</code></p>
+<p>问题解决。</p>
+<p>一般来说，彻底搞定Python的编码有3个地方要检查：1. 控制台编码 2. 文件保存编码 3. 文件编码标志</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

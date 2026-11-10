@@ -53,9 +53,8 @@
 
   
   <p>原class：</p>
-
 <pre><code>class Foo:
-    classVariable = &#39;ImAClassVariable&#39;
+    classVariable = 'ImAClassVariable'
     def __init__(self, a, b, c):
         self._a = a
         self._b = b
@@ -73,17 +72,15 @@
         return a + b
 
     def __repr__(self):
-        return &#39;&lt;%s: %r&gt;&#39; % (
+        return '&lt;%s: %r&gt;' % (
             self.__class__.__name__,
             vars(self)
         )
 </code></pre>
-
 <p><code>lambda</code>版本：</p>
-
 <pre><code>Foo = (lambda(new): # level 1, we define our new variable.
-        new.classobj(&#39;Foo&#39;, (), dict( # return a class object.
-            classVariable = &#39;ImAClassVariable&#39;,
+        new.classobj('Foo', (), dict( # return a class object.
+            classVariable = 'ImAClassVariable',
             __init__ = (lambda self, a, b, c:
                 self.__dict__.update(dict(
                     _a = a,
@@ -99,17 +96,15 @@
                 lambda a, b: a + b
             ),
             __repr__ = (lambda self:
-                &#39;&lt;%s: %r&gt;&#39; % (
+                '&lt;%s: %r&gt;' % (
                     self.__class__.__name__,
                     vars(self)
-                )   
+                )
             )
         ))
-    )(__import__(&#39;new&#39;)) # level 1 args
+    )(__import__('new')) # level 1 args
 </code></pre>
-
 <p>虽然很炫，但是<code>new</code>模块不是已经要被废除了么？</p>
-
 <p>from <a href="https://gist.github.com/1023982">gist</a> via <a href="http://www.reddit.com/r/Python/comments/hyxle/python_fun_with_lambdas_or_how_to_never_use/">reddit</a></p>
 </article>
 

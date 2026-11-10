@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Django里send_mail如何兼容GB2312的SMTP防止出现中文乱码 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Django里send_mail如何兼容GB2312的SMTP防止出现中文乱码" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/631468" />
+    <meta property="og:url" content="https://blog.est.im/archives/631468">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Django里send_mail如何兼容GB2312的SMTP防止出现中文乱码">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Django里send_mail如何兼容GB2312的SMTP防止出现中文乱码</h2>
+    <p class="post-date">Posted <time datetime="2011-06-19T14:52:49+08:00">2011-06-19</time> | <span>archive</span></p>
+  </header>
+
+  
+  <pre><code>#urls.py
+from django.conf.urls.defaults import *
+urlpatterns = patterns('',
+    (r'^test/$', 'Zhai.core.views.test'),
+)
+
+#views.py
+from django.http import HttpResponse
+def test(request):
+    from django.core.mail import EmailMessage
+    email = EmailMessage(request.GET['s'], request.GET['c'].encode('gbk'),'sender@example.com', ['address1@another.com'])
+    email.encoding = 'gb2312'
+    return HttpResponse(email.send(fail_silently=False))
+</code></pre>
+<p>django的编码是比较囧的<br />
+标准python shell里：</p>
+<pre><code>ActivePython 2.5.1.1 (ActiveState Software Inc.) based on
+Python 2.5.1 (r251:54863, May  1 2007, 17:47:05) [MSC v.1310 32 bit (Intel)] on
+win32
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; u'我囧'
+u'\u6211\u56e7'
+</code></pre>
+<p>对比下Django的shell：</p>
+<pre><code>Python 2.5.1 (r251:54863, May  1 2007, 17:47:05) [MSC v.1310 32 bit (Intel)] on
+win32
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+(InteractiveConsole)
+&gt;&gt;&gt; u'我囧'
+u'\xce\xd2\x87\xe5'
+&gt;&gt;&gt;
+</code></pre>
+<p>想了一下，Guido规定Python的默认编码是ascii，但是这里的ascii是range(12 <img alt="8)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_cool.gif" /> 的。这是最大的失误。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

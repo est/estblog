@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CAJ Viewer ActiveX Interface – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="CAJ Viewer ActiveX Interface" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/636733" />
+    <meta property="og:url" content="https://blog.est.im/archives/636733">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="CAJ Viewer ActiveX Interface">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">CAJ Viewer ActiveX Interface</h2>
+    <p class="post-date">Posted <time datetime="2009-01-29T00:00:00+08:00">2009-01-29</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>CAJAXLib; // CAJAX ActiveX Control module</p>
+<p>Enum SC_TOOL;<br />
+HAND = 0;<br />
+TEXT = 1;<br />
+IMAGE = 2;<br />
+_OCR = 3;<br />
+OBJECT = 4;<br />
+SLINE = 5;<br />
+CURVE = 6;<br />
+_NOTE = 7;<br />
+RECTANGLE = 8;<br />
+ELLIPSE = 9;</p>
+<p>Enum XOB_TYPE;<br />
+XOB_UNKNOWN = -1;<br />
+XOB_BOOKMARK = 0;<br />
+XOB_HIGHLIGHT = 1;<br />
+XOB_CROSSOUT = 2;<br />
+XOB_UNDERLINE = 3;<br />
+XOB_LINE = 4;<br />
+XOB_NOTE = 5;<br />
+XOB_META_KNOWLEDGE = 6;<br />
+XOB_CURVE = 7;<br />
+XOB_LINK = 8;<br />
+XOB_RECTANGLE = 9;<br />
+XOB_ELLIPSE = 10;<br />
+XOB_SELECT = 11;</p>
+<p>Enum PAGE_MODE_;<br />
+_SINGLE = 0;<br />
+_CONTINUOUS = 1;<br />
+_FACING = 2;<br />
+_CONTINUOUS_FACING = 3;</p>
+<p>Enum SCALE_MODE_;<br />
+_NUMBER = 0;<br />
+_REALSIZE = 1;<br />
+_FITWIDTH = 2;<br />
+_FITPAGE = 3;</p>
+<p>Enum NOTEITEM_CE_;<br />
+_ADD = 0;<br />
+_DEL = 1;<br />
+_MODI = 2;</p>
+<p>Dispatch _DCAJAX; // Dispatch interface for CAJAX Control<br />
+GUID={A4AE5C7B-CB98-4B19-81E9-2FA172A72F5A};<br />
+CursorType: I4;<br />
+ShowScrollBar: I4;<br />
+ZoomRatio: R4;<br />
+FileName: BSTR;<br />
+ShowToolBar: bool;<br />
+ShowLeftBar: bool;<br />
+ShowBottomBar: bool;<br />
+function AboutBox;<br />
+function Open(lpszFileName:BSTR): bool;<br />
+function Close;<br />
+function GetPageCount: I4;<br />
+function GetPageSize(index:I4; cx:^variant; cy:^variant);<br />
+function TurnToPage(index:I4; type:I4);<br />
+function Zoom(type:I4; num:R4);<br />
+function SetPageBrowseType(type:I4);<br />
+function GetCurPage: I4;<br />
+function GetHotItems: IUnknown;<br />
+function GetCatalog: IUnknown;<br />
+function XObjectFromPoint(x:I4; y:I4; type:^variant): IUnknown;<br />
+function GetViewPage(first:^variant; last:^variant);<br />
+function GetViewHwnd: OLE_HANDLE;<br />
+function SetViewMessageHook(hookproc:OLE_HANDLE);<br />
+function Rotate(index:I4; angle:I4);<br />
+function GetScrollInfo(cx:^variant; cy:^variant; xPage:^variant; yPage:^variant);<br />
+function SetScrollPos(bar:I4; pos:I4);<br />
+function GetScrollPos(bar:I4): I4;<br />
+function GetPageRect(index:I4; left:^variant; right:^variant; top:^variant; bottom:^variant);<br />
+function AddNote(type:I4; ppUnkown:^IUnknown): bool;<br />
+function Copy: bool;<br />
+function Ocr: BSTR;<br />
+function GetSelected(ppUnkown:^IUnknown): I4;<br />
+function DeleteNote(pval:^IUnknown; lCount:I4);<br />
+function GetNoteItems: IUnknown;<br />
+function Save: bool;<br />
+function Search(keyword:BSTR; page:I4): IUnknown;<br />
+function GotoSearchResult(index:I4);<br />
+function GotoNote(pval:IUnknown);<br />
+function GetSysMetrics(paramname:BSTR; value:^variant): bool;<br />
+function SetSysMetrics(paramname:BSTR; value:^variant): bool;<br />
+function RefreshDisplay;<br />
+function SendSelectionToWord: bool;<br />
+function GetNoteSets: IUnknown;<br />
+function SwitchNoteSet(pval:IUnknown);<br />
+function ExportNoteSet(pNoteSet:IUnknown; bstrPages:BSTR; bstrAuthor:BSTR; lType:I4): BSTR;<br />
+function UpdateNoteSet(pNoteSet:IUnknown): bool;<br />
+function GetDictClass: IUnknown;<br />
+function SwitchDict(id:I4): bool;<br />
+function DeleteNoteSet(pval:IUnknown; Force:bool): bool;<br />
+function ImportNoteSet(bstrSrc:BSTR; IsFileName:bool; pNotSet:IUnknown; AsNoteSet:bool; ForceImport:bool): bool;<br />
+function ExportNoteItem(pUnk:IUnknown): BSTR;<br />
+function ImportNoteItem(bstrXML:BSTR): IUnknown;<br />
+function DeleteNoteItem(bstrID:BSTR; nPage:I4): bool;<br />
+function GetDOI: BSTR;<br />
+function GetPageBrowseType: I4;<br />
+function SetPreURL(lpszPreURL:BSTR);<br />
+function SetURLEvent(bURLEvent:bool);<br />
+function SetModified(bModified:bool);<br />
+function SetReadOnly(bReadOnly:bool);<br />
+function AddNoteEx(type:I4): IUnknown;<br />
+function GetSelectedType: I4;<br />
+function GetSelectedEx: IUnknown;<br />
+function GetNoteFileName: BSTR;<br />
+function NoteSetCanEdit: bool;</p>
+<p>Dispatch _DCAJAXEvents; // Event interface for CAJAX Control<br />
+GUID={D5486D14-87AC-4733-A092-791779920655};<br />
+function MouseMove(Button:I2; Shift:I2; x:OLE_XPOS_PIXELS; y:OLE_YPOS_PIXELS; hwnd:OLE_HANDLE);<br />
+function MouseDown(Button:I2; Shift:I2; x:OLE_XPOS_PIXELS; y:OLE_YPOS_PIXELS; hwnd:OLE_HANDLE);<br />
+function MouseUp(Button:I2; Shift:I2; x:OLE_XPOS_PIXELS; y:OLE_YPOS_PIXELS; hwnd:OLE_HANDLE);<br />
+function MouseWheel(Button:I2; Shift:I2; x:OLE_XPOS_PIXELS; y:OLE_YPOS_PIXELS; delta:I2; hwnd:OLE_HANDLE);<br />
+function NoteItemChanged(rs:I2; pUnk:IUnknown);<br />
+function SelectChanged(type:I2; pUnk:IUnknown);<br />
+function ZoomTypeChanged(type:I2);<br />
+function PageChanged(index:I4);<br />
+function DragInFile(lpszFileName:BSTR);</p>
+<p>Class CAJAX; // CAJAX Control<br />
+GUID={78E87ACB-656E-4257-961D-3FADBE77A626};<br />
+CursorType: I4;<br />
+ShowScrollBar: I4;<br />
+ZoomRatio: R4;<br />
+FileName: BSTR;<br />
+ShowToolBar: bool;<br />
+ShowLeftBar: bool;<br />
+ShowBottomBar: bool;<br />
+function AboutBox;<br />
+function Open(lpszFileName:BSTR): bool;<br />
+function Close;<br />
+function GetPageCount: I4;<br />
+function GetPageSize(index:I4; cx:^variant; cy:^variant);<br />
+function TurnToPage(index:I4; type:I4);<br />
+function Zoom(type:I4; num:R4);<br />
+function SetPageBrowseType(type:I4);<br />
+function GetCurPage: I4;<br />
+function GetHotItems: IUnknown;<br />
+function GetCatalog: IUnknown;<br />
+function XObjectFromPoint(x:I4; y:I4; type:^variant): IUnknown;<br />
+function GetViewPage(first:^variant; last:^variant);<br />
+function GetViewHwnd: OLE_HANDLE;<br />
+function SetViewMessageHook(hookproc:OLE_HANDLE);<br />
+function Rotate(index:I4; angle:I4);<br />
+function GetScrollInfo(cx:^variant; cy:^variant; xPage:^variant; yPage:^variant);<br />
+function SetScrollPos(bar:I4; pos:I4);<br />
+function GetScrollPos(bar:I4): I4;<br />
+function GetPageRect(index:I4; left:^variant; right:^variant; top:^variant; bottom:^variant);<br />
+function AddNote(type:I4; ppUnkown:^IUnknown): bool;<br />
+function Copy: bool;<br />
+function Ocr: BSTR;<br />
+function GetSelected(ppUnkown:^IUnknown): I4;<br />
+function DeleteNote(pval:^IUnknown; lCount:I4);<br />
+function GetNoteItems: IUnknown;<br />
+function Save: bool;<br />
+function Search(keyword:BSTR; page:I4): IUnknown;<br />
+function GotoSearchResult(index:I4);<br />
+function GotoNote(pval:IUnknown);<br />
+function GetSysMetrics(paramname:BSTR; value:^variant): bool;<br />
+function SetSysMetrics(paramname:BSTR; value:^variant): bool;<br />
+function RefreshDisplay;<br />
+function SendSelectionToWord: bool;<br />
+function GetNoteSets: IUnknown;<br />
+function SwitchNoteSet(pval:IUnknown);<br />
+function ExportNoteSet(pNoteSet:IUnknown; bstrPages:BSTR; bstrAuthor:BSTR; lType:I4): BSTR;<br />
+function UpdateNoteSet(pNoteSet:IUnknown): bool;<br />
+function GetDictClass: IUnknown;<br />
+function SwitchDict(id:I4): bool;<br />
+function DeleteNoteSet(pval:IUnknown; Force:bool): bool;<br />
+function ImportNoteSet(bstrSrc:BSTR; IsFileName:bool; pNotSet:IUnknown; AsNoteSet:bool; ForceImport:bool): bool;<br />
+function ExportNoteItem(pUnk:IUnknown): BSTR;<br />
+function ImportNoteItem(bstrXML:BSTR): IUnknown;<br />
+function DeleteNoteItem(bstrID:BSTR; nPage:I4): bool;<br />
+function GetDOI: BSTR;<br />
+function GetPageBrowseType: I4;<br />
+function SetPreURL(lpszPreURL:BSTR);<br />
+function SetURLEvent(bURLEvent:bool);<br />
+function SetModified(bModified:bool);<br />
+function SetReadOnly(bReadOnly:bool);<br />
+function AddNoteEx(type:I4): IUnknown;<br />
+function GetSelectedType: I4;<br />
+function GetSelectedEx: IUnknown;<br />
+function GetNoteFileName: BSTR;<br />
+function NoteSetCanEdit: bool;<br />
+function MouseMove(Button:I2; Shift:I2; x:OLE_XPOS_PIXELS; y:OLE_YPOS_PIXELS; hwnd:OLE_HANDLE);<br />
+function MouseDown(Button:I2; Shift:I2; x:OLE_XPOS_PIXELS; y:OLE_YPOS_PIXELS; hwnd:OLE_HANDLE);<br />
+function MouseUp(Button:I2; Shift:I2; x:OLE_XPOS_PIXELS; y:OLE_YPOS_PIXELS; hwnd:OLE_HANDLE);<br />
+function MouseWheel(Button:I2; Shift:I2; x:OLE_XPOS_PIXELS; y:OLE_YPOS_PIXELS; delta:I2; hwnd:OLE_HANDLE);<br />
+function NoteItemChanged(rs:I2; pUnk:IUnknown);<br />
+function SelectChanged(type:I2; pUnk:IUnknown);<br />
+function ZoomTypeChanged(type:I2);<br />
+function PageChanged(index:I4);<br />
+function DragInFile(lpszFileName:BSTR);</p>
+<p>Class NoteItem; // NoteItem Class<br />
+GUID={28C8D621-80D0-4830-8107-DD2000B8AC61};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;</p>
+<p>Dispatch INoteItem; // INoteItem Interface<br />
+GUID={4DD175C4-81BB-49CC-B669-41854C43FE68};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;</p>
+<p>Class SRItems; // SRItems Class<br />
+GUID={59F2157D-5F37-4260-823F-6D180B8EF1EC};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get Count: I4;<br />
+property-get NearText(index:I4): BSTR;<br />
+property-get page(index:I4): I4;<br />
+property-get RectCount(index:I4): I4;<br />
+property-get Rect(RectIndex:I8): I8;</p>
+<p>Dispatch ISRItems; // ISRItems Interface<br />
+GUID={E705C69B-AFC3-48F5-BABD-BCB836C24A04};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get Count: I4;<br />
+property-get NearText(index:I4): BSTR;<br />
+property-get page(index:I4): I4;<br />
+property-get RectCount(index:I4): I4;<br />
+property-get Rect(RectIndex:I8): I8;</p>
+<p>Class Catalog; // Catalog Class<br />
+GUID={60A55D04-E3F7-4D4E-B4EE-255B3F684C08};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get Count: I4;<br />
+property-get Item(index:I4): IDispatch;</p>
+<p>Dispatch ICatalog; // ICatalog Interface<br />
+GUID={397AB28C-5618-4BAD-A6E5-87ACB2A4ACC0};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get Count: I4;<br />
+property-get Item(index:I4): IDispatch;</p>
+<p>Class CatalogItem; // CatalogItem Class<br />
+GUID={A1496B9E-D3BE-491A-ACE6-8EF2FBC08793};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Grade: I4;<br />
+property-get Title: BSTR;</p>
+<p>Dispatch ICatalogItem; // ICatalogItem Interface<br />
+GUID={3C0F32FE-723D-4007-8BFB-25F7D339A029};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Grade: I4;<br />
+property-get Title: BSTR;</p>
+<p>Class HotItem; // HotItem Class<br />
+GUID={BE504AB3-1CCF-41F3-BDB7-14A442DB6417};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;<br />
+property-get Title: BSTR;<br />
+property-get RectCount: I4;<br />
+property-get RectLeft(index:I4): I4;<br />
+property-get RectRight(index:I4): I4;<br />
+property-get RectTop(index:I4): I4;<br />
+property-get RectBottom(index:I4): I4;<br />
+property-get AimCount: I4;<br />
+property-get AimType(index:I4): BSTR;<br />
+property-get AimFileType(index:I4): BSTR;<br />
+property-get AimID(index:I4): I4;<br />
+property-get AimTitle(index:I4): BSTR;<br />
+property-get AimText(index:I4): BSTR;<br />
+property-get Aim(index:I4): BSTR;<br />
+function AddAim(type:BSTR; fileType:BSTR; id:I4; Title:BSTR; TEXT:BSTR; Aim:BSTR);</p>
+<p>Dispatch IHotItem; // IHotItem Interface<br />
+GUID={8EC601FF-00FB-43F9-B1C7-64D63DEAAF43};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;<br />
+property-get Title: BSTR;<br />
+property-get RectCount: I4;<br />
+property-get RectLeft(index:I4): I4;<br />
+property-get RectRight(index:I4): I4;<br />
+property-get RectTop(index:I4): I4;<br />
+property-get RectBottom(index:I4): I4;<br />
+property-get AimCount: I4;<br />
+property-get AimType(index:I4): BSTR;<br />
+property-get AimFileType(index:I4): BSTR;<br />
+property-get AimID(index:I4): I4;<br />
+property-get AimTitle(index:I4): BSTR;<br />
+property-get AimText(index:I4): BSTR;<br />
+property-get Aim(index:I4): BSTR;<br />
+function AddAim(type:BSTR; fileType:BSTR; id:I4; Title:BSTR; TEXT:BSTR; Aim:BSTR);</p>
+<p>Class NoteSet; // NoteSet Class<br />
+GUID={05ABD45D-692E-4D76-9175-8FC0C374E85D};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get Count: I4;<br />
+property-get Item(index:I4): IUnknown;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+function SetUnlock(password:BSTR);<br />
+function SetLock;<br />
+property-get Copyright: BSTR;<br />
+property-put Copyright(BSTR);<br />
+property-get ReadOnly: bool;<br />
+property-put ReadOnly(bool);<br />
+function SetPassword(OldPassword:BSTR; NewPassword:BSTR);<br />
+property-get Guid: BSTR;<br />
+property-put Guid(BSTR);<br />
+property-get Default: bool;<br />
+property-put Default(bool);</p>
+<p>Dispatch INoteSet; // INoteSet Interface<br />
+GUID={4D9ED452-F7AE-4762-A915-0CAC1C2E3E2A};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get Count: I4;<br />
+property-get Item(index:I4): IUnknown;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+function SetUnlock(password:BSTR);<br />
+function SetLock;<br />
+property-get Copyright: BSTR;<br />
+property-put Copyright(BSTR);<br />
+property-get ReadOnly: bool;<br />
+property-put ReadOnly(bool);<br />
+function SetPassword(OldPassword:BSTR; NewPassword:BSTR);<br />
+property-get Guid: BSTR;<br />
+property-put Guid(BSTR);<br />
+property-get Default: bool;<br />
+property-put Default(bool);</p>
+<p>Class XLine; // XLine Class<br />
+GUID={DA798947-5A1E-4F1A-AF67-C13B8A4FCE15};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;<br />
+property-get x: R4;<br />
+property-get y: R4;</p>
+<p>Dispatch IXLine; // IXLine Interface<br />
+GUID={8F82F159-81D7-4B88-8E37-2047D41E02DC};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;<br />
+property-get x: R4;<br />
+property-get y: R4;</p>
+<p>Class XBookmark; // XBookmark Class<br />
+GUID={FAB3E7C3-9974-426F-94A5-0CE174C58435};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;</p>
+<p>Dispatch IXBookmark; // IXBookmark Interface<br />
+GUID={DB0CDA9A-B166-4AD5-9E39-C907FD79FB8C};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;</p>
+<p>Class XHighlight; // XHighlight Class<br />
+GUID={3C9EB91B-2059-4822-82E9-63A53AF5D1CD};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;</p>
+<p>Dispatch IXHighlight; // IXHighlight Interface<br />
+GUID={B517D499-649F-4730-BF07-1362F7EEE2D1};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;</p>
+<p>Class XCrossout; // XCrossout Class<br />
+GUID={6DCD5498-E09B-42AD-A6E7-936951DD7E74};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;</p>
+<p>Dispatch IXCrossout; // IXCrossout Interface<br />
+GUID={AA8A47FA-F93F-4E23-846E-220B99A6E8BE};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;</p>
+<p>Class XUnderline; // XUnderline Class<br />
+GUID={38879E25-4155-4C21-AD06-C10E9A6E2140};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;</p>
+<p>Dispatch IXUnderline; // IXUnderline Interface<br />
+GUID={CB1DE461-502A-4E3E-BC0C-07E777A430D6};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;</p>
+<p>Class XNote; // XNote Class<br />
+GUID={066F40E4-29C2-4723-9445-94C39AD9ADBA};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;</p>
+<p>Dispatch IXNote; // IXNote Interface<br />
+GUID={AC802FAD-1A59-4528-8648-29AFD905BA44};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;</p>
+<p>Class XCurve; // XCurve Class<br />
+GUID={C45C8937-D8DE-46E7-BFCE-3C046CE85201};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;<br />
+property-get Count: I4;<br />
+property-get x(index:I4): R4;<br />
+property-get y(index:I4): R4;</p>
+<p>Dispatch IXCurve; // IXCurve Interface<br />
+GUID={335F5ACA-22C5-4523-AB89-60DCF5C0B503};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;<br />
+property-get Count: I4;<br />
+property-get x(index:I4): R4;<br />
+property-get y(index:I4): R4;</p>
+<p>Class XMetaKnowledge; // XMetaKnowledge Class<br />
+GUID={4595760B-5C55-41EA-93C1-B9EF479E9408};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;</p>
+<p>Dispatch IXMetaKnowledge; // IXMetaKnowledge Interface<br />
+GUID={CC096E7F-37E9-45E4-975E-9179FCCE1D10};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;</p>
+<p>Class XRectangle; // XRectangle Class<br />
+GUID={4238CCBB-2134-4C37-ACB4-41E9FD1DB6D9};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;</p>
+<p>Dispatch IXRectangle; // IXRectangle Interface<br />
+GUID={02E61AF7-7776-4D4F-B80F-F3BCE4DC7690};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;</p>
+<p>Class XEllipse; // XEllipse Class<br />
+GUID={CC5B7DE9-94A8-4052-885A-31D0CD4486E8};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;</p>
+<p>Dispatch IXEllipse; // IXEllipse Interface<br />
+GUID={2D4B044E-E744-4E44-AAA5-7D427151C5A5};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get page: I4;<br />
+property-get Color: I4;<br />
+property-put Color(I4);<br />
+property-get type: I4;<br />
+property-get DescText: BSTR;<br />
+property-put DescText(BSTR);<br />
+property-get Time: BSTR;<br />
+property-get Author: BSTR;<br />
+property-put Author(BSTR);<br />
+property-get id: BSTR;</p>
+<p>Class NoteSets; // NoteSets Class<br />
+GUID={551A8240-CB99-4D3F-A6C7-D2657436D0FE};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get Count: I4;<br />
+property-get Item(index:I4): IUnknown;</p>
+<p>Dispatch INoteSets; // INoteSets Interface<br />
+GUID={CA2DC156-DB2A-42F4-8B5C-C4495BEFEB94};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get Count: I4;<br />
+property-get Item(index:I4): IUnknown;</p>
+<p>Class TextObject; // TextObject Class<br />
+GUID={D053049B-D89A-41D1-8767-39AC5495324B};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+function GetText: BSTR;</p>
+<p>Dispatch ITextObject; // ITextObject Interface<br />
+GUID={A6A064F3-8C94-4EE7-90EA-5C4FEC2E7274};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+function GetText: BSTR;</p>
+<p>Class ImageObject; // ImageObject Class<br />
+GUID={F98CD16B-FEDA-49B5-A501-590B41B5053F};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+function GetBitmapHandle: OLE_HANDLE;</p>
+<p>Dispatch IImageObject; // IImageObject Interface<br />
+GUID={96265318-9338-419C-8AF6-AFD16CC52AFE};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+function GetBitmapHandle: OLE_HANDLE;</p>
+<p>Class DictClass; // DictClass Class<br />
+GUID={D4CCAFBA-A9D5-458B-A7E9-DC95D909E18E};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get Count: I4;<br />
+property-get Name(index:I4): BSTR;<br />
+property-get id(index:I4): I4;</p>
+<p>Dispatch IDictClass; // IDictClass Interface<br />
+GUID={941D05C2-052F-4707-A45B-FC0551237A96};<br />
+function QueryInterface(riid:^GUID; out ppvObj:^^void);<br />
+function AddRef: UI4;<br />
+function Release: UI4;<br />
+function GetTypeInfoCount(out pctinfo:^UINT);<br />
+function GetTypeInfo(itinfo:UINT; lcid:UI4; out pptinfo:^^void);<br />
+function GetIDsOfNames(riid:^GUID; rgszNames:^^I1; cNames:UINT; lcid:UI4; out rgdispid:^I4);<br />
+function Invoke(dispidMember:I4; riid:^GUID; lcid:UI4; wFlags:UI2; pdispparams:^DISPPARAMS; out pvarResult:^variant; out pexcepinfo:^EXCEPINFO; out puArgErr:^UINT);<br />
+property-get Count: I4;<br />
+property-get Name(index:I4): BSTR;<br />
+property-get id(index:I4): I4;</p>
+<p>恩。。。最讨厌caj。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

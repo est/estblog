@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>20行javascript写成的超漂亮分形动画 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="20行javascript写成的超漂亮分形动画" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/629298" />
+    <meta property="og:url" content="https://blog.est.im/archives/629298">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="20行javascript写成的超漂亮分形动画">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">20行javascript写成的超漂亮分形动画</h2>
+    <p class="post-date">Posted <time datetime="2012-11-15T04:14:46+08:00">2012-11-15</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>看过<a href="http://www.256b.com/">256字节编程大赛</a>，也看过<a href="http://www.ozoneasylum.com/">疯狂科学家</a>的dHTML Scene<a href="http://www.wildmag.de/compo/">地下比赛</a></p>
+<p>这次暴了个猛的，用<a href="http://en.wikipedia.org/wiki/Canvas_(HTML_element)">canvas</a>标签，加上20行javascript，就成了这个效果（你需要一个支持canvas标签的浏览器，例如<a href="http://www.p01.org/releases/DHTML_contests/files/20lines_hypno_trip_down_the_fractal_rug/">Safari</a>，<a href="http://www.mozilla.com/en-US/firefox/">Firefox</a>或者<a href="http://www.opera.com/products/desktop/">Opera</a>）：</p>
+<p><img alt="fractal rug" src="http://www.p01.org/releases/DHTML_contests/files/20lines_hypno_trip_down_the_fractal_rug.png" /></p>
+<p><a href="http://www.p01.org/releases/DHTML_contests/files/20lines_hypno_trip_down_the_fractal_rug/">http://www.p01.org/releases/DHTML_contests/files/20lines_hypno_trip_down_the_fractal_rug/</a></p>
+<p><code>/* */
+/* */
+/* */ // chain( func )
+/* */ // make func chainable by making it return itsReturnValue||this
+/* */ function chain( func )
+/* */ {
+/* 01 */ return function()
+/* */ {
+/* 02 */ return func.apply( this, arguments )||this;
+/* */ }
+/* */ }
+/* */
+/* */
+/* */ // initialize everything
+/* */ onload = function()
+/* */ {
+/* */ // initialize the contexts and the fractal
+/* 03 */ window.fx =
+/* */ {
+/* */ 'barCtx': document.getElementById('bar' ).getContext('2d'),
+/* */ 'fooCtx': document.getElementById('foo' ).getContext('2d'),
+/* */ 'logicCtx': document.getElementById('logic' ).getContext('2d'),
+/* */ 'renderCtx': document.getElementById('render').getContext('2d'),
+/* */ 'fractal': [0,0,0,0,2,0,0,0,0],
+/* */ CanvasRenderingContext2D: (window.CanvasRenderingContext2D?CanvasRenderingContext2D.prototype:document.getElementById('bar' ).getContext('2d').__proto__)
+/* */ }
+/* */
+/* */ // set( what, to )
+/* */ // sets a property of the CanvasRenderingContext2D, making such operation chainable
+/* */ window.fx.CanvasRenderingContext2D.set = function( what, to )
+/* */ {
+/* 04 */ this[what] = to;
+/* */ }
+/* */
+/* */ // switchTo( context )
+/* */ // return another CanvasRenderingContext2D, making such operation chainable
+/* */ window.fx.CanvasRenderingContext2D.switchTo = function( context )
+/* */ {
+/* 05 */ return context;
+/* */ }
+/* */
+/* */ // chain a bunch of CanvasRenderingContext2D methods
+/* 06 */ for( chainThat in {set:1,switchTo:1,clearRect:1,save:1,translate:1,rotate:1,drawImage:1,scale:1,restore:1,fillRect:1,moveTo:1,lineTo:1,beginPath:1,closePath:1,stroke:1,fill:1,arc:1} )
+/* */ {
+/* 07 */ window.fx.CanvasRenderingContext2D[chainThat] = chain( window.fx.CanvasRenderingContext2D[chainThat] );
+/* */ }
+/* */
+/* */ // let's get the party started
+/* 08 */ render();
+/* */ }
+/* */
+/* */
+/* */ // render()
+/* */ function render()
+/* */ {
+/* */ // the time is now
+/* 09 */ var now = new Date().getTime();
+/* */
+/* */ // mutate the outer cells of the rug
+/* 10 */ fx
+/* */ .fractal[ Math.floor(Math.random()*8+5)%9 ] = Math.floor( Math.random()*3 );
+/* */
+/* */ // softly kills the previous generations of the rug
+/* 11 */ fx
+/* */ .fooCtx
+/* */ .set( 'fillStyle', 'rgba(0,0,0,.1)' )
+/* */ .fillRect( 0, 0, 192, 192 )
+/* */ .set( 'fillStyle', '#653' )
+/* */ .switchTo( fx.barCtx )
+/* */ .clearRect( 0, 0, 192, 192 );
+/* */
+/* */ // render 1st generation of the rug
+/* 12 */ for( var i=-1; i&lt;9; fx.fooCtx.fillRect( (++i%3)*64+1,Math.floor(i/3)*64+1,(fx.fractal[i]&amp;1)*62,(fx.fractal[i]&amp;1)*62 ))
+/* */ {
+/* */ }
+/* */ // render next generations of the rug
+/* 13 */ for( var j=0; j++&lt;3; fx.fooCtx.drawImage( fx.barCtx.canvas,0,0 ) )
+/* */ {
+/* 14 */ for( var i=-1; ++i&lt;9; fx.barCtx.drawImage( fx.fooCtx.canvas,0,0,192,192, (i%3)*64+1,Math.floor(i/3)*64+1, (fx.fractal[i]&amp;2)*31, (fx.fractal[i]&amp;2)*31 ) )
+/* */ {
+/* */ }
+/* */ }
+/* */
+/* */ // render rotozoomed rug
+/* 15 */ fx
+/* */ .logicCtx
+/* */ .set( 'globalCompositeOperation', 'source-over' )
+/* */ .clearRect( 0, 0, 256, 192 )
+/* */ .save()
+/* */ .translate( 96, 96 )
+/* */ .rotate( (now/5841%2)*Math.PI )
+/* */ .scale( 1+2*((now/1274)%1), 1+2*((now/1274)%1) )
+/* */ .drawImage( fx.fooCtx.canvas,0,0,192,192, -288,-288,576,576 )
+/* */ .drawImage( fx.fooCtx.canvas,0,0,192,192, -96 ,-96 ,192,192 )
+/* */ .drawImage( fx.fooCtx.canvas,0,0,192,192, -32 ,-32 ,64 ,64 )
+/* */ .restore()
+/* */ .set( 'globalCompositeOperation', 'copy' )
+/* */ // prepare for hypnoglow
+/* */ .switchTo( fx.renderCtx )
+/* */ .set( 'globalCompositeOperation', 'source-over' )
+/* */ .clearRect( 0, 0, 192, 192 )
+/* */ .drawImage( fx.logicCtx.canvas, 0, 0 )
+/* */ .set( 'globalCompositeOperation', 'lighter' );
+/* */
+/* */ // hypnoglow
+/* 16 */ for( var i=-1; ++i&lt;6; fx.renderCtx.drawImage( fx.logicCtx.drawImage( fx.logicCtx.canvas, 0, 0, 192&gt;&gt;i, 192&gt;&gt;i, 0, 0, 96&gt;&gt;i, 96&gt;&gt;i ).canvas, 0, 0, 96&gt;&gt;i, 96&gt;&gt;i, 0, 0, 192, 192 ) )
+/* */ {
+/* */ }
+/* */
+/* */ // here we go again
+/* 17 */ setTimeout( render, 25 );
+/* */ }
+/* */
+/* */</code></p>
+<p>你可以看看类似的256byte汇编版本 <a href="http://www.256b.com/demo/225">1</a>，<a href="http://www.256b.com/demo/28">2</a>（友情提示，Vista以上操作系统没法看。因为微软的cmd显示驱动<a href="http://initiative.yo2.cn/archives/625340">不兼容DOS全屏绘图</a>，不过可以试试<a href="http://www.dosbox.com/">DOSBox</a>）</p>
+<p>reddit上<a href="http://www.reddit.com/r/programming/info/6np8o/comments/">评论</a>说：这个哪里才20行呀，要80个字符一行，20行写出这个效果才牛B，嘿嘿～～</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

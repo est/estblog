@@ -52,21 +52,20 @@
   </header>
 
   
-  <p>Function fSortArray(aSortThisArray)<br/>
-Dim oArrayList, iElement, oArrayDic<br/>
-Set oArrayDic = CreateObject(&quot;Scripting.Dictionary&quot;)<br/>
-Set oArrayList = CreateObject( &quot;System.Collections.ArrayList&quot; )<br/>
-&nbsp;For iElement = 0 To UBound(aSortThisArray)<br/>
-&nbsp; oArrayList.Add aSortThisArray(iElement)<br/>
-&nbsp;Next<br/>
-oArrayList.Sort<br/>
-set fSortArray = oArrayList<br/>
-End Function <br/>
-</p>
+  <pre><code>Function fSortArray(aSortThisArray)
+Dim oArrayList, iElement, oArrayDic
+Set oArrayDic = CreateObject(&quot;Scripting.Dictionary&quot;)
+Set oArrayList = CreateObject( &quot;System.Collections.ArrayList&quot; )
+ For iElement = 0 To UBound(aSortThisArray)
+  oArrayList.Add aSortThisArray(iElement)
+ Next
+oArrayList.Sort
+set fSortArray = oArrayList
+End Function
+</code></pre>
 <p>以上代码的核心思想为：</p>
 <p>System.Collections.ArrayList.Sort()</p>
 <p>可见，VBS虽然不能原生支持 .NET，但是可以通过 COM 调用某些 .NET 的。但是这就有一个问题了， .NET 通过 COM 调用，经过 JIT 吗？会生成 IL 吗？</p>
-<p><img src ="http://dormforce.net/Blog/electronixtar/aggbug/13647.aspx" width = "1" height = "1" /></p>
 </article>
 
 <div class="comments">

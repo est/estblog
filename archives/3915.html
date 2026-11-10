@@ -53,29 +53,19 @@
 
   
   <p>最近Google Code慢得跟狗屎一样，然后<code>svn export</code>或者<code>svn checkout</code>遇到大量文件，中途失败一下就悲剧了，因为没法断点续传。（或者我不知道）</p>
-
 <p>然后svn用代理也很sb，google的那个代理貌似不支持HTTP OPTIONS这种svn需要的语法，所以我就只有很悲剧的用<code>wget -m</code>了</p>
-
 <p>折腾了一下发现<code>wget -m</code>这玩意很很sb，居然不支持中文URL或文件名。好吧，发现wget支持两个参数</p>
-
 <pre><code>--local-encoding=ENC      use ENC as the local encoding for IRIs.
 --remote-encoding=ENC     use ENC as the default remote encoding.
 </code></pre>
-
 <p>满怀欣喜的用着两个参数 =UTF-8 的运行，结果发现</p>
-
 <blockquote>
-  <p>This version does not have support for IRIs</p>
+<p>This version does not have support for IRIs</p>
 </blockquote>
-
-<p>卧槽啊卧槽， 于是自己弄源码编译，已经都<code>--with-libidn</code>了，结果这JB烂玩意儿只能随机处理<strong>一个或两个</strong>中文字符，UTF-8尼玛伤不起啊！</p>
-
+<p>卧槽啊卧槽， 于是自己弄源码编译，已经都<code>--with-libidn</code>了，结果这JB烂玩意儿只能随机处理<strong>一个或两个</strong> 中文字符，UTF-8尼玛伤不起啊！</p>
 <p>最后用了<a href="http://cocobear.info/blog/2008/04/19/wget-chinese-encode/">cocobear的patch</a>，搞定了中文URL和文件名的问题，顺利<code>wget -m</code>来下载Google Code的一个SVN。</p>
-
 <p>以前折腾sftpd发现中文路径要挂，记得也是源码里只处理32-127的ASCII。</p>
-
 <p>为了节省大家的时间，提供一个编译好的32bit wget ELF文件下载：</p>
-
 <p><a href="http://blog.est.im/wp-content/uploads/2011/04/wget.zip">http://blog.est.im/wp-content/uploads/2011/04/wget.zip</a></p>
 </article>
 

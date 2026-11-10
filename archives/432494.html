@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>解决CS1.6出现Invalid CD-KEY和LAN servers are resticted to local clients (class c)问题 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="解决CS1.6出现Invalid CD-KEY和LAN servers are resticted to local clients (class c)问题" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/432494" />
+    <meta property="og:url" content="https://blog.est.im/archives/432494">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="解决CS1.6出现Invalid CD-KEY和LAN servers are resticted to local clients (class c)问题">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">解决CS1.6出现Invalid CD-KEY和LAN servers are resticted to local clients (class c)问题</h2>
+    <p class="post-date">Posted <time datetime="2007-10-01T11:19:28+08:00">2007-10-01</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>今天下午跟几个同学玩Counter Strike 1.6，联机的时候弄得比较郁闷。</p>
+<h2>版本</h2>
+<p>经研究发现最流行的最通用的CS1.6版本是3266。况且Vista下只能玩<a href="http://www.dcoo.com/download/2006-9/20069121030.htm">DcOo的那个3382+3266 Twins SP1版本</a>。</p>
+<h2>Invalid CD-KEY</h2>
+<p>出现这个错误，表明联机的CS客户端有CD-KEY冲突。国内一般用的盗版CD-KEY都是：</p>
+<pre><code>REGEDIT4
+
+[HKEY_CURRENT_USERSoftwareValve]
+
+[HKEY_CURRENT_USERSoftwareValveHalf-Life]
+
+[HKEY_CURRENT_USERSoftwareValveHalf-LifeSettings]
+&quot;ValveKey&quot;=&quot;5RP2E-EPH3K-BR3LG-KMGTE-FN8PY&quot;
+
+[HKEY_CURRENT_USERSoftwareValveSteam]
+&quot;Language&quot;=&quot;schinese&quot;
+&quot;Skin&quot;=&quot;&quot;
+&quot;Rate&quot;=&quot;&quot;
+</code></pre>
+<p>另外还有一个可能性就是：CS1.6小版本不一致。</p>
+<h2>LAN servers are resticted to local clients (class c)</h2>
+<p>出现这个错误的原因是：本地连接 配置了多个IP，然后第一个IP（默认IP）不是当前局域网的。修改 网络连接 -&gt; 本地连接 -&gt; 属性 -&gt; TCP/IP -&gt; IP地址即可。</p>
+<h2>找不到建立好的服务器</h2>
+<p>别人能刷出来建立好的游戏，但是自己的机器始终刷不出来。这个问题是因为机器不在同一个 WORKGROUP 或者 MSHOME 里。让大家把 我的电脑 -&gt; 属性 -&gt; 计算机名 -&gt; 更改 工作组 -&gt; 隶属于 -&gt; 都统一修改为 WORKGROUP 即可。<br />
+其实还有一个更简单用命令联机的方法。首先必须知道CS1.6服务器的IP地址，比如某服务器 xxx.xxx.xxx.xxx ，在游戏开始界面按下感叹号旁边那个 ` 按键，调出console，输入 connect xxx.xxx.xxx.xxx 回车，就联机了。</p>
+<p>要打一个CS真累啊 @.@</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

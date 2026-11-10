@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>高版本Chromium使用PAC的方法 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="高版本Chromium使用PAC的方法" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/640731" />
+    <meta property="og:url" content="https://blog.est.im/archives/640731">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="高版本Chromium使用PAC的方法">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">高版本Chromium使用PAC的方法</h2>
+    <p class="post-date">Posted <time datetime="2009-06-13T14:49:48+08:00">2009-06-13</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>以前的Chrome用的是WinHTTP栈来解析Windows“Internet设置”里的Pac，但是估计WinHTTP还是使用的Windows自带的script56.dll来解析javascript，现在高版本chromium(3.x)应该都是用V8+自己的栈来做URL获取了。</p>
+<p><code>chrome.exe "--proxy-pac-url=file://E:/my.pac"</code></p>
+<p>还有一个参数，winhttp-proxy-resolver，将来会被废除。不推荐使用。</p>
+<p>另外现在的dev版本不支持<code>--enable-udd-profiles</code>参数了，只有Ctrl+M先用着。烦～～～</p>
+<p><img alt="" src="http://www1.feedsky.com/t1/231372555/initiative/feedsky/s.gif?r=http://item.feedsky.com/~feedsky/initiative/~5939548/231372555/1236017/1/item.html" /></p>
+<p><a href="http://www1.feedsky.com/r/l/feedsky/initiative/231372555/art01.html"><img alt="" src="http://www1.feedsky.com/r/i/feedsky/initiative/231372555/art01.gif" /></a></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

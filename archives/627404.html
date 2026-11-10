@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Parasitic number – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Parasitic number" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/627404" />
+    <meta property="og:url" content="https://blog.est.im/archives/627404">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Parasitic number">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Parasitic number</h2>
+    <p class="post-date">Posted <time datetime="2008-04-28T00:00:00+08:00">2008-04-28</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>看到和菜头blog上有一篇文章<a href="http://www.hecaitou.net/?p=2879">《小学三年级数学题》</a></p>
+<blockquote>
+<p>一个自然数，把最后一位放在第一位，新数是老数的两倍，求该自然数。</p>
+</blockquote>
+<p>当时的第一反应是：自然数嘛，0。 00 = 00 * 2<br />
+当然我怀疑还真有这么一个变 <em>防盗栏杆外已经飘起了雨。盆子在阳台的右角，雨水先落在窗前铁栏杆再顺着花草的叶脉滴到盆子的土壤里。吮吸起左手的西</em> 态的正整数，所以python写了一个穷举。到 100,000也没有跑出来一个结果。郁闷。</p>
+<p>看到一个人的回帖，答案是 105263157894736842（刮开可看答案） 。当时就被囧了。小学三年级就可以求出这么大的整数啊，看了<a href="http://zhidao.baidu.com/question/52316056.html">百度知道</a>的解题过程，才发现原来这么简单。</p>
+<blockquote>
+<p>找10^n-2模19为0就OK，奥数题吧</p>
+</blockquote>
+<p>看来自己的智商在急剧减低啊。无聊Google了一下这个数字，原来这个数字叫 <a href="http://en.wikipedia.org/wiki/Parasitic_number">Parasitic number</a></p>
+<blockquote>
+<p>n Smallest n-parasitic number<br />
+ 2 105263157894736842<br />
+ 3 1034482758620689655172413793<br />
+ 4 102564<br />
+ 5 142857<br />
+ 6 10169491525423728813559932203389830508474576271186440677966<br />
+ 7 1014492753623188405797<br />
+ 8 1012658227848<br />
+ 9 10112359550561797752808988764044943820224719</p>
+</blockquote>
+<p>生成n-parasitic的公式为：<br />
+<img alt="n\frac{10^{10n-1}-1}{10n-1}" src="http://tex.72pines.com/latex.php?latex=n%5Cfrac{10^{10n-1}-1}{10n-1}" /></p>
+<p><code>n * ( 10^(10*n-1) - 1 ) / ( 10 * n - 1)</code></p>
+<p>python里用一个lambda函数表示<code>parasitic = lambda n: n*(pow(10, 10*n-1) -1 ) / ( 10*n -1)</code></p>
+<p>看来数学的精炼真是无与伦比永恒不变的啊。</p>
+<p>最后感谢<a href="http://72pines.com/">72pine</a>s的<img alt="LaTeX" src="http://tex.72pines.com/latex.php?latex=$%24%24%5CLaTeX%24%24$" />图片<a href="http://blog.72pines.com/posts/60">生成器</a>。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

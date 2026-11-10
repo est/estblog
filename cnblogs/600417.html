@@ -76,9 +76,9 @@ font-family:"Times New Roman"; margin-left:0in; margin-right:0in; margin-top:0in
 <p><font size="4">1. *.lnk<br/>
 </font>这是微软的通用快捷方式，很多电脑初学者当年就是把一个500MB的游戏在桌面上的1k大小的快捷方式复制到软盘里，然后回家双击打开一看，发现Windows提示&ldquo;找不到路径&rdquo;云云。后来才明白这只是个快捷方式。</p>
 <p>在命令行里打开一个 lnk 文件： Rundll32.exe url.dll, FileProtocolHandler %L</p>
-<p>lnk 的二进制格式 <a style="BEHAVIOR: url(http://202.115.22.199/FCKeditor/editor/css/behaviors/anchors.htc)" href="http://www.vckbase.com/document/viewdoc/?id=1411">http://www.vckbase.com/document/viewdoc/?id=1411</a></p>
+<p>lnk 的二进制格式 <a href="http://www.vckbase.com/document/viewdoc/?id=1411">http://www.vckbase.com/document/viewdoc/?id=1411</a></p>
 <p>其实 .LNK根 Windows Shell&nbsp;的关系比较紧密，在 Windows Vista 里，很多 Shell&nbsp;对象都可以通过 .lnk 文件来打开，所以 lnk 文件里全部是用 CLSID 作为引导</p>
-<p>在wsh/vbs里操作 .lnk 文件 <a style="BEHAVIOR: url(http://202.115.22.199/FCKeditor/editor/css/behaviors/anchors.htc)" href="http://download.microsoft.com/download/winscript56/Install/5.6/W982KMe/CN/scd56chs.exe">script56.chm::/html/wsconManagingShortcuts.htm</a> <br/>
+<p>在wsh/vbs里操作 .lnk 文件 <a href="http://download.microsoft.com/download/winscript56/Install/5.6/W982KMe/CN/scd56chs.exe">script56.chm::/html/wsconManagingShortcuts.htm</a> <br/>
 　</p>
 <p><font size="4">2. *.url</font></p>
 <p>.url 文件的格式和 .inf 的相似：<br/>
@@ -88,14 +88,14 @@ font-family:"Times New Roman"; margin-left:0in; margin-right:0in; margin-top:0in
 <a href="http://www.smsoft.ru/en/pifdoc.htm">http://www.smsoft.ru/en/pifdoc.htm</a></p>
 <p><font size="4">4. FolderShortcut</font></p>
 <p>这个是未公开的一种快捷方式吧，不要理解成 文件夹<strong>的</strong>快捷方式了，我记得是从Win98就开始用这个东东了，貌似是和 Active Desktop 技术一起出现的。国内的首次公开是在这个帖子 <a href="http://bbs.onegreen.net/TopicOther.asp?t=5&amp;BoardID=2&amp;id=1414">http://bbs.onegreen.net/TopicOther.asp?t=5&amp;BoardID=2&amp;id=1414</a>&nbsp;，最简单的 文件夹快捷方式 是把一个文件夹拖放到 开始菜单</p>
-<p><img alt="" src="http://202.115.22.199/Blog/Attachment/549"/></p>
+<p><img alt="" src="/Blog/Attachment/549"/></p>
 <p>如下图：上面那个是直接拖放生成的 文件夹快捷方式，下面的是传统的 lnk 快捷方式。两者的明显不同是： 文件夹快捷方式 是可以在菜单里显示所指向目标文件夹的内容的。</p>
-<p><img alt="" src="http://202.115.22.199/Blog/Attachment/550"/></p>
-<p><img alt="" src="http://202.115.22.199/Blog/Attachment/551"/></p>
+<p><img alt="" src="/Blog/Attachment/550"/></p>
+<p><img alt="" src="/Blog/Attachment/551"/></p>
 <p>更为可喜的是，文件夹快捷方式没有小箭头！</p>
-<p><img alt="" src="http://202.115.22.199/Blog/Attachment/552"/></p>
+<p><img alt="" src="/Blog/Attachment/552"/></p>
 <p>文件夹快捷方式的属性有点怪怪的呢</p>
-<p><img alt="" src="http://202.115.22.199/Blog/Attachment/553"/></p>
+<p><img alt="" src="/Blog/Attachment/553"/></p>
 <p>手工建立 文件夹快捷方式 的方法：<br/>
 1. 在目标文件夹里建立一个 系统 隐藏 属性的 desktop.ini（cmd里 attrib +S +h desktop.ini），内容为：<br/>
 [.ShellClassInfo]<br/>

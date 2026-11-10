@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[IE]去掉“此页包含安全和非安全项目”提示 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[IE]去掉“此页包含安全和非安全项目”提示" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/624402" />
+    <meta property="og:url" content="https://blog.est.im/archives/624402">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[IE]去掉“此页包含安全和非安全项目”提示">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[IE]去掉“此页包含安全和非安全项目”提示</h2>
+    <p class="post-date">Posted <time datetime="2008-02-29T00:00:00+08:00">2008-02-29</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>全民上网进入https时代，但是IE上网始终会出现</p>
+<p>This page contains both secure and non-secure items. Do you want to download the non-secure items?</p>
+<p>这个狗屁提示，很烦，于是想去掉。</p>
+<p>IE选项里翻了半天，最后找到了：杂项 - 显示混合内容</p>
+<p>或者偷偷懒的导入这个reg文件即可。<br />
+<code>Windows Registry Editor Version 5.00</code></p>
+<p>[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3]<br />
+"1609"=dword:00000000</p>
+<p>顺便发现微软一个很搞笑的<a href="http://support.microsoft.com/kb/184960/en-us">KB184960</a>，它说这个提示是：<br />
+This behavior is by design. You cannot disable this error message.</p>
+<p>最后吼一句：有没有谁知道一种系统tweak软件，能够根据调节的动作自动生成reg/bat/vbs/inf文件？并且支持通过WMI和远程注册表来调节？</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

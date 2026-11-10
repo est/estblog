@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>神奇的字符 Unicode控制字符实现文字倒序排列 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="神奇的字符 Unicode控制字符实现文字倒序排列" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/364865" />
+    <meta property="og:url" content="https://blog.est.im/archives/364865">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="神奇的字符 Unicode控制字符实现文字倒序排列">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">神奇的字符 Unicode控制字符实现文字倒序排列</h2>
+    <p class="post-date">Posted <time datetime="2011-07-18T08:01:54+08:00">2011-07-18</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>今天无意中去了一下<a href="https://dream4ever.org/forumdisplay.php?f=21">DRL的水区</a>，发现了一个比较好玩的帖子：<a href="https://dream4ever.org/showthread.php?t=175766">神奇的字符</a>。下来的时候自己花了几分钟研究了一下原理，原来是Unicode定义的 Start of right-to-left override，控制字符是RLO，~~ASCII码是 0x3F。只要在一行字符前面加上一个0x3F就可以实现文本的反向排列。这个0x3F是~~ U+202E是Unicode为了兼容阿拉伯文字从左至右的阅读习惯设计的一个转义字符。<br />
+例如：</p>
+<p>在Windows XP以上操作系统中这个特性是所有Win32文本框内置的，方法很简单，在一个字符前面点击右键，选择 插入Unicode控制字符 -&gt; RLO Start of right-to-left override。快捷方式是：右键, I, V。<br />
+截图说的明白些。</p>
+<p><img alt="1.jpg" src="/images/archive/2011/364865_01.jpg" /></p>
+<p>有什么用呢？当然论坛里比较好玩，比如说我把学校内网的一个phpwind的帖子列表改成了这幅造型，翻页的页码显示在中间 @.@</p>
+<p><img alt="2.jpg" src="/images/archive/2011/364865_02.jpg" /></p>
+<p>其实还有一个很好的用处，那就是在网上留你的Email的时候，可以先把你的Email倒过来（跟我以前写那个<a href="http://DormForce.NET/Blog/electronixtar/archive/2006/12/22/12947.aspx">用CSS的方法</a>有异曲同工之妙），比如说我的Email：moc.liamG@ratXinortcele<br />
+然后用这个方法使之倒序显示：‮moc.liamG@ratXinortcele</p>
+<p>虽然我们在网页上看到这个Email是正常的，但是大家可以复制粘贴一下我的Email，是不是倒过来了？很神奇是吧？这样一些垃圾邮件的爬虫抓取的也是无效的地址，可以有效保护我们在网上的隐私。</p>
+<p>‮列排序倒话的会社×反党×反些一把，了WFG破突是就处用个有还<br />
+‮嘿嘿。了效失便滤过词键关的WFG是但，览浏常正以可们人，OLR个一上加面前后然<br />
+‮的写么这是就话句这</p>
+<p>就这样，随便写点没技术含量的。明天还要补考《电磁场》，orz</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

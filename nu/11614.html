@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[原创]强悍的res:协议 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[原创]强悍的res:协议" />
+
+    <link rel="canonical" href="https://blog.est.im/nu/11614" />
+    <meta property="og:url" content="https://blog.est.im/nu/11614">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[原创]强悍的res:协议">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[原创]强悍的res:协议</h2>
+    <p class="post-date">Posted <time datetime="2006-11-14T23:59:00+08:00">2006-11-14</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>在IE里输入以下“网址”，看看出来什么了？</p>
+<p>res://shell32.dll/2/131</p>
+<p>res://C:\WINDOWS\system32\drivers\estbus.sys/16/1</p>
+<p>res://notepad.exe/16/1</p>
+<p>res://shell32.dll/16/1</p>
+<p>是不是可以用来分析 exe dll sys 的版本呢？只要符合 Win32 PE 格式的文件都可以用 res:// 协议来分析。其中第二个数字是资源类型，在 VC++ 的 winuser.h 里有定义</p>
+<pre><code>#define RT_CURSOR MAKEINTRESOURCE(1)
+#define RT_BITMAP MAKEINTRESOURCE(2)
+#define RT_ICON MAKEINTRESOURCE(3)
+#define RT_MENU MAKEINTRESOURCE(4)
+#define RT_DIALOG MAKEINTRESOURCE(5)
+#define RT_STRING MAKEINTRESOURCE(6)
+#define RT_FONTDIR MAKEINTRESOURCE(7)
+#define RT_FONT MAKEINTRESOURCE(8)
+#define RT_ACCELERATOR MAKEINTRESOURCE(9)
+#define RT_RCDATA MAKEINTRESOURCE(10)
+#define RT_MESSAGETABLE MAKEINTRESOURCE(11)
+#define RT_VERSION MAKEINTRESOURCE(16)
+#define RT_DLGINCLUDE MAKEINTRESOURCE(17)
+#define RT_PLUGPLAY MAKEINTRESOURCE(19)
+#define RT_VXD MAKEINTRESOURCE(20)
+#define RT_ANICURSOR MAKEINTRESOURCE(21)
+#define RT_ANIICON MAKEINTRESOURCE(22)
+#define RT_HTML MAKEINTRESOURCE(23)
+</code></pre>
+<p>res:// 用处大了，可以用来提取图片、AVI、光标、图标等。</p>
+<p>还有一个很NB的专门用来分析文件图标的协议 sysimage，只是只从上次出了个 文件探测 的漏洞以后，貌似微软就把这个协议封了，IE7里直接禁用了，郁闷。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

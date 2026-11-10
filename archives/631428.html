@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Apache2 mod_fastcgi Django备忘 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Apache2 mod_fastcgi Django备忘" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/631428" />
+    <meta property="og:url" content="https://blog.est.im/archives/631428">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Apache2 mod_fastcgi Django备忘">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Apache2 mod_fastcgi Django备忘</h2>
+    <p class="post-date">Posted <time datetime="2012-02-26T13:13:53+08:00">2012-02-26</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p><code>LoadModule rewrite_module modules/mod_rewrite.so</code></p>
+<p><code>LoadModule fastcgi_module modules/mod_fastcgi.so
+FastCGIExternalServer /home/django/mysite.fcgi -host 127.0.0.1:8882</code></p>
+<p><VirtualHost *:80></p>
+<h1>这里很重要。。。我配置了2天就是没有把这里的权限配置好</h1>
+<p><Directory /home/django/> #注意这里要chmod 777 -R<br />
+Options FollowSymLinks<br />
+AllowOverride All<br />
+Order deny,allow<br />
+Allow from all<br />
+</Directory></p>
+<p>ServerAdmin foo@bar.com<br />
+DocumentRoot /home/django/<br />
+ServerName  <em>域名</em><br />
+Alias /assets /home/django/static/assets<br />
+RewriteEngine On #注意这里重写规则的 / 很复杂，不能错一个。<br />
+RewriteRule ^/(assets.<em>)$ /$1 [QSA,L,PT]<br />
+RewriteCond %{REQUEST_FILENAME} !-f<br />
+RewriteRule ^/(.</em>)$ /mysite.fcgi/$1 [L]<br />
+ErrorLog /var/log/web/error_log #文件要存在，要有读写权限<br />
+CustomLog /var/log/web/access_log common<br />
+</VirtualHost></p>
+<p>一些细节弄了我很久。。。备忘。。。万恶的Apache配置文件语法。其中<code>mod_rewrite.so</code>和<code>mod_fastcgi.so</code>难得重新编译了。。。直接去deb包里提取一个现成的复制过去。。。当然你的Apache要支持<a href="http://httpd.apache.org/docs/2.0/dso.html">DSO</a>才行。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

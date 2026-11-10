@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>解决Google Calendar导入URL里icalendar（.ics）的中文乱码问题 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="解决Google Calendar导入URL里icalendar（.ics）的中文乱码问题" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/624683" />
+    <meta property="og:url" content="https://blog.est.im/archives/624683">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="解决Google Calendar导入URL里icalendar（.ics）的中文乱码问题">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">解决Google Calendar导入URL里icalendar（.ics）的中文乱码问题</h2>
+    <p class="post-date">Posted <time datetime="2008-03-06T01:17:53+08:00">2008-03-06</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>这几天一直折腾和Google Calendar同步一个icalendar格式的日历，中文乱码问题多次掺和，非常犯人。最后终于解决了，写几点感受。</p>
+<pre><code>1. 乱码问题要基于字节来研究，所以一个16进制编辑工具是必须的。例如UltraEdit。
+2. 乱码问题涉及多方面：网站源代码文件编码格式；动态页面后台解释器（asp, php, python）是MBCS还是SBCS；数据库查询结果返回编码；返回HTML的编码；返回HTML的BOM；返回HTTP头的Content-Type charset属性。下面一点一点的解说：
+</code></pre>
+<p>网站后台源代码文件：UTF8编码，不要BOM<br />
+动态页面后台解释器：最好是MBCS<br />
+数据库查询编码：UTF8<br />
+返回的HTML编码：UTF8，不要BOM<br />
+返回HTTP头：<code>Content-Type: text/calendar; charset=utf-8</code> 这里注意：大小写、连字符(utf-8而不是utf <img alt="8)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_cool.gif" /> 、空格。</p>
+<p>这样可以保证Google Calendar解析含中文的icalendar日历。</p>
+<p>还有一种非常郁闷的情况，就是动态页面后台解释器是SBCS的，例如python，那么有可能UTF8转换为GB2312输出文件的时候，每个字符中间多一个 \x00 。我也不知道这是为什么，但是用文本编辑器是没法察觉的，文本编辑器能正常显示中文，但是Google Calendar直接报告：invalid format。用十六进制编辑器才发现这个问题的。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

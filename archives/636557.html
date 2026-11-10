@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[Python]一键备份到Gmail – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[Python]一键备份到Gmail" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/636557" />
+    <meta property="og:url" content="https://blog.est.im/archives/636557">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[Python]一键备份到Gmail">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[Python]一键备份到Gmail</h2>
+    <p class="post-date">Posted <time datetime="2011-02-23T23:53:21+08:00">2011-02-23</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>好吧。。我又Out了。。</p>
+<p>整理资料。准备备份一次。15MB的rar包准备传到Gmail。手工操作太不靠谱，于是就自己写了一段Python脚本来完成这个工作。原理是：登录我的126邮箱，向Gmail发送带附件的Email。选择126的原因是网易公司在全国的CDN都比较快。。。</p>
+<pre><code>import smtplib, email
+import os, sys
+import hashlib
+
+def send_mail(send_from, send_to, subject, text, attachment_bytes, auth=(), send_server='localhost'):
+    msg = email.MIMEMultipart.MIMEMultipart()
+    msg['From'] = send_from
+    msg['To'] = email.Utils.COMMASPACE.join(send_to)
+    msg['Date'] = email.Utils.formatdate(localtime=True)
+    msg['Subject'] = subject
+
+    msg.attach( email.MIMEText.MIMEText(text) )
+
+    part = email.MIMEBase.MIMEBase('application', 'octet-stream')
+    part.set_payload( attachment_bytes )
+    email.Encoders.encode_base64(part)
+    part.add_header('Content-Disposition', 'attachment; filename=%s' % subject)
+    msg.attach(part)
+
+    smtp = smtplib.SMTP(send_server)
+    smtp.login(*auth)
+    smtp.sendmail(send_from, send_to, msg.as_string())
+    smtp.close()
+
+for f in sys.argv[1:]:
+    f_name = os.path.basename(f)
+    print '+ Uploading ' + f_name
+    f = open(f, 'rb').read()
+    md5 = hashlib.md5()
+    md5.update(f)
+    md5 = md5.hexdigest()
+    sha1 = hashlib.sha1()
+    sha1.update(f)
+    sha1 = sha1.hexdigest()
+
+    send_mail(
+        'aaaaaa@126.com',
+        ['bbbbbb@gmail.com'],
+        f_name,
+        f_name + '\r\n' + 'MD5: ' + md5 + '\r\nSHA1: ' + sha1,
+        f,
+        ('aaaaaa@126.com', 'aaaaaapwd'),
+        'smtp.126.com' )
+
+print 'Done.'
+</code></pre>
+<p>比较Out的原因是，写完这个script就发现n个现成的了：<a href="http://backup2e.com/">Backup to Email</a>，<a href="http://lifehacker.com/software/email/geek-to-live-automatically-email-yourself-file-backups-168156.php">Lifehacker上用Blat命令行实现</a>，Javaeye上一个几乎一样功能的帖子<a href="http://www.javaeye.com/topic/68165">GSend.py</a>，<a href="http://www.gmail-backup.com/">Gmail Backup</a>，<a href="http://gmailer.sourceforge.net/">Send To GMail</a>（a.k.a. Gmailer），当然<a href="http://www.viksoe.dk/code/gmail.htm">Gmail Drive Shell Extension</a>也是很老的一个软件了。。令我感到安慰的是这些软件基本都达到了1MB以上的体积。。还有我的script可以算MD5。。。。不过没法自动切割文件。。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

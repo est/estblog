@@ -52,10 +52,8 @@
   </header>
 
   
-  <p><img src="http://blog.est.im/wp-content/uploads/2010/08/15.png" alt=""></p>
-
+  <p><img alt="" src="http://blog.est.im/wp-content/uploads/2010/08/15.png" /></p>
 <p>代码一共924个字，相当于一篇稍长的高考作文。</p>
-
 <pre><code>float map(float x, float z)
 {
     // terrain
@@ -90,7 +88,7 @@
     if( fabsf(rx+rz)&lt;0.1f || fabsf(rx-rz)&lt;0.1f ) // path
         g += 0.1f;
 
-    // select terrain or pyramid 
+    // select terrain or pyramid
     if( g&gt;f ) f=g;
     return f;
 }
@@ -101,11 +99,8 @@ void fog(float *rgb, float t, const float *rayDir)
     collerp(rgb, fog*0.01f, rgb, fogColor);
 }
 </code></pre>
-
 <p>同样的场景用自然语言精确描述又需要多少字呢？</p>
-
 <p>来源：<a href="http://iquilezles.org/www/articles/proceduralgfx/inspire2008.pdf">4k intro常见技巧讲述pdf</a>。作者是rgba的iq。做demoscene的大神。。。</p>
-
 <p><a href="http://www.reddit.com/r/programming/comments/d1wfi/making_graphics_in_4_kilobytes_pdf/">via</a></p>
 </article>
 

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CAPICOM.EncryptedData的Python例子 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="CAPICOM.EncryptedData的Python例子" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/636464" />
+    <meta property="og:url" content="https://blog.est.im/archives/636464">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="CAPICOM.EncryptedData的Python例子">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">CAPICOM.EncryptedData的Python例子</h2>
+    <p class="post-date">Posted <time datetime="2011-02-10T05:17:21+08:00">2011-02-10</time> | <span>archive</span></p>
+  </header>
+
+  
+  <blockquote>
+<blockquote>
+<blockquote>
+<p>import win32com.client<br />
+EncryptedData = win32com.client.Dispatch('CAPICOM.<a href="http://msdn.microsoft.com/en-us/library/aa382010(VS.85).aspx">EncryptedData</a>')<br />
+EncryptedData.Algorithm.KeyLength = 5<br />
+EncryptedData.Algorithm.Name = 2 #DES<br />
+EncryptedData.SetSecret('mypass')<br />
+EncryptedData.Content = 'Hello world'<br />
+s = EncryptedData.Encrypt()<br />
+s<br />
+u'MGEGCSsGAQQBgjdYA6BUMFIGCisGAQQBgjdYAwGgRDBCAgMCAAECAmYBAgFABAjj\r\nk6mhbmNo7AQQPzxLV17fVCCYUGLD+nGfigQYQfGjLZxf4C6n7diHGlmP5T1ucS8a\r\nX4Vw\r\n'<br />
+EncryptedData.Decrypt(s)<br />
+EncryptedData.Content<br />
+u'Hello world'</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p><a href="http://www.newsmth.net/bbstcon.php?board=Python&amp;gid=51443">via</a></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

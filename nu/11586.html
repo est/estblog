@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>IE7新特性的细节：Internet开发者必看 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="IE7新特性的细节：Internet开发者必看" />
+
+    <link rel="canonical" href="https://blog.est.im/nu/11586" />
+    <meta property="og:url" content="https://blog.est.im/nu/11586">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="IE7新特性的细节：Internet开发者必看">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">IE7新特性的细节：Internet开发者必看</h2>
+    <p class="post-date">Posted <time datetime="2006-11-11T21:06:00+08:00">2006-11-11</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>Microsoft Internet Explorer 7 已经随着 Windows Update 进入千万正版及大部分盗版英文XP/2003/Vista了，中文版的也快了，大家来看看微软在IE上又有什么花招吧</p>
+<p>1. Alpha Channel in PNG. Supports transparency within the PNG image format, resulting in better-looking websites that are simpler to build. 终于赶上 Firefox 了</p>
+<p>2. Improved AJAX Support. Improves the implementation of the XMLHTTP Request as a native Javascript object for rich AJAX-style applications. While Internet Explorer 6 handled XMLHTTP requests with an ActiveX control, Internet Explorer 7 exposes XMLHTTP natively. This improves syntactical compatibility across different browsers and allows clients to configure and customize a security policy of their choice without compromising key AJAX scenarios. 又学Firefox ，这个对象不爽啊，不能set-Cookie</p>
+<p>3. Open Search Extensions. In conjunction with Amazon.com, a set of RSS Simple List Extensions were submitted to the RSS community, and released under the Creative Commons license. Among other features, these extensions greatly simplify development of applications that interact with Open Search-compatible search providers. 不如 Maxthon 的简单。也晓得支持POST方式的提交不？</p>
+<p>4. <strong>Scriptlets</strong> --Internet Explorer 7 disables Dynamic HTML (DHTML) scriptlets by default. 没接触过。</p>
+<p>5. <strong>Channel Definition Format (CDF)</strong> --All CDF support was removed from Internet Explorer 7 and replaced with the RSS feed reading experience. Win98里的频道栏？谁用过的吱一声？</p>
+<p>6. <strong>DirectAnimation</strong> --All DLLs to support the Internet Explorer DirectAnimation component were removed in Internet Explorer 7. 可惜啊，这个很有前途的Web 纯 3D 引擎技术。IE4 dHTML提出来的一个很好的东东，CSS里的很多虑镜都靠 DXAnimation呢。</p>
+<p>7. <strong>XBM</strong> -- XBM, an imaging format designed for X-based systems, is no longer supported. 那验证码咋办呢？</p>
+<p><strong>8. BASE Element</strong> --Internet Explorer 7 strictly enforces the BASE element rule, as documented in the HTML 4.01 standard. We no longer allow BASE tags outside of the HEAD of the document. The standard specifies that the base element must appear within the head of the document, before any elements that refer to an external source. 平时我都不用 <base> 的，汗</p>
+<p>9. <strong>window.opener and window.close</strong> --Internet Explorer 7 no longer allows the window.opener trick to bypass the window.close prompt. Browser windows cannot close themselves unless the windows were created in script. This security enhancement no longer allows browsing to a random site when the main browser window closes unexpectedly. 这个无效了，那么我们还得找另一个。比如某个 ActiveX，哇咔咔，人民群众的智慧是无穷的。</p>
+<p>10. <strong>Changes that affect modal or modeless dialogs created from script</strong> --Modal or modeless dialogs created from script in Internet Explorer 7 might seem to be slightly bigger than their Internet Explorer 6 counterparts. This is caused by a change to the behavior of the dialogWidth and dialogHeight properties, which now set and retrieve dimensions of the content area of a dialog (from Internet Explorer 7 and later). It will no longer be necessary to calculate the area lost by elements of a dialog’s frame. Information on these changes will be posted on the <a href="http://blogs.msdn.com/ie/">Internet Explorer Blog</a>.</p>
+<p>11. <strong>HTTPOnly Cookies</strong> --HTTPOnly cookies can no longer be overwritten from scripts.</p>
+<p>12. <strong><code>_SEARCH</code></strong>  The <code>_SEARCH</code> sidebar is disabled by default in Internet Explorer 7. It is now a setting and can be turned by checking <strong>Enable websites to use the search pane</strong> in the Advanced tab of the Internet control panel. 还记得IE6里那个经典的 <code>_media</code> 本地权限，哈哈</p>
+<p>13. <strong>View Source</strong> --The view-source protocol no longer works in Internet Explorer 7. 其实在XP SP2 IE6 里就被废了。</p>
+<p>14. <strong>Gopher Protocol</strong> --Support for the Gopher protocol was removed at the WinINET level. (Gopher support was turned off by default in Internet Explorer 6.) 我平身只用过一次的协议。比IRC还冷清</p>
+<p>15. <strong>window.external.ImportExportFavorites</strong> --window.external.ImportExportFavorites has been removed in Internet Explorer 7.</p>
+<p>16. <strong>SysImage URL Scheme</strong> --The SysImage URL Scheme has been removed from Internet Explorer 7. 这个东东爽啊，看exe图标的，可惜不支持了，不知道弱弱的 hta 支持不？</p>
+<p>17. <strong>Status Bar Scripting</strong> --Scripts will no longer be able to set the status bar text through the window.status and window.defaultStatus methods by default in the Internet and Restricted Zones. 只是 限制区域</p>
+<p>18. <strong>Security Settings for Script Access to the Clipboard</strong> --New security-related updates for Microsoft Internet Explorer 7 include a change in the default security settings for Script Access to the clipboard. Sites using scripts to access the clipboard in the Internet and Trusted sites zones will receive a prompt that will inform the user that their clipboard is being accessed by script. 剪贴板没戏了，vbs的Windows脚本操作剪贴板也就没戏了，靠！</p>
+<p>19. <strong>Active Desktop</strong> --Active Desktop has been removed from Windows Vista. 谁都不用，除了黑客用。不过就没法用 Flash 做桌面啦，郁闷。</p>
+<p>参考：<a href="http://msdn2.microsoft.com/en-us/ie/aa740486.aspx">http://msdn2.microsoft.com/en-us/ie/aa740486.aspx</a><br />
+以上中文评论只是 est 的个人观点。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

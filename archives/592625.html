@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TvKoo客户端ActiveX接口 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="TvKoo客户端ActiveX接口" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/592625" />
+    <meta property="og:url" content="https://blog.est.im/archives/592625">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="TvKoo客户端ActiveX接口">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">TvKoo客户端ActiveX接口</h2>
+    <p class="post-date">Posted <time datetime="2011-03-23T05:27:55+08:00">2011-03-23</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>KOOPLAYERLib; // KooPlayer ActiveX Control module</p>
+<p>Dispatch _DKooPlayer; // Dispatch interface for KooPlayer Control<br />
+GUID={80F1D1E4-9D20-4501-B0F1-196A6B302060};<br />
+bAutoHideControl: bool;<br />
+iDispGroup: I2;<br />
+bDispList: bool;<br />
+bP2P: bool;<br />
+bDispControlBar: bool;<br />
+iSoundValue: I2;<br />
+iBufPercent: I2;<br />
+bIsPlayVideo: bool;<br />
+iKooPlayerState: I2;<br />
+iMSPlayerState: I2;<br />
+iSoundBalance: I2;<br />
+function Play(NameID:variant): bool;<br />
+function Stop;<br />
+function SetVolume(nNewValue:I4);<br />
+function SetMute(bNewValue:I4);<br />
+function GetIsAvailable(bstrItem:BSTR): bool;<br />
+function GetSourceHeight: I2;<br />
+function GetSourceWidth: I2;<br />
+function FullScreen(bFull:I4);<br />
+function IsFullScreen: bool;<br />
+function GetAttributeCount: I4;<br />
+function getAttributeName(lIndex:I4): BSTR;<br />
+function getItemInfo(bstrItemName:BSTR): BSTR;<br />
+function AboutBox;</p>
+<p>Dispatch _DKooPlayerEvents; // Event interface for KooPlayer Control<br />
+GUID={6B1C04D4-FE66-4828-92E0-EEBCC8959BF3};<br />
+function State(csState:BSTR);<br />
+function StateInt(iState:I4);<br />
+function MSPlayerStateInt(iState:I2);<br />
+function MSPlayerState(csState:BSTR);<br />
+function ScriptCommand(csType:BSTR; Param:BSTR);</p>
+<p>Class KooPlayer; // TVKooPlayer Control<br />
+GUID={5CD4310E-88FB-43C1-BE24-5F3FA9C5C9D1};<br />
+bAutoHideControl: bool;<br />
+iDispGroup: I2;<br />
+bDispList: bool;<br />
+bP2P: bool;<br />
+bDispControlBar: bool;<br />
+iSoundValue: I2;<br />
+iBufPercent: I2;<br />
+bIsPlayVideo: bool;<br />
+iKooPlayerState: I2;<br />
+iMSPlayerState: I2;<br />
+iSoundBalance: I2;<br />
+function Play(NameID:variant): bool;<br />
+function Stop;<br />
+function SetVolume(nNewValue:I4);<br />
+function SetMute(bNewValue:I4);<br />
+function GetIsAvailable(bstrItem:BSTR): bool;<br />
+function GetSourceHeight: I2;<br />
+function GetSourceWidth: I2;<br />
+function FullScreen(bFull:I4);<br />
+function IsFullScreen: bool;<br />
+function GetAttributeCount: I4;<br />
+function getAttributeName(lIndex:I4): BSTR;<br />
+function getItemInfo(bstrItemName:BSTR): BSTR;<br />
+function AboutBox;<br />
+function State(csState:BSTR);<br />
+function StateInt(iState:I4);<br />
+function MSPlayerStateInt(iState:I2);<br />
+function MSPlayerState(csState:BSTR);<br />
+function ScriptCommand(csType:BSTR; Param:BSTR);</p>
+<p>就是这样，一个p2p平台</p>
+<p>服务器还要收费，鄙视！</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

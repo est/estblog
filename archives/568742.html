@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[全文转载][Ph4nt0m]Javascript Hook – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[全文转载][Ph4nt0m]Javascript Hook" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/568742" />
+    <meta property="og:url" content="https://blog.est.im/archives/568742">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[全文转载][Ph4nt0m]Javascript Hook">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[全文转载][Ph4nt0m]Javascript Hook</h2>
+    <p class="post-date">Posted <time datetime="2007-12-03T00:00:00+08:00">2007-12-03</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>浅谈javascript函数劫持</p>
+<p>by luoluo<br />
+on 2007-11-30<br />
+luoluonet_at_yahoo.cn</p>
+<p>http://www.ph4nt0m.org</p>
+<p>一、概述</p>
+<p>javascript函数劫持，也就是老外提到的javascript hijacking技术。最早还是和剑心同学讨论问题时偶然看到的一段代码，大概这样写的：</p>
+<p>window.alert = function(s) {};</p>
+<p>觉得这种用法很巧妙新颖，和API Hook异曲同工，索性称之为javascript function<br />
+hook，也就是函数劫持。通过替换js函数的实现来达到劫持这个函数调用的目的，一个完整的hook alert函数例子如下：</p>
+<!--1.htm-->
+<script type="text/javascript">
+<!--
+var _alert = alert;
+window.alert = function(s) {
+if (confirm("是否要弹框框，内容是\"" + s + "\"？&quot ![;\)](http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif) ) {
+_alert(s);
+}
+}
+//-->
+</script>
+<html>
+<body>
+<input type="button" onclick="javascript: alert("Hello World!&quot ![;\)](http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif) " value="test" />
+</body>
+</html>
+
+<p>搞过API<br />
+Hook的同学们看到这个代码一定会心的一笑，先保存原函数实现，然后替换为我们自己的函数实现，添加我们自己的处理逻辑后最终再调用原来的函数实现，这样这个alert函数就被我们劫持了。原理非常简单，下面举些典型的应用来看看我们能利用它来做些什么。</p>
+<p>二、应用举例</p>
+<p>1. 实现一个简易的javascript<br />
+debugger，这里说是debugger比较标题党，其实只是有点类似于debugger的功能，主要利用js函数劫持来实现函数的break<br />
+point，来看看个简单的例子：</p>
+<script type="text/javascript">
+<!--
+var _eval = eval;
+eval = function(s) {
+if (confirm("eval被调用\n\n调用函数\n" + eval.caller + "\n\n调用参数\n" + s)) {
+_eval(s);
+}
+}
+//-->
+</script>
+<html>
+<head>
+</head>
+<body>
+<script type="text/javascript">
+<!--
+function test() {
+var a = "alert(1)";
+eval(a);
+}
+
+function t() {
+test();
+}
+
+t();
+//-->
+</script>
+</body>
+</html>
+
+<p>通过js函数劫持中断函数执行，并显示参数和函数调用者代码，来看一个完整例子的效果：</p>
+<blockquote>
+<p>help<br />
+debug commands:</p>
+</blockquote>
+<p>bp <function name> - set a breakpoint on a function, e.g. "bp window.alert".<br />
+bl - list all breakpoints.<br />
+bc <breakpoint number> - remove a breakpoint by specified number, e.g. "bc 0".<br />
+help - help information.</p>
+<blockquote>
+<p>bp window.alert<br />
+* breakpoint on function "window.alert" added successfully.</p>
+<p>bl<br />
+* 1 breakpoints:<br />
+0 - window.alert</p>
+<p>bc 0<br />
+* breakpoint on function "window.alert" deleted successfully.</p>
+</blockquote>
+<p>这里演示设置断点，察看断点和删除断点，完整代码在本文附录[1]给出。</p>
+<p>2. 设置陷阱实时捕捉跨站测试者，搞跨站的人总习惯用alert来确认是否存在跨站，如果你要监控是否有人在测试你的网站xss的话，可以在你要监控的页面里hook<br />
+alert函数，记录alert调用情况：</p>
+<script type="text/javascript">
+<!--
+function log(s) {
+var img = new Image();
+img.style.width = img.style.height = 0;
+img.src = "http://yousite.com/log.php?caller=" + encodeURIComponent(s);
+}
+
+var _alert = alert;
+window.alert = function(s) {
+log(alert.caller);
+_alert(s);
+}
+//-->
+</script>
+
+<p>当然，你这个函数要加到页面的最开始，而且还要比较隐蔽一些，赫赫，你甚至可以使alert不弹框或者弹个警告框，让测试者抓狂一把。</p>
+<p>3. 实现DOM XSS自动化扫描，目前一般的XSS自动化扫描的方法是从http返回结果中搜索特征来确定是否存在漏洞，但是这种方法不适用于扫描DOM<br />
+XSS，因为DOM XSS是由客户端脚本造成的，比如前段时间剑心发现的google的跨站(见附录[2])原理如下：</p>
+<p>document.write(document.location.hash);</p>
+<p>这样的跨站无法反映在http response里，所以传统扫描方法没法扫描出来。但是如果你从上个例子里受到启发的话，一定会想到设置陷阱的办法，DOM<br />
+XSS最终导致alert被执行，所以我们hook alert函数设置陷阱，如果XSS成功则会去调用alert函数，触发我们的陷阱记录结果，这样就可以实现DOM<br />
+XSS的自动化扫描，陷阱代码类似于上面。</p>
+<p>4.<br />
+灵活的使用js劫持辅助你的页面代码分析工作，比如分析网页木马时，经常会有通过eval或者document.write来进行加密的情况，于是我们编写段hook<br />
+eval和document.write的小工具，辅助解密：</p>
+<script type="text/javascript">
+<!--
+var _eval = eval;
+eval = window.execScript = window.document.write = window.document.writeln =
+function(s) {
+document.getElementById("output&quot ![;\)](http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif) .value = s;
+}
+//-->
+</script>
+<html>
+<body>
+input:
+<textarea id="input" cols="80" rows="10"></textarea>
+<input type="button" onclick="javascript:
+_eval(document.getElementById("input&quot ![;\)](http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif) .value);" value="decode" />
+<br />
+output:
+<textarea id="output" cols="80" rows="10"></textarea>
+</body>
+</html>
+
+<p>在input框里输入加密的代码：</p>
+<p>eval(unescape("%61%6C%65%72%74%28%31%29%3B&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> );</p>
+<p>在output框里输出解码后的代码：</p>
+<p>alert(1);</p>
+<p>当然你还能想到更多的灵活应用：）</p>
+<p>三、反劫持</p>
+<p>谈到劫持也就必然要谈谈反劫持的话题，假设你要写一个健壮的xss playload，就需要考虑反劫持，有两个问题要解决：</p>
+<p>如何判断是否被劫持了？<br />
+如果发现被劫持了，如何反劫持？</p>
+<p>1. 判断某个函数是否被劫持，这个好办，写个小程序对比一下一个函数被hook前后，有什么差别：</p>
+<textarea id="tb1" cols="80" rows="8"></textarea>
+<script type="text/javascript">
+<!--
+document.getElementById("tb1&quot ![;\)](http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif) .value = eval + "\n";
+var _eval = eval;
+eval = function(s) {
+alert(s);
+_eval(s);
+}
+document.getElementById("tb1&quot ![;\)](http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif) .value += eval;
+//-->
+</script>
+
+<p>结果：</p>
+<p>function eval() {<br />
+[native code]<br />
+}</p>
+<p>function(s) {<br />
+alert(s);<br />
+_eval(s);<br />
+}</p>
+<p>我们发现那些内置函数是[native code]，而自定义的则是具体的函数定义，用这个特征就可以简单的检测函数是否被劫持：</p>
+<p>function checkHook(proc) {<br />
+if (proc.toString().indexOf("[native code]&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> &gt; 0) {<br />
+return false;<br />
+} else {<br />
+return true;<br />
+}<br />
+}</p>
+<p>2.<br />
+如何反劫持，第一个想法就是恢复被劫持的函数，如果劫持的人把原函数保存在某个变量里那还好办，直接调用原函数就可以了，但是劫持者自己也没保存副本怎么办，只能自己创建个新的环境，然后用新环境里的干净的函数来恢复我们这里被hook了的，怎么创建新环境？整个新的iframe好了，里面就是个全新的环境。ok，动手吧：</p>
+<p>function unHook(proc) {<br />
+var f = document.createElement("iframe&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ;<br />
+f.style.border = "0";<br />
+f.style.width = "0";<br />
+f.style.height = "0";<br />
+document.body.appendChild(f);</p>
+<p>var d = f.contentWindow.document;<br />
+d.write("<script type=\"text/javascript\">window.parent.escape =<br />
+escape;&lt;\/script&gt;&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ;<br />
+d.close();<br />
+}</p>
+<p>综合1、2节，整个测试代码如下：</p>
+<!--antihook.htm-->
+<script type="text/javascript">
+<!--
+escape = function(s) {
+return s;
+}
+//-->
+</script>
+<html>
+<body>
+<input type="button" onclick="javascript: test();" value="test" />
+<script type="text/javascript">
+<!--
+function test() {
+alert(escape("s y&quot ![;\)](http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif) );
+
+if (checkHook(escape)) {
+unHook(escape);
+}
+
+alert(escape("s y&quot ![;\)](http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif) );
+}
+
+function checkHook(proc) {
+if (proc.toString().indexOf("[native code]&quot ![;\)](http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif) > 0) {
+return false;
+} else {
+return true;
+}
+}
+
+function unHook(proc) {
+var f = document.createElement("iframe&quot ![;\)](http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif) ;
+f.style.border = "0";
+f.style.width = "0";
+f.style.height = "0";
+document.body.appendChild(f);
+
+var d = f.contentWindow.document;
+d.write("<script type=\"text/javascript\">window.parent.escape =
+escape;<\/script>&quot ![;\)](http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif) ;
+d.close();
+}
+//-->
+</script>
+</body>
+</html>
+
+<p>3.<br />
+不是上面两个问题都解决了么，为什么要有第3节？因为那不是个最好的解决办法，既然我们可以创建全新的iframe，何不把代码直接放到全新iframe里执行呢，这样做的话绿色环保，既不用考虑当前context里的hook问题，也不用改动当前context，不会影响本身的程序执行。给出两个比较通用点的函数：</p>
+<p>function createIframe(w) {<br />
+var d = w.document;<br />
+var newIframe = d.createElement("iframe&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ;<br />
+newIframe.style.width = 0;<br />
+newIframe.style.height = 0;<br />
+d.body.appendChild(newIframe);<br />
+newIframe.contentWindow.document.write("<html><body></body></html>&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ;<br />
+return newIframe;<br />
+}</p>
+<p>function injectScriptIntoIframe(f, proc) {<br />
+var d = f.contentWindow.document;<br />
+var s = "<script>\n(" + proc.toString() + &amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ();\n</script>";<br />
+d.write(s);<br />
+}</p>
+<p>把你的payload封装进一个函数，然后调用这两个方法来在iframe里执行：</p>
+<p>function payload() {<br />
+// your code goes here<br />
+}</p>
+<p>var f = createIframe(top);<br />
+injectScriptIntoIframe(f, payload);</p>
+<p>四、最后</p>
+<p>由于国内很少有见文章提及这个东西，所以才草成这篇，希望能够抛砖引玉。由于本人水平有限，难免有错误或者疏漏之处请谅解，没有说清楚的地方，欢迎和我交流。</p>
+<p>还有就是一些不得不感谢的人，感谢剑心一直以来毫无保留的交流，感谢黑锅多次鼓励我把自己的心得体会写成文字，感谢幻影所有的朋友们、B.C.T的朋友们以及群里那帮经常一起扯淡的朋友们。</p>
+<p>广告一下，没法幻影blog的朋友，可以添加hosts来突破：<br />
+72.14.219.190 pstgroup.blogspot.com</p>
+<p>五、附录</p>
+<p>[1] 简易的javascript inline debugger代码</p>
+<!--test.htm-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>Javascript Inline Debugger</title></head>
+<body>
+<script language="javascript" type="text/javascript"
+src="js_inline_debugger.js"></script>
+<input type="button" value="hahaha" onclick="javascript: alert(this.value);"
+style="margin-left: 300px;" />
+</body>
+</html>
+
+<p>/*<br />
+FileName: js_inline_debugger.js<br />
+Author: luoluo<br />
+Contact: luoluonet_at_yahoo.cn<br />
+Date: 2007-6-27<br />
+Version: 0.1<br />
+Usage:</p>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+</head>
+<body>
+<script language="javascript" type="text/javascript"
+src="js_inline_debugger.js"></script>
+</body>
+</html>
+<p>Instruction:<br />
+It is a simple javascript inline debugger. You must add xhtml1-transitional dtd<br />
+to your<br />
+html document if you wanna to use the script.<br />
+*/</p>
+<p>//--------------------------------------------------------------------------//<br />
+// 公用的函数<br />
+//--------------------------------------------------------------------------//<br />
+// 判断是否是IE<br />
+function isIE() {<br />
+return document.all &amp;&amp; window.external;<br />
+}</p>
+<p>// 去除字符串两边的空格<br />
+String.prototype.trim = function() {<br />
+var re = /(^\s<em>)|(\s</em>)$/g;<br />
+return this.replace(re, "&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ;<br />
+}</p>
+<p>// 删除数组中某个元素<br />
+Array.prototype.remove = function(i) {<br />
+var o = this[i];<br />
+for (var j = i; j &lt; this.length - 1; j ++) {<br />
+this[j] = this[j + 1];<br />
+}<br />
+-- this.length;<br />
+return o;<br />
+}</p>
+<p>// 判断一个数组中是否存在相同的元素<br />
+Array.prototype.search = function(o) {<br />
+for (var i = 0; i &lt; this.length; i ++) {<br />
+if (this[i] == o) {<br />
+return i;<br />
+}<br />
+}</p>
+<p>return -1;<br />
+}</p>
+<p>// html编码<br />
+function htmlEncode(s) {<br />
+s = s.replace(/&amp;/g, "&amp;&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ;<br />
+s = s.replace(/</g, "&lt;&quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ;
+s = s.replace(/>/g, "&gt;&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ;<br />
+s = s.replace(/\"/g, "&quot;&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ;<br />
+s = s.replace(/\"/g, "&#34;&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ;</p>
+<p>return s;<br />
+}</p>
+<p>// js编码<br />
+function jsEncode(s) {<br />
+s = s.replace(/\\/g, "\\\\&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ;<br />
+s = s.replace(/\n/g, "\\n&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ;<br />
+s = s.replace(/\"/g, "\\\"&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ;<br />
+s = s.replace(/\"/g, "\\\"&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ;<br />
+return s;<br />
+}</p>
+<p>//--------------------------------------------------------------//<br />
+// 命令行窗口工具<br />
+//--------------------------------------------------------------//<br />
+function Console(parentNode, processInputProc) {<br />
+// 窗口<br />
+var panel = document.createElement("div&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ;<br />
+panel.style.width = "250px";<br />
+panel.style.height = "250px";<br />
+panel.style.borderColor = "#666666";<br />
+panel.style.borderWidth = "1px";<br />
+panel.style.backgroundColor = "#ffffff";<br />
+panel.style.borderStyle = "solid";<br />
+panel.style.position = "absolute";<br />
+panel.style.zIndex = 100;<br />
+parentNode.appendChild(panel);</p>
+<p>// 标题栏<br />
+var title = document.createElement("div&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ;<br />
+title.style.width = "250px";<br />
+title.style.height = "15px";<br />
+title.style.backgroundColor = "#dddddd";<br />
+title.style.fontSize = "12px";<br />
+title.style.fontFamily = "verdana,tahoma";<br />
+panel.appendChild(title);</p>
+<p>// 标题栏拖动窗口功能<br />
+var isDragging = false;<br />
+var startPos = new Position(panel.offsetLeft, panel.offsetTop);<br />
+var startMousePos = new Position(0, 0);</p>
+<p>title.onmouseover = function(evt) {<br />
+this.style.cursor = "pointer";<br />
+}</p>
+<p>title.onmousedown = function(evt) {<br />
+if (isDragging == true) {<br />
+return;<br />
+}</p>
+<p>var event = evt || window.event;<br />
+startMousePos.x = event.clientX;<br />
+startMousePos.y = event.clientY;<br />
+isDragging = true;<br />
+}</p>
+<p>title.onmousemove = function(evt) {<br />
+if (isDragging == false) {<br />
+return;<br />
+}</p>
+<p>activateWindow();<br />
+var event = evt || window.event;<br />
+panel.style.left = (event.clientX - startMousePos.x) + startPos.x + "px";<br />
+panel.style.top = (event.clientY - startMousePos.y) + startPos.y + "px";<br />
+}</p>
+<p>title.onmouseup = function(evt) {<br />
+if (isDragging == false) {<br />
+return;<br />
+}</p>
+<p>var event = evt || window.event;<br />
+startPos.x = (event.clientX - startMousePos.x) + startPos.x;<br />
+panel.style.left = startPos.x + "px";<br />
+startPos.y = (event.clientY - startMousePos.y) + startPos.y;<br />
+panel.style.top = startPos.y + "px";<br />
+isDragging = false;<br />
+}</p>
+<p>// 关闭窗口功能<br />
+var closeButton = document.createElement("div&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ;<br />
+closeButton.style.width = "13px";<br />
+closeButton.style.height = "13px";<br />
+closeButton.style.backgroundColor = "#ffffff";<br />
+closeButton.style.styleFloat = closeButton.style.cssFloat = "left";<br />
+closeButton.style.fontSize = "12px";<br />
+closeButton.style.borderWidth = "1px";<br />
+closeButton.style.borderColor = "#999999";<br />
+closeButton.style.borderStyle = "solid";<br />
+closeButton.style.paddingButton = "2px";<br />
+closeButton.innerHTML = "<div style=\"margin-top: -2px;margin-left:
+3px;\">x</div>";<br />
+title.appendChild(closeButton);</p>
+<p>var isVisible = true;</p>
+<p>// 窗口关闭<br />
+closeButton.onclick = function(evt) {<br />
+isVisible = false;<br />
+panel.style.display = "none";<br />
+}</p>
+<p>// 标题栏文字<br />
+var titleLabel = document.createElement("div&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ;<br />
+titleLabel.style.height = "14px";<br />
+titleLabel.style.width = "200px";<br />
+titleLabel.style.fontSize = "11px";<br />
+titleLabel.style.color = "#ffffff";<br />
+titleLabel.style.styleFloat = titleLabel.style.cssFloat = "left";<br />
+titleLabel.style.fontFamily = "verdana,tahoma";<br />
+titleLabel.innerHTML = "Javascript Inline Debugger";<br />
+//titleLabel.style.marginTop = isIE() ? -14 : "-14px";<br />
+titleLabel.style.marginLeft = isIE() ? 18 : "18px";<br />
+title.appendChild(titleLabel);</p>
+<p>// 中间的显示部分<br />
+var showPanel = document.createElement("div&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ;<br />
+showPanel.style.width = "250px";<br />
+showPanel.style.height = isIE() ? "221px" : "219px";<br />
+showPanel.style.fontSize = "11px";<br />
+showPanel.style.padding = "0";<br />
+showPanel.style.margin = "0";<br />
+showPanel.style.overflow = "auto";<br />
+showPanel.style.marginTop = isIE() ? -1 : "0";<br />
+panel.appendChild(showPanel);</p>
+<p>// 命令输入框<br />
+var cmdArea = document.createElement("div&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ;<br />
+panel.appendChild(cmdArea);</p>
+<p>var cmdTextbox = document.createElement("input&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ;<br />
+cmdTextbox.type = "text";<br />
+cmdTextbox.style.width = "250px";<br />
+cmdTextbox.style.height = "12px";<br />
+cmdTextbox.style.fontSize = "12px";<br />
+cmdTextbox.style.padding = "0";<br />
+cmdTextbox.style.margin = "0";<br />
+cmdTextbox.style.marginTop = isIE() ? -2 : "0";<br />
+cmdTextbox.style.borderWidth = "0";<br />
+cmdTextbox.style.borderTopWidth = "1px";<br />
+cmdTextbox.style.paddingTop = "2px";<br />
+cmdArea.appendChild(cmdTextbox);</p>
+<p>// 窗口激活或者不激活<br />
+var isActive = false;</p>
+<p>// 激活窗口<br />
+var activateWindow = function() {<br />
+if (! isVisible) {<br />
+return;<br />
+}</p>
+<p>if (isActive) {<br />
+return;<br />
+}</p>
+<p>cmdTextbox.focus();<br />
+title.style.backgroundColor = "#015DF4";<br />
+isActive = true;<br />
+}</p>
+<p>panel.onclick = activateWindow;</p>
+<p>// 不激活窗口<br />
+var deactivateWindow = function() {<br />
+if (! isVisible) {<br />
+return;<br />
+}</p>
+<p>if (! isActive) {<br />
+return;<br />
+}</p>
+<p>title.style.backgroundColor = "#cccccc";<br />
+isActive = false;<br />
+}</p>
+<p>cmdTextbox.onfocus = activateWindow;<br />
+cmdTextbox.onblur = deactivateWindow;</p>
+<p>// 输出函数<br />
+var dbgPrint = function(s) {<br />
+showPanel.innerHTML += htmlEncode(s).replace(/\n|(\r\n)/g, "<br />&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ;</p>
+<p>if (parseInt(showPanel.scrollHeight) &gt; parseInt(showPanel.style.height)) {<br />
+showPanel.scrollTop += parseInt(showPanel.scrollHeight) -<br />
+parseInt(showPanel.style.height);<br />
+}<br />
+}</p>
+<p>// 调用输入处理回调函数<br />
+cmdTextbox.onkeydown = function(evt) {<br />
+var event = evt || window.event;</p>
+<p>if (event.keyCode == 0x0d) {<br />
+processInputProc(this.value, dbgPrint);<br />
+this.value = "";<br />
+}<br />
+}<br />
+}</p>
+<p>// 坐标类<br />
+function Position(x, y) {<br />
+this.x = x;<br />
+this.y = y;<br />
+}</p>
+<p>//--------------------------------------------------------------------------//<br />
+// 内联调试器类<br />
+//--------------------------------------------------------------------------//<br />
+function InlineDebugger() {<br />
+var bpList = new Array();<br />
+var id_eval;</p>
+<p>// 设置断点<br />
+var bp = function(funcName) {<br />
+// 检查eval是否被hook<br />
+if ((new String(eval)).indexOf("[native code]&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> &lt; 0) {<br />
+return "error: eval function was hooked by other codes in the front.\n";<br />
+}</p>
+<p>// 保存未被hooked的eval<br />
+id_eval = eval;</p>
+<p>var re = /^[a-zA-Z0-9_\.]+$/i;<br />
+if (! re.test(funcName)) {<br />
+return "error: bad argument of command bp \"" + funcName + "\".\n";<br />
+}</p>
+<p>try {<br />
+id_eval("if (typeof(" + funcName + &amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> == \"object\" || typeof(" + funcName + &amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /><br />
+== \"function\&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> {var obj = " + funcName + ";}&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ;<br />
+} catch (e) {<br />
+return "error: " + e + ", invalid function name \"" + funcName + "\".\n";<br />
+}</p>
+<p>if (obj == undefined) {<br />
+return "error: the argument of command bp \"" + funcName + "\" is not a function<br />
+object.\n";<br />
+}</p>
+<p>if ((new String(obj)).indexOf("function&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> &lt; 0) {<br />
+return "error: the argument of command bp \"" + funcName + "\" is a property, a<br />
+function is required.\n";<br />
+}</p>
+<p>if (bpList.search(funcName) &gt;= 0) {<br />
+return "error: there is a breakpoint on function \"" + funcName + "\"\n";<br />
+}</p>
+<p>try {<br />
+var sc = "window." + funcName.replace(/\./g, "<em>&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> + "_bak = " + funcName + ";\n"<br />
++<br />
+funcName + " = " +<br />
+"function() {\n" +<br />
+" var args = \"\";\n" +<br />
+" for (var i = 0; i &lt; arguments.length; i ++) {\n" +<br />
+" args += arguments[i] + (i == (arguments.length - 1) ? \"\" : \",\&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ;\n" +<br />
+" }\n" +<br />
+" if (confirm(\"function \\\"" + funcName + "\\\" was called, execute<br />
+it?\\n\\narguments:\\n\" + args + \"\\n\\ncaller:\\n\" + " + funcName +<br />
+".caller)) {\n" +<br />
+" id_eval(\"" + funcName.replace(/\./g, "</em>&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> + "_bak(\\\"\" + jsEncode(args) +<br />
+\"\\\&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> \&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ;\n" +<br />
+" }\n" +<br />
+"};" +<br />
+"\n";<br />
+id_eval(sc);<br />
+bpList.push(funcName);<br />
+return "* breakpoint on function \"" + funcName + "\" added successfully.\n";<br />
+} catch (e) {<br />
+return "unkown error: " + e + ".\n";<br />
+}<br />
+}</p>
+<p>// 枚举所有的断点<br />
+var bl = function() {<br />
+if (bpList.length == 0) {<br />
+return "* no breakpoint.\n";<br />
+}</p>
+<p>var bps = "* " + bpList.length + " breakpoints: \n";</p>
+<p>for (var i = 0; i &lt; bpList.length; i ++) {<br />
+bps += i + " - " + bpList[i] + "\n";<br />
+}</p>
+<p>return bps;<br />
+}</p>
+<p>// 清除某个断点<br />
+var bc = function(n) {<br />
+try {<br />
+n = parseInt(n);<br />
+} catch (e) {<br />
+return "error: bc command requires a numeric argument.\n";<br />
+}</p>
+<p>if (bpList.length == 0) {<br />
+return "error: no breakpoint.\n";<br />
+}</p>
+<p>var funcName = bpList.remove(n);</p>
+<p>try {<br />
+eval(funcName + " = window." + funcName.replace(/\./g, "_&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> + "_bak;&amp;quot <img alt=";)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_wink.gif" /> ;<br />
+return "* breakpoint on function \"" + funcName + "\" deleted successfully.\n";<br />
+} catch (e) {<br />
+return "error: " + e + ".\n";<br />
+}<br />
+}</p>
+<p>// 帮助<br />
+var help = function() {<br />
+var s = "debug commands:\n\n" +<br />
+"bp <function name> - set a breakpoint on a function, e.g. \"bp<br />
+window.alert\".\n" +<br />
+"bl - list all breakpoints.\n" +<br />
+"bc <breakpoint number> - remove a breakpoint by specified number, e.g. \"bc<br />
+0\".\n" +<br />
+"help - help information.\n"<br />
+"\n";<br />
+return s;<br />
+}</p>
+<p>// 处理命令<br />
+this.exeCmd = function(cmd) {<br />
+cmd = cmd.trim();<br />
+var cmdParts = cmd.split(/\s+/g);<br />
+var cmdName;<br />
+var cmdArg;</p>
+<p>if (cmdParts.length == 1) {<br />
+cmdName = cmd;<br />
+} else {<br />
+cmdName = cmdParts[0];<br />
+cmdArg = cmdParts[1];<br />
+}</p>
+<p>switch (cmdName) {<br />
+case "bp":<br />
+if (cmdArg == undefined) {<br />
+return "error: bp command requires an argument.\n";<br />
+} else {<br />
+return bp(cmdArg);<br />
+}<br />
+break;</p>
+<p>case "bl":<br />
+return bl();<br />
+break;</p>
+<p>case "bc":<br />
+if (cmdArg == undefined) {<br />
+return "error: bc command requires an argument \"number of breakpoint\".\n";<br />
+} else {<br />
+return bc(cmdArg);<br />
+}<br />
+break;</p>
+<p>case "help":<br />
+return help();<br />
+break;</p>
+<p>default: return "error: command \"" + cmdName + "\" not found, you can get<br />
+information by \"help\" command.\n";<br />
+break;<br />
+}<br />
+}<br />
+}</p>
+<p>//-----------------------------------------------------------------------------//<br />
+// 主过程<br />
+//-----------------------------------------------------------------------------//<br />
+/<em>try {<br />
+debugger;<br />
+} catch (e) {}</em>/<br />
+var id = new InlineDebugger();<br />
+var console = new Console(document.body, function(s,<br />
+printProc){printProc(id.exeCmd(s));});</p>
+<p>[2] http://www.xfocus.net/articles/200711/957.html</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Vista自带IIS7配置CGI和ISAPI的问题 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Vista自带IIS7配置CGI和ISAPI的问题" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/358695" />
+    <meta property="og:url" content="https://blog.est.im/archives/358695">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Vista自带IIS7配置CGI和ISAPI的问题">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Vista自带IIS7配置CGI和ISAPI的问题</h2>
+    <p class="post-date">Posted <time datetime="2007-08-30T00:00:00+08:00">2007-08-30</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>Vista Ultimate自带的IIS7是全新的界面，所以配置有点摸不着头脑。在 网站 -&gt; 处理程序映射 里添加一个 .php 的ISAPI时，IIS老是提示</p>
+<p>---------------------------<br />
+添加脚本映射<br />
+---------------------------<br />
+模块列表中不存在为此处理程序指定的一个或多个模块。如果您尝试添加脚本映射，则 IsapiModule 或 CgiModule 不会显示在模块列表中。<br />
+---------------------------<br />
+确定<br />
+---------------------------</p>
+<p>英文是：<br />
+One or more of the modules specified for this handler does not exist in the modules list. If you are trying to add a script map the IsapiModule or the CgiModule is not present in the modules list.</p>
+<p>Google了半天找不到原因。后来在一个php论坛的<a href="http://www.phpbuilder.com/board/showthread.php?p=10821113">帖子</a>里找到了答案。方法很简单，在 控制面板 -&gt; 程序和功能 -&gt; 打开或关闭Windows功能（这几步可以简化为Win+R运行OptionalFeatures） -&gt; Internet信息服务 -&gt; 万维网服务 -&gt; 应用程序开发功能，把下面的全部勾上！重启，成功！<br />
+<img alt="IIS CGI" src="http://olds.blogcn.com/wp-content/uploads/74/7487/2007/08/iis_cgi.jpg" /></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

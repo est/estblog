@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>用汇编写asp.net - 基于IL的Asm80386 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="用汇编写asp.net - 基于IL的Asm80386" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/629297" />
+    <meta property="og:url" content="https://blog.est.im/archives/629297">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="用汇编写asp.net - 基于IL的Asm80386">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">用汇编写asp.net - 基于IL的Asm80386</h2>
+    <p class="post-date">Posted <time datetime="2012-11-12T18:46:51+08:00">2012-11-12</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p><a href="http://www.viksoe.dk/code/asmil.htm">http://www.viksoe.dk/code/asmil.htm</a></p>
+<p><code>&lt;%@ page language="Asm80386" %&gt;
+&lt;%
+Str: DB "Testing...", 0</code></p>
+<p>mov eax, -2<br />
+cmp eax, 2<br />
+jle Label1<br />
+xor eax, eax<br />
+Label1:<br />
+lea esi, Str<br />
+push esi<br />
+call "Response.Write(string)"<br />
+pop esi<br />
+%&gt;<br />
+<br>EAX: &lt;%= eax %&gt;</p>
+<p>好耍哇，赶快去下载个（<a href="http://www.viksoe.dk/code/downloads/asmil.zip">ASM Script Compiler</a>）～～～才45k</p>
+<p>摘录reddit八卦<a href="http://www.reddit.com/r/programming/info/6nsj1/comments/">评论</a>几条：</p>
+<pre><code>* Rails 杀手来了！
+* 突然间Java Bytecode没有那么囧了
+* 宇宙第一个可移植的汇编程序！
+* 我靠，这还是2008年么？
+* bob，周一之前把我们的网站用这种方式**重写** （瀑布如雨汗）
+* 回楼上的，不行啊，我们的代码跑在 _Lisp_ 机器上
+* 搞笑的吧
+* 回复楼上：汇编是严肃的东西！
+* Web 3.0的标志性东西出现了！
+</code></pre>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

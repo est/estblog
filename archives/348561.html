@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Vista Ubuntu VMware不一样的双系统 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Vista Ubuntu VMware不一样的双系统" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/348561" />
+    <meta property="og:url" content="https://blog.est.im/archives/348561">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Vista Ubuntu VMware不一样的双系统">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">Vista Ubuntu VMware不一样的双系统</h2>
+    <p class="post-date">Posted <time datetime="2007-08-26T15:18:48+08:00">2007-08-26</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>以前装了个Windows Vista Ultimate+UbuntuStudio 7.04双系统，但是平时主要还是在Vista下，没时间玩Ubuntu得，因为重启进Ubuntu浪费时间。最近想了一个YY的办法，主要用VMWare的“映射物理磁盘”功能，在Vista上跑VMware，然后在Vmware里启动物理硬盘上的真实Ubuntu。这样不用重启就可以使用Ubuntu，同时节省磁盘空间，因为这样不用硬盘上装一个Ubuntu虚拟机里一个Ubuntu。这个Ubuntu虚拟机几个文件加起来一共才240K <img alt=":)" src="http://wpcache.yo2.cn/wp-includes/images/smilies/icon_smile.gif" /></p>
+<h2>新建虚拟机</h2>
+<p>在VMware菜单里选择 File -&gt; New -&gt; Virtual Machine，然后Custom一个Ubuntu的虚拟机。注意新建 虚拟磁盘 的时候（如图），一定要选择Use a <em>p</em> hysical disk(for advanced users)<br />
+<img alt="1.jpg" src="/images/archive/2007/348561_01.jpg" /></p>
+<p>接下来把虚拟磁盘映射到当前主机的真是磁盘上，选择 Use individual <em>p</em> artitions。<br />
+<img alt="" src="http://wpcache.yo2.cn/wp-content/uploads/74/7487/2007/08/2.jpg" /></p>
+<p>我的硬盘分区非配为：C:\为Vista系统盘（NTFS格式，GRUB启动），D:\为软件工具盘（FAT32格式，GRUB启动），E:\为文件盘（NTFS带压缩格式），剩下的分区分别是Ubuntu的swao, /home还有 / 根目录。这里只映射了D:盘（作为交换文件用）和3个Ubuntu分区。<br />
+<img alt="" src="http://wpcache.yo2.cn/wp-content/uploads/74/7487/2007/08/3.jpg" /></p>
+<h2>启动虚拟机</h2>
+<p>启动虚拟机的时候。发现其中有一行错误。原来是我的C:和E:盘没有找到 <img alt=":)" src="http://wpcache.yo2.cn/wp-includes/images/smilies/icon_smile.gif" /><br />
+<img alt="" src="http://wpcache.yo2.cn/wp-content/uploads/74/7487/2007/08/5.jpg" /></p>
+<h2>配置X.org</h2>
+<p>启动到最后显示X.org出错。在VMware菜单里选择 VM -&gt; Install VMware tools。Vmware会自动加载VMware显卡驱动的iso到光驱。发现光盘里有两个文件，一个VMwareTools-6.0.0-45731.i386.rpm，另一个是VMwareTools-6.0.0-45731.tar.gz，Ubuntu没法用rpm只有去手工编译了。用tar -xzf VMwareTools-6.0.0-45731.tar.gz -C ~/ 解压到 /home/est 目录下，运行sudo ~/vmware-tools-distrib/vmware-install.pl</p>
+<pre><code>Stopping VMware Tools services in the virtual machine:
+   Guest operating system daemon:                                      done
+   Blocking file system:                                               done
+   Unmounting HGFS shares:                                             done
+   Guest filesystem driver:                                            done
+   Guest memory manager:                                               done
+ * Deconfiguring network interfaces...                                   [ OK ]
+   Guest vmxnet fast network device:                                   done
+   New Host-Guest communications path:                                 done
+Trying to find a suitable vmmemctl module for your running kernel.
+
+None of the pre-built vmmemctl modules for VMware Tools is suitable for your
+running kernel.  Do you want this program to try to build the vmmemctl module
+for your system (you need to have a C compiler installed on your system)?
+[yes] yes
+
+Using compiler &quot;/usr/bin/gcc&quot;. Use environment variable CC to override.
+
+What is the location of the directory of C header files that match your running
+kernel? [/lib/modules/2.6.20-16-generic/build/include]
+
+Extracting the sources of the vmmemctl module.
+
+Building the vmmemctl module.
+
+Using 2.6.x kernel build system.
+make: Entering directory `/tmp/vmware-config0/vmmemctl-only'
+make -C /lib/modules/2.6.20-16-generic/build/include/.. SUBDIRS=$PWD SRCROOT=$PWD/. modules
+make[1]: Entering directory `/usr/src/linux-headers-2.6.20-16-generic'
+  CC [M]  /tmp/vmware-config0/vmmemctl-only/os.o
+  SHIPPED /tmp/vmware-config0/vmmemctl-only/vmmemctl1.o
+  LD [M]  /tmp/vmware-config0/vmmemctl-only/vmmemctl.o
+  Building modules, stage 2.
+  MODPOST 1 modules
+WARNING: could not find /tmp/vmware-config0/vmmemctl-only/.vmmemctl1.o.cmd for /tmp/vmware-config0/vmmemctl-only/vmmemctl1.o
+  CC      /tmp/vmware-config0/vmmemctl-only/vmmemctl.mod.o
+  LD [M]  /tmp/vmware-config0/vmmemctl-only/vmmemctl.ko
+make[1]: Leaving directory `/usr/src/linux-headers-2.6.20-16-generic'
+cp -f vmmemctl.ko ./../vmmemctl.o
+make: Leaving directory `/tmp/vmware-config0/vmmemctl-only'
+The module loads perfectly in the running kernel.
+
+Extracting the sources of the vmhgfs module.
+
+Building the vmhgfs module.
+
+Using 2.6.x kernel build system.
+make: Entering directory `/tmp/vmware-config0/vmhgfs-only'
+make -C /lib/modules/2.6.20-16-generic/build/include/.. SUBDIRS=$PWD SRCROOT=$PWD/. modules
+make[1]: Entering directory `/usr/src/linux-headers-2.6.20-16-generic'
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/backdoor.o
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/backdoorGcc32.o
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/bdhandler.o
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/cpName.o
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/cpNameLinux.o
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/cpNameLite.o
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/dbllnklst.o
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/dentry.o
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/dir.o
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/eventManager.o
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/file.o
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/filesystem.o
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/fsutil.o
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/hgfsBd.o
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/hgfsUtil.o
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/inode.o
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/kernelStubsLinux.o
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/link.o
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/message.o
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/module.o
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/page.o
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/request.o
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/rpcin.o
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/rpcout.o
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/staticEscape.o
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/stubs.o
+  CC [M]  /tmp/vmware-config0/vmhgfs-only/super.o
+  LD [M]  /tmp/vmware-config0/vmhgfs-only/vmhgfs.o
+  Building modules, stage 2.
+  MODPOST 1 modules
+  CC      /tmp/vmware-config0/vmhgfs-only/vmhgfs.mod.o
+  LD [M]  /tmp/vmware-config0/vmhgfs-only/vmhgfs.ko
+make[1]: Leaving directory `/usr/src/linux-headers-2.6.20-16-generic'
+cp -f vmhgfs.ko ./../vmhgfs.o
+make: Leaving directory `/tmp/vmware-config0/vmhgfs-only'
+The module loads perfectly in the running kernel.
+
+pcnet32                34052  0
+Unloading pcnet32 module
+
+Extracting the sources of the vmxnet module.
+
+Building the vmxnet module.
+
+Using 2.6.x kernel build system.
+make: Entering directory `/tmp/vmware-config0/vmxnet-only'
+make -C /lib/modules/2.6.20-16-generic/build/include/.. SUBDIRS=$PWD SRCROOT=$PWD/. modules
+make[1]: Entering directory `/usr/src/linux-headers-2.6.20-16-generic'
+  CC [M]  /tmp/vmware-config0/vmxnet-only/vmxnet.o
+  Building modules, stage 2.
+  MODPOST 1 modules
+  CC      /tmp/vmware-config0/vmxnet-only/vmxnet.mod.o
+  LD [M]  /tmp/vmware-config0/vmxnet-only/vmxnet.ko
+make[1]: Leaving directory `/usr/src/linux-headers-2.6.20-16-generic'
+cp -f vmxnet.ko ./../vmxnet.o
+make: Leaving directory `/tmp/vmware-config0/vmxnet-only'
+The module loads perfectly in the running kernel.
+
+Extracting the sources of the vmblock module.
+
+Building the vmblock module.
+
+Using 2.6.x kernel build system.
+make: Entering directory `/tmp/vmware-config0/vmblock-only'
+make -C /lib/modules/2.6.20-16-generic/build/include/.. SUBDIRS=$PWD SRCROOT=$PWD/. modules
+make[1]: Entering directory `/usr/src/linux-headers-2.6.20-16-generic'
+  CC [M]  /tmp/vmware-config0/vmblock-only/linux/block.o
+  CC [M]  /tmp/vmware-config0/vmblock-only/linux/control.o
+  CC [M]  /tmp/vmware-config0/vmblock-only/linux/dbllnklst.o
+  CC [M]  /tmp/vmware-config0/vmblock-only/linux/dentry.o
+  CC [M]  /tmp/vmware-config0/vmblock-only/linux/file.o
+  CC [M]  /tmp/vmware-config0/vmblock-only/linux/filesystem.o
+  CC [M]  /tmp/vmware-config0/vmblock-only/linux/inode.o
+  CC [M]  /tmp/vmware-config0/vmblock-only/linux/module.o
+  CC [M]  /tmp/vmware-config0/vmblock-only/linux/stubs.o
+  CC [M]  /tmp/vmware-config0/vmblock-only/linux/super.o
+  LD [M]  /tmp/vmware-config0/vmblock-only/vmblock.o
+  Building modules, stage 2.
+  MODPOST 1 modules
+  CC      /tmp/vmware-config0/vmblock-only/vmblock.mod.o
+  LD [M]  /tmp/vmware-config0/vmblock-only/vmblock.ko
+make[1]: Leaving directory `/usr/src/linux-headers-2.6.20-16-generic'
+cp -f vmblock.ko ./../vmblock.o
+make: Leaving directory `/tmp/vmware-config0/vmblock-only'
+The module loads perfectly in the running kernel.
+
+[EXPERIMENTAL] The Virtual Machine Communication Interface (VMCI) service
+provides a new communication capability with the Host, primarily for
+development at the moment.  Would you like to enable this feature? [yes] y
+
+Extracting the sources of the vmci module.
+
+Building the vmci module.
+
+Using 2.6.x kernel build system.
+make: Entering directory `/tmp/vmware-config0/vmci-only'
+make -C /lib/modules/2.6.20-16-generic/build/include/.. SUBDIRS=$PWD SRCROOT=$PWD/. modules
+make[1]: Entering directory `/usr/src/linux-headers-2.6.20-16-generic'
+  CC [M]  /tmp/vmware-config0/vmci-only/dbllnklst.o
+  CC [M]  /tmp/vmware-config0/vmci-only/kernelStubsLinux.o
+  CC [M]  /tmp/vmware-config0/vmci-only/vmciDatagram.o
+  CC [M]  /tmp/vmware-config0/vmci-only/vmci_drv.o
+  CC [M]  /tmp/vmware-config0/vmci-only/vmciProcess.o
+  CC [M]  /tmp/vmware-config0/vmci-only/vmciResource.o
+  CC [M]  /tmp/vmware-config0/vmci-only/vmciSharedMemory.o
+  CC [M]  /tmp/vmware-config0/vmci-only/vmciTest.o
+  CC [M]  /tmp/vmware-config0/vmci-only/vmciUtil.o
+  LD [M]  /tmp/vmware-config0/vmci-only/vmci.o
+  Building modules, stage 2.
+  MODPOST 1 modules
+  CC      /tmp/vmware-config0/vmci-only/vmci.mod.o
+  LD [M]  /tmp/vmware-config0/vmci-only/vmci.ko
+make[1]: Leaving directory `/usr/src/linux-headers-2.6.20-16-generic'
+cp -f vmci.ko ./../vmci.o
+make: Leaving directory `/tmp/vmware-config0/vmci-only'
+The module loads perfectly in the running kernel.
+
+Detected X.org version 7.2.
+
+This program previously created the file
+/usr/lib/xorg/modules/input/vmmouse_drv.so, and was about to remove it.
+Somebody else apparently did it already.
+
+Do you want to change the display size that X starts with? (yes/no) [no] n
+
+X Window System Version 7.2.0
+Release Date: 22 January 2007
+X Protocol Version 11, Revision 0, Release 7.2
+Build Operating System: Linux Ubuntu
+Current Operating System: Linux est-ubuntu 2.6.20-16-generic #2 SMP Thu Jun 7 20:19:32 UTC 2007 i686
+Build Date: 04 April 2007
+        Before reporting problems, check http://wiki.x.org
+        to make sure that you have the latest version.
+Module Loader present
+Markers: (--) probed, (**) From config file, (==) default setting,
+        (++) From command line, (!!) notice, (II) informational,
+        (WW) warning, (EE) error, (NI) not implemented, (??) unknown.
+(++) Log file: &quot;/tmp/vmware-config0/XF86ConfigLog.6340&quot;, Time: Sun Aug 26 19:58:58 2007
+(++) Using config file: &quot;/tmp/vmware-config0/XF86Config.6340&quot;
+
+X is running fine with the new config file.
+
+(EE) AIGLX: Screen 0 is not DRI capable
+Synaptics Touchpad no synaptics event device found (checked 15 nodes)
+Query no Synaptics: 6003C8
+(EE) Synaptics Touchpad no synaptics touchpad detected and no repeater device
+(EE) Synaptics Touchpad Unable to query/initialize Synaptics hardware.
+(EE) PreInit failed for input device &quot;Synaptics Touchpad&quot;
+(EE) xf86OpenSerial: Cannot open device /dev/input/wacom
+        No such file or directory.
+Error opening /dev/input/wacom : No such file or directory
+(EE) xf86OpenSerial: Cannot open device /dev/input/wacom
+        No such file or directory.
+Error opening /dev/input/wacom : No such file or directory
+(EE) xf86OpenSerial: Cannot open device /dev/input/wacom
+        No such file or directory.
+Error opening /dev/input/wacom : No such file or directory
+Could not init font path element /usr/X11R6/lib/X11/fonts/misc, removing From list!
+Could not init font path element /usr/share/fonts/X11/cyrillic, removing From list!
+Could not init font path element /usr/X11R6/lib/X11/fonts/Type1, removing From list!
+FreeFontPath: FPE &quot;/usr/share/fonts/X11/misc&quot; refcount is 2, should be 1; fixing.
+Starting VMware Tools services in the virtual machine:
+   Switching to guest configuration:                                   done
+   Guest filesystem driver:                                            done
+   Mounting HGFS shares:                                              failed
+   Guest memory manager:                                               done
+   Guest vmxnet fast network device:                                   done
+   New Host-Guest communications path:                                 done
+   Blocking file system:                                               done
+   DMA setup:                                                          done
+   Guest operating system daemon:                                      done
+
+The configuration of VMware Tools 6.0.0 build-45731 for Linux for this running
+kernel completed successfully.
+
+You must restart your X session before any mouse or graphics changes take
+effect.
+
+You can now run VMware Tools by invoking the following command:
+&quot;/usr/bin/vmware-toolbox&quot; during an X server session.
+
+To use the vmxnet driver, restart networking using the following commands:
+/etc/init.d/networking stop
+rmmod pcnet32
+rmmod vmxnet
+modprobe vmxnet
+/etc/init.d/networking start
+
+If you wish to configure any experimental features, please run the following
+command: &quot;vmware-config-tools.pl --experimental&quot;.
+
+Enjoy,
+
+--the VMware team
+</code></pre>
+<h2>搞定</h2>
+<p>Vista下跑VMware，虚拟机运行真实硬盘上的Ubuntu，截图纪念<br />
+<img alt="" src="http://wpcache.yo2.cn/wp-content/uploads/74/7487/2007/08/4.jpg" /></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

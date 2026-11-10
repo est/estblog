@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[无聊]谈谈IE/FF浏览器F5刷新和地址栏按回车的区别 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[无聊]谈谈IE/FF浏览器F5刷新和地址栏按回车的区别" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/465459" />
+    <meta property="og:url" content="https://blog.est.im/archives/465459">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[无聊]谈谈IE/FF浏览器F5刷新和地址栏按回车的区别">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[无聊]谈谈IE/FF浏览器F5刷新和地址栏按回车的区别</h2>
+    <p class="post-date">Posted <time datetime="2007-10-15T14:55:35+08:00">2007-10-15</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>研究CGI的时候无意发现了。</p>
+<h3>Internet Explorer</h3>
+<p>地址栏回车，HTTP头中 Accept 为：HTTP_ACCEPT image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/x-ms-application, application/vnd.ms-xpsdocument, application/xaml+xml, application/x-ms-xbap, application/msword, application/vnd.ms-powerpoint, application/x-shockwave-flash, application/vnd.ms-excel, application/x-silverlight, <em>/</em><br />
+按F5刷新，HTTP头中Accept 为： <em>/</em></p>
+<h3>Firefox</h3>
+<p>F5刷新：HTTP请求中有一个 Cache-Control: max-age=0<br />
+地址栏回车：没有这个Cache-Control 头</p>
+<p>诡异～</p>
+<p>写了一个脚本来证明我的这个观点 <!-- http://labs.dormforce.net/tests/enter-or-f5 --></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

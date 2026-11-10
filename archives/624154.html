@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[Python]给urllib2添加自动Referer, Cookie处理功能 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[Python]给urllib2添加自动Referer, Cookie处理功能" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/624154" />
+    <meta property="og:url" content="https://blog.est.im/archives/624154">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[Python]给urllib2添加自动Referer, Cookie处理功能">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[Python]给urllib2添加自动Referer, Cookie处理功能</h2>
+    <p class="post-date">Posted <time datetime="2008-02-24T00:00:00+08:00">2008-02-24</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>urllib2是个非常好用的http客户端库，但是用来写爬虫可能会遇到一些问题，一是连续请求某一网站的时候，cookie需要手动添加到HTTP请求头里，二是手动处理Referer页。这里贴一段代码，可以自动处理Cookie和Referer问题。每一个请求会自动添加上一次的cookie和referer。</p>
+<p>以后做爬虫，如果规模较大，性能要求较高，还是用<a href="http://pycurl.sourceforge.net/download/">pycURL</a>这个库吧，C写的。一般的小规模应用，要方便的跨Linux/Windows平台还是用下面的代码比较灵活方便。</p>
+<pre><code>class HTTPRefererProcessor(urllib2.BaseHandler):
+    def __init__(self):
+        self.referer = None
+
+    def http_request(self, request):
+        if ((self.referer is not None) and
+            not request.has_header(&quot;Referer&quot;)):
+            request.add_unredirected_header(&quot;Referer&quot;, self.referer)
+        return request
+
+    def http_response(self, request, response):
+        self.referer = response.geturl()
+        return response
+
+    https_request = http_request
+    https_response = http_response
+
+def main():
+    cj = CookieJar()
+    opener = urllib2.build_opener(
+        urllib2.HTTPCookieProcessor(cj),
+        HTTPRefererProcessor(),
+    )
+    urllib2.install_opener(opener)
+
+    urllib2.urlopen(url1)  #打开第一个网址
+    urllib2.urlopen(url2)  #打开第二个网址
+
+if &quot;__main__&quot; == __name__:
+    main()
+</code></pre>
+<p>参考了部分<a href="http://wwwsearch.sourceforge.net/ClientCookie/">ClientCookie</a>库的代码。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[原]一个极其BT的批处理：任务栏系统托盘汽泡提示 – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[原]一个极其BT的批处理：任务栏系统托盘汽泡提示" />
+
+    <link rel="canonical" href="https://blog.est.im/nu/13411" />
+    <meta property="og:url" content="https://blog.est.im/nu/13411">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[原]一个极其BT的批处理：任务栏系统托盘汽泡提示">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[原]一个极其BT的批处理：任务栏系统托盘汽泡提示</h2>
+    <p class="post-date">Posted <time datetime="2007-01-16T00:16:00+08:00">2007-01-16</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>这种极其超出p处理讨论范围的话题真的有点BT，而且很无聊，所以我的解决方案也很无聊，那就是调用无所不能的 C#，所以需要 .NET Framework 支持，看代码`</p>
+<p><a href="http://www.cn-dos.net/forum/viewthread.php?tid=26751&amp;pid=166694&amp;page=1###">http://www.cn-dos.net/forum/viewthread.php?tid=26751&amp;pid=166694&amp;page=1###</a></p>
+<pre><code class="language-bat">@echo off
+set &quot;dnfpath=C:\Windows\Microsoft.NET\Framework&quot;
+set &quot;est=DO_NOT_ZT_WITHOUT_PERMISSION&quot;
+for /f &quot;delims=&quot; %%v in ('dir /ad /b %dnfpath%\v?.*') do (
+       if exist &quot;%dnfpath%\%%v\csc.exe&quot; set &quot;cscpath=%dnfpath%\%%v\csc.exe&quot;
+)
+
+&lt; &quot;%~f0&quot; more +17 &gt; &quot;%temp%\estTrayTip.cs&quot;
+%cscpath% &quot;/out:%cd%\estTrayTip.exe&quot; &quot;%temp%\estTrayTip.cs&quot;
+estTrayTip.exe C:\Windows\System32\acwizard.ico 看什么看 没见过批处理啊？没见过任务栏的汽泡信息啊？见过了吧？见过了顶electronixtar的帖子。 2
+:exe的参数解释：estTrayTip.exe 图标路径 标题 内容 提示图标类型Error、Info、None、Warning，这里取2=Info。每个参数都必须正确填写
+&gt;nul ping 127.1 -n 1
+del estTrayTip.exe
+
+goto:eof
+
+:estTrayTip
+
+using System;
+using System.Windows.Forms;
+using System.Drawing;
+
+namespace estTrayTip
+{
+  class Program
+  {
+      static void Main(string[] args)
+      {
+          NotifyIcon estIcon = new NotifyIcon();
+          estIcon.Icon = new Icon(args[0]);
+          estIcon.Visible = true;
+          ToolTipIcon estToolTipIcon = new ToolTipIcon();
+          switch(args[3])
+          {
+              case &quot;1&quot;:
+                  estToolTipIcon = ToolTipIcon.Error; break;
+              case &quot;2&quot;:
+                  estToolTipIcon = ToolTipIcon.Info; break;
+              case &quot;3&quot;:
+                  estToolTipIcon = ToolTipIcon.None; break;
+              case &quot;4&quot;:
+                  estToolTipIcon = ToolTipIcon.Warning; break;
+          }
+          estIcon.ShowBalloonTip(1,args[1],args[2],estToolTipIcon);
+      }
+  }
+}
+
+</code></pre>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

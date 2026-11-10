@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[shellscript]Bash下实现任意键继续 Press anykey to continue – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="[shellscript]Bash下实现任意键继续 Press anykey to continue" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/553005" />
+    <meta property="og:url" content="https://blog.est.im/archives/553005">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[shellscript]Bash下实现任意键继续 Press anykey to continue">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">[shellscript]Bash下实现任意键继续 Press anykey to continue</h2>
+    <p class="post-date">Posted <time datetime="2007-11-23T23:14:38+08:00">2007-11-23</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>老师布置的UNIX Shell作业，有一个很瓜的问题，要实现Press anykey to continue，网上搜索了一下，大部分都是复杂的实现，鬼话连篇，其实Bash下用read就可以实现任意键继续，语法为：<br />
+<code>&gt;/dev/null read -n 1</code><br />
+-n 1参数的意思是：读取一次按键，而不是一行。<br />
+为什么要把<code>&gt;/dev/null</code> 放在最前面呢？因为<code>read -n 1&gt;/dev/null</code>会被bas错误理解为：把标准输出（stdout，输出句柄为1）重定向到/dev/null。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

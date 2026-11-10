@@ -1,0 +1,1791 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<link rel="icon" href="https://est.im/favicon.svg">    <title>est の 输入 输出和出入 - archive category</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="This blog is rated 🔞, viewer discretion is advised" />
+
+    <meta property="og:url" content="https://blog.est.im">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="est の 输入 输出和出入">
+    <meta property="og:description" content="This blog is rated 🔞, viewer discretion is advised">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="list-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="card-container side-gutter">
+      <header class="list-header">
+        <p class="list-header-subtext">This blog is rated 🔞, viewer discretion is advised</p>
+        <!-- <h1 class="list-header-title">est の 输入 输出和出入</h1> -->
+      </header>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/640309"  rel="bookmark" >
+              <h2 class="card-title">谷歌浏览器里牛逼的中文分词</h2>
+            </a>
+            <p class="card-text"><p>谷歌浏览器里牛逼的中文分词</p>
+<p>用过vim的都知道w和b键的功能。<br />
+深入Windows的都知道，通用文本框控件里，可以通过Ctrl+Left, Ctrl+Right来实现类似vim里w和b键的功能</p>
+<p>但是大家都知道，这个小技巧对于中文是无效的。</p>
+<p>但是今天突然发现谷歌浏览器（chrome/chromium）居然实现了中文词语之间的跳转</p>
+<p>举个例子，一个文本框里放一句英文：（这里用了一个<code>input</code>，RSS阅读器里可能看不到这个HTML元素，请到<a href="http://initiative.yo2.cn/archives/640309">博客原文</a>围观）</p>
+<p>在文本框里，按 left 和 right 键，光标只会一个字一个字的左移或者右移；Ctrl+left和Ctrl+right，光标会一个<strong>词</strong> 一个<strong>词</strong> 的移动。shift的作用是选择，那么Ctrl+Shift+Right就会直接选定一个词语。</p>
+<p>再放一段中文：</p>
+<p>在文本框里，按 left 和 right 键，光标只会一个字一个字的左移或者右移；Ctrl+left和Ctrl+right，依然只会一个字一个字，而不是一个词一个词的移动。</p>
+<p>为什么呢？很明显Windows没有自带中文分词功能。</p>
+<p>但是很牛逼的是，谷歌浏览器（chrome/chromium）带了这个功能。上面那个中文例子，假如我的光标在句首，那么Ctrl+Right之后，光标会在 爱因斯坦 的 坦 字后面，说 字前面；如果光标在第一个双引号前面，按下Ctrl+Right之后，光标会跳转到 想像力 的 力 字之后。实现了中文跨词语跳转。这给我们在文本框里做文字编辑提供了非常大的灵活性和方便。</p>
+<p>中文分词比英文分词麻烦多了。很明显英文基于词语的跳转就是跳转到下一个空白字符，而中文很麻烦的一点是二义性。举一个<a href="http://www.googlechinablog.com/2006/04/blog-post_10.html">谷歌中国黑板报的例子</a>，发展中国家 是分词为 发展 中国 家 好呢，还是 发展中 国家 好？这个纯粹靠上下文和概率算了。</p>
+<p><a href="http://www.catonmat.net/blog/code-reuse-in-google-chrome-browser/">深入</a>研究了一下这个有趣的功能，发现是<a href="http://www-01.ibm.com/software/globalization/icu/index.jsp">IBM的ICU库</a>提供的，每个Chrome安装文件夹下面都有一个<a href="http://build.chromium.org/buildbot/continuous/LATEST/chrome-win32.test/icudt38.dll">icudt38.dll</a>，这里面包含了一份<a href="http://src.chromium.org/viewvc/chrome/trunk/deps/third_party/icu38/source/data/brkitr/cc_cedict.txt">中文词语表</a>。基于<a href="http://us.mdbg.net/chindict/chindict.php?page=cedict">CC-CEDICT</a>那个版本</p>
+<p>不得不佩服Google工程师们做i18n的敬业和牛逼。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-05-28T00:00:00+08:00">2009-05-28</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/640297"  rel="bookmark" >
+              <h2 class="card-title">Hg可以直接push到github了</h2>
+            </a>
+            <p class="card-text"><p><img alt="" src="http://hg-git.github.com/images/server.png" /></p>
+<p>github博客<a href="http://github.com/blog/439-hg-git-mercurial-plugin">宣布</a> <a href="http://hg-git.github.com/">hg-git插件</a>：</p>
+<blockquote>
+<p>The Hg-Git plugin can convert commits/changesets losslessly from one system to another, so you can push via an Hg repository and another Hg client can pull it and thier changeset node ids will be identical - Mercurial data does not get lost in translation.</p>
+</blockquote>
+<p>看来hg和git不是对抗，而是联合。期待git客户端支持Mercurial服务器的插件。。。哈哈。。。</p>
+<p>via <a href="http://www.reddit.com/r/programming/comments/8nseh/no_need_to_choose_anymore_seamless_git/">proggit</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-05-28T00:00:00+08:00">2009-05-28</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/640282"  rel="bookmark" >
+              <h2 class="card-title">网通/联通的CDN太恶心了</h2>
+            </a>
+            <p class="card-text"><p>今天happydog跑过来玩，也谈到网通119.6.30.45:9203这个<a href="http://initiative.yo2.cn/archives/640241">超级恶心CDN</a>的问题。</p>
+<p>他用apt-get升级包的时候，经常提示服务器证书什么错误。这就是因为网通的CDN劫持了HTTP，把本来属于Ubuntu镜像的服务器<strong>主机名</strong> 强制HTTP/1.0 302 Found然后劫持到 Location: http://119.6.30.45:9203/xxxxx，很自然SSL之类的安全认证就要报错。</p>
+<p>今天发现了一个更加可恶的现象，这个CDN在某些情况只允许单线程下载，使得CDN之后的下载速度比原先直接多线程连接原始服务器的速度还要<strong>慢</strong> 。</p>
+<p><img alt="" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/05/23.jpg" /></p>
+<p>这就是为什么要强烈号召网络中立（<a href="http://en.wikipedia.org/wiki/Network_neutrality">Network neutrality</a>），无论你是好意，还是恶意的ISP，请不要流氓劫持互联网运作的基础设施。请不要破坏互联网公认协议。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-05-27T21:43:07+08:00">2009-05-27</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/640242"  rel="bookmark" >
+              <h2 class="card-title">阅读《空谷幽兰》小插曲。我发誓我不是故意的</h2>
+            </a>
+            <p class="card-text"><p>今天看完了一本书<a href="http://www.douban.com/subject/1902628/">《空谷幽兰：寻访现代中国隐士 Road to Heaven: Encounters with Chinese Hermits》</a>，美国汉学家 Bill Porter （法号赤松居士 <a href="http://en.wikipedia.org/wiki/Bill_Porter_(author)">Red Pine</a>）写的</p>
+<blockquote>
+<p>比尔·波特，美国当代作家、翻译家和著名汉学家人。他将中国古代大量的佛教典籍翻译成英文，在欧美引起了极大反响。他曾经以“红松”的笔名翻译出版了《寒山诗集》，《石屋山居诗集》和《菩提达摩禅法》等英文著作。从1972年起，他一直生活在台湾和香港，经常在中国大陆旅行，并撰写了大量介绍中国风土文物的书籍和游记，此书是最著名的译本，曾在欧美各国掀起了一股学习中国传统文化的热潮。</p>
+</blockquote>
+<p>里面有一段，讲他刚从第一次大陆旅行回来不久，准备第二次准备探访全中国的隐士的时候：</p>
+<blockquote>
+<p>第二天，史蒂芬和我乘公共汽车来到港口城市厦 <em>有两层房，之前楼下住着她的儿子儿媳，不过，他们去南京工作了，楼上则是她一个人照看两个孙女的地方。本分工作外，我</em> 门，然后搭下一班船回到了香港。几天后，我们回到台湾，放松了下来。但是我们同时也做好了准备：回去做一次更长时间的旅行，拜访全中国的隐士。可是，原来有意赞助我们的人都消失了，突然之间，我们只有靠自己了。我们考虑放弃这个计划，或者等着，直到条件好转。</p>
+</blockquote>
+<p>很疑惑。于是向上翻了n段，终于发现一个线索，讲他第一次来到大陆：</p>
+<blockquote>
+<p>两天后，史蒂芬和我参观完了城北的长城，回来了。我们的火车要去位于北京西北的古代佛教中心大同，离开车还有四个小时。那一天是5月4日，是现代中国第一次学生运动的70周年纪念日。</p>
+</blockquote>
+<p>于是明白了。</p>
+<p>我发誓我不是故意的。</p>
+<p>就单独这本书来说，还是很赞的。推荐阅读。</p>
+<p>留言请避开关键字。。。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-05-26T00:05:44+08:00">2009-05-26</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/640241"  rel="bookmark" >
+              <h2 class="card-title">绕过网通CDN直接从原始服务器下载文件</h2>
+            </a>
+            <p class="card-text"><p>网通/联通貌似有个出国CDN，有的时候，会劫持<strong>大文件</strong> HTTP下载到 http://119.6.30.42:9203/xxxxx 的一个网址</p>
+<p>例如把</p>
+<p>http://release.seleniumhq.org/selenium-core/1.0-beta-2/selenium-core-1.0-beta-2.zip</p>
+<p>劫持到：</p>
+<p>http://119.6.30.42:9203/0FD0374234C336D932328F67FC797056CBF760FC/release.seleniumhq.org/selenium-core/1.0-beta-2/selenium-core-1.0-beta-2.zip</p>
+<p>这个CDN貌似有的时候会卡，估计是在文件从远程服务器<strong>完整</strong> 镜像到CDN需要一定时间，有个解决办法，类似web开发里如何强制浏览器客户端刷新 .js文件，就是在URL后加一串参数。例如上面</p>
+<p>http://release.seleniumhq.org/selenium-core/1.0-beta-2/selenium-core-1.0-beta-2.zip</p>
+<p>改成</p>
+<p>http://release.seleniumhq.org/selenium-core/1.0-beta-2/selenium-core-1.0-beta-2.zip?a=2</p>
+<p>迅雷的速度就会立即开动。</p>
+<p>CDN会认为修改过后的URL是动态内容从而忽略，让客户端直接从原始服务器下载。</p>
+<p>由于是小概率事件，所以不一定成功。但是有个心理安慰作用。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-05-25T22:57:18+08:00">2009-05-25</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/640165"  rel="bookmark" >
+              <h2 class="card-title">[个人观点]不推荐使用QQMail</h2>
+            </a>
+            <p class="card-text"><p>说明：<br />
+本文完全是我的<strong>个人观点</strong> ，不强求各位看官同意，欢迎有道理的批驳，纯骂架评论将直接删除。</p>
+<p>这篇博文原文只发表在本人<a href="http://initiative.yo2.cn/">个人博客</a>（此处），没有向任何网站主动转帖。05月26日的cnBeta的投递不是我干的。</p>
+<hr />
+<p>看到<a href="http://cnbeta.com/articles/84939.htm">QQ邮箱新增撤回邮件功能</a></p>
+<p>虽然Foxmail团队还是很赞的。但是邮件撤回这个功能，也不能算腾讯首创，因为Outlook+Exchange里早就有这个功能了</p>
+<p><img alt="" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/05/za010934692052.gif" /></p>
+<p>而且很明显，这个功能只可以在私有产品体系里实现，因为SMTP的<a href="http://www.ietf.org/rfc/rfc2821.txt">RFC 2821</a>里根本没有withdraw这个定义。Gmail也有这个功能，是通过延时发送实现的。</p>
+<p>为什么不推荐使用QQMail？</p>
+<p>1. 江湖上装逼的说法：@qq.com看起来非常娱乐和幼稚<br />
+2. QQMail的“超大附件”这个玩意破坏<a href="http://www.ietf.org/rfc/rfc2183.txt">RFC 2183</a>，客户端不能收取，邮件看晚了点，附件就过期了。<br />
+3. QQ邮件的“群邮件”功能不能通过任何POP3/IMAP客户端收取到，无法把一个正常的email通过正常的途径转发(fwd)到“群邮件”里。</p>
+<p>总的来说，<strong>QQMail利用腾讯本身的市场垄断地位，破坏互联网公认协议，开发自己的私有系统，造成符合RFC标准的email客户端不兼容。</strong> 。如果大家放纵腾讯这一行为，那么很有可能出现QQ不和其他任何IM互通那样的局面。</p>
+<p>不遵守规定有什么危害？很简单的比喻就是IE6，GFW、HTTP劫持和IPv9。</p>
+<p>IE6就不说了。</p>
+<p>为什么要反对GFW？因为GFW破坏了 <strong>Inter</strong> net 的根本定义。互联网，不在于网络的发达，而在于<strong>互联</strong> 。互联网诞生之前，世界上已经有私人网络和商业网络了。互联网的出现，就像大桥一样把这些小岛连接了起来。电信网络可以看成最接近互联网规模的一个东西。但是电信网为什么没有成为互联网，而且也不可能取代互联网？这就是商业利益的推动。</p>
+<p>互联网的免费和开放，最根本的来源是哪里？是各大<strong>网关</strong> 之间默认的<strong>免费</strong> 互通原则。如果各个ISP之间要收取高昂的相互通信费，自己都搞一套复杂的防火墙规则，那么，互联网就是第二个电信网，我们从成都出差到上海，访问在成都的公司网络，就必须缴纳昂贵的<strong>漫游费</strong></p>
+<p>GFW就是Z治意志对国际规则的野蛮强奸。任何通过土鳖国国境线的内容，都必须经过几个人组成的<strong>“委员会”</strong> 的审核。</p>
+<p>再据一个例子，为什么ISP的DNS劫持和HTTP劫持广告是一种对Web严重威胁的大规模杀伤性武器？</p>
+<p>这里我们假定HTTP的劫持，对于一定数量的HTTP请求是随机的，那么我一个business critical的AJAX请求，本来应该返回一个正常的HTML片段，然后我通过DOM的innerHTML插入当前Web页面从而无刷新载入新内容，那么由于ISP的HTTP劫持，我插入的内容完全有可能变成ISP的iframe广告页面，造成整个Web是不可编程，不可预知的。那么大家也不会基于Web建立商业模型。也就没有市场可言。</p>
+<p><a href="http://initiative.yo2.cn/archives/636125">IPv9</a>也是这样。IPv9的商业动机很单纯，就是个想自己开个DNS服务器做域名生意的。只要全世界都把本机的DNS主机设置成IPv9公司的服务器，那么IPv9就普及了。但是可耻的是，IPv9是打着“自主创新”、“国 <em>另外三盆冒出嫩芽, 奇怪的是有一盆居然挣扎着开出了红色小花，因为隔着远，没看清楚是什么花。雨滴追逐着雨滴，落在</em> 家 <em>衣物，挂在卧室客厅的衣橱里，每件衣服都隔着一定距离，并且，保持衣橱的门敞开。鼓楼区的西北处我租了间套房，一室一</em> 安全”，甚至“政F”、“民族”这类恶心旗号。这种精神是完全背离互联网的<strong>互联</strong> 精神的。假设你自己真正有一个先进技术可以代替现有DNS了，你应该做的是提交给社区，然后request for comment。</p>
+<p>当然，按照本文的观点，也可以推广到Gmail。Google Docs以邮件形式发送，也只是发送一条链接，也可以看成Google破坏了Email的附件协议；GTalk的聊天记录也不能在客户端里收取，也可以看成破坏了Email收发协议。但是这个就要看你对Tencent和Google哪一家公司更加有信心了。目前我认为Google更加有credibility，Google这种做法可以让人理解，它的行为可以预测。</p>
+<p>最终建议就是：只把QQMail当聊天灌水共享mao片用。不要当真正的Email来使用。否则当你email积累到一定程度，对QQMail产生依赖，再转移就麻烦了（说不定又有个什么X钻的业务来方便转移`）。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-05-22T08:16:15+08:00">2009-05-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/640154"  rel="bookmark" >
+              <h2 class="card-title">Python模块依赖图</h2>
+            </a>
+            <p class="card-text"><p><a href="http://aegisknight.org/2009/05/visualizing-python-import-dependencies/">http://aegisknight.org/2009/05/visualizing-python-import-dependencies/</a></p>
+<p>以urllib2为例：</p>
+<p><img alt="" src="http://aegisknight.org/wp-uploads/urllib2dagdot.png" /></p>
+<p>类似的项目有<a href="http://guichaz.free.fr/misc/">importgraph.py</a>，<a href="http://www.tarind.com/depgraph.html">py2depgraph.py</a>，<a href="http://furius.ca/snakefood/">snakefood</a>，<a href="http://pypi.python.org/pypi/modulegraph/">modulegraph</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-05-21T19:43:27+08:00">2009-05-21</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/640147"  rel="bookmark" >
+              <h2 class="card-title">疑似暴风影音 DDoS是昨天全国DNS大面积瘫痪的原因</h2>
+            </a>
+            <p class="card-text"><p>昨天<a href="http://cnbeta.com/articles/84652.htm">全国各地陆续出现DNS解析问题</a></p>
+<p>在<a href="http://www.newsmth.net/bbstcon.php?board=ITExpress&amp;gid=615914">NewSMTH上</a>看到一个比较靠谱的解释：</p>
+<blockquote>
+<p>发信人: bearhero (至尊饱饱), 信区: Security<br />
+ 标 题: 昨晚dnspod被DDos打翻，导致中电信全国DNS拥塞<br />
+ 发信站: 水木社区 (Wed May 20 10:04:58 2009), 站内</p>
+<p>中电信全国用户受严重影响一小时</p>
+<p>据说是因为 dnspod 被ddos打击， 导致暴风影音无法解析<br />
+ http://support.dnspod.com/index.php?_m=news&amp;_a=viewnews&amp;newsid=7</p>
+<p>baofeng.com的NS记录是：<br />
+ ns1.dnspod.net. 160783 IN A 61.160.200.160<br />
+ ns2.dnspod.net. 160715 IN A 222.216.28.18<br />
+ 用户拼命去本地 DNS 解析 download.baofeng.com,live.baofeng.com,video.baofeng.com<br />
+ 而本地dns 去 dnspod 无法获取， 无法向用户回复<br />
+ 导致用户重复解析， 本地dns 拥塞后瘫痪<br />
+ 然后全网用户都完蛋。 直到 dnspod 一小时后恢复。</p>
+<p>现在互联网真神奇啊</p>
+</blockquote>
+<p>我在想假如是迅雷/QQ/360之类的域名解析出问题了怎么办？？？？</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-05-21T11:44:25+08:00">2009-05-21</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/640144"  rel="bookmark" >
+              <h2 class="card-title">学习一下关于微软某小说</h2>
+            </a>
+            <p class="card-text"><p><a href="http://www.tianya.cn/publicforum/Content/free/1/1556303.shtml">天涯牛贴</a>, via <a href="http://sr.ju690.com/meme/item/26715">SR.ju690.com</a></p>
+<pre><code>1. 售前就是传教
+2. M$还不会做sales，这种美国总部定KPI然后年底完成，top-down的方式在资本主义中国行不通。其实这方面史玉柱是高手。OS这种抽象东西更加需要高手来做
+3. 这段话有有趣：
+</code></pre>
+<blockquote>
+<p>大家去了很多地方，拜访了很多城市，最后收集上来数据一汇总，在地图上面画一画，发现靠谱的、软件企业比较多的，无非都集中在那么几个省和那么几个城市：<strong>北京、天津、青岛、济南、大连、上海、杭州、苏州、南京、武汉、长沙、广州、深圳、成都、西安</strong> 。<br />
+ 所以，为了节省差旅开支并且效率更高，根据新的讨论出来的结果，我们准备把全国划分成四个区，每个区都有人驻扎在当地：<strong>北区</strong> ，人派在北京，管理环渤海地区（北京、天津、河北）、中部省份（山西、河南）以及山东省、东北省；<strong>东区</strong> ，人派在上海，负责上海、浙江省、江苏省、安徽省、湖北省；<strong>西区</strong> ，人派在成都，负责西部，包括成都、重庆、西安、云南；<strong>南区</strong> ，人派在广州，负责广州、深圳、福建省（厦 <em>有两层房，之前楼下住着她的儿子儿媳，不过，他们去南京工作了，楼上则是她一个人照看两个孙女的地方。本分工作外，我</em> 门、福州）、湖南省等南方省市。</p>
+</blockquote>
+<pre><code>4. 看来M$主要还是在往软件园、企业卖。一般不怎么打劫学生之类的。但是里面有一句话很有意思：
+</code></pre>
+<blockquote>
+<p>我们软件园现在纯粹就是个做房地产的，没有跟软件产业有关的业务</p>
+</blockquote>
+<pre><code>5. &gt; 传教士小组这次分区的效果立竿见影，很快，四个区就开始明争暗斗，打得不可开交，最后，也直接导致了北区负责人崇侯虎和南区老大鄂崇禹的离开
+</code></pre>
+<p>看来不仅有real-world politics，还有business politics和office politics/li&gt;</p>
+<pre><code>6. &gt; 我经常会在想，一个公司每天会有多少人的多少时间是在会议室里度过的？每天这些人在会议室里都在讨论什么话题？每天这些人还剩多少时间是真正用来干活的？
+</code></pre>
+<p>又是一个典型的control流量超过data流量的例子</p>
+<pre><code>7. 又看到一句话，关于开会的：
+</code></pre>
+<blockquote>
+<p>“小样子，你别打字了行不行，咱们谈点正事，把电脑合上。”我们看了看小样子，哈哈一乐。肯定，不管是开会还是听培训，只要带了电脑，十个人里就有十个大部分时间，都是双眼盯着自己的笔记本电脑的屏幕，不是在回邮件，就是在上网浏览，还有聊天聊得热火朝天的更是大有人在。所以，有的部门就有规定，在开会的时候不准带电脑，只准带一个纸质的笔记本做记录。</p>
+</blockquote>
+<pre><code>8. 关于创意：
+</code></pre>
+<blockquote>
+<p>脑力风暴（Brain Storming）是我们开会的主要形式，脑力风暴的会就是一种集思广益的会，每做一件事情之前，我们都会先发起一次或者很多次集思广益会，大家在会上畅所欲言，把自己的创意和看法说出来，头脑碰撞产生火花。越聪明的头脑碰撞产生的火花越多，粪球和粪球碰撞在一起是产生不了火花的。脑力风暴会是EEG公司员工集思广益最主要的形式，创意往往都是从这种会里产生。所有的想法都会记录在白板上，大家一堆人对着白板指指划划。最后，我们会用相机拍下来白板的内容，把图片发给大家。当然了，只有这个图片是不行的，同时我们会把会议记录也发出来。</p>
+</blockquote>
+<pre><code>9. 每次看到这段话就想笑：
+</code></pre>
+<blockquote>
+<p>软件园要怎么做，当然不是这个哥们能说了算的。在我们看来，软件园赚的是国家的钱，靠政府补贴盈利，而且现在最容易赚钱的还是做房地产。特定的历史背景之下产生特殊的企业，曾经也有一家公司叫做托普软件的，发现房地产更加赚钱，于是打着软件的名义，在全国圈地盖了十几个软件园，准备盖楼收租。不幸的是，在暴利的诱惑下，不顾一切地圈地圈到眼红，大量透支政府资源和银行支持之后，虚幻的泡沫一旦暴露于阳光之下，就瞬间破灭了。</p>
+</blockquote>
+<pre><code>10. 看到这段话每次都笑不出来：
+</code></pre>
+<blockquote>
+<p>在座的还有一个风靡大江南北的计算机培训学校校长。于是大家谈笑风生，边唱边聊，痛斥这个吃人的行业，校长说他们学校送出去的活蹦乱跳的小姑娘到了软件公司天天吃辐射，没过几天就形容憔悴，变成黄脸婆，看得他们只心疼，连连拍大腿后悔：“真不该把小姑娘送去这种吃人的软件公司，软件开发真不是人干的”。我非常同意，说女孩最好别干这个，软件开发这种活太苦，女孩最应该干的就是每天高高兴兴、活蹦乱跳、把自己打扮得漂漂亮亮的，找点容易的事情做做，把挣来的工资都花光：这种女孩就容易找到好人家。请大家告诉大家，女孩千万不要做IT。</p>
+</blockquote>
+<p>我想起了NewSMTH上一句话：“以前欧美做半导体企业，大家的利润都保持在50%以上，大家都过得很滋润，台湾一做半导体，利润就只有30%了。。。”。我想软件也是这样的。Y2K之后，印度一做软件。。。。IT就成了体力活了。。。</p>
+<pre><code>11. 每次看到天涯楼层里插播小广告的
+</code></pre>
+<blockquote>
+<p>相关负责人已经认识到问题的严重性，开始让ITG严密监控该贴。ITG已经正在和天涯社区尝试取得联系，以便获得相关的IP地址访问信息；另外ITG现在也正在开始调取ISA Server上的访问记录，由于公司内部人员登陆到AD，并通过ISA Server进行基于用户身份的验证，所以可以轻易分析出那些账户或计算机访问了该贴，（基于RAS也是如此），并将于近日分别和相关涉及人员谈话，并进一步查清是哪些人员暴露公司内部的秘密，并准备追究法律责任。</p>
+</blockquote>
+<p>就觉得好笑啊</p>
+<pre><code>12. 20年过去了，当局还是忘不了987543210 012356789事件啊？
+</code></pre>
+<blockquote>
+<p>西伯侯带着干工组长拜访江汉市理查德的事情，惊动的不只是我们，分管教育的寸老太太更是勃然大怒。按照我们部门对每个小组责权的划分，寸老太太带领的校园小组专门负责任何跟学校、跟大学生有关的事宜。就是说，任何一件事情如果会跟大学生、大学扯上哪怕一丁点关系，就必须通过寸老太太，就必须告知寸老太太，由寸老太太决定到底是由她老人家自己亲自出面，还是由其他人代理她出面。</p>
+</blockquote>
+<p>还是那句话，如果没有Blizzard和ACG……不知道会是什么样子</p>
+<p>看完这篇猛文之后，更加坚定了我“没有房地产，就没有新中国”的信念。期待一个靠房地产起家的超级（流氓）大国的诞生</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-05-21T08:19:07+08:00">2009-05-21</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/640126"  rel="bookmark" >
+              <h2 class="card-title">逐步放弃SNS和其他微博，专注Twitter和blog</h2>
+            </a>
+            <p class="card-text"><p>Web 2.0很好的一点就是提供了多种渠道和工具，很坏的一点就是太散了。对于不能给我提供任何有价值信息回馈的社区，还是逐渐放弃罢。</p>
+<p>使用Ping.fm也有很久了，不过主要的圈子还是Twitter。其实当时用Ping.fm完全是看在Ping.fm有个GTalk Bot。用GTalk+RSS Bot接受twitter的@replies的好处：所有对你tweet的回复保存在Gmail里，随时可以看历史记录。如果你用的是桌面Twitter客户端，多系统、多电脑的数据保存等等都是麻烦的事情。其实我觉得GTalk有一万个缺点都无所谓，但是保存聊天记录在服务器上这一点太爽了。现在我查找某台服务器IP都是在Gmail里进行。。。囧。。。。</p>
+<p>目前已经放弃的有：Facebook, Plurk, LinkedIn, Tumblr, Identi.ca, FriendFeed, Jaiku和豆瓣广播。</p>
+<p>SNS的初印象最好，但是结果最坏。大一才听同学推荐加入xiaonei的时候，还是@edu.cn only，一个很精致的封闭式讨论区。首先的惊喜是联系上了几个初中甚至小学的同学，觉得SNS这玩意有前途，二来是可以在线偷 <em>，还在河边冲洗，用刷子擦，坚硬的塑料须擦着金属面，磨出笨拙的窸窣声，如同猫鼠在青瓦屋顶追逐，或者，已经接近尾声</em> 窥一下清华北大牛人的校园生活。xiaonei是完全有能力光复当年全国高校BBS那种真正“传统Internet”气氛的。</p>
+<p>但是现在SNS对我的映像几乎是最坏的。首先本人对陈一舟和千橡十分厌恶，其次个人隐私商业化之后，就会被一些其他力量利用。彻底和xiaonei决裂是因为<a href="http://initiative.yo2.cn/archives/630409">好友买卖</a>。</p>
+<p>最看不起SNS，就是开心农场。了解这个app也是看到同学在玩。其实我也承认这是一个<a href="http://twitter.com/bbiao/statuses/1677421127">用户的粘度很大的成功SNS应用</a>，但是，这玩意儿就跟下面的cnBeta评论说的意思一样：</p>
+<blockquote>
+<p>作为个人站长，你不应该一个劲的只管去做SEO，这样只会适得其反，注重实质才是硬道理，中国就是有太多像你们这样的无良个人站长，一篇文章定义个N个毫不相干的关键字，你们这样骗人和百度有什么区别？一个下载站很大的几个字“点击这儿下载”，但真正下载下来又是什么东西？还有你们这些个人站长最喜欢采集，这又是什么行为，还理直气壮的说你们个人站长最好百度早日完蛋，虽然我也希望百度早日完蛋，但相对比起来，我更希望你们这些无良个人站长早日完蛋！</p>
+<p>来自浙江省杭州市的匿名人士对新闻:《律师自购软件查网络广告迷局》的评论</p>
+</blockquote>
+<p>请问现在的SNS能创造多少有价值的信息？这种无聊的app除了打发时间和吸引眼球之外有任何意义吗？</p>
+<p>Facebook，每天上去就只能看到Kaifulee又增加了几百个好友，没别的了。也收到过一些无聊的app邀请。LinkedIn过于专业，不去LinkedIn赚美刀，基本没什么用处。</p>
+<p>再说说微博</p>
+<p>Pownce卖了之后被弄死，还不如Twitpic滋润；Plurk由于下面这张图片被G <em>两个孙女的地方。本分工作外，我有个习惯——收集容器，这非职业习惯，而是生活习惯或者说爱好。爱好是种盲目的人生态</em> F <em>里盛水，阳台防盗栏杆外已经飘起了雨。盆子在阳台的右角，雨水先落在窗前铁栏杆再顺着花草的叶脉滴到盆子的土壤里。吮</em> W，没意思了；</p>
+<p><a href="http://www.google.com/search?q=plurk"><img alt="" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/05/16.jpg" /></a></p>
+<p>Identi.ca只有open source的噱头；Tumblr和Jaiku被G <em>两个孙女的地方。本分工作外，我有个习惯——收集容器，这非职业习惯，而是生活习惯或者说爱好。爱好是种盲目的人生态</em> F <em>里盛水，阳台防盗栏杆外已经飘起了雨。盆子在阳台的右角，雨水先落在窗前铁栏杆再顺着花草的叶脉滴到盆子的土壤里。吮</em> W，而且Jaiku被Google出卖了；豆瓣广播，也没什么意思；最后，我的FriendFeed聚合内容几乎都是重复来自Twitter, Plurk, Tumblr, Identi.ca的重复刷屏。也就是说FF在微博食物链的最底层。可怜的Friendfeed，还被G <em>两个孙女的地方。本分工作外，我有个习惯——收集容器，这非职业习惯，而是生活习惯或者说爱好。爱好是种盲目的人生态</em> F <em>里盛水，阳台防盗栏杆外已经飘起了雨。盆子在阳台的右角，雨水先落在窗前铁栏杆再顺着花草的叶脉滴到盆子的土壤里。吮</em> W了一个最重要的网址推荐功能。</p>
+<p>其实microblogging这碗粥本来就小，大家能做的只是兼容别家的。但是大家在Twitter最困难的那些日子并没有作出真正对Twitter有威胁的举动。FriendFeed is the most close rival of twitter，现在则沦为了Twitter的backup plan和附庸。Twitter在Rails很buggy，经常宕机的那一段时间里，我甚至有抛弃twitter的想法，但是twitter这小玩意魅力实在太无穷了。虽然期间有很多alternative，但是都一一被twitter击败。随着Twitter用更加可靠的Scala来解决服务器availability问题，这个市场最终会被Twitter垄断。终极的Twitter就是，假如整个Internet是个OS，那么Twitter就是这个OS的<code>/var/log/syslog</code>。以后各种互联网产品对Twitter的支持就像shell下重定向输出那么简单。</p>
+<p>现在的douban小组、G Reader、reddit、HN成为我第一手信息来源，虽然这些网站都是做二手新闻生意的（笑～～）</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-05-20T11:47:17+08:00">2009-05-20</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/640121"  rel="bookmark" >
+              <h2 class="card-title">谷歌字典（Google Dictionary）的AJAX智能提示JSONP下拉菜单接口</h2>
+            </a>
+            <p class="card-text"><p><a href="http://suggestqueries.google.com/complete/search?ds=d&amp;hl=zh-CN&amp;jsonp=window.google.ac.hr&amp;q=china">http://suggestqueries.google.com/complete/search?ds=d&amp;hl=zh-CN&amp;jsonp=window.google.ac.hr&amp;q=china</a></p>
+<p>效果如图：</p>
+<p><img alt="" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/05/15.jpg" /></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-05-20T06:05:06+08:00">2009-05-20</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/640102"  rel="bookmark" >
+              <h2 class="card-title">请找出2个帖子的相同点</h2>
+            </a>
+            <p class="card-text"><p>还好我对这前几天新闻图片有映像：</p>
+<p><a href="http://www.militaryphotos.net/forums/showthread.php?t=156704">First privately-owned Su-27 Flankers in the US</a></p>
+<p><img alt="" src="http://img2.cache.netease.com/cnews/2009/5/15/200905151039030a160.jpg" /></p>
+<p><img alt="" src="http://img1.cache.netease.com/cnews/2009/5/15/20090515104039bca6b.jpg" /></p>
+<p>今天咋一看这图片这么眼熟呢？</p>
+<p><a href="http://war.news.163.com/09/0516/11/59EACPGK00011MTO.html">美国借进口乌克兰苏27破解中国战机核心机密</a></p>
+<p>以前教我们电磁场与波老师（863专家组成员）上课的时候跟大家说，其实国安保密保什么密嘛，都是保密生怕别人知道我们落后</p>
+<p>前几年神5上天，紧接着私人太空船<a href="http://en.wikipedia.org/wiki/Scaled_Composites_White_Knight">White Knight</a>就上天了；神7宇航员出仓之后，私人火箭<a href="http://en.wikipedia.org/wiki/Falcon_1">Falcon 1</a>也发射成功了。举国之力才能跟别人自由市场的私人资本抗衡，土星共同体<a href="http://news.ifeng.com/mil/2/200903/0326_340_1077927.shtml">很强大</a>。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-05-19T08:24:51+08:00">2009-05-19</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/640099"  rel="bookmark" >
+              <h2 class="card-title">Wolfram Alpha is live: Google Calculator Killer！</h2>
+            </a>
+            <p class="card-text"><ol>
+<li>Wolfram Alpha不是搜索引擎，而是计算引擎。Wolfram Alpha是基于Mathematica的Web前端，云计算而已。<ol start="2">
+<li>请问有多少中国人能够流畅拼写WolframAlpha.com？哈哈。易用性门槛很高。而且里面的很多东西太专业、工程、科学。非常偏。不过对于geek来说是一个非常有用的工具。</li>
+<li>Wolfram Alpha其实是一个<a href="http://www.google.com/intl/en/help/features.html#calculator">Google <strong>Calculator</strong></a> Killer</li>
+<li>Wolfram Alpha根本不适合大众使用，一个连<a href="http://www.wolframalpha.com/input/?i=h1n1+syptoms">H1N1 syptoms</a>都搜索不出来的搜索引擎，对于大众来说还是不实用</li>
+<li>等<a href="http://labs.mozilla.com/projects/ubiquity/">Ubiquity</a>插件。</li>
+<li>Wolfram Alpha的I18N和L10N有很长的路要走。<br />
+<img alt="" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/05/14.jpg" /><br />
+况且汉语的NLP应该比英语麻烦。</li>
+<li>Wolfram Alpha的visualization仅限于静态图片。例如<a href="http://www.wolframalpha.com/input/?i=myoglobin">肌红蛋白的分子3D结构</a>。如果能做成3D的Flash，可以鼠标拖拽旋转就安逸了</li>
+<li>对于对英语不熟悉的人来说，一个类似Google Suggest的AJAX提示框很重要，做得像IDE里的智能提示和关键词补完就更好了。</li>
+<li>Wolfram Alpha的<strong>API文档</strong> 在此：<a href="http://www.wolframalpha.com/WolframAlphaAPI.pdf">http://www.wolframalpha.com/WolframAlphaAPI.pdf</a></li>
+<li>Wolfram Alpha挂了就是这个样子滴：<br />
+<img alt="" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/05/13.jpg" /></li>
+</ol>
+</li>
+</ol>
+<p>总的来说，Wolfram Alpha会成为一个很hardcore的知识计算引擎，也具有革 <em>将衣服挂在窗外，巷子中砖瓦紧凑地接着淅淅沥沥的水滴。“滴答滴答下小雨了，种子说我要发芽，我要发芽。”记得初来时</em> 命性。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-05-19T04:59:32+08:00">2009-05-19</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/640083"  rel="bookmark" >
+              <h2 class="card-title">发送昨天的WinOMeter统计数据到Twitter/Ping.fm</h2>
+            </a>
+            <p class="card-text"><h3>关于WinOMeter</h3>
+<p><a href="http://www.tjelinek.com/main.php?section=w">WinOMeter</a>的介绍参考小众：<a href="http://www.appinn.com/winometer/">WinOMeter - 鼠标键盘统计工具</a></p>
+<p><img alt="" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/05/4.jpg" /></p>
+<h3>起因</h3>
+<p>可以这样想像一下：每天开机的时候，把想昨天我的键盘按键次数、鼠标左中右键点击次数、鼠标移动的公里数和uptime发送到Twitter</p>
+<p>这就是PYYWS2.js的来历。全称Ping Your Yesterday's WinOMeter Statistics</p>
+<p>我一开始比较傻，还屁颠屁癫给WinOMeter作者Tomas写email恳请他给WinOMeter增加一个导出文本数据的命令行接口，作者也回复了，在<a href="http://tjelinek.com/main.php?section=wn">1.4版本</a>里增加了一个启动参数：</p>
+<p><code>winometer.exe /exporthistory "filename.csv"</code></p>
+<p>后来发现WinOMeter的数据都保存在注册表<code>HKEY_CURRENT_USER\Software\Tomas Jelinek\WinOMeter</code>里，所以我等于白麻烦Tomas同学了。</p>
+<h3>代码</h3>
+<p>在这里下载：<br />
+<a href="http://zxn0.googlecode.com/svn/winutil/PYYWS2.js">http://zxn0.googlecode.com/svn/winutil/PYYWS2.js</a></p>
+<p>使用方法：根据自己的情况配置代码，把PYYWS2.js拖拽到开始 - 启动菜单即可</p>
+<p>注意发送数据到Twitter，我的实现是通过<a href="https://ping.fm/">Ping.fm</a>进行的，如果直接发送到Twitter，或者发送到helloTXT请自己DIY，请修改<br />
+<code>function post_to_pingfm(text)
+{
+...
+}</code><br />
+函数。使用的是AJAX的<a href="http://www.w3.org/TR/XMLHttpRequest/">XmlHttpRequest</a></p>
+<p>自定义发送内容，见<a href="http://code.google.com/p/zxn0/source/browse/winutil/PYYWS2.js#84">84行的 //content to be sent to ping.fm/twitter</a></p>
+<p>最后大概就是<a href="http://twitter.com/est/status/1790212558">这个样子</a>：</p>
+<p><img alt="" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/05/5.jpg" /></p>
+<h3>后记</h3>
+<p>由于WinOMeter注册表里边Mouse Trajectory数据是二进制保存浮点，我还不知道是如何转换的，猜是<a href="http://en.wikipedia.org/wiki/IEEE_754">IEEE 754</a>，但是自己没能够trial成功，于是在<a href="irc://irc.freenode.net/#askreddit">#askreddit</a>里问了高人才知道，是big-endian的IEEE 754，最后还要除1000，囧。。。。那位高人还建议，千万不要自己去重复造IEEE 754的轮子，麻烦而且容易出错，网上就找了一个最minimal的js代码，来自Fair Oaks Labs的<a href="http://code.google.com/p/jspack/">jspack</a>，用Javascript实现类似<a href="http://docs.python.org/library/struct.html">Python的struct模块</a>，包括32 bit的<a href="http://code.google.com/p/jspack/source/browse/trunk/code/struct.js#60">float encode和decode为hex</a>的函数。。很牛～～～</p>
+<p>最后还是把<a href="http://wakoopa.com/">Wakoopa</a>和<a href="http://www.rescuetime.com/">RescueTime</a>卸载了，一来是这2个软件基本等于没用，二来隐私泄漏非常严重，三来没接口不开源没法自己DIY，no fun。希望尽快有很好很强大夸手机和Linux的开源替代出现，最好把<a href="http://www.growlforwindows.com/">Growl</a>和Current Music Track功能都集成了。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-05-18T10:44:35+08:00">2009-05-18</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/640070"  rel="bookmark" >
+              <h2 class="card-title">西德某电视台1968一首歌 - Der Computer Nr. 3</h2>
+            </a>
+            <p class="card-text"><p>来自<a href="http://www.youtube.com/watch?v=Qk2jepguO_Y">youtube</a>。</p>
+<p>发到youku了，方便大家观看</p>
+<p><embed align="middle" allowscriptaccess="sameDomain" height="400" quality="high" src="http://player.youku.com/player.php/sid/XOTA4NTM1OTY=/v.swf" type="application/x-shockwave-flash" width="480"/></p>
+<p>歌手是法<strong>嘈杂的闹市。如果有时间，哪怕你走马观花也能淘到一些像样的玩意，我就常去逛，这是个人的职业习惯。巷子里叶子葱翠，</strong> 国的<a href="http://en.wikipedia.org/wiki/France_Gall">France Gall</a>。</p>
+<p>Der Computer Nr. 3<br />
+sucht für mich den richtigen Boy,<br />
+und die Liebe ist garantiert für beide dabei.<br />
+Der Computer weiß genau<br />
+für jeden Mann die richtige Frau,<br />
+und das Glück fällt im Augenblick<br />
+aus seiner Kartei.</p>
+<p>Denn einer von vielen Millionen,<br />
+der wartet auf mich irgendwo.</p>
+<p>(Gross: einszwoundachtzig, Kragen: 39, Schuhgröße: 46, stop!)</p>
+<p>Der Computer Nr. 3<br />
+sucht für mich den richtigen Boy,<br />
+und die Liebe ist garantiert für beide dabei.</p>
+<p>Lange war ich einsam, heut' bin ich verliebt,<br />
+und nur darum ist das so,<br />
+weil es die Technik und die Wissenschaft<br />
+und Elektronengehirne gibt.</p>
+<p>Der Computer Nr. 3<br />
+sucht für mich den richtigen Boy,<br />
+und die Liebe ist garantiert für beide dabei.<br />
+Der Computer weiß genau,<br />
+für jeden Mann die richtige Frau,<br />
+und das Glück fällt im Augenblick<br />
+aus seiner Kartei.</p>
+<p>Denn einer von vielen Millionen,<br />
+der wartet auf mich irgendwo</p>
+<p>(Alt: 22 Jahre, schwarze Haare, von Beruf Vertreter, Kennzeichen: Geld wie Heu)</p>
+<p>Der Computer Nr. 3<br />
+sucht für mich den richtigen Boy,<br />
+und die Liebe ist garantiert für beide dabei.</p>
+<p>英语翻译，感谢 <a href="http://www.youtube.com/user/anonym1801">anonym1801</a></p>
+<p>PART ONE<br />
+The computer No. 3<br />
+is looking for the right boy<br />
+and love is guaranteed for both</p>
+<p>The computer accurately knows<br />
+for every man the right woman<br />
+and the luck falls out at the moment<br />
+out from its register</p>
+<p>Indeed, one of many millions<br />
+is waiting for me somewhere</p>
+<p>PART TWO</p>
+<p>The computer No. 3<br />
+is looking for the right boy<br />
+and love is guaranteed for both</p>
+<p>for a long time I was lonely<br />
+tonight 'I'm in love<br />
+and it is only possibel<br />
+because of the existence<br />
+of technology and science<br />
+and electrical brains</p>
+<p>PART THREE</p>
+<p>The computer No. 3<br />
+is looking for the right boy<br />
+and love is guaranteed for both</p>
+<p>The computer accurately knows<br />
+for every man the right woman<br />
+and the luck falls out at the moment<br />
+out from its register</p>
+<p>Indeed, one of many millions<br />
+is waiting for me somewhere</p>
+<p>PART FOUR</p>
+<p>The computer No. 3<br />
+is looking for the right boy<br />
+and love is guaranteed for both</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-05-17T19:54:56+08:00">2009-05-17</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/634677"  rel="bookmark" >
+              <h2 class="card-title">[转贴]点讯梅花输入法技巧</h2>
+            </a>
+            <p class="card-text"><p>来自官方。。。<a href="http://www.dayhand.com/bbs/viewthread.php?tid=6651">http://www.dayhand.com/bbs/viewthread.php?tid=6651</a></p>
+<blockquote>
+<p>在掌握一些使用技巧后，输入速度可以得到很大提升，以下介绍几个常用技巧，更多功能请参考 菜单-&gt;使用说明。</p>
+<p>除了支持基本的点击操作，还支持划动操作。拇指键盘一般一个键位上定义多个字符，从上下左右不同方向划出可以输入相应方向的字符。<br />
+ 如图：<br />
+<img alt="" src="http://www.dayhand.com/bbs/attachments/month_0811/20081113_1138706de8518ca34a8eMbk8JiaClG5O.png" /><br />
+ 退格向上划可切换中英文，空格向左划可输入逗号，[jkl]向上划可输入数字5，[pqrs]向右划可精确输入r。其他类推。<br />
+ 左侧列表项较多时，可以上下拖动翻页。</p>
+<p>屏幕左右划动可以在拇指和26键键盘间切换，注意要划动较长距离。<br />
+ 26键键盘上一些键上定义了2个字符，其中首要字符直接点击输入，次要字符从按键向外划出就能输入。划的方向无所谓，根据键位位置顺手的方向即可。<br />
+ 如图：<br />
+<img alt="" src="http://www.dayhand.com/bbs/attachments/month_0811/20081113_85e911826fe4c63508d5RoxATe3huuWr.png" /><br />
+ 直接点击输入句号，按箭头方向划出输入逗号。其他类推。</p>
+<p>一些皮肤中候选字在键盘中间，可通过划选快捷输入。<br />
+ 如图：<br />
+<img alt="" src="http://www.dayhand.com/bbs/attachments/month_0811/20081113_5295acef2ba234115c2eKgnFExEUj5xs.png" /><br />
+ 拇指从候选字下方向上划过，就能选中“不错”。<br />
+ 如果候选字不在首选的几个中，可点击[选字]选择更多候选字。</p>
+<p>英文拇指面板下，空格向上划可切换大小写，划两下可以锁定大写。<br />
+ 英文拇指在字母模式下可以全点划输入，即点击输入中间字母，向四个方向划出输入对应方向的字符。<br />
+ 如图：<br />
+<img alt="" src="http://www.dayhand.com/bbs/attachments/month_0811/20081113_599c8e66d8de2cbaf876xGsN9J6ZmFCW.png" /><br />
+ 点击[abc]输入b，[jkl]向左划出输入j，[pqrs]向右划出输入r，[wxyz]向下划出输入z。其他类推。</p>
+<p>英文联想状态支持词组和造词，且支持字母符号混合的词组。[sym]可匹配空格 ' - _ @ . &amp;等几个符号。<br />
+ 如图：<br />
+<img alt="" src="http://www.dayhand.com/bbs/attachments/month_0811/20081113_40553db2aeaaa629323b1YrJ4M8PdNeC.png" /><br />
+ 点击i sym m，就可以直接输入 I'm<br />
+ 造词的时候也支持字母符号混合，连续输入www sym dayhand sym com，然后在左侧连续选择相应的字符，网址就被加到词库中了，下次只要输入 www sym就能看到。</p>
+</blockquote>
+<p>Windows Mobile最烂的2个特性，一个是来电/去电居然不锁屏，窗口不置顶，稍不注意就容易手忙脚乱切换窗口非常麻烦。另一个是自带的垃圾输入法非常的suck了。</p>
+<p>喜欢梅花输入法这种人性化高速搓屏幕的感觉。而且是国产软件，免费的。赞一个。。。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-05-12T10:45:10+08:00">2009-05-12</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/639837"  rel="bookmark" >
+              <h2 class="card-title">NetEase Youdao Nanti PWND! [Spoiler]</h2>
+            </a>
+            <p class="card-text"><p>Saw <a href="http://sr.ju690.com/meme/item/24407">an interesting puzzle</a>, blogging about it in English is <em>not</em> <strong>zhuangbility</strong> , but to avoid n00b finding solutions too easily via search engines.</p>
+<p><img alt="" src="/images/archive/2009/639837_01.jpg" /></p>
+<pre><code>1. Sniff
+2. No packets transfered when click 'submit', so all answers must be downloaded somewhere to client
+3. Firebug analyze URL requests &amp; responses
+4. Decompiled all .swf files, nothing found
+5. Found it's using PHP-RPC
+6. Tried [phprpc-python](http://www.phprpc.org/zh_CN/docs/) but didn't work
+7. Worked out puzzle 2. answer is **bomb**
+8. Dumped all browser memory
+9. Search for keyword **bomb**
+10. Got all answers to 15 questions
+11. Copy, paste &amp; submit all the right answers, but nothing happend, so just blogging about it &lt;http://initiative.yo2.cn/archives/639837&gt;
+12. ???
+13. Profit!
+</code></pre>
+<p>有道居然用PHPRPC把所有答案加密了。哼哼。任何加密都挡不住内存dump大法。</p>
+<p>So, here's the answers:</p>
+<p><a href="http://twitter.com/ripleyhu/status/1717319409">以下是剧透，丧失游戏乐趣后果自负</a>，没有自己动脑筋思考的同学请不要手贱，报名参加真正的TopCoder比赛吧：<a href="http://www.youdao.com/nanti/apply.php">http://www.youdao.com/nanti/apply.php</a></p>
+<p>`</p>
+<?xml version="1.0" encoding="utf-8" ?>
+<p><data radius="220" a="320" b="170" skey="youdao"><br />
+<question src="questions/q1oioqzvveoalz.fa.swf" answer="o" lowcase="true" visible="true">一样的人物</question><br />
+<question src="questions/q80afzfdqrezxc0-rwq.f0.swf" answer="bomb" lowcase="true" visible="true">湖边的回忆</question><br />
+<question src="questions/q4098azvhlaql.f-fq53.swf" answer="0441" visible="true">危险之地</question><br />
+<question src="questions/q3zlllweafl342laozl.swf" answer="@($" visible="true" locked="true">火星文</question><br />
+<question src="questions/q5zpaqa.eop2-f-qe4.swf" answer="也可能" visible="true" locked="true">博客中的线索</question><br />
+<question src="questions/q6pkltix.04.-af.swf" answer="本机地址" visible="true" locked="true">IT码农的留言</question><br />
+<question src="questions/q70a9fdalqrexc65o.vz.swf" answer="search engine" lowcase="true" visible="true" locked="true">曲径通幽</question><br />
+<question src="questions/q909qalzxovaltazt-fq.fq.swf" answer="为" visible="true" locked="true">手机词典的帮助</question><br />
+<question src="questions/q10090zvalzp-f.4.swf" answer="3624087915" visible="true" locked="true">古诗中的数字</question><br />
+<question src="questions/q2098alzraz.5.ao.swf" answer="12355331" visible="true" locked="true">彩铃包月</question><br />
+<question src="questions/q1109zgflqre0f-aw.w2.swf" answer="2月18日||二月十八日" visible="true" locked="true">和智玲的聊天</question><br />
+<question src="questions/q120z0fda2r.z0f-a2.swf" answer="cctv" lowcase="true" visible="true" locked="true">黑客是怎样炼成的</question><br />
+<question src="questions/q13-zf0w2rzlf0.f43.swf" answer="圆周率||祖冲之" visible="true" open="15" locked="true">Morse的登录</question><br />
+<question src="questions/q1409falz-fa.2aof.swf" answer="0731-5310163" visible="true" locked="true">错误的号码</question><br />
+<question src="questions/q160z-af.4er0zafwe.swf" answer="LOVE" visible="true" locked="true">数学之美</question><br />
+<question src="questions/q170z.gzzf-32zflgpqert.swf" answer="ONLMK" lowcase="true" visible="false">残破的画卷</question><br />
+</data><br />
+`</p>
+<p>Seems that there's even a hidden puzzle: <a href="http://www.youdao.com/nanti/mi/questions/q170z.gzzf-32zflgpqert.swf">http://www.youdao.com/nanti/mi/questions/q170z.gzzf-32zflgpqert.swf</a> but I haven't figured out how to invoke it (yet) . Perhaps using some .swf hook :D</p>
+<p>转载请注明出处 <a href="http://initiative.yo2.cn/archives/639837">http://initiative.yo2.cn/archives/639837</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-05-06T20:58:06+08:00">2009-05-06</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/639811"  rel="bookmark" >
+              <h2 class="card-title">libgugemusic: Google Music Streaming & Download</h2>
+            </a>
+            <p class="card-text"><h3>Basic structure</h3>
+<p>Google (China) Music website frontend is very traditional:</p>
+<p><a href="http://www.google.cn/music/song?id=S2894c9e5fc5df536">http://www.google.cn/music/song?id=S2894c9e5fc5df536</a><br />
+<a href="http://www.google.cn/music/album?id=B700dfba92c77567d">http://www.google.cn/music/album?id=B700dfba92c77567d</a><br />
+<a href="http://www.google.cn/music/artist?id=A21d5906abfad070c">http://www.google.cn/music/artist?id=A21d5906abfad070c</a></p>
+<h3>Streaming</h3>
+<p>Google (China) Music service includes an online player made with Flex. The Streaming of .mp3 files &amp; .lrc lyrics files is powered by <a href="http://www.chinacache.com/">ChinaCache</a>. Here's a <a href="http://www.google.cn/music/songstreaming?id=S40dbcfe0c610fa09&amp;client=&amp;output=xml&amp;sig=7df9df980d74d35d28efe461842d76f1&amp;cad=pl_player">sample streaming query with XML result</a></p>
+<p>In the URL query, parameter <code>sig=7df9df980d74d35d28efe461842d76f1</code> refers to: <code>MD5.hash(KeyContainer.PLAYER_KEY + param1.id);</code>,</p>
+<p>where <code>KeyContainer.PLAYER_KEYM</code> is defined at <code>com.google.music.projectm.player.generated.KeyContainer.as</code> as follows:<br />
+`<br />
+package com.google.music.projectm.player.generated<br />
+{</p>
+<pre><code>  public class KeyContainer extends Object
+  {
+      static public const PLAYER_KEY:String = "eca5badc586962b6521ffa54d9d731b0";
+
+      public function KeyContainer()
+      {
+          return;
+      }
+  }
+</code></pre>
+<p>}</p>
+<p>`</p>
+<p>So the pseudo algorism for <strong><code>sig</code></strong> is:</p>
+<p>md5("eca5badc586962b6521ffa54d9d731b0" + "S40dbcfe0c610fa09") = "7df9df980d74d35d28efe461842d76f1"</p>
+<h3>Download</h3>
+<p>Download is pretty easy, just try this link:</p>
+<p>http://www.google.cn/music/top100/musicdownload?id=Sc623893aee83dfb4</p>
+<p>and parse the <code>&lt;a&gt;</code> element:</p>
+<p><code>&lt;a href="/music/top100/url?q=http%3A%2F%2Ffile1.top100.cn%2F200905031622%2FFA4C7C8006CDB6F605DE00A4714A421A%2FSpecial_28506%2FWTF.mp3&amp;ct=rdl&amp;cad=dl&amp;ei=V1T9SdDnNpuYsAKE8ua6AQ&amp;sig=9EC3F52AC3B1F3857871AAF885AD2A2D"&gt;&lt;img src="http://www.gstatic.cn/top100/images/download_icon.png" alt="" style="border: none;"&gt;&lt;/a&gt;</code></p>
+<h3>libgugemusic</h3>
+<p>libgugemusic.py is a simple library for interacting with Google (China) Music service written in pure Python</p>
+<p>Example:<br />
+`</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>import libgugemusic<br />
+libgugemusic.download_mp3_by_id('S40dbcfe0c610fa09')<br />
+'http://file3.top100.cn/200905031859/42B67F4B5A23786601DB7781B75E509A/Special_12<br />
+3690/%E8%8A%B1%E8%9D%B4%E8%9D%B6.mp3'<br />
+libgugemusic.stream_mp3_by_id('S40dbcfe0c610fa09')<br />
+{'songUrl': 'http://audio2.top100.cn/200905031859/6186071D9F22FB7C15048C81BE0241<br />
+7B/streaming2/Special_123690/%E8%8A%B1%E8%9D%B4%E8%9D%B6.mp3', 'lyricsUrl': 'htt<br />
+p://lyric.top100.cn/Special_123690/M0123690001.lrc', 'label': '\xe5\x8d\x8e\xe7\<br />
+xba\xb3\xe5\x94\xb1\xe7\x89\x87\xe5\x85\xac\xe5\x8f\xb8(Warner Music)', 'provide<br />
+rId': 'M0123690001', 'albumThumbnailLink': 'http://www.gstatic.cn/base_media?q=h<br />
+ttp://pic.top100.cn/SpecialImg/middle_special_123690.jpg&amp;size=2&amp;hl=cn&amp;am<br />
+p;fact=194&amp;dhm=8bddb8f1'}<br />
+`</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>You can get <a href="http://zxn0.googlecode.com/svn/libgugemusic/libgugemusic.py">libgugemusic.py</a> on <a href="http://zxn0.googlecode.com/svn/libgugemusic/">my Google Code SVN repository</a></p>
+<p>I'll expand this library with music location function, and finally integrate Google (China) Music service with Last.FM <code>[radio.getPlaylist](http://www.last.fm/api/show?service=256)</code> as an alternative to Last.FM, Pandora &amp; Spotify.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-05-03T18:06:37+08:00">2009-05-03</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/639807"  rel="bookmark" >
+              <h2 class="card-title">CollegeHumor上的Prank War系列原创视频</h2>
+            </a>
+            <p class="card-text"><p>今晚无聊继续逛CollegeHumor.com，发现了Prank War系列原创视频，翻译过来就是大学系列恶作剧</p>
+<p><a href="http://www.collegehumor.com/video:1759697">Prank War: Audio Prank</a><br />
+In the initial offense, Streeter tricks Amir into listening to some disturbing music.<br />
+这是<a href="http://www.collegehumor.com/article:1722147">第一个恶搞</a>。Amir每次带耳机听歌都会不由自主的哼哼，Streeter就决定恶搞他一下。</p>
+<object type="application/x-shockwave-flash" data="http://www.collegehumor.com/moogaloop/moogaloop.swf?clip_id=1759697&#038;fullscreen=1" width="480" height="360" ><param name="allowfullscreen" value="true"/><param name="wmode" value="transparent"/><param name="AllowScriptAccess" value="true"/><param name="movie" quality="best" value="http://www.collegehumor.com/moogaloop/moogaloop.swf?clip_id=1759697&#038;fullscreen=1"/><embed src="http://www.collegehumor.com/moogaloop/moogaloop.swf?clip_id=1759697&#038;fullscreen=1" type="application/x-shockwave-flash" wmode="transparent"  width="480" height="360"  allowScriptAccess="always"></object>
+
+<p>Watch <a href="http://www.collegehumor.com/video:1759697">Prank War: Audio Prank</a> on <a href="http://www.collegehumor.com/">CollegeHumor</a></p>
+<p>其实这恶搞最开始是放在vimeo上的<a href="http://vimeo.com/148233">http://vimeo.com/148233</a>。</p>
+<p><a href="http://www.collegehumor.com/video:1759727">Prank War: Streeter's Big Date</a><br />
+Amir tricks Streeter into meeting an imaginary fan for a lunch date.<br />
+Amir假装是一个MM粉丝强烈要求和Streeter一起吃个饭。。。。。</p>
+<object type="application/x-shockwave-flash" data="http://www.collegehumor.com/moogaloop/moogaloop.swf?clip_id=1759727&#038;fullscreen=1" width="480" height="360" ><param name="allowfullscreen" value="true"/><param name="wmode" value="transparent"/><param name="AllowScriptAccess" value="true"/><param name="movie" quality="best" value="http://www.collegehumor.com/moogaloop/moogaloop.swf?clip_id=1759727&#038;fullscreen=1"/><embed src="http://www.collegehumor.com/moogaloop/moogaloop.swf?clip_id=1759727&#038;fullscreen=1" type="application/x-shockwave-flash" wmode="transparent"  width="480" height="360"  allowScriptAccess="always"></object>
+
+<p>Watch <a href="http://www.collegehumor.com/video:1759727">Prank War: Streeters Big Date</a> on <a href="http://www.collegehumor.com/">CollegeHumor</a></p>
+<p><a href="http://www.collegehumor.com/video:1759729">Prank War: Amir's Audition</a><br />
+Streeter enlists the help of Amir's friend to trick him into making an audition tape for a show that doesn't exist.<br />
+Streeter伪造了一个为电视台招喜剧演员的招聘广告。。。</p>
+<object type="application/x-shockwave-flash" data="http://www.collegehumor.com/moogaloop/moogaloop.swf?clip_id=1759729&#038;fullscreen=1" width="480" height="360" ><param name="allowfullscreen" value="true"/><param name="wmode" value="transparent"/><param name="AllowScriptAccess" value="true"/><param name="movie" quality="best" value="http://www.collegehumor.com/moogaloop/moogaloop.swf?clip_id=1759729&#038;fullscreen=1"/><embed src="http://www.collegehumor.com/moogaloop/moogaloop.swf?clip_id=1759729&#038;fullscreen=1" type="application/x-shockwave-flash" wmode="transparent"  width="480" height="360"  allowScriptAccess="always"></object>
+
+<p>Watch <a href="http://www.collegehumor.com/video:1759729">Prank War: Amirs Audition</a> on <a href="http://www.collegehumor.com/">CollegeHumor</a></p>
+<p>太有才了！最后Amir真的是想在地上找个洞钻进去啊。。。</p>
+<p><a href="http://www.collegehumor.com/video:1759731">Prank War: Streeter Bombs</a><br />
+Amir convinces the entire crowd at a comedy show not to laugh at any of Streeter's jokes.<br />
+Streeter的演出，大家都不笑冷场。。。</p>
+<object type="application/x-shockwave-flash" data="http://www.collegehumor.com/moogaloop/moogaloop.swf?clip_id=1759731&#038;fullscreen=1" width="480" height="360" ><param name="allowfullscreen" value="true"/><param name="wmode" value="transparent"/><param name="AllowScriptAccess" value="true"/><param name="movie" quality="best" value="http://www.collegehumor.com/moogaloop/moogaloop.swf?clip_id=1759731&#038;fullscreen=1"/><embed src="http://www.collegehumor.com/moogaloop/moogaloop.swf?clip_id=1759731&#038;fullscreen=1" type="application/x-shockwave-flash" wmode="transparent"  width="480" height="360"  allowScriptAccess="always"></object>
+
+<p>Watch <a href="http://www.collegehumor.com/video:1759731">Prank War: Streeter Bombs</a> on <a href="http://www.collegehumor.com/">CollegeHumor</a></p>
+<p>不过下面吼You are fat太冷了。。。哈哈。。。Streeter同学真是大受打击啊。</p>
+<p>Prank War: Amir's Big Break (With Human Giant)<br />
+Streeter and Amir fly to LA where Streeter (with the help of Human Giant) trick Amir into thinking he's 1) going to be on TV and 2) that he's a terrible actor.</p>
+<object type="application/x-shockwave-flash" data="http://www.collegehumor.com/moogaloop/moogaloop.swf?clip_id=1759206&#038;fullscreen=1" width="480" height="360" ><param name="allowfullscreen" value="true"/><param name="wmode" value="transparent"/><param name="AllowScriptAccess" value="true"/><param name="movie" quality="best" value="http://www.collegehumor.com/moogaloop/moogaloop.swf?clip_id=1759206&#038;fullscreen=1"/><embed src="http://www.collegehumor.com/moogaloop/moogaloop.swf?clip_id=1759206&#038;fullscreen=1" type="application/x-shockwave-flash" wmode="transparent"  width="480" height="360"  allowScriptAccess="always"></object>
+
+<p>Watch <a href="http://www.collegehumor.com/video:1759206">Prank War: Amirs Big Break (With Human Giant)</a> on <a href="http://www.collegehumor.com/">CollegeHumor</a></p>
+<p>Amir的表情好失望好失望啊。。。。机票那么贵。。。结果。。。。</p>
+<p><a href="http://www.collegehumor.com/video:1774718">Prank War: The Yankee Prankee</a><br />
+Amir ambushes Streeter and his girlfriend at a Yankee Game by having Streeter unknowingly propose to her via JumboTron.<br />
+Amir在Yankee Game上打广告，把Streeter的女朋友吹了。。。。</p>
+<object type="application/x-shockwave-flash" data="http://www.collegehumor.com/moogaloop/moogaloop.swf?clip_id=1774718&#038;fullscreen=1" width="480" height="360" ><param name="allowfullscreen" value="true"/><param name="wmode" value="transparent"/><param name="AllowScriptAccess" value="true"/><param name="movie" quality="best" value="http://www.collegehumor.com/moogaloop/moogaloop.swf?clip_id=1774718&#038;fullscreen=1"/><embed src="http://www.collegehumor.com/moogaloop/moogaloop.swf?clip_id=1774718&#038;fullscreen=1" type="application/x-shockwave-flash" wmode="transparent"  width="480" height="360"  allowScriptAccess="always"></object>
+
+<p>Watch <a href="http://www.collegehumor.com/video:1774718">Prank War: The Yankee Prankee</a> and more <a href="http://www.collegehumor.com/videos">funny videos</a> on <a href="http://www.collegehumor.com/">CollegeHumor</a></p>
+<p><a href="http://www.collegehumor.com/video:1902812">Prank War 7: The Half Million Dollar Shot</a><br />
+Amir makes a blindfolded half-court basketball shot for $500,000. Or so he thinks.<br />
+Amir蒙眼在半场投球进了，中了500万美元。。。。至少他是这样认为的。。。。</p>
+<object type="application/x-shockwave-flash" data="http://www.collegehumor.com/moogaloop/moogaloop.swf?clip_id=1902812&#038;fullscreen=1" width="640" height="360" ><param name="allowfullscreen" value="true"/><param name="wmode" value="transparent"/><param name="AllowScriptAccess" value="true"/><param name="movie" quality="best" value="http://www.collegehumor.com/moogaloop/moogaloop.swf?clip_id=1902812&#038;fullscreen=1"/><embed src="http://www.collegehumor.com/moogaloop/moogaloop.swf?clip_id=1902812&#038;fullscreen=1" type="application/x-shockwave-flash" wmode="transparent"  width="640" height="360"  allowScriptAccess="always"></object>
+
+<p>Watch <a href="http://www.collegehumor.com/video:1902812">Prank War 7: The Half Million Dollar Shot</a> on <a href="http://www.collegehumor.com/">CollegeHumor</a></p>
+<p>Amir举奖金牌子看到Streeter的时候，当时心里就一囧啊。。。。</p>
+<p>以后应该还有续集。<a href="http://www.collegehumor.com/tag:prank-war/videos">7部视频</a>/<a href="http://www.collegehumor.com/tag:prank-war/articles">文章</a>的链接在CollegeHumor上可以找到</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-05-03T03:22:27+08:00">2009-05-03</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/639727"  rel="bookmark" >
+              <h2 class="card-title">Unicode盘符</h2>
+            </a>
+            <p class="card-text"><p>Windows下盘符只能从A:，B:，C:，D:，一直到Z:，其实可以用Unicode做盘符的。</p>
+<p>受<a href="http://www.reddit.com/r/programming/comments/8gdh3/no_you_may_not_create_a_folder_named_aux_on_your/c0971nh?context=1">reddit一位网友</a>启发，我就把所有MP3丢 <code>☭:\</code> 盘下了。咩哈哈。。。AV都丢 <code>Ѡ:\</code> 盘也是个不错的主意。恩恩～～～</p>
+<p><img alt="" src="http://imgur.com/2FeiN.jpg" /></p>
+<p>实现方法很简单，修改注册表<code>HKEY_LOCAL_MACHINE\SYSTEM\MountedDevices</code>即可。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-04-29T21:11:18+08:00">2009-04-29</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/639491"  rel="bookmark" >
+              <h2 class="card-title">JavaScript for hackers</h2>
+            </a>
+            <p class="card-text"><p>看到<a href="http://dev.opera.com/author/1971445">GARETHHEYES</a>的<a href="http://dev.opera.com/articles/view/opera-javascript-for-hackers-1/">JavaScript for hackers</a>，摘录一些。</p>
+<p>这人很牛的。。。他的<a href="http://www.businessinfo.co.uk/labs/">http://www.businessinfo.co.uk/labs/</a>上有n多exp</p>
+<h3>RegExp可以执行任意代码</h3>
+<p><code>'somestring'.replace(/some/,function($1){ alert(/Fuck GFW/) })</code></p>
+<p>非常典型的函数式编程漏洞。嘿嘿。<code>'XSS'.replace(/XSS/g,alert)</code> 函数当参数传递。</p>
+<h3>Unicode转义</h3>
+<p><code>\u0061lert(1)</code></p>
+<p>用<code>eval('\\u'+'0061'+'lert(1)')</code>这个方法可以轻松过PHPIDS</p>
+<p>这个还不算很逆天的，Mozilla的那个<a href="http://en.wikipedia.org/wiki/ECMAScript_for_XML">E4X</a>导致的escape/unescape漏洞才多</p>
+<h3>JS引擎的宽容</h3>
+<p><code>+alert(1)--</code><br />
+<code>+alert(1)</code><br />
+<code>1/alert(1)</code><br />
+<code>alert(1)&gt;&gt;&gt;/abc/</code><br />
+<a href="http://sla.ckers.org/">sla.ckers</a>上对这方面很有研究</p>
+<h3>throw, delete语法</h3>
+<p><code>throw delete~typeof~alert(1)</code><br />
+<code>delete alert(1)</code><br />
+<code>delete~[a=alert]/delete a(1)</code><br />
+<code>delete [a=alert],delete a(1)</code></p>
+<p>真是把JS旮旯的语法都用上了</p>
+<h3>全局对象其实是表达式</h3>
+<p>把JS当英语自然语言描述<br />
+<code>stop, open, print &amp;&amp; alert(1)</code><br />
+<code>javascript : /is/^{ a : ' weird ' }[' &amp; wonderful ']/" language "
+the_fun: ['never '] + stop['s']</code></p>
+<h3>有趣的Getters/Setters</h3>
+<p><code>defineSetter('x',alert); x=1;</code></p>
+<p>Opera下有效</p>
+<h3>location的双重encoding</h3>
+<p><code>location='javascript:%61%6c%65%72%74%28%31%29'</code><br />
+<code>location='javascript:%5c%75%30%30%36%31%5c%75%30%30%36%63%5c %75%30%30%36%35%5c%75%30%30%37%32%5c%75%30%30%37%34(1)'</code></p>
+<h3>XSS矢量生成工具</h3>
+<p>作者提供了一个<a href="http://www.businessinfo.co.uk/labs/hackvertor/hackvertor.php">XSS矢量生成工具</a>。</p>
+<h3>衍生阅读</h3>
+<p><a href="http://www.thespanner.co.uk/">THE SPANNER</a>（也是大牛）的两篇JAVASCRIPT FOR HACKERS<a href="http://www.thespanner.co.uk/2007/09/19/javascript-for-hackers/">上</a>，<a href="http://www.thespanner.co.uk/2007/12/12/javascript-for-hackers-part-2/">下</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-04-25T23:28:11+08:00">2009-04-25</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/639479"  rel="bookmark" >
+              <h2 class="card-title">男女与信息技术</h2>
+            </a>
+            <p class="card-text"><p><a href="http://video.google.com/videoplay?docid=-9059265454566485886">On Girls, Boys, and IT Careers</a></p>
+<p><embed allowfullscreen="true" allowscriptaccess="always" id="VideoPlayback" src="http://video.google.com/googleplayer.swf?docid=-9059265454566485886&amp;hl=en&amp;fs=true" style="width:400px;height:326px" type="application/x-shockwave-flash"></p>
+<blockquote>
+<p>Google TechTalks April 06, 2006 Dr. Cornelia Brunner Associate Director, Center for Children &amp; Technology Education Development Center Dr. Brunner has been involved in the research, production, and teaching of educational technology in a variety of subject areas for thirty years. In addition to conducting research projects about the relationship between learning, teaching, and technology, she has designed and implemented educational materials incorporating technologies to support inquiry-based learning and teaching in science, social studies, media literacy, and the arts. ABSTRACT Research over the past two decades has pointed to a strong, persistent, gendered difference in technological desire – in what we want from, expect of, hope for and fear about technology. These differences may be at the heart of current lack of interest in the IT professions among young women. The purpose of this talk to to illustrate some of these differences and to discuss ways in which we might invite young women who are not comfortable with the dominant discourse about technology into the IT professions by describing processes and opportunities in a language that speaks to a more “feminine” technological imagination.«</p>
+</blockquote>
+<p>这里的男女不是指生殖性别上的男女，而是只人们概念中男女理解事情、做事的区别方式。</p>
+<p>20年前的研究，也算一种二元论吧。从男性主义和女性主义不同的角度和观点来看IT这种讨论很有意思，technology/geek不仅仅是男性的专利。</p>
+<p>每次看YC News，听TED或者Google TechTalks都让我感到自己是intellectual barbarian</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-04-25T16:16:04+08:00">2009-04-25</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/639464"  rel="bookmark" >
+              <h2 class="card-title">证明32 * 33 = 1^2 4^2 7^2 8^2 9^2 10^2 14^2 15^2 18^2</h2>
+            </a>
+            <p class="card-text"><p><a href="http://www.regruntled.com/2009/03/27/smallest-perfect-simple-squared-rectangle/"><img alt="" src="http://www.regruntled.com/wp-content/uploads/2009/03/perfectsimple.jpg" /></a></p>
+<p>多年不做证明，觉得这东东挺有趣的</p>
+<p><a href="http://www.reddit.com/r/math/comments/8enz6/prove_32_33_12_42_72_82_92_102_142_152_182_with/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-04-25T07:15:55+08:00">2009-04-25</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/639392"  rel="bookmark" >
+              <h2 class="card-title">RedHat的开源指数</h2>
+            </a>
+            <p class="card-text"><p><a href="http://cnbeta.com/articles/82496.htm">cnBeta上</a>看到RedHat让GaTech做的<a href="http://www.redhat.com/about/where-is-open-source/activity/">全球开源指数调查</a></p>
+<p>当然分 <em>看两个孙女的地方。本分工作外，我有个习惯——收集容器，这非职业习惯，而是生活习惯或者说爱好。爱好是种盲目的人生</em> 裂海南岛的行为就不多说了。重点是它的<a href="http://www.redhat.com/f/pdf/ossi-index-ranks.pdf">数据</a>。</p>
+<p>原文是鸟文比较难以理解，所以我<a href="http://www.redhat.com/about/where-is-open-source/world_borders.js">提取</a>出来了。直接看排名吧。越小越好。前五甲是法西德澳芬</p>
+<blockquote>
+<p>CNTRY_NAME,CNTRY_ABBR,Act_T,Act_G,Act_I,Act_C,Env_T,Env_G,Env_I,Env_C<br />
+ Algeria,dz,66,45,65,64,54,41,57,66<br />
+ Argentina,ar,37,28,45,33,39,44,41,38<br />
+ Australia,au,4,14,4,11,11,7,16,10<br />
+ Austria,at,27,34,12,40,17,13,31,15<br />
+ Bangladesh,bd,61,45,66,53,72,71,38,75<br />
+ Belgium,be,17,10,18,32,18,17,22,19<br />
+ Bolivia,bo,60,45,50,59,61,57,51,57<br />
+ Brazil,br,12,3,43,14,45,40,65,42<br />
+ Bulgaria,bg,31,26,24,53,37,36,56,37<br />
+ Cameroon,cm,69,45,72,67,74,75,73,74<br />
+ Canada,ca,28,34,17,16,10,11,15,5<br />
+ Chile,cl,43,45,26,41,33,33,32,40<br />
+ China,cn,15,6,69,4,50,70,8,59<br />
+ Colombia,co,45,34,48,23,47,45,55,51<br />
+ Costa Rica,cr,40,28,32,58,41,37,46,41<br />
+ Croatia,hr,44,34,28,60,42,47,61,36<br />
+ Czech Republic,cz,39,45,23,52,36,46,54,29<br />
+ Denmark,dk,10,12,8,31,4,2,9,6<br />
+ Dominican Republic,do,65,45,59,68,58,52,50,58<br />
+ Ecuador,ec,59,45,49,57,48,51,33,54<br />
+ Egypt,eg,58,45,63,50,49,60,26,46<br />
+ Estonia,ee,8,45,5,1,21,21,49,14<br />
+ Finland,fi,5,19,1,18,5,12,5,8<br />
+ France,fr,1,1,25,3,15,18,18,17<br />
+ Germany,de,3,4,19,5,16,14,23,18<br />
+ Greece,gr,53,45,39,49,29,32,44,30<br />
+ Guatemala,gu,63,45,56,64,67,59,63,68<br />
+ Hungary,hu,32,45,21,19,24,22,19,31<br />
+ India,in,23,14,44,8,53,54,24,67<br />
+ Indonesia,id,48,28,64,43,63,56,47,66<br />
+ Ireland,ie,19,32,14,9,19,19,11,24<br />
+ Italy,it,11,8,20,15,22,25,34,23<br />
+ Japan,jp,14,11,27,6,13,6,14,11<br />
+ Jordan,jo,50,45,34,46,56,55,42,53<br />
+ Kenya,kv,74,45,71,72,73,65,72,73<br />
+ Latvia,lv,71,45,38,73,30,31,74,16<br />
+ Lithuania,lt,47,45,40,22,35,28,71,27<br />
+ Malaysia,my,26,12,36,27,31,49,21,34<br />
+ Mauritius,mu,72,45,37,74,38,34,30,44<br />
+ Mexico,mx,51,45,52,24,44,39,45,45<br />
+ Moldova,md,75,45,58,75,34,62,2,48<br />
+ Morocco,ma,68,45,67,62,69,67,60,63<br />
+ Netherlands,nl,13,19,7,17,9,5,12,7<br />
+ New Zealand,nz,21,45,10,13,6,9,6,9<br />
+ Nigeria,ng,73,45,73,71,75,68,75,71<br />
+ Norway,no,7,14,2,29,3,4,17,3<br />
+ Oman,om,62,45,53,63,60,64,40,49<br />
+ Pakistan,pk,38,22,68,38,71,74,39,69<br />
+ Paraguay,py,55,32,60,64,68,58,70,61<br />
+ Peru,pe,36,24,54,36,51,48,64,47<br />
+ Philippines,ph,67,26,57,70,55,53,48,56<br />
+ Poland,pl,29,34,16,35,25,29,20,25<br />
+ Portugal,pt,33,24,31,48,26,23,27,32<br />
+ Romania,ro,54,45,35,55,43,43,68,33<br />
+ Russia,ru,42,45,47,12,27,26,59,26<br />
+ Senegal,sn,64,45,70,61,70,63,58,72<br />
+ Singapore,sg,16,34,3,21,14,35,1,22<br />
+ Slovakia,sk,41,34,29,51,28,27,53,28<br />
+ Slovenia,si,24,34,6,47,23,24,43,20<br />
+ South Africa,za,30,17,46,25,52,30,67,60<br />
+ South Korea,kp,20,5,41,26,12,16,10,12<br />
+ Spain,es,2,2,22,10,20,20,29,21<br />
+ Sri Lanka,lk,52,34,62,39,66,66,36,70<br />
+ Sweden,se,18,22,11,20,1,1,4,1<br />
+ Switzerland,ch,22,34,9,28,7,10,3,13<br />
+ Thailand,th,25,8,51,30,59,69,28,43<br />
+ Tunisia,tn,46,45,30,37,65,72,37,55<br />
+ Turkey,tr,57,45,61,44,46,50,35,52<br />
+ Ukraine,ua,56,34,55,56,32,15,69,39<br />
+ United Kingdom,gb,6,7,15,7,8,8,13,4<br />
+ United States,us,9,28,13,2,2,3,7,2<br />
+ Uruguay,uy,49,45,33,42,40,38,66,35<br />
+ Venezuela,ve,34,19,42,45,62,61,62,50<br />
+ Vietnam,vn,35,17,75,34,64,73,25,62<br />
+ Yemen,ye,70,45,74,69,57,42,52,64</p>
+</blockquote>
+<p>做了个<a href="https://spreadsheets.google.com/ccc?key=pwW5DByVrVc5xShzVyan3Ig">Spreadsheet</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-04-23T12:03:14+08:00">2009-04-23</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/639388"  rel="bookmark" >
+              <h2 class="card-title">Google开始做游戏了</h2>
+            </a>
+            <p class="card-text"><p><a href="http://o3d.googlecode.com/svn/trunk/samples/io/io.html"><img alt="" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/04/13.jpg" /></a> （刚写完blog这个svn的URL就更新了。看来应注明<a href="http://o3d.googlecode.com/svn-history/r29/trunk/samples/io/">revision</a>作为永久URL）</p>
+<p><a href="http://www.reddit.com/r/programming/comments/8eaim/google_has_released_a_new_open_source_browser/c090i6l">LOL</a>, this is really<a href="http://drawlogic.com/2009/04/21/google-relases-o3d-plugin-for-3d-in-browser-controlled-with-javascript/"> old school shit</a> like VRML &amp; DirectAnimation</p>
+<p>咋个说呢，<a href="http://www.microsoft.com/windows/WindowsMedia/">WMF</a>发来贺电，Silverlight发来贺电，Unity3D发来贺电，<a href="http://papervision3d.org/">P3D</a>发来贺电</p>
+<p>还是要问候谷歌工程师，我日你大爷的，老子下载535KB的O3DSetup.exe，满以为就这么小巧可爱了，结果是他妈<strong>下载</strong> 下来一个<strong>下载器</strong> ，然后下载器自己再去慢吞吞的单线程下载O3D的真实安装包 <a href="http://dl-prcsat.google.com/o3d/0.1.34.2/o3d.msi">http://dl-prcsat.google.com/o3d/0.1.34.2/o3d.msi</a>（1.74MB） 这种bootstrapper的设计者真他妈的是三<strong>。厂里的集体宿舍人满为患，后来的人无处容身，像我，就需要租间房子。这栋楼老太太有两层房，之前楼下住着她的儿子儿</strong> 鹿喝多了。其他的不说了，就单说这个o3d.msi，解压之后发现2个可疑文件，getextras.exe（估计就是推广Google Toolbar的）和driver_blacklist.txt，后者的内容如下：</p>
+<blockquote>
+<h1>This file contains the GUIDs of blacklisted drivers as unsigned ints in hex.</h1>
+<p># File format:<br />
+ # # comments out to the end of a line.<br />
+ # Lines should be no longer than 256 characters. Still, to keep things<br />
+ # simple, just put one GUID per line.<br />
+ # Whitespace is ignored except in that it separates GUIDs.<br />
+ # No other characters are legal.</p>
+<h1>Sample GUID [DO NOT UNCOMMENT THIS LINE]:</h1>
+<p># 0xd7b71e3e</p>
+<h1>Actual blacklisted drivers:</h1>
+</blockquote>
+<p>不过O3D在WinXP IE+Chromium还是很争气的弹了个错误对话框</p>
+<blockquote>
+<p>---------------------------<br />
+ Microsoft Internet Explorer<br />
+ ---------------------------<br />
+ Unsupported GPU device: \\.\DISPLAY1<br />
+ Press OK to continue anyway.<br />
+ ---------------------------<br />
+ 确定 取消<br />
+ ---------------------------</p>
+</blockquote>
+<p>最后我并不看好O3D。首先插件这个东西是见了就烦，虽然Google的品牌是个金字招牌了；其次地球上的3D平台已经充分多充分滥了。再次各种平台的支持也麻烦，例如手持设备。我个人觉得能够序列化在Web/RDP传输的<a href="http://www.opengl.org/">gl</a>指令流才是真正的3D王道。况且3D看似是2D平面的进步，实则进入了交互多媒体领域，要支持摇杆手柄LAN/WAN联机才好玩。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-04-23T09:39:12+08:00">2009-04-23</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/636708"  rel="bookmark" >
+              <h2 class="card-title">My Favorite Haskell New Logos</h2>
+            </a>
+            <p class="card-text"><p>Interesting discussing via <a href="http://news.ycombinator.com/item?id=412231">HN</a></p>
+<p><img alt="" src="http://www.haskell.org/sitewiki/images/2/28/Haskell-Logo.png" /></p>
+<p><img alt="" src="http://www.haskell.org/sitewiki/images/e/e8/Haskell-cjay2c.png" /></p>
+<p><img alt="" src="http://www.haskell.org/sitewiki/images/thumb/6/68/Haskell_spreadshirt_logo.png/400px-Haskell_spreadshirt_logo.png" /></p>
+<p><img alt="" src="http://www.haskell.org/sitewiki/images/e/e6/BurkeLibbey_Haskell.png" /></p>
+<p><img alt="" src="http://www.haskell.org/sitewiki/images/f/fc/Haskell_logo_ideas_tshirt_falconnl.png" /></p>
+<p><img alt="" src="http://www.haskell.org/sitewiki/images/4/49/Tshirt-logo-mod-inv.png" /></p>
+<p><img alt="" src="http://www.haskell.org/sitewiki/images/c/c5/HsLogosMB.png" /></p>
+<p><img alt="" src="http://www.haskell.org/sitewiki/images/0/06/Haskell-pure.png" /></p>
+<p><img alt="" src="http://haskell.org/sitewiki/images/2/21/Haskell-apankrat.png" /></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-04-18T15:02:29+08:00">2009-04-18</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/635991"  rel="bookmark" >
+              <h2 class="card-title">Spotify高级技巧</h2>
+            </a>
+            <p class="card-text"><p>一 05</p>
+<h2><a href="http://initiative.yo2.cn/archives/635991" title="Permanent Link to Spotify高级技巧">Spotify高级技巧</a></h2>
+<p><a href="http://image-001.yo2cdn.com/wp-content/uploads/2008/09/login-view.png"></a></p>
+<h3>Spotify外围</h3>
+<p>无论你的spotify安装还是没安装，无论你安装到什么地方，都可以Win+R然后输入 <code>spotify:</code> 回车来启动Spotify</p>
+<p>查看spotify服务器的在线状态，请到这个页面：<a href="https://www.spotify.com/en/help/service-status/">https://www.spotify.com/en/help/service-status/</a></p>
+<h3>常见问题及其解答</h3>
+<p><img alt="" src="http://www.spotify.com/wp-content/themes/spotify/images/logo.png" /></p>
+<p><a href="https://www.spotify.com/en/help/faq/">Spotify官方FAQ</a></p>
+<p><strong>Q:</strong> Spotify的目标是什么？<br />
+<strong>A:</strong> Our dream is to let everyone listen to whatever they want, whenever and wherever they want.<br />
+我们的理想是：让每个人，在任意时间，任意地点听他们想听的任意歌曲！</p>
+<h3>最popular的歌</h3>
+<p><a href="https://www.spotify.com/blog/archives/2007/09/10/check-out-whos-hot-or-not/">貌似</a>是<a href="http://open.spotify.com/artist/5pKCCKE2ajJHZ9KAiaK11H">Rihanna</a>的<a href="http://open.spotify.com/track/1lvpFGnu5xzQk9Ex1NWwTX">Umbrella</a></p>
+<p><a href="http://www.flickr.com/photos/sophia-bendz/1355712554/"><img alt="" src="http://static.flickr.com/1020/1355712554_35d161cc25_o.png" /></a></p>
+<h3>Spotify内部URI</h3>
+<p><img alt="Spotify URIs" src="http://img.skitch.com/20080114-pe8b8t7p8npt1hk9j52f69y1i4.png" /></p>
+<p>Spotify支持两种URI，一种是HTTP网页打开的，例如<br />
+<a href="http://open.spotify.com/artist/5lsC3H1vh9YSRQckyGv0Up">http://open.spotify.com/artist/5lsC3H1vh9YSRQckyGv0Up</a></p>
+<p>这样非常方便和朋友分享。直接把链接发过去就行啦。:-)</p>
+<p>其实打开上面的URL，得到的是下面这种URI：</p>
+<p>第二种，以 <code>spotify:</code> 这种shema开头的URI<br />
+<a href="http://open.spotify.com/artist/5lsC3H1vh9YSRQckyGv0Up">http://open.spotify.com/artist/5lsC3H1vh9YSRQckyGv0Up</a><br />
+等价于：<br />
+<a href="spotify:artist:5lsC3H1vh9YSRQckyGv0Up">spotify:artist:5lsC3H1vh9YSRQckyGv0Up</a></p>
+<p>更多的例子：<br />
+艺人：<br />
+<a href="spotify:artist:5lsC3H1vh9YSRQckyGv0Up">spotify:artist:5lsC3H1vh9YSRQckyGv0Up</a><br />
+专辑：<br />
+<a href="spotify:album:5CGyhPqG6AHnHuO4DVgh7v">spotify:album:5CGyhPqG6AHnHuO4DVgh7v</a><br />
+单曲：<br />
+<a href="spotify:track:6nagmlFCvUo7rSjt3wDPbD">spotify:track:6nagmlFCvUo7rSjt3wDPbD</a><br />
+单曲+定位时间<br />
+<a href="spotify:track:0x6sp8GeimTiAUVGkp3ZGv#1:40">spotify:track:0x6sp8GeimTiAUVGkp3ZGv#1:40</a><br />
+用户播放列表：<br />
+<a href="spotify:user:spotify:playlist:0FQk6BADgIIYd3yTLCThjg">spotify:user:spotify:playlist:0FQk6BADgIIYd3yTLCThj</a></p>
+<p>搜索功能：<br />
+<a href="spotify:search:genre:soul+year:1970-1975">spotify:search:genre:soul+year:1970-1975</a></p>
+<p>提示“Link Not Found”<br />
+<a href="spotify:no-such-thing">spotify:no-such-thing</a></p>
+<p>打开配置页面<br />
+<a href="spotify:config">spotify:config</a></p>
+<p>spotify: 这种URI的实际原理是，以 <code>spotify.exe /uri xxx</code> 参数来启动。</p>
+<p>spotify还在和各方面合作，让大家能在<a href="http://spotify.com/blog/archives/2008/06/14/support-for-spotify-uris-in-adium-13-beta/">Adium</a>, <a href="http://spotify.com/blog/archives/2008/01/25/patching-mediawiki-for-fun-and-profit">mediawiki</a>, Firefox等软件都能直接点击来打开 <code>spotify:</code> 这种链接。</p>
+<h3>合作播放列表</h3>
+<p>可以和朋友一起维护一个<a href="https://www.spotify.com/blog/archives/2008/01/30/collaborative-playlists">Collaborative playlists</a></p>
+<p><img alt="" src="http://img.skitch.com/20080130-bbcmbkgp87i3x841aa9hbxr7k3.png" /></p>
+<p>然后把这个playlist分享给朋友，让朋友往这个playlist里加歌吧！</p>
+<h3>Spotify的品质</h3>
+<p>spotify的mp3<a href="http://torrentfreak.com/spotify-an-alternative-to-music-piracy-090102/">据说</a>是160kbaps以上，比<a href="http://music.sina.com.cn/">sina yueku</a>的64kbps好多啦。也<a href="http://bbs.sdust.edu.cn/read.php?tid=115170#1052246">有人说是192kbps</a>的。</p>
+<p>而且注重一些细节，例如<a href="https://www.spotify.com/blog/archives/2008/04/21/content-and-metadata-changes/">metadata的处理</a>，metadata就是一些id3 tag和封面之类的；对Unicode的支持，以及各种BT的情况，<a href="https://www.spotify.com/blog/archives/2008/03/27/we-like-challenges/">例如</a> <a href="spotify:artist:6kBDZFXuLrZgHnvmPu9NsG">Aphex Twin</a>的这首<a href="spotify:track:7qfsvjCitAWJFuh01M66M5">歌曲</a>名字：</p>
+<p>[Δ <em>M</em> <em>i</em> −1 = − <em>α</em> Σ <em>n</em> =1 <em>N</em> <em>D</em> <em>i</em>[<em>n</em>]<a href="spotify:track:7qfsvjCitAWJFuh01M66M5">Σ <em>j</em> ∈C{<em>i</em>}<em>F</em> <em>ji</em>[<em>n</em> − 1] + <em>F</em> ext <em>i</em>[[<em>n</em> −1]]</a></p>
+<p><img alt="" src="https://www.spotify.com/wp-content/uploads/2008/03/apex-twin.png" /></p>
+<p>不得不说精品软件就是这些细节铸就的。</p>
+<h3>搜索</h3>
+<p>spotify对<a href="https://www.spotify.com/blog/archives/2008/01/22/searching-spotify/">搜索</a>也支持得非常好。</p>
+<p>关键字是不区分大小写的。但是要注意歧义。例如，单纯搜索 <a href="spotify:search:madonna">madonna</a> 这样的结果是不准确的，建议用更加详细的关键词限制，例如<a href="spotify:search:artist:madonna">artist:madonna</a>，<a href="spotify:search:album:madonna">album:madonna</a>，<a href="spotify:search:title:madonna">title:madonna</a>。也可限制一下时间范围，例如<a href="spotify:search:year:1969">year:1969</a>，<a href="spotify:search:year:1994-1996">year:1994-1996</a>。风格也可以限制一下，如<a href="spotify:search:genre:soul">genre:soul</a></p>
+<p>几个例子：<br />
+90年代初的techno：<br />
+<a href="spotify:search:genre:techno+year:1990-95">genre:techno year:1990-95</a></p>
+<p>60年代末的 <a href="spotify:artist:5BDObRbJMdEvYEqvIOFVjB">Grateful Dead</a><br />
+<a href="spotify:search:artist:%22grateful+dead%22+year:1965-1970">artist:“grateful+dead” year:1965-1970</a></p>
+<p>OR语法：<br />
+<a href="spotify:search:artist:%22grateful dead%22+OR+artist:madonna">artist:"grateful dead" OR artist:madonna</a></p>
+<h3>Scrobbling</h3>
+<p><a href="http://last.fm">LastFM</a>的伟大，是在于<a href="http://www.audioscrobbler.net/">AudioScrobbler.net</a>的伟大。稍微新一点的播放器，Foobar, WMP, VLC等等都支持Scrobbling。可以说scrobbling是Web 2.0时代听音乐的必选</p>
+<p><a href="http://www.spotify.com/blog/archives/2008/12/18/spotify-scrobbles/">Spotify也支持Scrobbling</a></p>
+<p><img alt="" src="http://www.spotify.com/wp-content/uploads/lastfm-settings.png" /></p>
+<p>绑定了LastFM帐号之后，你就可以在<a href="http://www.last.fm/user/electronixtar">你的LastFM页面</a>看到你的播放情况啦</p>
+<p><img alt="" src="http://www.spotify.com/wp-content/uploads/lastfm-scrobbling.png" /></p>
+<p>再利用<a href="http://www.last.fm/api">LastFM API</a>，就可以干各种好玩的事情了。</p>
+<h3>Spotify的粉丝</h3>
+<p>法 <em>，反射出光线吸引我，我加了七元钱换下它。此刻房子里的光线较差，到门口刚明亮一点又很快暗下去。天变得真快，我俯下</em> 国人的求注册邀请专用米：<a href="http://www.i-wanna-get-a-spotify-invite.net/">http://www.i-wanna-get-a-spotify-invite.net/</a></p>
+<p>瑞典人写的用<a href="http://www.finstilt.se/2008/01/16/spotify/">手机当遥控器，控制spotify</a></p>
+<p>Firefox插件：在Spotify里搜索 Spotify Search 0.3.4<br />
+<a href="https://addons.mozilla.org/sv-SE/firefox/addon/10206">https://addons.mozilla.org/sv-SE/firefox/addon/10206</a></p>
+<h3>预测一下</h3>
+<p>Spotify最近不会推出Linux的原生版本，什么32 bit, 64 bit, D-bus更不要想了。用Linux的代价就是这些商业软件支持不好。<a href="https://beta.spotify.com/help/linux/">用Wine先跑着</a>吧。或者去<a href="http://getsatisfaction.com/spotify/topics/native_linux_support_would_be_great">Spitify的客服论坛</a>去闹</p>
+<p>Spotify可能会推出<a href="https://www.spotify.com/blog/archives/2008/05/06/looking-for-s60-developers/">S60版本</a>。我猜iPhone版本也会很快推出。</p>
+<p>以后自己家里一定要弄一个高清BT盒子，盒子里第一款要装的软件就是spotify，给房间24小时供给<a href="http://open.spotify.com/search/celtic">celtic音乐</a>。呵呵</p>
+<p>est打算做几个玩意：<br />
+1. Windows Mobile手机通过WIFI控制Spotify<br />
+2. Now Playing! 论坛签名图片，兼容lastFM和Spotify。支持修改GTalk, MSN等状态？呵呵<br />
+3. Spotify静音、暂停的全局快捷键</p>
+<p>如果以后有时间，弄一个XBMC插件之类的。弄一个CD Cover Art Display之类的。一些douban和LastFM的review也不错</p>
+<h3>10 Responses to “Spotify高级技巧”</h3>
+<pre><code>1. una Says:
+</code></pre>
+<p>一月 6th, 2009 at 09:22</p>
+<p>你好！我是博文视点的员工，因为我们要出版笑来老师的《把时间当作朋友》一书，所以想找您做一下读者调研。上面留的mail是我的MSN，可以加我一下吗？</p>
+<pre><code>2. [yqrx.com](http://yqrx.com) Says:
+</code></pre>
+<p>一月 6th, 2009 at 15:47</p>
+<p>飘亮</p>
+<pre><code>3. [Spotify - Close To U](http://ioio.name/blog/spotify.html) Says:
+</code></pre>
+<p>一月 8th, 2009 at 17:11</p>
+<p>[...] 这个观点我是不赞同的，很显然，我必须使用iTunes往我的iPod里面加歌，不然iPod就变成移动硬盘了而不是播放器；再者，中文歌也是要听的，貌似目前还不能满足 ，输入“的”查询后才发现中文歌是有的，只是比较新的还没有。 更多的信息还是阅读est写的Spotify介绍和Spotify高级技巧吧。 [...]</p>
+<pre><code>4. [coolcfan](http://press.coolcfan.org) Says:
+</code></pre>
+<p>一月 8th, 2009 at 19:31</p>
+<p>唉……这个软件啊……太强大了……</p>
+<pre><code>5. [tuotuo’s blog » Spotify](http://tuotuo.org/2009/01/spotify) Says:
+</code></pre>
+<p>一月 11th, 2009 at 08:52</p>
+<p>[...] 今天在cnbeta上面看到est同学投递的《手感超好超流畅的P2P音乐播放软件Spotify》，被前面四个字低俗到了。按图索骥，找了N久的UK代理，尝试了N个不同的Tor代理，始终没有一个有用的，最后还是无意中在豆瓣的Spotify小组找到一个可以用的代理。成功申请试了一下，速度还是不错，可能是因为我不是教育网也不是万人坑里的垃圾联通网络，基本上选定一首歌两三秒钟就可以正常播放。英文曲库比较全，中文的就不是很多，还好我们A-mei的歌有不少，哈哈。而且还可以和last.fm绑定去scrobbling，终于可以正常使用last.fm了，因为不喜欢用foolbar、winamp和WMP，听本地歌曲只用airplay。关于Spotify的详细介绍请参考est同学的blog，我手里有五个invites，需要被邀请的同学请留言，先到先得。 [...]</p>
+<pre><code>6. [z.Yleo77](http://www.alive77.cn) Says:
+</code></pre>
+<p>一月 11th, 2009 at 13:56</p>
+<p>界面做的确实很棒， 应了标题， 不过试听了里面的歌， 即便是E文歌， 也满足不了需要。</p>
+<pre><code>7. [Spotify —— New way to enjoy music - My Web Life](http://fangs.yo2.cn/spotify/) Says:
+</code></pre>
+<p>一月 27th, 2009 at 21:29</p>
+<p>[...] est 所写的一文。 随机文章:整体布局基本确定推歌：Sting - Shape Of My [...]</p>
+<pre><code>8. suhong Says:
+</code></pre>
+<p>二月 1st, 2009 at 07:08</p>
+<p>朋友给我发个邀请吗行吗谢谢了</p>
+<pre><code>9. [Music 2.0 的播放器Spotify | X 先 生 的 夏 日 茶 屋 。](http://www.xtea.org/?p=142) Says:
+</code></pre>
+<p>三月 22nd, 2009 at 20:55</p>
+<p>[...] Spotify高级技巧 [...]</p>
+<pre><code>10. [股吧](http://www.aguba.cn) Says:
+</code></pre>
+<p>四月 20th, 2009 at 23:34</p>
+<p>好东西收藏了！</p>
+<h3>Leave a Reply</h3>
+<p><strong>Name</strong> (required)</p>
+<p><strong>Mail</strong> (will not be published) (required)</p>
+<p><strong>Website</strong></p>
+<p><a href="javascript:void(0)">点击取消回复</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-04-18T10:57:25+08:00">2009-04-18</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/635541"  rel="bookmark" >
+              <h2 class="card-title">第25步，恭喜你，你成功的在Windows上安装了gedit！</h2>
+            </a>
+            <p class="card-text"><p>想在Windows上试试gedit？请参考gnome官方教程：<a href="http://live.gnome.org/Gedit/Windows">http://live.gnome.org/Gedit/Windows</a></p>
+<p>一共有25个步骤。</p>
+<p>step 1 安装Subversion<br />
+step 2 安装MinGW<br />
+step 3 安装MSYS<br />
+step 4 blah blah blah ...<br />
+...<br />
+step 25 最后在输入4条命令，执行一个bat批处理文件，你就可以成功（如果前几步都顺利的话）在Windows上使用gedit啦。</p>
+<p>恩。这也解释了为什么open source software is damn hard的原因。</p>
+<p>哈哈。上面只是开个玩笑。<a href="http://blogs.gnome.org/pbor/2008/12/25/late-christmas-gift-for-windows-users/">gnome官方blog上pbor同学宣布</a>：<a href="http://ftp.gnome.org/pub/gnome/binaries/win32/gedit/2.25/gedit-setup-2.25.2-18.exe">gedit 2.25 for Windows第一个官方正式非编译直接安装版</a>圣诞节发布！</p>
+<p>下载地址：<a href="http://ftp.gnome.org/pub/gnome/binaries/win32/gedit/">http://ftp.gnome.org/pub/gnome/binaries/win32/gedit/</a><br />
+直接下载：<a href="http://ftp.gnome.org/pub/gnome/binaries/win32/gedit/2.25/gedit-setup-2.25.2-18.exe">http://ftp.gnome.org/pub/gnome/binaries/win32/gedit/2.25/gedit-setup-2.25.2-18.exe</a> (15M, exe格式)</p>
+<p>近期准备再次移植<a href="http://scribes.sourceforge.net/">scribes</a>到Windows上试试～～～鼓捣一下dbus，祝我好运吧～～</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-04-17T05:41:06+08:00">2009-04-17</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/639125"  rel="bookmark" >
+              <h2 class="card-title">星航/星战/BSG/巴5/EVE/2001/星际/其他科幻太空战舰长度对比图</h2>
+            </a>
+            <p class="card-text"><p>Star Trek vs Star Wars vs Battlestar Galactica, vs Babylon 5 vs Farscape vs Eve Online vs 2001 a Space Oddity vs Lexx v Starship Troopers vs Space Quest vs More</p>
+<p><img alt="" src="http://izlin.free.fr/eve/images/compilation.jpg" /></p>
+<p>相当的猛。。。<a href="http://www.reddit.com/r/pics/comments/8da8q/star_trek_vs_star_wars_1_pic/">via</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-04-16T19:48:41+08:00">2009-04-16</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/639124"  rel="bookmark" >
+              <h2 class="card-title">List of Spotify Servers</h2>
+            </a>
+            <p class="card-text"><p>78.31.8.2 hanna.lon.spotify.com<br />
+78.31.8.3 sigrid.lon.spotify.com<br />
+78.31.8.4 www.spotify.com<br />
+78.31.8.6 heather.lon.spotify.com<br />
+78.31.8.7 lina.lon.spotify.com<br />
+78.31.8.8 klara.lon.spotify.com<br />
+78.31.8.9 smtp.spotify.com<br />
+78.31.8.10 cdn-gateway-001.lon.spotify.com<br />
+78.31.8.12 sara.lon.spotify.com<br />
+78.31.8.13 lily.lon.spotify.com<br />
+78.31.8.14 grace.lon.spotify.com<br />
+78.31.8.15 charlotte.lon.spotify.com<br />
+78.31.8.17 esther.lon.spotify.com<br />
+78.31.8.18 diana.lon.spotify.com<br />
+78.31.8.20 judith.lon.spotify.com<br />
+78.31.8.21 heather.lon.spotify.com<br />
+78.31.8.22 fiona.lon.spotify.com<br />
+78.31.8.23 wilma.lon.spotify.com<br />
+78.31.8.24 amanda.lon.spotify.com<br />
+78.31.8.25 leticia.lon.spotify.com<br />
+78.31.8.28 developer.lon.spotify.com</p>
+<p>And the port is 4070</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-04-16T19:12:41+08:00">2009-04-16</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/639037"  rel="bookmark" >
+              <h2 class="card-title">Howto: Use global hotkey to play/pause Spotify with Hoekey</h2>
+            </a>
+            <p class="card-text"><p>Add this line to your Hoekey config file (Thanks for the tip, Roar!)</p>
+<p><code>^@F5=Msg|SpotifyMainWindow|793|0|917504 ;Spotify Play/Pause</code></p>
+<p>And the global hotkey for play/pause Spotify in background is Ctrl+Alt+F5</p>
+<p>Next song (Thanks Mybeky for the tip!)</p>
+<p><code>^@Right=Msg|SpotifyMainWindow|793|0|720896</code></p>
+<p>So Ctrl+Alt+Right for the next song!</p>
+<p>This works for other music players if you change <code>SpotifyMainWindow</code> to a proper window class name, also you can implement this on other hotkey apps like <a href="http://www.autohotkey.com/">AHK</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-04-14T00:00:00+08:00">2009-04-14</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/639040"  rel="bookmark" >
+              <h2 class="card-title">Skritter是一个比较震撼的汉字学习网站</h2>
+            </a>
+            <p class="card-text"><p>今天在<a href="http://news.ycombinator.com/item?id=560733">HN上</a>看到一个&gt;汉字学习网站<a href="http://www.skritter.com/">Skritter</a></p>
+<p>Skritter基于Python+GAE，<a href="http://skrit.appspot.com/team">3个undergraduate</a>成立<a href="http://skrit.appspot.com/story">于9个月前</a>的一个Startup。</p>
+<p>目前提供一个demo帐号供大家赏玩：用户名: hackernews 密码: hackernews</p>
+<p>印象比较深刻的是Skritter用Flash做的汉字笔顺测验功能。其实我好多笔顺都是错的，为了连写方便习惯了。。。呵呵。。。</p>
+<p><img alt="" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/04/12.jpg" /></p>
+<p>说道汉字笔画识别，<a href="http://www.nciku.com/">nciku</a>也做的很好。还有微软拼音也有笔画识别。据我所知，很汗颜的是，汉字周边产品，国内产品，词霸之类的，就没有这个功能。老外三个人的团队就比国内做的要多要好。作为中国人我感到这是一种耻辱。</p>
+<p>这种交互式学习，相比传统方式<a href="http://news.ycombinator.com/item?id=560858">据说</a>可以提高效率44%，而且在欧美有很大的市场。而且是western-style的学习方式，更加符合欧美人的习惯</p>
+<p>不过这个产品也有个明显不足，那就是<strong>汉字</strong> 的学习为主，忽略了<strong>汉语</strong> 和文化的学习，比如学汉语怎么起一个汉语名字？同时也忽略了对现代商业汉语和互联网汉语的学习。人为可越过的门槛，为什么不在一个网站里一次性投资学习完毕？呵呵。我想这种产业的终极模式就是新东方那样的一条龙吧。</p>
+<p>最后，基于GAE也意味着GFW对互联网商业模型的野蛮干扰，这也是Skritter发展的一个隐患。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-04-14T00:00:00+08:00">2009-04-14</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/639035"  rel="bookmark" >
+              <h2 class="card-title">Hoekey实现全局热键控制Spotify播放/暂停</h2>
+            </a>
+            <p class="card-text"><p><a href="http://initiative.yo2.cn/archives/635971">Spotify</a>是我最喜欢的音乐类软件。但是没法像千千静听那样实现一个系统全局播放/暂停快捷键。但是我们有<a href="http://www.bcheck.net/apps/hoe.htm">Hoekey</a>。</p>
+<p>方法很简单：</p>
+<p><code>^@F5=Msg|SpotifyMainWindow|793|0|917504 ;Spotify Play/Pause</code></p>
+<p>那么，Spotify的窗口最小化在系统托盘进行背景音乐播放的时候，我们只要按Ctrl+Alt+F5就可以暂停/播放Spotify了。</p>
+<p>解释下。Msg表示<code>[SendMessage](http://msdn.microsoft.com/en-us/library/ms644950\(VS.85\).aspx)</code>函数；SpotifyMainWindow表示Spotify的window class；793表示WM_APPCOMMAND（0x0319，参见WinUser.h）；0|917504表示<code>[APPCOMMAND_MEDIA_PLAY_PAUSE](http://msdn.microsoft.com/en-us/library/ms646275\(VS.85\).aspx)</code>（也就是14，0xE0000。同样定义在WinUser.h里。实现这个功能Windows必须支持多媒体键盘，也就是说至少XP SP1）。</p>
+<p>当然，下一首歌的快捷键可以定义为：（感谢mybeky的tip）</p>
+<p><code>^@Right=Msg|SpotifyMainWindow|793|0|720896</code></p>
+<p>当然这个hack也适用于其它n多播放器，还有就是<a href="http://www.autohotkey.com/">AHK</a>也可以实现类似功能。具体实现我就不写了。哈哈。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-04-14T00:00:00+08:00">2009-04-14</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/638819"  rel="bookmark" >
+              <h2 class="card-title">IE和微软</h2>
+            </a>
+            <p class="card-text"><p>IE的确是Windows的一部分，捆绑不能算垄断。因为IE的核心是mshtml.dll，而mshtml.dll非常严重的集成在了Windows GUI Shell的各个方面。Win98开始，资源管理器左边那一块就可以直接由<code>folder.htt</code>（htt全称HTML Template，实质就是HTML）定义</p>
+<p><img alt="" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/04/davwin981.gif" /></p>
+<p>mshtml.dll提供了众多接口，例如非常著名的<code>IHTMLDocument2</code>和<code>nternetExplorer.Application</code>，这些东西在Win32平台上是极度被广泛的使用。就像现在的现在被用滥了的webkit一样。Win XP控制面板里“添加删除程序”也是HTML+JS写的，绝大多数Windows帮助文件是基于hh.exe，也就是HTML Help的，GTalk的自定义外观是通过HTML+CSS实现的。要在Windows里去除IE，非常不现实。假设是根除，也就是删除了mshtml.dll，那么大多数Win32程序就废品了，普通用户连Firefox如何去下载可能都束手无策。（在只装有Windows的机器上几乎唯一的办法是通过ftp.exe命令行。）</p>
+<p>但是更加重要的一点，是HTML在Office里的应用。Office是微软最赚钱的产品之一，但是Office的Word, Powerpoint都是基于MSHTML的。例如Office里通用的矢量绘图，就是基于mshtml的<a href="http://en.wikipedia.org/wiki/Vector_Markup_Language">VML</a>引擎。VML还是多强大的。这里有一个<a href="http://wildmag.de/compo/FPS-AutoShapes/AutoShapes.html">256字节javascript调用vml例子</a>。Word/PPT里比较高级的语法，例如宏，域等等概念，最终都可以追溯到Microsoft Script Editor里HTML的变化。</p>
+<p>现在说说IE。IE的本质，不是用来上网的，而是用来查看一个html文件的。IE5如此，IE6也如此。Firefox做的，并没有太多的创新，而是遍地的marketing。Firefox实现的东西，从MyIE到GoSuRF早就实现了。现在的小白都喜欢吹嘘extension和plugin的区别，我的看法就是有个毛的区别啊，被<strong>插</strong> 的深度不同而已。IE7受到FF的压力，做了个标签页浏览，其他的还是很烂。IE8受到Chrome的压力，改进了JScript.dll，但是速度依然不行。而且IE里的一些内存泄漏例如Circular Memory leaks居然还是COM+的架构问题引起的。</p>
+<p>所以IE不仅仅是浏览器那么简单，IE可以说牵扯到微软两大核心产品Windows和Office的经脉。任何IE的进步都是牵一发动全身的事情，没有那么简单的。</p>
+<p>那么微软那么牛那么大的帝国，真的连一个IE都做不好吗？我觉得这一切都是<a href="https://groups.google.com/group/pongba/msg/2b6a67461e917690">微软自己的战略失误</a>。浏览器从来都不是微软关心的盈利重点。除非市场强迫微软这么做。</p>
+<p>其实有的时候抛开一切来思考一下，现代OS、浏览器、Office真的应该改进一下了。OS不再应该是对冯·诺伊曼模型的浅包装，Office应该更加注重工作流和业务智能，浏览器应该是完全面向应用的容器式设计。微软这10年进步很少，所谓<a href="http://googlechinablog.com/2007/10/blog-post_3090.html">What Andy gives, Bill takes away</a>么。呵呵 。微软给了竞争对手和开源世界整整10年的机会，可惜是谁也没有作出有革命性的东西出来。OOo到现在还在抄袭Office，GNOME/KDE仍然没有跳出模仿OS X/Windows GUI的框框，谁也没有威胁谁，谁也没有创新。甚至我觉得这10年真正对信息载体/工具有革命性的变化的东西之一是——<a href="http://git-scm.org/">GIT</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-04-09T14:51:28+08:00">2009-04-09</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/638795"  rel="bookmark" >
+              <h2 class="card-title">GAE提供Java支持。比Java更加牛B的是JVM</h2>
+            </a>
+            <p class="card-text"><p>我知道到处都是铺天盖地的报道了，其实我非常不情愿写超热门话题的博文。但是这件事还是非常值得一说的。</p>
+<p><a href="http://googleappengine.blogspot.com/2009/04/seriously-this-time-new-language-on-app.html">GAE支持Java了</a>。里面有句话：</p>
+<blockquote>
+<p>They even use alternate languages on the JVM, like Groovy, Scala, and JRuby.</p>
+</blockquote>
+<p>虽然我对现代Java产业化技术不是很熟悉（语法还是知道那么一点），但是还是反复听说过这些东西的大名的。按照这个说法，GAE支持Groovy, Scala, JRuby, Jython, Clojure，甚至<a href="http://www.mozilla.org/rhino/">Mozilla的服务器端Javascript技术Rhino</a>，因为JVM上的花样太多了。可以说GAE这一步是打开了无数应用的大门，相信不久就有很牛B的工业级作品跑在GAE上面</p>
+<p>我知道很多小白要闹PHP了。其实云计算市场已经有一家公司支持PHP了。这就是<a href="http://www.microsoft.com/azure/">Microsoft Azure</a>。通过FastCGI支持了<a href="http://www.microsoft.com/azure/windowsazure.mspx">PHP</a></p>
+<blockquote>
+<p>Choice. Windows Azure reduces obstacles to creating reliable and scalable web applications because it is based on, and works with familiar Microsoft technology including ASP.NET, IIS, FastCGI, .NET Full Trust, P/Invoke, and Visual Studio 2008, so developers can use their existing skills to efficiently create, test, deploy, and manage web services. Windows Azure supports standards and protocols including SOAP, REST, XML, <strong>and PHP</strong>.</p>
+</blockquote>
+<p>=================跑题的分割线=================</p>
+<p>突然明白，为啥第一次用Google App Engine要手机<a href="http://code.google.com/appengine/kb/sms.html">SMS激活码</a>了。其实当初我注册GAE是第一批beta，不用手机激活，但是后来要了。这是为了防止Abuse。<a href="http://en.wikipedia.org/wiki/Amazon_Elastic_Compute_Cloud#Abuse">Amazon的EC2就出现过</a>。还有就是为了防止我这种人。虽然GAE是免费的，但是免费不代表无限制，免费的有quota。为了突破quota，很简单的办法就是申请20个以上的Gmail马甲，然后基于n个GAE建立一个负载均衡，所谓的云中云。当然有无限的马甲不代表有<a href="http://code.google.com/appengine/kb/sms.html#howmany">无限的手机号码</a>。所以没办法了。。。。除非你在移动内部临时划一个号码段来注册马甲。。。或者把Google黑了。。。。。。啊。。跑题跑远了。。。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-04-08T17:41:09+08:00">2009-04-08</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/638793"  rel="bookmark" >
+              <h2 class="card-title">一行python展开TinyUrl压缩过的网址</h2>
+            </a>
+            <p class="card-text"><p><code>python -c "print __import__('urllib2').urlopen('http://tinyurl.com/25485h').url"</code></p>
+<p><a href="http://www.reddit.com/r/programming/comments/8aqvt/unshortening_urls_with_modern_perl/c08q20o">来源</a>。</p>
+<p>不过这个方法没法提取Javascript跳转。哈哈。话也说回来如果真的是Javascript跳转，不生成一个完整的DOM，理论上来说都不是100%能够解析任意HTML的。</p>
+<p>我也写过一个类似的，不过复杂了。手动提取的301/302返回头跳转。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-04-08T17:30:44+08:00">2009-04-08</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/638774"  rel="bookmark" >
+              <h2 class="card-title">4楼的太强了。。。汽车标志【18+】</h2>
+            </a>
+            <p class="card-text"><p><a href="http://bbs.et8.net/live/showthread.php?t=965312"><img alt="" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/04/2009-4-7-11-58-07.jpg" /></a></p>
+<p>膜拜。。。orz。。。。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-04-07T12:00:10+08:00">2009-04-07</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/638772"  rel="bookmark" >
+              <h2 class="card-title">好想要个这样的杯子啊 CSS is aweso...</h2>
+            </a>
+            <p class="card-text"><p><a href="http://www.zazzle.com/css_is_awesome_mug-168716435071981928"><img alt="" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2009/04/css_cup.jpg" /></a></p>
+<p>很有爱的杯子。。。不知道我火星没。。。 via <a href="http://www.reddit.com/r/web_design/comments/8agn9/css_is_aweso/">1</a>, <a href="http://www.reddit.com/r/programming/comments/8aeb9/css_mug/">2</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-04-07T11:27:31+08:00">2009-04-07</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/638752"  rel="bookmark" >
+              <h2 class="card-title">国际空间站ISS飞行的高清视频 - 感觉太high了</h2>
+            </a>
+            <p class="card-text"><p>就像牛顿同学说的，把一个足球场大的东西，以27,700km/h的速度抛向350 km的近地轨道，然后在无大气阻力的情况下每天绕地球15.7圈飞翔。。。太high了。</p>
+<p><img alt="" src="http://upload.wikimedia.org/wikipedia/commons/thumb/8/80/ISS_March_2009.jpg/799px-ISS_March_2009.jpg" /></p>
+<p>STS 119 HD ISS Fly Around Sped Up</p>
+<p><a href="http://www.youtube.com/watch?v=bXNH7whveGk">youtube视频</a> （强烈建议打开HD模式）</p>
+<p><a href="http://anon.nasa-global.edgesuite.net/HD_downloads/STS_119_HD_ISS_FLyaround_Sped_Up.mov">视频下载</a> (.mov格式 151MB)</p>
+<p>NASA TV还是有不少好玩的东东的。呵呵</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-04-06T00:07:13+08:00">2009-04-06</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/638728"  rel="bookmark" >
+              <h2 class="card-title">Cybersecurity Act of 2009提案：奥黑有关闭整个互联网的权利</h2>
+            </a>
+            <p class="card-text"><p>reddit 讨论<a href="http://www.reddit.com/r/worldnews/comments/89z8i/president_will_be_able_to_shut_down_the_internet/">1</a>，<a href="http://www.reddit.com/r/politics/comments/89ssg/so_much_for_free_spech_the_cybersecurity_act_of/">2</a>，<a href="http://www.reddit.com/r/reddit.com/comments/89qx4/proposed_cybersecurity_act_of_2009_gives_the/">3</a>，点击<a href="http://www.reddit.com/r/worldnews/related/89z8i/president_will_be_able_to_shut_down_the_internet/">related</a>可以看到更多。</p>
+<blockquote>
+<p>This is no April Fool's joke: here is a bill that is almost a caricature of what the rest of the world fears about U.S. control of the Internet DNS root and ICANN. Legislation unveiled today by Senate Commerce Chairman John (Jay) Rockefeller and Sen. Olympia Snowe, R-Maine, would require a Presidentially appointed cybersecurity advisory panel to ensure that <strong>national security</strong> would not be compromised before approving the renewal or modification of the contract between the U.S. government and the Internet Corporation for Assigned Names and Numbers. According to a summary of the bill, it would "make sure that ICANN does not succumb to foreign pressure" to end its relationship with the U.S. government.<br />
+ ICANN is only one part of a comprehensive and authoritarian approach to cybersecurity. According to the Center for Democracy and Technology, "The <strong>Cybersecurity Act of 2009</strong> would...give the President unfettered power to <strong>shut down Internet</strong> traffic in emergencies or disconnect <strong>any</strong> critical infrastructure system or network on national security grounds."<br />
+ Read the proposed Cybersecurity Act of 2009. <a href="http://cdt.org/security/CYBERSEC4.pdf">http://cdt.org/security/CYBERSEC4.pdf</a></p>
+</blockquote>
+<p>上面的pdf在43 - 44页提到这一点。</p>
+<p>这提案够绝。GFW发来贺电。这就是奥黑给全世界带来的Change I wish I could believe in？哈哈。当然这提案还没通过。就看米国国会的表现了。</p>
+<p>Dreamhack Winter 2008上有人写了个“Internet备份程序”。方法是遍历从1.0.0.0到254.254.254.254的所有IP和端口。。。哈哈。可以<a href="http://www.scene.org/file_dl.php?url=http://http.fr.scene.org//parties/2008/dreamhack_winter08/useless_utility/backup_internet-bolland.zip&amp;id=515300">下载</a>看源码和鸟语视频解说。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-04-05T10:42:41+08:00">2009-04-05</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/638694"  rel="bookmark" >
+              <h2 class="card-title">天朝网监 vs 米国FBI</h2>
+            </a>
+            <p class="card-text"><p>最近0day把一个本来应该五·一才出来的电影<code>X-Men.Origins.Wolverine.REAL.PROPER.WORKPRINT.XviD-iLG</code>给<a href="http://mymovie.blogbus.com/logs/37330690.html">提前泄漏</a>了。</p>
+<p>FBI就直接把整层楼的<a href="http://sites.google.com/site/mnsclec/index">数据中心给抄了</a>。注意天朝只是封一个网站关一个服务器，或者让IDC负责，FBI是直接拔整个Core IP Networks数据中心的电源。直接后果就是，有可能打911都要收到影响：</p>
+<blockquote>
+<p>Citizen access to Emergency 911 services are being affected, as Core IP's primary client base consists of telephone companies.</p>
+</blockquote>
+<p>这个事情在<a href="http://www.reddit.com/r/technology/comments/89vm4/if_you_run_a_datacenter_please_be_aware_that_in/">reddit上</a>也讨论火热</p>
+<p>最后文章给出了一句精辟的总结：</p>
+<blockquote>
+<p>If you run a datacenter, please be aware that in our <strong>great country</strong> , the FBI can come into your place of business at <strong>any time</strong> and take whatever they want, <strong>with no reason</strong>.</p>
+</blockquote>
+<p>河蟹是全球性的</p>
+<p><em>Update 2009-4-5 14:23</em></p>
+<p>根据<a href="http://it.solidot.org/it/09/04/05/0324257.shtml">Solidot报道</a></p>
+<blockquote>
+<p>CBS11 News报道，FBI突袭Core IP Networks公司数据中心是因为对方逾期未交电信费，存在欺诈行为。</p>
+</blockquote>
+<p>那么本文观点也无从谈起了。</p>
+<p><a href="http://initiative.yo2.cn/wp-admin/post.php?action=edit&amp;post=638694" title="编辑文章">Edit</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-04-04T15:42:56+08:00">2009-04-04</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/638532"  rel="bookmark" >
+              <h2 class="card-title">Google CADIE·Chrome浏览器3D模式</h2>
+            </a>
+            <p class="card-text"><p><a href="http://cadiesingularity.blogspot.com/">http://cadiesingularity.blogspot.com/</a></p>
+<p>我的天，Comic Sans MS字体，<MARQUEE>，90年代的标准风格网页～～～只能说震惊了～～～</p>
+<p>Google推出了地球上第一个人工智能系统<a href="http://www.google.com/intl/en/landing/cadie/index.html">CADIE</a></p>
+<p>而且把Chrome浏览器升级到了<a href="http://www.google.com/intl/en/landing/chrome/cadie/">3D模式</a></p>
+<p><img alt="" src="http://www.google.com/intl/en/landing/chrome/cadie/step2.jpg" /></p>
+<p>只能用膜拜来形容了</p>
+<p><img alt="" src="http://www.google.com/intl/en/landing/chrome/cadie/step3.jpg" /></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-04-01T00:00:00+08:00">2009-04-01</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/633018"  rel="bookmark" >
+              <h2 class="card-title">一行python获得常用汉字声母</h2>
+            </a>
+            <p class="card-text"><p>无聊写了<code>get_sm()</code>函数。sm表示sheng mu（声母）。。。汗。。。。</p>
+<h3>用法：</h3>
+<p><code>&gt;&gt;&gt; get_sm('汗')
+'h'</code></p>
+<p>目前只支持GB汉字编码中3755个一级常用汉字。不支持多音字。</p>
+<p><code>&gt;&gt;&gt; get_sm('重')
+'z'</code></p>
+<p>同时也不支持数字、符号的读音。例如 get_sm('，') 没法得到 'd'（逗号，<strong>d</strong> ou hao）</p>
+<h3>用途：</h3>
+<p>快速搜索一个contact list</p>
+<h3>源码：</h3>
+<pre><code>get_sm = lambda c:chr( len(filter(lambda x  &lt;reduce(lambda x,y  rd(x)*256+or
+d(y), c), [0xB0A1, 0xB0C5, 0xB2C1, 0xB4EE, 0xB6EA, 0xB7A2, 0xB8C1, 0xB9FE, 0x
+BBF7,  0xBBF7, 0xBFA6, 0xC0AC, 0xC2E8, 0xC4C3, 0xC5B6, 0xC5BE, 0xC6DA, 0xC8BB, 0
+xC8F6, 0xCBFA, 0xCDDA, 0xCDDA, 0xCDDA, 0xCEF4, 0xD1B9, 0xD4D1, 0xD8A1, ]))  + 96 )
+</code></pre>
+<p>恩。没错。我就是要把可读性降到最低。。。。。</p>
+<h3>原理：</h3>
+<p>国标码字符集<strong>GB2312</strong> -80收录了6763个常用汉字，其中<strong>一级汉字3755个</strong> ，二级汉字3008个。另外还收录了各种符号682个，合计7445个。<br />
+第一级汉字是常用汉字，计3755个，置于16～55区，<strong>按汉语拼音字母／笔形顺序排列</strong> ；第二级汉字是次常用汉字，计3008个，置于56～87区，按部首／笔画顺序排列</p>
+<h3>附带发现</h3>
+<p>Python里把一个str类型的汉字转换为数字的函数：<br />
+<code>mbord = lambda c:reduce(lambda x,y ![:o](http://static.blogcn.com/wp-includes/images/smilies/icon_surprised.gif) rd(x)*0xFF+ord(y), c)</code><br />
+mbord的全称是multibyte ordinal<br />
+例如：</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>mbord = lambda c:reduce(lambda x,y <img alt=":o" src="http://static.blogcn.com/wp-includes/images/smilies/icon_surprised.gif" /> rd(x)*256+ord(y), c)<br />
+mbord('我')<br />
+52946<br />
+hex(mbord('我'))<br />
+'0xced2'<br />
+'我'<br />
+'\xce\xd2'<br />
+</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>其实python的str和character两种类型是有bug。这个我已经吼了很多次了。n多人觉得我理解错了。</p>
+<pre><code>ActivePython 2.5.2.2 (ActiveState Software Inc.) based on
+Python 2.5.2 (r252:60911, Mar 27 2008, 17:57:1   [MSC v.1310 32 bit (Intel)] on
+win32
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; '囧'==u'囧'
+__main__:1: UnicodeWarning: Unicode equal comparison failed to convert both argu
+ments to Unicode - interpreting them as being unequal
+False
+</code></pre>
+<p>世界上唯一一门在执行 == 判断的时候要抛出一个 Warning 的语言，也只有Python了吧？</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-03-31T13:11:13+08:00">2009-03-31</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/638450"  rel="bookmark" >
+              <h2 class="card-title">谷歌中国载歌载舞庆祝音乐泡泡的诞生</h2>
+            </a>
+            <p class="card-text"><p><embed align="middle" allowscriptaccess="sameDomain" height="400" quality="high" src="http://player.youku.com/player.php/sid/XODE0NTkzNjA=/v.swf" type="application/x-shockwave-flash" width="480"/></p>
+<p><a href="http://v.youku.com/v_show/id_XODE0NTkzNjA=.html">很好</a>。Baidu, on your face! Boom boom!</p>
+<blockquote>
+<p>谷歌音乐泡<br />
+ yeah.....</p>
+<p>音乐泡 寻找你最喜欢的调调<br />
+ 要不要 show出你最迷人的微笑<br />
+ 用心跳 浪漫我全部都准备好<br />
+ 音乐泡音乐泡 分享爱的味道</p>
+<p>糟糕 糟糕 音乐质量不高<br />
+ 爱幻想爱歌唱我要我的新潮<br />
+ 到处都是死链 我心灵倍受煎熬<br />
+ 无法忍耐的世界拒绝低调<br />
+ 我动手我创造谷歌音乐频道<br />
+ 享受正版音乐 没有病毒骚扰<br />
+ 试过一次我一定就会就知道<br />
+ 就像走在云端 癫狂随风飘飘<br />
+ 你的爱 你的泪 你的醉人微笑<br />
+ 把音乐拿起 放下 陪你直到天荒地老<br />
+ 不用去抵抗不用披着斯文的外套<br />
+ 征服你的武器我使用音乐泡泡 come on<br />
+ 红色绿色帮你调配音乐颜色<br />
+ 怎么想怎么听全是泡泡的本色<br />
+ 心情变幻我的泡泡也会变色<br />
+ 蓝橙黄靛紫快来用心情挑歌<br />
+ （挑歌 wu~） 快来泡泡音乐 你的心情不差<br />
+ （挑歌 oh~） 感受特别体验 过滤伤心八卦<br />
+ （挑歌 wu~）哪一种都不缺 再多也能容纳<br />
+ （挑歌~）就像我被你用音乐溶化</p>
+<p>音乐 音乐 没有一丝松懈<br />
+ 我知道不管结果怎样我在改变世界<br />
+ 加班加到三点 K歌不见不散<br />
+ 我用我的快乐 给你好的音乐<br />
+ 为了追求灵感 滑雪把腿摔断<br />
+ 从来不缺少果敢 随时穿越快感<br />
+ 撇开冷漠我渴望音乐无限<br />
+ 不是玉树临风 就是沉鱼落雁<br />
+ 没有什么色彩比你还要飘渺<br />
+ 音乐的风向标只有你最奇妙<br />
+ 甭管朋克古典 或者爵士蓝调<br />
+ 用音乐的语言来选择心情调料<br />
+ 任凭千方百计看风云一日千里<br />
+ 音乐的终极目的不主张垂头丧气<br />
+ 不用再说相信你早就知道<br />
+ 泡泡 泡泡 谷歌的音乐泡泡<br />
+ （挑歌 wu~） 快来泡泡音乐 你的心情不差<br />
+ （挑歌 oh~） 感受特别体验 过滤伤心八卦<br />
+ （挑歌 wu~）哪一种都不缺 再多也能容纳<br />
+ （挑歌~）就像我被你用音乐溶化</p>
+<p>只要看一眼你的笑<br />
+ 我神魂颠倒<br />
+ 身边忽然浮现缤纷的泡泡<br />
+ 随心而动的韵调<br />
+ 让恋爱更加美好<br />
+ 快要离不开的音乐泡</p>
+<p>幸福来自病毒 有时也有解药<br />
+ 出位到了极限 疯癫会到发飙<br />
+ 从来不缺果敢 老是扎堆胡闹<br />
+ Google我的音乐 Google我的骄傲<br />
+ 蹦极没有终点 谁能帮我起跳<br />
+ 音乐的风向标 只有我最奇妙<br />
+ 音乐的大泡泡 跟我一起舞蹈<br />
+ Google我的音乐 Google我的骄傲</p>
+</blockquote>
+<p>另外，开复的谷歌在youku有一个官方帐号，叫 <a href="http://u.youku.com/xiaogugege">XiaoGuGeGe</a>。时不时有一些官方的<a href="http://u.youku.com/user_video/id_UNTg0MTQ2NjQ=.html">视频</a>发布。注意跟踪啊～～～有人问为啥谷歌不用自家的youtube，原因那是众所周知的嘛。哈哈～～～</p>
+<p><a href="http://initiative.yo2.cn/wp-admin/post.php?action=edit&amp;post=638450" title="编辑文章">Edit</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-03-31T00:00:00+08:00">2009-03-31</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/638476"  rel="bookmark" >
+              <h2 class="card-title">谷歌发布音乐搜索 - 姚明本人亲自发来贺电</h2>
+            </a>
+            <p class="card-text"><p>谷歌发布音乐搜索 - <a href="http://v.youku.com/v_show/id_XODE1NjIzNzY=.html">姚明本人亲自发来贺电</a></p>
+<p><embed align="middle" allowscriptaccess="sameDomain" height="400" quality="high" src="http://player.youku.com/player.php/sid/XODE1NjIzNzY=/v.swf" type="application/x-shockwave-flash" width="480"/></p>
+<p>国际唱片工业协会主 <em>乎松弛。内侧两棵绿色棕树之间是灰色偏暗的楼道。光线低沉，半天了都没人在楼道出现。三到五层以及第八层楼道口安有小</em> 席<a href="http://v.youku.com/v_show/id_XODE1Njc0MTI=.html">John Kennedy（好囧的名字）发来贺电</a></p>
+<p><embed align="middle" allowscriptaccess="sameDomain" height="400" quality="high" src="http://player.youku.com/player.php/sid/XODE1Njc0MTI=/v.swf" type="application/x-shockwave-flash" width="480"/></p>
+<p><a href="http://initiative.yo2.cn/">est</a>也发来贺电。视频没有。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-03-31T00:00:00+08:00">2009-03-31</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/638444"  rel="bookmark" >
+              <h2 class="card-title">教你在任意国内网站快速删除帐号</h2>
+            </a>
+            <p class="card-text"><p>看到solidot上一新闻：<a href="http://internet.solidot.org/article.pl?sid=09/03/30/1444252">注册容易，删除账号却实在不易啊</a></p>
+<p>呃。。。ID想<strong>被</strong> 自杀还不容易啊？</p>
+<p>很简单。</p>
+<p>1. 备份自己的数据，把资料从目标网站上dump下来，修改/清除所有个人联系信息和资料。（其实数据的覆盖比删除安全很多。）<br />
+2. 挂proxy，打开<a href="http://www.epochtimes.com/">大鸡院</a>网站<br />
+3. 复制20多篇反☭的新闻，注意标题一定要狠，要吸引人，要哗众取宠。然后广泛粘贴到目标网站高流量的板块<br />
+4. 不出意外的话，个把小时之内你的帐号会被永久性的从目标网站服务器删除，而且不会留下任何痕迹。即使网站没有开发这个功能我想鹳狸猿直接操作数据库都会把你的帐号灭了。</p>
+<p>这一招是我从豆瓣上学到的，很多童鞋想删帐号，没办法，于是就跑到 豆瓣Fans小组啊，冷组啊之类的折腾啊闹啊，过一会儿就非常满意的看到 该账户不存在 了。哈哈。</p>
+<p><em>Update 23:20</em> ：</p>
+<p>啊啊啊被<a href="http://sr.ju690.com/meme/item/18158">sr.ju690.com推荐</a>了。有人说小心被请去喝茶。呃，我没考虑这个问题。因为我们的objective是如何注销一个ID，其余的事情都算collateral damage不属于本文讨论范围。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-03-31T00:00:00+08:00">2009-03-31</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/638435"  rel="bookmark" >
+              <h2 class="card-title">Playing For Change</h2>
+            </a>
+            <p class="card-text"><object height="225" width="400"><param name="allowfullscreen" value="true"/>
+<param name="allowscriptaccess" value="always"/>
+<param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=2897417&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1"/>
+<embed allowfullscreen="true" allowscriptaccess="always" height="225" src="http://vimeo.com/moogaloop.swf?clip_id=2897417&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" type="application/x-shockwave-flash" width="400"/></object>
+<p><a href="http://vimeo.com/2897417">Stand By Me</a> from <a href="http://vimeo.com/user538179">David Johnson</a> on <a href="http://vimeo.com">Vimeo</a>.</p>
+<object height="300" width="400"><param name="allowfullscreen" value="true"/>
+<param name="allowscriptaccess" value="always"/>
+<param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=2903195&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1"/>
+<embed allowfullscreen="true" allowscriptaccess="always" height="300" src="http://vimeo.com/moogaloop.swf?clip_id=2903195&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" type="application/x-shockwave-flash" width="400"/></object>
+<p><a href="http://vimeo.com/2903195">Playing For Change | Song Around the World "Don't Worry"</a> from <a href="http://vimeo.com/concord">Concord Music Group</a> on <a href="http://vimeo.com">Vimeo</a>.</p>
+<object height="267" width="400"><param name="allowfullscreen" value="true"/>
+<param name="allowscriptaccess" value="always"/>
+<param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=3097281&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1"/>
+<embed allowfullscreen="true" allowscriptaccess="always" height="267" src="http://vimeo.com/moogaloop.swf?clip_id=3097281&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" type="application/x-shockwave-flash" width="400"/></object>
+<p><a href="http://vimeo.com/3097281">Playing For Change | Song Around The World "One Love"</a> from <a href="http://vimeo.com/concord">Concord Music Group</a> on <a href="http://vimeo.com">Vimeo</a>.</p>
+<p>Playing For Change 组织了全世界各地的流浪艺术家的演出来完成一个作品。</p>
+<p><a href="http://initiative.yo2.cn/wp-admin/post.php?action=edit&amp;post=638435" title="编辑文章">Edit</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-03-30T00:00:00+08:00">2009-03-30</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/638436"  rel="bookmark" >
+              <h2 class="card-title">成电2001年的11栋大火【youtube视频】</h2>
+            </a>
+            <p class="card-text"><object height="344" width="425"><param name="movie" value="http://www.youtube.com/v/sFVqaAF32zs&amp;hl=en&amp;fs=1"/><param name="allowFullScreen" value="true"/><param name="allowscriptaccess" value="always"/><embed allowfullscreen="true" allowscriptaccess="always" height="344" src="http://www.youtube.com/v/sFVqaAF32zs&amp;hl=en&amp;fs=1" type="application/x-shockwave-flash" width="425"/></object>
+
+<p>今天开Google Earth 5找素材的时候无意中<a href="http://www.youtube.com/watch?v=sFVqaAF32zs">发现</a>的。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-03-30T00:00:00+08:00">2009-03-30</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/638390"  rel="bookmark" >
+              <h2 class="card-title">半岛电视台2009-3-26报道：101East - Restless China</h2>
+            </a>
+            <p class="card-text"><object height="295" width="480"><param name="movie" value="http://www.youtube.com/v/vdAdkXsAQ88&amp;hl=en&amp;fs=1"/>
+<param name="allowFullScreen" value="true"/>
+<param name="allowscriptaccess" value="always"/>
+<embed allowfullscreen="true" allowscriptaccess="always" height="295" src="http://www.youtube.com/v/vdAdkXsAQ88&amp;hl=en&amp;fs=1" type="application/x-shockwave-flash" width="480"/></object>
+
+<p>第一次知道Al Jazeera是半岛电视台的意思。呵呵。</p>
+<p>茅于轼接受参访的时候，装逼背英文，</p>
+<blockquote>
+<p>Althrough there are not...angry..and...not...他们不是对……</p>
+</blockquote>
+<p>结果最后还是支吾不出来了，说汉语算了。。。囧。。。</p>
+<p>from <a href="http://www.reddit.com/user/fuzzybunn/">fuzzybunn</a> at reddit</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-03-29T00:00:00+08:00">2009-03-29</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/638356"  rel="bookmark" >
+              <h2 class="card-title">可以飞的划艇Kayak</h2>
+            </a>
+            <p class="card-text"><object height="344" width="425"><param name="movie" value="http://www.youtube.com/v/bQRtgEIs--k&amp;hl=en&amp;fs=1"/><param name="allowFullScreen" value="true"/><param name="allowscriptaccess" value="always"/><embed allowfullscreen="true" allowscriptaccess="always" height="344" src="http://www.youtube.com/v/bQRtgEIs--k&amp;hl=en&amp;fs=1" type="application/x-shockwave-flash" width="425"/></object>
+
+<p><a href="http://www.pddnet.com/scripts/ShowPR.asp?RID=22072&amp;CommonCount=0">介绍</a></p>
+<p><img alt="" src="http://pddnet.com/images/0804/Flyak.jpg" /></p>
+<blockquote>
+<p>As the name implies, the Flyak “flies,” its wings are underneath the water in the form of front and rear hydrofoils.</p>
+</blockquote>
+<p><img alt="" src="http://pddnet.com/images/0804/Flyak2.jpg" /></p>
+<p>没想到流体还有这种性质。估计很快会破奥运记录。这个可以叫真正的“飞船”了。呵呵。</p>
+<p>貌似已经在出售了。<a href="http://www.foilkayak.com">www.foilkayak.com</a> （网站貌似挂了）</p>
+<object height="344" width="425"><param name="movie" value="http://www.youtube.com/v/aiShINSE7B8&amp;hl=en&amp;fs=1"/><param name="allowFullScreen" value="true"/><param name="allowscriptaccess" value="always"/><embed allowfullscreen="true" allowscriptaccess="always" height="344" src="http://www.youtube.com/v/aiShINSE7B8&amp;hl=en&amp;fs=1" type="application/x-shockwave-flash" width="425"/></object>
+
+<p>听这声音真有引擎的味道。。不过是人力的。呵呵。</p>
+<p>再加个<a href="http://en.wikipedia.org/wiki/Ground_effect_vehicle">翼地效应机</a>，就非常接近科幻了。</p>
+<p><a href="http://initiative.yo2.cn/wp-admin/post.php?action=edit&amp;post=638356" title="编辑文章">Edit</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-03-28T00:00:00+08:00">2009-03-28</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+    </main>
+    <nav class="pagination-nav side-padding">
+<a href="/category/archive.29.html" class="pagination-newer">&lt; Newer Posts</a><a href="/category/archive.31.html" class="pagination-older">Older Posts &gt;</a>    </nav>
+
+
+  </body>
+</html>

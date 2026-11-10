@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>index.dat – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="index.dat" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/485052" />
+    <meta property="og:url" content="https://blog.est.im/archives/485052">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="index.dat">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">index.dat</h2>
+    <p class="post-date">Posted <time datetime="2007-10-25T00:00:00+08:00">2007-10-25</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p>查了下，Vista下的index.dat文件有24处之多，真是BT，看来隐私漏了不少。<br />
+<code>dir /a /b /s index.dat</code><br />
+得到结果：<br />
+C:\Users\est\AppData\Local\Microsoft\Feeds Cache\index.dat<br />
+C:\Users\est\AppData\Local\Microsoft\Windows\History\History.IE5\index.dat<br />
+C:\Users\est\AppData\Local\Microsoft\Windows\History\History.IE5\MSHist012007100120071008\index.dat<br />
+C:\Users\est\AppData\Local\Microsoft\Windows\History\History.IE5\MSHist012007100820071015\index.dat<br />
+C:\Users\est\AppData\Local\Microsoft\Windows\History\History.IE5\MSHist012007101220071013\index.dat<br />
+C:\Users\est\AppData\Local\Microsoft\Windows\History\History.IE5\MSHist012007101520071022\index.dat<br />
+C:\Users\est\AppData\Local\Microsoft\Windows\History\History.IE5\MSHist012007102220071023\index.dat<br />
+C:\Users\est\AppData\Local\Microsoft\Windows\History\History.IE5\MSHist012007102320071024\index.dat<br />
+C:\Users\est\AppData\Local\Microsoft\Windows\History\History.IE5\MSHist012007102420071025\index.dat<br />
+C:\Users\est\AppData\Local\Microsoft\Windows\History\History.IE5\MSHist012007102520071026\index.dat<br />
+C:\Users\est\AppData\Local\Microsoft\Windows\History\Low\History.IE5\index.dat<br />
+C:\Users\est\AppData\Local\Microsoft\Windows\Temporary Internet Files\Content.IE5\index.dat<br />
+C:\Users\est\AppData\Local\Microsoft\Windows\Temporary Internet Files\Low\Content.IE5\index.dat<br />
+C:\Users\est\AppData\Roaming\Adobe\FileBrowser\Photoshop7\index.dat<br />
+C:\Users\est\AppData\Roaming\Microsoft\Internet Explorer\UserData\index.dat<br />
+C:\Users\est\AppData\Roaming\Microsoft\Office\Recent\index.dat<br />
+C:\Users\est\AppData\Roaming\Microsoft\Windows\Cookies\index.dat<br />
+C:\Users\est\AppData\Roaming\Microsoft\Windows\Cookies\Low\index.dat</p>
+<p>C:\Windows\System32\config\systemprofile\AppData\Local\Microsoft\Feeds Cache\index.dat<br />
+C:\Windows\System32\config\systemprofile\AppData\Local\Microsoft\Windows\History\History.IE5\index.dat<br />
+C:\Windows\System32\config\systemprofile\AppData\Local\Microsoft\Windows\History\History.IE5\MSHist012007040620070407\index.dat<br />
+C:\Windows\System32\config\systemprofile\AppData\Local\Microsoft\Windows\History\History.IE5\MSHist012007091020070911\index.dat<br />
+C:\Windows\System32\config\systemprofile\AppData\Local\Microsoft\Windows\Temporary Internet Files\Content.IE5\index.dat<br />
+C:\Windows\System32\config\systemprofile\AppData\Roaming\Microsoft\Windows\Cookies\index.dat</p>
+<p>过几天争取看看<a href="http://www.latenighthacking.com/projects/2003/reIndexDat/">reverse engineering index.dat files</a>，还有<a href="http://www.wbaudisch.de/Cache.htm">IE缓存记录</a>。</p>
+<p>Vista下找到cookie的路径不容易啊，Win+R运行<code>cookies</code>，提示</p>
+<p>[Window Title]<br />
+位置不可用<br />
+[Content]<br />
+无法访问 C:\Users\est\Cookies。<br />
+拒绝访问。<br />
+[确定]</p>
+<p>经几个朋友讨论，发现了进入cookie文件夹的快捷方式：Win+R运行 <code>shell:cookies</code> ，最终路径是 <code>C:\Users\est\AppData\Roaming\Microsoft\Windows\Cookies</code></p>
+<p>不看不知道，一看吓一跳，最终结果是，3933个项目 2.10MB，暴汗。</p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

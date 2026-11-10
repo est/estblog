@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>通过反向模式匹配实现fp的机器辅助的推理和优化？ – est の 输入 输出和出入</title>
+<link rel="icon" href="https://est.im/favicon.svg">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="通过反向模式匹配实现fp的机器辅助的推理和优化？" />
+
+    <link rel="canonical" href="https://blog.est.im/archives/631891" />
+    <meta property="og:url" content="https://blog.est.im/archives/631891">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="通过反向模式匹配实现fp的机器辅助的推理和优化？">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="single-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="content side-text-padding">
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">通过反向模式匹配实现fp的机器辅助的推理和优化？</h2>
+    <p class="post-date">Posted <time datetime="2008-09-08T00:00:00+08:00">2008-09-08</time> | <span>archive</span></p>
+  </header>
+
+  
+  <p><a href="http://www.defmacro.org/ramblings/fp.html">Functional Programming For The Rest of Us</a>里提到fp可以实现数学上的公式优化代码。真很伟大。就像三角函数里的一些超级捷径公式一样。同时也提到了Pattern Matching。我在想有没有通过反向模式匹配reverse pattern matching实现机器辅助的推理和优化呢？</p>
+<blockquote>
+<p>机器辅助的推理和优化</p>
+<p>函数式语言的一个有趣的属性就是他们可以用数学方式推理。因为一种函数式语言只是一个形式系统的实现，所有在纸上完成的运算都可以应用于用这种语言书写的程序。编译器可以用数学理论将转换一段代码转换为等价的但却更高效的代码[7]。多年来关系数据库一直在进行着这类优化。没有理由不能把这一技术应用到常规软件上。</p>
+<p>另外，还能使用这些技术来证明部分程序的正确，甚至可能创建工具来分析代码并为单元测试自动生成边界用例！对稳固的系统这种功能没有价值，但如果你<br />
+ 要设计心房脉冲产生器 (pace<br />
+ maker)或空中交通控制系统，这种工具就不可或缺。如果你编写的应用程序不是产业的核心任务，这类工具也是你强于竞争对手的杀手锏。</p>
+<p>Machine Assisted Proofs and Optimizations<br />
+ An interesting property of functional languages is that they can be reasoned about mathematically. Since a functional language is simply an implementation of a formal system, all mathematical operations that could be done on paper still apply to the programs written in that language. The compiler could, for example, convert pieces of code into equivalent but more efficient pieces with a mathematical proof that two pieces of code are equivalent7. Relational databases have been performing these optimizations for years. There is no reason the same techniques can't apply to regular software.</p>
+<p>Additionally, you can use these techniques to prove that parts of your program are correct. It is even possible to create tools that analyze code and generate edge cases for unit tests automatically! This functionality is invaluable for rock solid systems. If you are designing pace makers and air traffic control systems such tools are almost always a requirement. If you are writing an application outside of truly mission critical industries, these tools can give you a tremendous edge over your competitors.</p>
+<p>模式匹配</p>
+<p>模式匹配不是什么新的创新的特性。事实上，它和函数式编程的关系不大。把产生模式匹配归因于函数式编程的唯一的原因是函数式语言一度提供了模式匹配，然而现在的命令式语言还做不到。</p>
+<p>Pattern Matching</p>
+<p>Pattern matching is not a new or innovative feature. In fact, it has little to do with functional programming. The only reason why it's usually attributed to FP is that functional languages have had pattern matching for some time, while modern imperative languages still don't.</p>
+</blockquote>
+<p>也就是说，把常见的funtion列出一些特例，缓存了，高速频繁调用的时候就直接运用这些现成的答案 <img alt=":-)" src="http://image-003.yo2cdn.com/wp-includes/images/smilies/icon_smile.gif" /></p>
+<p>半夜习惯扯谈，高手勿见笑 <img alt=":-)" src="http://image-003.yo2cdn.com/wp-includes/images/smilies/icon_smile.gif" /></p>
+</article>
+
+<div class="comments">
+  <h2>Comments</h2>
+  <script type="text/javascript" defer src="https://c.est.im/req4cmt.js"></script>
+</div>    </main>
+
+
+  </body>
+
+</html>

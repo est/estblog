@@ -1,0 +1,2599 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<link rel="icon" href="https://est.im/favicon.svg">    <title>est の 输入 输出和出入 - archive category</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://disqus.com https://player.bilibili.com https://www.youtube.com;">
+    <link href="https://feeds.feedburner.com/initiative" type="application/rss+xml" rel="alternate" title="est の 输入 输出和出入 RSS Feed" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="This blog is rated 🔞, viewer discretion is advised" />
+
+    <meta property="og:url" content="https://blog.est.im">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="est の 输入 输出和出入">
+    <meta property="og:description" content="This blog is rated 🔞, viewer discretion is advised">
+
+    <link rel="stylesheet" href="/theme/css/normalize.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+
+
+    <style>
+      body {
+        background: #ecedef url("/theme/img/ignasi_pattern_s.png") repeat;
+      }
+    </style>
+  </head>
+  <body class="list-body">
+<nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="/" class="nav-text">
+    est の 输入 输出和出入
+  </a></h1>
+  <div class="hamburger-menu">
+    <button>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://feeds.feedburner.com/initiative" class="hamburger-menu-overlay-link">RSS</a></li>
+      <li><a href="/about" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="/category" class="hamburger-menu-overlay-link">Category</a></li>
+
+    </ul>
+  </div>
+</nav>    <main class="card-container side-gutter">
+      <header class="list-header">
+        <p class="list-header-subtext">This blog is rated 🔞, viewer discretion is advised</p>
+        <!-- <h1 class="list-header-title">est の 输入 输出和出入</h1> -->
+      </header>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13367"  rel="bookmark" >
+              <h2 class="card-title">[原创]批处理屏幕截图</h2>
+            </a>
+            <p class="card-text"><p>@echo off<br />
+set "dnfpath=C:\\Windows\\Microsoft.NET\\Framework"<br />
+for /f "delims=" %%v in ('dir /ad /b %dnfpath%\\v?.*') do (<br />
+         if exist %dnfpath%\\%%v\\csc.exe set cscpath=%dnfpath%\\%%v\\csc.exe<br />
+)<br />
+&lt; "%~f0" more +15 &gt; %temp%\\estCapture.cs<br />
+%cscpath% /out:%cd%\\estCapture.exe %temp%\\estCapture.cs 1&gt;nul 2&gt;nul<br />
+estCapture.exe<br />
+start estCapture.bmp<br />
+ping -n 2 127.1 1&gt;nul 2&gt;nul<br />
+del estCapture.exe 2&gt;nul</p>
+<p>goto:eof</p>
+<p>:estCapture</p>
+<p>using System.Drawing;<br />
+using System.Drawing.Imaging;<br />
+using System.Windows.Forms;</p>
+<p>public class MyClass<br />
+{<br />
+        public static void Main()<br />
+        {<br />
+                        Image img = new Bitmap(Screen.AllScreens[0].Bounds.Width, Screen.AllScreens[0].Bounds.Height);<br />
+                        Graphics g = Graphics.FromImage(img);<br />
+                        g.CopyFromScreen(new Point(0, 0), new Point(0, 0), Screen.AllScreens[0].Bounds.Size);<br />
+                        img.Save("estCapture.bmp", ImageFormat.Bmp);<br />
+        }<br />
+}</p>
+<p>展示下批处理调用 .NET 的威力，需要 .NET Framework支持，测试环境： Windows Vista + .Net Framework 3.0 。代码比较简单，没写注释哈。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-11T00:52:00+08:00">2007-01-11</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13360"  rel="bookmark" >
+              <h2 class="card-title">Google也出错啦</h2>
+            </a>
+            <p class="card-text"><table cellspacing="0" cellpadding="2" width="100%" border="0">
+    <tbody>
+        <tr>
+            <td nowrap="nowrap" width="1%" rowspan="3"><b><font face="times" color="#0039b6" size="10">G</font><font face="times" color="#c41200" size="10">o</font><font face="times" color="#f3c518" size="10">o</font><font face="times" color="#0039b6" size="10">g</font><font face="times" color="#30a72f" size="10">l</font><font face="times" color="#c41200" size="10">e</font>&nbsp;&nbsp;</b> </td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td bgcolor="#3366cc"><font face="arial,sans-serif" color="#ffffff"><b>Error</b></font></td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+    </tbody>
+</table>
+<blockquote>
+<h1>Server Error</h1>
+The server encountered a temporary error and could not complete your request.
+<p>Please try again in 30 seconds. </p>
+<p>&nbsp;</p>
+</blockquote>
+<table cellspacing="0" cellpadding="0" width="100%">
+    <tbody>
+        <tr>
+            <td bgcolor="#3366cc"><img height="4" alt="" width="1"/></td>
+        </tr>
+    </tbody>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>本人第一次预见，上帝Google出错了</p>
+<p><img src ="http://dormforce.net/Blog/electronixtar/aggbug/13360.aspx" width = "1" height = "1" /></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-10T08:10:00+08:00">2007-01-10</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13358"  rel="bookmark" >
+              <h2 class="card-title">看看老外搜集的Windows快捷键大全（2007-1-10更新）</h2>
+            </a>
+            <p class="card-text"><p>本人自以为我知道的快捷键是很稀罕了，比如，我新建文件夹的方式是：右键＋F，W。今天无意搜索到了<a href="http://shellrevealed.com/blogs/shellblog/archive/2006/10/16/Do-things-faster-with-Keyboard-Shortcuts.aspx">外国人搜集的快捷键</a>，汗，很多听都没听说过。</p>
+<p>&nbsp;</p>
+<p>
+<table style="WIDTH: 427.5pt; BORDER-COLLAPSE: collapse" cellspacing="0" cellpadding="0" class="MsoTableColorfulList">
+    <tbody>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #9e3a38; PADDING-BOTTOM: 0in; WIDTH: 427.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-BOTTOM: white 1.5pt solid; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0" colspan="2">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: white"><font size="3"><font face="Calibri">Explorer Shortcuts</font></font></span></strong></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">ALT+D</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Select the Address bar（经常用，Maxthon这个JB经常读缓存，所以我经常Alt+D，Enter，ALt+D，Enter&hellip;&hellip;）</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">CTRL+E</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Select the Instant Search box（这个强悍，经测试，Maxthon，IE7，Vista有效，很方便的哈）</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">F5</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Refresh the active window</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 30pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 30pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">ALT+UP ARROW</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 30pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">View the folder one level up in Windows Explorer（用过，一般就Backspace）</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">ALT+LEFT</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Go backward to previous location in history（其实这个快捷键是我在Office 2000的剪贴画管理器里发现的）</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">Backspace</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Navigate to parent folder if there are no previous navigations.&nbsp; Navigate to previous location in history if one exists.</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">ALT+RIGHT</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Go forward to next location in history</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">ESC</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Cancel the current task or search（也可以停止IE的载入，停止GIF动画播放）</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">F10 or ALT</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Activate the menu bar in the active program（Shift+F10也可以的哈）</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">F6</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Cycle focus to next UI element in Explorer（听都没听说过）</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">ALT+F4 or CTRL+W</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Close the active item, or exit the active program（这个也很常用，Firefox，explorer，Maxthon都支持）</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">F4</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Display the Address bar list in Windows Explorer</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">F3 or CTRL+F</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Search for a file or folder</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">CTRL+N</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Opens current location in a new window</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">F11</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Turn Full Screen Mode on or off</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">ALT+SPACEBAR</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Open the shortcut menu for the active window</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">ALT+TAB</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Cycle through open windows</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">CTRL+ALT+TAB</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Cycle through open windows without closing the menu（没听说过，汗）</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">CTRL+ESC</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Display Start Menu</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">CTRL+SHIFT+ESC</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Task Manager</font></font></span></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><font face="Calibri" size="3"></font></p>
+<p>
+<table style="WIDTH: 427.5pt; BORDER-COLLAPSE: collapse" cellspacing="0" cellpadding="0" class="MsoTableColorfulList">
+    <tbody>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #9e3a38; PADDING-BOTTOM: 0in; WIDTH: 427.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-BOTTOM: white 1.5pt solid; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0" colspan="2">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: white"><font size="3"><font face="Calibri">Listview Shortcuts </font></font></span></strong></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">CTRL+A</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Select all items in a document or window</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">END</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Select last item in the active window</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">HOME</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Select first item in the active window</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 30pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 30pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">CTRL+END</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 30pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Move focus to last item in the selected window without selecting</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">CTRL+HOME</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Move focus to first item in the selected window without selecting</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">CTRL+Arrow keys+Spacebar</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Allows discontinuous multiple selection of items</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">SHIFT with any arrow key</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Select more than one item in a window or on the desktop, or select text within a document</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">SHIFT+F10</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Display the shortcut menu for the selected item</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">F2</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Rename the selected item</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">ALT+ENTER</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Display properties for the selected item</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">DELETE or CTRL+D</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Delete the selected item and move it to the Recycle Bin</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">SHIFT+DELETE</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Delete the selected item without moving it to the Recycle Bin first</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">CTRL+PLUS key on Number Pad</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Delete the selected item without moving it to the Recycle Bin first</font></font></span></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 10pt"><font face="Calibri" size="3"></font></p>
+<p>这里补充几个哈，程序员尤其有用的快捷键，Ctrl+&rarr;&larr;&uarr;&darr;。比如说，一个这样一个句子：<br/>
+UESTC.NU.DormForce.SynX.est</p>
+<p><input style="WIDTH: 405px; HEIGHT: 22px" size="52" name="t1" value="UESTC.NU.DormForce.SynX.est"/></p>
+<p><br/>
+大家把光标放到最后，然后用 Ctrl+LeftArrow试试看，呵呵，光标不是一个字母一个字母地移动了，而是很智能的一个词语一个词语的移动。<br/>
+所以呢，比如我要选中 SynX.est，那么我的快捷键就是 Ctrl+Shift+LeftArrow 两次，呵呵</p>
+<p>&nbsp;另外，Ctrl+滚轮可以设置很多窗口的字体大小，比如 Word，IE，Wordpad（写字板），等等</p>
+<p>
+<table style="WIDTH: 427.5pt; BORDER-COLLAPSE: collapse" cellspacing="0" cellpadding="0" class="MsoTableColorfulList">
+    <tbody>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #9e3a38; PADDING-BOTTOM: 0in; WIDTH: 427.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-BOTTOM: white 1.5pt solid; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0" colspan="2">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: white"><font size="3"><font face="Calibri">Instant Search Box Shortcuts</font></font></span></strong></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 8.4pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 8.4pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">ALT+ENTER</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 8.4pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Searches for entered term and opens Search Pane (does not work in Start Menu)</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 8.1pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 8.1pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">SHIFT+ENTER</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 8.1pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Searches for entered term using Internet browser (does not work in Start Menu)</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 30pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 30pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">CTRL+SHIFT+ENTER</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 30pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Will launch a selected Application elevated if used from the Start Menu</font></font></span></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 10pt"><font face="Calibri" size="3"></font></p>
+<p>
+<table style="WIDTH: 427.5pt; BORDER-COLLAPSE: collapse" cellspacing="0" cellpadding="0" class="MsoTableColorfulList">
+    <tbody>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #9e3a38; PADDING-BOTTOM: 0in; WIDTH: 427.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-BOTTOM: white 1.5pt solid; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0" colspan="2">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: white"><font size="3"><font face="Calibri">Folder Tree Shortcuts</font></font></span></strong></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 30pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 30pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">NUM LOCK+ASTERISK (*) on numeric keypad</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 30pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Display all subfolders under the selected folder</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 30pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 30pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">NUM LOCK+PLUS SIGN (+) on numeric keypad</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 30pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Display the contents of the selected folder</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 30pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 30pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">NUM LOCK+MINUS SIGN (-) on numeric keypad</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 30pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Collapse the selected folder</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 30pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 30pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">LEFT ARROW</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 30pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Collapse the current selection (if it is expanded), or select the parent folder</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 30pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 30pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">RIGHT ARROW</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 30pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Display the current selection (if it is collapsed), or select the first subfolder</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">ALT+LEFT ARROW</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">View the previous folder</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">ALT+RIGHT ARROW</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">View the next folder</font></font></span></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</p>
+<p>怎么样，都没见过吧？我补充一个，当在 资源管理器 里以 详细信息 查看文件的时候，有的时候列表的某一栏太窄了，有的太宽了，有没有快捷键一次性调节所有列到最合适的宽度呢？这个快捷键就是：Ctrl+数字键盘的+号</p>
+<p>F2 重命名，也比较通用的哈</p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 10pt"><font face="Calibri" size="3"></font></p>
+<p>
+<table style="BORDER-COLLAPSE: collapse" cellspacing="0" cellpadding="0" class="MsoTableColorfulList">
+    <tbody>
+        <tr>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #9e3a38; PADDING-BOTTOM: 0in; WIDTH: 427.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-BOTTOM: white 1.5pt solid; BORDER-RIGHT-COLOR: #f0f0f0" colspan="2">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: white"><font size="3"><font face="Calibri">Windows Key Shortcuts</font></font></span></strong></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 153pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">Windows logo key </font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 274.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Open or close the Start menu</font></font></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 153pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">Windows logo key + #</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 274.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Launches shortcut in Quick Launch with the position corresponding to the # entered.<span>&nbsp;&nbsp; </span>(eg. Winkey + 1 to launch first item in quick launch menu)（听都没听说过，汗，不过很多XP没有测试成功，我的Vista测试成功了，郁闷，大家帮测试下）</font></font></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 153pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">Windows logo key +BREAK</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 274.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Display the System Properties dialog box</font></font></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 153pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">Windows logo key +D</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 274.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Display the desktop</font></font></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 153pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">Windows logo key +M</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 274.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Minimize all windows</font></font></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 153pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">Windows logo key +SHIFT+M</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 274.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Restore minimized windows to the desktop</font></font></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 153pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">Windows logo key +E</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 274.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Open Windows Explorer navigated to Computer</font></font></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 153pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">Windows logo key +F</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 274.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Search for a file or folder</font></font></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 153pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">CTRL+Windows logo key +F</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 274.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Search for computers </font></font></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 153pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">Windows logo key +L</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 274.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Lock your computer </font></font></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 153pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">Windows logo key +R</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 274.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Open the Run dialog box</font></font></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 153pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">Windows logo key +T</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 274.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Cycle through programs on the taskbar（和Alt+Esc的作用差不多，在Vista下还有个小窗口御览，平时一般只用Alt+Tab）</font></font></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 153pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">Windows logo key +TAB</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 274.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Cycle through programs on the taskbar by using Windows Flip 3-D</font></font></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 153pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">CTRL+Windows logo key +TAB</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 274.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Use the arrow keys to cycle through programs on the taskbar by using Windows Flip 3-D</font></font></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 153pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">Windows logo key +SPACEBAR</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 274.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Bring all gadgets to the front and select Windows Sidebar</font></font></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 153pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">Windows logo key +G</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 274.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Cycle through Sidebar gadgets</font></font></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 153pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">Windows logo key +U</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 274.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Open Ease of Access Center</font></font></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 153pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">Windows logo key +X</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 274.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Open Windows Mobility Center（这个厉害，Vista专用）</font></font></span></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</p>
+<p>另外，按5次Shift可以看看&ldquo;粘滞键&rdquo;<br/>
+Shift+Alt+PrintScreen可以设置高对比度<br/>
+按住<strong>右</strong>Shift 8秒钟，可以打开筛选键<br/>
+Left ALT+left SHIFT+NUM LOCK 鼠标键<br/>
+NUM LOCK 5妙种：切换键<br/>
+</p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 10pt"><font face="Calibri" size="3"></font></p>
+<p>
+<table style="WIDTH: 427.5pt; BORDER-COLLAPSE: collapse" cellspacing="0" cellpadding="0" class="MsoTableColorfulList">
+    <tbody>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #9e3a38; PADDING-BOTTOM: 0in; WIDTH: 427.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-BOTTOM: white 1.5pt solid; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0" colspan="2">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: white"><font size="3"><font face="Calibri">Login Screen Shortcuts</font></font></span></strong></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 4pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 4pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">ALT+S</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 4pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Power Menu</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 7.6pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 7.6pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">ALT+W</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 7.6pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Switch user</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 3.5pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 3.5pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">Arrow keys</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 3.5pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Navigate between user tiles</font></font></span></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 10pt"><font face="Calibri" size="3"></font></p>
+<p>
+<table style="WIDTH: 427.5pt; BORDER-COLLAPSE: collapse" cellspacing="0" cellpadding="0" class="MsoTableColorfulList">
+    <tbody>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #9e3a38; PADDING-BOTTOM: 0in; WIDTH: 427.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-BOTTOM: white 1.5pt solid; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0" colspan="2">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: white"><font size="3"><font face="Calibri">Security Screen Shortcuts</font></font></span></strong></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 6.25pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 6.25pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">ALT+K</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 6.25pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Lock machine</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 9.85pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 9.85pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">ALT+W</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 9.85pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Switch user</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 9.4pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 9.4pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">ALT+L</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 9.4pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Log off</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 8.5pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 8.5pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">ALT+C</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 8.5pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Change Password</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 7.6pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 7.6pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">ALT+T</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 7.6pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Task Manager</font></font></span></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 10pt"><font face="Calibri" size="3"></font></p>
+<p>
+<table style="WIDTH: 427.5pt; BORDER-COLLAPSE: collapse" cellspacing="0" cellpadding="0" class="MsoTableColorfulList">
+    <tbody>
+        <tr style="HEIGHT: 15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #9e3a38; PADDING-BOTTOM: 0in; WIDTH: 427.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; BORDER-BOTTOM: white 1.5pt solid; HEIGHT: 15pt; BORDER-RIGHT-COLOR: #f0f0f0" colspan="2">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: white"><font size="3"><font face="Calibri">General Shortcuts</font></font></span></strong></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 6.25pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 6.25pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">CTRL+C or CTRL+INS</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 6.25pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Copy</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 9.85pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 9.85pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">CTRL+X or SHIFT+DEL</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 9.85pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Cut</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 9.4pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 9.4pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">CTRL+V or SHIFT+INS</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 9.4pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Paste（其实这个挺使用的，有的程序的文本框禁止粘贴，但是过滤快捷键不严格，Ctrl+V实效了，Shift+Ins还是可以的，详情点击<a href="http://dormforce.net/Blog/electronixtar/archive/2006/12/24/12978.aspx">这里</a>）</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 8.5pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 8.5pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">CTRL+Z</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 8.5pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Undo</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 7.6pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 7.6pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">CTRL+Y</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 7.6pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Redo</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 7.6pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 7.6pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">F1</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 7.6pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Help</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 22.5pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 22.5pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">CTRL+SHIFT while dragging an item</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 22.5pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Create shortcut to selected item.</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 22.5pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 22.5pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">CTRL+SHIFT with any of the arrow keys</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 22.5pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><span style="COLOR: black"><font size="3"><font face="Calibri">Highlight a block of text.</font></font></span></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 7.65pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 7.65pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">CTRL+RIGHT ARROW</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #cccccc; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 7.65pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><font size="3"><font face="Calibri"><span style="COLOR: black">Move the insertion point to the beginning of the next word.</span><span style="FONT-SIZE: 8pt; COLOR: black; FONT-FAMILY: 'Arial','sans-serif'"></span></font></font></p>
+            </td>
+        </tr>
+        <tr style="HEIGHT: 21.15pt">
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 152pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 21.15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><strong><span style="COLOR: black"><font size="3"><font face="Calibri">CTRL+LEFT ARROW</font></font></span></strong></p>
+            </td>
+            <td style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; BORDER-LEFT-COLOR: #f0f0f0; BACKGROUND: #e6e6e6; BORDER-BOTTOM-COLOR: #f0f0f0; PADDING-BOTTOM: 0in; WIDTH: 275.5pt; BORDER-TOP-COLOR: #f0f0f0; PADDING-TOP: 0in; HEIGHT: 21.15pt; BORDER-RIGHT-COLOR: #f0f0f0">
+            <p class="MsoNormal" style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><font size="3"><font face="Calibri"><span style="COLOR: black">Move the insertion point to the beginning of the previous word.</span><span style="FONT-SIZE: 8pt; COLOR: black; FONT-FAMILY: 'Arial','sans-serif'"></span></font></font></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</p>
+<p>在这里补充一个<font color="#ff6600">最火星的快捷键</font>，在 写字板（开始 运行 wordpad）或者QQ的聊天对话框里，输入一个字符，例如 星，按下Alt+X，可以得到&ldquo;星&rdquo;的ASCII码 661F，或者，输入661F，可以得到其对应的字符&ldquo;星&rdquo;，初步估计这是 riched32.dll 的功能</p>
+<p>Ctrl+&uarr; 相当于 &uarr; 再 Home</p>
+<p>最后写几个不是快捷键的小技巧：</p>
+<p>其实Tab键是很多菜鸟忽略的，但是很方便的，上网填表，cmd路径自动补齐等，很好用！还有Shift+Tab。（有的同学知道Tab居然不知道Shift+Tab）</p>
+<p>右击一个文件，马上按R可以查看这个文件的属性，同理，IIS里右击一个站点按R可以看站点属性，Visual Studio里右击一个控件按R也可以看属性，很方便的吧。可惜有的程序把这个R（P&amp;roperties）设计成了 P，造成了一定的混乱 -_-! 。在Linux下就根本没有这个规律啦，Linux的命令风格和按键设置都太有个性了，根本不统一！</p>
+<p>和上面这个类似的，关机的时候要退出 系统托盘的那一排图标，最快的方法是：右键单击图标，然后X，所以一路点过去，一路X就把能关的后台程序全部关了，MSN，TM都可以，但是GTalk设置的是E，还是那句话，Linux设计倾向的程序都太有风格了。微软家的东西就是统一啊，方便。</p>
+<p>很多软件做的很漂亮了，取消了菜单栏，比如MSN，IE7，Vista，要显示菜单栏还是很简单的，按下Alt就行了</p>
+<p>按住 Shift 可以跳过光盘、U盘的自动播放，特别是U盘，可以预防病毒哦</p>
+<p>还有就是一开始说的新建文件夹的最快方法了，用的多，所以好用。右键+F，W</p>
+<p>&nbsp;</p>
+<p><img src ="http://dormforce.net/Blog/electronixtar/aggbug/13358.aspx" width = "1" height = "1" /></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-10T07:06:01+08:00">2007-01-10</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13357"  rel="bookmark" >
+              <h2 class="card-title">Web没前途的</h2>
+            </a>
+            <p class="card-text"><p>今天很是生气，哎，1000多字的blog，点了个 保存 ，结果给弹一个框框说&ldquo;.Text Application Error：OutOfMemeory Exception&rdquo;，真TMD的烂啊，偶写blog的心情一下子就&hellip;&hellip;说到技术层面上，Web程序好看，制作简单，但是结构超级复杂和麻烦。如果blog是个C/S结构，或者B/S的blog系统支持xmlhttp后台提交的话&hellip;&hellip;就不会有这种后果了&hellip;&hellip;&hellip;&hellip;呜呜呜呜，Web程序&hellip;&hellip;是 不可靠 和 低效率的，你看做一个 DOM 拖动的 div 就要写那么多代码，或者用那么多的类啊，真的很累。现在Web 2.0被Google炒得很热，但是这些其实很很泡沫的，什么WebOS也是极其SB和夸张的。我始终认为，电脑软件，用户至上，不要把什么开源啊面向对象啊弄到用户层去。心情不好乱说几句，呵呵</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-10T07:06:00+08:00">2007-01-10</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13355"  rel="bookmark" >
+              <h2 class="card-title">Alt+Shift+PrintScreen</h2>
+            </a>
+            <p class="card-text"><p>这不是XP/Vista的彩蛋，这是XP/VIsta的功能，高对比度，呵呵</p>
+<p>有什么用呢？</p>
+<p>比如说，图书馆的公用电脑，只有一个 书籍查阅软件 的界面，把explorer屏蔽了，但是</p>
+<p>1. 打开输入法，点帮助，然后C:\windows\explorer.exe，经典的输入法漏洞啊</p>
+<p>2. 按5次shift，然后随便找个帮助什么的，就可以打开C:了</p>
+<p>3. 按Win+U，放大镜，关于，有个“访问Microsoft网站”的链接</p>
+<p>4. 就是现在的了，Shift+Alt+PrtSc，呵呵</p>
+<p>一般的软件绝对想不到，要封这么多系统默认快捷键，汗。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-10T06:42:00+08:00">2007-01-10</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13352"  rel="bookmark" >
+              <h2 class="card-title">如何分别代码是国人写的还是外国人写的</h2>
+            </a>
+            <p class="card-text"><p>其实很简单</p>
+<p>首先Gooogle，英文的中文的都搜索下。</p>
+<p>其次，有注释，版权说明的，就很有可能是外国人写的。</p>
+<p>国人写的，一般都是半吊子代码，^_^</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-09T21:37:00+08:00">2007-01-09</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13325"  rel="bookmark" >
+              <h2 class="card-title">Web 2.0 Roadmap</h2>
+            </a>
+            <p class="card-text"><p><img alt="" src="/Blog/Attachment/649" /> MS 和 Google 两大整营</p>
+<p>[内有附件]</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-07T19:28:00+08:00">2007-01-07</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13321"  rel="bookmark" >
+              <h2 class="card-title">Web 2.0 新兴网站推荐</h2>
+            </a>
+            <p class="card-text"><p><a href="http://www.sidekiq.com/">http://www.sidekiq.com/</a><br />
+这个搜索引擎看起来非常安逸哦，有点想抛弃Google鸟～～</p>
+<p><a href="http://centernetworks.com/">http://centernetworks.com/</a></p>
+<p><a href="http://www.mashable.com/">http://www.mashable.com/</a></p>
+<p><a href="http://www.readwriteweb.com/">http://www.readwriteweb.com/</a></p>
+<p><a href="http://techcrunch.com/">http://techcrunch.com/</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-07T05:34:00+08:00">2007-01-07</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13316"  rel="bookmark" >
+              <h2 class="card-title">哭了～工具盘被误删了</h2>
+            </a>
+            <p class="card-text"><p>今天有个顽固文件，在我的工具盘 D:\ 盘，输入 rd /s /q setup.1 回车的时候不小心又按到了回车键上面的 \ ，然后，傻了一会儿，5GB的工具灰飞烟灭了～～～5555555～～～～FinalData中.......很多工具是绝版的低版本，可惜啊。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-07T04:18:00+08:00">2007-01-07</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13315"  rel="bookmark" >
+              <h2 class="card-title">Vista下登陆QQ出现蓝屏</h2>
+            </a>
+            <p class="card-text"><p>删除npkcrypt.sys和npkcrypt.vxd文件即可</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-07T03:37:00+08:00">2007-01-07</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13296"  rel="bookmark" >
+              <h2 class="card-title">[原]Vista下的文件名欺骗</h2>
+            </a>
+            <p class="card-text"><p>打开一个文件夹比如说，E:\test ，空白处点右键，选择 属性，选择 自定义，然后可以给文件夹改个图标，这个可能地球人都知道了，不过Vista下有更好玩的东西，先随便给文件夹改个图标，点击 确定，然后，打开当前文件夹下的 desktop.ini（方法就很多了，最简单：直接在地址栏的当前路径后面接着输入 \desktop.ini 回车，当然，如果你启用了“显示系统及隐藏文件”的话，直接双击打开），记事本弹出来，加这么一句：</p>
+<p>LocalizedResourceName=Hacked By est</p>
+<p>保存，关闭记事本。</p>
+<p>把 desktop.ini 改名成其他，例如 desktop.ini2，然后再改回来，然后，返回上一级文件夹（快捷键Backspace，晕，我在教入门知识～～），看看，文件夹的名字变成了什么？</p>
+<p><img alt="" src="/Blog/Attachment/642" /></p>
+<p><img alt="" src="/Blog/Attachment/643" /></p>
+<p>继续好玩的，首先在刚才的文件夹下面新建一个子文件夹，例如我这里是 E:\test\subtest\ 再次打开刚才的 desktop.ini，添几行：</p>
+<p>[LocalizedFileNames]<br />
+subtest=Another Name</p>
+<p>接下来，又是，保存，关闭记事本，把 desktop.ini 改成其他名字，如 desktop.ini2（这样做是为了使explorer刷新，重新应用 desktop.ini 的属性），然后改回来，按F5刷新当前文件夹，看看 subtest 文件夹的名字是不是变成了 Another Name？</p>
+<p><img alt="" src="/Blog/Attachment/644" /></p>
+<p><img alt="" src="/Blog/Attachment/645" /></p>
+<p>事实上文件夹的名字改变没有呢？没有。不信，点一下 Vista 资源管理器的 地址栏，呵呵，如图。</p>
+<p><img alt="" src="/Blog/Attachment/646" /></p>
+<p><img alt="" src="/Blog/Attachment/647" /></p>
+<p>这个 trick 有什么用呢？好处是，我可以建立一个缩写名字的文件夹，这样便于输入路径，然后用desktop.ini这么修改下，显示成全称，美观。往坏处想呢，我有个 trojan.exe，图标和Word文档的一样，放在一个名字叫 virus\ 的文件夹下，这个 virus\ 文件夹下面用一个 desktop.ini 把 trojan.exe 伪装成 letter.docx（Office 2003及以前是 .doc，2007就是 .docx 格式了），然后，社会工程学让用户点击这个文件……普通用户会说，这个文件的名字是 letter.doc（不是 letter.doc.exe ），是安全的，可以打开，双击后……一切都结束了。</p>
+<p>图里面有两个文件，一个 fake letter.docx，其实是一个exe，双击可以直接运行，图标是用ResHacker伪装的Word2007的图标，另一个 Normal Word Document.docx 是真正的 Word 2007 文档。光凭外观，你能区分exe和docx么？</p>
+<p><img alt="" src="/Blog/Attachment/648" /></p>
+<p>版权所有，转载请注明出处。</p>
+<p>我是怎么发现这个秘密的呢？在这里：</p>
+<p>%appdata%\Microsoft\Windows\Start Menu\desktop.ini<br />
+%appdata%\Microsoft\Windows\Start Menu\Programs\Accessories\desktop.ini</p>
+<p>这可能是我期末考试前最后一篇blog了，这学期为了 .NET，Vista，Ubuntu欠了不少功课，郁闷啊～～</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-05T04:38:00+08:00">2007-01-05</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13295"  rel="bookmark" >
+              <h2 class="card-title">Vista的“文件类型”到哪里去了？</h2>
+            </a>
+            <p class="card-text"><p>以前要修改文件关联，比如说 .doc 文件的图标，一般是 资源管理器 的 工具 菜单（Win98下是 查看 菜单），点 文件和文件夹选项，然后点 文件类型，就可以修改了，但是在Vista下这招不管用了，到 控制面板 文件夹选项 里也没有找到。翻了一会儿，发现这个东西到 控制面板\默认程序\设置关联 里去了，呵呵。不过现在Vista下不能改图标了，只能动注册表了，郁闷。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-05T04:24:00+08:00">2007-01-05</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13292"  rel="bookmark" >
+              <h2 class="card-title">Universal XSS with PDF files: highly dangerous</h2>
+            </a>
+            <p class="card-text"><p><a href="http://www.securityfocus.com/archive/1/455790/30/0/threaded">Universal XSS with PDF files: highly dangerous</a></p>
+<p>Jan 03 2007 02:20AM<br />
+pdp (architect) (pdp gnucitizen googlemail com) (3 replies)</p>
+<p>I will be very quick and just point to links where you can read about<br />
+this issue.<br />
+It seams that PDF documents can execute JavaScript code for no<br />
+apparent reason by using the following template:<br />
+http://path/to/pdf/file.pdf#whatever_name_you_want=javascript:your_code_<br />
+here<br />
+You must understand that the attacker doesn't need to have write<br />
+access to the specified PDF document. In order to get an XSS vector<br />
+working you need to have a PDF file hosted on the target and that's<br />
+all about it. The rest is just a matter of your abilities and desires.<br />
+This finding was originally mentioned by Sven Vetsch, on his blog.<br />
+This is a very good and quite interesting. Good work.<br />
+There is a POC I composed:<br />
+http://www.google.com/librariancenter/downloads/Tips_Tricks_85x11.pdf#so<br />
+mething=javascript:function%20createXMLHttpRequest(){%20%20%20try{%20ret<br />
+urn%20new%20ActiveXObject('Msxml2.XMLHTTP');%20}catch(e){}%20%20%20try{%<br />
+20return%20new%20ActiveXObject('Microsoft.XMLHTTP');%20}catch(e){}%20%20<br />
+%20try{%20return%20new%20XMLHttpRequest();%20}catch(e){}%20%20%20return%<br />
+20null;}var%20xhr%20=%20createXMLHttpRequest();xhr.onreadystatechange%20<br />
+=%20function(){%20%20%20%20if%20(xhr.readyState%20==%204)%20%20%20%20%20<br />
+%20%20%20alert(xhr.responseText);};xhr.open('GET',%20'http://www.google.<br />
+com',%20true);xhr.send(null);<br />
+More on the matter can be found here:<br />
+http://www.gnucitizen.org/blog/danger-danger-danger/<br />
+http://www.disenchant.ch/blog/hacking-with-browser-plugins/34<br />
+--<br />
+pdp (architect) | petko d. petkov<br />
+http://www.gnucitizen.org</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-05T02:55:00+08:00">2007-01-05</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13272"  rel="bookmark" >
+              <h2 class="card-title">DrCom的一个bug</h2>
+            </a>
+            <p class="card-text"><p>今天用Vista，无线可以用DrCom登陆，但是切换到 本地连接 就不能登陆了，提示 “登陆超时”。我把 无线网路 禁用了也没用。于是，把DrCom删除了重装，正常了，原来DrCom不能正确识别通过那个可用的连接来登陆验证服务器。如果我同时脸上了 Wired LAN, Wireless LAN, PPPoE, VPN，恐怕DrCom就不知所措了，^_^</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-01-01T22:14:00+08:00">2007-01-01</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13264"  rel="bookmark" >
+              <h2 class="card-title">XP的默认背景颜色</h2>
+            </a>
+            <p class="card-text"><p>Red: 58<br />
+Green: 110<br />
+Blue: 165<br />
+Hex: #3A6EA5</p>
+<p>留个记号，把我的Ubuntu设成Windows Classical的主题颜色</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-31T19:37:00+08:00">2006-12-31</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13261"  rel="bookmark" >
+              <h2 class="card-title">Planet-lab Google Trends</h2>
+            </a>
+            <p class="card-text"><p><a href="http://www.google.com/trends?q=planetlab&amp;date=all&amp;geo=all&amp;ctab=1&amp;sa=N" title="http://www.google.com/trends?q=planetlab&amp;date=all&amp;geo=all&amp;ctab=1&amp;sa=N">http://www.google.com/trends?q=planetlab&amp;date=all&amp;geo=all&amp;ctab=1&amp;sa=N</a></p>
+<p>还是有很多中国人关心NGN的，呵呵。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-31T17:54:00+08:00">2006-12-31</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13260"  rel="bookmark" >
+              <h2 class="card-title">准备改blog的CSS</h2>
+            </a>
+            <p class="card-text"><p>老样子看烦了，准备换个，先用默认的 XP Style 凑活用着</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-31T17:24:00+08:00">2006-12-31</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13259"  rel="bookmark" >
+              <h2 class="card-title">Live Writer SyntaxHighLighter Test</h2>
+            </a>
+            <p class="card-text"><pre><code class="language-C#">using System;
+using System.Windows.Forms;
+
+public class MyClass
+{
+  public static void Main()
+  {
+    MessageBox.Show(&quot;Hello, Windows Live Writer&quot;);
+  }
+}
+</code></pre>
+<pre><code class="language-css">body
+{
+  color:#FFFFFF;
+}
+</code></pre>
+<pre><code class="language-vbs">set oSpeech = CreateObject(&quot;SAPI.SpVoice&quot;)
+oSpeech.Speak &quot;Hello, Windows Live Writer&quot;)
+</code></pre>
+<p>貌似不错的样子。</p>
+<p><a href="http://wlwplugins.com/index/plugin/formatting/syntax-highlighting/">http://wlwplugins.com/index/plugin/formatting/syntax-highlighting/</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-31T17:18:00+08:00">2006-12-31</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13258"  rel="bookmark" >
+              <h2 class="card-title">Google Suggest 不兼容 IE7？</h2>
+            </a>
+            <p class="card-text"><p>作为AJAX的典范，几乎每本ajax的书都提到了Google的发明：<a href="http://www.google.com/webhp?complete=1">Google Suggest</a>。今天在 Vista RC2 里用 IE7 打开 Google Suggest 的时候，发现自动提示已经不起作用了</p>
+<p><a href="/Blog/images/electronixtar/639/o_WindowsLiveWriter_GoogleSuggestIE7_EE1A_image%7B0%7D%5B1%5D.png"></a></p>
+<p><img alt="" src="/Blog/Attachment/633" /></p>
+<p>[内有附件]</p>
+<p>附件:<br />
+<a href="/Blog/Attachment/633">2.JPG</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-31T16:56:00+08:00">2006-12-31</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13244"  rel="bookmark" >
+              <h2 class="card-title">Google计算器的极限</h2>
+            </a>
+            <p class="card-text"><p>在我的<a href="/nu/13242">上一个blog</a>中提到一个javascript的计算器，我联想到了Google的计算器，想做一个在线ajax的计算器，结果发现了Google所能计算的最大数字是：</p>
+<p><strong>170 ! = 7.25741562 × 10306</strong></p>
+<p><a href="http://www.google.com/search?q=170%21">http://www.google.com/search?q=170%21</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-29T22:08:00+08:00">2006-12-29</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13242"  rel="bookmark" >
+              <h2 class="card-title">支持表达式的公式计算工具</h2>
+            </a>
+            <p class="card-text"><p>昨天鸡腿同学说，写一个支持公式的计算工具还是挺复杂的。当时我就笑了，用C#写可能巨复杂，但是用脚本写就太简单了，于是偶就写了个，大家试试</p>
+<pre><code class="language-javascript">window.execScript\('pi=4*atn\(1\)\\ne=exp\(1\)\\nmsgbox\(eval\('+prompt\('Expression to calculate?','log\(e\)+sin\(pi\)/5-arccos\(.5\)'\).toLowerCase\(\).replace\(/\(arccos\)\\\(\(.+\)\\\)/g, 'pi/2-arcsin\($2\)'\).replace\(/\(arcsin\)\\\(\(.+\)\\\)/g, 'atn\($2/sqr\(1-$2*$2\)\)'\).replace\(/arctan/g, 'atn'\)+'\)\)','VBScript'\);
+</code></pre>
+<p>使用方法;</p>
+<p>支持运算：</p>
+<p>＋<br />
+－<br />
+×<br />
+÷<br />
+sin<br />
+cos<br />
+tan<br />
+arcsin<br />
+arccos<br />
+arctan<br />
+x^y x的y次方<br />
+exp(n) （自然对数e的n次方， e^n ）<br />
+log(x) （自然对数开方）<br />
+支持无穷级括号运算，全部用 () 英文的半角小括号</p>
+<p>支持常数：<br />
+pi=3.14159265358979<br />
+e=2.71828182845905</p>
+<p>当然了，可以使用正则增加对 sec csc ctg sh ch th等计算符号的支持。只不过偶懒得写罢了</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-29T21:41:00+08:00">2006-12-29</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13240"  rel="bookmark" >
+              <h2 class="card-title">js转换华氏温度到摄氏温度</h2>
+            </a>
+            <p class="card-text"><pre><code>function f2c(s) {
+  var test = /(\d+(\\.\d*)?)F\b/g;    // 初始化模式。
+  return(s.replace
+    (test,
+      function($0,$1,$2) {
+        return((($1-32) * 5/9) + &quot;C&quot;);
+      }
+    )
+  );
+}
+document.write(f2c(&quot;Water freezes at 32F and boils at 212F.&quot;));
+</code></pre>
+<p>如此精简的代码！有3个问题期待高手解答</p>
+<p>1. function 为什么可以不根函数名字？<br />
+2. 变量怎么可以以 $ 开头呢？<br />
+3. replace写成一行怎么写呢？</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-29T20:26:00+08:00">2006-12-29</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/13027"  rel="bookmark" >
+              <h2 class="card-title">查看 --> 页面风格</h2>
+            </a>
+            <p class="card-text"><p><img alt="" src="/Blog/Attachment/621" /></p>
+<p><a href="/Blog/images/electronixtar/639/o_WindowsLiveWriter_6c5c98caa06b_143B0_image%7B0%7D%5B2%5D.png"></a></p>
+<p>w3c规定的标准，Firefox 准从了，原理是：</p>
+<pre><code>&lt;link id=&quot;MainStyle&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot; href=&quot;/Blog/skins/LightyBlue/style.css&quot; title=&quot;Main&quot;&gt;&lt;/link&gt;
+&lt;link id=&quot;SecondaryCss&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot; href=&quot;/Blog/electronixtar/customcss.aspx&quot; title=&quot;Sec&quot;&gt;&lt;/link&gt;
+</code></pre>
+<p>指定了 title 属性后，浏览器就会出现一个CSS风格的选择菜单，呵呵，挺好玩的，可惜IE不支持</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-28T23:00:00+08:00">2006-12-28</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/12997"  rel="bookmark" >
+              <h2 class="card-title">CSS滤镜也可以这样写：CLSID</h2>
+            </a>
+            <p class="card-text"><pre><code>&lt;marquee
+height=&quot;200px&quot;
+direction=&quot;up&quot;
+onmouseover=&quot;this.stop()&quot;
+onmouseout=&quot;this.start()&quot;
+style=&quot;
+overflow-y:scroll;
+filter:
+clsid:ADC6CB82-424C-11D2-952A-00C04FA34F05(Style=1,StartX=0,StartY=80,FinishX=0,FinishY=100)
+clsid:ADC6CB82-424C-11D2-952A-00C04FA34F05(Style=1,StartX=0,StartY=20,FinishX=0,FinishY=0)
+;
+&quot;&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+asdasd&lt;br /&gt;
+&lt;/marquee&gt;
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+asdasd
+</code></pre>
+<p>最后轮到我们思考了：如果这个CLSID是一个危险的 ActiveX 对象，如果progid涉及到以前那个 DirectX 渲染溢出～～～～</p>
+<p>再联想到一件事情，<br />
+我试了试</p>
+<pre><code>&lt;object classid=&quot;clsid:D27CDB6E-AE6D-11cf-96B8-444553540000&quot;&gt;
+&lt;param name=&quot;movie&quot; value=&quot;C:\Windows\help\tours\mmtour\intro.swf&quot;&gt;
+&lt;/object&gt;
+</code></pre>
+<p>有效</p>
+<p>但是</p>
+<pre><code>&lt;object classid=&quot;progid:ShockwaveFlash.ShockwaveFlash&quot;&gt;
+&lt;param name=&quot;movie&quot; value=&quot;C:\Windows\help\tours\mmtour\intro.swf&quot;&gt;
+&lt;/object&gt;
+</code></pre>
+<p>就不行，奇怪～</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-26T00:19:00+08:00">2006-12-26</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/12995"  rel="bookmark" >
+              <h2 class="card-title">Safe-For-Scripting ActiveX List</h2>
+            </a>
+            <p class="card-text"><p>Tested on my XP Pro SP2 IE6<br />
+Registry on HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Internet Explorer\ActiveX Compatibility</p>
+<p>CLSID:</p>
+<pre><code>{00000566-0000-0010-8000-00AA006D2EA4}
+{00022601-0000-0000-C000-000000000046}
+{00022602-0000-0000-C000-000000000046}
+{00022603-0000-0000-C000-000000000046}
+{0002E510-0000-0000-C000-000000000046}
+{0003000E-0000-0000-C000-000000000046}
+{00080000-B1BA-11CE-ABC6-F5B2E79D9E3F}
+{009541A0-3B81-101C-92F3-040224009C02}
+{02466323-75ed-11cf-a267-0020af2546ea}
+{025B1052-CB0B-11CF-A071-00A0C9A06E05}
+{03405265-b4e2-11d0-8a77-00aa00a4fbc5}
+{03405269-b4e2-11d0-8a77-00aa00a4fbc5}
+{05589fa1-c356-11ce-bf01-00aa0055595a}
+{06A7EC63-4E21-11D0-A112-00A0C90543AA}
+{06DD38D3-D187-11CF-A80D-00C04FD74AD8}
+{0713E8A2-850A-101B-AFC0-4210102A8DA7}
+{0713E8D2-850A-101B-AFC0-4210102A8DA7}
+{08B0e5c0-4FCB-11CF-AAA5-00401C608501}
+{0DAD5531-BF31-43AC-A513-1F8926BBF5EC}
+{0F1BE7F7-45CA-11D2-831F-00A0244D2298}
+{0F1BE7F8-45CA-11D2-831F-00A0244D2298}
+{105C7D20-FE19-11D2-ACB6-0080C877D9B9}
+{1141B704-053E-11D0-9DF0-00C04FD7BF41}
+{130D7743-5F5A-11D1-B676-00A0C9697233}
+{167701E3-FDCF-11D0-A48E-006097C549FF}
+{16E349E0-702C-11CF-A3A9-00A0C9034920}
+{172BDDF8-CEEA-11D1-8B05-00600806D9B6}
+{183C259A-0480-11d1-87EA-00C04FC29D46}
+{1D2B4F40-1F10-11D1-9E88-00C04FDCAB92}
+{1DF67C43-AEAA-11CF-BA92-444553540000}
+{1fb464c8-09bb-4017-a2f5-eb742f04392f}
+{210DA8A2-7445-11D1-91F7-006097DF5BD4}
+{2179C5D3-EBFF-11CF-B6FD-00AA00B4E220}
+{22D6F312-B0F6-11D0-94AB-0080C74C7E95}
+{238f6f83-b8b4-11cf-8771-00a024541ee3}
+{275E2FE0-7486-11D0-89D6-00A0C90C9B67}
+{29c13b62-b9f7-4cd3-8cef-0a58a1a99441}
+{2BD0D2F2-52EC-11D1-8C69-0E16BC000000}
+{3050f4d8-98b5-11cf-BB82-00AA00BDCE0B}
+{3050F5C8-98B5-11CF-BB82-00AA00BDCE0B}
+{3050F67D-98B5-11CF-BB82-00AA00BDCE0B}
+{32DA2B15-CFED-11D1-B747-00C04FC2B085}
+{43F8F289-7A20-11D0-8F06-00C04FC295E1}
+{457A23DF-6F2A-4684-91D0-317FB768D87C}
+{46646B43-EA16-11CF-870C-00201801DDD6}
+{49C47CE5-9BA4-11D0-8212-00C04FC32C45}
+{4B106874-DD36-11D0-8B44-00A024DD9EFF}
+{4DDB6D36-3BC1-11D2-86F2-006008B0E5D2}
+{4FA211A0-FD53-11D2-ACB6-0080C877D9B9}
+{50E5E3D1-C07E-11D0-B9FD-00A0249F6B00}
+{58DA8D8A-9D6A-101B-AFC0-4210102A8DA7}
+{58DA8D8F-9D6A-101B-AFC0-4210102A8DA7}
+{59CCB4A0-727D-11CF-AC36-00AA00A47DD2}
+{5A20858B-000D-11D0-8C01-444553540000}
+{5B84FC03-E639-11CF-B8A0-00A024186BF1}
+{6059B947-EC52-11CF-B509-00A024488F73}
+{62CEC9E0-3811-4C36-A94E-4F7565DCD23F}
+{69DEAF94-AF66-11D3-BEC0-00105AA9B6AE}
+{6B7E638F-850A-101B-AFC0-4210102A8DA7}
+{6D940280-9F11-11CE-83FD-02608C3EC08A}
+{6D940285-9F11-11CE-83FD-02608C3EC08A}
+{6E449683-C509-11CF-AAFA-00AA00B6015C}
+{73822330-B759-11D0-9E3D-00A0C911C819}
+{7823A620-9DD9-11CF-A662-00AA00C066D2}
+{78A9B22E-E0F4-11D0-B5DA-00C0F00AD7F8}
+{791fa017-2de3-492e-acc5-53c67a2b94d0}
+{7B9379D2-E1E4-11D0-8444-00401C6075AA}
+{80CB7887-20DE-11D2-8D5C-00C04FC29D45}
+{812AE312-8B8E-11CF-93C8-00AA00C08FDF}
+{81361143-FAF9-11D3-B0D3-00C04F612FF1}
+{81361146-FAF9-11D3-B0D3-00C04F612FF1}
+{81361149-FAF9-11D3-B0D3-00C04F612FF1}
+{8136114B-FAF9-11D3-B0D3-00C04F612FF1}
+{8136114D-FAF9-11D3-B0D3-00C04F612FF1}
+{8136114F-FAF9-11D3-B0D3-00C04F612FF1}
+{81361152-FAF9-11D3-B0D3-00C04F612FF1}
+{81361155-FAF9-11D3-B0D3-00C04F612FF1}
+{84926CA0-2941-101C-816F-0E6013114B7F}
+{8856F961-340A-11D0-A96B-00C04FD705A2}
+{886E7BF0-C867-11CF-B1AE-00AA00A3F2C3}
+{8BD21D50-EC42-11CE-9E0D-00AA006002F3}
+{8F2C1D40-C3CD-11D1-A08F-006097BD9970}
+{8FE7E181-BB96-11D2-A1CB-00609778EA66}
+{9088E688-063A-4806-A3DB-6522712FC061}
+{913C89C0-492C-11D4-911A-009027370674}
+{922C97A8-9E2D-4D30-AC34-07646D743E97}
+{928626A3-6B98-11CF-90B4-00AA00A4011F}
+{931a8c29-3ea9-494d-91e7-22e9a9247687}
+{9590092D-8811-11CF-8075-444553540000}
+{96B9602E-BD20-11D2-AC89-00C04F7989D6}
+{970C7E08-05A7-11D0-89AA-00A0C9054129}
+{99B42120-6EC7-11CF-A6C7-00AA00A47DD2}
+{9AADA567-04E0-11D4-9148-00C04F610D24}
+{9B2719DD-B696-11D0-A489-00C04FD91AC0}
+{A123D693-256A-11d0-9DFE-00C04FD7BF41}
+{A3F23606-0729-42B2-9004-57D52E30546A}
+{AAD093B2-F9CA-11CF-9C85-0000C09300C4}
+{ADB880A6-D8FF-11CF-9377-00AA003B7A11}
+{AE1C01E3-0283-11d3-9B3F-00C04F8EF466}
+{AE24FDAE-03C6-11D1-8B76-0080C744F389}
+{AED6483E-3304-11D2-86F1-006008B0E5D2}
+{AED6483F-3304-11D2-86F1-006008B0E5D2}
+{B283E214-2CB3-11D0-ADA6-00400520799C}
+{B2F87B84-26A6-11D0-B50A-00A024488F73}
+{B3F8F451-788A-11D0-89D9-00A0C90C9B67}
+{B75FEF72-0C54-11D2-B14E-00C04FB9358B}
+{B9D029D3-CDE3-11CF-855E-00A0C908FAF9}
+{CA8A9780-280D-11CF-A24D-444553540000}
+{CEBC955E-58AF-11D2-A30A-00A0C903492B}
+{CFCDAA03-8BE4-11cf-B84B-0020AFBBCCFA}
+{D27CDB6E-AE6D-11CF-96B8-444553540000}
+{D2F97240-C9F4-11CF-BFC4-00A0C90C2BDB}
+{D306C3B7-2AD5-11D1-9E9A-00805F200005}
+{D32C3BAD-5213-49BD-A7D5-E6DE6C0D8249}
+{E1A6B8A0-3603-101C-AC6E-040224009C02}
+{E5DF9D10-3B52-11D1-83E8-00A0C90DC849}
+{E87A6788-1D0F-4444-8898-1D25829B6755}
+{EFBD14F0-6BFB-11CF-9177-00805F8813FF}
+{F4894F79-8121-4DF2-B79E-ED73FA8ADE6F}
+{F550114A-3C91-4C0B-9407-85D3F0B47989}
+{F72A7B0E-0DD8-11D1-BD6E-00AA00B92AF1}
+{FE9E48A4-A014-11D1-855C-00A0C944138C}
+</code></pre>
+<p>ProgId</p>
+<pre><code>ADODB.Stream.2.8
+MPlayer
+AVIFile
+MIDFile
+OWC.Spreadsheet.9
+MPlayer
+AMOVIE.ActiveMovieControl.2
+Microsoft.ActiveXPlugin.1
+COMCTL.TreeCtrl.1
+COMCTL.ProgCtrl.1
+SafeWia.Script.1
+IPConfMSP.IPConfMSP.1
+H323MSP.H323MSP.1
+WINMGMTS.1
+LM.LMReader.1
+ThumbCtl.ThumbCtl.1
+NSPlay.NSPlayCtl.1
+MediaPlayer.MediaPlayer.1
+htafile
+Scripting.Encoder
+CEnroll.CEnroll.1
+DShowPreview.VideoPreview.1
+MSP.MSP.2
+RegWizCtrl.RegWizCtrl.1
+COMCTL.ListViewCtrl.1
+COMCTL.ImageListCtrl.1
+COMCTL.SBarCtrl.1
+ASControls.InstallEngineCtl.1
+Shell.Explorer.2
+Forms.OptionButton.1
+WebDesigner.Editor.Document.12.0
+SdpConferenceBlob.SdpConferenceBlob.1
+Internet.HHCtrl.1
+ScriptBridge.ScriptBridge.1
+termmgr.VideoRenderTerminal
+termmgr.MediaStreamingTerminal
+rmocx.RealPlayer G2 Control.1
+ShockwaveFlash.ShockwaveFlash.9
+WebViewFolderIcon.WebViewFolderIcon.1
+SharePointDesigner.Editor.Document.12.0
+TlntSvr.EnumTelnetClientsSvr.1
+</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-25T23:35:00+08:00">2006-12-25</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/12989"  rel="bookmark" >
+              <h2 class="card-title">及其罕见的VBS错误：</h2>
+            </a>
+            <p class="card-text"><p>居然第 0 行出错，寒～</p>
+<p><img alt="" src="/Blog/Attachment/620" /></p>
+<p>[内有附件]</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-25T18:04:00+08:00">2006-12-25</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/12978"  rel="bookmark" >
+              <h2 class="card-title">Live Writer标题栏不能粘贴</h2>
+            </a>
+            <p class="card-text"><p><img alt="" src="/Blog/Attachment/618" /></p>
+<p>可以看到， Paste 是灰色的，用 Ctrl+V 也没有用。解决方法是：用 Shift+Insert 来粘贴</p>
+<p>对应按键：</p>
+<p>Ctrl+X Shift+Del</p>
+<p>Ctrl+C Alt+Insert</p>
+<p>Ctrl+V Shift+Insert</p>
+<p>其中Shift+Del要小心，因为在 资源管理器 里 Shift+Del的意思是：不可恢复的删除</p>
+<p>[内有附件]</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-24T21:20:00+08:00">2006-12-24</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/12968"  rel="bookmark" >
+              <h2 class="card-title">Office 2007 密钥</h2>
+            </a>
+            <p class="card-text"><p>DBXYD-TF477-46YM4-W74MH-6YDQ8<br />
+W2JJW-4KYDP-2YMKW-FX36H-QYVD8</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-24T12:55:00+08:00">2006-12-24</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/12958"  rel="bookmark" >
+              <h2 class="card-title">推荐一个写HTML代码的工具</h2>
+            </a>
+            <p class="card-text"><p>试了下，觉得 Dreamweaver和FrontPage不爽的可以试试，功能十分强大。</p>
+<p><img alt="" src="/Blog/Attachment/615" /></p>
+<p>软件名称：Expression Web Free Trial<br />
+下载文件：WebDesigner.exe<br />
+文件大小：195.8 MB<br />
+版本：12.0.4518.1014<br />
+MD5：37ce020a0ade1f88192be7a837021166<br />
+介绍地址：<a href="http://www.microsoft.com/downloads/details.aspx?FamilyId=44FA7F93-7D57-4523-B0C9-2CE54397B732&amp;displaylang=en">http://www.microsoft.com/downloads/details.aspx?FamilyId=44FA7F93-7D57-4523-B0C9-2CE54397B732&amp;displaylang=en</a><br />
+直接下载：<a href="http://download.microsoft.com/download/9/2/e/92ed6d4e-8315-4db5-a954-a953e3be3f80/WebDesigner.exe">http://download.microsoft.com/download/9/2/e/92ed6d4e-8315-4db5-a954-a953e3be3f80/WebDesigner.exe</a><br />
+打包格式： exe[CAB SFX]<br />
+备注：需要<a href="http://www.microsoft.com/design/Expression-Web-Product-Key.aspx">注册一个</a><a href="http://www.microsoft.com/design/Expression-Web-Product-Key.aspx">product key</a> 试用</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-23T21:55:00+08:00">2006-12-23</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/600417"  rel="bookmark" >
+              <h2 class="card-title">[原创]Windows的11种快捷方式（2006-12-21修订版）</h2>
+            </a>
+            <p class="card-text"><p>&nbsp;<style type="text/css"></p>
+<!--
+div.Section1
+{}
+h3
+{margin-bottom:.0001pt;
+text-align:center;
+page-break-after:avoid;
+font-size:12.0pt;
+font-family:"Times New Roman"; margin-left:0in; margin-right:0in; margin-top:0in}
+span.SpellE
+{}
+h2
+{margin-bottom:.0001pt;
+page-break-after:avoid;
+font-size:12.0pt;
+font-family:"Times New Roman"; margin-left:0in; margin-right:0in; margin-top:0in}
+-->
+</style>
+<p>快捷方式，很多人的反映就是那个小箭头，其实Windows支持9种快捷方式。</p>
+<p>关于这个格式</p>
+<p><font size="4">1. *.lnk<br/>
+</font>这是微软的通用快捷方式，很多电脑初学者当年就是把一个500MB的游戏在桌面上的1k大小的快捷方式复制到软盘里，然后回家双击打开一看，发现Windows提示&ldquo;找不到路径&rdquo;云云。后来才明白这只是个快捷方式。</p>
+<p>在命令行里打开一个 lnk 文件： Rundll32.exe url.dll, FileProtocolHandler %L</p>
+<p>lnk 的二进制格式 <a href="http://www.vckbase.com/document/viewdoc/?id=1411">http://www.vckbase.com/document/viewdoc/?id=1411</a></p>
+<p>其实 .LNK根 Windows Shell&nbsp;的关系比较紧密，在 Windows Vista 里，很多 Shell&nbsp;对象都可以通过 .lnk 文件来打开，所以 lnk 文件里全部是用 CLSID 作为引导</p>
+<p>在wsh/vbs里操作 .lnk 文件 <a href="http://download.microsoft.com/download/winscript56/Install/5.6/W982KMe/CN/scd56chs.exe">script56.chm::/html/wsconManagingShortcuts.htm</a> <br/>
+　</p>
+<p><font size="4">2. *.url</font></p>
+<p>.url 文件的格式和 .inf 的相似：<br/>
+<a href="http://www.cyanwerks.com/file-format-url.html">http://www.cyanwerks.com/file-format-url.html</a></p>
+<p><font size="4">3. *.pif</font></p>
+<p>这是相当古老的一种格式了<br/>
+<a href="http://www.smsoft.ru/en/pifdoc.htm">http://www.smsoft.ru/en/pifdoc.htm</a></p>
+<p><font size="4">4. FolderShortcut</font></p>
+<p>这个是未公开的一种快捷方式吧，不要理解成 文件夹<strong>的</strong>快捷方式了，我记得是从Win98就开始用这个东东了，貌似是和 Active Desktop 技术一起出现的。国内的首次公开是在这个帖子 <a href="http://bbs.onegreen.net/TopicOther.asp?t=5&amp;BoardID=2&amp;id=1414">http://bbs.onegreen.net/TopicOther.asp?t=5&amp;BoardID=2&amp;id=1414</a>&nbsp;，最简单的 文件夹快捷方式 是把一个文件夹拖放到 开始菜单</p>
+<p><img alt="" src="/Blog/Attachment/549"/></p>
+<p>如下图：上面那个是直接拖放生成的 文件夹快捷方式，下面的是传统的 lnk 快捷方式。两者的明显不同是： 文件夹快捷方式 是可以在菜单里显示所指向目标文件夹的内容的。</p>
+<p><img alt="" src="/Blog/Attachment/550"/></p>
+<p><img alt="" src="/Blog/Attachment/551"/></p>
+<p>更为可喜的是，文件夹快捷方式没有小箭头！</p>
+<p><img alt="" src="/Blog/Attachment/552"/></p>
+<p>文件夹快捷方式的属性有点怪怪的呢</p>
+<p><img alt="" src="/Blog/Attachment/553"/></p>
+<p>手工建立 文件夹快捷方式 的方法：<br/>
+1. 在目标文件夹里建立一个 系统 隐藏 属性的 desktop.ini（cmd里 attrib +S +h desktop.ini），内容为：<br/>
+[.ShellClassInfo]<br/>
+CLSID2={0AFACED1-E828-11D1-9187-B532F1E9575D}<br/>
+Flags=2<br/>
+2. 保存，建立一个 一般的快捷方式，指向你的目标地址，名称为：target.lnk （必须是这个！）。<br/>
+3. 把该文件夹设为 只读 属性</p>
+<p>貌似文件夹快捷方式只能指向 文件夹 和 URL，不能指向文件。其实 文件夹快捷方式用在黑克攻防领域是相当的爽的，特别是结合 .lnk .url 的一些溢出，几乎是百发百中！（谁会想到，打开一个文件<strong>夹</strong>也会中病毒？）</p>
+<p><font size="4">5. HardLink</font></p>
+<p>NTFS的一大特性。在XP下可以通过 fsutil 建立（需要管理员权限）。</p>
+<p>C:\WINDOWS\system32&gt;fsutil hardlink create<br/>
+用法 : fsutil hardlink create &lt;新文件名&gt; &lt;现有文件名&gt;<br/>
+例如 : fsutil hardlink create c:\foo.txt c:\bar.txt</p>
+<p>HardLink有什么用呢？可以把<strong>一个</strong>文件，放到很多目录下，但是只占一个文件的空间，有点像那些 n 合 1 的光盘的原理。所以hardlink可以用来骗人啦，例如，我把我的一个2GB的GHOST镜像文件hardkink 1000次，那么我看这些所有文件的属性就是一个 2TB 啦，呵呵，其实我的硬盘没这么大。Hardlink 可以用来解决很多问题。比如说，系统里很多 dll 是重复的，我们就可以把一个 dll 做成很多 hardlink，这样可以大大的节省空间。需要注意的是，Hardlink 只实用于NTFS的分区，一个文件只能被Hardlink 1024ci ，而且只能在同一分区建立。</p>
+<p><font size="4">6. Junction Point </font></p>
+<p>相比于Hardlink，Junction Point 可以看作文件夹的硬连接吧，Vista里 Junction 已经被完全的符号连接取代了。</p>
+<p><font size="4">7. Reparse Point</font></p>
+<p>和Hardlink有点类似，不过是针对文件夹的，还是fsutil命令来管理</p>
+<p>C:\WINDOWS\system32&gt;fsutil reparsepoint<br/>
+---- 支持的 REPARSEPOINT 命令 ----</p>
+<p>query&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 查询重分析点<br/>
+delete&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 删除重分析点</p>
+<p>不过要建立的话，可以通过SysInternals的又一款作品&nbsp;<a href="http://www.sysinternals.com/files/junction.zip">http://www.sysinternals.com/files/junction.zip</a>&nbsp; 来建立</p>
+<p><font size="4">8. Symbolic Links</font></p>
+<p>符号连接允许你创建一个指针(pointer)，从目录的一个位置指向实际上位于别处的文件。NTFS并没有真正实现类似于UNIX系统中的符号连接，但通过重解析点，这种功能被模拟出来。实际上，一个符号连接就是一个重解析点，它将对一个文件的访问重定向到另一个文件。</p>
+<p><font size="4">9. Mount Point</font></p>
+<p>可以通过 mountvol 命令来管理。严格的说这已经不是快捷方式了，不过可以把一个储存媒体挂载到一个NTFS的文件夹下。</p>
+<p><font size="4">9. Shell Object</font></p>
+<p><font size="2">其实呢，&ldquo;字体&rdquo;文件夹就是一种典型的 Shell 对象。下载<a href="http://dormforce.net/Blog/Attachment/611">ShellExtView</a> ， <a href="http://dormforce.net/Blog/Attachment/612">ShellObjectEditor</a></font></p>
+<p><font size="4">10. Shell Command</font></p>
+<p>常见的有</p>
+<p>显示桌面.csf，内容为：<br/>
+[Shell] <br/>
+Command=2 <br/>
+IconFile=explorer.exe,3 <br/>
+[Taskbar] <br/>
+Command=ToggleDesktop </p>
+<p>改文件会DDE调用explorer来显示桌面</p>
+<p>查看频道.scf</p>
+<p>[Shell]<br/>
+Command=3<br/>
+IconFile=shdocvw.dll,-118</p>
+<p>[IE]<br/>
+Command=Channels</p>
+<p>explorer.scf</p>
+<p><br/>
+[Shell]<br/>
+Command=2<br/>
+IconFile=explorer.exe,1</p>
+<p>[Taskbar]<br/>
+Command=Explorer</p>
+<p>&nbsp;我总觉得 .scf 根 GNOME里的 .desktop 文件很相似呢，呵呵</p>
+<p>还有一种是复制文件的时候，拖放对象的一种特殊快捷方式，这类快捷方式都是 0 字节的文件，也是通过DDE调用的。例如：<br/>
+我的文档.mydocs<br/>
+ZIP压缩文件夹.ZFSendToTarget<br/>
+桌面.desklink<br/>
+邮件.mapmail<br/>
+</p>
+<p>Windows所支持的快捷方式基本上就这些了，快捷方式以极小的代价把一个文件在不同的位置展现了出来，给系统的使用带来了很大的方便，同时也带来了很多未知的安全隐患。如果有时间的话，下次继续，<a href="http://dormforce.net/blog/electronixtar">《快捷方式攻防战》</a></p>
+<p>[内有附件]</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:52:07+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/600416"  rel="bookmark" >
+              <h2 class="card-title">[原创]vbs/bat混合编程(2006-12-5修订版，支持参数传递)</h2>
+            </a>
+            <p class="card-text"><p>这个想法我思考了很久。<br/>
+<br/>
+巧妙利用 bat 和 vbs 的语法特征，让<font color="#ff0000">同一个</font>文件，被 cmd.exe 识别成批处理，让 wscrpt.exe 识别成 vbs，并且同时符合两者的语法，并且保证都没有错误，保证两者的高度兼容。经过一个通宵的努力，我实现了这种 bat/vbs 复合编程。<br/>
+<br/>
+<br/>
+一个 批处理&nbsp;&nbsp;.vbs 文件，在前面加一段代码（头），就变成了 .bat 批处理，注意，没有生成临时文件，不用修改任何原有代码。<br/>
+<br/>
+例子：保存下列代码为 test.bat，注意是批处理，但是这个批处理却成功的被 wsh 解析执行了！ </p>
+<blockquote class="code"><b class="smalltxt"><font size="2">CODE:</font></b>&nbsp;&nbsp;<a class="smalltxt" onclick="copycode(findobj('code0'));" href="http://www.cn-dos.net/forum/viewthread.php?tid=25333&amp;fpage=0&amp;highlight=&amp;page=1###"><font color="#003366" size="2">[Copy to clipboard]</font></a> <hr color="#dde3ec" size="1"/>
+<div id="code0" style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">:On Error Resume Next</div>
+<div style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">:Sub bat<br/>
+echo off &amp; cls<br/>
+echo Batching_codez_here_following_vbs_rules &amp; pause &gt;nul<br/>
+echo '&gt;nul &amp; start &quot;&quot; wscript //e:vbscript &quot;%~f0&quot; %*<br/>
+Exit Sub : End Sub</div>
+<div style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">MsgBox &quot;This is vbs&quot;<br/>
+for each i in wscript.arguments<br/>
+wscript.echo i<br/>
+next</div>
+<div style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Courier New">&nbsp;</div>
+</blockquote>
+<p>保存代码为 test.bat，可以看到 echo 出来的东西和 msgbox 出来的消息，呵呵<br/>
+<br/>
+以上代码只是一个示例，同时执行了 一段 批处理 和 vbs，没有生成临时文件。用了大量的 hack 技巧<br/>
+<br/>
+下面粗略解释下代码<br/>
+</p>
+<p>:On Error Resume Next </p>
+<p>cmd.exe 识别成一段注释<br/>
+wscript.exe 这样识别， : 在vbs语法里代表分行，然后 On Error Resume Next，也就是让WSH忽略一些错误</p>
+<p>echo '&gt;nul &amp; start &quot;&quot; wscript //e:vbscript &quot;%~f0&quot; %* <br/>
+<br/>
+cmd.exe 识别成：echo一个 '&nbsp; 到 空设备，也就是什么都不显示。&amp; 的意思是同时执行，那么同时执行了 start &quot;&quot; wscript //e:vbscript &quot;%~f0&quot; %*，也就是启动WSH，用VBS语法解析自身。<br/>
+<br/>
+这段代码的核心思想已经介绍完毕了。下面，为了让 批处理 以vbs调用其自身后，马上退出，我们需要 exit 或者 goto :eof，但是 goto call exit 在vbs又是一个关键词，所以我们只能用符合 vbs 语法的 exit sub，所以我们在第二句加一个<br/>
+:sub bat，作为注释 cmd.exe 跳过。然后在 6 句加一个 exit sub&nbsp;: end sub，让 批处理结束，exit 无论接什么参数都会使批处理退出的，同时又符合 vbs 的语法地借宿了一个 sub<br/>
+<br/>
+那个 echo off &amp; cls&nbsp;&nbsp;，批处理的意思就是相当于 @echo off ，但是 vbs 不认 @ 符号，所以改成 echo off &amp; cls ， vbs 可以解析为，调用一个叫 echo() 的函数，参数为 off &amp; cls ，也就是两个字符串 off 和 cls 相加 <br/>
+<br/>
+Well，接下来，你可以自由地在批处理中书写vbs脚本了，效率和真正的vbs一样高！<br/>
+<br/>
+这段代码的好处是：不用生成临时文件。其实用 echo 或者 more 或者 find 来生成临时vbs很浪费系统资源的，用我写的这段代码，就完全免去了这些麻烦。直接混合编程，以 start wscript -e:vbs &quot;%~f0&quot; 为界限，上面写 批处理，下面写 vbs，并行不悖！<br/>
+</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:52:06+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/600414"  rel="bookmark" >
+              <h2 class="card-title">CSS Filter: Light</h2>
+            </a>
+            <p class="card-text"><p>Added light FX to the picture on the left</p>
+<p>code:</p>
+<p>&nbsp;</p>
+<p>&lt;img<br/>
+style=&quot;filter:light();&quot;<br/>
+id=&quot;mypic&quot;<br/>
+src=&quot;C:\windows\web\wallpaper\bliss.bmp&quot;<br/>
+onload=&quot;javascript:this.filters.light.addCone(this.width/2,this.height/2,100,this.width/2,this.height/2,255,255,255,100,30)&quot;<br/>
+onmousemove=&quot;javascript:this.filters.light.moveLight(0,event.offsetX,event.offsetY,200,1)&quot; <br/>
+/&gt;</p>
+<p>&nbsp;</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:50:05+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/600413"  rel="bookmark" >
+              <h2 class="card-title">[原创]XP关机对话框的变灰dHTML特效</h2>
+            </a>
+            <p class="card-text"><p>&lt;!-- This element has the filter applied. --&gt;<br/>
+<br/>
+&lt;DIV ID=&quot;oTrans&quot; STYLE=&quot;position:absolute; top:0px; left:0px; width:100%; height:100%;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; background-image=url(file:///C:/WINDOWS/Web/Wallpaper/Bliss.bmp);<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; filter:progid:DXImageTransform.Microsoft.Fade(duration=2);&quot;&gt;<br/>
+&lt;BUTTON onclick=&quot;fnToggle()&quot;&gt;Logout&lt;/BUTTON&gt;<br/>
+<br/>
+&lt;DIV ID=&quot;oTrans1&quot; STYLE=&quot;position:absolute; top:0px; left:0px; width:100%; height:100%; visibility:hidden;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; background-image=url(file:///C:/WINDOWS/Web/Wallpaper/Bliss.bmp);<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);&quot;&gt;<br/>
+&lt;BUTTON onclick=&quot;fnToggle()&quot;&gt;Cancel&lt;/BUTTON&gt;<br/>
+&lt;/DIV&gt;<br/>
+<br/>
+&lt;/DIV&gt;<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+&lt;SCRIPT&gt;<br/>
+var bTranState = 0;<br/>
+<br/>
+<br/>
+function fnToggle()<br/>
+{<br/>
+&nbsp; &nbsp; oTrans.filters[0].Apply();<br/>
+&nbsp; &nbsp; <br/>
+&nbsp; &nbsp; if (bTranState==0)<br/>
+&nbsp; &nbsp; {<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; bTranState = 1;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; oTrans1.style.visibility=&quot;visible&quot;;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; }<br/>
+&nbsp; &nbsp; else<br/>
+&nbsp; &nbsp; {<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; oTrans.filters[0].stop();<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; bTranState = 0;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; oTrans1.style.visibility=&quot;hidden&quot;;<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; }<br/>
+<br/>
+&nbsp; &nbsp; oTrans.filters[0].Play();<br/>
+}<br/>
+<br/>
+&lt;/SCRIPT&gt;<br/>
+</p>
+<p>&nbsp;</p>
+<p>初次写 js 特效，有点不精简，呵呵。</p>
+<p>最开始是做一个 div ，直接用 fade 和 baseimage 两个虑境，但是由于某些原因，fade虑境被省略了，于是做两个 img 呵呵。</p>
+<p>我最开始是发布在51js上的，搜索了下，网上已经有人乱转代码了。国内软件行业就这种抄过去抄过来的混乱。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:50:04+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/600412"  rel="bookmark" >
+              <h2 class="card-title">[原创]dHTML特效 alpha虑境之柔和边缘效果</h2>
+            </a>
+            <p class="card-text"><p><marquee onmouseover="this.stop()" style="OVERFLOW-Y: scroll; FILTER: alpha(Style=1,StartX=0,StartY=80,FinishX=0,FinishY=100)
+alpha(Style=1,StartX=0,StartY=20,FinishX=0,FinishY=0)" onmouseout="this.start()" direction="up" height="200">asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+asdasd<br/><br />
+</marquee></p>
+<p>&nbsp;</p>
+<p>&lt;marquee<br/>
+height=&quot;200px&quot;<br/>
+direction=&quot;up&quot;<br/>
+onmouseover=&quot;this.stop()&quot;<br/>
+onmouseout=&quot;this.start()&quot;<br/>
+style=&quot;<br/>
+overflow-y:scroll;<br/>
+filter:<br/>
+alpha(Style=1,StartX=0,StartY=80,FinishX=0,FinishY=100)<br/>
+alpha(Style=1,StartX=0,StartY=20,FinishX=0,FinishY=0)<br/>
+;<br/>
+&quot;&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+asdasd&lt;br /&gt;<br/>
+&lt;/marquee&gt;<br/>
+</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:50:03+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/600411"  rel="bookmark" >
+              <h2 class="card-title">vbs 调用 Win32 API</h2>
+            </a>
+            <p class="card-text"><p>Option Explicit<br/>
+Dim UserWrap <br/>
+Set UserWrap = CreateObject(&quot;DynamicWrapper&quot;)</p>
+<p>' Call MessageBoxA(), first register the API function<br/>
+UserWrap.Register &quot;USER32.DLL&quot;, &quot;MessageBoxA&quot;, &quot;I=HsSu&quot;, _<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;f=s&quot;, &quot;R=l&quot;<br/>
+' now call the function<br/>
+UserWrap.MessageBoxA Null, &quot;MessageBox (ANSI)&quot;, _<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;From DynaWrap Object&quot;, 3</p>
+<p>&nbsp;Readme.txt</p>
+<p>This is the dynacall.dll that I described as &quot;bringing back the Declare<br/>
+statement&quot;&nbsp; in VBScript. Basically it will allow you to call functions<br/>
+in other dlls...like any of the win32 api functions. This will be my<br/>
+only distribution.</p>
+<p>Many thanks to Ton Plooy and Jeff Stong who wrote the code and published<br/>
+it in WDJ. And more thanks to William Epp for getting it to work with my<br/>
+sample script ccupd.vbs using the GETPROFILESTRING function. However I<br/>
+have another function in the sample that still doesn't work<br/>
+GETPROFILESECTION. This is a work in progress but I think it is a handy<br/>
+little feature. Hopefully by this distributions it will get where it<br/>
+needs to be. Clarence and Ian have offered to post it on their sites so<br/>
+further updates can be had at either WSH site. (anyone else call this<br/>
+thing woosh? Hopefully it will perform this way).</p>
+<p>Basically you declare functions and other DLLS like this:</p>
+<p>'&nbsp;&nbsp; Create the wrapper object for dynamic DLL function calling<br/>
+Dim UserWrap <br/>
+Set UserWrap = CreateObject(&quot;DynamicWrapper&quot;)<br/>
+'&nbsp;&nbsp; GetProcAddress for GetPrivateProfileStringA()<br/>
+UserWrap.Register &quot;kernel32.DLL&quot;, &quot;GetPrivateProfileString&quot;, &quot;i=ssssls&quot;,<br/>
+&quot;f=s&quot;, &quot;r=l&quot;</p>
+<p><br/>
+The input parameters are:</p>
+<p>i=describes the number and data type of the functions parameters</p>
+<p>f=type of call _stdcall or _cdecl. So it can work with both MS C++ and<br/>
+Borland C++. Default to _stdcall. If that doesn't work use _cdecl. If<br/>
+that doesn't work good luck!</p>
+<p>r=return data type.</p>
+<p><br/>
+Data types are:</p>
+<p>const ARGTYPEINFO ArgInfo[] = <br/>
+{<br/>
+{'a', sizeof(IDispatch*),&nbsp;&nbsp;&nbsp; VT_DISPATCH}, // a&nbsp;&nbsp; IDispatch*<br/>
+{'c', sizeof(unsigned char), VT_I4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // c&nbsp;&nbsp; signed char&nbsp; <br/>
+{'d', sizeof(double),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_R8},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // d&nbsp;&nbsp; 8 byte real <br/>
+{'f', sizeof(float),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_R4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // f&nbsp;&nbsp; 4 byte real <br/>
+{'k', sizeof(IUnknown*),&nbsp;&nbsp;&nbsp;&nbsp; VT_UNKNOWN},&nbsp; // k&nbsp;&nbsp; IUnknown* <br/>
+{'h', sizeof(long),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_I4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // h&nbsp;&nbsp; HANDLE <br/>
+{'l', sizeof(long),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_I4},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // l&nbsp;&nbsp; long <br/>
+{'p', sizeof(void*),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_PTR},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // p&nbsp;&nbsp; pointer <br/>
+{'s', sizeof(BSTR),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_LPSTR},&nbsp;&nbsp;&nbsp; // s&nbsp;&nbsp; string <br/>
+{'t', sizeof(short),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_I2},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // t&nbsp;&nbsp; short <br/>
+{'u', sizeof(UINT),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_UINT},&nbsp;&nbsp;&nbsp;&nbsp; // u&nbsp;&nbsp; unsigned int <br/>
+{'w', sizeof(BSTR),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VT_LPWSTR},&nbsp;&nbsp; // w&nbsp;&nbsp; wide string <br/>
+}</p>
+<p>William Epp added anr 'r' for VT_BYREF (pass by reference)but is for<br/>
+strings only. This made the GETPROFILESTRING function to work. But it<br/>
+didn't work for the GETPROFILESECTION. If anyone gets it to work please<br/>
+let me know.</p>
+<p><br/>
+Attachments:</p>
+<p>stong.zip - original download from WDJ<br/>
+DynaWrap.zip - the modified code, the DLL with modifications.<br/>
+feature.htm - the feature article for this code by Jeff Stong. Only<br/>
+thing I could find on WDJ. I couldn't find Ton's article.</p>
+<p><a href="http://cwashington.netreach.net/site/downloads.html">http://cwashington.netreach.net/site/downloads.html</a></p>
+<p><a href="http://www.mvps.org/scripting/">http://www.mvps.org/scripting/</a></p>
+<p>[内有附件]</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:50:02+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/cnblogs/600410"  rel="bookmark" >
+              <h2 class="card-title">WinNT Namespace 与 ext3 结构</h2>
+            </a>
+            <p class="card-text"><p>Linux的 ext3 文件系统结构是 一个 / 根，然后衍生出整个PC的文件、设备、一切。 其实呢，WinNT 也是这样设计的，只是没有暴露给用户罢了。说白了， C:\ D:\ 等只是一个符号连接。如图：用了反汇编高手WQXNETQIQI推荐的工具，Sysinternals 的大作：WinObj</p>
+<p><img alt="" src="http://dormforce.net/Blog/Attachment/610"/></p>
+<p>&nbsp;在 cmd 命令行里，我们可以通过<br/>
+tree \\?\CdRom0<br/>
+来查看机器上第一个光驱的 目录结构，也可以通过<br/>
+type \\?\GLOBALROOT\Device\CdRom0\autorun.inf<br/>
+来读取 第一个光驱根目录下 autorun.ini 的内容。</p>
+<p>是不是和 Linux 的 cat /media/cdrom 有点相似呢？</p>
+<p>再看看一个WinNT NTFS的的命令：<br/>
+C:\&gt;mountvol<br/>
+创建、删除或列出卷装载点。<br/>
+MOUNTVOL [drive:]path VolumeName<br/>
+MOUNTVOL [drive:]path /D<br/>
+MOUNTVOL [drive:]path /L</p>
+<p>&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a0-85e1-11db-9bf6-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a1-85e1-11db-9bf6-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; D:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{d1dd98a2-85e1-11db-9bf6-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; E:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{aa4a8921-f599-11da-9600-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; F:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{b2938600-f565-11da-a449-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; G:\<br/>
+&nbsp;&nbsp;&nbsp; \\?\Volume{aa4a8920-f599-11da-9600-806d6172696f}\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A:\</p>
+<p>输入 <br/>
+C:\&gt;dir \\?\Volume{d1dd98a0-85e1-11db-9bf6-806d6172696f}\Windows<br/>
+就相当于<br/>
+dir %WinDir% 了。</p>
+<p>输入<br/>
+type \\?\GLOBALROOT\Device\HardDiskVolume1\boot.ini<br/>
+就相当于<br/>
+type C:\Boot.ini</p>
+<p>看来Windows 也有一个类似于 ext3 的文件系统啊。加上 Windows Shell Namespace，应该比 ext3 丰富了吧。</p>
+<p>粗略的估计，用命令行可以查看一些Win32的 NamedPipe 和 内存、TCP 连接的情况。由于本人才疏学浅，不知道从哪里入手，不过总体感觉是：Windows&nbsp; 到底还是MS几亿美金打造的OS，还是有其深刻内涵的。从这点看来，Linux又显得原始了点。</p>
+<p>[内有附件]</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-22T05:50:01+08:00">2006-12-22</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/12748"  rel="bookmark" >
+              <h2 class="card-title">整个Web是怎么架构的</h2>
+            </a>
+            <p class="card-text"><p><img alt="" src="http://www.w3.org/2004/10/RecsFigure-Smaller.png" /></p>
+<p>看了下，烂得可以。一大堆垃圾技术，纯体力活，鉴定完毕。（没错，我就是传说中的大陆愤青）</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-21T21:43:00+08:00">2006-12-21</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/12682"  rel="bookmark" >
+              <h2 class="card-title">教育网代理～～～</h2>
+            </a>
+            <p class="card-text"><p>发现了传说中   <a href="http://www.edn.cn">edn.cn</a> ，呵呵，速度还可以，代理使用方法：在网址后加一个 .edn.cn。比如说： <a href="http://www.google.com.edn.cn">www.google.com.edn.cn</a>。其实这个地址跳转到了：</p>
+<p><a href="http://www2.edn.cn/cache/http/index.php?q=www.google.com">http://www2.edn.cn/cache/http/index.php?q=www.google.com</a></p>
+<p>收费的VPN代理列表：</p>
+<p><a href="http://www.vip.edu.cn/lnssetting/lns.txt">http://www.vip.edu.cn/lnssetting/lns.txt</a></p>
+<p>最近尝试了各种代理软件，ProxyHunter，ProxyFox，ProxyFinder，ProxyThrone，ProxyChecker，ProxySuperMan，ProxySpy，ProxyTiger，TOR，Proxy Switcher，qqProxy，aiProxy，Charon，各种VPN代理，甚至无介，自由闷等，都觉得十分不爽，看来还是要自己开发软件啊</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-18T23:14:00+08:00">2006-12-18</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/12509"  rel="bookmark" >
+              <h2 class="card-title">WinNT Namespace 与 ext3 结构</h2>
+            </a>
+            <p class="card-text"><p>Linux的 ext3 文件系统结构是 一个 / 根，然后衍生出整个PC的文件、设备、一切。 其实呢，WinNT 也是这样设计的，只是没有暴露给用户罢了。说白了， C:\ D:\ 等只是一个符号连接。如图：用了反汇编高手WQXNETQIQI推荐的工具，Sysinternals 的大作：WinObj</p>
+<p><img alt="" src="/Blog/Attachment/610" /></p>
+<p>在 cmd 命令行里，我们可以通过<br />
+tree \\?\CdRom0<br />
+来查看机器上第一个光驱的 目录结构，也可以通过<br />
+type \\?\GLOBALROOT\Device\CdRom0\autorun.inf<br />
+来读取 第一个光驱根目录下 autorun.ini 的内容。</p>
+<p>是不是和 Linux 的 cat /media/cdrom 有点相似呢？</p>
+<p>再看看一个WinNT NTFS的的命令：<br />
+C:&gt;mountvol<br />
+创建、删除或列出卷装载点。<br />
+MOUNTVOL [drive:]path VolumeName<br />
+MOUNTVOL [drive:]path /D<br />
+MOUNTVOL [drive:]path /L</p>
+<pre><code>
+    \\\?\Volume{d1dd98a0-85e1-11db-9bf6-806d6172696f}\
+        C:\
+    \\\?\Volume{d1dd98a1-85e1-11db-9bf6-806d6172696f}\
+        D:\
+    \\\?\Volume{d1dd98a2-85e1-11db-9bf6-806d6172696f}\
+        E:\
+    \\\?\Volume{aa4a8921-f599-11da-9600-806d6172696f}\
+        F:\
+    \\\?\Volume{b2938600-f565-11da-a449-806d6172696f}\
+        G:\
+    \\\?\Volume{aa4a8920-f599-11da-9600-806d6172696f}\
+        A:\
+</code></pre>
+<p>输入<br />
+<code>C:\&gt;dir \\\?\Volume{d1dd98a0-85e1-11db-9bf6-806d6172696f}\Windows</code><br />
+就相当于<br />
+dir %WinDir% 了。</p>
+<p>输入<br />
+<code>type \\\?\GLOBALROOT\Device\HardDiskVolume1\boot.ini</code><br />
+就相当于<br />
+type C:\Boot.ini</p>
+<p>看来Windows 也有一个类似于 ext3 的文件系统啊。加上 Windows Shell Namespace，应该比 ext3 丰富了吧。</p>
+<p>粗略的估计，用命令行可以查看一些Win32的 NamedPipe 和 内存、TCP 连接的情况。由于本人才疏学浅，不知道从哪里入手，不过总体感觉是：Windows  到底还是MS几亿美金打造的OS，还是有其深刻内涵的。从这点看来，Linux又显得原始了点。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-17T14:19:00+08:00">2006-12-17</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/12508"  rel="bookmark" >
+              <h2 class="card-title">[原]vbs 调用 Win32 API</h2>
+            </a>
+            <p class="card-text"><pre><code>Option Explicit
+Dim UserWrap
+Set UserWrap = CreateObject(&quot;DynamicWrapper&quot;)
+
+' Call MessageBoxA(), first register the API function
+UserWrap.Register &quot;USER32.DLL&quot;, &quot;MessageBoxA&quot;, &quot;I=HsSu&quot;, _
+                 &quot;f=s&quot;, &quot;R=l&quot;
+' now call the function
+UserWrap.MessageBoxA Null, &quot;MessageBox (ANSI)&quot;, _
+        &quot;From DynaWrap Object&quot;, 3
+
+ Readme.txt
+</code></pre>
+<p>This is the dynacall.dll that I described as "bringing back the Declare<br />
+statement"  in VBScript. Basically it will allow you to call functions<br />
+in other dlls...like any of the win32 api functions. This will be my<br />
+only distribution.</p>
+<p>Many thanks to Ton Plooy and Jeff Stong who wrote the code and published<br />
+it in WDJ. And more thanks to William Epp for getting it to work with my<br />
+sample script ccupd.vbs using the GETPROFILESTRING function. However I<br />
+have another function in the sample that still doesn't work<br />
+GETPROFILESECTION. This is a work in progress but I think it is a handy<br />
+little feature. Hopefully by this distributions it will get where it<br />
+needs to be. Clarence and Ian have offered to post it on their sites so<br />
+further updates can be had at either WSH site. (anyone else call this<br />
+thing woosh? Hopefully it will perform this way).</p>
+<p>Basically you declare functions and other DLLS like this:</p>
+<p>'   Create the wrapper object for dynamic DLL function calling<br />
+Dim UserWrap<br />
+Set UserWrap = CreateObject("DynamicWrapper")<br />
+'   GetProcAddress for GetPrivateProfileStringA()<br />
+UserWrap.Register "kernel32.DLL", "GetPrivateProfileString", "i=ssssls",<br />
+"f=s", "r=l"</p>
+<p>The input parameters are:</p>
+<p>i=describes the number and data type of the functions parameters</p>
+<p>f=type of call <code>_stdcall</code> or <code>_cdecl</code>. So it can work with both MS C++ and<br />
+Borland C++. Default to <code>_stdcall</code>. If that doesn't work use <code>_cdecl</code>. If<br />
+that doesn't work good luck!</p>
+<p>r=return data type.</p>
+<p>Data types are:</p>
+<pre><code>const ARGTYPEINFO ArgInfo[] =
+{
+{'a', sizeof(IDispatch*),    VT_DISPATCH}, // a   IDispatch*
+{'c', sizeof(unsigned char), VT_I4},       // c   signed char
+{'d', sizeof(double),        VT_R8},       // d   8 byte real
+{'f', sizeof(float),         VT_R4},       // f   4 byte real
+{'k', sizeof(IUnknown*),     VT_UNKNOWN},  // k   IUnknown*
+{'h', sizeof(long),          VT_I4},       // h   HANDLE
+{'l', sizeof(long),          VT_I4},       // l   long
+{'p', sizeof(void*),         VT_PTR},      // p   pointer
+{'s', sizeof(BSTR),          VT_LPSTR},    // s   string
+{'t', sizeof(short),         VT_I2},       // t   short
+{'u', sizeof(UINT),          VT_UINT},     // u   unsigned int
+{'w', sizeof(BSTR),          VT_LPWSTR},   // w   wide string
+}
+</code></pre>
+<p>William Epp added anr 'r' for VT_BYREF (pass by reference)but is for<br />
+strings only. This made the GETPROFILESTRING function to work. But it<br />
+didn't work for the GETPROFILESECTION. If anyone gets it to work please<br />
+let me know.</p>
+<p>Attachments:</p>
+<p>stong.zip - original download from WDJ<br />
+DynaWrap.zip - the modified code, the DLL with modifications.<br />
+feature.htm - the feature article for this code by Jeff Stong. Only<br />
+thing I could find on WDJ. I couldn't find Ton's article.</p>
+<p><a href="http://cwashington.netreach.net/site/downloads.html">http://cwashington.netreach.net/site/downloads.html</a></p>
+<p><a href="http://www.mvps.org/scripting/">http://www.mvps.org/scripting/</a></p>
+<p>[内有附件]</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-17T13:57:00+08:00">2006-12-17</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/12228"  rel="bookmark" >
+              <h2 class="card-title">Ubuntu下 Win+R 起动 终端</h2>
+            </a>
+            <p class="card-text"><p>1. Alt+F2, run command:<br />
+    gconf-editor<br />
+2. Goto key: '/apps/metacity/global_keybindings', set 'run_command_1' value to '<super>R'<br />
+3. Goto key: '/apps/metacity/keybinding_commands', set 'command_1' value to 'gnome-terminal'<br />
+4. Now close the editor and press Win+R, see what happens. HTH</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-09T13:51:00+08:00">2006-12-09</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/12210"  rel="bookmark" >
+              <h2 class="card-title">Ubuntu reborn</h2>
+            </a>
+            <p class="card-text"><p>Yes, my original Ubuntu crashed when apt-get autoclean, and I tried Hiweed. Hiweed was quite nice but not so nice as Ubuntu, Kubuntu looks god, but I trred 8 times to install it via LiveCD, harddisk, CD-ROM, and failed everytime when partitioning. At last I went back to Ubunt 6.10. Most people chose to switch to FC6 or SUSE, and returned to Ubuntu not long after. Really ubuntu is suitable for desktop computing.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-09T00:01:00+08:00">2006-12-09</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/12024"  rel="bookmark" >
+              <h2 class="card-title">Hiweed教育网HTTP下载</h2>
+            </a>
+            <p class="card-text"><p>不知道hiweed作者怎么想的，这么大的iso也不弄一个BT之类的发布，所以好不容易找了一个教育网的HTTP下载</p>
+<p><a href="http://202.200.121.18/Linux/hiweed-desktop_1.0final.iso">http://202.200.121.18/Linux/hiweed-desktop_1.0final.iso</a></p>
+<p>西安理工大学的。好的，让我们来见识见识所谓的10分钟安装成功的 Hiweed</p>
+<p>国内的Linux发行版本还是很多的嘛，Dubuntu，MagicLinux，Hiweed</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-06T15:23:00+08:00">2006-12-06</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/12017"  rel="bookmark" >
+              <h2 class="card-title">Ubuntu坏了，怀念Linux</h2>
+            </a>
+            <p class="card-text"><p>执行了一个 sudo apt-get autormove，卸载了 328MB 的包，然后就点不开Ubuntu了，郁闷。Recovery Mode也懒得进了，干脆装一个 Hiweed 试试。据说做的不错。</p>
+<p>怀念在 Linux 下上 Google 的速度。不知道为什么用 IE 上 Google 那么慢</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-05T17:52:00+08:00">2006-12-05</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/12016"  rel="bookmark" >
+              <h2 class="card-title">[原创]vbs/bat混合编程(2006-12-5修订版，支持参数传递)</h2>
+            </a>
+            <p class="card-text"><p>这个想法我思考了很久。</p>
+<p>巧妙利用 bat 和 vbs 的语法特征，让同一个文件，被 cmd.exe 识别成批处理，让 wscrpt.exe 识别成 vbs，并且同时符合两者的语法，并且保证都没有错误，保证两者的高度兼容。经过一个通宵的努力，我实现了这种 bat/vbs 复合编程。</p>
+<p>一个 批处理  .vbs 文件，在前面加一段代码（头），就变成了 .bat 批处理，注意，没有生成临时文件，不用修改任何原有代码。</p>
+<p>例子：保存下列代码为 test.bat，注意是批处理，但是这个批处理却成功的被 wsh 解析执行了！</p>
+<p><a href="http://www.cn-dos.net/forum/viewthread.php?tid=25333&amp;fpage=0&amp;highlight=&amp;page=1###">http://www.cn-dos.net/forum/viewthread.php?tid=25333&amp;fpage=0&amp;highlight=&amp;page=1###</a></p>
+<pre><code class="language-vbs">:On Error Resume Next
+
+:Sub bat
+  echo off &amp; cls
+  echo Batching_codez_here_following_vbs_rules &amp; pause &gt;nul
+  echo '&gt;nul &amp; start &quot;&quot; wscript //e:vbscript &quot;%~f0&quot; %*
+  Exit Sub : End Sub
+
+MsgBox &quot;This is vbs&quot;
+for each i in wscript.arguments
+  wscript.echo i
+next
+</code></pre>
+<p>保存代码为 test.bat，可以看到 echo 出来的东西和 msgbox 出来的消息，呵呵</p>
+<p>以上代码只是一个示例，同时执行了 一段 批处理 和 vbs，没有生成临时文件。用了大量的 hack 技巧</p>
+<p>下面粗略解释下代码</p>
+<p>:On Error Resume Next</p>
+<p>cmd.exe 识别成一段注释<br />
+wscript.exe 这样识别， : 在vbs语法里代表分行，然后 On Error Resume Next，也就是让WSH忽略一些错误</p>
+<p>echo '&gt;nul &amp; start "" wscript //e:vbscript "%~f0" %*</p>
+<p>cmd.exe 识别成：echo一个 '  到 空设备，也就是什么都不显示。&amp; 的意思是同时执行，那么同时执行了 <code>start "" wscript //e:vbscript "%~f0" %*</code>，也就是启动WSH，用VBS语法解析自身`</p>
+<p>这段代码的核心思想已经介绍完毕了。下面，为了让 批处理 以vbs调用其自身后，马上退出，我们需要 exit 或者 goto :eof，但是 goto call exit 在vbs又是一个关键词，所以我们只能用符合 vbs 语法的 exit sub，所以我们在第二句加一个<br />
+:sub bat，作为注释 cmd.exe 跳过。然后在 6 句加一个 exit sub : end sub，让 批处理结束，exit 无论接什么参数都会使批处理退出的，同时又符合 vbs 的语法地借宿了一个 sub</p>
+<p>那个 echo off &amp; cls  ，批处理的意思就是相当于 @echo off ，但是 vbs 不认 @ 符号，所以改成 echo off &amp; cls ， vbs 可以解析为，调用一个叫 echo() 的函数，参数为 off &amp; cls ，也就是两个字符串 off 和 cls 相加</p>
+<p>Well，接下来，你可以自由地在批处理中书写vbs脚本了，效率和真正的vbs一样高！</p>
+<p>这段代码的好处是：不用生成临时文件。其实用 echo 或者 more 或者 find 来生成临时vbs很浪费系统资源的，用我写的这段代码，就完全免去了这些麻烦。直接混合编程，以 start wscript -e:vbs "%~f0" 为界限，上面写 批处理，下面写 vbs，并行不悖！</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-05T16:55:00+08:00">2006-12-05</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/11995"  rel="bookmark" >
+              <h2 class="card-title">Linux 使用感受</h2>
+            </a>
+            <p class="card-text"><p>1. 先上内网，比如 202.115.16.166，再登录 DrCom，就可以同时上内网和外网了。呵呵。<br />
+2. 据说 eva QQ 可以看自定义表情、传文件。太厉害了，下载了一个，十分好用。就是KDE的程序在Ubuntu上有点卡。而且不能输入中文，Google得到答案： sudo apt-get install scim-qtimm<br />
+3. 接上条，我后来干脆直接卸载了 SCIM，装上了 fcitx<br />
+4. 给正在使用 XMMS 和 Beep Media Player 的兄弟一个建议，放弃吧，因为我们有更好的 audacious ！</p>
+<p>apt源：<br />
+deb http://static.audacious-media-player.org/ubuntu edgy main<br />
+deb-src http://static.audacious-media-player.org/ubuntu edgy main</p>
+<p>powered by <a href="http://performancing.com/firefox">performancing firefox</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-04T12:49:00+08:00">2006-12-04</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/11920"  rel="bookmark" >
+              <h2 class="card-title">我发现的Office彩蛋</h2>
+            </a>
+            <p class="card-text"><p>用 ResHacker 分析了好久，最后做一个命令给大家分享</p>
+<p>OK，戴上你的耳机，开始 / 运行</p>
+<p><code>about:&lt;bgsound src="res://C:\Program Files\Common Files\Microsoft Shared\VBA\VBA6\vbe6.dll/10/5432"&gt;</code></p>
+<p>回车</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-02T18:16:00+08:00">2006-12-02</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/11917"  rel="bookmark" >
+              <h2 class="card-title">XP记事本的又一个bug</h2>
+            </a>
+            <p class="card-text"><p>想必大家已经听说了记事本中输入 联通 保存，再打开就变成黑坨坨了吧？我又在国外看到另一个</p>
+<p>输入：</p>
+<p>4444 333 333 55555</p>
+<p>保存，再打开，呵呵，看到了什么？</p>
+<p>其实呢，任意字母，只要按 4个字母 3个字母 3个字母 5个字母排列，都会出现这个情况。所以呢，国外流传了另一种版本：</p>
+<p>Bush hid the facts</p>
+<p>看来留言伤人啊，呵呵</p>
+<p>留言继续传播，结果发现乱码像“中文”</p>
+<p>畂桳栠摩琠敨映捡獴</p>
+<p>于是有些自作聪明的老外就用 Google 翻译，得到的答案是</p>
+<p>Hour Morocco by showing video games seized mongoose</p>
+<p>是不是真的有点搞笑了呢？</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-02T17:22:00+08:00">2006-12-02</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/11901"  rel="bookmark" >
+              <h2 class="card-title">[Original]Proof of Concept: Bat & Vbs Hybrid Programming</h2>
+            </a>
+            <p class="card-text"><p>Proof of Concept: Bat &amp; Vbs Hybrid Programming</p>
+<p>By est, electroniXtar (from) GMail.com</p>
+<p>vbs.bat</p>
+<pre><code>:On Error Resume Next
+Sub bat
+echo Batching_codez_here_following_vbs_rules &amp; pause
+start wscript -e:vbs &quot;%~f0&quot;
+Exit Sub
+End Sub
+MsgBox &quot;This is vbs&quot;
+</code></pre>
+<p>Save the code above as vbs.bat, double click it, and you'll find a Batch echo:<br />
+Batching_codez_here_following_vbs_rules<br />
+and after press any key, you'll find a vbs prompt saying "This is vbs"<br />
+These little code costed me a whole night &gt;_&lt; So I think it's worth commentating.</p>
+<p>:On Error Resume Next<br />
+In batching, any character that follows the colon : will be neglected. So the first line means same as<br />
+rem On Error Resume Next<br />
+But this line fucking useful for the 6 lines bellow.</p>
+<p>start wscript -e:vbs "%~f0"<br />
+First I thought about<br />
+wscript //e:vbscript ~%f0"<br />
+And the vbscript interpreter could not recognize // even I "Resume Next". So after many trials and errors, finally I got this line both right for cmd.exe and wscript.exe. For cmd.exe, it launched the batch file itself, "%~f0". Instead of using %0, I choose %~f0. For example, you save this vbs.bat in directory D:\test, then you type these commands in cmd.exe<br />
+D:<br />
+cd test<br />
+vbs<br />
+Stop! Now, %0 is vbs , and for %~f0 is D:\test\vbs.bat ! wscript.exe will not start vbs.bat if you just run<br />
+wscript -e:vbs vbs<br />
+Another problem, if I save this vbs.bat in a directory like C:\Documents and Settings\Administrator\Desktop\vbs.bat, quotes are needed to make "Documents and Settings" complete string.</p>
+<p>So what may wscript.exe regard this line?<br />
+start wscript -e:vbs "%~f0"<br />
+"start" here possibly means a undefined Function() or Sub(), it's called with the variant named wscript, after this Function(), it's return value substract "e", "e" here is, maybe, another undefined variant like "wscript". The following : is a colon separating two statements in vbs grammar. The statement on the right of the colon : asks wscript.exe to call a function named "vbs" the the parameter "%~f0". After all, our dear wscript.exe is cheated, and cmd.exe is fooled!</p>
+<p>Now this little code is using wscript to call itself to run like a real vbs, but, on the other hand, cmd.exe is trying to understand every line of the fake bat file. I have to do something to stop that, using "exit", but in vbs exit is a keyword, you must exit Exit Do, Exit For, Exit Function, Exit Property, or Exit Sub. And to me, Exit Sub looks good, so in the second line of my code I wrote<br />
+Sub bat<br />
+cmd.exe may look for a external program called sub.exe, and normally this program does not exist, so go on, after<br />
+start wscript -e:vbs "%~f0"<br />
+we<br />
+Exit Sub<br />
+To cmd.exe, the batch quits. To wscript.exe, the Sub() exits. And after that<br />
+End Sub<br />
+cmd.exe is over now, so wscript will just regard an end of a usual Sub(), but as a bat file, it succesfully launched itself just like a vbs.</p>
+<p>You may ask: why must I do this after all? I just use a bat to "echo" out a genuine <code>*.vbs</code> file, and wscript that <code>*.vbs</code> and that's all? Truely this is the normal ways people call scripts between bat and vbs. But think about an extra large vbs? I have an experience here. I wrote a vbs that can spawn a 400KB file, the vbs itself is 600KB, and I tried to "echo" out the vbs in a 700KB bat file, what happened? My XP SP2 rush up to 1.5GB memroy cost for 1 minute, and failed to spawn that 400KB file saying: "vbs error in line (2,7): Not enough memory to create a string". If I use the little codez above, wscript will run quite well just like a real vbs. Another advantage of my code is, no tmp file needed for switching between two languages. simply write batch code above<br />
+<code>start wscript -e:vbs "%~f0"</code><br />
+and write vbs code below it!</p>
+<p>Hope everyone can find extra usage of my code. Thanks for taking time reading my article. If you have any better ideas, please let me know.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-12-01T23:51:00+08:00">2006-12-01</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/11877"  rel="bookmark" >
+              <h2 class="card-title">被Linux的乱码问题弄疯了</h2>
+            </a>
+            <p class="card-text"><p>Windows文件共享乱码</p>
+<p>FTP，乱码</p>
+<p>XMMS菜单乱码</p>
+<p>.m3u文件，乱码</p>
+<p>FireFox保存的文件名，显示为 %e4%bc%98%e7%a7%80%e7%8f%ad%e9%9b%86%e4%bd%93%e7%ad%94%e8%be%a9</p>
+<p>MSN聊天时，好友的英文字符，乱码</p>
+<p>给其他人发邮件，贴一个附件，别人用 FoxMail 打不开，内容为乱码</p>
+<p>传一个文件到Samba，英文名的zip，内含中文名文件，别人没法解压，因为中文名变成了含 ? 文件名的乱码，无法写入文件。</p>
+<p>天啊，拿什么来拯救你，我的Linux？</p>
+<p>powered by <a href="http://performancing.com/firefox">performancing firefox</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2006-11-30T20:41:00+08:00">2006-11-30</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+    </main>
+    <nav class="pagination-nav side-padding">
+<a href="/category/archive.40.html" class="pagination-newer">&lt; Newer Posts</a><a href="/category/archive.42.html" class="pagination-older">Older Posts &gt;</a>    </nav>
+
+
+  </body>
+</html>
