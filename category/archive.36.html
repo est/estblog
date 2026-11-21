@@ -477,6 +477,45 @@ shhgs在国外呆久了，解释中文都太深
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/624155"  rel="bookmark" >
+              <h2 class="card-title">[python]基于htmllib.HTMLParser的html2text</h2>
+            </a>
+            <p class="card-text"><pre><code>def html2text(strHtml):
+    &quot;&quot;&quot;处理html 4.01和部分xhtml 1.0转义字符&quot;&quot;&quot;
+    class SimpleParser(htmllib.HTMLParser):
+        def anchor_end(self):
+            if self.anchor:
+                self.anchor = None
+        def handle_image(self, src, alt, *args):
+            #self.handle_data(alt)  #可以重写为alt属性
+            pass                    #图片替换成空
+        def convert_entityref(self, name):
+            name2codepoint[&quot;nbsp&quot;]  = 0x0020
+            name2codepoint[&quot;apos&quot;]  = 0x0027
+            if name in name2codepoint and name&lt;256:
+                return chr(name2codepoint[name])
+            else:
+                return
+        def convert_charref(self, name):
+            return unichr(int(name)).encode(&quot;gb18030&quot;)
+
+    file = StringIO.StringIO()
+    p = SimpleParser(formatter.AbstractFormatter(formatter.DumbWriter(file)))
+    p.feed(strHtml)
+    p.close()
+    return file.getvalue()
+</code></pre>
+<p>贴在这里备用。相当与js DOM编程里的 innerText 功能。该死的<a href="http://www.crummy.com/software/BeautifulSoup/">BeautifulSoup</a>为啥不集成这个功能啊？</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-02-24T00:00:00+08:00">2008-02-24</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/624154"  rel="bookmark" >
               <h2 class="card-title">[Python]给urllib2添加自动Referer, Cookie处理功能</h2>
             </a>
@@ -514,45 +553,6 @@ if &quot;__main__&quot; == __name__:
     main()
 </code></pre>
 <p>参考了部分<a href="http://wwwsearch.sourceforge.net/ClientCookie/">ClientCookie</a>库的代码。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2008-02-24T00:00:00+08:00">2008-02-24</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/624155"  rel="bookmark" >
-              <h2 class="card-title">[python]基于htmllib.HTMLParser的html2text</h2>
-            </a>
-            <p class="card-text"><pre><code>def html2text(strHtml):
-    &quot;&quot;&quot;处理html 4.01和部分xhtml 1.0转义字符&quot;&quot;&quot;
-    class SimpleParser(htmllib.HTMLParser):
-        def anchor_end(self):
-            if self.anchor:
-                self.anchor = None
-        def handle_image(self, src, alt, *args):
-            #self.handle_data(alt)  #可以重写为alt属性
-            pass                    #图片替换成空
-        def convert_entityref(self, name):
-            name2codepoint[&quot;nbsp&quot;]  = 0x0020
-            name2codepoint[&quot;apos&quot;]  = 0x0027
-            if name in name2codepoint and name&lt;256:
-                return chr(name2codepoint[name])
-            else:
-                return
-        def convert_charref(self, name):
-            return unichr(int(name)).encode(&quot;gb18030&quot;)
-
-    file = StringIO.StringIO()
-    p = SimpleParser(formatter.AbstractFormatter(formatter.DumbWriter(file)))
-    p.feed(strHtml)
-    p.close()
-    return file.getvalue()
-</code></pre>
-<p>贴在这里备用。相当与js DOM编程里的 innerText 功能。该死的<a href="http://www.crummy.com/software/BeautifulSoup/">BeautifulSoup</a>为啥不集成这个功能啊？</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-02-24T00:00:00+08:00">2008-02-24</time></p>
 <p>archive</p>            </div>
@@ -1238,6 +1238,27 @@ Django is one of the premier web frameworks for Python, and is often compared to
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/nu/17"  rel="bookmark" >
+              <h2 class="card-title">练狙了练狙了</h2>
+            </a>
+            <p class="card-text"><p>中新网11月8日电 伊拉克前总统萨达姆7日呼吁伊拉克人实现和解，萨达姆两天前因反人类罪指控被高等法庭判处死刑。</p>
+<p>萨达姆在回顾耶稣和先知穆罕默德都曾原谅他们的敌人后称：“我呼吁伊拉克人、阿拉伯人、库尔德人原谅对方，进行和解和握手。”</p>
+<p>但他的这些话不太可能对武装团伙产生多大的影响力。越来越自信的武装团伙已发布了一系列宣传一位名为祖巴的狙击手的录像带，对他射杀美军士兵的战绩进行“庆祝”，并声称制造出了一种新型地对地导弹。</p>
+<p>当法官5日以萨达姆下令处决148名什叶派村民为由判处他绞刑时，萨达姆曾大闹法庭。但当他昨天因1988年安法尔案接受审判时，他和他的六名同案被告安静地听取了大屠杀幸存者的证词。伊拉克国家安全顾问鲁巴伊告诉《泰晤士报》：“我认为对萨达姆的判决将对武装分子活动起到重大的负面影响，这将打消他们重新掌权的希望，使他们更加接近和解。”</p>
+<p>什叶派主导的政府已起草了一项让一些原阿拉伯复兴社会党党员复职的法律。官员们还宣布55名警察已被控虐待犯人的罪名，逊尼派经常指责主要由什叶派组成的警察纵容对他们社区进行袭击的死亡小队。</p>
+<p>但这些姿态不太可能对伊武装分子活动起到很大的效果。主要由前萨达姆安全部门人员组成的伊拉克伊斯兰军对“巴格达狙击手祖巴的战绩”进行了庆祝。录像带显示，祖巴在一个墙上刻下他的射杀纪录，然后他放下狙击枪，写了一个赞扬真主的诗歌，呼吁伊拉克人与十字军和犹太人作战。</p>
+<p>时长28分钟的录像对一名自称是伊拉克伊斯兰军狙击手旅指挥官进行了采访。在采访的间隙中是一名狙击手射杀二十四名美军士兵的画面。在每个枪击事件中，士兵被标识出来。在场民众先是听到子弹发射声，然后看到美军士兵应声倒地。图像下闪动着“巴格达狙击手祖巴”的字幕。狙击手旅指挥官声称，武装分子不是战术精湛的战士，但他们的技能正变得越来越熟练。他说：“圣战者随着时间的过去而开始从战场上获得经验。”</p>
+<p>他声称，他的团伙已训练了一个精锐的狙击手旅并完善了针对美军的战法。他的神枪手们从一名退役的美军少校普拉斯特所著的《终级狙击手》 的书中学会了狙击战法。祖巴还拥有一个名为“祖巴在线”的网站。伊斯兰军的武装分子在斋月结束时曾在巴格达的逊尼居民区的大街上活动，向居民们分发录像带。他们看起来一点也不感到害怕。一名居民在观看完录像带后称：“我对此感到自豪，这是一部制作得相当好的电影，这是一个完美的工作。这是让美国人离开的最佳方法。”(关新)</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-13T00:00:00+08:00">2008-01-13</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/nu/16"  rel="bookmark" >
               <h2 class="card-title">上次网上查资料～～～</h2>
             </a>
@@ -1521,27 +1542,6 @@ MS不错<br />
 <p>丧次我擦资料，头然蹦区一过窗口，蛮黄蛮暴泥，我就赶快关鸟</p>
 <p>江西上饶：象次瓦查资料，独沿蹦出各类窗口，一触，么噶黄，么噶暴力，瓦库信把额关么不。</p>
 <p>最后还有个<a href="http://www.cgfan.com/bbs/read.php?tid=31632">CG版</a>的</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2008-01-13T00:00:00+08:00">2008-01-13</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/nu/17"  rel="bookmark" >
-              <h2 class="card-title">练狙了练狙了</h2>
-            </a>
-            <p class="card-text"><p>中新网11月8日电 伊拉克前总统萨达姆7日呼吁伊拉克人实现和解，萨达姆两天前因反人类罪指控被高等法庭判处死刑。</p>
-<p>萨达姆在回顾耶稣和先知穆罕默德都曾原谅他们的敌人后称：“我呼吁伊拉克人、阿拉伯人、库尔德人原谅对方，进行和解和握手。”</p>
-<p>但他的这些话不太可能对武装团伙产生多大的影响力。越来越自信的武装团伙已发布了一系列宣传一位名为祖巴的狙击手的录像带，对他射杀美军士兵的战绩进行“庆祝”，并声称制造出了一种新型地对地导弹。</p>
-<p>当法官5日以萨达姆下令处决148名什叶派村民为由判处他绞刑时，萨达姆曾大闹法庭。但当他昨天因1988年安法尔案接受审判时，他和他的六名同案被告安静地听取了大屠杀幸存者的证词。伊拉克国家安全顾问鲁巴伊告诉《泰晤士报》：“我认为对萨达姆的判决将对武装分子活动起到重大的负面影响，这将打消他们重新掌权的希望，使他们更加接近和解。”</p>
-<p>什叶派主导的政府已起草了一项让一些原阿拉伯复兴社会党党员复职的法律。官员们还宣布55名警察已被控虐待犯人的罪名，逊尼派经常指责主要由什叶派组成的警察纵容对他们社区进行袭击的死亡小队。</p>
-<p>但这些姿态不太可能对伊武装分子活动起到很大的效果。主要由前萨达姆安全部门人员组成的伊拉克伊斯兰军对“巴格达狙击手祖巴的战绩”进行了庆祝。录像带显示，祖巴在一个墙上刻下他的射杀纪录，然后他放下狙击枪，写了一个赞扬真主的诗歌，呼吁伊拉克人与十字军和犹太人作战。</p>
-<p>时长28分钟的录像对一名自称是伊拉克伊斯兰军狙击手旅指挥官进行了采访。在采访的间隙中是一名狙击手射杀二十四名美军士兵的画面。在每个枪击事件中，士兵被标识出来。在场民众先是听到子弹发射声，然后看到美军士兵应声倒地。图像下闪动着“巴格达狙击手祖巴”的字幕。狙击手旅指挥官声称，武装分子不是战术精湛的战士，但他们的技能正变得越来越熟练。他说：“圣战者随着时间的过去而开始从战场上获得经验。”</p>
-<p>他声称，他的团伙已训练了一个精锐的狙击手旅并完善了针对美军的战法。他的神枪手们从一名退役的美军少校普拉斯特所著的《终级狙击手》 的书中学会了狙击战法。祖巴还拥有一个名为“祖巴在线”的网站。伊斯兰军的武装分子在斋月结束时曾在巴格达的逊尼居民区的大街上活动，向居民们分发录像带。他们看起来一点也不感到害怕。一名居民在观看完录像带后称：“我对此感到自豪，这是一部制作得相当好的电影，这是一个完美的工作。这是让美国人离开的最佳方法。”(关新)</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-01-13T00:00:00+08:00">2008-01-13</time></p>
 <p>archive</p>            </div>

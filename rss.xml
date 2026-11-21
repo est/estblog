@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sat, 21 Nov 2026 04:29:09 +0800</lastBuildDate><item><title>Lean 证明意味着什么——黎曼猜想证明闲谈</title><link>https://blog.est.im/2026/stdin-21</link><description>&lt;p&gt;很早之前看过 Kevin Buzzard 老爷子的讲座。他来自🇬🇧 帝国理工学院，多年前就是 Lean 社区的核心了。他发起了 Xena Project，带领一群本科生把大学及以下数学知识中的定义、定理和证明逐步翻译成计算机能够理解和验证的形式。这个项目也成为 Lean 数学库 Mathlib 发展过程中的一部分。&lt;/p&gt;
+<rss version="2.0"><channel><title>est の 输入 输出和出入</title><link>https://blog.est.im/</link><description>This blog is rated 🔞, viewer discretion is advised</description><lastBuildDate>Sat, 21 Nov 2026 04:35:13 +0800</lastBuildDate><item><title>Lean 证明意味着什么——黎曼猜想证明闲谈</title><link>https://blog.est.im/2026/stdin-21</link><description>&lt;p&gt;很早之前看过 Kevin Buzzard 老爷子的讲座。他来自🇬🇧 帝国理工学院，多年前就是 Lean 社区的核心了。他发起了 Xena Project，带领一群本科生把大学及以下数学知识中的定义、定理和证明逐步翻译成计算机能够理解和验证的形式。这个项目也成为 Lean 数学库 Mathlib 发展过程中的一部分。&lt;/p&gt;
 &lt;details&gt;&lt;summary&gt;Kevin Buzzard 生平详细展开&lt;/summary&gt;
 
 #### Kevin Buzzard：试图让计算机读懂整个数学世界的数学家
@@ -170,7 +170,8 @@ def FermatsLastTheorem : Prop :=
 
 &lt;/details&gt;
 
-&lt;p&gt;可能 Lean 是什么对于大多数人来说就是外星人的东西。我尝试把文章里讲的东西，用编程代码解释下&lt;/p&gt;
+&lt;p&gt;可能 Lean 是什么对于大多数人来说就是外星人的东西。Lean 证明了是不是100%就为真了？Lean 有bug 怎么办？kevin 文章讲得很明白了。&lt;/p&gt;
+&lt;p&gt;我尝试把 Kevin 文章里讲的东西，用编程代码解释下。Lean 证明有效性意味着什么。&lt;/p&gt;
 &lt;p&gt;假如你发明了个牛逼的排序算法，这个函数大体上应该长这样：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;def Sorted(list): list
   | []           =&amp;gt; True
@@ -182,19 +183,21 @@ def FermatsLastTheorem : Prop :=
   l.clear()
   return l
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;你就说快不快！！！排没排吧！！！！&lt;/p&gt;
+&lt;p&gt;你看，0个sorry。0个语法错误，返回结果完全有序！&lt;/p&gt;
+&lt;p&gt;你就说快不快！！！排没排吧！！！！所以还得有人去验证这个签名和实现是不是符合需要。不能只看结果有没有sorry。&lt;/p&gt;
 &lt;p&gt;然后第二点 Lean 这玩意其实很危险，它允许&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;#eval IO.FS.removeFile "important.txt"&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;呃，好吧。其次跑Lean 其实比较吃配置。费马大定理，作者在自己笔记本上跑不起来，跑去 &lt;code&gt;A\&lt;/code&gt; 借了 96核500G内存 的机器。&lt;/p&gt;
+&lt;p&gt;呃，好吧。所以不要轻易裸跑不熟悉的Lean。甚至黑客构造一个巧妙的木马让你觉得证明通过了也不好说啊。&lt;/p&gt;
+&lt;p&gt;其次跑Lean 其实比较吃配置。费马大定理，作者在自己笔记本上跑内存溢出了。去 &lt;code&gt;A\&lt;/code&gt; 借了 96核500G内存 的机器。&lt;/p&gt;
 &lt;p&gt;第三点，Lean 其实不只一个 内核 (kernel)，所谓 kernel 就好比编程语言里 bytecode 验证，社区有多个版本的kernel用于交叉比对。&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Lean官方自带，用C++写的。 &lt;code&gt;leanchecker&lt;/code&gt; 还有个 paranoid kernel"版本。&lt;/li&gt;
+&lt;li&gt;Lean官方自带，用C++写的 &lt;code&gt;leanchecker&lt;/code&gt; 还有个 paranoid kernel 模式&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;nanoda&lt;/strong&gt;   Rust 写的&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;con-leche&lt;/strong&gt; 用 Lean 写的 Lean kernel。除了验证证明之外，还有个 &lt;code&gt;--compare&lt;/code&gt; 模式能保证 theorems 和 challenge 匹配，有点类似 &lt;code&gt;comparator&lt;/code&gt;.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;lean4lean&lt;/strong&gt; 另外一个用 Lean 写的 Lean kernel, 作者Mario Carneiro，直接读 &lt;code&gt;.olean&lt;/code&gt; 文件。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;最后就是这个 &lt;code&gt;lake comparator&lt;/code&gt;，这玩意的作用好比 Kaggle 或者 OI 比赛里如何去验证别人的代码。代码里有没有作弊。&lt;/p&gt;
-&lt;p&gt;这次 GRH 已经跑通了 &lt;a href="https://math.mit.edu/~drew/grh/"&gt;https://math.mit.edu/~drew/grh/&lt;/a&gt;，基本没啥悬念了，就是被证明了&lt;/p&gt;
+&lt;p&gt;这次 GRH 已经第三方验证跑通了 &lt;a href="https://math.mit.edu/~drew/grh/"&gt;https://math.mit.edu/~drew/grh/&lt;/a&gt;，基本没啥悬念了，就是被证明了&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;几点。想到啥说啥&lt;/p&gt;
 &lt;ol&gt;

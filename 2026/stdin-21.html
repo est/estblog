@@ -223,7 +223,8 @@ def FermatsLastTheorem : Prop :=
 
 </details>
 
-<p>可能 Lean 是什么对于大多数人来说就是外星人的东西。我尝试把文章里讲的东西，用编程代码解释下</p>
+<p>可能 Lean 是什么对于大多数人来说就是外星人的东西。Lean 证明了是不是100%就为真了？Lean 有bug 怎么办？kevin 文章讲得很明白了。</p>
+<p>我尝试把 Kevin 文章里讲的东西，用编程代码解释下。Lean 证明有效性意味着什么。</p>
 <p>假如你发明了个牛逼的排序算法，这个函数大体上应该长这样：</p>
 <pre><code>def Sorted(list): list
   | []           =&gt; True
@@ -235,19 +236,21 @@ def FermatsLastTheorem : Prop :=
   l.clear()
   return l
 </code></pre>
-<p>你就说快不快！！！排没排吧！！！！</p>
+<p>你看，0个sorry。0个语法错误，返回结果完全有序！</p>
+<p>你就说快不快！！！排没排吧！！！！所以还得有人去验证这个签名和实现是不是符合需要。不能只看结果有没有sorry。</p>
 <p>然后第二点 Lean 这玩意其实很危险，它允许</p>
 <p><code>#eval IO.FS.removeFile "important.txt"</code></p>
-<p>呃，好吧。其次跑Lean 其实比较吃配置。费马大定理，作者在自己笔记本上跑不起来，跑去 <code>A\</code> 借了 96核500G内存 的机器。</p>
+<p>呃，好吧。所以不要轻易裸跑不熟悉的Lean。甚至黑客构造一个巧妙的木马让你觉得证明通过了也不好说啊。</p>
+<p>其次跑Lean 其实比较吃配置。费马大定理，作者在自己笔记本上跑内存溢出了。去 <code>A\</code> 借了 96核500G内存 的机器。</p>
 <p>第三点，Lean 其实不只一个 内核 (kernel)，所谓 kernel 就好比编程语言里 bytecode 验证，社区有多个版本的kernel用于交叉比对。</p>
 <ul>
-<li>Lean官方自带，用C++写的。 <code>leanchecker</code> 还有个 paranoid kernel"版本。</li>
+<li>Lean官方自带，用C++写的 <code>leanchecker</code> 还有个 paranoid kernel 模式</li>
 <li><strong>nanoda</strong>   Rust 写的</li>
 <li><strong>con-leche</strong> 用 Lean 写的 Lean kernel。除了验证证明之外，还有个 <code>--compare</code> 模式能保证 theorems 和 challenge 匹配，有点类似 <code>comparator</code>.</li>
 <li><strong>lean4lean</strong> 另外一个用 Lean 写的 Lean kernel, 作者Mario Carneiro，直接读 <code>.olean</code> 文件。</li>
 </ul>
 <p>最后就是这个 <code>lake comparator</code>，这玩意的作用好比 Kaggle 或者 OI 比赛里如何去验证别人的代码。代码里有没有作弊。</p>
-<p>这次 GRH 已经跑通了 <a href="https://math.mit.edu/~drew/grh/">https://math.mit.edu/~drew/grh/</a>，基本没啥悬念了，就是被证明了</p>
+<p>这次 GRH 已经第三方验证跑通了 <a href="https://math.mit.edu/~drew/grh/">https://math.mit.edu/~drew/grh/</a>，基本没啥悬念了，就是被证明了</p>
 <hr />
 <p>几点。想到啥说啥</p>
 <ol>
