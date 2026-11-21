@@ -956,18 +956,13 @@ CFACF72F5EB60EA15F89E3AF66732545</p>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/632693"  rel="bookmark" >
-              <h2 class="card-title">24小时没看cnBeta和Google Reader了</h2>
+            <a href="/archives/632662"  rel="bookmark" >
+              <h2 class="card-title">同步ID的两种模型</h2>
             </a>
-            <p class="card-text"><p>成都的雨：</p>
-<p><a href="http://picasaweb.google.com/electronixtar/DropBox?authkey=EJI6sPMp8Eo#5251090180173043922"><img alt="Chengdu rain" src="http://lh3.ggpht.com/electronixtar/SN-esojBmNI/AAAAAAAAAMI/SfP0Bg5J9Pw/s400/200809272337_412.jpg" /></a></p>
-<p>这几天在实习的公司里，做一个不大不小的项目，用到了asyncore和cx_Oracle，写了个738字节长的SQL查询语句，解决了<a href="http://initiative.yo2.cn/archives/632661">Python乱码问题</a>。虽然拖延了工期，加班了，心里还是有那么一点高兴的。哈哈～～</p>
-<p>上传图片<a href="http://picasaweb.google.com/electronixtar/">到Picasa</a>的时候，想到了。其实Picasa, Youtube, Flickr这样的网站，需求很简单：</p>
-<p>1. 满足偷 <em>铆在墙上。第九层楼道高于我的视线，所以没看见什么。在对面五层楼的护栏上，排着七盆花草。时节还没完全来到，有三盆</em> 窥和集体偷 <em>铆在墙上。第九层楼道高于我的视线，所以没看见什么。在对面五层楼的护栏上，排着七盆花草。时节还没完全来到，有三盆</em> 窥的需要。以及digg、群体讨论和炒作。<br />
-2. 满足有了数码设备，把照片、图片、音频等方便发布到网上并流畅、方便观看的需要。<br />
-3. 最后创造社区自己的价值和价值观。</p>
-<p>24小时没看cnBeta和Google Reader了。这个记录能坚持多久呢？</p>
-<p>So concentrate and WIN!</p></p>
+            <p class="card-text"><p>网站做大了，如果用户使用论坛需要注册一次，使用FTP也需要注册一次，使用Blog也注册一次，自然很麻烦。整合账户当然是必须的。其实有2种模式</p>
+<p>1. Push模式。首先禁用所有模块的新用户注册功能，然后建立一个Account Center，用户在账户中心里激活一项服务，就把ID和密码推送到模块的内建数据库。如果用户在账户中心修改密码，也要同步一次。</p>
+<p>2. Pull模式。用户在其他子功能模块登录的时候，去读取中心帐号服务器的数据库/Web Service来验证密码是否正确。缺点：中心服务器down了就永远没法登录了。延迟也比较高。</p>
+<p>如果要形成Single Sign-On方案的话，需要设计token传递，也就是跨进程、跨服务器共享session的机制，注销的时候也需要递归销毁token和cookie。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-09-28T00:00:00+08:00">2008-09-28</time></p>
 <p>archive</p>            </div>
@@ -1004,13 +999,18 @@ CFACF72F5EB60EA15F89E3AF66732545</p>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/632662"  rel="bookmark" >
-              <h2 class="card-title">同步ID的两种模型</h2>
+            <a href="/archives/632693"  rel="bookmark" >
+              <h2 class="card-title">24小时没看cnBeta和Google Reader了</h2>
             </a>
-            <p class="card-text"><p>网站做大了，如果用户使用论坛需要注册一次，使用FTP也需要注册一次，使用Blog也注册一次，自然很麻烦。整合账户当然是必须的。其实有2种模式</p>
-<p>1. Push模式。首先禁用所有模块的新用户注册功能，然后建立一个Account Center，用户在账户中心里激活一项服务，就把ID和密码推送到模块的内建数据库。如果用户在账户中心修改密码，也要同步一次。</p>
-<p>2. Pull模式。用户在其他子功能模块登录的时候，去读取中心帐号服务器的数据库/Web Service来验证密码是否正确。缺点：中心服务器down了就永远没法登录了。延迟也比较高。</p>
-<p>如果要形成Single Sign-On方案的话，需要设计token传递，也就是跨进程、跨服务器共享session的机制，注销的时候也需要递归销毁token和cookie。</p></p>
+            <p class="card-text"><p>成都的雨：</p>
+<p><a href="http://picasaweb.google.com/electronixtar/DropBox?authkey=EJI6sPMp8Eo#5251090180173043922"><img alt="Chengdu rain" src="http://lh3.ggpht.com/electronixtar/SN-esojBmNI/AAAAAAAAAMI/SfP0Bg5J9Pw/s400/200809272337_412.jpg" /></a></p>
+<p>这几天在实习的公司里，做一个不大不小的项目，用到了asyncore和cx_Oracle，写了个738字节长的SQL查询语句，解决了<a href="http://initiative.yo2.cn/archives/632661">Python乱码问题</a>。虽然拖延了工期，加班了，心里还是有那么一点高兴的。哈哈～～</p>
+<p>上传图片<a href="http://picasaweb.google.com/electronixtar/">到Picasa</a>的时候，想到了。其实Picasa, Youtube, Flickr这样的网站，需求很简单：</p>
+<p>1. 满足偷 <em>铆在墙上。第九层楼道高于我的视线，所以没看见什么。在对面五层楼的护栏上，排着七盆花草。时节还没完全来到，有三盆</em> 窥和集体偷 <em>铆在墙上。第九层楼道高于我的视线，所以没看见什么。在对面五层楼的护栏上，排着七盆花草。时节还没完全来到，有三盆</em> 窥的需要。以及digg、群体讨论和炒作。<br />
+2. 满足有了数码设备，把照片、图片、音频等方便发布到网上并流畅、方便观看的需要。<br />
+3. 最后创造社区自己的价值和价值观。</p>
+<p>24小时没看cnBeta和Google Reader了。这个记录能坚持多久呢？</p>
+<p>So concentrate and WIN!</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-09-28T00:00:00+08:00">2008-09-28</time></p>
 <p>archive</p>            </div>
@@ -1044,22 +1044,6 @@ MD5:a3a530131d523279c3f617cafe723a85</p>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/632571"  rel="bookmark" >
-              <h2 class="card-title">极品网站。。。</h2>
-            </a>
-            <p class="card-text"><p>中国密码学会的网站可以随便进后台，哈哈</p>
-<p><a href="http://xn--fiq7vi3qbveynay21l.com/admin/MeetManage.aspx">http://xn--fiq7vi3qbveynay21l.com/admin/MeetManage.aspx</a></p>
-<p>太极品了 。大家<a href="http://www2.dormforce.net/flatgrid/viewmctalk.php?id=2650">去玩</a>吧。哈哈</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2008-09-23T00:00:00+08:00">2008-09-23</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/archives/632555"  rel="bookmark" >
               <h2 class="card-title">装逼就是要这么装</h2>
             </a>
@@ -1074,6 +1058,22 @@ MD5:a3a530131d523279c3f617cafe723a85</p>
 <p>我刚刚用sbcl/emacs/slime, hunchentoot, cl-who, sqlite3, and clsql把我的blog重写了一遍。只花了我一天的时间（包括在VPN上重装Gentoo）。老子一年没有碰编程了（换专业了。）</p>
 </blockquote>
 <p>囧rz</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-09-23T00:00:00+08:00">2008-09-23</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/632571"  rel="bookmark" >
+              <h2 class="card-title">极品网站。。。</h2>
+            </a>
+            <p class="card-text"><p>中国密码学会的网站可以随便进后台，哈哈</p>
+<p><a href="http://xn--fiq7vi3qbveynay21l.com/admin/MeetManage.aspx">http://xn--fiq7vi3qbveynay21l.com/admin/MeetManage.aspx</a></p>
+<p>太极品了 。大家<a href="http://www2.dormforce.net/flatgrid/viewmctalk.php?id=2650">去玩</a>吧。哈哈</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-09-23T00:00:00+08:00">2008-09-23</time></p>
 <p>archive</p>            </div>
@@ -1305,21 +1305,13 @@ UNMAPPED_REMOTE_USER=est-Vista\\est
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/632207"  rel="bookmark" >
-              <h2 class="card-title">Windows Vista/Server 2008下无法使用ISTAP的IPv6故障解决</h2>
+            <a href="/archives/631638"  rel="bookmark" >
+              <h2 class="card-title">锟斤拷锟斤拷锟斤拷 - 经典Unicode乱码</h2>
             </a>
-            <p class="card-text"><p>大二就把IPv6的隧道弄起了，但是到大四才开始用。唉。。。</p>
-<p>使用方法：</p>
-<p><code>netsh interface ipv6 isatap set router x.x.x.x</code></p>
-<p>为什么没有效果呢？因为IP Helper服务没有启动。</p>
-<pre><code>sc config iphlpsvc start= auto
-net start iphlpsvc
-</code></pre>
-<p>好久没折腾Windows，很多troubleshooting的关键都忘记了。</p>
-<p>ps 我发现<a href="http://ipv6.google.com/">Google的IPv6首页</a>，<a href="http://ipv6.google.com/intl/en_ALL/images/logo.gif">logo</a>会跳动啊</p>
-<p><img alt="Google IPv6 Logo" src="http://ipv6.google.com/intl/en_ALL/images/logo.gif" /></p>
-<p>看不起的，我把扣下来了。IPv4应该也能看到</p>
-<p><img alt="Google IPv6 Logo" src="http://olds.blogcn.com/wp-content/uploads/74/7487/2008/09/1.gif" /></p></p>
+            <p class="card-text"><p>就是这么搞笑 <img alt=":-)" src="http://extra-001.yo2cdn.com/wp-includes/images/smilies/icon_smile.gif" /></p>
+<p><a href="http://www.baidu.com/baidu?word=%EF%BF%BD%EF%BF%BD">http://www.google.com/search?q=锟斤拷</a></p>
+<p><a href="http://www.google.com/search?hl=en&amp;q=%E9%94%9F%E6%96%A4%E6%8B%B7">http://www.google.com/search?hl=en&amp;q=%E9%94%9F%E6%96%A4%E6%8B%B7</a></p>
+<p>编码问题真是个TMD烦人的问题。例如：<img alt="15.jpg" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2008/09/15.jpg" /></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-09-12T00:00:00+08:00">2008-09-12</time></p>
 <p>archive</p>            </div>
@@ -1345,13 +1337,21 @@ net start iphlpsvc
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/631638"  rel="bookmark" >
-              <h2 class="card-title">锟斤拷锟斤拷锟斤拷 - 经典Unicode乱码</h2>
+            <a href="/archives/632207"  rel="bookmark" >
+              <h2 class="card-title">Windows Vista/Server 2008下无法使用ISTAP的IPv6故障解决</h2>
             </a>
-            <p class="card-text"><p>就是这么搞笑 <img alt=":-)" src="http://extra-001.yo2cdn.com/wp-includes/images/smilies/icon_smile.gif" /></p>
-<p><a href="http://www.baidu.com/baidu?word=%EF%BF%BD%EF%BF%BD">http://www.google.com/search?q=锟斤拷</a></p>
-<p><a href="http://www.google.com/search?hl=en&amp;q=%E9%94%9F%E6%96%A4%E6%8B%B7">http://www.google.com/search?hl=en&amp;q=%E9%94%9F%E6%96%A4%E6%8B%B7</a></p>
-<p>编码问题真是个TMD烦人的问题。例如：<img alt="15.jpg" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2008/09/15.jpg" /></p></p>
+            <p class="card-text"><p>大二就把IPv6的隧道弄起了，但是到大四才开始用。唉。。。</p>
+<p>使用方法：</p>
+<p><code>netsh interface ipv6 isatap set router x.x.x.x</code></p>
+<p>为什么没有效果呢？因为IP Helper服务没有启动。</p>
+<pre><code>sc config iphlpsvc start= auto
+net start iphlpsvc
+</code></pre>
+<p>好久没折腾Windows，很多troubleshooting的关键都忘记了。</p>
+<p>ps 我发现<a href="http://ipv6.google.com/">Google的IPv6首页</a>，<a href="http://ipv6.google.com/intl/en_ALL/images/logo.gif">logo</a>会跳动啊</p>
+<p><img alt="Google IPv6 Logo" src="http://ipv6.google.com/intl/en_ALL/images/logo.gif" /></p>
+<p>看不起的，我把扣下来了。IPv4应该也能看到</p>
+<p><img alt="Google IPv6 Logo" src="http://olds.blogcn.com/wp-content/uploads/74/7487/2008/09/1.gif" /></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-09-12T00:00:00+08:00">2008-09-12</time></p>
 <p>archive</p>            </div>
@@ -1529,16 +1529,14 @@ http://<em>your_IP_address</em> :8888/1.asf for your LAN friends, <strong>yes</s
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/631703"  rel="bookmark" >
-              <h2 class="card-title">把任意网站的Favicon在线转换为png格式 - Google Social Graph API的附加功能</h2>
+            <a href="/archives/631723"  rel="bookmark" >
+              <h2 class="card-title">《西游记》：孙悟空也吃过人肉滴～～～</h2>
             </a>
-            <p class="card-text"><p><a href="http://www.google.com/s2/favicons?domain=www.sina.com.cn"><img alt="sina.com.cn" src="http://www.google.com/s2/favicons?domain=www.sina.com.cn" /></a></p>
-<p><a href="http://www.google.com/s2/favicons?domain=www.reddit.com"><img alt="reddit" src="http://www.google.com/s2/favicons?domain=www.reddit.com" /></a></p>
-<p>可以把任意网站的<a href="http://en.wikipedia.org/wiki/Favicon">favicon</a>（就是浏览器地址栏那些彩色的小图标），在线转换为PNG格式。有什么用呢？很简单。因为你直接在<strong>HTML正文</strong> 里显示favicon是不可能的，因为世界上唯一一款支持ICON二进制图片格式渲染的浏览器IE6（通过<a href="http://secunia.com/advisories/13396/">sysimage://这种有bug的协议</a>）已经快绝种啦。在网页里嵌入，只能是PNG, JPEG之类的。Google的服务器速度又快。用来做众多网站的Mashup，再爽不过啦，都不用自己写一套favicon抓取和缓存系统，定期更新那么麻烦了。</p>
-<p><a href="http://www.google.com/s2/favicons?domain=initiative.yo2.cn">http://www.google.com/s2/favicons?domain=你的域名</a></p>
-<p>btw <a href="http://code.google.com/apis/socialgraph/">Google Social Graph API</a>终于迈开了第一步啊。不容易。期待和<a href="http://code.google.com/apis/visualization/">Visualization API</a>的酷比结合。<a href="http://www.google.com/s2/profiles/115620783176556731712">这里是est的Profile</a>。后面这一串slug貌似和blogger的不一样，和<a href="https://www.google.com/reader/shared/13380820526477419450">Google Reader Shared Items</a>也不一样。</p>
-<p>btw2 今天我投递的新闻上了reddit的programming版首页啦。不容易，第一次～～～，截图纪念～～～</p>
-<p><img alt="est" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2008/08/131313131.jpg" /></p></p>
+            <p class="card-text"><p>前几天跟人争论，记得《西游记》里，齐天大圣也是妖精的前科，也吃过人肉的。就把翻出来了。貌似在 第二十三回 三藏不忘本 四圣试禅心</p>
+<blockquote>
+<p>只见那行者自南山顶上，摘了几个桃子，托着钵盂，一筋斗，点将回来，睁火眼金睛观看，认得那女子是个妖精，放下钵盂，掣铁棒，当头就打。唬得个长老用手扯住道：“悟空！你走将来打谁？”行者道：“师父，你面前这个女子，莫当做个好人。他是个妖精，要来骗你哩。”三藏道：“你这猴头，当时倒也有些眼力，今日如何乱道！这女菩萨有此善心，将这饭要斋我等，你怎么说他是个妖精？”行者笑道：“师父，你那里认得！老孙在水帘洞里做妖魔时，<strong>若想人肉吃</strong> ，便是这等：或变金银，或变庄台，或变醉人，或变女色。有那等痴心的，爱上我，我就迷他到洞里，尽意随心，或蒸或煮受用；吃不了，还要晒干了防天阴哩！师父，我若来迟，你定入他套子，遭他毒手！”那唐僧那里肯信，只说是个好人。</p>
+</blockquote>
+<p>恩恩～～～～</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-08-31T00:00:00+08:00">2008-08-31</time></p>
 <p>archive</p>            </div>
@@ -1549,14 +1547,16 @@ http://<em>your_IP_address</em> :8888/1.asf for your LAN friends, <strong>yes</s
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/631723"  rel="bookmark" >
-              <h2 class="card-title">《西游记》：孙悟空也吃过人肉滴～～～</h2>
+            <a href="/archives/631703"  rel="bookmark" >
+              <h2 class="card-title">把任意网站的Favicon在线转换为png格式 - Google Social Graph API的附加功能</h2>
             </a>
-            <p class="card-text"><p>前几天跟人争论，记得《西游记》里，齐天大圣也是妖精的前科，也吃过人肉的。就把翻出来了。貌似在 第二十三回 三藏不忘本 四圣试禅心</p>
-<blockquote>
-<p>只见那行者自南山顶上，摘了几个桃子，托着钵盂，一筋斗，点将回来，睁火眼金睛观看，认得那女子是个妖精，放下钵盂，掣铁棒，当头就打。唬得个长老用手扯住道：“悟空！你走将来打谁？”行者道：“师父，你面前这个女子，莫当做个好人。他是个妖精，要来骗你哩。”三藏道：“你这猴头，当时倒也有些眼力，今日如何乱道！这女菩萨有此善心，将这饭要斋我等，你怎么说他是个妖精？”行者笑道：“师父，你那里认得！老孙在水帘洞里做妖魔时，<strong>若想人肉吃</strong> ，便是这等：或变金银，或变庄台，或变醉人，或变女色。有那等痴心的，爱上我，我就迷他到洞里，尽意随心，或蒸或煮受用；吃不了，还要晒干了防天阴哩！师父，我若来迟，你定入他套子，遭他毒手！”那唐僧那里肯信，只说是个好人。</p>
-</blockquote>
-<p>恩恩～～～～</p></p>
+            <p class="card-text"><p><a href="http://www.google.com/s2/favicons?domain=www.sina.com.cn"><img alt="sina.com.cn" src="http://www.google.com/s2/favicons?domain=www.sina.com.cn" /></a></p>
+<p><a href="http://www.google.com/s2/favicons?domain=www.reddit.com"><img alt="reddit" src="http://www.google.com/s2/favicons?domain=www.reddit.com" /></a></p>
+<p>可以把任意网站的<a href="http://en.wikipedia.org/wiki/Favicon">favicon</a>（就是浏览器地址栏那些彩色的小图标），在线转换为PNG格式。有什么用呢？很简单。因为你直接在<strong>HTML正文</strong> 里显示favicon是不可能的，因为世界上唯一一款支持ICON二进制图片格式渲染的浏览器IE6（通过<a href="http://secunia.com/advisories/13396/">sysimage://这种有bug的协议</a>）已经快绝种啦。在网页里嵌入，只能是PNG, JPEG之类的。Google的服务器速度又快。用来做众多网站的Mashup，再爽不过啦，都不用自己写一套favicon抓取和缓存系统，定期更新那么麻烦了。</p>
+<p><a href="http://www.google.com/s2/favicons?domain=initiative.yo2.cn">http://www.google.com/s2/favicons?domain=你的域名</a></p>
+<p>btw <a href="http://code.google.com/apis/socialgraph/">Google Social Graph API</a>终于迈开了第一步啊。不容易。期待和<a href="http://code.google.com/apis/visualization/">Visualization API</a>的酷比结合。<a href="http://www.google.com/s2/profiles/115620783176556731712">这里是est的Profile</a>。后面这一串slug貌似和blogger的不一样，和<a href="https://www.google.com/reader/shared/13380820526477419450">Google Reader Shared Items</a>也不一样。</p>
+<p>btw2 今天我投递的新闻上了reddit的programming版首页啦。不容易，第一次～～～，截图纪念～～～</p>
+<p><img alt="est" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2008/08/131313131.jpg" /></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-08-31T00:00:00+08:00">2008-08-31</time></p>
 <p>archive</p>            </div>
@@ -1616,28 +1616,6 @@ http://<em>your_IP_address</em> :8888/1.asf for your LAN friends, <strong>yes</s
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/631352"  rel="bookmark" >
-              <h2 class="card-title">麻省理工学院 MIT 1869-1870的入学考试题（代数、算术、几何和英语）</h2>
-            </a>
-            <p class="card-text"><p>English:<br />
-<img alt="MIT 1869-1870 entrance exam English " src="http://pieandhammer.com/wp/wp-content/uploads/2007/09/english.gif" /></p>
-<p>algebra:<br />
-<img alt="MIT 1869-1870 entrance exam algebra" src="http://pieandhammer.com/wp/wp-content/uploads/2007/09/algebra.gif" /></p>
-<p>arithmetic:<br />
-<img alt="MIT 1869-1870 entrance exam arithmetic" src="http://pieandhammer.com/wp/wp-content/uploads/2007/09/arithmetic.gif" /></p>
-<p>geometry:<br />
-<img alt="MIT 1869-1870 entrance exam geometry" src="http://pieandhammer.com/wp/wp-content/uploads/2007/09/geometry.gif" /></p>
-<p>一个叫<a href="http://pieandhammer.com/?p=65">olga</a>的挖坟党在<a href="http://libraries.mit.edu/archives/exhibits/exam/">MIT图书馆存档里</a>找到的。<a href="http://www.reddit.com/comments/6wr1l/mit_entrance_exam_18691870/">via reddit</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2008-08-18T00:00:00+08:00">2008-08-18</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/archives/631355"  rel="bookmark" >
               <h2 class="card-title">PuTTY的缺陷</h2>
             </a>
@@ -1654,6 +1632,28 @@ http://<em>your_IP_address</em> :8888/1.asf for your LAN friends, <strong>yes</s
 </li>
 </ol>
 <p>PuTTY是有<a href="http://rechten.uvt.nl/koops/cryptolaw/">加密技术出口限制</a>的。。。某些对美国不友好国家下载并使用PuTTY是非法的。。。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-08-18T00:00:00+08:00">2008-08-18</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/631352"  rel="bookmark" >
+              <h2 class="card-title">麻省理工学院 MIT 1869-1870的入学考试题（代数、算术、几何和英语）</h2>
+            </a>
+            <p class="card-text"><p>English:<br />
+<img alt="MIT 1869-1870 entrance exam English " src="http://pieandhammer.com/wp/wp-content/uploads/2007/09/english.gif" /></p>
+<p>algebra:<br />
+<img alt="MIT 1869-1870 entrance exam algebra" src="http://pieandhammer.com/wp/wp-content/uploads/2007/09/algebra.gif" /></p>
+<p>arithmetic:<br />
+<img alt="MIT 1869-1870 entrance exam arithmetic" src="http://pieandhammer.com/wp/wp-content/uploads/2007/09/arithmetic.gif" /></p>
+<p>geometry:<br />
+<img alt="MIT 1869-1870 entrance exam geometry" src="http://pieandhammer.com/wp/wp-content/uploads/2007/09/geometry.gif" /></p>
+<p>一个叫<a href="http://pieandhammer.com/?p=65">olga</a>的挖坟党在<a href="http://libraries.mit.edu/archives/exhibits/exam/">MIT图书馆存档里</a>找到的。<a href="http://www.reddit.com/comments/6wr1l/mit_entrance_exam_18691870/">via reddit</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-08-18T00:00:00+08:00">2008-08-18</time></p>
 <p>archive</p>            </div>
