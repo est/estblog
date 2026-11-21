@@ -294,6 +294,26 @@ main()<br />
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/492315"  rel="bookmark" >
+              <h2 class="card-title">Vista:调整分区大小中途断电……</h2>
+            </a>
+            <p class="card-text"><p>今天为了安装Leopard，把硬盘上的UbuntuStudio分区删除了，腾出来6GB，还得腾出6GB，于是把E:盘上的0Cisco Document DVD 2007删除了，然后在Vista的 磁盘管理 里调整空闲分区大小。</p>
+<p>令人气愤的是，Vista使我的硬盘狂转了30多分钟，没有任何提示，于是我打算重启计算机，但是关机就关了10多分钟，实在不行了，断电</p>
+<p>后果是可怕的，GRUB提示22错误，看来是找不到MBR了，用启动盘启动Diskgen重建分区表，顺利引导Vista，可惜系统提示0x00000000错误，看来已经损坏了……</p>
+<p>我安装的是RTM的Vista，但是安装盘找不到了，找到一个RC1的Vista，修复，重启，顺利启动～～～看了下后果不是很严重，C:盘和E:盘盘符丢失，D:和E:盘符颠倒，令人惊奇的是，没有任何数据丢失！</p>
+<p>用开机引导的磁盘检查仔细看过了C:、D:和E:盘，no errors found！</p>
+<p>看来Vista的数据管理真的很优秀，在这么极端的环境下还能够保证磁盘数据的完整性。这也是令我坚持使用Vista的理由吧。</p>
+<p>以后不敢再做这样危险的操作了。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-10-28T00:00:00+08:00">2007-10-28</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/492728"  rel="bookmark" >
               <h2 class="card-title">[JScript]批量导出Kerio Mail的帐号</h2>
             </a>
@@ -315,26 +335,6 @@ xmlDoc.load("users.cfg")</p>
 var names = xmlDoc.selectNodes("//config/list/listitem/variable[@name='Fullname']")</p>
 <p>str='"username","first name","last name","password"\n'<br />
 for(i=0;i<a href="http://msdn2.microsoft.com/en-us/library/ms756987.aspx">xmlDoc对象</a>和XPath（<a href="http://www.zvon.org/xxl/XPathTutorial/General_chi/examples.html">教程</a>），呵呵。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-10-28T00:00:00+08:00">2007-10-28</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/492315"  rel="bookmark" >
-              <h2 class="card-title">Vista:调整分区大小中途断电……</h2>
-            </a>
-            <p class="card-text"><p>今天为了安装Leopard，把硬盘上的UbuntuStudio分区删除了，腾出来6GB，还得腾出6GB，于是把E:盘上的0Cisco Document DVD 2007删除了，然后在Vista的 磁盘管理 里调整空闲分区大小。</p>
-<p>令人气愤的是，Vista使我的硬盘狂转了30多分钟，没有任何提示，于是我打算重启计算机，但是关机就关了10多分钟，实在不行了，断电</p>
-<p>后果是可怕的，GRUB提示22错误，看来是找不到MBR了，用启动盘启动Diskgen重建分区表，顺利引导Vista，可惜系统提示0x00000000错误，看来已经损坏了……</p>
-<p>我安装的是RTM的Vista，但是安装盘找不到了，找到一个RC1的Vista，修复，重启，顺利启动～～～看了下后果不是很严重，C:盘和E:盘盘符丢失，D:和E:盘符颠倒，令人惊奇的是，没有任何数据丢失！</p>
-<p>用开机引导的磁盘检查仔细看过了C:、D:和E:盘，no errors found！</p>
-<p>看来Vista的数据管理真的很优秀，在这么极端的环境下还能够保证磁盘数据的完整性。这也是令我坚持使用Vista的理由吧。</p>
-<p>以后不敢再做这样危险的操作了。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-10-28T00:00:00+08:00">2007-10-28</time></p>
 <p>archive</p>            </div>
@@ -373,24 +373,6 @@ for(i=0;i<a href="http://msdn2.microsoft.com/en-us/library/ms756987.aspx">xmlDoc
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/488997"  rel="bookmark" >
-              <h2 class="card-title">SUN of bitch - why Java sucks</h2>
-            </a>
-            <p class="card-text"><p>SUN公司真操蛋。</p>
-<p>今天在<a href="http://www.topcoder.com/sichuan">TopCoder</a>做题，需要<a href="http://java.sun.com/j2se/1.4.2/download.html">JRE1.4.2</a>环境，哼哼，Java在我的映像中一直是低效和臃肿的代名词，但是为了……免费的牛奶、面包还有Topcoder的T-Shirt，所以还是忍了。于是去<a href="http://www.sun.com/">SUN官网</a>下载Java Runtime Environment。但是下载JRE需要去下载SUN公司的专用下载器<a href="http://www.sun.com/download/sdm/">Sun Download Manager</a>，比较瓜的是，SUN公司推荐用SDM来下载SDM，真TMD的SB；比较气愤的是，SDM的安装程序还用UPX加壳，还不能直接解压<br />
-。好啦，安装好了SDM，终于可以下载了，哼，貌似192开头的IP很牛X似的。最终得到JRE的下载地址：</p>
-<p><a href="http://192.18.108.229/ECom/EComTicketServlet/BEGINCC6D7D4E58DC482AC4ED0B01ED34B2B9/-2147483648/2425957131/1/851618/851546/2425957131/2ts+/westCoastFSEND/j2re-1.4.2_16-oth-JPR/j2re-1.4.2_16-oth-JPR:3/j2re-1_4_2_16-windows-i586-p.exe">http://192.18.108.229/ECom/EComTicketServlet/BEGINCC6D7D4E58DC482AC4ED0B01ED34B2B9/-2147483648/2425957131/1/851618/851546/2425957131/2ts+/westCoastFSEND/j2re-1.4.2_16-oth-JPR/j2re-1.4.2_16-oth-JPR:3/j2re-1_4_2_16-windows-i586-p.exe</a></p>
-<p>最后发现，最BT的是，SDM是用Java写的 -_-! ！@#￥%……&amp;×（）</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-10-27T00:00:00+08:00">2007-10-27</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/archives/489553"  rel="bookmark" >
               <h2 class="card-title">Google Experimental的新功能：电影搜索</h2>
             </a>
@@ -403,6 +385,24 @@ for(i=0;i<a href="http://msdn2.microsoft.com/en-us/library/ms756987.aspx">xmlDoc
 还有<a href="http://www.imdb.com/title/tt0432021/">IMDb的链接</a>，爽～</p>
 <p>看来，Google真的要做到，One search engine to them all！</p>
 <p>附注：要体验该功能需要<a href="http://www.google.com/experimental/">加入Google Experimental测试计划</a>。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-10-27T00:00:00+08:00">2007-10-27</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/488997"  rel="bookmark" >
+              <h2 class="card-title">SUN of bitch - why Java sucks</h2>
+            </a>
+            <p class="card-text"><p>SUN公司真操蛋。</p>
+<p>今天在<a href="http://www.topcoder.com/sichuan">TopCoder</a>做题，需要<a href="http://java.sun.com/j2se/1.4.2/download.html">JRE1.4.2</a>环境，哼哼，Java在我的映像中一直是低效和臃肿的代名词，但是为了……免费的牛奶、面包还有Topcoder的T-Shirt，所以还是忍了。于是去<a href="http://www.sun.com/">SUN官网</a>下载Java Runtime Environment。但是下载JRE需要去下载SUN公司的专用下载器<a href="http://www.sun.com/download/sdm/">Sun Download Manager</a>，比较瓜的是，SUN公司推荐用SDM来下载SDM，真TMD的SB；比较气愤的是，SDM的安装程序还用UPX加壳，还不能直接解压<br />
+。好啦，安装好了SDM，终于可以下载了，哼，貌似192开头的IP很牛X似的。最终得到JRE的下载地址：</p>
+<p><a href="http://192.18.108.229/ECom/EComTicketServlet/BEGINCC6D7D4E58DC482AC4ED0B01ED34B2B9/-2147483648/2425957131/1/851618/851546/2425957131/2ts+/westCoastFSEND/j2re-1.4.2_16-oth-JPR/j2re-1.4.2_16-oth-JPR:3/j2re-1_4_2_16-windows-i586-p.exe">http://192.18.108.229/ECom/EComTicketServlet/BEGINCC6D7D4E58DC482AC4ED0B01ED34B2B9/-2147483648/2425957131/1/851618/851546/2425957131/2ts+/westCoastFSEND/j2re-1.4.2_16-oth-JPR/j2re-1.4.2_16-oth-JPR:3/j2re-1_4_2_16-windows-i586-p.exe</a></p>
+<p>最后发现，最BT的是，SDM是用Java写的 -_-! ！@#￥%……&amp;×（）</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-10-27T00:00:00+08:00">2007-10-27</time></p>
 <p>archive</p>            </div>
@@ -1013,41 +1013,6 @@ Pachelbel's canon in D Major</p>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/446524"  rel="bookmark" >
-              <h2 class="card-title">原来lighttpd 1.4.x不支持Expect: 100-continue</h2>
-            </a>
-            <p class="card-text"><p>今天跟同学写一个WebService，我这边是用lighttpd+mod_fastcgi+django做的一个WebService服务，同学那边用C#来调用这个WebService。但是每次在Visual Studio 2005里调试的时候都显示</p>
-<pre><code>未处理 WebException
-远程服务器返回错误: (417) Expectation Failed。
-</code></pre>
-<p>我用Python的urllib2来POST这个WebService都是成功的，但是.NET里几个HTTP请求对象都不能调用。仔细对比抓包了2种语言的请求包，发现.NET的请求头多了一个<code>Expect: 100-continue</code>。</p>
-<p>起初我还怀疑是django不支持，后来查看了<a href="http://blog.csdn.net/li_xj/archive/2007/06/22/1661466.aspx">HTTP 1.1的文档</a>，最后发现，<a href="http://miketeo.net/wp/index.php/2007/08/21/lighttpd-expect-100-continue-workaround.html">lighttpd 1.4版本更本不会支持Expect: 100-continue</a>这个HTTP头。或者装 lighttpd 1.5.x 的开发版本，或者换apache。</p>
-<p>结合在<a href="http://topic.csdn.net/t/20060318/11/4622842.html">CSDN上的相关问题</a>，最终的解决办法是：在Http请求之前加上这一句：<code>System.Net.ServicePointManager.Expect100Continue = false;</code></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-10-07T00:00:00+08:00">2007-10-07</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/445829"  rel="bookmark" >
-              <h2 class="card-title">Coding GTalk Bot with Python, now.</h2>
-            </a>
-            <p class="card-text"><p>After my <a href="http://www.dormforce.net/Blog/electronixtar/archive/2007/03/11/13799.aspx">first trial with IM bots</a>, I start over again this October. The bot is planned for new post alerts for <a href="http://www.dormforce.net/bbs">DormForce forum</a>. There are many XMPP libraries for Python like <a href="http://xmpppy.sourceforge.net/">xmpppy</a>, <a href="http://pyxmpp.jajcus.net/">pyxmpp</a>, <a href="http://jabberpy.sourceforge.net">jabber.py</a> and <a href="http://twistedmatrix.com/documents/current/api/twisted.words.protocols.jabber.component.html">twisted words</a>, among them, xmpppy is the <a href="http://xmpppy-guide.berlios.de/html/node5.html">inofficial successor of jabber.py</a>, compared to pyxmpp, xmpppy is <a href="http://alienghic.livejournal.com/383245.html">more light-weight</a> and <a href="http://www.larsen-b.com/Article/214.html">convenient</a>. So I choose xmpppy with my GTalkBot plan.</p>
-<p>Debugging xmpppy is fun, it outputs colored XML in Python shell automatically, you know what's going on exactly in the code.</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-10-07T00:00:00+08:00">2007-10-07</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/archives/445889"  rel="bookmark" >
               <h2 class="card-title">[python]Login to GTalk using xmpppy</h2>
             </a>
@@ -1112,6 +1077,57 @@ COPY [/D] [/V] [/N] [/Y | /-Y] [/Z] [/L] [/A | /B ] source [/A | /B]
 </code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-10-07T00:00:00+08:00">2007-10-07</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/445829"  rel="bookmark" >
+              <h2 class="card-title">Coding GTalk Bot with Python, now.</h2>
+            </a>
+            <p class="card-text"><p>After my <a href="http://www.dormforce.net/Blog/electronixtar/archive/2007/03/11/13799.aspx">first trial with IM bots</a>, I start over again this October. The bot is planned for new post alerts for <a href="http://www.dormforce.net/bbs">DormForce forum</a>. There are many XMPP libraries for Python like <a href="http://xmpppy.sourceforge.net/">xmpppy</a>, <a href="http://pyxmpp.jajcus.net/">pyxmpp</a>, <a href="http://jabberpy.sourceforge.net">jabber.py</a> and <a href="http://twistedmatrix.com/documents/current/api/twisted.words.protocols.jabber.component.html">twisted words</a>, among them, xmpppy is the <a href="http://xmpppy-guide.berlios.de/html/node5.html">inofficial successor of jabber.py</a>, compared to pyxmpp, xmpppy is <a href="http://alienghic.livejournal.com/383245.html">more light-weight</a> and <a href="http://www.larsen-b.com/Article/214.html">convenient</a>. So I choose xmpppy with my GTalkBot plan.</p>
+<p>Debugging xmpppy is fun, it outputs colored XML in Python shell automatically, you know what's going on exactly in the code.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-10-07T00:00:00+08:00">2007-10-07</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/446524"  rel="bookmark" >
+              <h2 class="card-title">原来lighttpd 1.4.x不支持Expect: 100-continue</h2>
+            </a>
+            <p class="card-text"><p>今天跟同学写一个WebService，我这边是用lighttpd+mod_fastcgi+django做的一个WebService服务，同学那边用C#来调用这个WebService。但是每次在Visual Studio 2005里调试的时候都显示</p>
+<pre><code>未处理 WebException
+远程服务器返回错误: (417) Expectation Failed。
+</code></pre>
+<p>我用Python的urllib2来POST这个WebService都是成功的，但是.NET里几个HTTP请求对象都不能调用。仔细对比抓包了2种语言的请求包，发现.NET的请求头多了一个<code>Expect: 100-continue</code>。</p>
+<p>起初我还怀疑是django不支持，后来查看了<a href="http://blog.csdn.net/li_xj/archive/2007/06/22/1661466.aspx">HTTP 1.1的文档</a>，最后发现，<a href="http://miketeo.net/wp/index.php/2007/08/21/lighttpd-expect-100-continue-workaround.html">lighttpd 1.4版本更本不会支持Expect: 100-continue</a>这个HTTP头。或者装 lighttpd 1.5.x 的开发版本，或者换apache。</p>
+<p>结合在<a href="http://topic.csdn.net/t/20060318/11/4622842.html">CSDN上的相关问题</a>，最终的解决办法是：在Http请求之前加上这一句：<code>System.Net.ServicePointManager.Expect100Continue = false;</code></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-10-07T00:00:00+08:00">2007-10-07</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/442624"  rel="bookmark" >
+              <h2 class="card-title">ftp-mozilla.netscape.com/pub/mozilla.org/addons/<插件ID>/</h2>
+            </a>
+            <p class="card-text"><p>最近不知道怎么回事，教育网网速牛慢。去<a href="https://www.mozilla.org/">mozilla.org</a>更新<a href="https://addons.mozilla.org/en-US/firefox">Firefox插件</a>或者去<a href="http://www.sourceforge.net">sf</a>下源码都慢的要命。FF插件是通过https下载的，SVN是WebDAV的HTTP请求头，但是一般的HTTP代理不支持https，也不支持GET, POST, CONNECT之外的HTTP请求头；加上很多客户端软件又只支持HTTP代理，不能用socks，而我<a href="http://initiative.yo2.cn/archives/317847">在网管会架设的Privoxy</a>又只允许GET, POST, CONNNECT请求头………………………………这几天一直弄得很是郁闷（这里我要骂一下WebDAV、REST等非传统HTTP架构的起草人，好好的有GET和POST不用你们去发明PUT, DELETE, PROPFIND这些狗p东西干嘛？有毛病！操！）</p>
+<p>瞎掺和的时候发现了Mozilla网站的一个规律，可以用迅雷直接拖。首先找到一个插件的ID，例如我的御用主题包<a href="https://addons.mozilla.org/en-US/firefox/addon/5308">own</a>，他的页面URL是<a href="https://addons.mozilla.org/en-US/firefox/addon/5308">https://addons.mozilla.org/en-US/firefox/addon/<strong>5308</strong></a>，那么own这个插件的ID就是5308，然后直接在浏览器地址栏输入 <a href="http://ftp-mozilla.netscape.com/pub/mozilla.org/addons/5308/">http://ftp-mozilla.netscape.com/pub/mozilla.org/addons/5308/</a> 就可以浏览并下载这个插件的最新版本文件了。以后无论是Firefox, Thunderbird, SunBird插件、扩展、皮肤升级都懒得再去mozilla.org首页去搜索，点击，点击，点击，点击，点击……</p>
+<p>记住， <em>http://ftp-mozilla.netscape.com/pub/mozilla.org/addons/ &lt;插件ID&gt;/</em></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-10-06T00:00:00+08:00">2007-10-06</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
@@ -1219,22 +1235,6 @@ E:\Python\reference\djangoprojectwebsite\django_website&gt;<strong>set DJANGO_SE
   3. 最后执行 update_feeds.py，注意用相对路径启动 update_feeds.py<br />
 <code>E:\Python\reference\djangoprojectwebsite\django_website&gt;**apps\aggregator\bin\update_feeds.py**</code></p>
 <p>终于开始更新了，嘎嘎</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-10-06T00:00:00+08:00">2007-10-06</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/442624"  rel="bookmark" >
-              <h2 class="card-title">ftp-mozilla.netscape.com/pub/mozilla.org/addons/<插件ID>/</h2>
-            </a>
-            <p class="card-text"><p>最近不知道怎么回事，教育网网速牛慢。去<a href="https://www.mozilla.org/">mozilla.org</a>更新<a href="https://addons.mozilla.org/en-US/firefox">Firefox插件</a>或者去<a href="http://www.sourceforge.net">sf</a>下源码都慢的要命。FF插件是通过https下载的，SVN是WebDAV的HTTP请求头，但是一般的HTTP代理不支持https，也不支持GET, POST, CONNECT之外的HTTP请求头；加上很多客户端软件又只支持HTTP代理，不能用socks，而我<a href="http://initiative.yo2.cn/archives/317847">在网管会架设的Privoxy</a>又只允许GET, POST, CONNNECT请求头………………………………这几天一直弄得很是郁闷（这里我要骂一下WebDAV、REST等非传统HTTP架构的起草人，好好的有GET和POST不用你们去发明PUT, DELETE, PROPFIND这些狗p东西干嘛？有毛病！操！）</p>
-<p>瞎掺和的时候发现了Mozilla网站的一个规律，可以用迅雷直接拖。首先找到一个插件的ID，例如我的御用主题包<a href="https://addons.mozilla.org/en-US/firefox/addon/5308">own</a>，他的页面URL是<a href="https://addons.mozilla.org/en-US/firefox/addon/5308">https://addons.mozilla.org/en-US/firefox/addon/<strong>5308</strong></a>，那么own这个插件的ID就是5308，然后直接在浏览器地址栏输入 <a href="http://ftp-mozilla.netscape.com/pub/mozilla.org/addons/5308/">http://ftp-mozilla.netscape.com/pub/mozilla.org/addons/5308/</a> 就可以浏览并下载这个插件的最新版本文件了。以后无论是Firefox, Thunderbird, SunBird插件、扩展、皮肤升级都懒得再去mozilla.org首页去搜索，点击，点击，点击，点击，点击……</p>
-<p>记住， <em>http://ftp-mozilla.netscape.com/pub/mozilla.org/addons/ &lt;插件ID&gt;/</em></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-10-06T00:00:00+08:00">2007-10-06</time></p>
 <p>archive</p>            </div>

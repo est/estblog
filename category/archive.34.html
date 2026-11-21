@@ -805,6 +805,68 @@ b6282f0705e1404ec4796d7b7cfc5faa</p>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/629662"  rel="bookmark" >
+              <h2 class="card-title">Thunderbird和Firefox涉嫌后台无条件发送用户隐私数据，Mozilla就是个B啊</h2>
+            </a>
+            <p class="card-text"><p><a href="http://www.reddit.com/info/6oz9u/comments/">reddit上</a>看到的。老外<a href="http://www.reddit.com/r/programming/info/6oz9u/comments/c04hand">回复</a>真有耐心和专业水准啊</p>
+<p><a href="http://www.reddit.com/info/6oz9u/comments/">Did you know Firefox and Thunderbird phone home once a day, even with updates disabled and can remotely disable any addon or plugin they wish?</a></p>
+<blockquote>
+<p>I found this out a few days after I decided to start using Thunderbird and created strict firewall rules as a precaution.</p>
+<p>I noticed that Thunderbird would, for no reason at all, sometimes try to contact a server over SSL. I looked up the ip address 63.245.213.32 and found it belonged to Mozilla.</p>
+<p>On researching the problem further I found that the cause of the connection is a feature that cannot be disabled from any menu, only the about:config configuration page.</p>
+<p>Look up extensions.blocklist.enabled for more information. It's present in Firefox also and is enabled even if all the options are disabled through the menus.</p>
+<p>What this tells Mozilla each day:</p>
+<ul>
+<li>IP address</li>
+<li>What time you were using the product</li>
+<li>What exact version number you were using</li>
+<li>If you are using any of the plugins or addons sent in the disabled list</li>
+<li>Total number of active users of their software<br />
+ This may not be that significant to most people but I think you should have a right to know when an application makes this sort of outbound connection without clearly informing you.</li>
+</ul>
+<p>Here is a list of all the unrequested connections Firefox makes: http://support.mozilla.com/fr/kb/Firefox+makes+unrequested+connections</p>
+<p>and that's excluding addons. Many addons will phone home each time Firefox or Thunderbird are launched.</p>
+<p>Please don't downmod this item without reason as I think it's important people have a chance to see what kind of policies Mozilla follows and what kind of database they could be building in the same way people should at least be aware of the potential for misuse if Google has access to your email and search queries.</p>
+</blockquote>
+<p>原文作者<a href="http://www.reddit.com/user/prelim/">prelim</a></p>
+<p>这里简单翻译下：</p>
+<blockquote>
+<p>大家知不知道，Firefox和Thunderbird每天都要跟Mozilla服务器通信一次？即使你把所有更新和插件更新选项禁止？</p>
+<p>我也是前几天才发现的。我刚装上Thunderbird，我有严格的防火墙规则。我发现Thunderbird，在没有任何提示没有任何征兆的情况下，某些时候会通过SSL连接一个服务器。IP是63.245.213.32，是Mozilla的服务器。</p>
+<p>后来我发现这个“功能”选项在任何菜单里都找8到，除非手工修改about:config配置</p>
+<p>键值是：extensions.blocklist.enabled</p>
+<p>这个选项在Firefox里也存在，同样也不可能从菜单里禁用掉。。。</p>
+<p>每天客户端向Mozilla发送这些信息：</p>
+<ul>
+<li>IP地址</li>
+<li>使用了他们的产品多长时间</li>
+<li>你的客户端版本</li>
+<li>你的插件列表，和禁用的插件列表</li>
+<li>软件所有活跃用户的数量</li>
+</ul>
+<p>这些信息不重要，但是重要的是，一个软件在外传任何数据的时候，应该<strong>明确通知用户</strong></p>
+<p>这里有一个网页，展示了Firefox的“非请求连接”列表<a href="http://support.mozilla.com/fr/kb/Firefox+makes+unrequested+connections">http://support.mozilla.com/fr/kb/Firefox+makes+unrequested+connections</a></p>
+<p>这还不包括各种插件内建的升级机制。很多插件在启动的时候要和自己的服务器联系一次。</p>
+<p>所以啊，下载任何软件/插件，要找够足够的理由先。重要的是Mozilla应该让用户知道他们的政策是什么？他们在数据库保存了哪些重要信息？</p>
+</blockquote>
+<p>est评论：<br />
+1. 他妈的FF fans不要来给老子扫盲plug-in、add-on和extension的区别。反正都不是什么好东西。你以为被插得越多还真他妈越爽啊？老子衷心祝愿FF像以前IE那样插件泛滥致死。<br />
+2. Mozilla也不是什么好鸟。<br />
+3. 欢迎健康开源软件<br />
+4. 老外非常重视隐私。非常！其实隐私很重要～～～至少可以防止<a href="http://en.wikipedia.org/wiki/Social_engineering_(security)">社工</a>和<a href="http://dzh2.mop.com/">肉搜</a><br />
+5. Mozilla的<a href="http://www.mozilla.com/en-US/legal/eula/firefox-en.html">EULA</a>里隐约提到了这件事情。真阴险啊。。。。其实我们装软件都不怎么看协议，都一路I Agree的说～～<br />
+6. 如果微软在IE干了这个事情。。。。哼哼。。。吼吼～～～～<br />
+7. 从官方<a href="http://kb.mozillazine.org/Extensions.blocklist.enabled">Extensions.blocklist.enabled</a>说明来看，这个功能貌似是防止恶意插件的</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-06-26T00:00:00+08:00">2008-06-26</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/629642"  rel="bookmark" >
               <h2 class="card-title">8款被偶忽略的牛B开源软件</h2>
             </a>
@@ -863,54 +925,6 @@ o support for member functions</li>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/629372"  rel="bookmark" >
-              <h2 class="card-title">AT&T的最新3D浏览器Pogo邀请码发放！est国内独家首发</h2>
-            </a>
-            <p class="card-text"><p><img alt="pogo" src="http://www.techcrunch.com/wp-content/uploads/2008/06/pogosss.jpg" /></p>
-<p>其实不用邀请码的，直接下载</p>
-<p><a href="http://media.pogobrowser.com/pogo/ATT-Pogo-Setup.exe">http://media.pogobrowser.com/pogo/ATT-Pogo-Setup.exe</a></p>
-<p>大家积极beta哦</p>
-<p>邀请码是：bTHTRjv1<br />
-只有500个名额，估计很快就没了……</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2008-06-26T00:00:00+08:00">2008-06-26</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/629555"  rel="bookmark" >
-              <h2 class="card-title">惊！Python语言遭动物保护组织MM大街裸体抗 。提上裤子， 议！</h2>
-            </a>
-            <p class="card-text"><p>在<a href="https://groups.google.com/group/python-cn/t/60d7a3df1b9c19ce">python-cn列表</a>看到<a href="http://techfaux.com/2008/06/17/peta-targets-computer-programmers-with-string-of-bizarre-protests/">巨搞笑的一个笑话</a></p>
-<p>以下内容转自博客 <a href="http://techfaux.com/2008/06/17/peta-targets-computer-programmers-with-string-of-bizarre-protests/">http://techfaux.com/2008/06/17/peta-targets-computer-programmers-with-string-of-bizarre-protests/</a> 作者Bryan Woods</p>
-<p><img alt="MM anti python hacking" src="http://www.ihmcimg.com/picts05/2006/01/spain_naked_protest_jj802.jpg" /></p>
-<p><a href="http://djangoproject.com/">Django Project</a>是用Python语言写的一个敏捷开发Web框架，和<a href="http://rubyonrails.com/">RoR</a>类似的。每个月Python社区的程序员都要到Lawrence去参加party聚会，一来是交流感情，二来是炫耀最新的技术。</p>
-<p>如果通常这样的聚会是“有趣”的，上一周的hackathon就是非常“囧”的了。晚上8点的时候越来越多的程序员赶到了Lawrence办公室，同时25-30个白人女性也开始在房间周围出现</p>
-<p>好，8:15分，她们开始<strong>脱衣服</strong> ，身上带一个牌子，写道：“一件蛇皮大衣的代价是多少条生命啊！”、“蛇是动物，动物是有灵性的！”</p>
-<p>程序员都跑出来看热闹了，Jacob Kaplan-Moss说：“太他妈的无敌了！她们全部<strong>裸</strong> 了”</p>
-<p>MM说：“我知道他们在干嘛。他们在猎杀蟒蛇（hacking pythons）。这是野蛮的行径，我们会一直守在这里，直到最后一条蟒蛇被拯救为止。”</p>
-<p>……</p>
-<p>后来作者问了下python语言之父Guido Van Rossum关于这件事的看法。他有他读到的见解。“什么是女人？！”他问到。</p>
-<p>est备注：</p>
-<pre><code>1. “hacking python”的意思不是“猎杀蟒蛇”，而是“黑客般研究python语言”。
-2. PETA组织抵 _，现在应该把_ 制计算机编程语言就算了，还找那么多MM裸体抗 _。提上裤子，_ 议，真猛！
-3. [TechFaux](http://techfaux.com/)是一个技术新闻恶 _挂昨晚刚洗的_ 搞、八卦、江湖传闻、谣言网站
-4. 恩，这篇博文，标题里有“裸体”2个字，果然得到[广泛](http://developers.solidot.org/developers/08/06/26/009255.shtml)[转载](http://www.javaeye.com/news/2697)。。不错不错～～～以后要多多标题党～～～
-</code></pre></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2008-06-26T00:00:00+08:00">2008-06-26</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/archives/629459"  rel="bookmark" >
               <h2 class="card-title">个人觉得大陆IT软件/互联网领先世界的一些技术</h2>
             </a>
@@ -930,6 +944,25 @@ o support for member functions</li>
 <p>最大的敌人是我朝衙门（天不时）。表现为：a. 与民争利 b. 畸形保守主义。以“Google Earth泄密”和GFW为代表 c. 官僚体制。以工信部和广电总局为代表。<br />
 第二大敌人就是人为的泡沫（人不和）。这些人肤浅、浮躁，套了$$就跑。以<a href="http://www.baidu.com/baidu?word=%CD%F8%D7%AC">网赚</a>为代表。空泛一点的说，就是提前功利化、商业化。这也是GNU哲学认为非自由软件有害技术发展的原理。</p>
 <p>很多时候，我觉得IT行业是我国所有现代化工业里唯一差不多真正和国际接轨的行业。。。虽然很多关键技术还不能自力更生，但是我们的差距应该比较小了，只有5年左右（虽然根据摩尔效应，IT的5年可能就是n代的技术革新了）。比起其他行业30年甚至50年的差距好多了。中国错过了100年的正确发展机会，IT行业一定是第一个迎头赶上并且超过的。。。。。这也是为什么IT虽然很<strong>不赚钱</strong> 很失望很伤心很烂很民工很泡沫但是我坚持认为IT有搞头的原因。<strong>这是IT的时代。</strong></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-06-26T00:00:00+08:00">2008-06-26</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/629372"  rel="bookmark" >
+              <h2 class="card-title">AT&T的最新3D浏览器Pogo邀请码发放！est国内独家首发</h2>
+            </a>
+            <p class="card-text"><p><img alt="pogo" src="http://www.techcrunch.com/wp-content/uploads/2008/06/pogosss.jpg" /></p>
+<p>其实不用邀请码的，直接下载</p>
+<p><a href="http://media.pogobrowser.com/pogo/ATT-Pogo-Setup.exe">http://media.pogobrowser.com/pogo/ATT-Pogo-Setup.exe</a></p>
+<p>大家积极beta哦</p>
+<p>邀请码是：bTHTRjv1<br />
+只有500个名额，估计很快就没了……</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-06-26T00:00:00+08:00">2008-06-26</time></p>
 <p>archive</p>            </div>
@@ -960,58 +993,25 @@ o support for member functions</li>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/629662"  rel="bookmark" >
-              <h2 class="card-title">Thunderbird和Firefox涉嫌后台无条件发送用户隐私数据，Mozilla就是个B啊</h2>
+            <a href="/archives/629555"  rel="bookmark" >
+              <h2 class="card-title">惊！Python语言遭动物保护组织MM大街裸体抗 。提上裤子， 议！</h2>
             </a>
-            <p class="card-text"><p><a href="http://www.reddit.com/info/6oz9u/comments/">reddit上</a>看到的。老外<a href="http://www.reddit.com/r/programming/info/6oz9u/comments/c04hand">回复</a>真有耐心和专业水准啊</p>
-<p><a href="http://www.reddit.com/info/6oz9u/comments/">Did you know Firefox and Thunderbird phone home once a day, even with updates disabled and can remotely disable any addon or plugin they wish?</a></p>
-<blockquote>
-<p>I found this out a few days after I decided to start using Thunderbird and created strict firewall rules as a precaution.</p>
-<p>I noticed that Thunderbird would, for no reason at all, sometimes try to contact a server over SSL. I looked up the ip address 63.245.213.32 and found it belonged to Mozilla.</p>
-<p>On researching the problem further I found that the cause of the connection is a feature that cannot be disabled from any menu, only the about:config configuration page.</p>
-<p>Look up extensions.blocklist.enabled for more information. It's present in Firefox also and is enabled even if all the options are disabled through the menus.</p>
-<p>What this tells Mozilla each day:</p>
-<ul>
-<li>IP address</li>
-<li>What time you were using the product</li>
-<li>What exact version number you were using</li>
-<li>If you are using any of the plugins or addons sent in the disabled list</li>
-<li>Total number of active users of their software<br />
- This may not be that significant to most people but I think you should have a right to know when an application makes this sort of outbound connection without clearly informing you.</li>
-</ul>
-<p>Here is a list of all the unrequested connections Firefox makes: http://support.mozilla.com/fr/kb/Firefox+makes+unrequested+connections</p>
-<p>and that's excluding addons. Many addons will phone home each time Firefox or Thunderbird are launched.</p>
-<p>Please don't downmod this item without reason as I think it's important people have a chance to see what kind of policies Mozilla follows and what kind of database they could be building in the same way people should at least be aware of the potential for misuse if Google has access to your email and search queries.</p>
-</blockquote>
-<p>原文作者<a href="http://www.reddit.com/user/prelim/">prelim</a></p>
-<p>这里简单翻译下：</p>
-<blockquote>
-<p>大家知不知道，Firefox和Thunderbird每天都要跟Mozilla服务器通信一次？即使你把所有更新和插件更新选项禁止？</p>
-<p>我也是前几天才发现的。我刚装上Thunderbird，我有严格的防火墙规则。我发现Thunderbird，在没有任何提示没有任何征兆的情况下，某些时候会通过SSL连接一个服务器。IP是63.245.213.32，是Mozilla的服务器。</p>
-<p>后来我发现这个“功能”选项在任何菜单里都找8到，除非手工修改about:config配置</p>
-<p>键值是：extensions.blocklist.enabled</p>
-<p>这个选项在Firefox里也存在，同样也不可能从菜单里禁用掉。。。</p>
-<p>每天客户端向Mozilla发送这些信息：</p>
-<ul>
-<li>IP地址</li>
-<li>使用了他们的产品多长时间</li>
-<li>你的客户端版本</li>
-<li>你的插件列表，和禁用的插件列表</li>
-<li>软件所有活跃用户的数量</li>
-</ul>
-<p>这些信息不重要，但是重要的是，一个软件在外传任何数据的时候，应该<strong>明确通知用户</strong></p>
-<p>这里有一个网页，展示了Firefox的“非请求连接”列表<a href="http://support.mozilla.com/fr/kb/Firefox+makes+unrequested+connections">http://support.mozilla.com/fr/kb/Firefox+makes+unrequested+connections</a></p>
-<p>这还不包括各种插件内建的升级机制。很多插件在启动的时候要和自己的服务器联系一次。</p>
-<p>所以啊，下载任何软件/插件，要找够足够的理由先。重要的是Mozilla应该让用户知道他们的政策是什么？他们在数据库保存了哪些重要信息？</p>
-</blockquote>
-<p>est评论：<br />
-1. 他妈的FF fans不要来给老子扫盲plug-in、add-on和extension的区别。反正都不是什么好东西。你以为被插得越多还真他妈越爽啊？老子衷心祝愿FF像以前IE那样插件泛滥致死。<br />
-2. Mozilla也不是什么好鸟。<br />
-3. 欢迎健康开源软件<br />
-4. 老外非常重视隐私。非常！其实隐私很重要～～～至少可以防止<a href="http://en.wikipedia.org/wiki/Social_engineering_(security)">社工</a>和<a href="http://dzh2.mop.com/">肉搜</a><br />
-5. Mozilla的<a href="http://www.mozilla.com/en-US/legal/eula/firefox-en.html">EULA</a>里隐约提到了这件事情。真阴险啊。。。。其实我们装软件都不怎么看协议，都一路I Agree的说～～<br />
-6. 如果微软在IE干了这个事情。。。。哼哼。。。吼吼～～～～<br />
-7. 从官方<a href="http://kb.mozillazine.org/Extensions.blocklist.enabled">Extensions.blocklist.enabled</a>说明来看，这个功能貌似是防止恶意插件的</p></p>
+            <p class="card-text"><p>在<a href="https://groups.google.com/group/python-cn/t/60d7a3df1b9c19ce">python-cn列表</a>看到<a href="http://techfaux.com/2008/06/17/peta-targets-computer-programmers-with-string-of-bizarre-protests/">巨搞笑的一个笑话</a></p>
+<p>以下内容转自博客 <a href="http://techfaux.com/2008/06/17/peta-targets-computer-programmers-with-string-of-bizarre-protests/">http://techfaux.com/2008/06/17/peta-targets-computer-programmers-with-string-of-bizarre-protests/</a> 作者Bryan Woods</p>
+<p><img alt="MM anti python hacking" src="http://www.ihmcimg.com/picts05/2006/01/spain_naked_protest_jj802.jpg" /></p>
+<p><a href="http://djangoproject.com/">Django Project</a>是用Python语言写的一个敏捷开发Web框架，和<a href="http://rubyonrails.com/">RoR</a>类似的。每个月Python社区的程序员都要到Lawrence去参加party聚会，一来是交流感情，二来是炫耀最新的技术。</p>
+<p>如果通常这样的聚会是“有趣”的，上一周的hackathon就是非常“囧”的了。晚上8点的时候越来越多的程序员赶到了Lawrence办公室，同时25-30个白人女性也开始在房间周围出现</p>
+<p>好，8:15分，她们开始<strong>脱衣服</strong> ，身上带一个牌子，写道：“一件蛇皮大衣的代价是多少条生命啊！”、“蛇是动物，动物是有灵性的！”</p>
+<p>程序员都跑出来看热闹了，Jacob Kaplan-Moss说：“太他妈的无敌了！她们全部<strong>裸</strong> 了”</p>
+<p>MM说：“我知道他们在干嘛。他们在猎杀蟒蛇（hacking pythons）。这是野蛮的行径，我们会一直守在这里，直到最后一条蟒蛇被拯救为止。”</p>
+<p>……</p>
+<p>后来作者问了下python语言之父Guido Van Rossum关于这件事的看法。他有他读到的见解。“什么是女人？！”他问到。</p>
+<p>est备注：</p>
+<pre><code>1. “hacking python”的意思不是“猎杀蟒蛇”，而是“黑客般研究python语言”。
+2. PETA组织抵 _，现在应该把_ 制计算机编程语言就算了，还找那么多MM裸体抗 _。提上裤子，_ 议，真猛！
+3. [TechFaux](http://techfaux.com/)是一个技术新闻恶 _挂昨晚刚洗的_ 搞、八卦、江湖传闻、谣言网站
+4. 恩，这篇博文，标题里有“裸体”2个字，果然得到[广泛](http://developers.solidot.org/developers/08/06/26/009255.shtml)[转载](http://www.javaeye.com/news/2697)。。不错不错～～～以后要多多标题党～～～
+</code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-06-26T00:00:00+08:00">2008-06-26</time></p>
 <p>archive</p>            </div>
@@ -1160,6 +1160,24 @@ OK<br />
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/628600"  rel="bookmark" >
+              <h2 class="card-title">SysInternals共享工具 \\live.sysinternals.com\Tools</h2>
+            </a>
+            <p class="card-text"><p><a href="file://live.sysinternals.com/Tools">\\live.sysinternals.com\Tools</a></p>
+<p><img alt="19.jpg" src="http://image-003.yo2cdn.com/wp-content/uploads/74/7487/2008/05/19.jpg" /></p>
+<p>Windows下点击就直接打开了，直接运行，用的是~~IPC$~~ （更正：）WebDAV的RPC（也就是说通过80端口下载，而不是传统的135-139端口，可以突破大多数防火墙，hiahia），不需要下载了，很好很强大哈～～</p>
+<p>当然<a href="http://live.sysinternals.com/">HTTP</a>方式下载也可以，超方便啊，wget就直接弄下来了</p>
+<p>Linux下应该可以通过 <smb://live.sysinternals.com> 来访问，不过貌似应该没什么用 -_-!</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-05-31T00:00:00+08:00">2008-05-31</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/628586"  rel="bookmark" >
               <h2 class="card-title">【转载】《集结号》：军人极度厌恶这个电影，到了不能容忍的愤怒</h2>
             </a>
@@ -1180,16 +1198,20 @@ OK<br />
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/628600"  rel="bookmark" >
-              <h2 class="card-title">SysInternals共享工具 \\live.sysinternals.com\Tools</h2>
+            <a href="/archives/628575"  rel="bookmark" >
+              <h2 class="card-title">douban开始发瓜咯——评论豆瓣相册功能</h2>
             </a>
-            <p class="card-text"><p><a href="file://live.sysinternals.com/Tools">\\live.sysinternals.com\Tools</a></p>
-<p><img alt="19.jpg" src="http://image-003.yo2cdn.com/wp-content/uploads/74/7487/2008/05/19.jpg" /></p>
-<p>Windows下点击就直接打开了，直接运行，用的是~~IPC$~~ （更正：）WebDAV的RPC（也就是说通过80端口下载，而不是传统的135-139端口，可以突破大多数防火墙，hiahia），不需要下载了，很好很强大哈～～</p>
-<p>当然<a href="http://live.sysinternals.com/">HTTP</a>方式下载也可以，超方便啊，wget就直接弄下来了</p>
-<p>Linux下应该可以通过 <smb://live.sysinternals.com> 来访问，不过貌似应该没什么用 -_-!</p></p>
+            <p class="card-text"><p>豆瓣新推出了 相册功能 <a href="http://www.douban.com/mine/photos">http://www.douban.com/mine/photos</a></p>
+<p>毫无新意，浪费服务器带宽，而且根据<a href="http://www.douban.com/group/topic/2937438/">以前的帖子</a>，</p>
+<blockquote>
+<p>一，“豆瓣为什么不能传图片”？</p>
+<p>综合起来的答案有以下类型：<br />
+ 1，图片会占用服务器资源。本来已经很慢了，再慢下去就不能忍了。貌似他们暂时还没有添服务器的打算。</p>
+</blockquote>
+<p>自己扇耳光</p>
+<p>图片有EXIF检查，不是照片，估计不能传上去，也就是贴截屏的图片就没有那么容易了</p></p>
             <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2008-05-31T00:00:00+08:00">2008-05-31</time></p>
+              <p>Posted <time datetime="2008-05-29T00:00:00+08:00">2008-05-29</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
@@ -1207,28 +1229,6 @@ OK<br />
 <p>flickr的速度也超级慢</p>
 <p>真希望有网站能用<a href="http://www.swfupload.org/">flash</a>来做批量上传</p>
 <p>希望<a href="http://www.whatwg.org/specs/web-apps/current-work/">HTML5</a>能够解决这种Web基础设施的<a href="http://mac.6.cn/topic/view/2520.html">尴尬</a>，希望少一点类似XML的<a href="http://xmlsucks.org/">垃圾</a>商业炒作。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2008-05-29T00:00:00+08:00">2008-05-29</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/628575"  rel="bookmark" >
-              <h2 class="card-title">douban开始发瓜咯——评论豆瓣相册功能</h2>
-            </a>
-            <p class="card-text"><p>豆瓣新推出了 相册功能 <a href="http://www.douban.com/mine/photos">http://www.douban.com/mine/photos</a></p>
-<p>毫无新意，浪费服务器带宽，而且根据<a href="http://www.douban.com/group/topic/2937438/">以前的帖子</a>，</p>
-<blockquote>
-<p>一，“豆瓣为什么不能传图片”？</p>
-<p>综合起来的答案有以下类型：<br />
- 1，图片会占用服务器资源。本来已经很慢了，再慢下去就不能忍了。貌似他们暂时还没有添服务器的打算。</p>
-</blockquote>
-<p>自己扇耳光</p>
-<p>图片有EXIF检查，不是照片，估计不能传上去，也就是贴截屏的图片就没有那么容易了</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-05-29T00:00:00+08:00">2008-05-29</time></p>
 <p>archive</p>            </div>
@@ -1741,15 +1741,48 @@ Carly Fiorina曾经对我说过“这个世界上有好想法的人很多，但�
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/544014"  rel="bookmark" >
-              <h2 class="card-title">让squid, privoxy, polipo, varnish见鬼去吧，我用3proxy！</h2>
+            <a href="/archives/627373"  rel="bookmark" >
+              <h2 class="card-title">【原创】Mac OS X Leopard 10.5.2 OSX86 从零入门笔记</h2>
             </a>
-            <p class="card-text"><p>说说为啥子要选择<a href="http://3proxy.ru/">3proxy</a>。说到代理，Windows下第一反映就是CCProxy，当然Linux下就是著名的squid。但是squid其实是一种cache，用来单纯做代理似乎有点浪费，而且我们做代理并不需要很强大的cache功能，相反，很多时候我们希望禁用掉cache，所以我选择了3proxy，只有HTTP代理功能，小巧方便。</p>
-<p>同样的开源产品有TinyProxy，但是TinyProxy不支持父级socks代理，而且安全漏洞也比3proxy多。</p>
-<p>使用3Proxy一般是为了给intranet搭建上游代理为socks的HTTP代理网关。例如TOR或者SSH。</p>
-<p>官方网站：<a href="http://3proxy.ru/">http://3proxy.ru/</a><br />
-下载：<a href="http://3proxy.ru/download/">http://3proxy.ru/download/</a><br />
-配置文档：<a href="http://3proxy.ru/doc/html/man3/3proxy.cfg.3.html">http://3proxy.ru/doc/html/man3/3proxy.cfg.3.html</a></p></p>
+            <p class="card-text"><p><a href="http://isohunt.com/torrent_details/39354389/10.5.2?tab=summary">Kalyway</a>的10.5.2 osx86光盘出来了，下载、安装、折腾期间等屏幕进度条的时间，花了2个小时把《Mac OS X从入门到精通》看完了。感觉和当年看Windows入门差不多。这本书虽然是讲 10.2 的OS X系统，但是不少操作还是通用的，就像当年我抱一本清华的Win98教程学习WinME和XP一样。</p>
+<pre><code>* 首先是按键对应。由于Apple电脑用的不是普通PC的104键盘，所以教程里的按键名称对应如下：
+</code></pre>
+<p>⌥ = Option = Alt<br />
+⇧ = Shift = Shift<br />
+⌘ = Command/Apple = Win<br />
+^ = Control = Ctrl<br />
+  * Ctrl+单击=右击<br />
+  * 多选图标：shift+拖选；⌘+拖选<br />
+  * 有些程序支持“四连击”<br />
+  * ⌘+O激活一个选定图标<br />
+  * Shift+单击 = ⌘+单击<br />
+  * Option+拖动 = 复制。普通拖动：移动。不同盘之间是复制<br />
+  * Option+⌘+拖动：创建alias<br />
+  * 窗口左上角从左至右依次是：关闭 最小 最大<br />
+  * ⌘+W关闭子窗口/标签页 ⌘+M最小化 Shift+⌘+M：慢动作最小化<br />
+  * 窗口上的图标可以当文件拖动<br />
+  * ⌘+拖动窗口标题栏：不激活后面的窗口移动位置<br />
+  * Dock的内容：Application Aliases, Running Applications, File Aliases, Dock Extra(也称Docklings)<br />
+  * 把一个程序放到前台，其他程序放到后台：⌘+Option+Dock单击<br />
+  * ⌘+Tab 切换程序 ⌘+Shift+Tab反向切换<br />
+  * Finder = Mac下的explorer<br />
+  * 强制推出一个程序：⌘+Option+Escape<br />
+  * Option+拖动 = 同时改变几个分栏的宽度<br />
+  * Finder里：Shift+⌘+H打开 <em>H</em> ome。同理有： <em>C</em> omputer， <em>A</em> pplications，Networ <em>k</em> ， <em>U</em> tillities。 <em>G</em> oto Folder<br />
+  * Finder里⌘+I 查看文件信息<br />
+  * 新建文件夹⌘+Shift+N<br />
+  * ⌘+D 建立文件的duplicate<br />
+  * 复制 - 粘贴 - 撤销 ⌘+C ⌘+V ⌘+Z<br />
+  * collection：字体集<br />
+  * admin = wheel = superuser = root<br />
+  * Terminal里：⌘+↑↓滚动屏幕；PageUp/PageDown上下翻页 ⌘+数字 多个Terminal之间切换<br />
+  * Terminal里Ctrl+A 光标移动到开头 Ctrl+E光标移动到结尾<br />
+  * Ctrl+U 清楚光标前所有文字<br />
+  * !50 执行bash history里第50个命令（我连这个都忘记了，囧）<br />
+  * Mac里文件路径表示， : 和 / 的作用一样<br />
+  * ~kir/ k表示用户kirk的主目录</p>
+<p>好了，Mac OS X基本上手了。过几天开始研究<a href="http://en.wikipedia.org/wiki/Cocoa_%28API%29">Cocoa</a>、TextMate、Coda之类好玩的东西。</p>
+<p>还是对OSx86不支持T2300e双核和AD1981HD声卡表示遗憾</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-04-27T00:00:00+08:00">2008-04-27</time></p>
 <p>archive</p>            </div>

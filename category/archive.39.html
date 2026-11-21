@@ -324,6 +324,62 @@ One or more of the modules specified for this handler does not exist in the modu
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/352898"  rel="bookmark" >
+              <h2 class="card-title">[python]ctypes读取Windows剪贴板</h2>
+            </a>
+            <p class="card-text"><p>最近写一个python的截图小工具，需要读取剪贴板，但是懒得用<a href="http://aspn.activestate.com/ASPN/docs/ActivePython/2.2/PyWin32/win32clipboard.html">win32clipboard</a>，于是在<a href="http://aspn.activestate.com/ASPN/Cookbook/Python/">ASPN</a>上找到了一段<a href="http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/528893">用ctypes读取剪贴板</a>的python程序</p>
+<pre><code>#!/usr/bin/env python
+#coding:UTF-8
+
+import win32con, ctypes
+
+&quot;&quot;&quot; Abbreviations for readability &quot;&quot;&quot;
+OpenClipboard = ctypes.windll.user32.OpenClipboard
+EmptyClipboard = ctypes.windll.user32.EmptyClipboard
+GetClipboardData = ctypes.windll.user32.GetClipboardData
+SetClipboardData = ctypes.windll.user32.SetClipboardData
+CloseClipboard = ctypes.windll.user32.CloseClipboard
+GlobalLock = ctypes.windll.kernel32.GlobalLock
+GlobalAlloc = ctypes.windll.kernel32.GlobalAlloc
+GlobalUnlock = ctypes.windll.kernel32.GlobalUnlock
+memcpy = ctypes.cdll.msvcrt.memcpy
+
+&quot;&quot;&quot; Windows Clipboard utilities &quot;&quot;&quot;
+  def GetClipboardText():
+    text = &quot;&quot;
+        if OpenClipboard(0):
+            hClipMem = GetClipboardData(win32con.CF_TEXT)
+                GlobalLock.restype = ctypes.c_char_p
+                text = GlobalLock(hClipMem)
+                GlobalUnlock(hClipMem)
+                CloseClipboard()
+            return text
+
+            def SetClipboardText(text):
+        buffer = ctypes.c_buffer(text)
+        bufferSize = ctypes.sizeof(buffer)
+        hGlobalMem = GlobalAlloc(win32con.GHND, bufferSize)
+        GlobalLock.restype = ctypes.c_void_p
+        lpGlobalMem = GlobalLock(hGlobalMem)
+        memcpy(lpGlobalMem, ctypes.addressof(buffer), bufferSize)
+        GlobalUnlock(hGlobalMem)
+        if OpenClipboard(0):
+            EmptyClipboard()
+                SetClipboardData(win32con.CF_TEXT, hGlobalMem)
+                CloseClipboard()
+
+                print GetClipboardText()
+</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-08-28T00:00:00+08:00">2007-08-28</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/353443"  rel="bookmark" >
               <h2 class="card-title">[python]ctypes调用comdlg32</h2>
             </a>
@@ -444,62 +500,6 @@ ofx.lpstrFilter = filterText
 ctypes.windll.comdlg32.GetOpenFileNameW(ctypes.byref(ofx))
 
 print opath.replace(u&quot;\0&quot;, u&quot;&quot;)
-</code></pre></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-08-28T00:00:00+08:00">2007-08-28</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/352898"  rel="bookmark" >
-              <h2 class="card-title">[python]ctypes读取Windows剪贴板</h2>
-            </a>
-            <p class="card-text"><p>最近写一个python的截图小工具，需要读取剪贴板，但是懒得用<a href="http://aspn.activestate.com/ASPN/docs/ActivePython/2.2/PyWin32/win32clipboard.html">win32clipboard</a>，于是在<a href="http://aspn.activestate.com/ASPN/Cookbook/Python/">ASPN</a>上找到了一段<a href="http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/528893">用ctypes读取剪贴板</a>的python程序</p>
-<pre><code>#!/usr/bin/env python
-#coding:UTF-8
-
-import win32con, ctypes
-
-&quot;&quot;&quot; Abbreviations for readability &quot;&quot;&quot;
-OpenClipboard = ctypes.windll.user32.OpenClipboard
-EmptyClipboard = ctypes.windll.user32.EmptyClipboard
-GetClipboardData = ctypes.windll.user32.GetClipboardData
-SetClipboardData = ctypes.windll.user32.SetClipboardData
-CloseClipboard = ctypes.windll.user32.CloseClipboard
-GlobalLock = ctypes.windll.kernel32.GlobalLock
-GlobalAlloc = ctypes.windll.kernel32.GlobalAlloc
-GlobalUnlock = ctypes.windll.kernel32.GlobalUnlock
-memcpy = ctypes.cdll.msvcrt.memcpy
-
-&quot;&quot;&quot; Windows Clipboard utilities &quot;&quot;&quot;
-  def GetClipboardText():
-    text = &quot;&quot;
-        if OpenClipboard(0):
-            hClipMem = GetClipboardData(win32con.CF_TEXT)
-                GlobalLock.restype = ctypes.c_char_p
-                text = GlobalLock(hClipMem)
-                GlobalUnlock(hClipMem)
-                CloseClipboard()
-            return text
-
-            def SetClipboardText(text):
-        buffer = ctypes.c_buffer(text)
-        bufferSize = ctypes.sizeof(buffer)
-        hGlobalMem = GlobalAlloc(win32con.GHND, bufferSize)
-        GlobalLock.restype = ctypes.c_void_p
-        lpGlobalMem = GlobalLock(hGlobalMem)
-        memcpy(lpGlobalMem, ctypes.addressof(buffer), bufferSize)
-        GlobalUnlock(hGlobalMem)
-        if OpenClipboard(0):
-            EmptyClipboard()
-                SetClipboardData(win32con.CF_TEXT, hGlobalMem)
-                CloseClipboard()
-
-                print GetClipboardText()
 </code></pre></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-08-28T00:00:00+08:00">2007-08-28</time></p>
@@ -1279,105 +1279,6 @@ E0 00</p>
 <p>dir /s c:\windows\msv1_0.dll</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-08-24T00:00:00+08:00">2007-08-24</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/340447"  rel="bookmark" >
-              <h2 class="card-title">用python写MIDI电子琴</h2>
-            </a>
-            <p class="card-text"><p>想起了VB时代调用 <a href="file:///C:/Windows/System32/winmm.dll">winmm.dll</a> 制作电子琴，觉得比较好玩，于是用python也写了一个电子琴的原型。有时间在用wx做个GUI吧 :)</p>
-<pre><code class="language-python">#!/usr/bin/env python
-#coding:UTF-8
-
-From ctypes import *
-import time
-
-hMidiOut=c_long() #系统给MIDI请求分配一个句柄
-dMidi=windll.winmm #调用的 winmm.dll
-dMidi.midiOutOpen(byref(hMidiOut), -1, 0,0,0) #打开一个MIDI输出设备，句柄为hMidiOut
-
-baseNote = 60 #这个应该是C调
-volume = 127 #音量最大
-channel = 0 #MIDI的第一个乐器：piano，改成9就是drums
-
-scale = (0, 2, 4, 5, 7, 9, 11, 12, 11, 9, 7, 5, 4, 2, 0)
-print scale
-for note in scale:
-# play a note
-midimsg = 0x90 + ((baseNote + note) * 0x100) + (volume * 0x10000) + channel
-rc = dMidi.midiOutShortMsg (hMidiOut, midimsg)
-time.sleep(0.25)
-# turn it off
-midimsg = 0x80 + ((baseNote + note) * 0x100) + channel
-rc = dMidi.midiOutShortMsg (hMidiOut, midimsg)
-
-dMidi.midiOutClose(hMidiOut)
-
-</code></pre></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-08-23T00:00:00+08:00">2007-08-23</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/338830"  rel="bookmark" >
-              <h2 class="card-title">在GTalk上听广播，打电话</h2>
-            </a>
-            <p class="card-text"><p><a href="http://gtalk2voip.com/">GTalk2VoIP.com</a>推出了一个比较好玩的GTalk机器人，在GTalk添加<a href="mailto:service@gtalk2voip.com">service@gtalk2voip.com</a>为好友，点击Call就可以跟这个机器人玩了。</p>
-<p>service: Press CALL to make call... Offered by GTalk2VoIP Gateway. <a href="http://www.gtalk2voip.com//">http://www.gtalk2voip.com//</a></p>
-<p>Calling service@gtalk2voip.com at 2:33 PM on Thursday</p>
-<p>service: .<br />
-<em>====== AVAILABLE COMMANDS ======</em><br />
-<strong>HELP</strong> - Display this message.<br />
-<strong>MYPAGE</strong> - Display URL to your personal account page.<br />
-<strong>WEBCALL</strong> - Display URL to your personal Web Call.<br />
-<strong>DICT</strong> <em>word</em> - Make a request to DICT.ORG for word definitions. 传说中的查单词功能<br />
-<strong>MSG</strong> <em>to</em> <em>text</em> - Send off-line message <em>text</em> to user <em>to</em> .<br />
-<strong>IM</strong> <em>to</em> <em>text</em> - Send Instant Message <em>text</em> to user <em>to</em> . Example: <strong>IM msn:billgates@hotmail.com Hello Billy!</strong><br />
-<strong>VMLIST</strong> - Display content of your voice mail box.<br />
-<strong>VMPLAY</strong> <em>id</em> - Play voice mail message number <em>id</em> .<br />
-<strong>VMDEL</strong> <em>id</em> - Delete voice mail message number <em>id</em><br />
-<strong>VMSEND</strong> <em>user</em> - Send voice mail to other gtalk <em>user</em> .<br />
-<strong>CONF</strong> - Create conference room for you. Room cookie will be sent back.<br />
-<strong>JOIN</strong> <em>cookie</em> - Join someone's else conference room using <em>cookie</em> .</p>
-<p><strong>COST</strong> <em>phone</em> - Display amount of credits charged for 1min unit while calling to <em>phone</em> . Example, to figure price for calling american 800 services type: <strong>COST 1-800</strong><br />
-<strong>CREDITS</strong> - Go buy more credits.<br />
-<strong>CALL</strong> <em>phone</em> <em>[via]</em> - Make an outgoing voice call to telephone number <em>phone</em> which is represented in <strong>E.164</strong> format. Example, to call Google type: CALL 1-650-253-0000 . You can also setup a registered service provider name in optional <em>via</em> parameter to place call throu. 拨打固定电话的功能<br />
-<strong>CALL</strong> <em>sipuser@sipprovider.com</em> - Make an outgoing voice call to SIP phone <em>sipuser@sipprovider.com</em> . Example: CALL pbx@stalker.com .<br />
-<em>DTMF_TONES</em> : Type in any string of digits or Asterisk or # sign while talking to send DTMF tones.<br />
-<strong>SMS</strong> <em>phone_number</em> <em>text</em> - Send <em>text</em> an SMS message to <em>phone</em> . Example: SMS +1-234-5678901 Hello, just testing<br />
-<em>============== END =============</em></p>
-<p>如果要听在线广播的话，在聊天窗口输入radio，机器人回复</p>
-<p><strong>LIST OF AVAILABLE RADIO STATIONS:</strong></p>
-<p><strong>100</strong> - 181.fm - Kickin' Country (Todays Best Country!), <a href="http://scfire-chi0l-1.stream.aol.com/stream/1075">http://scfire-chi0l-1.stream.aol.com:80/stream/1075</a><br />
-<strong>101</strong> - 1.FM - Country, <a href="http://64.62.194.11:8020/">http://64.62.194.11:8020/</a><br />
-<strong>102</strong> - Atlantic Sound Factory - ASF Radio, <a href="http://69.31.50.146/">http://69.31.50.146:80/</a><br />
-<strong>103</strong> - 100.7 Jack FM, San Diego, <a href="http://38.116.132.31:9024/">http://38.116.132.31:9024/</a><br />
-<strong>104</strong> - 102.7 FM The Fringe, <a href="http://64.72.124.89:8134/">http://64.72.124.89:8134/</a><br />
-<strong>105</strong> - 181.fm - The Buzz (Your Alternative Station!), <a href="http://scfire-nyk0l-1.stream.aol.com/stream/1022">http://scfire-nyk0l-1.stream.aol.com:80/stream/1022</a><br />
-<strong>106</strong> - 181.fm - The Mix Channel (70s, 80s, 90s and Today's Best Music) , <a href="http://208.53.158.167:8032/">http://208.53.158.167:8032/</a><br />
-<strong>107</strong> - 181.fm - The Eagle (Your Home For REAL Classic Rock!), <a href="http://208.53.158.126:8030/">http://208.53.158.126:8030/</a><br />
-<strong>108</strong> - .977 The 80s Channel, <a href="http://scfire-ntc0l-2.stream.aol.com/stream/1040">http://scfire-ntc0l-2.stream.aol.com:80/stream/1040</a><br />
-<strong>109</strong> - 1.FM - Channel X, <a href="http://209.51.161.54:8072/">http://209.51.161.54:8072/</a><br />
-<strong>110</strong> - Teen Taal Radio (HINDI), <a href="http://213.251.129.40:8022/">http://213.251.129.40:8022/</a><br />
-<strong>111</strong> - Radio Helsinki - 92.6 MHz, <a href="http://88.198.49.11:8000/live56.ogg">http://88.198.49.11:8000/live56.ogg</a><br />
-<strong>201</strong> - KCRW World News, <a href="http://scfire-ntc0l-2.stream.aol.com/stream/1047">http://scfire-ntc0l-2.stream.aol.com:80/stream/1047</a><br />
-<strong>202</strong> - Sporting News Radio, <a href="http://scfire-chi0l-2.stream.aol.com/stream/1057">http://scfire-chi0l-2.stream.aol.com:80/stream/1057</a><br />
-<strong>203</strong> - KPFK - Southern California's 90.7 FM News, Talk &amp; Music, <a href="http://64.27.31.66/">http://64.27.31.66:80/</a><br />
-<strong>204</strong> - WBUR 90.9 FM, Boston's NPR News Station, <a href="http://205.234.188.21/">http://205.234.188.21:80/</a></p>
-<p>To connect, type <strong>RADIO <em>number</em></strong> where <code>blogid</code>=7487 AND <em>number</em> is a station numerical ID from the list above.</p>
-<p>那么，输入 <code>Radio 电台ID</code> 就可以开始听广播玩了。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-08-23T00:00:00+08:00">2007-08-23</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
@@ -3011,6 +2912,105 @@ dMidi.midiOutClose(hMidiOut)
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/338830"  rel="bookmark" >
+              <h2 class="card-title">在GTalk上听广播，打电话</h2>
+            </a>
+            <p class="card-text"><p><a href="http://gtalk2voip.com/">GTalk2VoIP.com</a>推出了一个比较好玩的GTalk机器人，在GTalk添加<a href="mailto:service@gtalk2voip.com">service@gtalk2voip.com</a>为好友，点击Call就可以跟这个机器人玩了。</p>
+<p>service: Press CALL to make call... Offered by GTalk2VoIP Gateway. <a href="http://www.gtalk2voip.com//">http://www.gtalk2voip.com//</a></p>
+<p>Calling service@gtalk2voip.com at 2:33 PM on Thursday</p>
+<p>service: .<br />
+<em>====== AVAILABLE COMMANDS ======</em><br />
+<strong>HELP</strong> - Display this message.<br />
+<strong>MYPAGE</strong> - Display URL to your personal account page.<br />
+<strong>WEBCALL</strong> - Display URL to your personal Web Call.<br />
+<strong>DICT</strong> <em>word</em> - Make a request to DICT.ORG for word definitions. 传说中的查单词功能<br />
+<strong>MSG</strong> <em>to</em> <em>text</em> - Send off-line message <em>text</em> to user <em>to</em> .<br />
+<strong>IM</strong> <em>to</em> <em>text</em> - Send Instant Message <em>text</em> to user <em>to</em> . Example: <strong>IM msn:billgates@hotmail.com Hello Billy!</strong><br />
+<strong>VMLIST</strong> - Display content of your voice mail box.<br />
+<strong>VMPLAY</strong> <em>id</em> - Play voice mail message number <em>id</em> .<br />
+<strong>VMDEL</strong> <em>id</em> - Delete voice mail message number <em>id</em><br />
+<strong>VMSEND</strong> <em>user</em> - Send voice mail to other gtalk <em>user</em> .<br />
+<strong>CONF</strong> - Create conference room for you. Room cookie will be sent back.<br />
+<strong>JOIN</strong> <em>cookie</em> - Join someone's else conference room using <em>cookie</em> .</p>
+<p><strong>COST</strong> <em>phone</em> - Display amount of credits charged for 1min unit while calling to <em>phone</em> . Example, to figure price for calling american 800 services type: <strong>COST 1-800</strong><br />
+<strong>CREDITS</strong> - Go buy more credits.<br />
+<strong>CALL</strong> <em>phone</em> <em>[via]</em> - Make an outgoing voice call to telephone number <em>phone</em> which is represented in <strong>E.164</strong> format. Example, to call Google type: CALL 1-650-253-0000 . You can also setup a registered service provider name in optional <em>via</em> parameter to place call throu. 拨打固定电话的功能<br />
+<strong>CALL</strong> <em>sipuser@sipprovider.com</em> - Make an outgoing voice call to SIP phone <em>sipuser@sipprovider.com</em> . Example: CALL pbx@stalker.com .<br />
+<em>DTMF_TONES</em> : Type in any string of digits or Asterisk or # sign while talking to send DTMF tones.<br />
+<strong>SMS</strong> <em>phone_number</em> <em>text</em> - Send <em>text</em> an SMS message to <em>phone</em> . Example: SMS +1-234-5678901 Hello, just testing<br />
+<em>============== END =============</em></p>
+<p>如果要听在线广播的话，在聊天窗口输入radio，机器人回复</p>
+<p><strong>LIST OF AVAILABLE RADIO STATIONS:</strong></p>
+<p><strong>100</strong> - 181.fm - Kickin' Country (Todays Best Country!), <a href="http://scfire-chi0l-1.stream.aol.com/stream/1075">http://scfire-chi0l-1.stream.aol.com:80/stream/1075</a><br />
+<strong>101</strong> - 1.FM - Country, <a href="http://64.62.194.11:8020/">http://64.62.194.11:8020/</a><br />
+<strong>102</strong> - Atlantic Sound Factory - ASF Radio, <a href="http://69.31.50.146/">http://69.31.50.146:80/</a><br />
+<strong>103</strong> - 100.7 Jack FM, San Diego, <a href="http://38.116.132.31:9024/">http://38.116.132.31:9024/</a><br />
+<strong>104</strong> - 102.7 FM The Fringe, <a href="http://64.72.124.89:8134/">http://64.72.124.89:8134/</a><br />
+<strong>105</strong> - 181.fm - The Buzz (Your Alternative Station!), <a href="http://scfire-nyk0l-1.stream.aol.com/stream/1022">http://scfire-nyk0l-1.stream.aol.com:80/stream/1022</a><br />
+<strong>106</strong> - 181.fm - The Mix Channel (70s, 80s, 90s and Today's Best Music) , <a href="http://208.53.158.167:8032/">http://208.53.158.167:8032/</a><br />
+<strong>107</strong> - 181.fm - The Eagle (Your Home For REAL Classic Rock!), <a href="http://208.53.158.126:8030/">http://208.53.158.126:8030/</a><br />
+<strong>108</strong> - .977 The 80s Channel, <a href="http://scfire-ntc0l-2.stream.aol.com/stream/1040">http://scfire-ntc0l-2.stream.aol.com:80/stream/1040</a><br />
+<strong>109</strong> - 1.FM - Channel X, <a href="http://209.51.161.54:8072/">http://209.51.161.54:8072/</a><br />
+<strong>110</strong> - Teen Taal Radio (HINDI), <a href="http://213.251.129.40:8022/">http://213.251.129.40:8022/</a><br />
+<strong>111</strong> - Radio Helsinki - 92.6 MHz, <a href="http://88.198.49.11:8000/live56.ogg">http://88.198.49.11:8000/live56.ogg</a><br />
+<strong>201</strong> - KCRW World News, <a href="http://scfire-ntc0l-2.stream.aol.com/stream/1047">http://scfire-ntc0l-2.stream.aol.com:80/stream/1047</a><br />
+<strong>202</strong> - Sporting News Radio, <a href="http://scfire-chi0l-2.stream.aol.com/stream/1057">http://scfire-chi0l-2.stream.aol.com:80/stream/1057</a><br />
+<strong>203</strong> - KPFK - Southern California's 90.7 FM News, Talk &amp; Music, <a href="http://64.27.31.66/">http://64.27.31.66:80/</a><br />
+<strong>204</strong> - WBUR 90.9 FM, Boston's NPR News Station, <a href="http://205.234.188.21/">http://205.234.188.21:80/</a></p>
+<p>To connect, type <strong>RADIO <em>number</em></strong> where <code>blogid</code>=7487 AND <em>number</em> is a station numerical ID from the list above.</p>
+<p>那么，输入 <code>Radio 电台ID</code> 就可以开始听广播玩了。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-08-23T00:00:00+08:00">2007-08-23</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/340447"  rel="bookmark" >
+              <h2 class="card-title">用python写MIDI电子琴</h2>
+            </a>
+            <p class="card-text"><p>想起了VB时代调用 <a href="file:///C:/Windows/System32/winmm.dll">winmm.dll</a> 制作电子琴，觉得比较好玩，于是用python也写了一个电子琴的原型。有时间在用wx做个GUI吧 :)</p>
+<pre><code class="language-python">#!/usr/bin/env python
+#coding:UTF-8
+
+From ctypes import *
+import time
+
+hMidiOut=c_long() #系统给MIDI请求分配一个句柄
+dMidi=windll.winmm #调用的 winmm.dll
+dMidi.midiOutOpen(byref(hMidiOut), -1, 0,0,0) #打开一个MIDI输出设备，句柄为hMidiOut
+
+baseNote = 60 #这个应该是C调
+volume = 127 #音量最大
+channel = 0 #MIDI的第一个乐器：piano，改成9就是drums
+
+scale = (0, 2, 4, 5, 7, 9, 11, 12, 11, 9, 7, 5, 4, 2, 0)
+print scale
+for note in scale:
+# play a note
+midimsg = 0x90 + ((baseNote + note) * 0x100) + (volume * 0x10000) + channel
+rc = dMidi.midiOutShortMsg (hMidiOut, midimsg)
+time.sleep(0.25)
+# turn it off
+midimsg = 0x80 + ((baseNote + note) * 0x100) + channel
+rc = dMidi.midiOutShortMsg (hMidiOut, midimsg)
+
+dMidi.midiOutClose(hMidiOut)
+
+</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-08-23T00:00:00+08:00">2007-08-23</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/337502"  rel="bookmark" >
               <h2 class="card-title">Google Earth更新了，我也跟进</h2>
             </a>
@@ -3146,6 +3146,23 @@ X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6000.16480</p>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/262082"  rel="bookmark" >
+              <h2 class="card-title">Ubuntu上漫画了</h2>
+            </a>
+            <p class="card-text"><p><a href="http://ubuntudaily.com/wp-content/uploads/1185408112656.jpg"><img alt="" src="http://ubuntudaily.com/wp-content/uploads/1185408112656.jpg" /></a></p>
+<p>Ubuntu 在漫画 Marvel Comic Mighty Avengers 的第四版中出现了。</p>
+<p>可以看到启动管理器GRUB里的内核列表，还有一个戏剧性的“Access Denied”消息。</p>
+<p>通常这种情况可以通过Recovery Mode进入root的shell来恢复系统</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-07-27T00:00:00+08:00">2007-07-27</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/261743"  rel="bookmark" >
               <h2 class="card-title">IE7不经提示关闭浏览器窗口的Javascript</h2>
             </a>
@@ -3157,23 +3174,6 @@ X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6000.16480</p>
 &lt;!--IE7下可以用这样的方法--&gt;
 &lt;a href=&quot;javascript:window.open('','_top'); window.top.close();&quot;&gt;Close IE7&lt;/a&gt;
 </code></pre></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-07-27T00:00:00+08:00">2007-07-27</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/262082"  rel="bookmark" >
-              <h2 class="card-title">Ubuntu上漫画了</h2>
-            </a>
-            <p class="card-text"><p><a href="http://ubuntudaily.com/wp-content/uploads/1185408112656.jpg"><img alt="" src="http://ubuntudaily.com/wp-content/uploads/1185408112656.jpg" /></a></p>
-<p>Ubuntu 在漫画 Marvel Comic Mighty Avengers 的第四版中出现了。</p>
-<p>可以看到启动管理器GRUB里的内核列表，还有一个戏剧性的“Access Denied”消息。</p>
-<p>通常这种情况可以通过Recovery Mode进入root的shell来恢复系统</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-07-27T00:00:00+08:00">2007-07-27</time></p>
 <p>archive</p>            </div>
@@ -4464,6 +4464,51 @@ It has powerful features such as "Glob-style pattern matching", "Scan selection 
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/251544"  rel="bookmark" >
+              <h2 class="card-title">命令行字体注册工具RegFont.vbs v1.0 [2007-5-7]</h2>
+            </a>
+            <p class="card-text"><p>运行环境：WinNT/Win2K/WinXP/Win2003<br />
++ 使用方法：命令行输入RegFont.vbs 字体文件名回车即可。(例如：RegFont.vbs FZ.TTF)程序<br />
+会自动移动FZ.TTF到系统的FONTS目录，并对字体进行注册，完成后即可<br />
+使用该字体。也可以在windows里头直接将某个TTF托拽到REGFONT进行注册。</p>
+<p>regfont xx.ttf 复制xx.ttf并注册<br />
+regfont xx.ttf /m 移动xx.ttf并注册<br />
+补充：<br />
+regfont xx.ttf /i 安装xx.ttf不复制，仅用快捷方式安装<br />
+regfont xx.ttf /r 安装xx.ttf，仅对本次会话有效，重启后注销。</p>
+<p>�</p>
+<pre><code>Set objShell=CreateObject(&quot;Shell.Application&quot;)
+Set objWSH=CreateObject(&quot;WScript.Shell&quot;)
+Set objFSO=CreateObject(&quot;Scripting.FileSystemObject&quot;)
+Set argv=WScript.Arguments
+set objFsoFontFile=objFSO.GetFile(argv(0))
+Set objFontFile=objShell.NameSpace(CStr(objFsoFontFile.ParentFolder)).ParseName(objFsoFontFile.Name)
+Set objSysFontsDir=objShell.NameSpace(&quot;shell:fonts&quot;)
+
+If argv.Length=1 Then
+    Call objSysFontsDir.CopyHere(objFontFile)
+ElseIf argv(1)=&quot;/i&quot; Then
+    strFontTitle=objCurrDir.GetDetailsOf(objFontFile,21)  '这个地方调用explorer获得字体标题，非Vista可能不是21
+    Call objWSH.RegWrite(&quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts\&quot; &amp; strFontTitle &amp; &quot; (TrueType)&quot;,objFontFile.Path)
+    '需要重启才能生效，vbs无法调用API，sigh～～或许rundll32可以？
+ElseIf argv(1)=&quot;/m&quot; Then
+    objSysFontsDir.MoveHere(objFontFile)
+ElseIf argv(1)=&quot;/r&quot; Then
+    WScript.Echo &quot;Not implemented&quot;
+Else
+    WScript.Echo &quot;RegFont.vbs V1.0&quot;
+End If
+</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-05-07T00:00:00+08:00">2007-05-07</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/251545"  rel="bookmark" >
               <h2 class="card-title">【原】StarDict 2.4.8 绿色精简便携版 for Win32/Windows ，免GTK</h2>
             </a>
@@ -4528,51 +4573,6 @@ lib\pango\1.5.0\modules\pango-basic-win32.dll</p>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/251544"  rel="bookmark" >
-              <h2 class="card-title">命令行字体注册工具RegFont.vbs v1.0 [2007-5-7]</h2>
-            </a>
-            <p class="card-text"><p>运行环境：WinNT/Win2K/WinXP/Win2003<br />
-+ 使用方法：命令行输入RegFont.vbs 字体文件名回车即可。(例如：RegFont.vbs FZ.TTF)程序<br />
-会自动移动FZ.TTF到系统的FONTS目录，并对字体进行注册，完成后即可<br />
-使用该字体。也可以在windows里头直接将某个TTF托拽到REGFONT进行注册。</p>
-<p>regfont xx.ttf 复制xx.ttf并注册<br />
-regfont xx.ttf /m 移动xx.ttf并注册<br />
-补充：<br />
-regfont xx.ttf /i 安装xx.ttf不复制，仅用快捷方式安装<br />
-regfont xx.ttf /r 安装xx.ttf，仅对本次会话有效，重启后注销。</p>
-<p>�</p>
-<pre><code>Set objShell=CreateObject(&quot;Shell.Application&quot;)
-Set objWSH=CreateObject(&quot;WScript.Shell&quot;)
-Set objFSO=CreateObject(&quot;Scripting.FileSystemObject&quot;)
-Set argv=WScript.Arguments
-set objFsoFontFile=objFSO.GetFile(argv(0))
-Set objFontFile=objShell.NameSpace(CStr(objFsoFontFile.ParentFolder)).ParseName(objFsoFontFile.Name)
-Set objSysFontsDir=objShell.NameSpace(&quot;shell:fonts&quot;)
-
-If argv.Length=1 Then
-    Call objSysFontsDir.CopyHere(objFontFile)
-ElseIf argv(1)=&quot;/i&quot; Then
-    strFontTitle=objCurrDir.GetDetailsOf(objFontFile,21)  '这个地方调用explorer获得字体标题，非Vista可能不是21
-    Call objWSH.RegWrite(&quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts\&quot; &amp; strFontTitle &amp; &quot; (TrueType)&quot;,objFontFile.Path)
-    '需要重启才能生效，vbs无法调用API，sigh～～或许rundll32可以？
-ElseIf argv(1)=&quot;/m&quot; Then
-    objSysFontsDir.MoveHere(objFontFile)
-ElseIf argv(1)=&quot;/r&quot; Then
-    WScript.Echo &quot;Not implemented&quot;
-Else
-    WScript.Echo &quot;RegFont.vbs V1.0&quot;
-End If
-</code></pre></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-05-07T00:00:00+08:00">2007-05-07</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/archives/251172"  rel="bookmark" >
               <h2 class="card-title">Launch two GTalk at once</h2>
             </a>
@@ -4587,33 +4587,6 @@ End If
  Note: You can also make a conference call with more people, just have need to have one less instance than the amount of people that exist.<br />
 <a href="http://www.fluxiontech.com/?p=64">http://www.fluxiontech.com/?p=64</a></p>
 </blockquote></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-05-05T00:00:00+08:00">2007-05-05</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/251171"  rel="bookmark" >
-              <h2 class="card-title">GENERAL MOTORS VS. MICROSOFT.</h2>
-            </a>
-            <p class="card-text"><p>For all of us who feel only the deepest love and affection for the way computers have enhanced our lives, read on.</p>
-<p>At a recent computer expo (COMDEX), Bill Gates reportedly compared the computer industry with the auto industry and stated, "If GM had kept up with technology like the computer industry has, we would all be driving $25.00 cars that got 1,000 miles to the gallon."</p>
-<p>In response to Bill's comments, General Motors issued a press release stating:</p>
-<p>If GM had developed technology like Microsoft, we would all be driving cars with the following characteristics (and I just love this part):</p>
-<p>1. For no reason whatsoever, your car would crash . . . twice a day.</p>
-<p>2. Every time they repainted the lines in the road, you would have to buy a new car.</p>
-<p>3. Occasionally your car would die on the freeway for no reason. You would have to pull to the side of the road, close all of the windows, shut off the car, restart it and reopen the windows before you could continue. For some reason you would simply accept this.</p>
-<p>4. Occasionally, executing a maneuver such as a left turn would cause your car to shut down and refuse to restart, in which case you would have to reinstall the engine.</p>
-<p>5. Macintosh would make a car that was powered by the sun, was reliable, five times as fast and twice as easy to drive - but would run on only five percent of the roads.</p>
-<p>6. The oil, water temperature, and alternator warning lights would all be replaced by a single "This Car Has Performed An Illegal Operation" warning light.</p>
-<p>7. The airbag system would ask "Are you sure?" before deploying.</p>
-<p>8. Occasionally, for no reason whatsoever, your car would lock you out and refuse to let you in until you simultaneously lifted the door handle, turned the key and grabbed hold of the radio antenna.</p>
-<p>9. Every time a new car was introduced car buyers would have to learn how to drive all over again because none of the controls would operate in the same manner as the old car.</p>
-<p>10. You'd have to press the "Start" button to turn the engine off.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-05-05T00:00:00+08:00">2007-05-05</time></p>
 <p>archive</p>            </div>
@@ -4651,6 +4624,33 @@ to offer our service everywhere.</p>
 <p>We share your disappointment and greatly appreciate your understanding.</p>
 <p>Sincerely,</p>
 <p>Tim Westergren</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-05-05T00:00:00+08:00">2007-05-05</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/251171"  rel="bookmark" >
+              <h2 class="card-title">GENERAL MOTORS VS. MICROSOFT.</h2>
+            </a>
+            <p class="card-text"><p>For all of us who feel only the deepest love and affection for the way computers have enhanced our lives, read on.</p>
+<p>At a recent computer expo (COMDEX), Bill Gates reportedly compared the computer industry with the auto industry and stated, "If GM had kept up with technology like the computer industry has, we would all be driving $25.00 cars that got 1,000 miles to the gallon."</p>
+<p>In response to Bill's comments, General Motors issued a press release stating:</p>
+<p>If GM had developed technology like Microsoft, we would all be driving cars with the following characteristics (and I just love this part):</p>
+<p>1. For no reason whatsoever, your car would crash . . . twice a day.</p>
+<p>2. Every time they repainted the lines in the road, you would have to buy a new car.</p>
+<p>3. Occasionally your car would die on the freeway for no reason. You would have to pull to the side of the road, close all of the windows, shut off the car, restart it and reopen the windows before you could continue. For some reason you would simply accept this.</p>
+<p>4. Occasionally, executing a maneuver such as a left turn would cause your car to shut down and refuse to restart, in which case you would have to reinstall the engine.</p>
+<p>5. Macintosh would make a car that was powered by the sun, was reliable, five times as fast and twice as easy to drive - but would run on only five percent of the roads.</p>
+<p>6. The oil, water temperature, and alternator warning lights would all be replaced by a single "This Car Has Performed An Illegal Operation" warning light.</p>
+<p>7. The airbag system would ask "Are you sure?" before deploying.</p>
+<p>8. Occasionally, for no reason whatsoever, your car would lock you out and refuse to let you in until you simultaneously lifted the door handle, turned the key and grabbed hold of the radio antenna.</p>
+<p>9. Every time a new car was introduced car buyers would have to learn how to drive all over again because none of the controls would operate in the same manner as the old car.</p>
+<p>10. You'd have to press the "Start" button to turn the engine off.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-05-05T00:00:00+08:00">2007-05-05</time></p>
 <p>archive</p>            </div>
