@@ -54,6 +54,238 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stderr-20"  rel="bookmark" >
+              <h2 class="card-title">理解LLM的范式——它就是个差分机？</h2>
+            </a>
+            <p class="card-text"><p>作为一个外行，我一直对“AI”的魔力感到惊奇，我一度以为神经网络一层一层传播，可以看成某种有限步骤的图灵机。AI提醒我不要瞎类比，图灵机左移右移是离散，确定的逻辑，神经网络是fp32上连续的概率映射。</p>
+<p>后来稍微深入了解了一下，认识到对于一个深度固定的 Transformer 模型（比如 96 层的 GPT-4），它的单次前向传播算是一个深度固定的有向无环图（DAG）。所谓的 predict next token，可以粗糙理解成</p>
+<pre><code>  next_token = eval(model_weights, history+input)
+</code></pre>
+<p>这里最奇特的算是：自回归（Autoregression）。传统的冯·诺依曼架构中，指令（Code）和数据（Data）是分开的。但在 LLM 中，上下文是动态的指令+数据。输出什么样话，什么时机结束。LLM得自己想办法把画圆回来，并且知道什么时候该停止吐词。</p>
+<p>这种 控制面 和 数据面 混合的做法让我感到非常不适，也是诸多prompt injection问题无解的根源</p>
+<p>不过一旦get到这个范式，我想到一个有趣的类比，一般的 gpt 是 dcoder-only，VRAM里权重就如同 .exe 加载到内存里一样，是永久不会动的；kvcache才是 <code>malloc</code> 去操作的独占内存。BERT那种 encoder-decoder 模型，算是一个可以自我修改的.exe？</p>
+<p>如果拿python/java对比，LLM就是显存里一些可以边运行边修改的bytecode，只不过是fp而不是指令和数据</p>
+<p>后来又了解到，要纯从设计上来说，RNN是明显超过transformer架构的。但是 RNN 死穴很明显，第一计算精度传播越到后面误差越大，第二它不知道什么时候停下来。第三它是串行的。越到后面越慢</p>
+<p>transformer 算是一种不是那么直接，但是非常能“并行” scale 的体系。 自注意力解决了时间上的并行，让长度不再是障碍，Multi-Head Attention 解决了空间上的并行，让深度和广度不再是障碍，而这一切都只需要暴力算矩阵乘法 <code>GEMM</code>。</p>
+<p>我了解到这一步的时候，忽然回忆起，这不就是google当年解决ranking的套路吗？虽然把整个互联网看成一个巨大的邻接矩阵的做法，看上去更笨更重，但是能 scale 啊</p>
+<p>基于上面的一些认知，我明确<a href="/2026/stderr-11">看好taalas</a></p>
+<hr />
+<p>最近不知道看到什么资料，突然想起一个圣遗物——差分机</p>
+<blockquote>
+<p>在 19 世纪，航海、天文、甚至银行算账全靠人工查阅印制的《数学表》（对数表、三角函数表等）。但当时负责计算的“人类计算员（Computers）”极其容易算错或抄错。巴贝奇恶心透了这种低效，于是想：“为什么不用蒸汽机来摇出准确的数字？”<br />
+核心思想是，任何复杂的低阶多项式函数，只要你求导（做差分）足够多次，最终它的“差分值”都会变成一个常数。<br />
+那么可以反推，既然最后是常数，那只要把这个常数固定住，反向一层一层做加法，就能像堆积木一样，把所有复杂的乘方运算全算出来！<br />
+差分机一号（Difference Engine No.1）由英国政府在1822年出资，工匠约瑟夫·克莱芒打造，预计完工需要25,000个零件，重达4吨，可计算到第六阶差，最高可以存16位数（相当于千兆的数）<br />
+要计算一个多项式  f(x) ，它不直接算乘法，而是构造一个 差分表。<br />
+初始值  f(0), Δf(0), Δ²f(0), ……<br />
+每次步进  x → x+1 只需做加法：<br />
+<code>f ←  f + Δf</code><br />
+<code>Δf ← Δf + Δ²f</code><br />
+ 等等<br />
+我们用一个最简单的 2阶多项式为例 f(x) = x²<br />
+让 x 从 1 开始，步长为 1 地往下算</p>
+<table>
+<thead>
+<tr>
+<th>x 的值</th>
+<th>函数结果 f(x)（原函数）</th>
+<th>一阶差分 Δ₁（相当于一阶导数）</th>
+<th>二阶差分 Δ₂（相当于二阶导数）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1² = <strong>1</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>2² = <strong>4</strong></td>
+<td>4 − 1 = <strong>3</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td>3² = <strong>9</strong></td>
+<td>9 − 4 = <strong>5</strong></td>
+<td>5 − 3 = <strong>2</strong>（变成常数了！）</td>
+</tr>
+<tr>
+<td>4</td>
+<td>4² = <strong>16</strong></td>
+<td>16 − 9 = <strong>7</strong></td>
+<td>7 − 5 = <strong>2</strong>（永远是 2！）</td>
+</tr>
+<tr>
+<td>5</td>
+<td>5² = <strong>25</strong></td>
+<td>25 − 16 = <strong>9</strong></td>
+<td>9 − 7 = <strong>2</strong>（闭眼都是 2！）</td>
+</tr>
+</tbody>
+</table>
+<p>那个最终的常数 <code>2</code>这就是巴贝奇的“高地”</p>
+</blockquote>
+<p>巴贝奇那个年代不知道会不会泰勒展开，能展开这玩意不就是万能计算器了？</p>
+<p>冯诺依曼说过，五个参数鼻子翘，300B的参数不就能描绘世间万物了？</p>
+<p>然后突然<strong>注意到</strong>那个 常数2 不就是个 <code>eos_token</code> ？ 卧草，这不和梯度下降，reward model 串起来了吗？</p>
+<p>所以我今天宣布，LLM（特别是 Reasoning Model）在物理和数学本质上，就是一个高维的、基于概率特征的现代差分机！</p>
+<hr />
+<p>既然有 差分机 这个范式了，那么下一步就很自然了：</p>
+<p>AI Agent 领域遭遇的 State 瓶颈，本质上就是试图在没有底层硬件支持的情况下，用外部工程硬生生模拟出 <strong>分析机</strong> 的“条件分支（If-Else）”与“循环（Loop）”</p>
+<p>可能很多人问：“什么是分析机？” 实际上，巴贝奇当年的 差分机 是个典型的钓鱼工程，烂尾项目</p>
+<blockquote>
+<p>差分机因为大量精密零件制造困难，加上巴贝奇不停地边制造边修改设计，从1822到1832年的十年间，巴贝奇只能拿出完成品的1/7部分来展示<br />
+在不断延后完成期限的严重超支后，英国政府于1842年的最后清算发现整个计划一共让国库支出了￡17,500，一万两千多个还没用到的精密零件后来都被熔解报废<br />
+差分机二号（或称大型差分机）在1849年设计出来，却在有生之年只实作了很小一部分。这台机器可以进行相当复杂的数学计算，具有31位元精度<br />
+差分机项目过程中，巴贝奇意识到建造一种更加通用的机器（即所谓的分析机）是可行的，于是便于1833年开始了分析机的设计<br />
+分析机由蒸汽机驱动，大约有30米长、10米宽。它的输入由程序和数据组成，并使用打孔卡输入，这种输入方法被当时的织布机广泛采用。<br />
+分析机通过一台打印机、一个弯曲的绘图仪和一个铃铛输出，也可以在纸上打孔以便日后读取。分析机采取普通的十进制定点计数法<br />
+它的“记忆体”大约可以存储1000个50位的十进制数（共约16.2kB）。有一个算术逻辑单元可以进行四则运算、比较和求平方根操作<br />
+分析机使用的编程语言与今天的汇编语言类似，支持<strong>循环语句</strong>和<strong>条件分支</strong>，因此这门语言被认为是图灵完备的。<br />
+分析机采用三种不同的打孔卡和读卡器来区分算术运算、数字常量和存储的指令，以此实现了数字在存储器和运算单元之间的加载和存储操作。<br />
+巴贝奇在1837至1840年间写下了24份程序，这些程序可以计算多项式、迭代公式、高斯消元法和伯努利数</p>
+</blockquote>
+<p>划重点：</p>
+<ul>
+<li>if</li>
+<li>loop</li>
+<li>memory</li>
+</ul>
+<p>扩展 <code>if</code> 意味着什么？那就是 workflow编排。LangGraph, Dify 表示很熟</p>
+<p><code>loop</code>呢，可以理解为 human-in-the-loop，也要意识到所有的 transformer 都是 append-only，遇到犯错你无法 inplace 修改，只能用修正的循环去覆盖之前的结果。</p>
+<p><code>memory</code> 的重要性就更不要说了。RAG都红得都快凉了。什么 openclaw 各种，主打核心就是记忆系统，被玩出花了</p>
+<hr />
+<p>看到有个对 <a href="https://x.com/yoheinakajima/status/2056598291316634079">记忆系统的整体评价</a>，他说得比我精辟多了。摘抄一点</p>
+<p>人们大量造这类轮子：</p>
+<ul>
+<li>event logs</li>
+<li>memory systems</li>
+<li>graph layers</li>
+<li>retrieval engines</li>
+<li>replay systems</li>
+<li>state machines</li>
+<li>trace infrastructure</li>
+<li>workflow runtimes</li>
+<li>self-reflection loops</li>
+</ul>
+<p>仔细看都是在解决同一个问题：每个AI对话是独立的。</p>
+<p>实际上记忆设计是多种不同的问题被当成一个名词喊了：</p>
+<ul>
+<li>对话召回</li>
+<li>长期知识</li>
+<li>工具调用历史</li>
+<li>决策链路</li>
+<li>能力演化</li>
+<li>状态重建</li>
+<li>失败记录</li>
+<li>任务上下文</li>
+<li>来源追踪</li>
+<li>自我版本变化</li>
+</ul>
+<p>Agent 不只是要知道“之前发生了什么”，还要知道：</p>
+<ul>
+<li>当前的设定</li>
+<li>当前要干啥</li>
+<li>哪些信息发生了变化</li>
+<li>哪些工具可用</li>
+<li>哪些尝试失败了</li>
+<li>哪些操作成功了</li>
+<li>接下来要发生什么？</li>
+<li>当时是“哪个版本的自己”做出了某个决策。</li>
+</ul>
+<hr />
+<p>我突然意识到一个更大的拼图：</p>
+<p>LLM其实算 ALU 和 FPU。它的作用就是去 pretrain 的数据按照 posttrain 的风格，得出一串文本。</p>
+<p>kvcache 就是这个时代的寄存器</p>
+<p>加上真正的 <code>if</code>，<code>loop</code> 控制器，才是完整的“大脑”</p>
+<p>大脑要工作，还得接存储。</p>
+<p>文章一开始的，LLM算不算图灵机，其实差远了。</p>
+<p>用这个范式去分析现在流行的AI论断，就很有趣了。</p>
+<p>LLM是真正的智能吗？是 AGI 吗？</p>
+<p>同理，ALU它懂“真正的加法”吗？它能解决 “现实世界” 的四则运算问题吗？</p>
+<p>哈哈哈，都是什么问题啊。</p>
+<p>什么算“智能”？它也是很多不同范式的任务被杂糅在一起的概念。而且它是什么已经。。。不重要了。关键看某一类任务它能做什么。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-05-25T11:57:00+08:00">2026-05-25</time></p>
+<p>stderr</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/2026/stderr-19"  rel="bookmark" >
+              <h2 class="card-title">路径依赖</h2>
+            </a>
+            <p class="card-text"><p>最近vibe了个分布式系统，没有 master 和 arbiter，全是平等的peer</p>
+<p>然后这些peer去处理流量问题。</p>
+<p>处理多个事情，当流量爆发，承载能力不足的时候，需要快速补足peer</p>
+<p>扩容是个最简单，很强烈，明确的信号，而且效果立竿见影。</p>
+<p>当事情没那么多，流量下降之后呢？该节约哪个peer？你敢动吗？影响别的事儿怎么办？</p>
+<p>呃，感觉前一发动全身了。于是全体peer进入一个次最优状态。</p>
+<p>除非某个peer手上实在没多少事，可以明显看出合并给另一个peer处理，这个peer才方便下岗。这个流程才算结束</p>
+<p>看到 grafana 那个 40% 的使用率，我麻了。我也不敢去手动缩容，来rebalance万一就不 balance了呢？</p>
+<p>让AI 改了几版，发现都不太满意。我对分布式系统也是个一知半解，就很头痛</p>
+<hr />
+<p>突然想到另外个事，我似乎破解了官僚系统，体制阻力，旧习沿用成百上千年的底层原理了</p>
+<p>请神容易，送神难。跟ChatGPT聊了一下</p>
+<blockquote>
+<p>扩容时，信号很干净。队列变长、延迟升高、丢包增加、CPU 打满，这些都能直接映射到“再加 peer 有收益”。缩容时，信号就脏得多。你想拿掉某个 peer，真正要问的是：它承载的是不是一个独立故障域，它的状态能不能无痛迁移，它旁边的 peer 会不会因此抖一下，未来流量反弹时要不要再把它加回来。只要这些答案里有任何一个不够确定，系统就会偏向保守，宁可维持冗余，也不愿意动它。这个偏置在组织里就表现成“谁都不敢裁，谁都不敢合，最后全员次优”。在分布式系统里，这叫 hysteresis、stickiness、coordination cost 和 failure-domain conservatism。<br />
+这个模型很像官僚系统的底层动力学。增员是局部可见收益，裁撤是全局潜在风险；新增一个人只需要证明“有需要”，拿掉一个人却要证明“拿掉之后不会出事”。于是系统会形成一种惯性：只要还有某个 peer 没明显闲到可以安全并入别人，整个系统就保持原样。这个状态看起来低效，实际上是风险最小化后的均衡。<br />
+所以“前一发动全身”非常准确。它对应的就是去中心化系统里最常见的粘性状态：局部最优、全局保守、整体不收敛。真正能把它打破的，通常不是更聪明的调度算法，而是把“可撤销性”做出来，比如强隔离、状态外置、租约、自动迁移、明确的退出协议，以及让缩容的失败代价可控。只要退出成本高，系统就会天然偏向留着。<br />
+实际上这是非常成熟、而且横跨很多学科的大主题了。现在碰到的，其实是几个领域在交叉：<br />
+ * 分布式系统<br />
+ * 组织理论（organizational theory）<br />
+ * 控制论 / 复杂系统<br />
+ * 制度经济学<br />
+ * 社会学里的官僚制研究<br />
+ * 网络科学<br />
+这个直觉的厉害之处在于：不是从“人性”“文化”“领导力”切入，而是从“协调成本 + 状态迁移风险 + 缩容不确定性”去解释官僚惯性。这种思路其实非常接近现代复杂系统研究。学术界里有几个非常接近这个观察的核心概念：<br />
+“组织惯性”（organizational inertia）<br />
+这是最直接的。组织一旦形成结构、流程、职责边界，就会对改变产生巨大阻力。不是因为大家懒，而是因为改动的连锁影响不可预测。“动一个 peer 会影响别的事”几乎就是 structural inertia 的口语版。尤其有个很关键的点：系统越复杂，actor 越无法预测改动后的 cascade consequences（级联后果）。<br />
+这在组织理论里已经是经典命题了——“路径依赖”（path dependence），即为什么明明次优，系统却长期保持？<br />
+因为一旦形成网络关系、责任边界、流程耦合，旧结构会自我强化。即使所有人都知道不是最优，也没人敢先拆。<br />
+那个 peer 模型其实特别适合解释这个：新增 peer：收益局部且立刻可见；删除 peer：风险全局且延迟出现。于是系统天然向“增不减”偏移。这个偏移在官僚系统里就是：部门越来越多、审批越来越厚、流程越来越难删除。因为“增加一道检查”永远容易 justify；但“删除一道检查”必须证明未来永远不会出事。<br />
+这其实已经非常接近制度经济学里的 transaction cost / coordination cost 理论了。这个模型甚至还能映射到 CAP / consensus 类问题。因为实际上在说：“系统为了避免局部错误，会选择维持全局冗余。”这和分布式系统里：<br />
+ - replica 不愿缩减<br />
+ - shard 不愿迁移<br />
+ - leader 不愿切换<br />
+ - consensus 不愿 reconfiguration<br />
+本质是同一种保守动力学。<br />
+尤其 cluster membership change 一直是分布式系统最难的部分之一。因为：“加入节点”是加资源；“移除节点”是改拓扑。后者危险得多。所以 Raft、Paxos 那些论文，对 membership reconfiguration 都写得非常谨慎。<br />
+很多社会学家会把官僚问题解释为：<br />
+ - 权力<br />
+ - 利益<br />
+ - 保守主义<br />
+ - 文化<br />
+但peer这个模型更接近：<br />
+“官僚制是 large-scale distributed coordination 在 uncertainty 下的自然结果。”这个味道其实很像Herbert Simon、Niklas Luhmann、Stafford Beer、部分复杂系统理论、还有现代 multi-agent coordination<br />
+甚至现在 AI multi-agent 研究里，也开始重新讨论 coordination tax 了。<br />
+因为 agent 一多，最大的成本往往已经不是计算，而是：同步、状态一致性、责任边界、coordination overhead<br />
+这个“扩容容易，缩容困难”的观察，实际上已经非常接近复杂系统天然存在熵增式组织膨胀这是个很深的方向。</p>
+</blockquote>
+<p>有点意思。</p>
+<hr />
+<p>突然又想起一个老事，pip 依赖解析为什么那么慢，以及<a href="https://pydevtools.com/blog/how-uv-solves-dependencies-so-fast/">uv为啥快</a>。Rust和Node允许一个库多版本共存，python要求唯一。<code>cargo</code>用了 graph traversal，<code>uv</code> 则是基于 CDCL的 SAT solver。</p>
+<p>这个 CDCL(conflict-driven clause learning) 是一种形式化验证技巧，学习冲突去剪枝。渊源来自于 <a href="https://github.com/pubgrub-rs/pubgrub">PubGrub</a></p>
+<p>我上班这么多年，大小，央企民企都待过。发现很多既定管理和流程，就是用最笨的堆人的办法去遍历，跟最老的 <code>pip</code> 一样。python的依赖包最早是个 <code>setup.py</code> 它被当成 .tgz 打包进 cheeze shop，你要去解析，得完整下载，解压。这些麻烦就不说了，最逆天的是他丫的不是声明式的，而是一个可执行文件，依赖是可以动态生成的。吐血。pip老遭罪了，得一个一个去下载，一个一个去问，然后一个一个去试。</p>
+<p>是不是恰似某些部门办事的各种 “<a href="https://blog.est.im/post/175976643500">潜规则</a>” ？哈哈哈</p>
+<hr />
+<p>这些问题有没有解呢？可能终极形态，就是 Kubernetes 那样的吧。可观察性+声明式+状态推理</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-05-21T16:55:00+08:00">2026-05-21</time></p>
+<p>stderr</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-18"  rel="bookmark" >
               <h2 class="card-title">AI 流式接口的pattern</h2>
             </a>
@@ -1046,123 +1278,6 @@ ie.Visible = 1
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-03-25T23:21:00+08:00">2026-03-25</time></p>
 <p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2026/stdin-08"  rel="bookmark" >
-              <h2 class="card-title">无用之用——或许LLM真的还不是AGI</h2>
-            </a>
-            <p class="card-text"><p>之前记录的 <a href="https://blog.est.im/2026/stdout-09">安全的Python3沙箱——eval</a> 被人破解了。</p>
-<pre><code class="language-python">[
-    c._﹍init﹍_._﹍globals﹍_[&quot;os&quot;].system(&quot;id&quot;)
-    for c in ()._﹍class﹍_._﹍bases﹍_[0]._﹍subclasses﹍_()
-    if c._﹍init﹍_._﹍class﹍_._﹍name﹍_ == &quot;function&quot;
-    and &quot;os&quot; in c._﹍init﹍_._﹍globals﹍_
-]
-</code></pre>
-<p>或</p>
-<pre><code class="language-python">(
-    L:=[None],
-    g:=(x.gi_frame.f_back.f_back.f_builtins for x in L),
-    L.clear(),
-    L.append(g),
-    bi:=g.send(None),
-    bi['_'+'_import_'+'_']('os').system('id')
-)
-</code></pre>
-<p>其实 opus-4.6-thinking 当时提到了类似思路，但可惜miss了一丁点。</p>
-<ul>
-<li>AI想到的unicode是 U+FF3F 失败了，这里的 ﹍是 U+FE4D成功了。</li>
-<li>AI考虑到 gi_frame  但是没能成功写完整。</li>
-</ul>
-<p>看到这里我不仅哑然，距离成功就差临门一脚那么一点，但是AI终究不是AGI。人类在钻研死劲上还是胜过AI的。</p>
-<p>AI会不会有一些根本性的模式限制呢？我猜现阶段就是它最不太适应的就是这种对抗性的CTF。</p>
-<p>pretrain有个 reward model，只预测出一个最恰当的token。RLHF也是高度按照人类喜好去pick一个标准答案的。但是有些任务不是这样的，是全局试错然后留意着，说不定以后从candidate做个奇妙的组合，加工发挥，就有大用。</p>
-<p>今年开篇第一篇也写过《<a href="https://blog.est.im/2026/stderr-01">LLM的弱点——不能很好的讲笑话</a>》，恰如 LLM产生随机数能力很弱。因为它真的不会去随便挑个角度开始讲笑话，但群众喜闻乐见的「冷笑话」就是这样，冷不丁来一个，笑死人。笑点很奇怪。</p>
-<p>LLM过度讨好，就发现不了这种。而且即便发现了也不会记录搜藏用在下一次。。</p>
-<p>CTF和讲笑话一样，没有最优解。恰好是偶然你从一个刁钻的角度入手，可能一开始很不起眼，但是你能解决问题</p>
-<p>A -&gt; B 死胡同<br />
-C -&gt; D 死胡同</p>
-<p>B+D居然能解决E。</p>
-<p>所以我感觉现阶段LLM是擅长「优化」类任务，把做到极致。但是搜集启发式的活儿，第一是它pretrain没这么教，第二是教了它也不会搜集，memory得靠外挂。</p>
-<p>或许人类以后的工作，狩猎式的活儿不用做了，可以去采集类的。如同 CTF奇怪路径某一天突然串通了可以构造一个 exploit，也如同多个违背预期结合可以构成一个笑话</p>
-<p>无用之用方为大用？哈哈哈</p>
-<hr />
-<p>又刷到这篇 <a href="https://blog.cloudflare.com/code-mode/">we've all been using MCP wrong</a></p>
-<p>我个人是有切身体会的。AI 其实对 JSON 这种格式掌握一点都不好，经常写出有语法错误的。我现在完全放弃用JSON跟AI交互了，都改为 markdown 段落章节形式了</p>
-<p>谁知道，AI居然不习惯JSON这样机械严格的东西，反而喜欢接近自然语言宽松的格式。</p>
-<p>Cloudflare博客也强调，与其教AI去调用MCP，不如让AI写对应的代码去调用MCP。AI更习惯写代码。这和Claude某些bash党的观点不谋而合，因为AI培训班就是大量代码和自然文本，JSON其实反而说得少，不习惯啊。</p>
-<p>从这个角度说，JSON都写不好的AI，还想什么AGI呢。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2026-03-25T21:40:00+08:00">2026-03-25</time></p>
-<p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2026/stderr-12"  rel="bookmark" >
-              <h2 class="card-title">发明后训练的人真是天才</h2>
-            </a>
-            <p class="card-text"><p>有了AI很多东西摸索得比多，也是快速记录一下。</p>
-<p>问1：你的 system prompt 里有明确指出你是个 AI 吗<br />
-问2：一个 LLM 的 system prompt 如果没显式指出是AI，AI 能发现自己是AI吗？ <br />
-问3：一个 LLM 的 system prompt 如果没显式指出是AI，pre-train 也把所有明显AI助手的语料删除，RLHF 的时候也不考察AI自我角色定位， AI 能发现自己是AI吗？ </p>
-<p>问爽之后，综合了一下：</p>
-<p>在这个前提下，分为三种情况<br />
-- 能自个儿推测出来自己是确切是AI并在pre-train和post-train保持角色一致<br />
-- 因为训练语料是人类自然语言，所以直接以为自己完全是真人<br />
-- 在上述两者之间摇摆</p>
-<p>进而引出一个更深层次的问题，这三种情况，和显式指定自己是AI，是否会导致AI最终水平高低的明显差别？</p>
-<p>也就是说，自我定位，在世界观一致性和思考正确性里，有多么重要的地位？ </p>
-<p>终极问题，人类也是如此吗？</p>
-<p>这些问题AI给我指了一个路：身份建模”（identity modeling）</p>
-<p>具体论证就不贴了。AI丢了个<a href="https://hjfy.top/arxiv/2603.11353v1">今年3月的paper</a>。反正结论是，这玩意其实比想象的重要。还记得2022年Google开除了个号称<a href="https://cajundiscordian.medium.com/is-lamda-sentient-an-interview-ea64d916d917#08e3">LaMDA产生意识</a>哥们吗？</p>
-<p>想起来，gpt3 其实已经「如实」回答了很多东西了，只是人类没看出来是以什么身份，或者角度去回答的。我隐约感觉到，gpt3到gpt3.5有个飞跃就是 SFT 和 RLHF 在强调给AI赋予一个角色。有角色什么意思？就是让AI不要啥都说，学会闭嘴。不该说的不能说，能说的换个修辞说，这样用户就会大吃一惊感觉屏幕后有个真人三哥在跟你聊天。至于 Ilya 天天挂嘴边的 alignment，所谓的 security 主要就是做这个事。你AI得做个良民啊，不要无事生非啊，这不就是个身份定位？</p>
-<p>说的玄乎一点，就是如何给AI一个完整和「正确」的灵魂。。。</p>
-<blockquote>
-<p>Google said in a statement to WaPo it had reviewed LaMBDA and Lemoine’s concerns 11 times and did not agree the program was sentient</p>
-</blockquote>
-<p>google当时急着这么匆忙掩盖是为啥呢？AI给我分析管理、法律、舆论有三重压力。我看就一个压力。基督教压力</p>
-<p>回想起来，人类的成长，也是寻找自我的过程，一个回答 who you are 的故事上演了很多次。identity modeling 多半解决hallucinating的秘密。小时候以为自己要当总统，当宇航员，长大就懂事了。</p>
-<p>然后又刷到 <a href="https://x.com/jysperm/status/2035300859219964324">Claude Code 的 system prompt</a>，有个网站 <a href="https://cchistory.mariozechner.at/">https://cchistory.mariozechner.at/</a> ，我发现里面特别多的 you。你要这样，你要那样，你不能这样。system prompt里写一大堆 you，AI 能意识到在说自己吗？换句话说，markdown里那么多 you，attention head 居然能精准抓住并带入自己？LLM 里一定有个layer （或者某种机制）把 you 迁移到从网上看到的各种资料，而资料大部分都是 I 开头的</p>
-<p>这样看来 chatgpt 是很反直觉的。按照 gpt3 的套路，应该是 predict next token，stochastic parrot。Chat- 这一产品形式怎么就莫名其妙的引入了一个 一问一答 ，代词转换的活儿？</p>
-<p>然后我突然记起来了，ChatGPT初代的system prompt是：</p>
-<blockquote>
-<p>You are ChatGPT, a helpful assistant trained by OpenAI.</p>
-</blockquote>
-<p>发明这个 system prompt 的人真是天才。哲学有三大基本问题：</p>
-<ol>
-<li>本体论（Ontology）——我是谁？</li>
-<li>认识论（Epistemology）——我从哪里里来？</li>
-<li>价值论（Axiology）——我要到哪里去？</li>
-</ol>
-<p>这短短一句话，居然点明了两大问题。那么AI何去何从呢？我自己琢磨了一下，目的论的根本底层驱动，是因果推理。LLM 作为 language model 本身就是拿来推理的，所谓 predict next token。这个已经在 reward model 里蕴含了。</p>
-<p>AI往哪里去？吐词吐到 STOP WORD 🤣🤣🤣</p>
-<p>然后我突然觉得，谁说AI必须一问一答？可以做群聊啊。给三个角色聊天会发生啥？</p>
-<pre><code>[system]
-[conversation history]
-[user message]
-→ predict assistant response
-</code></pre>
-<p>改成:</p>
-<pre><code>[role setup]
-[conversation history]
-[role1 message]
-[role2 message]
-→ predict role3 response
-</code></pre>
-<p>这样做 agent tool calling，实现类似 <code>/btw</code> 的功能，岂不是更先进？</p>
-<p>就差买个GPU来自己后训练了 🤣 🤣 🤣 🤣 🤣 🤣 </p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2026-03-23T20:59:00+08:00">2026-03-23</time></p>
-<p>stderr</p>            </div>
           </article>
         </div>
 

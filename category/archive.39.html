@@ -324,62 +324,6 @@ One or more of the modules specified for this handler does not exist in the modu
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/352898"  rel="bookmark" >
-              <h2 class="card-title">[python]ctypes读取Windows剪贴板</h2>
-            </a>
-            <p class="card-text"><p>最近写一个python的截图小工具，需要读取剪贴板，但是懒得用<a href="http://aspn.activestate.com/ASPN/docs/ActivePython/2.2/PyWin32/win32clipboard.html">win32clipboard</a>，于是在<a href="http://aspn.activestate.com/ASPN/Cookbook/Python/">ASPN</a>上找到了一段<a href="http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/528893">用ctypes读取剪贴板</a>的python程序</p>
-<pre><code>#!/usr/bin/env python
-#coding:UTF-8
-
-import win32con, ctypes
-
-&quot;&quot;&quot; Abbreviations for readability &quot;&quot;&quot;
-OpenClipboard = ctypes.windll.user32.OpenClipboard
-EmptyClipboard = ctypes.windll.user32.EmptyClipboard
-GetClipboardData = ctypes.windll.user32.GetClipboardData
-SetClipboardData = ctypes.windll.user32.SetClipboardData
-CloseClipboard = ctypes.windll.user32.CloseClipboard
-GlobalLock = ctypes.windll.kernel32.GlobalLock
-GlobalAlloc = ctypes.windll.kernel32.GlobalAlloc
-GlobalUnlock = ctypes.windll.kernel32.GlobalUnlock
-memcpy = ctypes.cdll.msvcrt.memcpy
-
-&quot;&quot;&quot; Windows Clipboard utilities &quot;&quot;&quot;
-  def GetClipboardText():
-    text = &quot;&quot;
-        if OpenClipboard(0):
-            hClipMem = GetClipboardData(win32con.CF_TEXT)
-                GlobalLock.restype = ctypes.c_char_p
-                text = GlobalLock(hClipMem)
-                GlobalUnlock(hClipMem)
-                CloseClipboard()
-            return text
-
-            def SetClipboardText(text):
-        buffer = ctypes.c_buffer(text)
-        bufferSize = ctypes.sizeof(buffer)
-        hGlobalMem = GlobalAlloc(win32con.GHND, bufferSize)
-        GlobalLock.restype = ctypes.c_void_p
-        lpGlobalMem = GlobalLock(hGlobalMem)
-        memcpy(lpGlobalMem, ctypes.addressof(buffer), bufferSize)
-        GlobalUnlock(hGlobalMem)
-        if OpenClipboard(0):
-            EmptyClipboard()
-                SetClipboardData(win32con.CF_TEXT, hGlobalMem)
-                CloseClipboard()
-
-                print GetClipboardText()
-</code></pre></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-08-28T00:00:00+08:00">2007-08-28</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/archives/353443"  rel="bookmark" >
               <h2 class="card-title">[python]ctypes调用comdlg32</h2>
             </a>
@@ -511,6 +455,102 @@ print opath.replace(u&quot;\0&quot;, u&quot;&quot;)
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/352898"  rel="bookmark" >
+              <h2 class="card-title">[python]ctypes读取Windows剪贴板</h2>
+            </a>
+            <p class="card-text"><p>最近写一个python的截图小工具，需要读取剪贴板，但是懒得用<a href="http://aspn.activestate.com/ASPN/docs/ActivePython/2.2/PyWin32/win32clipboard.html">win32clipboard</a>，于是在<a href="http://aspn.activestate.com/ASPN/Cookbook/Python/">ASPN</a>上找到了一段<a href="http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/528893">用ctypes读取剪贴板</a>的python程序</p>
+<pre><code>#!/usr/bin/env python
+#coding:UTF-8
+
+import win32con, ctypes
+
+&quot;&quot;&quot; Abbreviations for readability &quot;&quot;&quot;
+OpenClipboard = ctypes.windll.user32.OpenClipboard
+EmptyClipboard = ctypes.windll.user32.EmptyClipboard
+GetClipboardData = ctypes.windll.user32.GetClipboardData
+SetClipboardData = ctypes.windll.user32.SetClipboardData
+CloseClipboard = ctypes.windll.user32.CloseClipboard
+GlobalLock = ctypes.windll.kernel32.GlobalLock
+GlobalAlloc = ctypes.windll.kernel32.GlobalAlloc
+GlobalUnlock = ctypes.windll.kernel32.GlobalUnlock
+memcpy = ctypes.cdll.msvcrt.memcpy
+
+&quot;&quot;&quot; Windows Clipboard utilities &quot;&quot;&quot;
+  def GetClipboardText():
+    text = &quot;&quot;
+        if OpenClipboard(0):
+            hClipMem = GetClipboardData(win32con.CF_TEXT)
+                GlobalLock.restype = ctypes.c_char_p
+                text = GlobalLock(hClipMem)
+                GlobalUnlock(hClipMem)
+                CloseClipboard()
+            return text
+
+            def SetClipboardText(text):
+        buffer = ctypes.c_buffer(text)
+        bufferSize = ctypes.sizeof(buffer)
+        hGlobalMem = GlobalAlloc(win32con.GHND, bufferSize)
+        GlobalLock.restype = ctypes.c_void_p
+        lpGlobalMem = GlobalLock(hGlobalMem)
+        memcpy(lpGlobalMem, ctypes.addressof(buffer), bufferSize)
+        GlobalUnlock(hGlobalMem)
+        if OpenClipboard(0):
+            EmptyClipboard()
+                SetClipboardData(win32con.CF_TEXT, hGlobalMem)
+                CloseClipboard()
+
+                print GetClipboardText()
+</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-08-28T00:00:00+08:00">2007-08-28</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/349160"  rel="bookmark" >
+              <h2 class="card-title">1分钟初评FUZE - 我看好AIR</h2>
+            </a>
+            <p class="card-text"><p>听说<a href="http://www.mikehuntington.com/techblog/index.php/2007/08/25/fuze-beta-011-is-here-messenger-built-using-air/">FUZE</a>出官方beta了，于是赶忙去看看。下面引用自 awflasher.com</p>
+<blockquote>
+<p><a href="http://www.awflasher.com/blog/archives/1035">基于Adobe AIR的一体化IM系统FUZE已可下载</a></p>
+<p>经过漫长的等待，终于等到了“FUZE”上线。本来准备睡觉了，看到GMail中Huntington发来的邮件，说FUZE已经上线开始Beta测试了。于是赶紧装了一个体验了一把。</p>
+<p>AIR的安装过程就是Smooth、Sexy，直接在FlashPlayer9下安装AIR包（RunTime也可以的），然后运行。注册一个ID就可以使用了。可以集成MSN、GTalk、Yahoo、AIM等等一些常用IM应用的帐号进行“托管”。</p>
+<p>废话不多说了，大家自己体验一下吧：</p>
+<p><a href="http://www.mikehuntington.com/techblog"><br />
+ http://www.mikehuntington.com/techblog</a> - 点右侧边栏Flash中的“INSTALL NOW”</p>
+<p>我个人觉得这些五花八门的IM托管平台，例如<a href="http://www.awflasher.com/www.pidgin.im/">Pidgin</a>、<a href="http://www.awflasher.com/www.miranda-im.org/">Miranda</a>等等，都非常有前途。然而基于AIR的FUZE则利用AIR平台本身的优势（低安装成本、低开发成本、易整合性、跨平台能力），很可能能够做出更容易让更多的WebDeveloper切入的IM-MashUp应用！到那时，相信腾讯QQ也会开始考虑支持<a href="http://www.xmpp.org/">XMPP</a>吧（封闭总有一天会灭亡）。</p>
+</blockquote>
+<p>这是我第一次接触Adobe AIR做的应用程序。</p>
+<h2>安装</h2>
+<p>点击那个Flash即可安装。</p>
+<p><img alt="12.jpg" src="http://wpcache.yo2.cn/wp-content/uploads/74/7487/2007/08/12.jpg" /></p>
+<p>从这一点来说AIR已经超过了Silverlight，因为Silverlight至今还没有在我的Vista Ultimate+IE7下安装成功。<a href="http://silverlight.net/forums/">Silverlight官方论坛</a>里很多人都有这个问题，主要原因是WPF/E的一个CTP版本卸载不完全。AIR部署起来就很有优势了，因为Flash的普及率实在太高了！（只要有Flash9就可以很快无缝安装AIR），而且跨平台，所以WPF、SilverLight输了。</p>
+<h2>下载</h2>
+<p>FUZE下载很快。但是安装的时候出现了哭笑不得的一幕。字符串中 218.30.64.194 这个地址被电信DNS恶意劫持了，所以导致升级检测出错，暴汗。</p>
+<p><img alt="1" src="/images/archive/2007/349160_01.jpg" /></p>
+<h2>性能</h2>
+<p>FUZE占用内存很小，22MB，比一个wxPython的程序大一点。但是想到界面的特效和绚丽，也就认了。注意TM2008 Preview的内存占用也达到了28MB。但是FUZE支持的协议比TM多。但是用微软 .NET+WPF打造的程序就没那么幸运了，还是今天在cnbeta上看到的那个<a href="http://www.cnbeta.com/articles/37370.htm">切换壁纸的程序</a>，内存占用达到了夸张的80MB。真是瀑布如雨汗</p>
+<h2>使用</h2>
+<p>随意添加了一个GTalk帐号并登录，很顺畅～～</p>
+<h2>结论</h2>
+<p>从几个丰富客户端框架技术来看，AIR从部署、性能、用户体验各个方面都超过了微软自己的WPF、Silverlight。估计AIR普及的时候不远了。AIR的特典是：小巧，快速又不失强大。WPF、Silverlight看似更加复杂、笨重。看来Adobe和Microsoft两个巨头有的一拼！</p>
+<p><img alt="31.jpg" src="http://wpcache.yo2.cn/wp-content/uploads/74/7487/2007/08/31.jpg" /></p>
+<h2>联想</h2>
+<p>什么时候如果Python直接支持跨平台的AIR，估计python在RIA、GUI、Web2.0中肯定有一席之地。Actionscript似乎作为一门完备的编程语言还差了点</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-08-27T00:00:00+08:00">2007-08-27</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/351229"  rel="bookmark" >
               <h2 class="card-title">让Thunderbird跨越Ubuntu和Windows</h2>
             </a>
@@ -550,46 +590,6 @@ print opath.replace(u&quot;\0&quot;, u&quot;&quot;)
 最后截图纪念。<br />
 <img alt="thunderbird.jpg" src="http://olds.blogcn.com/wp-content/uploads/74/7487/2007/08/thunderbird.jpg" /><br />
 为什么Linux下的Thunderbird图标比Windows下的好看呢 @.@ 嫉妒ing...</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-08-27T00:00:00+08:00">2007-08-27</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/349160"  rel="bookmark" >
-              <h2 class="card-title">1分钟初评FUZE - 我看好AIR</h2>
-            </a>
-            <p class="card-text"><p>听说<a href="http://www.mikehuntington.com/techblog/index.php/2007/08/25/fuze-beta-011-is-here-messenger-built-using-air/">FUZE</a>出官方beta了，于是赶忙去看看。下面引用自 awflasher.com</p>
-<blockquote>
-<p><a href="http://www.awflasher.com/blog/archives/1035">基于Adobe AIR的一体化IM系统FUZE已可下载</a></p>
-<p>经过漫长的等待，终于等到了“FUZE”上线。本来准备睡觉了，看到GMail中Huntington发来的邮件，说FUZE已经上线开始Beta测试了。于是赶紧装了一个体验了一把。</p>
-<p>AIR的安装过程就是Smooth、Sexy，直接在FlashPlayer9下安装AIR包（RunTime也可以的），然后运行。注册一个ID就可以使用了。可以集成MSN、GTalk、Yahoo、AIM等等一些常用IM应用的帐号进行“托管”。</p>
-<p>废话不多说了，大家自己体验一下吧：</p>
-<p><a href="http://www.mikehuntington.com/techblog"><br />
- http://www.mikehuntington.com/techblog</a> - 点右侧边栏Flash中的“INSTALL NOW”</p>
-<p>我个人觉得这些五花八门的IM托管平台，例如<a href="http://www.awflasher.com/www.pidgin.im/">Pidgin</a>、<a href="http://www.awflasher.com/www.miranda-im.org/">Miranda</a>等等，都非常有前途。然而基于AIR的FUZE则利用AIR平台本身的优势（低安装成本、低开发成本、易整合性、跨平台能力），很可能能够做出更容易让更多的WebDeveloper切入的IM-MashUp应用！到那时，相信腾讯QQ也会开始考虑支持<a href="http://www.xmpp.org/">XMPP</a>吧（封闭总有一天会灭亡）。</p>
-</blockquote>
-<p>这是我第一次接触Adobe AIR做的应用程序。</p>
-<h2>安装</h2>
-<p>点击那个Flash即可安装。</p>
-<p><img alt="12.jpg" src="http://wpcache.yo2.cn/wp-content/uploads/74/7487/2007/08/12.jpg" /></p>
-<p>从这一点来说AIR已经超过了Silverlight，因为Silverlight至今还没有在我的Vista Ultimate+IE7下安装成功。<a href="http://silverlight.net/forums/">Silverlight官方论坛</a>里很多人都有这个问题，主要原因是WPF/E的一个CTP版本卸载不完全。AIR部署起来就很有优势了，因为Flash的普及率实在太高了！（只要有Flash9就可以很快无缝安装AIR），而且跨平台，所以WPF、SilverLight输了。</p>
-<h2>下载</h2>
-<p>FUZE下载很快。但是安装的时候出现了哭笑不得的一幕。字符串中 218.30.64.194 这个地址被电信DNS恶意劫持了，所以导致升级检测出错，暴汗。</p>
-<p><img alt="1" src="/images/archive/2007/349160_01.jpg" /></p>
-<h2>性能</h2>
-<p>FUZE占用内存很小，22MB，比一个wxPython的程序大一点。但是想到界面的特效和绚丽，也就认了。注意TM2008 Preview的内存占用也达到了28MB。但是FUZE支持的协议比TM多。但是用微软 .NET+WPF打造的程序就没那么幸运了，还是今天在cnbeta上看到的那个<a href="http://www.cnbeta.com/articles/37370.htm">切换壁纸的程序</a>，内存占用达到了夸张的80MB。真是瀑布如雨汗</p>
-<h2>使用</h2>
-<p>随意添加了一个GTalk帐号并登录，很顺畅～～</p>
-<h2>结论</h2>
-<p>从几个丰富客户端框架技术来看，AIR从部署、性能、用户体验各个方面都超过了微软自己的WPF、Silverlight。估计AIR普及的时候不远了。AIR的特典是：小巧，快速又不失强大。WPF、Silverlight看似更加复杂、笨重。看来Adobe和Microsoft两个巨头有的一拼！</p>
-<p><img alt="31.jpg" src="http://wpcache.yo2.cn/wp-content/uploads/74/7487/2007/08/31.jpg" /></p>
-<h2>联想</h2>
-<p>什么时候如果Python直接支持跨平台的AIR，估计python在RIA、GUI、Web2.0中肯定有一席之地。Actionscript似乎作为一门完备的编程语言还差了点</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-08-27T00:00:00+08:00">2007-08-27</time></p>
 <p>archive</p>            </div>
@@ -1279,6 +1279,48 @@ E0 00</p>
 <p>dir /s c:\windows\msv1_0.dll</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-08-24T00:00:00+08:00">2007-08-24</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/340447"  rel="bookmark" >
+              <h2 class="card-title">用python写MIDI电子琴</h2>
+            </a>
+            <p class="card-text"><p>想起了VB时代调用 <a href="file:///C:/Windows/System32/winmm.dll">winmm.dll</a> 制作电子琴，觉得比较好玩，于是用python也写了一个电子琴的原型。有时间在用wx做个GUI吧 :)</p>
+<pre><code class="language-python">#!/usr/bin/env python
+#coding:UTF-8
+
+From ctypes import *
+import time
+
+hMidiOut=c_long() #系统给MIDI请求分配一个句柄
+dMidi=windll.winmm #调用的 winmm.dll
+dMidi.midiOutOpen(byref(hMidiOut), -1, 0,0,0) #打开一个MIDI输出设备，句柄为hMidiOut
+
+baseNote = 60 #这个应该是C调
+volume = 127 #音量最大
+channel = 0 #MIDI的第一个乐器：piano，改成9就是drums
+
+scale = (0, 2, 4, 5, 7, 9, 11, 12, 11, 9, 7, 5, 4, 2, 0)
+print scale
+for note in scale:
+# play a note
+midimsg = 0x90 + ((baseNote + note) * 0x100) + (volume * 0x10000) + channel
+rc = dMidi.midiOutShortMsg (hMidiOut, midimsg)
+time.sleep(0.25)
+# turn it off
+midimsg = 0x80 + ((baseNote + note) * 0x100) + channel
+rc = dMidi.midiOutShortMsg (hMidiOut, midimsg)
+
+dMidi.midiOutClose(hMidiOut)
+
+</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-08-23T00:00:00+08:00">2007-08-23</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
@@ -2912,6 +2954,25 @@ E0 00</p>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/337502"  rel="bookmark" >
+              <h2 class="card-title">Google Earth更新了，我也跟进</h2>
+            </a>
+            <p class="card-text"><p>不多说</p>
+<pre><code>1. 我用[UniExtract](http://legroom.net/software/uniextract)直接解压（先运行[Google_Earth_BZXV.exe](http://dl.google.com/earth/client/branded/redirect/Google_Earth_BZXV.exe)，然后到%temp%目录下去解压xxxxx.msi）得到绿色版Google Earth，放在`D:\Program Files\Google Earth`
+2. `Google Earth完全加载完毕后，正对的位置居然是中国，说明Google服务器根据我的IP确认了用户的地理位置
+</code></pre>
+<p><img alt="image" src="http://wpcache.yo2.cn/wp-content/uploads/74/7487/2007/08/image9.png" /><code>3.</code>程序并没有在D:\生成D:\Documents and Settings\est\Google\或者D:\Users\est\Google，说明Google Earth读取系统环境变量的这个bug被修复了。<code>4.</code>增加了<a href="http://earth.google.com/sky/skyedu.html">Sky for Google Earth</a>功能，这是最激动人心的，也就是传说中的Google Astronomy。<br />
+<img alt="image" src="http://wpcache.yo2.cn/wp-content/uploads/74/7487/2007/08/image10.png" />`</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-08-23T00:00:00+08:00">2007-08-23</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/338830"  rel="bookmark" >
               <h2 class="card-title">在GTalk上听广播，打电话</h2>
             </a>
@@ -2959,67 +3020,6 @@ E0 00</p>
 <strong>204</strong> - WBUR 90.9 FM, Boston's NPR News Station, <a href="http://205.234.188.21/">http://205.234.188.21:80/</a></p>
 <p>To connect, type <strong>RADIO <em>number</em></strong> where <code>blogid</code>=7487 AND <em>number</em> is a station numerical ID from the list above.</p>
 <p>那么，输入 <code>Radio 电台ID</code> 就可以开始听广播玩了。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-08-23T00:00:00+08:00">2007-08-23</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/340447"  rel="bookmark" >
-              <h2 class="card-title">用python写MIDI电子琴</h2>
-            </a>
-            <p class="card-text"><p>想起了VB时代调用 <a href="file:///C:/Windows/System32/winmm.dll">winmm.dll</a> 制作电子琴，觉得比较好玩，于是用python也写了一个电子琴的原型。有时间在用wx做个GUI吧 :)</p>
-<pre><code class="language-python">#!/usr/bin/env python
-#coding:UTF-8
-
-From ctypes import *
-import time
-
-hMidiOut=c_long() #系统给MIDI请求分配一个句柄
-dMidi=windll.winmm #调用的 winmm.dll
-dMidi.midiOutOpen(byref(hMidiOut), -1, 0,0,0) #打开一个MIDI输出设备，句柄为hMidiOut
-
-baseNote = 60 #这个应该是C调
-volume = 127 #音量最大
-channel = 0 #MIDI的第一个乐器：piano，改成9就是drums
-
-scale = (0, 2, 4, 5, 7, 9, 11, 12, 11, 9, 7, 5, 4, 2, 0)
-print scale
-for note in scale:
-# play a note
-midimsg = 0x90 + ((baseNote + note) * 0x100) + (volume * 0x10000) + channel
-rc = dMidi.midiOutShortMsg (hMidiOut, midimsg)
-time.sleep(0.25)
-# turn it off
-midimsg = 0x80 + ((baseNote + note) * 0x100) + channel
-rc = dMidi.midiOutShortMsg (hMidiOut, midimsg)
-
-dMidi.midiOutClose(hMidiOut)
-
-</code></pre></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-08-23T00:00:00+08:00">2007-08-23</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/337502"  rel="bookmark" >
-              <h2 class="card-title">Google Earth更新了，我也跟进</h2>
-            </a>
-            <p class="card-text"><p>不多说</p>
-<pre><code>1. 我用[UniExtract](http://legroom.net/software/uniextract)直接解压（先运行[Google_Earth_BZXV.exe](http://dl.google.com/earth/client/branded/redirect/Google_Earth_BZXV.exe)，然后到%temp%目录下去解压xxxxx.msi）得到绿色版Google Earth，放在`D:\Program Files\Google Earth`
-2. `Google Earth完全加载完毕后，正对的位置居然是中国，说明Google服务器根据我的IP确认了用户的地理位置
-</code></pre>
-<p><img alt="image" src="http://wpcache.yo2.cn/wp-content/uploads/74/7487/2007/08/image9.png" /><code>3.</code>程序并没有在D:\生成D:\Documents and Settings\est\Google\或者D:\Users\est\Google，说明Google Earth读取系统环境变量的这个bug被修复了。<code>4.</code>增加了<a href="http://earth.google.com/sky/skyedu.html">Sky for Google Earth</a>功能，这是最激动人心的，也就是传说中的Google Astronomy。<br />
-<img alt="image" src="http://wpcache.yo2.cn/wp-content/uploads/74/7487/2007/08/image10.png" />`</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-08-23T00:00:00+08:00">2007-08-23</time></p>
 <p>archive</p>            </div>
@@ -3146,23 +3146,6 @@ X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6000.16480</p>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/262082"  rel="bookmark" >
-              <h2 class="card-title">Ubuntu上漫画了</h2>
-            </a>
-            <p class="card-text"><p><a href="http://ubuntudaily.com/wp-content/uploads/1185408112656.jpg"><img alt="" src="http://ubuntudaily.com/wp-content/uploads/1185408112656.jpg" /></a></p>
-<p>Ubuntu 在漫画 Marvel Comic Mighty Avengers 的第四版中出现了。</p>
-<p>可以看到启动管理器GRUB里的内核列表，还有一个戏剧性的“Access Denied”消息。</p>
-<p>通常这种情况可以通过Recovery Mode进入root的shell来恢复系统</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-07-27T00:00:00+08:00">2007-07-27</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/archives/261743"  rel="bookmark" >
               <h2 class="card-title">IE7不经提示关闭浏览器窗口的Javascript</h2>
             </a>
@@ -3184,17 +3167,15 @@ X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6000.16480</p>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/nu/132"  rel="bookmark" >
-              <h2 class="card-title">恶搞：est的Blog宣布不加入奥运报道联盟</h2>
+            <a href="/archives/262082"  rel="bookmark" >
+              <h2 class="card-title">Ubuntu上漫画了</h2>
             </a>
-            <p class="card-text"><p>est的blog讯 7月24日16:16消息，由新浪、腾讯网易发起成立的北京奥运报道联盟在业内引发强烈反响。今天下午，est的blog正式宣布不加入该联盟。</p>
-<p>北京奥运报道联盟上周刚刚在京成立。除了最早发起的三大门户外，TOM在线、博客网、天极网、猫扑网、和讯网、奇虎网、金融界、凤凰网、MSN中文网、中国雅虎、空中网、中华网21CN及赛迪网已先后成为联盟成员。</p>
-<p>今天下午，est的blog明确提出不加入。根据北京奥运报道联盟宗旨，尽管该联盟是一个开放性组织，欢迎致力于奥运报道的网站加入，但是因为这个联盟是一小撮网站在忽悠，所以不考虑加入，并坚决表示不会加入任何阵营。</p>
-<p>est的blog是全球最无聊的博客，目前每天访问量高于10个IP，访问量也算得上是全球最低。</p>
-<p>观察人士认为，est的blog宣布不加入，将不会影响奥运报道联盟覆盖范围及影响力的提升，尤其是在地域、领域覆盖上将更加全面和完善。在北京2008奥运会召开之际，相对于单一的个人博客网站，不会给广告主以任何的吸引力。</p>
-<p><a href="http://forum.techweb.com.cn/viewthread.php?tid=159328">TechWeb论坛上</a>有人恶搞了，所以俺也跟着恶搞一个，纯粹恶搞，某些事情已经到了可以恶搞的地步了，所以来模仿恶搞一下。其实，偶觉得，如果有视频作者可以把这些所有的新闻都恶搞一下，应该很好玩吧。</p></p>
+            <p class="card-text"><p><a href="http://ubuntudaily.com/wp-content/uploads/1185408112656.jpg"><img alt="" src="http://ubuntudaily.com/wp-content/uploads/1185408112656.jpg" /></a></p>
+<p>Ubuntu 在漫画 Marvel Comic Mighty Avengers 的第四版中出现了。</p>
+<p>可以看到启动管理器GRUB里的内核列表，还有一个戏剧性的“Access Denied”消息。</p>
+<p>通常这种情况可以通过Recovery Mode进入root的shell来恢复系统</p></p>
             <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-07-24T00:00:00+08:00">2007-07-24</time></p>
+              <p>Posted <time datetime="2007-07-27T00:00:00+08:00">2007-07-27</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
@@ -3215,6 +3196,25 @@ X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6000.16480</p>
 <p>好了，可怜的 X-文件锁 被我们完全破解了。</p>
 <p>ps 我不是故意的……</p>
 <p>ps 最后发现国内n多黑站到处转载这篇文章，我晕啊，最先是 鬼仔's blog，然后是……不说了 <a href="http://www.google.cn/search?q=x%E6%96%87%E4%BB%B6%E9%94%81+%E7%A0%B4%E8%A7%A3">http://www.google.cn/search?q=x%E6%96%87%E4%BB%B6%E9%94%81+%E7%A0%B4%E8%A7%A3</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-07-24T00:00:00+08:00">2007-07-24</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/132"  rel="bookmark" >
+              <h2 class="card-title">恶搞：est的Blog宣布不加入奥运报道联盟</h2>
+            </a>
+            <p class="card-text"><p>est的blog讯 7月24日16:16消息，由新浪、腾讯网易发起成立的北京奥运报道联盟在业内引发强烈反响。今天下午，est的blog正式宣布不加入该联盟。</p>
+<p>北京奥运报道联盟上周刚刚在京成立。除了最早发起的三大门户外，TOM在线、博客网、天极网、猫扑网、和讯网、奇虎网、金融界、凤凰网、MSN中文网、中国雅虎、空中网、中华网21CN及赛迪网已先后成为联盟成员。</p>
+<p>今天下午，est的blog明确提出不加入。根据北京奥运报道联盟宗旨，尽管该联盟是一个开放性组织，欢迎致力于奥运报道的网站加入，但是因为这个联盟是一小撮网站在忽悠，所以不考虑加入，并坚决表示不会加入任何阵营。</p>
+<p>est的blog是全球最无聊的博客，目前每天访问量高于10个IP，访问量也算得上是全球最低。</p>
+<p>观察人士认为，est的blog宣布不加入，将不会影响奥运报道联盟覆盖范围及影响力的提升，尤其是在地域、领域覆盖上将更加全面和完善。在北京2008奥运会召开之际，相对于单一的个人博客网站，不会给广告主以任何的吸引力。</p>
+<p><a href="http://forum.techweb.com.cn/viewthread.php?tid=159328">TechWeb论坛上</a>有人恶搞了，所以俺也跟着恶搞一个，纯粹恶搞，某些事情已经到了可以恶搞的地步了，所以来模仿恶搞一下。其实，偶觉得，如果有视频作者可以把这些所有的新闻都恶搞一下，应该很好玩吧。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-07-24T00:00:00+08:00">2007-07-24</time></p>
 <p>archive</p>            </div>
@@ -4464,51 +4464,6 @@ It has powerful features such as "Glob-style pattern matching", "Scan selection 
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/251544"  rel="bookmark" >
-              <h2 class="card-title">命令行字体注册工具RegFont.vbs v1.0 [2007-5-7]</h2>
-            </a>
-            <p class="card-text"><p>运行环境：WinNT/Win2K/WinXP/Win2003<br />
-+ 使用方法：命令行输入RegFont.vbs 字体文件名回车即可。(例如：RegFont.vbs FZ.TTF)程序<br />
-会自动移动FZ.TTF到系统的FONTS目录，并对字体进行注册，完成后即可<br />
-使用该字体。也可以在windows里头直接将某个TTF托拽到REGFONT进行注册。</p>
-<p>regfont xx.ttf 复制xx.ttf并注册<br />
-regfont xx.ttf /m 移动xx.ttf并注册<br />
-补充：<br />
-regfont xx.ttf /i 安装xx.ttf不复制，仅用快捷方式安装<br />
-regfont xx.ttf /r 安装xx.ttf，仅对本次会话有效，重启后注销。</p>
-<p>�</p>
-<pre><code>Set objShell=CreateObject(&quot;Shell.Application&quot;)
-Set objWSH=CreateObject(&quot;WScript.Shell&quot;)
-Set objFSO=CreateObject(&quot;Scripting.FileSystemObject&quot;)
-Set argv=WScript.Arguments
-set objFsoFontFile=objFSO.GetFile(argv(0))
-Set objFontFile=objShell.NameSpace(CStr(objFsoFontFile.ParentFolder)).ParseName(objFsoFontFile.Name)
-Set objSysFontsDir=objShell.NameSpace(&quot;shell:fonts&quot;)
-
-If argv.Length=1 Then
-    Call objSysFontsDir.CopyHere(objFontFile)
-ElseIf argv(1)=&quot;/i&quot; Then
-    strFontTitle=objCurrDir.GetDetailsOf(objFontFile,21)  '这个地方调用explorer获得字体标题，非Vista可能不是21
-    Call objWSH.RegWrite(&quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts\&quot; &amp; strFontTitle &amp; &quot; (TrueType)&quot;,objFontFile.Path)
-    '需要重启才能生效，vbs无法调用API，sigh～～或许rundll32可以？
-ElseIf argv(1)=&quot;/m&quot; Then
-    objSysFontsDir.MoveHere(objFontFile)
-ElseIf argv(1)=&quot;/r&quot; Then
-    WScript.Echo &quot;Not implemented&quot;
-Else
-    WScript.Echo &quot;RegFont.vbs V1.0&quot;
-End If
-</code></pre></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-05-07T00:00:00+08:00">2007-05-07</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/archives/251545"  rel="bookmark" >
               <h2 class="card-title">【原】StarDict 2.4.8 绿色精简便携版 for Win32/Windows ，免GTK</h2>
             </a>
@@ -4573,6 +4528,78 @@ lib\pango\1.5.0\modules\pango-basic-win32.dll</p>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/251544"  rel="bookmark" >
+              <h2 class="card-title">命令行字体注册工具RegFont.vbs v1.0 [2007-5-7]</h2>
+            </a>
+            <p class="card-text"><p>运行环境：WinNT/Win2K/WinXP/Win2003<br />
++ 使用方法：命令行输入RegFont.vbs 字体文件名回车即可。(例如：RegFont.vbs FZ.TTF)程序<br />
+会自动移动FZ.TTF到系统的FONTS目录，并对字体进行注册，完成后即可<br />
+使用该字体。也可以在windows里头直接将某个TTF托拽到REGFONT进行注册。</p>
+<p>regfont xx.ttf 复制xx.ttf并注册<br />
+regfont xx.ttf /m 移动xx.ttf并注册<br />
+补充：<br />
+regfont xx.ttf /i 安装xx.ttf不复制，仅用快捷方式安装<br />
+regfont xx.ttf /r 安装xx.ttf，仅对本次会话有效，重启后注销。</p>
+<p>�</p>
+<pre><code>Set objShell=CreateObject(&quot;Shell.Application&quot;)
+Set objWSH=CreateObject(&quot;WScript.Shell&quot;)
+Set objFSO=CreateObject(&quot;Scripting.FileSystemObject&quot;)
+Set argv=WScript.Arguments
+set objFsoFontFile=objFSO.GetFile(argv(0))
+Set objFontFile=objShell.NameSpace(CStr(objFsoFontFile.ParentFolder)).ParseName(objFsoFontFile.Name)
+Set objSysFontsDir=objShell.NameSpace(&quot;shell:fonts&quot;)
+
+If argv.Length=1 Then
+    Call objSysFontsDir.CopyHere(objFontFile)
+ElseIf argv(1)=&quot;/i&quot; Then
+    strFontTitle=objCurrDir.GetDetailsOf(objFontFile,21)  '这个地方调用explorer获得字体标题，非Vista可能不是21
+    Call objWSH.RegWrite(&quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts\&quot; &amp; strFontTitle &amp; &quot; (TrueType)&quot;,objFontFile.Path)
+    '需要重启才能生效，vbs无法调用API，sigh～～或许rundll32可以？
+ElseIf argv(1)=&quot;/m&quot; Then
+    objSysFontsDir.MoveHere(objFontFile)
+ElseIf argv(1)=&quot;/r&quot; Then
+    WScript.Echo &quot;Not implemented&quot;
+Else
+    WScript.Echo &quot;RegFont.vbs V1.0&quot;
+End If
+</code></pre></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-05-07T00:00:00+08:00">2007-05-07</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/251171"  rel="bookmark" >
+              <h2 class="card-title">GENERAL MOTORS VS. MICROSOFT.</h2>
+            </a>
+            <p class="card-text"><p>For all of us who feel only the deepest love and affection for the way computers have enhanced our lives, read on.</p>
+<p>At a recent computer expo (COMDEX), Bill Gates reportedly compared the computer industry with the auto industry and stated, "If GM had kept up with technology like the computer industry has, we would all be driving $25.00 cars that got 1,000 miles to the gallon."</p>
+<p>In response to Bill's comments, General Motors issued a press release stating:</p>
+<p>If GM had developed technology like Microsoft, we would all be driving cars with the following characteristics (and I just love this part):</p>
+<p>1. For no reason whatsoever, your car would crash . . . twice a day.</p>
+<p>2. Every time they repainted the lines in the road, you would have to buy a new car.</p>
+<p>3. Occasionally your car would die on the freeway for no reason. You would have to pull to the side of the road, close all of the windows, shut off the car, restart it and reopen the windows before you could continue. For some reason you would simply accept this.</p>
+<p>4. Occasionally, executing a maneuver such as a left turn would cause your car to shut down and refuse to restart, in which case you would have to reinstall the engine.</p>
+<p>5. Macintosh would make a car that was powered by the sun, was reliable, five times as fast and twice as easy to drive - but would run on only five percent of the roads.</p>
+<p>6. The oil, water temperature, and alternator warning lights would all be replaced by a single "This Car Has Performed An Illegal Operation" warning light.</p>
+<p>7. The airbag system would ask "Are you sure?" before deploying.</p>
+<p>8. Occasionally, for no reason whatsoever, your car would lock you out and refuse to let you in until you simultaneously lifted the door handle, turned the key and grabbed hold of the radio antenna.</p>
+<p>9. Every time a new car was introduced car buyers would have to learn how to drive all over again because none of the controls would operate in the same manner as the old car.</p>
+<p>10. You'd have to press the "Start" button to turn the engine off.</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2007-05-05T00:00:00+08:00">2007-05-05</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/251172"  rel="bookmark" >
               <h2 class="card-title">Launch two GTalk at once</h2>
             </a>
@@ -4624,33 +4651,6 @@ to offer our service everywhere.</p>
 <p>We share your disappointment and greatly appreciate your understanding.</p>
 <p>Sincerely,</p>
 <p>Tim Westergren</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2007-05-05T00:00:00+08:00">2007-05-05</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/251171"  rel="bookmark" >
-              <h2 class="card-title">GENERAL MOTORS VS. MICROSOFT.</h2>
-            </a>
-            <p class="card-text"><p>For all of us who feel only the deepest love and affection for the way computers have enhanced our lives, read on.</p>
-<p>At a recent computer expo (COMDEX), Bill Gates reportedly compared the computer industry with the auto industry and stated, "If GM had kept up with technology like the computer industry has, we would all be driving $25.00 cars that got 1,000 miles to the gallon."</p>
-<p>In response to Bill's comments, General Motors issued a press release stating:</p>
-<p>If GM had developed technology like Microsoft, we would all be driving cars with the following characteristics (and I just love this part):</p>
-<p>1. For no reason whatsoever, your car would crash . . . twice a day.</p>
-<p>2. Every time they repainted the lines in the road, you would have to buy a new car.</p>
-<p>3. Occasionally your car would die on the freeway for no reason. You would have to pull to the side of the road, close all of the windows, shut off the car, restart it and reopen the windows before you could continue. For some reason you would simply accept this.</p>
-<p>4. Occasionally, executing a maneuver such as a left turn would cause your car to shut down and refuse to restart, in which case you would have to reinstall the engine.</p>
-<p>5. Macintosh would make a car that was powered by the sun, was reliable, five times as fast and twice as easy to drive - but would run on only five percent of the roads.</p>
-<p>6. The oil, water temperature, and alternator warning lights would all be replaced by a single "This Car Has Performed An Illegal Operation" warning light.</p>
-<p>7. The airbag system would ask "Are you sure?" before deploying.</p>
-<p>8. Occasionally, for no reason whatsoever, your car would lock you out and refuse to let you in until you simultaneously lifted the door handle, turned the key and grabbed hold of the radio antenna.</p>
-<p>9. Every time a new car was introduced car buyers would have to learn how to drive all over again because none of the controls would operate in the same manner as the old car.</p>
-<p>10. You'd have to press the "Start" button to turn the engine off.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2007-05-05T00:00:00+08:00">2007-05-05</time></p>
 <p>archive</p>            </div>

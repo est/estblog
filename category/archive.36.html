@@ -54,6 +54,37 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/624293"  rel="bookmark" >
+              <h2 class="card-title">stackless, threads, stack, whatever</h2>
+            </a>
+            <p class="card-text"><p>再写一个comet-like Web app的时候，无意中翻到了上古神器<a href="http://code.google.com/p/eurasia/">Eurasia3</a>，也翻到了stackless，每次碰到stackless就小小的震撼一下，就像阳光照不到的阴暗角落，不知道哪里有什么样稀奇古怪的东西。还是在IBM developerWorks上翻到了一点支离破碎的东西（<a href="http://www-128.ibm.com/developerworks/cn/linux/sdk/python/python-7/">中文</a> | <a href="http://www.ibm.com/developerworks/library/l-pyth7.html">英文</a>）：</p>
+<blockquote>
+<p>Mertz：Stackless Python 确切来说是什么？有什么初学者可以理解的概念能够解释有关 Stackless 的不同之处？</p>
+<p>Tismer：Stackless Python 是一种不在 C 堆栈上保存状态的 Python 实现。它的确有堆栈 -- 要多少有多少 -- 但这些是 Python 堆栈。</p>
+<p>C 堆栈不能从例如 C 这样的语言以干净的方式进行修改，除非以预期的顺序进行。它对您施加了很大限制：您必须回到这里，与您离开的方向正好相反。</p>
+<p>“普通的”程序员一开始不会认为这是个限制。他们必须从开始就要学会将想法转向堆栈。堆栈没有什么坏处，并且通常它们施加的执行顺序就是实际上的顺序，但这并不意味着我们必须等待一个这样的堆栈序列完成才能运行另一序列。</p>
+<p>程序员在必须执行非阻塞调用和回调时意识到这一点。堆栈突然挡住去路，我们必须使用线程，或将状态明确存储在对象中，或者构建显式的可切换堆栈等等。Stackless 的目的是帮助程序员避免这些问题。</p>
+<p>Mertz: Exactly what is Stackless Python? Is there something a beginner can get his or her mind around that explains what is different about Stackless?</p>
+<p>Tismer: Stackless Python is a Python implementation that does not save state on the C stack. It does have stacks -- as many as you want -- but these are Python stacks.</p>
+<p>The C stack cannot be modified in a clean way from a language like C, unless you do it in the expected order. It imposes a big obligation on you: You will come back, exactly here, exactly in the reverse way as you went off.</p>
+<p>"Normal" programmers do not see this as a restriction in the first place. They have to learn to push their minds onto stacks from the outset. There is nothing bad about stacks, and usually their imposed execution order is the way to go, but that does not mean that we have to wait for one such stack sequence to complete before we can run a different one.</p>
+<p>Programmers realize this when they have to do non-blocking calls and callbacks. Suddenly the stack is in the way, we must use threads, or explicitly store state in objects, or build explicit, switchable stacks, and so on. The aim of Stackless is to deliver the programmer from these problems.</p>
+</blockquote>
+<p>还是一片空白啊。但是感觉HTML - CGI - AJAX这一些东西一路过来，可能对并发编程有相当大的促进吧？加上现在的comet，简直是颠覆性的东西。</p>
+<p>顺便看了一下文章发表的时间：<br />
+David Mertz (mertz@gnosis.cx), President, Gnosis Software, Inc.</p>
+<p><strong>01 Oct 2000</strong></p>
+<p>瞬间觉得自己超级渺小。8年前我在做什么？跟老师在昏暗沉闷的微机室学习DOS, WPS……Guido在1989圣诞节无聊写了个python出来。Tismer在1999无聊写了个stackless</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-02-26T00:00:00+08:00">2008-02-26</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/624294"  rel="bookmark" >
               <h2 class="card-title">数羊也可以这样数</h2>
             </a>
@@ -446,72 +477,6 @@ shhgs在国外呆久了，解释中文都太深
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/624306"  rel="bookmark" >
-              <h2 class="card-title">Product key error</h2>
-            </a>
-            <p class="card-text"><p>安装Windows Server 2008，本来想用OEM的方法激活，但是可耻的失败了。</p>
-<p>---------------------------<br />
-Product key error<br />
----------------------------<br />
-The product key you have entered will not work with this edition of Windows Server®.</p>
-<p>You must either run Windows Server® Setup or enter a Windows Server® Standard product key.<br />
----------------------------<br />
-OK<br />
----------------------------</p>
-<p>网上有<a href="http://www.vistafans.com/viewthread.php?tid=242637">OEM激活的教程</a>：由于Windows Server 2008和 Windows Vista SP1用的是<a href="http://blogs.itecn.net/blogs/smallfrogs/archive/2008/02/15/windows-vista-sp1-windows-server-2008.aspx">同一个内核</a>，所以可以先安装一个HP OEM Vista，然后把这两个文件替换Server 2008的同名文件<br />
-%WinDir%\System32\Licensing\pkeyconfig\pkeyconfig.xrm-ms<br />
-%WinDir%\ServiceProfiles\NetworkService\AppData\Roaming\Microsoft\SoftwareLicensing\tokens.dat<br />
-再用OEM激活，据说有人成功过。但是缺点是：Server 2008变成了workstation版本，例如 我的电脑 - 服务器管理 变成了计算机管理，<a href="http://www.vistafans.com/viewthread.php?tid=244938">IIS和AD也不是服务器版本的</a></p>
-<p>那么，我还需要再装一次Vista么，囧</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2008-02-26T00:00:00+08:00">2008-02-26</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/624155"  rel="bookmark" >
-              <h2 class="card-title">[python]基于htmllib.HTMLParser的html2text</h2>
-            </a>
-            <p class="card-text"><pre><code>def html2text(strHtml):
-    &quot;&quot;&quot;处理html 4.01和部分xhtml 1.0转义字符&quot;&quot;&quot;
-    class SimpleParser(htmllib.HTMLParser):
-        def anchor_end(self):
-            if self.anchor:
-                self.anchor = None
-        def handle_image(self, src, alt, *args):
-            #self.handle_data(alt)  #可以重写为alt属性
-            pass                    #图片替换成空
-        def convert_entityref(self, name):
-            name2codepoint[&quot;nbsp&quot;]  = 0x0020
-            name2codepoint[&quot;apos&quot;]  = 0x0027
-            if name in name2codepoint and name&lt;256:
-                return chr(name2codepoint[name])
-            else:
-                return
-        def convert_charref(self, name):
-            return unichr(int(name)).encode(&quot;gb18030&quot;)
-
-    file = StringIO.StringIO()
-    p = SimpleParser(formatter.AbstractFormatter(formatter.DumbWriter(file)))
-    p.feed(strHtml)
-    p.close()
-    return file.getvalue()
-</code></pre>
-<p>贴在这里备用。相当与js DOM编程里的 innerText 功能。该死的<a href="http://www.crummy.com/software/BeautifulSoup/">BeautifulSoup</a>为啥不集成这个功能啊？</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2008-02-24T00:00:00+08:00">2008-02-24</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/archives/624154"  rel="bookmark" >
               <h2 class="card-title">[Python]给urllib2添加自动Referer, Cookie处理功能</h2>
             </a>
@@ -549,6 +514,45 @@ if &quot;__main__&quot; == __name__:
     main()
 </code></pre>
 <p>参考了部分<a href="http://wwwsearch.sourceforge.net/ClientCookie/">ClientCookie</a>库的代码。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-02-24T00:00:00+08:00">2008-02-24</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/624155"  rel="bookmark" >
+              <h2 class="card-title">[python]基于htmllib.HTMLParser的html2text</h2>
+            </a>
+            <p class="card-text"><pre><code>def html2text(strHtml):
+    &quot;&quot;&quot;处理html 4.01和部分xhtml 1.0转义字符&quot;&quot;&quot;
+    class SimpleParser(htmllib.HTMLParser):
+        def anchor_end(self):
+            if self.anchor:
+                self.anchor = None
+        def handle_image(self, src, alt, *args):
+            #self.handle_data(alt)  #可以重写为alt属性
+            pass                    #图片替换成空
+        def convert_entityref(self, name):
+            name2codepoint[&quot;nbsp&quot;]  = 0x0020
+            name2codepoint[&quot;apos&quot;]  = 0x0027
+            if name in name2codepoint and name&lt;256:
+                return chr(name2codepoint[name])
+            else:
+                return
+        def convert_charref(self, name):
+            return unichr(int(name)).encode(&quot;gb18030&quot;)
+
+    file = StringIO.StringIO()
+    p = SimpleParser(formatter.AbstractFormatter(formatter.DumbWriter(file)))
+    p.feed(strHtml)
+    p.close()
+    return file.getvalue()
+</code></pre>
+<p>贴在这里备用。相当与js DOM编程里的 innerText 功能。该死的<a href="http://www.crummy.com/software/BeautifulSoup/">BeautifulSoup</a>为啥不集成这个功能啊？</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-02-24T00:00:00+08:00">2008-02-24</time></p>
 <p>archive</p>            </div>
@@ -1234,27 +1238,6 @@ Django is one of the premier web frameworks for Python, and is often compared to
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/nu/17"  rel="bookmark" >
-              <h2 class="card-title">练狙了练狙了</h2>
-            </a>
-            <p class="card-text"><p>中新网11月8日电 伊拉克前总统萨达姆7日呼吁伊拉克人实现和解，萨达姆两天前因反人类罪指控被高等法庭判处死刑。</p>
-<p>萨达姆在回顾耶稣和先知穆罕默德都曾原谅他们的敌人后称：“我呼吁伊拉克人、阿拉伯人、库尔德人原谅对方，进行和解和握手。”</p>
-<p>但他的这些话不太可能对武装团伙产生多大的影响力。越来越自信的武装团伙已发布了一系列宣传一位名为祖巴的狙击手的录像带，对他射杀美军士兵的战绩进行“庆祝”，并声称制造出了一种新型地对地导弹。</p>
-<p>当法官5日以萨达姆下令处决148名什叶派村民为由判处他绞刑时，萨达姆曾大闹法庭。但当他昨天因1988年安法尔案接受审判时，他和他的六名同案被告安静地听取了大屠杀幸存者的证词。伊拉克国家安全顾问鲁巴伊告诉《泰晤士报》：“我认为对萨达姆的判决将对武装分子活动起到重大的负面影响，这将打消他们重新掌权的希望，使他们更加接近和解。”</p>
-<p>什叶派主导的政府已起草了一项让一些原阿拉伯复兴社会党党员复职的法律。官员们还宣布55名警察已被控虐待犯人的罪名，逊尼派经常指责主要由什叶派组成的警察纵容对他们社区进行袭击的死亡小队。</p>
-<p>但这些姿态不太可能对伊武装分子活动起到很大的效果。主要由前萨达姆安全部门人员组成的伊拉克伊斯兰军对“巴格达狙击手祖巴的战绩”进行了庆祝。录像带显示，祖巴在一个墙上刻下他的射杀纪录，然后他放下狙击枪，写了一个赞扬真主的诗歌，呼吁伊拉克人与十字军和犹太人作战。</p>
-<p>时长28分钟的录像对一名自称是伊拉克伊斯兰军狙击手旅指挥官进行了采访。在采访的间隙中是一名狙击手射杀二十四名美军士兵的画面。在每个枪击事件中，士兵被标识出来。在场民众先是听到子弹发射声，然后看到美军士兵应声倒地。图像下闪动着“巴格达狙击手祖巴”的字幕。狙击手旅指挥官声称，武装分子不是战术精湛的战士，但他们的技能正变得越来越熟练。他说：“圣战者随着时间的过去而开始从战场上获得经验。”</p>
-<p>他声称，他的团伙已训练了一个精锐的狙击手旅并完善了针对美军的战法。他的神枪手们从一名退役的美军少校普拉斯特所著的《终级狙击手》 的书中学会了狙击战法。祖巴还拥有一个名为“祖巴在线”的网站。伊斯兰军的武装分子在斋月结束时曾在巴格达的逊尼居民区的大街上活动，向居民们分发录像带。他们看起来一点也不感到害怕。一名居民在观看完录像带后称：“我对此感到自豪，这是一部制作得相当好的电影，这是一个完美的工作。这是让美国人离开的最佳方法。”(关新)</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2008-01-13T00:00:00+08:00">2008-01-13</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/nu/16"  rel="bookmark" >
               <h2 class="card-title">上次网上查资料～～～</h2>
             </a>
@@ -1538,6 +1521,27 @@ MS不错<br />
 <p>丧次我擦资料，头然蹦区一过窗口，蛮黄蛮暴泥，我就赶快关鸟</p>
 <p>江西上饶：象次瓦查资料，独沿蹦出各类窗口，一触，么噶黄，么噶暴力，瓦库信把额关么不。</p>
 <p>最后还有个<a href="http://www.cgfan.com/bbs/read.php?tid=31632">CG版</a>的</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-01-13T00:00:00+08:00">2008-01-13</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/nu/17"  rel="bookmark" >
+              <h2 class="card-title">练狙了练狙了</h2>
+            </a>
+            <p class="card-text"><p>中新网11月8日电 伊拉克前总统萨达姆7日呼吁伊拉克人实现和解，萨达姆两天前因反人类罪指控被高等法庭判处死刑。</p>
+<p>萨达姆在回顾耶稣和先知穆罕默德都曾原谅他们的敌人后称：“我呼吁伊拉克人、阿拉伯人、库尔德人原谅对方，进行和解和握手。”</p>
+<p>但他的这些话不太可能对武装团伙产生多大的影响力。越来越自信的武装团伙已发布了一系列宣传一位名为祖巴的狙击手的录像带，对他射杀美军士兵的战绩进行“庆祝”，并声称制造出了一种新型地对地导弹。</p>
+<p>当法官5日以萨达姆下令处决148名什叶派村民为由判处他绞刑时，萨达姆曾大闹法庭。但当他昨天因1988年安法尔案接受审判时，他和他的六名同案被告安静地听取了大屠杀幸存者的证词。伊拉克国家安全顾问鲁巴伊告诉《泰晤士报》：“我认为对萨达姆的判决将对武装分子活动起到重大的负面影响，这将打消他们重新掌权的希望，使他们更加接近和解。”</p>
+<p>什叶派主导的政府已起草了一项让一些原阿拉伯复兴社会党党员复职的法律。官员们还宣布55名警察已被控虐待犯人的罪名，逊尼派经常指责主要由什叶派组成的警察纵容对他们社区进行袭击的死亡小队。</p>
+<p>但这些姿态不太可能对伊武装分子活动起到很大的效果。主要由前萨达姆安全部门人员组成的伊拉克伊斯兰军对“巴格达狙击手祖巴的战绩”进行了庆祝。录像带显示，祖巴在一个墙上刻下他的射杀纪录，然后他放下狙击枪，写了一个赞扬真主的诗歌，呼吁伊拉克人与十字军和犹太人作战。</p>
+<p>时长28分钟的录像对一名自称是伊拉克伊斯兰军狙击手旅指挥官进行了采访。在采访的间隙中是一名狙击手射杀二十四名美军士兵的画面。在每个枪击事件中，士兵被标识出来。在场民众先是听到子弹发射声，然后看到美军士兵应声倒地。图像下闪动着“巴格达狙击手祖巴”的字幕。狙击手旅指挥官声称，武装分子不是战术精湛的战士，但他们的技能正变得越来越熟练。他说：“圣战者随着时间的过去而开始从战场上获得经验。”</p>
+<p>他声称，他的团伙已训练了一个精锐的狙击手旅并完善了针对美军的战法。他的神枪手们从一名退役的美军少校普拉斯特所著的《终级狙击手》 的书中学会了狙击战法。祖巴还拥有一个名为“祖巴在线”的网站。伊斯兰军的武装分子在斋月结束时曾在巴格达的逊尼居民区的大街上活动，向居民们分发录像带。他们看起来一点也不感到害怕。一名居民在观看完录像带后称：“我对此感到自豪，这是一部制作得相当好的电影，这是一个完美的工作。这是让美国人离开的最佳方法。”(关新)</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-01-13T00:00:00+08:00">2008-01-13</time></p>
 <p>archive</p>            </div>
