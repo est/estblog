@@ -54,37 +54,6 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/624293"  rel="bookmark" >
-              <h2 class="card-title">stackless, threads, stack, whatever</h2>
-            </a>
-            <p class="card-text"><p>再写一个comet-like Web app的时候，无意中翻到了上古神器<a href="http://code.google.com/p/eurasia/">Eurasia3</a>，也翻到了stackless，每次碰到stackless就小小的震撼一下，就像阳光照不到的阴暗角落，不知道哪里有什么样稀奇古怪的东西。还是在IBM developerWorks上翻到了一点支离破碎的东西（<a href="http://www-128.ibm.com/developerworks/cn/linux/sdk/python/python-7/">中文</a> | <a href="http://www.ibm.com/developerworks/library/l-pyth7.html">英文</a>）：</p>
-<blockquote>
-<p>Mertz：Stackless Python 确切来说是什么？有什么初学者可以理解的概念能够解释有关 Stackless 的不同之处？</p>
-<p>Tismer：Stackless Python 是一种不在 C 堆栈上保存状态的 Python 实现。它的确有堆栈 -- 要多少有多少 -- 但这些是 Python 堆栈。</p>
-<p>C 堆栈不能从例如 C 这样的语言以干净的方式进行修改，除非以预期的顺序进行。它对您施加了很大限制：您必须回到这里，与您离开的方向正好相反。</p>
-<p>“普通的”程序员一开始不会认为这是个限制。他们必须从开始就要学会将想法转向堆栈。堆栈没有什么坏处，并且通常它们施加的执行顺序就是实际上的顺序，但这并不意味着我们必须等待一个这样的堆栈序列完成才能运行另一序列。</p>
-<p>程序员在必须执行非阻塞调用和回调时意识到这一点。堆栈突然挡住去路，我们必须使用线程，或将状态明确存储在对象中，或者构建显式的可切换堆栈等等。Stackless 的目的是帮助程序员避免这些问题。</p>
-<p>Mertz: Exactly what is Stackless Python? Is there something a beginner can get his or her mind around that explains what is different about Stackless?</p>
-<p>Tismer: Stackless Python is a Python implementation that does not save state on the C stack. It does have stacks -- as many as you want -- but these are Python stacks.</p>
-<p>The C stack cannot be modified in a clean way from a language like C, unless you do it in the expected order. It imposes a big obligation on you: You will come back, exactly here, exactly in the reverse way as you went off.</p>
-<p>"Normal" programmers do not see this as a restriction in the first place. They have to learn to push their minds onto stacks from the outset. There is nothing bad about stacks, and usually their imposed execution order is the way to go, but that does not mean that we have to wait for one such stack sequence to complete before we can run a different one.</p>
-<p>Programmers realize this when they have to do non-blocking calls and callbacks. Suddenly the stack is in the way, we must use threads, or explicitly store state in objects, or build explicit, switchable stacks, and so on. The aim of Stackless is to deliver the programmer from these problems.</p>
-</blockquote>
-<p>还是一片空白啊。但是感觉HTML - CGI - AJAX这一些东西一路过来，可能对并发编程有相当大的促进吧？加上现在的comet，简直是颠覆性的东西。</p>
-<p>顺便看了一下文章发表的时间：<br />
-David Mertz (mertz@gnosis.cx), President, Gnosis Software, Inc.</p>
-<p><strong>01 Oct 2000</strong></p>
-<p>瞬间觉得自己超级渺小。8年前我在做什么？跟老师在昏暗沉闷的微机室学习DOS, WPS……Guido在1989圣诞节无聊写了个python出来。Tismer在1999无聊写了个stackless</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2008-02-26T00:00:00+08:00">2008-02-26</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/archives/624294"  rel="bookmark" >
               <h2 class="card-title">数羊也可以这样数</h2>
             </a>
@@ -477,45 +446,29 @@ shhgs在国外呆久了，解释中文都太深
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/624154"  rel="bookmark" >
-              <h2 class="card-title">[Python]给urllib2添加自动Referer, Cookie处理功能</h2>
+            <a href="/archives/624293"  rel="bookmark" >
+              <h2 class="card-title">stackless, threads, stack, whatever</h2>
             </a>
-            <p class="card-text"><p>urllib2是个非常好用的http客户端库，但是用来写爬虫可能会遇到一些问题，一是连续请求某一网站的时候，cookie需要手动添加到HTTP请求头里，二是手动处理Referer页。这里贴一段代码，可以自动处理Cookie和Referer问题。每一个请求会自动添加上一次的cookie和referer。</p>
-<p>以后做爬虫，如果规模较大，性能要求较高，还是用<a href="http://pycurl.sourceforge.net/download/">pycURL</a>这个库吧，C写的。一般的小规模应用，要方便的跨Linux/Windows平台还是用下面的代码比较灵活方便。</p>
-<pre><code>class HTTPRefererProcessor(urllib2.BaseHandler):
-    def __init__(self):
-        self.referer = None
-
-    def http_request(self, request):
-        if ((self.referer is not None) and
-            not request.has_header(&quot;Referer&quot;)):
-            request.add_unredirected_header(&quot;Referer&quot;, self.referer)
-        return request
-
-    def http_response(self, request, response):
-        self.referer = response.geturl()
-        return response
-
-    https_request = http_request
-    https_response = http_response
-
-def main():
-    cj = CookieJar()
-    opener = urllib2.build_opener(
-        urllib2.HTTPCookieProcessor(cj),
-        HTTPRefererProcessor(),
-    )
-    urllib2.install_opener(opener)
-
-    urllib2.urlopen(url1)  #打开第一个网址
-    urllib2.urlopen(url2)  #打开第二个网址
-
-if &quot;__main__&quot; == __name__:
-    main()
-</code></pre>
-<p>参考了部分<a href="http://wwwsearch.sourceforge.net/ClientCookie/">ClientCookie</a>库的代码。</p></p>
+            <p class="card-text"><p>再写一个comet-like Web app的时候，无意中翻到了上古神器<a href="http://code.google.com/p/eurasia/">Eurasia3</a>，也翻到了stackless，每次碰到stackless就小小的震撼一下，就像阳光照不到的阴暗角落，不知道哪里有什么样稀奇古怪的东西。还是在IBM developerWorks上翻到了一点支离破碎的东西（<a href="http://www-128.ibm.com/developerworks/cn/linux/sdk/python/python-7/">中文</a> | <a href="http://www.ibm.com/developerworks/library/l-pyth7.html">英文</a>）：</p>
+<blockquote>
+<p>Mertz：Stackless Python 确切来说是什么？有什么初学者可以理解的概念能够解释有关 Stackless 的不同之处？</p>
+<p>Tismer：Stackless Python 是一种不在 C 堆栈上保存状态的 Python 实现。它的确有堆栈 -- 要多少有多少 -- 但这些是 Python 堆栈。</p>
+<p>C 堆栈不能从例如 C 这样的语言以干净的方式进行修改，除非以预期的顺序进行。它对您施加了很大限制：您必须回到这里，与您离开的方向正好相反。</p>
+<p>“普通的”程序员一开始不会认为这是个限制。他们必须从开始就要学会将想法转向堆栈。堆栈没有什么坏处，并且通常它们施加的执行顺序就是实际上的顺序，但这并不意味着我们必须等待一个这样的堆栈序列完成才能运行另一序列。</p>
+<p>程序员在必须执行非阻塞调用和回调时意识到这一点。堆栈突然挡住去路，我们必须使用线程，或将状态明确存储在对象中，或者构建显式的可切换堆栈等等。Stackless 的目的是帮助程序员避免这些问题。</p>
+<p>Mertz: Exactly what is Stackless Python? Is there something a beginner can get his or her mind around that explains what is different about Stackless?</p>
+<p>Tismer: Stackless Python is a Python implementation that does not save state on the C stack. It does have stacks -- as many as you want -- but these are Python stacks.</p>
+<p>The C stack cannot be modified in a clean way from a language like C, unless you do it in the expected order. It imposes a big obligation on you: You will come back, exactly here, exactly in the reverse way as you went off.</p>
+<p>"Normal" programmers do not see this as a restriction in the first place. They have to learn to push their minds onto stacks from the outset. There is nothing bad about stacks, and usually their imposed execution order is the way to go, but that does not mean that we have to wait for one such stack sequence to complete before we can run a different one.</p>
+<p>Programmers realize this when they have to do non-blocking calls and callbacks. Suddenly the stack is in the way, we must use threads, or explicitly store state in objects, or build explicit, switchable stacks, and so on. The aim of Stackless is to deliver the programmer from these problems.</p>
+</blockquote>
+<p>还是一片空白啊。但是感觉HTML - CGI - AJAX这一些东西一路过来，可能对并发编程有相当大的促进吧？加上现在的comet，简直是颠覆性的东西。</p>
+<p>顺便看了一下文章发表的时间：<br />
+David Mertz (mertz@gnosis.cx), President, Gnosis Software, Inc.</p>
+<p><strong>01 Oct 2000</strong></p>
+<p>瞬间觉得自己超级渺小。8年前我在做什么？跟老师在昏暗沉闷的微机室学习DOS, WPS……Guido在1989圣诞节无聊写了个python出来。Tismer在1999无聊写了个stackless</p></p>
             <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2008-02-24T00:00:00+08:00">2008-02-24</time></p>
+              <p>Posted <time datetime="2008-02-26T00:00:00+08:00">2008-02-26</time></p>
 <p>archive</p>            </div>
           </article>
         </div>
@@ -553,6 +506,53 @@ if &quot;__main__&quot; == __name__:
     return file.getvalue()
 </code></pre>
 <p>贴在这里备用。相当与js DOM编程里的 innerText 功能。该死的<a href="http://www.crummy.com/software/BeautifulSoup/">BeautifulSoup</a>为啥不集成这个功能啊？</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-02-24T00:00:00+08:00">2008-02-24</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/624154"  rel="bookmark" >
+              <h2 class="card-title">[Python]给urllib2添加自动Referer, Cookie处理功能</h2>
+            </a>
+            <p class="card-text"><p>urllib2是个非常好用的http客户端库，但是用来写爬虫可能会遇到一些问题，一是连续请求某一网站的时候，cookie需要手动添加到HTTP请求头里，二是手动处理Referer页。这里贴一段代码，可以自动处理Cookie和Referer问题。每一个请求会自动添加上一次的cookie和referer。</p>
+<p>以后做爬虫，如果规模较大，性能要求较高，还是用<a href="http://pycurl.sourceforge.net/download/">pycURL</a>这个库吧，C写的。一般的小规模应用，要方便的跨Linux/Windows平台还是用下面的代码比较灵活方便。</p>
+<pre><code>class HTTPRefererProcessor(urllib2.BaseHandler):
+    def __init__(self):
+        self.referer = None
+
+    def http_request(self, request):
+        if ((self.referer is not None) and
+            not request.has_header(&quot;Referer&quot;)):
+            request.add_unredirected_header(&quot;Referer&quot;, self.referer)
+        return request
+
+    def http_response(self, request, response):
+        self.referer = response.geturl()
+        return response
+
+    https_request = http_request
+    https_response = http_response
+
+def main():
+    cj = CookieJar()
+    opener = urllib2.build_opener(
+        urllib2.HTTPCookieProcessor(cj),
+        HTTPRefererProcessor(),
+    )
+    urllib2.install_opener(opener)
+
+    urllib2.urlopen(url1)  #打开第一个网址
+    urllib2.urlopen(url2)  #打开第二个网址
+
+if &quot;__main__&quot; == __name__:
+    main()
+</code></pre>
+<p>参考了部分<a href="http://wwwsearch.sourceforge.net/ClientCookie/">ClientCookie</a>库的代码。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-02-24T00:00:00+08:00">2008-02-24</time></p>
 <p>archive</p>            </div>

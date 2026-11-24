@@ -956,6 +956,32 @@ CFACF72F5EB60EA15F89E3AF66732545</p>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/632661"  rel="bookmark" >
+              <h2 class="card-title">Python中Unicode转string绝对不会exception的方法</h2>
+            </a>
+            <p class="card-text"><p>如果你被这个错误信息惹冒火了</p>
+<p><code>UnicodeEncodeError: 'ascii' codec can't encode character \x4b in position 0: ordinal not in range(12 ![8\)](http://static.blogcn.com/wp-includes/images/smilies/icon_cool.gif)</code></p>
+<p>可以试试这个函数：</p>
+<pre><code>def fstr(input, encoding='utf-8'):
+        &quot;&quot;&quot;Force convert &quot;&quot;&quot;
+        import cStringIO, codecs
+        s = cStringIO.StringIO()
+        w = codecs.getwriter(encoding)(s)
+        w.write(input)
+        return s.getvalue()
+</code></pre>
+<p>Python的中文乱码问题真是一陀屎。Python社区一帮只用ASCII字符的装<a href="https://groups.google.com/group/comp.lang.python/t/ca6ade6b6f5f3052">B的老外</a>也几乎没遇到过。一点都不体贴我们CJK开发人员的艰辛。</p>
+<p>作为CPython标准发行版的内置函数：str()，理论上应该可以把任意object转换为字符串表示形式。不知道地球上除了python之外，还有什么伟大的语言，连内置函数 <em>object</em>.<strong>str</strong>() （相当于其他语言里的 <em>object</em>.toString()）都会抛出一个异常～～～～～～wtf～～～～～～～～～</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-09-28T00:00:00+08:00">2008-09-28</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/632693"  rel="bookmark" >
               <h2 class="card-title">24小时没看cnBeta和Google Reader了</h2>
             </a>
@@ -995,32 +1021,6 @@ CFACF72F5EB60EA15F89E3AF66732545</p>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/632661"  rel="bookmark" >
-              <h2 class="card-title">Python中Unicode转string绝对不会exception的方法</h2>
-            </a>
-            <p class="card-text"><p>如果你被这个错误信息惹冒火了</p>
-<p><code>UnicodeEncodeError: 'ascii' codec can't encode character \x4b in position 0: ordinal not in range(12 ![8\)](http://static.blogcn.com/wp-includes/images/smilies/icon_cool.gif)</code></p>
-<p>可以试试这个函数：</p>
-<pre><code>def fstr(input, encoding='utf-8'):
-        &quot;&quot;&quot;Force convert &quot;&quot;&quot;
-        import cStringIO, codecs
-        s = cStringIO.StringIO()
-        w = codecs.getwriter(encoding)(s)
-        w.write(input)
-        return s.getvalue()
-</code></pre>
-<p>Python的中文乱码问题真是一陀屎。Python社区一帮只用ASCII字符的装<a href="https://groups.google.com/group/comp.lang.python/t/ca6ade6b6f5f3052">B的老外</a>也几乎没遇到过。一点都不体贴我们CJK开发人员的艰辛。</p>
-<p>作为CPython标准发行版的内置函数：str()，理论上应该可以把任意object转换为字符串表示形式。不知道地球上除了python之外，还有什么伟大的语言，连内置函数 <em>object</em>.<strong>str</strong>() （相当于其他语言里的 <em>object</em>.toString()）都会抛出一个异常～～～～～～wtf～～～～～～～～～</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2008-09-28T00:00:00+08:00">2008-09-28</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/archives/628300"  rel="bookmark" >
               <h2 class="card-title">The 18MB Microsoft Word 2003, non-install, portale, WOW!</h2>
             </a>
@@ -1044,6 +1044,22 @@ MD5:a3a530131d523279c3f617cafe723a85</p>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/632571"  rel="bookmark" >
+              <h2 class="card-title">极品网站。。。</h2>
+            </a>
+            <p class="card-text"><p>中国密码学会的网站可以随便进后台，哈哈</p>
+<p><a href="http://xn--fiq7vi3qbveynay21l.com/admin/MeetManage.aspx">http://xn--fiq7vi3qbveynay21l.com/admin/MeetManage.aspx</a></p>
+<p>太极品了 。大家<a href="http://www2.dormforce.net/flatgrid/viewmctalk.php?id=2650">去玩</a>吧。哈哈</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-09-23T00:00:00+08:00">2008-09-23</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/632555"  rel="bookmark" >
               <h2 class="card-title">装逼就是要这么装</h2>
             </a>
@@ -1058,22 +1074,6 @@ MD5:a3a530131d523279c3f617cafe723a85</p>
 <p>我刚刚用sbcl/emacs/slime, hunchentoot, cl-who, sqlite3, and clsql把我的blog重写了一遍。只花了我一天的时间（包括在VPN上重装Gentoo）。老子一年没有碰编程了（换专业了。）</p>
 </blockquote>
 <p>囧rz</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2008-09-23T00:00:00+08:00">2008-09-23</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/632571"  rel="bookmark" >
-              <h2 class="card-title">极品网站。。。</h2>
-            </a>
-            <p class="card-text"><p>中国密码学会的网站可以随便进后台，哈哈</p>
-<p><a href="http://xn--fiq7vi3qbveynay21l.com/admin/MeetManage.aspx">http://xn--fiq7vi3qbveynay21l.com/admin/MeetManage.aspx</a></p>
-<p>太极品了 。大家<a href="http://www2.dormforce.net/flatgrid/viewmctalk.php?id=2650">去玩</a>吧。哈哈</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-09-23T00:00:00+08:00">2008-09-23</time></p>
 <p>archive</p>            </div>
@@ -1305,11 +1305,13 @@ UNMAPPED_REMOTE_USER=est-Vista\\est
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/632209"  rel="bookmark" >
-              <h2 class="card-title">paycenter.com.cn 域名输入错误</h2>
+            <a href="/archives/631638"  rel="bookmark" >
+              <h2 class="card-title">锟斤拷锟斤拷锟斤拷 - 经典Unicode乱码</h2>
             </a>
-            <p class="card-text"><p>解决办法：<a href="http://dcp.xinnet.com">http://dcp.xinnet.com</a></p>
-<p>万恶的新网不支持AAAA记录解析啊。。。还得自己架设一个BIND</p></p>
+            <p class="card-text"><p>就是这么搞笑 <img alt=":-)" src="http://extra-001.yo2cdn.com/wp-includes/images/smilies/icon_smile.gif" /></p>
+<p><a href="http://www.baidu.com/baidu?word=%EF%BF%BD%EF%BF%BD">http://www.google.com/search?q=锟斤拷</a></p>
+<p><a href="http://www.google.com/search?hl=en&amp;q=%E9%94%9F%E6%96%A4%E6%8B%B7">http://www.google.com/search?hl=en&amp;q=%E9%94%9F%E6%96%A4%E6%8B%B7</a></p>
+<p>编码问题真是个TMD烦人的问题。例如：<img alt="15.jpg" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2008/09/15.jpg" /></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-09-12T00:00:00+08:00">2008-09-12</time></p>
 <p>archive</p>            </div>
@@ -1320,13 +1322,11 @@ UNMAPPED_REMOTE_USER=est-Vista\\est
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/631638"  rel="bookmark" >
-              <h2 class="card-title">锟斤拷锟斤拷锟斤拷 - 经典Unicode乱码</h2>
+            <a href="/archives/632209"  rel="bookmark" >
+              <h2 class="card-title">paycenter.com.cn 域名输入错误</h2>
             </a>
-            <p class="card-text"><p>就是这么搞笑 <img alt=":-)" src="http://extra-001.yo2cdn.com/wp-includes/images/smilies/icon_smile.gif" /></p>
-<p><a href="http://www.baidu.com/baidu?word=%EF%BF%BD%EF%BF%BD">http://www.google.com/search?q=锟斤拷</a></p>
-<p><a href="http://www.google.com/search?hl=en&amp;q=%E9%94%9F%E6%96%A4%E6%8B%B7">http://www.google.com/search?hl=en&amp;q=%E9%94%9F%E6%96%A4%E6%8B%B7</a></p>
-<p>编码问题真是个TMD烦人的问题。例如：<img alt="15.jpg" src="http://image-001.yo2cdn.com/wp-content/uploads/74/7487/2008/09/15.jpg" /></p></p>
+            <p class="card-text"><p>解决办法：<a href="http://dcp.xinnet.com">http://dcp.xinnet.com</a></p>
+<p>万恶的新网不支持AAAA记录解析啊。。。还得自己架设一个BIND</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-09-12T00:00:00+08:00">2008-09-12</time></p>
 <p>archive</p>            </div>
@@ -1616,32 +1616,6 @@ http://<em>your_IP_address</em> :8888/1.asf for your LAN friends, <strong>yes</s
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/631355"  rel="bookmark" >
-              <h2 class="card-title">PuTTY的缺陷</h2>
-            </a>
-            <p class="card-text"><ol>
-<li>tab等界面支持<ol start="2">
-<li>标准PKCS(RSA)的公钥/密钥，而不是.ppk格式的。例如<a href="http://www.joebar.ch/puttysc/">putty sc</a>？</li>
-<li>缩小到Tray，整合MyEnTunnel算了</li>
-<li>把配置文件保存到当前.putty目录或者.ini文件，而不是注册表。<a href="http://socialistsushi.com/2005/11/17/portaputty">portaputty</a>实现了这一功能</li>
-<li>PuTTY里你是怎么传文件的？本机建立个HTTP然后远程wget？为什么PuTTY不直接支持SecureCRT里的Zmodem：直接输入rz和sz命令就传文件，多爽。其实ZModerm也不爽。没法传文件夹。还是FTPRush基于SSHv1/v2的sftp爽。就是速度慢了点</li>
-<li>CJK的更好支持，例如<a href="http://yawiki.org/proc/yawiki.org/proc/http://ntu.csie.org/~piaip/pietty/">pietty</a></li>
-<li>连接串口？囧代替超级终端。。其实Window Mobile上的<a href="http://www.pocketputty.net/">pocketputty</a>就做得非常好。支持COM/RAW Socket/SSH/Telnet/RLogin多种协议</li>
-<li>保存登录密码？</li>
-</ol>
-</li>
-</ol>
-<p>PuTTY是有<a href="http://rechten.uvt.nl/koops/cryptolaw/">加密技术出口限制</a>的。。。某些对美国不友好国家下载并使用PuTTY是非法的。。。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2008-08-18T00:00:00+08:00">2008-08-18</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/archives/631356"  rel="bookmark" >
               <h2 class="card-title">传说中“符合RFC标准”验证电子邮件的正则表达式</h2>
             </a>
@@ -1765,6 +1739,32 @@ ff\n\015()]<em>)</em>)[\040\t]<em>)</em>(?:.[\040\t]<em>(?:([^\\x80-\xff\n\015()
 <p>geometry:<br />
 <img alt="MIT 1869-1870 entrance exam geometry" src="http://pieandhammer.com/wp/wp-content/uploads/2007/09/geometry.gif" /></p>
 <p>一个叫<a href="http://pieandhammer.com/?p=65">olga</a>的挖坟党在<a href="http://libraries.mit.edu/archives/exhibits/exam/">MIT图书馆存档里</a>找到的。<a href="http://www.reddit.com/comments/6wr1l/mit_entrance_exam_18691870/">via reddit</a></p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-08-18T00:00:00+08:00">2008-08-18</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/631355"  rel="bookmark" >
+              <h2 class="card-title">PuTTY的缺陷</h2>
+            </a>
+            <p class="card-text"><ol>
+<li>tab等界面支持<ol start="2">
+<li>标准PKCS(RSA)的公钥/密钥，而不是.ppk格式的。例如<a href="http://www.joebar.ch/puttysc/">putty sc</a>？</li>
+<li>缩小到Tray，整合MyEnTunnel算了</li>
+<li>把配置文件保存到当前.putty目录或者.ini文件，而不是注册表。<a href="http://socialistsushi.com/2005/11/17/portaputty">portaputty</a>实现了这一功能</li>
+<li>PuTTY里你是怎么传文件的？本机建立个HTTP然后远程wget？为什么PuTTY不直接支持SecureCRT里的Zmodem：直接输入rz和sz命令就传文件，多爽。其实ZModerm也不爽。没法传文件夹。还是FTPRush基于SSHv1/v2的sftp爽。就是速度慢了点</li>
+<li>CJK的更好支持，例如<a href="http://yawiki.org/proc/yawiki.org/proc/http://ntu.csie.org/~piaip/pietty/">pietty</a></li>
+<li>连接串口？囧代替超级终端。。其实Window Mobile上的<a href="http://www.pocketputty.net/">pocketputty</a>就做得非常好。支持COM/RAW Socket/SSH/Telnet/RLogin多种协议</li>
+<li>保存登录密码？</li>
+</ol>
+</li>
+</ol>
+<p>PuTTY是有<a href="http://rechten.uvt.nl/koops/cryptolaw/">加密技术出口限制</a>的。。。某些对美国不友好国家下载并使用PuTTY是非法的。。。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-08-18T00:00:00+08:00">2008-08-18</time></p>
 <p>archive</p>            </div>
