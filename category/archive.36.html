@@ -477,45 +477,6 @@ David Mertz (mertz@gnosis.cx), President, Gnosis Software, Inc.</p>
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/624155"  rel="bookmark" >
-              <h2 class="card-title">[python]基于htmllib.HTMLParser的html2text</h2>
-            </a>
-            <p class="card-text"><pre><code>def html2text(strHtml):
-    &quot;&quot;&quot;处理html 4.01和部分xhtml 1.0转义字符&quot;&quot;&quot;
-    class SimpleParser(htmllib.HTMLParser):
-        def anchor_end(self):
-            if self.anchor:
-                self.anchor = None
-        def handle_image(self, src, alt, *args):
-            #self.handle_data(alt)  #可以重写为alt属性
-            pass                    #图片替换成空
-        def convert_entityref(self, name):
-            name2codepoint[&quot;nbsp&quot;]  = 0x0020
-            name2codepoint[&quot;apos&quot;]  = 0x0027
-            if name in name2codepoint and name&lt;256:
-                return chr(name2codepoint[name])
-            else:
-                return
-        def convert_charref(self, name):
-            return unichr(int(name)).encode(&quot;gb18030&quot;)
-
-    file = StringIO.StringIO()
-    p = SimpleParser(formatter.AbstractFormatter(formatter.DumbWriter(file)))
-    p.feed(strHtml)
-    p.close()
-    return file.getvalue()
-</code></pre>
-<p>贴在这里备用。相当与js DOM编程里的 innerText 功能。该死的<a href="http://www.crummy.com/software/BeautifulSoup/">BeautifulSoup</a>为啥不集成这个功能啊？</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2008-02-24T00:00:00+08:00">2008-02-24</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/archives/624154"  rel="bookmark" >
               <h2 class="card-title">[Python]给urllib2添加自动Referer, Cookie处理功能</h2>
             </a>
@@ -553,6 +514,45 @@ if &quot;__main__&quot; == __name__:
     main()
 </code></pre>
 <p>参考了部分<a href="http://wwwsearch.sourceforge.net/ClientCookie/">ClientCookie</a>库的代码。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2008-02-24T00:00:00+08:00">2008-02-24</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/624155"  rel="bookmark" >
+              <h2 class="card-title">[python]基于htmllib.HTMLParser的html2text</h2>
+            </a>
+            <p class="card-text"><pre><code>def html2text(strHtml):
+    &quot;&quot;&quot;处理html 4.01和部分xhtml 1.0转义字符&quot;&quot;&quot;
+    class SimpleParser(htmllib.HTMLParser):
+        def anchor_end(self):
+            if self.anchor:
+                self.anchor = None
+        def handle_image(self, src, alt, *args):
+            #self.handle_data(alt)  #可以重写为alt属性
+            pass                    #图片替换成空
+        def convert_entityref(self, name):
+            name2codepoint[&quot;nbsp&quot;]  = 0x0020
+            name2codepoint[&quot;apos&quot;]  = 0x0027
+            if name in name2codepoint and name&lt;256:
+                return chr(name2codepoint[name])
+            else:
+                return
+        def convert_charref(self, name):
+            return unichr(int(name)).encode(&quot;gb18030&quot;)
+
+    file = StringIO.StringIO()
+    p = SimpleParser(formatter.AbstractFormatter(formatter.DumbWriter(file)))
+    p.feed(strHtml)
+    p.close()
+    return file.getvalue()
+</code></pre>
+<p>贴在这里备用。相当与js DOM编程里的 innerText 功能。该死的<a href="http://www.crummy.com/software/BeautifulSoup/">BeautifulSoup</a>为啥不集成这个功能啊？</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2008-02-24T00:00:00+08:00">2008-02-24</time></p>
 <p>archive</p>            </div>
