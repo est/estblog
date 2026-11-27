@@ -54,6 +54,1061 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-43"  rel="bookmark" >
+              <h2 class="card-title">Ladybird Browser Launch Options</h2>
+            </a>
+            <p class="card-text"><p><code>ladybird</code> 的全部启动参数。权威来源是它自己：</p>
+<pre><code class="language-sh">Meta/ladybird.py run ladybird -- --help
+ARGSPARSER_EMIT_MARKDOWN=1 Meta/ladybird.py run ladybird -- --help
+</code></pre>
+<p>标注 <strong>隐藏</strong> 的参数不进 <code>--help</code>，但照常能用（<code>parse()</code> 不看 <code>hide_mode</code>）。</p>
+<h2>命令行参数</h2>
+<h3>位置参数</h3>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>取值 / 示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>url</code></td>
+<td>取值 <code>[url ...]</code>，如 <code>ladybird example.com a.html</code></td>
+<td>启动时打开的 URL，可省略、可多个<br>URLs to open at startup</td>
+</tr>
+</tbody>
+</table>
+<p>源码：<code>Libraries/LibWebView/Application.cpp:389</code></p>
+<h3>通用</h3>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>取值 / 示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--help</code></td>
+<td>无，如 <code>ladybird --help</code></td>
+<td>显示帮助后退出<br>Display help message and exit</td>
+</tr>
+<tr>
+<td><code>--version</code></td>
+<td>无</td>
+<td>打印版本号<br>Print version</td>
+</tr>
+<tr>
+<td><code>--complete</code></td>
+<td>无，<strong>隐藏</strong></td>
+<td>为后续 argv 输出补全 JSON<br>Emit shell-completion JSON</td>
+</tr>
+<tr>
+<td><code>-C, --certificate</code></td>
+<td>取值 <code>&lt;certificate&gt;</code>，如 <code>-C ca.pem</code></td>
+<td>证书文件，可重复<br>Certificate file, repeatable</td>
+</tr>
+<tr>
+<td><code>-n, --new-window</code></td>
+<td>无</td>
+<td>强制开新窗口<br>Force a new window</td>
+</tr>
+<tr>
+<td><code>--test-mode</code></td>
+<td>无</td>
+<td>测试模式<br>Enable test mode</td>
+</tr>
+<tr>
+<td><code>--default-time-zone</code></td>
+<td>取值 <code>&lt;id&gt;</code>，如 <code>--default-time-zone Asia/Shanghai</code></td>
+<td>默认时区<br>Default time zone</td>
+</tr>
+<tr>
+<td><code>--resource-map</code></td>
+<td>取值 <code>&lt;path&gt;</code>，如 <code>--resource-map map.json</code></td>
+<td>JSON，把 URL 映射到本地文件<br>JSON mapping URLs to local files</td>
+</tr>
+<tr>
+<td><code>--user-agent-preset</code></td>
+<td>取值 <code>&lt;name&gt;</code></td>
+<td>用指定 UA 预设顶掉默认 UA<br>Use a named User-Agent preset</td>
+</tr>
+</tbody>
+</table>
+<p>源码：<code>--help</code>/<code>--version</code>/<code>--complete</code> 在 <code>Libraries/LibCore/ArgsParser.cpp:34-36</code>，其余在 <code>Libraries/LibWebView/Application.cpp:389-539</code></p>
+<h3>Headless 与窗口</h3>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>取值 / 示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--headless</code></td>
+<td>取值 <code>[=mode]</code>，如 <code>--headless</code>、<code>--headless=text</code></td>
+<td>不开窗口跑。<code>mode</code> ∈ <code>screenshot</code>（默认，省略值即取它）、<code>layout-tree</code>、<code>text</code>、<code>manual</code>、<code>terminal</code>（非 Windows）<br>Run without a window; <code>screenshot</code> is the default</td>
+</tr>
+<tr>
+<td><code>--screenshot-delay</code></td>
+<td>取值 <code>&lt;seconds&gt;</code>，如 <code>--screenshot-delay 3</code></td>
+<td>截图前等几秒（仅 screenshot 模式）<br>Seconds to wait before the screenshot</td>
+</tr>
+<tr>
+<td><code>--screenshot-path</code></td>
+<td>取值 <code>&lt;path&gt;</code>，如 <code>--screenshot-path out.png</code></td>
+<td>截图存哪（仅 screenshot 模式）<br>Where to save the screenshot</td>
+</tr>
+<tr>
+<td><code>--window-width</code></td>
+<td>取值 <code>&lt;pixels&gt;</code>，如 <code>--window-width 1280</code></td>
+<td>视口宽，默认 800，目前仅 headless 生效<br>Viewport width, default 800</td>
+</tr>
+<tr>
+<td><code>--window-height</code></td>
+<td>取值 <code>&lt;pixels&gt;</code>，如 <code>--window-height 720</code></td>
+<td>视口高，默认 600，目前仅 headless 生效<br>Viewport height, default 600</td>
+</tr>
+<tr>
+<td><code>--device-pixel-ratio</code></td>
+<td>取值 <code>&lt;ratio&gt;</code>，如 <code>--device-pixel-ratio 2</code></td>
+<td>DPR，默认 1，仅 headless terminal 模式<br>Device pixel ratio, default 1</td>
+</tr>
+</tbody>
+</table>
+<p>源码：<code>Libraries/LibWebView/Application.cpp:391-421</code></p>
+<h3>Profile 与进程统计</h3>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>取值 / 示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--profile</code></td>
+<td>取值 <code>&lt;name&gt;</code>，如 <code>--profile scratch</code></td>
+<td>选用或创建命名 profile<br>Select or create a named profile</td>
+</tr>
+<tr>
+<td><code>--profile-path</code></td>
+<td>取值 <code>&lt;path&gt;</code></td>
+<td>在该绝对路径下用一份自包含 profile<br>Self-contained profile at an absolute path</td>
+</tr>
+<tr>
+<td><code>--temporary-profile</code></td>
+<td>无</td>
+<td>临时 profile，正常退出即删<br>Temporary profile, removed on clean shutdown</td>
+</tr>
+<tr>
+<td><code>--replace-unresponsive-browser-from-before</code></td>
+<td>取值 <code>&lt;unix-ms&gt;</code></td>
+<td>结束该时刻前启动、且已无响应的同 profile 浏览器并接管（非 Windows，UI 自动注入）<br>Replace an unresponsive earlier browser</td>
+</tr>
+<tr>
+<td><code>--stats-log-dir</code></td>
+<td>取值 <code>&lt;path&gt;</code></td>
+<td>进程统计（JSON lines）写到哪；Android 不注册<br>Directory for process statistics</td>
+</tr>
+</tbody>
+</table>
+<p>源码：<code>Libraries/LibWebView/Application.cpp:437-445</code></p>
+<h3>网络、DNS 与缓存</h3>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>取值 / 示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--proxy-autoconfig-url</code></td>
+<td>取值 <code>&lt;url&gt;</code>，<strong>隐藏</strong></td>
+<td>PAC 地址，源码注明暂不支持、请求会失败<br>PAC URL, not supported yet</td>
+</tr>
+<tr>
+<td><code>--dns-server</code></td>
+<td>取值 <code>&lt;host&gt;</code>，如 <code>--dns-server 1.1.1.1</code></td>
+<td>DNS 服务器地址<br>DNS server address</td>
+</tr>
+<tr>
+<td><code>--dns-port</code></td>
+<td>取值 <code>&lt;port&gt;</code></td>
+<td>DNS 端口；不给时 53，带 <code>--dot</code> 时 853<br>DNS port, 53 by default, 853 with <code>--dot</code></td>
+</tr>
+<tr>
+<td><code>--dot</code></td>
+<td>无</td>
+<td>走 DNS over TLS<br>Use DNS over TLS</td>
+</tr>
+<tr>
+<td><code>--dnssec</code></td>
+<td>无</td>
+<td>本地验证 DNSSEC<br>Validate DNSSEC locally</td>
+</tr>
+<tr>
+<td><code>--disable-http-memory-cache</code></td>
+<td>无</td>
+<td>关掉 HTTP 内存缓存<br>Disable the HTTP memory cache</td>
+</tr>
+<tr>
+<td><code>--disable-http-disk-cache</code></td>
+<td>无</td>
+<td>关掉 HTTP 磁盘缓存<br>Disable the HTTP disk cache</td>
+</tr>
+<tr>
+<td><code>--max-site-request-servers</code></td>
+<td>取值 <code>&lt;count&gt;</code>，如 <code>--max-site-request-servers 0</code></td>
+<td>每个站点可用的 RequestServer 数，0 = 共用一个<br>RequestServers per site; 0 shares one</td>
+</tr>
+<tr>
+<td><code>--disable-content-blocker</code></td>
+<td>无</td>
+<td>关掉内容拦截<br>Disable content blocking</td>
+</tr>
+<tr>
+<td><code>--content-blocker-list</code></td>
+<td>取值 <code>&lt;path&gt;</code>，可重复</td>
+<td>拦截列表路径<br>Content blocker list, repeatable</td>
+</tr>
+<tr>
+<td><code>--force-video-decoder-server</code></td>
+<td>无</td>
+<td>没硬解的视频也丢给 VideoDecoderServer<br>Force software video through VideoDecoderServer</td>
+</tr>
+</tbody>
+</table>
+<p>源码：<code>Libraries/LibWebView/Application.cpp:423-435</code>（PAC）、<code>:473-521</code>（其余）</p>
+<h3>页面行为</h3>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>取值 / 示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--allow-popups</code></td>
+<td>无</td>
+<td>默认不拦弹窗<br>Do not block popups by default</td>
+</tr>
+<tr>
+<td><code>--disable-scripting</code></td>
+<td>无</td>
+<td>默认禁用脚本<br>Disable scripting by default</td>
+</tr>
+<tr>
+<td><code>--disable-sql-database</code></td>
+<td>无</td>
+<td>禁用 SQL 数据库<br>Disable the SQL database</td>
+</tr>
+<tr>
+<td><code>--tuple-file-origins</code></td>
+<td>无</td>
+<td>把 <code>file://</code> 当 tuple origin<br>Treat <code>file://</code> URLs as tuple origins</td>
+</tr>
+<tr>
+<td><code>--log-all-js-exceptions</code></td>
+<td>无</td>
+<td>记录所有 JS 异常<br>Log all JavaScript exceptions</td>
+</tr>
+<tr>
+<td><code>--enable-autoplay</code></td>
+<td>无</td>
+<td>允许自动播放<br>Enable multimedia autoplay</td>
+</tr>
+<tr>
+<td><code>--expose-experimental-interfaces</code></td>
+<td>无</td>
+<td>暴露实验性 IDL 接口<br>Expose experimental IDL interfaces</td>
+</tr>
+<tr>
+<td><code>--expose-internals-object</code></td>
+<td>无</td>
+<td>暴露 <code>internals</code> 对象<br>Expose the <code>internals</code> object</td>
+</tr>
+<tr>
+<td><code>--disable-scrollbar-painting</code></td>
+<td>无</td>
+<td>主视口不画滚动条<br>Do not paint scrollbars on the main viewport</td>
+</tr>
+<tr>
+<td><code>--force-fontconfig</code></td>
+<td>无</td>
+<td>字体加载强制走 fontconfig<br>Force fontconfig for font loading</td>
+</tr>
+</tbody>
+</table>
+<p>源码：<code>Libraries/LibWebView/Application.cpp:447-517</code></p>
+<h3>性能与调试</h3>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>取值 / 示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--debug-process</code></td>
+<td>取值 <code>&lt;name&gt;</code>，如 <code>--debug-process=WebContent</code>，可重复</td>
+<td>让指定进程等调试器 attach<br>Wait for a debugger on the given process</td>
+</tr>
+<tr>
+<td><code>--profile-process</code></td>
+<td>取值 <code>&lt;name&gt;</code></td>
+<td>对指定进程做性能分析<br>Profile the given process</td>
+</tr>
+<tr>
+<td><code>--profile-tool</code></td>
+<td>取值 <code>&lt;tool&gt;</code>，<code>callgrind</code>（默认）或 <code>cpu</code></td>
+<td>选分析器<br>Select the profiler</td>
+</tr>
+<tr>
+<td><code>--profile-output</code></td>
+<td>取值 <code>&lt;path&gt;</code></td>
+<td>CPU profiler 输出路径，要配 <code>--profile-tool=cpu</code><br>Where to write CPU profiler output</td>
+</tr>
+<tr>
+<td><code>-g, --collect-garbage-on-every-allocation</code></td>
+<td>无</td>
+<td>每次 JS 堆分配后都 GC<br>GC after every JS heap allocation</td>
+</tr>
+<tr>
+<td><code>--force-cpu-painting</code></td>
+<td>无</td>
+<td>强制 CPU 绘制，等价 <code>--disable-features=gpu_painting</code><br>Same as <code>--disable-features=gpu_painting</code></td>
+</tr>
+<tr>
+<td><code>--disable-features</code></td>
+<td>取值 <code>&lt;feature,...&gt;</code>，可重复</td>
+<td>关闭平台特性及其依赖者<br>Turn off platform features</td>
+</tr>
+<tr>
+<td><code>--force-enable-features</code></td>
+<td>取值 <code>&lt;feature,...&gt;</code>，可重复</td>
+<td>越过黑名单强开平台特性<br>Force-enable features despite the blocklist</td>
+</tr>
+<tr>
+<td><code>--devtools</code></td>
+<td>取值 <code>[=port]</code>，如 <code>--devtools</code>、<code>--devtools=9229</code></td>
+<td>开 Firefox DevTools server，端口可省（默认 6000）<br>Enable the DevTools server, port optional</td>
+</tr>
+<tr>
+<td><code>--disable-sandbox</code></td>
+<td>无</td>
+<td>关掉辅助进程沙箱<br>Disable helper process sandboxing</td>
+</tr>
+<tr>
+<td><code>--web-content-memory-limit</code></td>
+<td>取值 <code>&lt;MiB&gt;</code>，0 = 不限</td>
+<td>WebContent 内存上限<br>Memory limit for WebContent</td>
+</tr>
+</tbody>
+</table>
+<p>源码：<code>Libraries/LibWebView/Application.cpp:451-537</code>，DevTools 默认端口 <code>Libraries/LibWebView/Options.h:69</code></p>
+<h3>隐藏与内部参数</h3>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>取值 / 示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--webdriver-browser-mach-server-name</code></td>
+<td>取值 <code>&lt;name&gt;</code>，<strong>隐藏</strong>，仅 macOS</td>
+<td>浏览器 WebDriver IPC 的 Mach server 名<br>Mach server for WebDriver IPC</td>
+</tr>
+<tr>
+<td><code>--webdriver-browser-path</code></td>
+<td>取值 <code>&lt;path&gt;</code>，<strong>隐藏</strong>，非 macOS</td>
+<td>浏览器 WebDriver IPC 路径<br>Path to the WebDriver IPC</td>
+</tr>
+<tr>
+<td><code>--ui-info</code></td>
+<td>取值 <code>&lt;hex&gt;</code>，<strong>隐藏</strong></td>
+<td>UI 交给 Hub 的启动信息<br>What the UI tells the Hub to start with</td>
+</tr>
+<tr>
+<td><code>--ui-mach-server</code></td>
+<td>取值 <code>&lt;name&gt;</code>，<strong>隐藏</strong>，仅 macOS</td>
+<td>Hub 回连 UI 的 Mach server<br>Mach server for the Hub to reach the UI</td>
+</tr>
+<tr>
+<td><code>--ui-pid</code></td>
+<td>取值 <code>&lt;pid&gt;</code>，<strong>隐藏</strong></td>
+<td>Hub 结束时一并结束的 UI 进程 PID<br>PID of the UI process the Hub ends with</td>
+</tr>
+</tbody>
+</table>
+<p>前两条被 <code>#if defined(AK_OS_MACOS)</code> 夹着，单个构建里只有一条；后三条由 UI 自动注入，别手敲。</p>
+<p>源码：<code>Libraries/LibWebView/Application.cpp:466-469</code>、<code>Services/Hub/Application.cpp:28-31</code></p>
+<hr />
+<p><code>OptionHideMode</code> 定义在 <code>Libraries/LibCore/ArgsParser.h:43-47</code>：<code>Markdown</code> 只在 Markdown 渲染里藏（终端 <code>--help</code> 照样显示），<code>CommandLineAndMarkdown</code> 则连 <code>--help</code> 和补全都不出现（跳过点 <code>Libraries/LibCore/ArgsParser.cpp:219/251/296/744</code>）。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-11-27T17:00:00+08:00">2026-11-27</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/2026/stdout-42"  rel="bookmark" >
+              <h2 class="card-title">Ladybird Browser Keyboard Shortcuts</h2>
+            </a>
+            <p class="card-text"><h2>Ladybird 浏览器快捷键</h2>
+<p>源码见下文各表后的"源码"行。</p>
+<table>
+<thead>
+<tr>
+<th>干什么</th>
+<th>macOS</th>
+<th>Win / Linux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>新建标签页</td>
+<td><code>⌘</code>+<code>T</code></td>
+<td><code>Ctrl</code>+<code>T</code></td>
+</tr>
+<tr>
+<td>关闭标签页</td>
+<td><code>⌘</code>+<code>W</code></td>
+<td><code>Ctrl</code>+<code>W</code>（另 <code>Ctrl</code>+<code>F4</code>）</td>
+</tr>
+<tr>
+<td>重开刚关的标签页</td>
+<td><code>⌘</code>+<code>⇧</code>+<code>T</code></td>
+<td><code>Ctrl</code>+<code>Shift</code>+<code>T</code></td>
+</tr>
+<tr>
+<td>下一个 / 上一个标签页</td>
+<td><code>⌘</code>+<code>Tab</code> / <code>⌘</code>+<code>⇧</code>+<code>Tab</code>（另 <code>⌘</code>+<code>PageDown</code>/<code>PageUp</code>、<code>⌃</code>+<code>Tab</code>、<code>⌘</code>+<code>⇧</code>+<code>]</code>/<code>[</code>）</td>
+<td><code>Ctrl</code>+<code>Tab</code> / <code>Ctrl</code>+<code>Shift</code>+<code>Tab</code>（另 <code>Ctrl</code>+<code>PageDown</code>/<code>PageUp</code>）</td>
+</tr>
+<tr>
+<td>跳到第 1–8 个 / 最后一个标签页</td>
+<td><code>⌘</code>+<code>1</code>…<code>⌘</code>+<code>8</code> / <code>⌘</code>+<code>9</code></td>
+<td><code>Ctrl</code>+<code>1</code>…<code>Ctrl</code>+<code>8</code> / <code>Ctrl</code>+<code>9</code>（Linux 另有 <code>Alt</code>+数字）</td>
+</tr>
+<tr>
+<td>搜索标签页</td>
+<td><code>⌘</code>+<code>⇧</code>+<code>A</code></td>
+<td><code>Ctrl</code>+<code>Shift</code>+<code>A</code></td>
+</tr>
+<tr>
+<td>新建窗口 / 隐私窗口</td>
+<td><code>⌘</code>+<code>N</code> / <code>⌘</code>+<code>⇧</code>+<code>N</code></td>
+<td><code>Ctrl</code>+<code>N</code> / <code>Ctrl</code>+<code>Shift</code>+<code>N</code></td>
+</tr>
+<tr>
+<td>重新加载 / 跳过缓存重载</td>
+<td><code>⌘</code>+<code>R</code>、<code>F5</code> / <code>⌘</code>+<code>⌥</code>+<code>R</code>、<code>⌘</code>+<code>⇧</code>+<code>R</code></td>
+<td><code>Ctrl</code>+<code>R</code>、<code>F5</code> / <code>Ctrl</code>+<code>Shift</code>+<code>R</code>、<code>Ctrl</code>+<code>F5</code></td>
+</tr>
+<tr>
+<td>后退 / 前进</td>
+<td><code>⌘</code>+<code>[</code>、<code>⌘</code>+<code>←</code> / <code>⌘</code>+<code>]</code>、<code>⌘</code>+<code>→</code>（Qt 标准键）</td>
+<td><code>Alt</code>+<code>←</code> / <code>Alt</code>+<code>→</code>（Qt 标准键）</td>
+</tr>
+<tr>
+<td>页面中查找 / 上一个·下一个</td>
+<td><code>⌘</code>+<code>F</code> / <code>⌘</code>+<code>⇧</code>+<code>G</code>、<code>⌘</code>+<code>G</code></td>
+<td><code>Ctrl</code>+<code>F</code> / <code>Ctrl</code>+<code>Shift</code>+<code>G</code>、<code>Ctrl</code>+<code>G</code>（或 <code>F3</code>）</td>
+</tr>
+<tr>
+<td>聚焦地址栏</td>
+<td><code>⌘</code>+<code>L</code>、<code>⌥</code>+<code>D</code></td>
+<td><code>Ctrl</code>+<code>L</code>、<code>Alt</code>+<code>D</code></td>
+</tr>
+<tr>
+<td>打开文件</td>
+<td><code>⌘</code>+<code>O</code></td>
+<td><code>Ctrl</code>+<code>O</code></td>
+</tr>
+<tr>
+<td>放大 / 缩小 / 重置</td>
+<td><code>⌘</code>+<code>+</code>（<code>⌘</code>+<code>=</code>）/ <code>⌘</code>+<code>-</code> / <code>⌘</code>+<code>0</code></td>
+<td><code>Ctrl</code>+<code>+</code>（<code>Ctrl</code>+<code>=</code>）/ <code>Ctrl</code>+<code>-</code> / <code>Ctrl</code>+<code>0</code></td>
+</tr>
+<tr>
+<td>添加书签 / 书签所有标签页</td>
+<td><code>⌘</code>+<code>D</code> / <code>⌘</code>+<code>⇧</code>+<code>D</code></td>
+<td><code>Ctrl</code>+<code>D</code> / <code>Ctrl</code>+<code>Shift</code>+<code>D</code></td>
+</tr>
+<tr>
+<td>书签栏开关</td>
+<td><code>⌘</code>+<code>⇧</code>+<code>B</code></td>
+<td><code>Ctrl</code>+<code>Shift</code>+<code>B</code></td>
+</tr>
+<tr>
+<td>侧边栏开关</td>
+<td><code>⌥</code>+<code>⌘</code>+<code>S</code></td>
+<td><code>Ctrl</code>+<code>Shift</code>+<code>S</code></td>
+</tr>
+<tr>
+<td>管理书签 / 查看历史</td>
+<td><code>⌥</code>+<code>⌘</code>+<code>B</code> / <code>⌘</code>+<code>Y</code></td>
+<td><code>Ctrl</code>+<code>Shift</code>+<code>O</code> / <code>Ctrl</code>+<code>H</code></td>
+</tr>
+<tr>
+<td>清除浏览数据</td>
+<td><code>⌘</code>+<code>⇧</code>+<code>⌫</code></td>
+<td><code>Ctrl</code>+<code>Shift</code>+<code>Del</code></td>
+</tr>
+<tr>
+<td>设置</td>
+<td><code>⌘</code>+<code>,</code></td>
+<td><code>Ctrl</code>+<code>,</code></td>
+</tr>
+<tr>
+<td>查看源代码 / 开发者工具</td>
+<td><code>⌥</code>+<code>⌘</code>+<code>U</code> / <code>⌘</code>+<code>⇧</code>+<code>I</code>（<code>⌘</code>+<code>⇧</code>+<code>C</code>、<code>F12</code>）</td>
+<td><code>Ctrl</code>+<code>U</code> / <code>Ctrl</code>+<code>Shift</code>+<code>I</code>（<code>Ctrl</code>+<code>Shift</code>+<code>C</code>、<code>F12</code>）</td>
+</tr>
+<tr>
+<td>任务管理器</td>
+<td><code>⌘</code>+<code>⇧</code>+<code>M</code></td>
+<td><code>Ctrl</code>+<code>Shift</code>+<code>M</code></td>
+</tr>
+<tr>
+<td>焦点在工具栏 ↔ 页面</td>
+<td><code>F6</code></td>
+<td><code>F6</code></td>
+</tr>
+<tr>
+<td>下载列表</td>
+<td><code>⌥</code>+<code>⌘</code>+<code>L</code></td>
+<td><code>Ctrl</code>+<code>J</code></td>
+</tr>
+<tr>
+<td>退出</td>
+<td><code>⌘</code>+<code>Q</code></td>
+<td><code>Ctrl</code>+<code>Q</code>（<strong>Windows 上没有绑定</strong>，见 Qt <code>keyBindings[]</code>）</td>
+</tr>
+<tr>
+<td>停止加载</td>
+<td><code>Esc</code>（<strong>只在页面视图里</strong>）</td>
+<td>同左</td>
+</tr>
+</tbody>
+</table>
+<p>源码：见下文各分组。</p>
+<h3>Full list</h3>
+<h4>1 导航与刷新</h4>
+<table>
+<thead>
+<tr>
+<th>动作 Action</th>
+<th>菜单 Menu</th>
+<th>macOS</th>
+<th>Win / Linux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>后退 Back</td>
+<td>History</td>
+<td><code>⌘</code>+<code>[</code>、<code>⌘</code>+<code>←</code>、浏览器后退键</td>
+<td><code>Alt</code>+<code>←</code>、后退键</td>
+</tr>
+<tr>
+<td>前进 Forward</td>
+<td>History</td>
+<td><code>⌘</code>+<code>]</code>、<code>⌘</code>+<code>→</code>、浏览器前进键</td>
+<td><code>Alt</code>+<code>→</code>、浏览器前进键</td>
+</tr>
+<tr>
+<td>重新加载 Reload</td>
+<td>View</td>
+<td><code>⌘</code>+<code>R</code>、<code>F5</code></td>
+<td><code>Ctrl</code>+<code>R</code>、<code>F5</code></td>
+</tr>
+<tr>
+<td>跳过缓存重新加载</td>
+<td>View</td>
+<td><code>⌘</code>+<code>⌥</code>+<code>R</code>、<code>⌘</code>+<code>⇧</code>+<code>R</code></td>
+<td><code>Ctrl</code>+<code>Shift</code>+<code>R</code>、<code>Ctrl</code>+<code>F5</code></td>
+</tr>
+<tr>
+<td>停止加载 Stop</td>
+<td>View</td>
+<td><code>Esc</code>（<strong>Widget 作用域</strong>，仅为菜单显示，实际由页面视图处理）</td>
+<td>同左</td>
+</tr>
+</tbody>
+</table>
+<p>源码：<code>UI/Qt/Menu.cpp:210-225</code>（<code>set_action_shortcuts</code>，Back/Forward 是 <code>StandardKey</code>）、停止加载 <code>UI/Qt/Application.cpp:509-517</code></p>
+<h4>2 编辑与查找</h4>
+<table>
+<thead>
+<tr>
+<th>动作 Action</th>
+<th>菜单 Menu</th>
+<th>macOS</th>
+<th>Win / Linux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>撤销 Undo</td>
+<td>Edit</td>
+<td><code>⌘</code>+<code>Z</code></td>
+<td><code>Ctrl</code>+<code>Z</code></td>
+</tr>
+<tr>
+<td>重做 Redo</td>
+<td>Edit</td>
+<td><code>⌘</code>+<code>⇧</code>+<code>Z</code></td>
+<td><code>Ctrl</code>+<code>Y</code>、<code>Ctrl</code>+<code>Shift</code>+<code>Z</code></td>
+</tr>
+<tr>
+<td>复制 Copy</td>
+<td>Edit</td>
+<td><code>⌘</code>+<code>C</code></td>
+<td><code>Ctrl</code>+<code>C</code></td>
+</tr>
+<tr>
+<td>剪切 Cut</td>
+<td>Edit</td>
+<td><code>⌘</code>+<code>X</code></td>
+<td><code>Ctrl</code>+<code>X</code></td>
+</tr>
+<tr>
+<td>粘贴 Paste</td>
+<td>Edit</td>
+<td><code>⌘</code>+<code>V</code></td>
+<td><code>Ctrl</code>+<code>V</code></td>
+</tr>
+<tr>
+<td>粘贴并匹配样式</td>
+<td>Edit</td>
+<td><code>⌘</code>+<code>⇧</code>+<code>V</code>、<code>⌘</code>+<code>⌥</code>+<code>⇧</code>+<code>V</code></td>
+<td><code>Ctrl</code>+<code>Shift</code>+<code>V</code></td>
+</tr>
+<tr>
+<td>全选 Select All</td>
+<td>Edit</td>
+<td><code>⌘</code>+<code>A</code></td>
+<td><code>Ctrl</code>+<code>A</code></td>
+</tr>
+<tr>
+<td>页面中查找 Find</td>
+<td>Edit</td>
+<td><code>⌘</code>+<code>F</code></td>
+<td><code>Ctrl</code>+<code>F</code></td>
+</tr>
+<tr>
+<td>查找下一个</td>
+<td>Edit</td>
+<td><code>⌘</code>+<code>G</code>、<code>F3</code></td>
+<td><code>F3</code>、<code>Ctrl</code>+<code>G</code>（平台而异）</td>
+</tr>
+<tr>
+<td>查找上一个</td>
+<td>Edit</td>
+<td><code>⌘</code>+<code>⇧</code>+<code>G</code>、<code>⇧</code>+<code>F3</code></td>
+<td><code>⇧</code>+<code>F3</code>、<code>Ctrl</code>+<code>Shift</code>+<code>G</code></td>
+</tr>
+<tr>
+<td>设置 Settings</td>
+<td>Edit</td>
+<td><code>⌘</code>+<code>,</code>（另含设置键）</td>
+<td><code>Ctrl</code>+<code>,</code></td>
+</tr>
+</tbody>
+</table>
+<p>源码：<code>UI/Qt/Menu.cpp:234-306</code>（编辑类），查找与设置 <code>UI/Qt/Application.cpp:519-545</code></p>
+<h4>3 标签页与窗口</h4>
+<table>
+<thead>
+<tr>
+<th>动作 Action</th>
+<th>菜单 Menu</th>
+<th>macOS</th>
+<th>Win / Linux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>新建标签页</td>
+<td>File</td>
+<td><code>⌘</code>+<code>T</code></td>
+<td><code>Ctrl</code>+<code>T</code></td>
+</tr>
+<tr>
+<td>新建窗口</td>
+<td>File</td>
+<td><code>⌘</code>+<code>N</code></td>
+<td><code>Ctrl</code>+<code>N</code></td>
+</tr>
+<tr>
+<td>新建隐私窗口</td>
+<td>File</td>
+<td><code>⌘</code>+<code>⇧</code>+<code>N</code></td>
+<td><code>Ctrl</code>+<code>Shift</code>+<code>N</code></td>
+</tr>
+<tr>
+<td>重新打开已关闭标签页</td>
+<td>File</td>
+<td><code>⌘</code>+<code>⇧</code>+<code>T</code></td>
+<td><code>Ctrl</code>+<code>Shift</code>+<code>T</code></td>
+</tr>
+<tr>
+<td>关闭当前标签页</td>
+<td>File</td>
+<td><code>⌘</code>+<code>W</code>、<code>⌘</code>+<code>F4</code></td>
+<td><code>Ctrl</code>+<code>W</code>、<code>Ctrl</code>+<code>F4</code></td>
+</tr>
+<tr>
+<td>打开文件…</td>
+<td>File</td>
+<td><code>⌘</code>+<code>O</code></td>
+<td><code>Ctrl</code>+<code>O</code></td>
+</tr>
+<tr>
+<td>打开位置… / 聚焦地址栏</td>
+<td>File</td>
+<td><code>⌘</code>+<code>L</code>、<code>⌥</code>+<code>D</code></td>
+<td><code>Ctrl</code>+<code>L</code>、<code>Alt</code>+<code>D</code></td>
+</tr>
+<tr>
+<td>退出 Quit</td>
+<td>File</td>
+<td><code>⌘</code>+<code>Q</code></td>
+<td>Linux <code>Ctrl</code>+<code>Q</code>；<strong>Windows 无绑定</strong></td>
+</tr>
+<tr>
+<td>下一个标签页</td>
+<td>View</td>
+<td><code>⌘</code>+<code>PageDown</code>、<code>⌘</code>+<code>Tab</code>、<strong><code>⌃</code>+<code>Tab</code></strong>、<code>⌘</code>+<code>⇧</code>+<code>]</code>、<code>⌘</code>+<code>⌥</code>+<code>→</code></td>
+<td><code>Ctrl</code>+<code>PageDown</code>、<code>Ctrl</code>+<code>Tab</code></td>
+</tr>
+<tr>
+<td>上一个标签页</td>
+<td>View</td>
+<td><code>⌘</code>+<code>PageUp</code>、<code>⌘</code>+<code>⇧</code>+<code>Tab</code>、<strong><code>⌃</code>+<code>⇧</code>+<code>Tab</code></strong>、<code>⌘</code>+<code>⇧</code>+<code>[</code>、<code>⌘</code>+<code>⌥</code>+<code>←</code></td>
+<td><code>Ctrl</code>+<code>PageUp</code>、<code>Ctrl</code>+<code>Shift</code>+<code>Tab</code></td>
+</tr>
+<tr>
+<td>搜索标签页…</td>
+<td>View</td>
+<td><code>⌘</code>+<code>⇧</code>+<code>A</code></td>
+<td><code>Ctrl</code>+<code>Shift</code>+<code>A</code></td>
+</tr>
+<tr>
+<td>焦点：工具栏 ↔ 页面</td>
+<td>View</td>
+<td><code>F6</code></td>
+<td><code>F6</code></td>
+</tr>
+<tr>
+<td>跳到第 1–8 个标签页</td>
+<td>—</td>
+<td><code>⌘</code>+<code>1</code>…<code>⌘</code>+<code>8</code></td>
+<td><code>Ctrl</code>+<code>1</code>…<code>8</code>（<strong>Linux 另有 <code>Alt</code>+<code>1</code>…<code>8</code></strong>）</td>
+</tr>
+<tr>
+<td>跳到最后一个标签页</td>
+<td>—</td>
+<td><code>⌘</code>+<code>9</code></td>
+<td><code>Ctrl</code>+<code>9</code>（Linux 另有 <code>Alt</code>+<code>9</code>）</td>
+</tr>
+</tbody>
+</table>
+<p>源码：<code>UI/Qt/Application.cpp:403-545</code>（<code>create_application_actions()</code>，这些动作同时挂到窗口 <code>UI/Qt/BrowserWindow.cpp:489-515</code>，菜单栏隐藏时仍生效）、数字选标签 <code>UI/Qt/BrowserWindow.cpp:517-534</code></p>
+<h4>4 书签与历史</h4>
+<table>
+<thead>
+<tr>
+<th>动作 Action</th>
+<th>菜单 Menu</th>
+<th>macOS</th>
+<th>Win / Linux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>添加/取消书签</td>
+<td>Bookmarks</td>
+<td><code>⌘</code>+<code>D</code></td>
+<td><code>Ctrl</code>+<code>D</code></td>
+</tr>
+<tr>
+<td>书签所有标签页…</td>
+<td>Bookmarks</td>
+<td><code>⌘</code>+<code>⇧</code>+<code>D</code></td>
+<td><code>Ctrl</code>+<code>Shift</code>+<code>D</code></td>
+</tr>
+<tr>
+<td>管理书签</td>
+<td>Bookmarks</td>
+<td><code>⌥</code>+<code>⌘</code>+<code>B</code></td>
+<td><code>Ctrl</code>+<code>Shift</code>+<code>O</code></td>
+</tr>
+<tr>
+<td>书签栏开关</td>
+<td>挂在窗口上</td>
+<td><code>⌘</code>+<code>⇧</code>+<code>B</code></td>
+<td><code>Ctrl</code>+<code>Shift</code>+<code>B</code></td>
+</tr>
+<tr>
+<td>查看历史</td>
+<td>History</td>
+<td><code>⌘</code>+<code>Y</code></td>
+<td><code>Ctrl</code>+<code>H</code></td>
+</tr>
+<tr>
+<td>清除浏览数据</td>
+<td>History</td>
+<td><code>⌘</code>+<code>⇧</code>+<code>⌫</code></td>
+<td><code>Ctrl</code>+<code>Shift</code>+<code>Del</code></td>
+</tr>
+<tr>
+<td>下载列表</td>
+<td>File / Ladybird 菜单</td>
+<td><code>⌥</code>+<code>⌘</code>+<code>L</code></td>
+<td><code>Ctrl</code>+<code>J</code></td>
+</tr>
+</tbody>
+</table>
+<p>源码：<code>UI/Qt/Menu.cpp:226-296</code>（快捷键），菜单项创建于 <code>UI/Qt/Bookmarks.cpp</code>、<code>UI/Qt/ApplicationActions.cpp</code></p>
+<h4>5 视图、缩放、侧边栏</h4>
+<table>
+<thead>
+<tr>
+<th>动作 Action</th>
+<th>菜单 Menu</th>
+<th>macOS</th>
+<th>Win / Linux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>侧边栏开关</td>
+<td>View</td>
+<td><code>⌥</code>+<code>⌘</code>+<code>S</code></td>
+<td><code>Ctrl</code>+<code>Shift</code>+<code>S</code></td>
+</tr>
+<tr>
+<td>放大 Zoom In</td>
+<td>View ▸ Zoom</td>
+<td><code>⌘</code>+<code>+</code>、<strong><code>⌘</code>+<code>=</code></strong></td>
+<td><code>Ctrl</code>+<code>+</code>、<strong><code>Ctrl</code>+<code>=</code></strong></td>
+</tr>
+<tr>
+<td>缩小 Zoom Out</td>
+<td>View ▸ Zoom</td>
+<td><code>⌘</code>+<code>-</code></td>
+<td><code>Ctrl</code>+<code>-</code></td>
+</tr>
+<tr>
+<td>重置缩放</td>
+<td>View ▸ Zoom</td>
+<td><code>⌘</code>+<code>0</code></td>
+<td><code>Ctrl</code>+<code>0</code></td>
+</tr>
+<tr>
+<td>显示菜单栏</td>
+<td>View（部分平台）</td>
+<td>—</td>
+<td>平台而异</td>
+</tr>
+</tbody>
+</table>
+<p>源码：<code>UI/Qt/Menu.cpp:266-337</code>，菜单项 <code>UI/Qt/Application.cpp:3184</code>、<code>:3222-3223</code></p>
+<h4>6 检查与开发</h4>
+<table>
+<thead>
+<tr>
+<th>动作 Action</th>
+<th>菜单 Menu</th>
+<th>macOS</th>
+<th>Win / Linux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>开发者工具开关</td>
+<td>Inspect</td>
+<td><code>⌘</code>+<code>⇧</code>+<code>I</code>、<code>⌘</code>+<code>⇧</code>+<code>C</code>、<code>F12</code></td>
+<td><code>Ctrl</code>+<code>Shift</code>+<code>I</code>、<code>Ctrl</code>+<code>Shift</code>+<code>C</code>、<code>F12</code></td>
+</tr>
+<tr>
+<td>查看页面源代码</td>
+<td>Inspect</td>
+<td><code>⌥</code>+<code>⌘</code>+<code>U</code></td>
+<td><code>Ctrl</code>+<code>U</code></td>
+</tr>
+<tr>
+<td>任务管理器</td>
+<td>Inspect</td>
+<td><code>⌘</code>+<code>⇧</code>+<code>M</code></td>
+<td><code>Ctrl</code>+<code>Shift</code>+<code>M</code></td>
+</tr>
+</tbody>
+</table>
+<p>源码：<code>UI/Qt/Menu.cpp:297-320</code>，菜单项 <code>UI/Qt/ApplicationActions.cpp:244-249</code></p>
+<h4>7 其它窗口与对话框里的键</h4>
+<table>
+<thead>
+<tr>
+<th>键</th>
+<th>作用域 Scope</th>
+<th>按键</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>复制 PID</td>
+<td>进程管理器窗口</td>
+<td><code>⌘</code>+<code>C</code> / <code>Ctrl</code>+<code>C</code></td>
+</tr>
+<tr>
+<td>关闭窗口</td>
+<td>进程管理器窗口</td>
+<td><code>QKeySequence::Close</code>（mac <code>⌘</code>+<code>W</code>、Windows 首选 <code>Ctrl</code>+<code>F4</code>、Linux <code>Ctrl</code>+<code>W</code>）</td>
+</tr>
+<tr>
+<td>关闭标签页（菜单显示）</td>
+<td>标签页右键菜单</td>
+<td><code>QKeySequence::Close</code></td>
+</tr>
+<tr>
+<td>关闭对话框</td>
+<td>JavaScript 对话框</td>
+<td><code>Esc</code></td>
+</tr>
+<tr>
+<td>重新加载</td>
+<td>崩溃覆盖层</td>
+<td>Return / Enter</td>
+</tr>
+</tbody>
+</table>
+<p>源码：<code>UI/Qt/ProcessManagerWindow.cpp:577-590</code>、<code>UI/Qt/Tab.cpp:925-931</code>、<code>UI/Qt/JavaScriptDialog.cpp:152</code>、<code>UI/Qt/WebContentView.cpp:1578-1580</code></p>
+<p>右键菜单、tooltip 里的快捷键只是<strong>显示</strong>（<code>setShortcutVisibleInContextMenu</code>），真正的绑定在动作上，别当两条绑定。</p>
+<h3>保留集合</h3>
+<p>页面理论上可以 <code>preventDefault</code> 任何键，但浏览器 chrome 的键必须先赢：<code>ShortcutOverride</code> 事件里命中保留键就忽略 override、交给浏览器 QAction，否则接受 override、交给页面。</p>
+<table>
+<thead>
+<tr>
+<th>保留的键</th>
+<th>macOS</th>
+<th>Win / Linux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>标准键 Close / New / Quit</td>
+<td><code>⌘</code>+<code>W</code> / <code>⌘</code>+<code>N</code> / <code>⌘</code>+<code>Q</code></td>
+<td><code>Ctrl</code>+<code>W</code>·<code>Ctrl</code>+<code>F4</code> / <code>Ctrl</code>+<code>N</code> / <code>Ctrl</code>+<code>Q</code></td>
+</tr>
+<tr>
+<td>新建标签页 / 重开关闭页 / 新建隐私窗口</td>
+<td><code>⌘</code>+<code>T</code>、<code>⌘</code>+<code>⇧</code>+<code>T</code>、<code>⌘</code>+<code>⇧</code>+<code>N</code></td>
+<td><code>Ctrl</code>+<code>T</code>、<code>Ctrl</code>+<code>Shift</code>+<code>T</code>、<code>Ctrl</code>+<code>Shift</code>+<code>N</code></td>
+</tr>
+<tr>
+<td>书签栏开关</td>
+<td><code>⌘</code>+<code>⇧</code>+<code>B</code></td>
+<td><code>Ctrl</code>+<code>Shift</code>+<code>B</code></td>
+</tr>
+<tr>
+<td>地址栏 / 下一个标签页</td>
+<td><code>⌘</code>+<code>L</code>、<code>⌘</code>+<code>Tab</code>、<code>⌘</code>+<code>PageDown</code></td>
+<td><code>Ctrl</code>+<code>L</code>、<code>Ctrl</code>+<code>Tab</code>、<code>Ctrl</code>+<code>PageDown</code></td>
+</tr>
+<tr>
+<td>上一个标签页</td>
+<td><code>⌘</code>+<code>⇧</code>+<code>Tab</code>、<code>⌘</code>+<code>PageUp</code></td>
+<td><code>Ctrl</code>+<code>Shift</code>+<code>Tab</code>、<code>Ctrl</code>+<code>PageUp</code></td>
+</tr>
+<tr>
+<td>mac 专属：隐藏/历史 <code>⌘</code>+<code>H</code>、窗口切换 <code>⌃</code>+<code>Tab</code>、<code>⌃</code>+<code>⇧</code>+<code>Tab</code>、<code>⌘</code>+<code>⇧</code>+<code>[</code> <code>]</code></td>
+<td>见左（<code>#if AK_OS_MACOS</code> 分支）</td>
+<td>—</td>
+</tr>
+<tr>
+<td>非 mac 专属：关闭标签页</td>
+<td>—</td>
+<td><code>Ctrl</code>+<code>F4</code></td>
+</tr>
+<tr>
+<td><code>F6</code> 切换焦点</td>
+<td><code>F6</code></td>
+<td><code>F6</code></td>
+</tr>
+<tr>
+<td>侧边栏开关</td>
+<td><code>⌥</code>+<code>⌘</code>+<code>S</code></td>
+<td><code>Ctrl</code>+<code>Shift</code>+<code>S</code></td>
+</tr>
+</tbody>
+</table>
+<p>源码：<code>UI/Qt/WebContentView.cpp:784-843</code>（<code>is_browser_reserved_shortcut</code>，调用点 <code>:2638-2653</code>）</p>
+<p><strong>没有被保留的键</strong>（<code>Ctrl</code>+<code>F</code>/<code>P</code>/<code>S</code>、<code>Tab</code>、方向键……）会经 <code>UI/Qt/WebContentView.cpp:845-873</code> 的 <code>keyPressEvent</code> 转给 WebContent 进程，再在 <code>:2795-2818</code> 归一化成 LibWeb keycode，页面 JS 可以自由处理。</p>
+<h3>Ladybird <strong>没有</strong>绑定的键（别按了以为坏了）</h3>
+<table>
+<thead>
+<tr>
+<th>键</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ctrl</code>+<code>P</code> 打印</td>
+<td>无 <code>StandardKey::Print</code> 绑定</td>
+</tr>
+<tr>
+<td><code>Ctrl</code>+<code>S</code> 保存</td>
+<td>无 <code>StandardKey::Save</code> 绑定；右键"另存为"走菜单动作，无快捷键</td>
+</tr>
+<tr>
+<td><code>F11</code> 全屏</td>
+<td>只是被当作普通键转发给页面（<code>UI/Qt/WebContentView.cpp:702</code> 把 <code>F11</code> 映射成 <code>Key_F11</code>）</td>
+</tr>
+<tr>
+<td><code>Ctrl</code>+<code>C</code> 中断 / <code>Ctrl</code>+<code>L</code> 清屏</td>
+<td>属于<strong>终端组件</strong>，不是主浏览器页面</td>
+</tr>
+</tbody>
+</table>
+<p>验证：<code>grep -rn "StandardKey::Print\|StandardKey::Save\|StandardKey::FullScreen" UI/ Libraries/</code> 无结果；终端组件见 <code>Libraries/LibWebView/TerminalInputParser.cpp</code>、<code>TerminalWebView.cpp:517-527</code>。</p>
+<ul>
+<li>未列出的键默认<strong>归页面</strong>：LibWeb 的 <code>EventHandler.cpp</code> 里没有 <code>Mod_Ctrl</code> 组合分支（<code>grep -rn "Mod_Ctrl" Libraries/LibWeb/HTML/EventHandler.cpp</code> 无结果）。</li>
+<li>HTML <code>accesskey</code>（<code>Alt</code>+字母）是规范级的"页面快捷键"，实现在 <code>Libraries/LibWeb/HTML/HTMLElement.cpp:2719</code>（<code>access_key_label()</code>），实际组合依赖平台与页面属性。</li>
+<li>页面 JS 自己注册的快捷键（如 Gmail 的 <code>c</code>）不归浏览器管，本表自然也搜不到。</li>
+</ul></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-11-27T16:51:00+08:00">2026-11-27</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-40"  rel="bookmark" >
               <h2 class="card-title">HTML里的“宏”</h2>
             </a>
@@ -4315,77 +5370,6 @@ It's a <a href="https://issues.chromium.org/issues/40777458">Chromium thing</a> 
 <p>The lesson learned: Don't buy Sandick or WestData. At least the low-end ones.</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2025-10-09T10:30:00+08:00">2025-10-09</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2025/stdout-08"  rel="bookmark" >
-              <h2 class="card-title">xHTML5</h2>
-            </a>
-            <p class="card-text"><p>有 ChatGPT学姿势就是快</p>
-<pre><code class="language-html">&lt;!DOCTYPE html [
-  &lt;!ENTITY myEntity &quot;Hello World&quot;&gt;
-  &lt;!ENTITY wow &quot;alert('hi')&quot;&gt;
-]&gt;
-&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
-&lt;body&gt;
-  &amp;myEntity;
-  &lt;script&gt;
-    &amp;wow;
-  &lt;/script&gt;
-
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<p>保存到本地 1.xhtml，双击浏览器打开。谁能想到这也行？xml entity 还可以这样玩？</p>
-<p>只要MIME为 <code>application/xhtml+xml</code> 就可以把HTML5当XML渲染。</p>
-<p>部署了个在线demo： <a href="https://lab.est.im/svg/entity.xhtml">https://lab.est.im/svg/entity.xhtml</a></p>
-<p>不敢相信自己眼睛，确认下是HTML5:</p>
-<ul>
-<li><code>document.compatMode</code> 返回 <code>CSS1Compat</code> 没问题</li>
-<li><code>ocument.doctype</code> 返回 <code>&lt;!DOCTYPE html&gt;</code> 没毛病</li>
-</ul>
-<p>如果是老的兼容模式：</p>
-<ul>
-<li><code>document.compatMode</code> 为 <code>BackCompat</code></li>
-<li><code>document.doctype.publicId</code> 为 <code>-//W3C//DTD HTML 4.01//EN</code></li>
-<li><code>document.doctype.systemId</code> 为 <code>http://www.w3.org/TR/html4/strict.dtd</code></li>
-</ul>
-<p>思路打开了。哈哈</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2025-09-15T00:12:00+08:00">2025-09-15</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2025/stdout-07"  rel="bookmark" >
-              <h2 class="card-title">disqus已卸载，手搓了套blog评论系统 - req4cmt</h2>
-            </a>
-            <p class="card-text"><p>一直用 disqus 主要是觉得方便（懒）。但是自从被墙了就很不方便了。加上近期开始强制插入广告，就更讨厌了</p>
-<p>想找个替代品，很多基于 github 的，在 issue 盖楼，我觉得不方便备份，希望是能直接写入 repo的。这样一个 git clone 就搬家了。更不用说几乎都是基于 OAuth 的 github 登录实际上能拿到你所有 <code>repo</code> 的 scope，也就是能读写你所有公开（甚至私有）仓库内容。我一般都不点</p>
-<p>于是决定手搓一个。</p>
-<p>首先考虑的就是如何把内容写入 git repo。这个在做 <a href="https://blog.est.im/2025/stdout-05">gitweets</a> 已经调研尝试过了。</p>
-<p>本着在 cloudflare worker 白嫖的心态，这种 serverless 的环境肯定不允许装 git 命令行或者 libgit 这种 .so，所以考虑 pure python 的 <a href="https://github.com/jelmer/dulwich">dulwich</a>。折腾了一下 python binding 发现CF居然是个WASM转译。那还不如js。还好nodejs生态也很丰富，有个纯js的实现 <a href="https://isomorphic-git.org/">isomorphic-git</a> 。</p>
-<p>然后手搓了一下发现需要个 memfs 在内存里模拟文件IO。</p>
-<p>其次是如何读取内容，评论列表以 <code>域名/路径.jsonl</code> 格式保存为纯文本，一行一条评论JSON，方便diff。将来可以做成 pull request 当成 moderation</p>
-<p>本来想通过 git-http 来读文件，发现太慢了。干脆走捷径直接反代 <code>https://raw.githubusercontent.com/</code> 就行。本来也不用反代，一是这个域名被DNS屏蔽，二是加一个该死的CORS头才能跨域。</p>
-<p>跑通之后接着就模仿disqus实现页面一段.js嵌入，渲染表单，展示评论列表等等，我的 js/css 实在捉急就搓了套最基础的。</p>
-<p>能用就行！</p>
-<p>防止spam这方面也没多想，看很多人说做 hidden input 就能拦住绝大部分，那就先这样跑着。除了评论框这个 <code>textarea</code> 甚至名字都是选填</p>
-<p>尽可能做兼容，让在没有 .js 的情况下也能提交表单。当然得在嵌入页面的时候弄 <code>&lt;noscript&gt;</code></p>
-<p>该项目严重依赖 cloudflare 和 github 两位赛博菩萨的免费额度，所以请求过多会被控频。实在不行弄个KV队列之类的。但是我这博客这么冷清，多虑了？</p>
-<p>最后，把 disqus 老的评论都导出来了。毕竟是多年的回忆。</p>
-<p>项目放在 <a href="https://github.com/est/req4cmt">https://github.com/est/req4cmt</a> 欢迎点评。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2025-09-10T22:38:00+08:00">2025-09-10</time></p>
 <p>stdout</p>            </div>
           </article>
         </div>

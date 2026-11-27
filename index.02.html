@@ -54,6 +54,209 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-31"  rel="bookmark" >
+              <h2 class="card-title">邮箱生态调研2026</h2>
+            </a>
+            <p class="card-text"><p>起初一个很简单的想法，把一个app/服务的私人数据，集中存数据库麻烦，不想维护担责，干脆放用户自己邮箱里，所谓"BYOS（自带存储）"。反正协议 SMTP/POP3/IMAP 很方便，然后调查了下很快发现，时代变了。</p>
+<p>本来寄希望IMAP 这个协议，感觉能缝成一个读写API，</p>
+<p>-<code>APPEND</code> 写（一封邮件 = 一个对象），<code>FETCH</code> 读，<code>STORE</code> 改 flag，<code>COPY/MOVE</code> 移动<br />
+- "目录 + KV"模型，flag（<code>\Seen</code>、<code>\Flagged</code> 等）即元数据位<br />
+- <code>SEARCH</code>查询 主题、日期、自定义 header等<br />
+- 增量同步： <code>UID</code> + <code>UIDVALIDITY</code>，<code>IDLE</code> 可做准实时推送（仅单文件夹）</p>
+<p>其实古董的 GMailFS / GMail Drive 之类把 Gmail 当虚拟磁盘的开源项目很多，各类 邮件备份 工具、笔记类应用的同步，都走过这条路</p>
+<p>以前输入帐号密码这种简单方式，早被废了；甚至专用密码、动态密码都下掉了。主流邮箱（Gmail/Outlook/Yahoo）已全面转向 OAuth 2.0，就是它协议上是要走一个握手然后验证token的流程，用户门槛太高了。</p>
+<p>让AI跑了一圈发现：</p>
+<h3>邮箱供应商对比：</h3>
+<table>
+<thead>
+<tr>
+<th>供应商</th>
+<th>开发者接入方式</th>
+<th>开发者审核门槛</th>
+<th>用户授权操作</th>
+<th>用户麻烦程度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Gmail</strong></td>
+<td>OAuth 2.0（SASL XOAUTH2），scope <code>https://mail.google.com/</code>，需建 GCP 项目</td>
+<td><strong>最重</strong>：restricted scope，正式对外必须过 OAuth 验证 + 安全评估，<strong>每年复审</strong>；未过审只能 ≤100 测试用户或内部使用</td>
+<td>跳转 Google 授权页点同意（OAuth）；或开 2FA 后生成 16 位应用专用密码粘贴</td>
+<td>低（OAuth）~ 中（app password）</td>
+</tr>
+<tr>
+<td><strong>Outlook.com</strong></td>
+<td>OAuth 2.0（SASL XOAUTH2），scope <code>https://outlook.office.com/IMAP.AccessAsUser.All</code>，需注册 Microsoft Entra 应用</td>
+<td><strong>中等</strong>：Entra 注册免费即时；无强制审核；Publisher verification（去掉"未验证应用"警示）可选，需 EV 证书约 $100/年</td>
+<td><strong>必须先到网页设置手动打开 IMAP（默认关）</strong>；之后走 OAuth 自动授权，或应用密码</td>
+<td>中（多一步开 IMAP）</td>
+</tr>
+<tr>
+<td><strong>Yahoo</strong></td>
+<td>OAuth 2.0（SASL OAUTHBEARER），需在 YDN 注册应用；或应用密码</td>
+<td><strong>低</strong>：无 Google 式受限 scope 审核</td>
+<td>OAuth 授权页；或设置里生成应用密码</td>
+<td>低（OAuth）~ 中（app password）</td>
+</tr>
+<tr>
+<td><strong>iCloud</strong></td>
+<td>官方支持三方应用 OAuth 授权，或应用专用密码</td>
+<td>低-中</td>
+<td><strong>必须开 2FA</strong>，到 account.apple.com 生成应用专用密码（每应用一个，上限 25 个）</td>
+<td>中</td>
+</tr>
+<tr>
+<td><strong>QQ 邮箱</strong></td>
+<td>无 OAuth，只有"授权码"</td>
+<td><strong>无</strong>（无审核无文档）</td>
+<td>设置 → 账户 → 开启 IMAP/SMTP → <strong>短信验证</strong> → 生成 16 位授权码 → 粘贴进 App</td>
+<td>中（2~3 分钟）</td>
+</tr>
+<tr>
+<td><strong>163 / 126</strong></td>
+<td>同上（客户端授权密码）</td>
+<td>无</td>
+<td>同上</td>
+<td>中（2~3 分钟）</td>
+</tr>
+</tbody>
+</table>
+<h3>硬限制</h3>
+<table>
+<thead>
+<tr>
+<th>供应商</th>
+<th>IMAP 服务器</th>
+<th>容量</th>
+<th>单封大小</th>
+<th>连接/会话限制</th>
+<th>明文密码状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Gmail</strong></td>
+<td>imap.gmail.com:993</td>
+<td>15GB（与 Drive/相册共享）</td>
+<td>25MB</td>
+<td>15 并发连接；会话约 24h</td>
+<td>已废除，需 OAuth 或 app password</td>
+</tr>
+<tr>
+<td><strong>Outlook.com</strong></td>
+<td>outlook.office365.com:993</td>
+<td>15GB</td>
+<td>约 35MB 量级</td>
+<td>多客户端并发触发风控</td>
+<td>已废除（2022-10 起强制 Modern Auth）</td>
+</tr>
+<tr>
+<td><strong>Yahoo</strong></td>
+<td>imap.mail.yahoo.com:993</td>
+<td>1TB</td>
+<td>25MB 附件</td>
+<td>无公开数字</td>
+<td><strong>2024-05-15 起停用明文密码</strong></td>
+</tr>
+<tr>
+<td><strong>iCloud</strong></td>
+<td>imap.mail.me.com:993</td>
+<td>免费 5GB</td>
+<td>约 20MB 量级</td>
+<td>无公开数字</td>
+<td>需应用专用密码</td>
+</tr>
+<tr>
+<td><strong>QQ 邮箱</strong></td>
+<td>imap.qq.com:993</td>
+<td>约 16GB 级</td>
+<td>普通附件约 50MB，大文件走中转站（有时效）</td>
+<td>无公开文档，风控靠账号安全策略</td>
+<td>无 OAuth，仅授权码</td>
+</tr>
+<tr>
+<td><strong>163 / 126</strong></td>
+<td>imap.163.com:993</td>
+<td>免费容量较大（自动扩容）</td>
+<td>普通附件约 50MB，大文件走"超大附件"（有时效）</td>
+<td>无公开文档</td>
+<td>无 OAuth，仅授权码</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ 以上数字除标注官方来源者外均为常用量级，上线前需逐家实测；QQ/163 无官方公开 API/协议文档，以实操惯例为准。</p>
+</blockquote>
+<h3>操作路径</h3>
+<h4>路径 A：OAuth 授权</h4>
+<p>Gmail / Outlook / Yahoo</p>
+<ul>
+<li>用户操作：简单。点"继续用 Google/微软登录" → 同意 → 跳回，约 30 秒，体验最好，还能随时撤销。</li>
+<li>开发者代价：Google 的 restricted scope 审核是真实的时间黑洞——提交安全评估、回答数据使用问卷、<strong>每年复审</strong>；没下来之前 App 无法对真实用户上线（只能测试名单）。微软无强制审核、Yahoo 无审核，相对顺。</li>
+</ul>
+<h4>路径 B：应用专用密码 / 授权码</h4>
+<ul>
+<li>用户要依次完成：开 2FA（Google/Apple 强制）→ 进设置页 → 生成 16 位码 → 回 App 粘贴。<strong>平均 5~15 分钟</strong>，而且这是客服工单的主要来源：没开 2FA、改了主密码（所有应用密码自动吊销）、粘贴带空格、公司/学校账号禁开……</li>
+<li>Google 官方明说 app password "not recommended and unnecessary"，方向是逼大家走 OAuth。<strong>把产品押在 app password 上是逆政策而动</strong>，微软/Yahoo 已先后封死明文密码，这条路只会越来越窄。</li>
+</ul>
+<h3>结论：</h3>
+<p>算了。不要折腾。</p>
+<h3>附：参考来源</h3>
+<ul>
+<li>Gmail 应用专用密码与 2FA 要求：<a href="https://support.google.com/mail/answer/185833">https://support.google.com/mail/answer/185833</a></li>
+<li>Gmail 附件 25MB 限制：<a href="https://support.google.com/mail/answer/6584">https://support.google.com/mail/answer/6584</a></li>
+<li>Gmail IMAP 会话 / 连接限制、IMAP 常开（2025-01 起）：<a href="https://support.google.com/mail/answer/7126229">https://support.google.com/mail/answer/7126229</a> <a href="https://developers.google.com/gmail/">https://developers.google.com/gmail/</a>imap/imap-smtp</li>
+<li>Google OAuth 验证与受限 scope 年度复审：<a href="https://support.google.com/cloud/answer/9110914">https://support.google.com/cloud/answer/9110914</a></li>
+<li>Outlook.com 设置页（IMAP 默认关闭、强制 Modern Auth）：<a href="https://support.microsoft.com/en-us/outlook/">https://support.microsoft.com/en-us/outlook/</a>pop-imap-and-smtp-settings-for-outlook-com</li>
+<li>微软 IMAP OAuth 接入（scope、授权码 / 设备码流程）：<a href="https://learn.microsoft.com/en-us/exchange/client-developer/legacy-protocols/how-to-authenticate-an-imap-pop-smtp-application-by-using-oauth">https://learn.microsoft.com/en-us/exchange/client-developer/legacy-protocols/how-to-authenticate-an-imap-pop-smtp-application-by-using-oauth</a></li>
+<li>微软 basic auth 废除（Exchange Online，2022-10）：<a href="https://learn.microsoft.com/en-us/exchange/clients-and-mobile-in-exchange-online/deprecation-of-basic-authentication-exchange-online">https://learn.microsoft.com/en-us/exchange/clients-and-mobile-in-exchange-online/deprecation-of-basic-authentication-exchange-online</a></li>
+<li>Yahoo 明文密码 IMAP 停用（2024-05-15）与 OAuth：<a href="https://help.yahoo.com/kb/SLN36636.html">https://help.yahoo.com/kb/SLN36636.html</a> <a href="https://senders.yahooinc.com/developer/">https://senders.yahooinc.com/developer/</a>documentation/</li>
+<li>Apple 应用专用密码（2FA 强制、25 个上限、改密吊销）：<a href="https://support.apple.com/en-us/102654">https://support.apple.com/en-us/102654</a></li>
+</ul></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-08-07T10:35:00+08:00">2026-08-07</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/2026/stderr-27"  rel="bookmark" >
+              <h2 class="card-title">“畜牲”</h2>
+            </a>
+            <p class="card-text"><p>最近观察到娃学会了一些脱口而出的骂人的话，他骑车遇到看不惯的现象，就会骂一句 “牲口” ！</p>
+<p>我也没太多去干预，毕竟比 “肏” 这类秽语要委婉那么一丢丢。</p>
+<p>然后我最近也喜欢一边开 Vibe Coding 一边挂机 Rimworld 种田，</p>
+<p>然后就发现一个事儿，我在牧场区域种的 恶蘑菇，一种非食用植物，不会被动物吃掉；如果种玉米 稻米 土豆就会被偷吃，然后基地的粮食就少了一份。</p>
+<p>所以突然就得到这么一个莫名其妙的理论：</p>
+<p><strong>动物并不会去主动破坏自己吃不了的东西</strong></p>
+<p>可能也有反例，狼、狮子会杀死竞争者的幼崽，黑猩猩会打架，一些鸟会破坏别的鸟的蛋；松鼠会偷走自己暂时吃不了的东西；海豚玩弄猎物；</p>
+<p>通过这些例子，感觉破坏性和智力正相关，也就是利用预测能力和因果性去糟蹋东西。骂人是动物，仿佛动物低人一等，但是人心有的时候，甚至还不如“畜牲”</p>
+<p>如果把这个限定缩小一点：</p>
+<p>动物作恶的能力仅限身体。</p>
+<p>人类里的坏逼，可能是唯一为了某个概念性的目标，会系统性破坏自己无法直接利用、甚至未来有价值东西的动物</p>
+<p>智力让生物获得了创造未来的能力，也让它获得了毁灭未来的能力。</p>
+<p>植物貌似也只会利用身体去占领局部环境，比如分泌毒素，遮挡阳光，向环境释放某种抑制剂。</p>
+<p>但人类可以把攻击性扩大到远超生存需求的规模。为了荣誉、信仰、身份、复仇去糟蹋自己甚至不认识的人或者物。</p>
+<p>这是一种非常特殊的“脱离现实反馈”的能力。</p>
+<p>所以「畜牲」这个骂法有点讽刺——很多时候，骂别人「像动物」，其实是在指责对方缺少克制；但换个角度看，动物反而经常遵循一种很严格的生态逻辑：消耗资源、竞争、生存，不会为了纯粹抽象的理由把世界变得更糟。</p>
+<hr />
+<p>btw 这个游戏真的有毒。好多年前尝试畜牧，结果直接生了一小崽，指数增长，然后过冬吃光了粮食，就纷纷饿死。然后来年就严格限制动物数量，定期宰杀，发现最简单的办法是砍掉雄性，留下1-2个传种，留下产奶产蛋的雌性。在感叹残酷的同时，结果无意中发现了 回交 。</p>
+<p>据说宋朝马政废弛，就是因为儒生不忍心这么干，所以导致良马欠缺。</p>
+<p>你说这个这个是人类的扭曲的道德还是动物的天性呢？</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-08-03T23:24:00+08:00">2026-08-03</time></p>
+<p>stderr</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stderr-26"  rel="bookmark" >
               <h2 class="card-title">飞书并入豆包，文档是否减少？</h2>
             </a>
@@ -2557,139 +2760,6 @@ Albert Einstein 最符合你说的脑子一抽，自己特别喜欢思想实验�
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-05-31T11:56:00+08:00">2026-05-31</time></p>
 <p>stdin</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2026/stdout-21"  rel="bookmark" >
-              <h2 class="card-title">Playlet：DLNA听歌神器 免安装app播放NAS里的歌</h2>
-            </a>
-            <p class="card-text"><p>家里有个小 NAS 。里面存了一些歌。一半是用 NAS 自带的 app 听，一半是。。。SMB 共享打开听</p>
-<p>虽然 NAS 也提供 DLNA ，一直以来找不到趁手 app ，要么收费，要么 bug 多，要么不能多端。</p>
-<p>13年前我也想<a href="https://github.com/est/push2air">基于 <code>chrome.socket</code> 做个 Chrome App</a> 弄个类似的。结果这破玩意实现有问题，<a href="https://issuetracker.google.com/issues/40960228">多连接会导致 hang</a>。最后<a href="https://blog.chromium.org/2020/01/moving-forward-from-chrome-apps.html">2020年Chromium决定杀死 Chrome Apps</a></p>
-<p>周六的时候，实在无聊，决定又开始搓轮子。在思考  SSDP/UPnP ，native UI, electron，命令行这些选型的时候，突然想到，DLNA服本来就要提供一个http，自己再造个 http 客户端去通信，岂不是多此一举？只要依托它，解决跨域……等等，用个 bookmarklet 不就行了？当页调用 <code>fetch()</code> ，走 SOAP 协议，完美。</p>
-<p>所以这就有了，网页版听歌的。不需要安装 app ，只需要一个浏览器书签</p>
-<p><a href="https://est.github.io/playlet/">https://est.github.io/playlet/</a></p>
-<p>也需要你对网络、DLNA 的亿点点知识。比如你得自己想办法找出 DLNA 的 IP 和端口</p>
-<p>使用方法：</p>
-<ol>
-<li>
-<p>把这个网址加到浏览器书签</p>
-<pre><code>    javascript:import("https://est.github.io/playlet/loader.js")
-</code></pre>
-</li>
-<li>
-<p>打开 DLNA 服务器的网页</p>
-</li>
-<li>点击第一步加的书签（如果找不到书签栏，右上角三个点菜单 -&gt; 收藏 可以切换）</li>
-</ol>
-<p>自测兼容 NAS 的 MiniDLNA 。chrome ，手机浏览器和 webview 都可以播放。</p>
-<p>当年嵌入个 <code>&lt;script&gt;</code> 写法多复杂，createElement又这那的；现在直接 <code>import()</code> 搞定。简洁明了，还不会重复加载。</p>
-<p>最后是个 50KB 左右的单体 js。实现了播放、搜索等核心功能+UI。</p>
-<p>给本地测试环境动了个小心思，利用 iframe 去模拟 bookmarklet 注入。还学习到 <code>&lt;audio crossorigin="anonymous"&gt;</code> 居然主动去检查跨域CORS头导致加载失败，去掉 <code>crossorigin</code> 就行。AI嘴硬不给去掉，服了。</p>
-<p>这下随时随地打开浏览器就能听歌了。除了收藏的一些古典CD是 .cue 分段的没法播放。感觉需要去电脑上硬切割一下了。</p>
-<p>接下来想把歌词什么的整理好。不知道有没有类似 opensubtitles 之类的服务。</p>
-<p>最后想起来，miniDLNA为啥不直接把这一坨JS内置了 😂 可能当年那个条件没厂家愿意去js手搓一套DLNA协议+播放界面吧。甚至浏览器对常见音频格式都不怎么支持</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2026-05-30T20:03:08+08:00">2026-05-30</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2026/stdout-20"  rel="bookmark" >
-              <h2 class="card-title">不修改nginx接收websocket</h2>
-            </a>
-            <p class="card-text"><p>以前只记得要支持websocket 需要 nginx 改：</p>
-<pre><code>  location /ws-service-a {
-      proxy_pass http://backend_a;
-      proxy_http_version 1.1;
-      proxy_set_header Upgrade $http_upgrade;
-      proxy_set_header Connection $connection_upgrade;
-  }
-</code></pre>
-<p>今天折腾忘记这茬了，一直在调 FastAPI ，<code>@app.websocket()</code> 死活不识别 <code>wscat</code> 的请求</p>
-<p>WebSocket 协议的工作方式是：</p>
-<p>1.客户端发 GET + Upgrade: websocket 头<br />
-2.服务端识别这个特殊 GET，返回 101 Switching Protocols<br />
-3.连接升级完成</p>
-<p><code>opus-4.6</code> 说：既然路由确实注册了，那问题几乎可以确定是：前面的反向代理/LB 没有透传 WebSocket</p>
-<p>我就来劲了，让AI写一份 特殊 GET，返回 101 Switching Protocols 。</p>
-<p>结果还真成功了。<code>wscat</code> 返回 error: Invalid Sec-WebSocket-Accept header</p>
-<p>折腾了几下，发现此路不通</p>
-<blockquote>
-<p>问题不是 @app.websocket() 没挂载，它挂载了，但永远匹配不到。原因是 uvicorn 的路由分发发生在更底层：</p>
-<p>请求到达 uvicorn<br />
-    ↓<br />
-uvicorn 检查 headers：有 Upgrade: websocket？<br />
-    ├── 是 → scope.type = "websocket" → 只匹配 @app.websocket() 路由<br />
-    └── 否 → scope.type = "http"     → 只匹配 @app.get/post() 路由<br />
-你的 nginx 把 Upgrade 头吃了，所以 uvicorn 永远把请求标记为 http scope。在 http scope 下，@app.websocket(...) 路由根本不参与匹配 — 就像它不存在一样。</p>
-<p>这就是为什么：</p>
-<p>@app.get('/ws/test') 能匹配 — 它是 HTTP 路由，匹配 HTTP scope<br />
-@app.websocket('/ws/real') 匹配不到 — 它是 WebSocket 路由，只在 websocket scope 下才可见<br />
-两个都注册成功了，但 scope 类型不对，uvicorn 在路由匹配之前就把它们分到了不同的赛道。</p>
-</blockquote>
-<p>接下来几轮错误复制粘贴大法：</p>
-<ul>
-<li>最初想法：ASGI middleware 翻译协议 → 80 行，手搓 websockets 库</li>
-<li>精简版：用 websockets 库做帧编码 → 还是 50 行 middleware</li>
-</ul>
-<p>后来发现ASGI 这一层做不到。因为 标准 ASGI middleware 拿到请求时已经太晚了：</p>
-<p>uvicorn TCP 收包<br />
-1. httptools 解析 headers<br />
-2. on_headers_complete 决定 scope type (http vs websocket)  ← 需要在这里拦截<br />
-3. 创建 scope + receive/send（已经绑定为 HTTP 协议）<br />
-4. 调用 ASGI app (middleware 链)                            ← middleware 才在这里介入</p>
-<p>middleware 只能看到已经定型的 scope['type'] = 'http'，改不了底层的 receive/send 绑定。</p>
-<p>然后尝试了一个 <code>gunicorn.conf.py</code> 的hack：</p>
-<pre><code class="language-python">def post_worker_init(worker):
-    &quot;&quot;&quot;让 uvicorn 从 sec-websocket-key 识别 WebSocket，绕过 nginx 吞 Upgrade 头的问题&quot;&quot;&quot;
-    import httptools
-    from uvicorn.protocols.http.httptools_impl import HttpToolsProtocol
-    _orig = HttpToolsProtocol.on_headers_complete
-    def _patched(self):
-        has_ws_key = any(n == b&quot;sec-websocket-key&quot; for n, _ in self.headers)
-        if has_ws_key and self._should_upgrade_to_ws():
-            self.headers.append((b&quot;upgrade&quot;, b&quot;websocket&quot;))
-            self.headers.append((b&quot;connection&quot;, b&quot;Upgrade&quot;))
-            self.scope[&quot;headers&quot;] = self.headers
-            self.scope[&quot;method&quot;] = self.parser.get_method().decode(&quot;ascii&quot;)
-            raise httptools.HttpParserUpgrade(b&quot;&quot;)
-        return _orig(self)
-    HttpToolsProtocol.on_headers_complete = _patched
-</code></pre>
-<p>我也觉得，ws这协议是不是有病。如果有 <code>sec-websocket-key</code> 就认定为 ws 不就完了。搞那么复杂。</p>
-<p>然后这个办法在 ASGI 里还是行不通。最终版：直接篡改 uvicorn 收到的 raw TCP 字节</p>
-<pre><code class="language-python">def post_worker_init(worker):
-    import re
-    from uvicorn.protocols.http.httptools_impl import HttpToolsProtocol
-
-    _orig_data_received = HttpToolsProtocol.data_received
-
-    def _patched_data_received(self, data):
-        if not getattr(self, '_ws_patched', False) and b'\r\n\r\n' in data:
-            self._ws_patched = True
-            lower = data.lower()
-            if b'sec-websocket-key:' in lower and b'\nupgrade:' not in lower:
-                data = re.sub(rb'(?i)\r\nconnection:[^\r]*', b'\r\nConnection: Upgrade', data)
-                data = data.replace(b'\r\n\r\n', b'\r\nUpgrade: websocket\r\n\r\n', 1)
-        return _orig_data_received(self, data)
-
-    HttpToolsProtocol.data_received = _patched_data_received
-</code></pre>
-<p>居然成功了！不修改nginx兼容websocket！</p>
-<p>这路子太野了。还是老老实实去改nginx了。</p>
-<p>不过也学到一些姿势，比如 <code>258EAFA5-E914-47DA-95CA-C5AB0DC85B11</code> ，以及ws居然是二进制流。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2026-05-28T18:35:00+08:00">2026-05-28</time></p>
-<p>stdout</p>            </div>
           </article>
         </div>
 

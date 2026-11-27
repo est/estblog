@@ -54,26 +54,6 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/640297"  rel="bookmark" >
-              <h2 class="card-title">Hg可以直接push到github了</h2>
-            </a>
-            <p class="card-text"><p><img alt="" src="http://hg-git.github.com/images/server.png" /></p>
-<p>github博客<a href="http://github.com/blog/439-hg-git-mercurial-plugin">宣布</a> <a href="http://hg-git.github.com/">hg-git插件</a>：</p>
-<blockquote>
-<p>The Hg-Git plugin can convert commits/changesets losslessly from one system to another, so you can push via an Hg repository and another Hg client can pull it and thier changeset node ids will be identical - Mercurial data does not get lost in translation.</p>
-</blockquote>
-<p>看来hg和git不是对抗，而是联合。期待git客户端支持Mercurial服务器的插件。。。哈哈。。。</p>
-<p>via <a href="http://www.reddit.com/r/programming/comments/8nseh/no_need_to_choose_anymore_seamless_git/">proggit</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2009-05-28T00:00:00+08:00">2009-05-28</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/archives/640309"  rel="bookmark" >
               <h2 class="card-title">谷歌浏览器里牛逼的中文分词</h2>
             </a>
@@ -91,6 +71,26 @@
 <p>中文分词比英文分词麻烦多了。很明显英文基于词语的跳转就是跳转到下一个空白字符，而中文很麻烦的一点是二义性。举一个<a href="http://www.googlechinablog.com/2006/04/blog-post_10.html">谷歌中国黑板报的例子</a>，发展中国家 是分词为 发展 中国 家 好呢，还是 发展中 国家 好？这个纯粹靠上下文和概率算了。</p>
 <p><a href="http://www.catonmat.net/blog/code-reuse-in-google-chrome-browser/">深入</a>研究了一下这个有趣的功能，发现是<a href="http://www-01.ibm.com/software/globalization/icu/index.jsp">IBM的ICU库</a>提供的，每个Chrome安装文件夹下面都有一个<a href="http://build.chromium.org/buildbot/continuous/LATEST/chrome-win32.test/icudt38.dll">icudt38.dll</a>，这里面包含了一份<a href="http://src.chromium.org/viewvc/chrome/trunk/deps/third_party/icu38/source/data/brkitr/cc_cedict.txt">中文词语表</a>。基于<a href="http://us.mdbg.net/chindict/chindict.php?page=cedict">CC-CEDICT</a>那个版本</p>
 <p>不得不佩服Google工程师们做i18n的敬业和牛逼。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-05-28T00:00:00+08:00">2009-05-28</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/640297"  rel="bookmark" >
+              <h2 class="card-title">Hg可以直接push到github了</h2>
+            </a>
+            <p class="card-text"><p><img alt="" src="http://hg-git.github.com/images/server.png" /></p>
+<p>github博客<a href="http://github.com/blog/439-hg-git-mercurial-plugin">宣布</a> <a href="http://hg-git.github.com/">hg-git插件</a>：</p>
+<blockquote>
+<p>The Hg-Git plugin can convert commits/changesets losslessly from one system to another, so you can push via an Hg repository and another Hg client can pull it and thier changeset node ids will be identical - Mercurial data does not get lost in translation.</p>
+</blockquote>
+<p>看来hg和git不是对抗，而是联合。期待git客户端支持Mercurial服务器的插件。。。哈哈。。。</p>
+<p>via <a href="http://www.reddit.com/r/programming/comments/8nseh/no_need_to_choose_anymore_seamless_git/">proggit</a></p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2009-05-28T00:00:00+08:00">2009-05-28</time></p>
 <p>archive</p>            </div>
@@ -1567,29 +1567,6 @@ False
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
-            <a href="/archives/638444"  rel="bookmark" >
-              <h2 class="card-title">教你在任意国内网站快速删除帐号</h2>
-            </a>
-            <p class="card-text"><p>看到solidot上一新闻：<a href="http://internet.solidot.org/article.pl?sid=09/03/30/1444252">注册容易，删除账号却实在不易啊</a></p>
-<p>呃。。。ID想<strong>被</strong> 自杀还不容易啊？</p>
-<p>很简单。</p>
-<p>1. 备份自己的数据，把资料从目标网站上dump下来，修改/清除所有个人联系信息和资料。（其实数据的覆盖比删除安全很多。）<br />
-2. 挂proxy，打开<a href="http://www.epochtimes.com/">大鸡院</a>网站<br />
-3. 复制20多篇反☭的新闻，注意标题一定要狠，要吸引人，要哗众取宠。然后广泛粘贴到目标网站高流量的板块<br />
-4. 不出意外的话，个把小时之内你的帐号会被永久性的从目标网站服务器删除，而且不会留下任何痕迹。即使网站没有开发这个功能我想鹳狸猿直接操作数据库都会把你的帐号灭了。</p>
-<p>这一招是我从豆瓣上学到的，很多童鞋想删帐号，没办法，于是就跑到 豆瓣Fans小组啊，冷组啊之类的折腾啊闹啊，过一会儿就非常满意的看到 该账户不存在 了。哈哈。</p>
-<p><em>Update 23:20</em> ：</p>
-<p>啊啊啊被<a href="http://sr.ju690.com/meme/item/18158">sr.ju690.com推荐</a>了。有人说小心被请去喝茶。呃，我没考虑这个问题。因为我们的objective是如何注销一个ID，其余的事情都算collateral damage不属于本文讨论范围。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2009-03-31T00:00:00+08:00">2009-03-31</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
             <a href="/archives/638476"  rel="bookmark" >
               <h2 class="card-title">谷歌发布音乐搜索 - 姚明本人亲自发来贺电</h2>
             </a>
@@ -1687,6 +1664,45 @@ False
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/archives/638444"  rel="bookmark" >
+              <h2 class="card-title">教你在任意国内网站快速删除帐号</h2>
+            </a>
+            <p class="card-text"><p>看到solidot上一新闻：<a href="http://internet.solidot.org/article.pl?sid=09/03/30/1444252">注册容易，删除账号却实在不易啊</a></p>
+<p>呃。。。ID想<strong>被</strong> 自杀还不容易啊？</p>
+<p>很简单。</p>
+<p>1. 备份自己的数据，把资料从目标网站上dump下来，修改/清除所有个人联系信息和资料。（其实数据的覆盖比删除安全很多。）<br />
+2. 挂proxy，打开<a href="http://www.epochtimes.com/">大鸡院</a>网站<br />
+3. 复制20多篇反☭的新闻，注意标题一定要狠，要吸引人，要哗众取宠。然后广泛粘贴到目标网站高流量的板块<br />
+4. 不出意外的话，个把小时之内你的帐号会被永久性的从目标网站服务器删除，而且不会留下任何痕迹。即使网站没有开发这个功能我想鹳狸猿直接操作数据库都会把你的帐号灭了。</p>
+<p>这一招是我从豆瓣上学到的，很多童鞋想删帐号，没办法，于是就跑到 豆瓣Fans小组啊，冷组啊之类的折腾啊闹啊，过一会儿就非常满意的看到 该账户不存在 了。哈哈。</p>
+<p><em>Update 23:20</em> ：</p>
+<p>啊啊啊被<a href="http://sr.ju690.com/meme/item/18158">sr.ju690.com推荐</a>了。有人说小心被请去喝茶。呃，我没考虑这个问题。因为我们的objective是如何注销一个ID，其余的事情都算collateral damage不属于本文讨论范围。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-03-31T00:00:00+08:00">2009-03-31</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/archives/638436"  rel="bookmark" >
+              <h2 class="card-title">成电2001年的11栋大火【youtube视频】</h2>
+            </a>
+            <p class="card-text"><object height="344" width="425"><param name="movie" value="http://www.youtube.com/v/sFVqaAF32zs&amp;hl=en&amp;fs=1"/><param name="allowFullScreen" value="true"/><param name="allowscriptaccess" value="always"/><embed allowfullscreen="true" allowscriptaccess="always" height="344" src="http://www.youtube.com/v/sFVqaAF32zs&amp;hl=en&amp;fs=1" type="application/x-shockwave-flash" width="425"/></object>
+
+<p>今天开Google Earth 5找素材的时候无意中<a href="http://www.youtube.com/watch?v=sFVqaAF32zs">发现</a>的。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2009-03-30T00:00:00+08:00">2009-03-30</time></p>
+<p>archive</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/archives/638435"  rel="bookmark" >
               <h2 class="card-title">Playing For Change</h2>
             </a>
@@ -1707,22 +1723,6 @@ False
 <p><a href="http://vimeo.com/3097281">Playing For Change | Song Around The World "One Love"</a> from <a href="http://vimeo.com/concord">Concord Music Group</a> on <a href="http://vimeo.com">Vimeo</a>.</p>
 <p>Playing For Change 组织了全世界各地的流浪艺术家的演出来完成一个作品。</p>
 <p><a href="http://initiative.yo2.cn/wp-admin/post.php?action=edit&amp;post=638435" title="编辑文章">Edit</a></p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2009-03-30T00:00:00+08:00">2009-03-30</time></p>
-<p>archive</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/archives/638436"  rel="bookmark" >
-              <h2 class="card-title">成电2001年的11栋大火【youtube视频】</h2>
-            </a>
-            <p class="card-text"><object height="344" width="425"><param name="movie" value="http://www.youtube.com/v/sFVqaAF32zs&amp;hl=en&amp;fs=1"/><param name="allowFullScreen" value="true"/><param name="allowscriptaccess" value="always"/><embed allowfullscreen="true" allowscriptaccess="always" height="344" src="http://www.youtube.com/v/sFVqaAF32zs&amp;hl=en&amp;fs=1" type="application/x-shockwave-flash" width="425"/></object>
-
-<p>今天开Google Earth 5找素材的时候无意中<a href="http://www.youtube.com/watch?v=sFVqaAF32zs">发现</a>的。</p></p>
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2009-03-30T00:00:00+08:00">2009-03-30</time></p>
 <p>archive</p>            </div>

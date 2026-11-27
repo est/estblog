@@ -54,6 +54,139 @@
         <!-- new article -->
         <div class="card blog-card">
           <article class="card-body">
+            <a href="/2026/stdout-21"  rel="bookmark" >
+              <h2 class="card-title">Playlet：DLNA听歌神器 免安装app播放NAS里的歌</h2>
+            </a>
+            <p class="card-text"><p>家里有个小 NAS 。里面存了一些歌。一半是用 NAS 自带的 app 听，一半是。。。SMB 共享打开听</p>
+<p>虽然 NAS 也提供 DLNA ，一直以来找不到趁手 app ，要么收费，要么 bug 多，要么不能多端。</p>
+<p>13年前我也想<a href="https://github.com/est/push2air">基于 <code>chrome.socket</code> 做个 Chrome App</a> 弄个类似的。结果这破玩意实现有问题，<a href="https://issuetracker.google.com/issues/40960228">多连接会导致 hang</a>。最后<a href="https://blog.chromium.org/2020/01/moving-forward-from-chrome-apps.html">2020年Chromium决定杀死 Chrome Apps</a></p>
+<p>周六的时候，实在无聊，决定又开始搓轮子。在思考  SSDP/UPnP ，native UI, electron，命令行这些选型的时候，突然想到，DLNA服本来就要提供一个http，自己再造个 http 客户端去通信，岂不是多此一举？只要依托它，解决跨域……等等，用个 bookmarklet 不就行了？当页调用 <code>fetch()</code> ，走 SOAP 协议，完美。</p>
+<p>所以这就有了，网页版听歌的。不需要安装 app ，只需要一个浏览器书签</p>
+<p><a href="https://est.github.io/playlet/">https://est.github.io/playlet/</a></p>
+<p>也需要你对网络、DLNA 的亿点点知识。比如你得自己想办法找出 DLNA 的 IP 和端口</p>
+<p>使用方法：</p>
+<ol>
+<li>
+<p>把这个网址加到浏览器书签</p>
+<pre><code>    javascript:import("https://est.github.io/playlet/loader.js")
+</code></pre>
+</li>
+<li>
+<p>打开 DLNA 服务器的网页</p>
+</li>
+<li>点击第一步加的书签（如果找不到书签栏，右上角三个点菜单 -&gt; 收藏 可以切换）</li>
+</ol>
+<p>自测兼容 NAS 的 MiniDLNA 。chrome ，手机浏览器和 webview 都可以播放。</p>
+<p>当年嵌入个 <code>&lt;script&gt;</code> 写法多复杂，createElement又这那的；现在直接 <code>import()</code> 搞定。简洁明了，还不会重复加载。</p>
+<p>最后是个 50KB 左右的单体 js。实现了播放、搜索等核心功能+UI。</p>
+<p>给本地测试环境动了个小心思，利用 iframe 去模拟 bookmarklet 注入。还学习到 <code>&lt;audio crossorigin="anonymous"&gt;</code> 居然主动去检查跨域CORS头导致加载失败，去掉 <code>crossorigin</code> 就行。AI嘴硬不给去掉，服了。</p>
+<p>这下随时随地打开浏览器就能听歌了。除了收藏的一些古典CD是 .cue 分段的没法播放。感觉需要去电脑上硬切割一下了。</p>
+<p>接下来想把歌词什么的整理好。不知道有没有类似 opensubtitles 之类的服务。</p>
+<p>最后想起来，miniDLNA为啥不直接把这一坨JS内置了 😂 可能当年那个条件没厂家愿意去js手搓一套DLNA协议+播放界面吧。甚至浏览器对常见音频格式都不怎么支持</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-05-30T20:03:08+08:00">2026-05-30</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
+            <a href="/2026/stdout-20"  rel="bookmark" >
+              <h2 class="card-title">不修改nginx接收websocket</h2>
+            </a>
+            <p class="card-text"><p>以前只记得要支持websocket 需要 nginx 改：</p>
+<pre><code>  location /ws-service-a {
+      proxy_pass http://backend_a;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection $connection_upgrade;
+  }
+</code></pre>
+<p>今天折腾忘记这茬了，一直在调 FastAPI ，<code>@app.websocket()</code> 死活不识别 <code>wscat</code> 的请求</p>
+<p>WebSocket 协议的工作方式是：</p>
+<p>1.客户端发 GET + Upgrade: websocket 头<br />
+2.服务端识别这个特殊 GET，返回 101 Switching Protocols<br />
+3.连接升级完成</p>
+<p><code>opus-4.6</code> 说：既然路由确实注册了，那问题几乎可以确定是：前面的反向代理/LB 没有透传 WebSocket</p>
+<p>我就来劲了，让AI写一份 特殊 GET，返回 101 Switching Protocols 。</p>
+<p>结果还真成功了。<code>wscat</code> 返回 error: Invalid Sec-WebSocket-Accept header</p>
+<p>折腾了几下，发现此路不通</p>
+<blockquote>
+<p>问题不是 @app.websocket() 没挂载，它挂载了，但永远匹配不到。原因是 uvicorn 的路由分发发生在更底层：</p>
+<p>请求到达 uvicorn<br />
+    ↓<br />
+uvicorn 检查 headers：有 Upgrade: websocket？<br />
+    ├── 是 → scope.type = "websocket" → 只匹配 @app.websocket() 路由<br />
+    └── 否 → scope.type = "http"     → 只匹配 @app.get/post() 路由<br />
+你的 nginx 把 Upgrade 头吃了，所以 uvicorn 永远把请求标记为 http scope。在 http scope 下，@app.websocket(...) 路由根本不参与匹配 — 就像它不存在一样。</p>
+<p>这就是为什么：</p>
+<p>@app.get('/ws/test') 能匹配 — 它是 HTTP 路由，匹配 HTTP scope<br />
+@app.websocket('/ws/real') 匹配不到 — 它是 WebSocket 路由，只在 websocket scope 下才可见<br />
+两个都注册成功了，但 scope 类型不对，uvicorn 在路由匹配之前就把它们分到了不同的赛道。</p>
+</blockquote>
+<p>接下来几轮错误复制粘贴大法：</p>
+<ul>
+<li>最初想法：ASGI middleware 翻译协议 → 80 行，手搓 websockets 库</li>
+<li>精简版：用 websockets 库做帧编码 → 还是 50 行 middleware</li>
+</ul>
+<p>后来发现ASGI 这一层做不到。因为 标准 ASGI middleware 拿到请求时已经太晚了：</p>
+<p>uvicorn TCP 收包<br />
+1. httptools 解析 headers<br />
+2. on_headers_complete 决定 scope type (http vs websocket)  ← 需要在这里拦截<br />
+3. 创建 scope + receive/send（已经绑定为 HTTP 协议）<br />
+4. 调用 ASGI app (middleware 链)                            ← middleware 才在这里介入</p>
+<p>middleware 只能看到已经定型的 scope['type'] = 'http'，改不了底层的 receive/send 绑定。</p>
+<p>然后尝试了一个 <code>gunicorn.conf.py</code> 的hack：</p>
+<pre><code class="language-python">def post_worker_init(worker):
+    &quot;&quot;&quot;让 uvicorn 从 sec-websocket-key 识别 WebSocket，绕过 nginx 吞 Upgrade 头的问题&quot;&quot;&quot;
+    import httptools
+    from uvicorn.protocols.http.httptools_impl import HttpToolsProtocol
+    _orig = HttpToolsProtocol.on_headers_complete
+    def _patched(self):
+        has_ws_key = any(n == b&quot;sec-websocket-key&quot; for n, _ in self.headers)
+        if has_ws_key and self._should_upgrade_to_ws():
+            self.headers.append((b&quot;upgrade&quot;, b&quot;websocket&quot;))
+            self.headers.append((b&quot;connection&quot;, b&quot;Upgrade&quot;))
+            self.scope[&quot;headers&quot;] = self.headers
+            self.scope[&quot;method&quot;] = self.parser.get_method().decode(&quot;ascii&quot;)
+            raise httptools.HttpParserUpgrade(b&quot;&quot;)
+        return _orig(self)
+    HttpToolsProtocol.on_headers_complete = _patched
+</code></pre>
+<p>我也觉得，ws这协议是不是有病。如果有 <code>sec-websocket-key</code> 就认定为 ws 不就完了。搞那么复杂。</p>
+<p>然后这个办法在 ASGI 里还是行不通。最终版：直接篡改 uvicorn 收到的 raw TCP 字节</p>
+<pre><code class="language-python">def post_worker_init(worker):
+    import re
+    from uvicorn.protocols.http.httptools_impl import HttpToolsProtocol
+
+    _orig_data_received = HttpToolsProtocol.data_received
+
+    def _patched_data_received(self, data):
+        if not getattr(self, '_ws_patched', False) and b'\r\n\r\n' in data:
+            self._ws_patched = True
+            lower = data.lower()
+            if b'sec-websocket-key:' in lower and b'\nupgrade:' not in lower:
+                data = re.sub(rb'(?i)\r\nconnection:[^\r]*', b'\r\nConnection: Upgrade', data)
+                data = data.replace(b'\r\n\r\n', b'\r\nUpgrade: websocket\r\n\r\n', 1)
+        return _orig_data_received(self, data)
+
+    HttpToolsProtocol.data_received = _patched_data_received
+</code></pre>
+<p>居然成功了！不修改nginx兼容websocket！</p>
+<p>这路子太野了。还是老老实实去改nginx了。</p>
+<p>不过也学到一些姿势，比如 <code>258EAFA5-E914-47DA-95CA-C5AB0DC85B11</code> ，以及ws居然是二进制流。</p></p>
+            <div class="card-subtext muted-text">
+              <p>Posted <time datetime="2026-05-28T18:35:00+08:00">2026-05-28</time></p>
+<p>stdout</p>            </div>
+          </article>
+        </div>
+
+
+        <!-- new article -->
+        <div class="card blog-card">
+          <article class="card-body">
             <a href="/2026/stdout-19"  rel="bookmark" >
               <h2 class="card-title">AI 硬伤</h2>
             </a>
@@ -1184,145 +1317,6 @@ A: 文言文真退了，可能就真的不知道以后高中语文课上来是�
             <div class="card-subtext muted-text">
               <p>Posted <time datetime="2026-04-02T21:08:00+08:00">2026-04-02</time></p>
 <p>stderr</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2026/stdout-13"  rel="bookmark" >
-              <h2 class="card-title">Bonsai 在 M2 安装</h2>
-            </a>
-            <p class="card-text"><p>有个 1bit 模型最近很火 <a href="https://github.com/PrismML-Eng/Bonsai-demo">https://github.com/PrismML-Eng/Bonsai-demo</a></p>
-<p>我本地环境不知道咋回事，搞混了 x86_64 和 arm64 。还有官方默认 python 3.11 我也不太满意，强行升级一波。</p>
-<pre><code>diff --git setup.sh setup.sh
-index 543fab0..80c1190 100755
---- setup.sh
-+++ setup.sh
-@@ -13,7 +13,8 @@ cd &quot;$SCRIPT_DIR&quot;
-
- VENV_DIR=&quot;$SCRIPT_DIR/.venv&quot;
- VENV_PY=&quot;$VENV_DIR/bin/python&quot;
--PYTHON_VERSION=&quot;3.11&quot;
-+# PYTHON_VERSION=&quot;3.11&quot;
-+PYTHON_VERSION=3.14
-
- # ────────────────────────────────────────────────────
- #  Helpers
-@@ -266,6 +267,10 @@ if [ &quot;$OS&quot; = &quot;Darwin&quot; ]; then
-     fi
-
-     step &quot;Building MLX from source (this takes 2-5 minutes on first install) ...&quot;
-+    # Force arm64 so CMake does not pick x86_64 (e.g. universal cc / Rosetta); MLX rejects x86_64+Metal on macOS.
-+    if [ &quot;$(uname -m)&quot; = &quot;arm64&quot; ]; then
-+        export ARCHFLAGS=&quot;${ARCHFLAGS:--arch arm64}&quot;
-+    fi
-     # --no-build-isolation required: MLX's C++/Metal build needs pre-installed setuptools
-     uv pip install --python &quot;$VENV_PY&quot; -e mlx/ --no-build-isolation
-     step &quot;Installing MLX Python deps (mlx-lm, torch, transformers, ...) ...&quot;
-</code></pre>
-<p>cd mlx</p>
-<pre><code>diff --git CMakeLists.txt CMakeLists.txt
-index 041a476c..459ddae2 100644
---- CMakeLists.txt
-+++ CMakeLists.txt
-@@ -56,7 +56,17 @@ message(
- )
-
- if(${CMAKE_SYSTEM_NAME} MATCHES &quot;Darwin&quot;)
--  if(${CMAKE_SYSTEM_PROCESSOR} MATCHES &quot;x86_64&quot;)
-+  # CMAKE_SYSTEM_PROCESSOR can stay x86_64 on Apple silicon until the toolchain
-+  # is fully configured; CMAKE_OSX_ARCHITECTURES reflects the actual target.
-+  set(_mlx_macos_targeting_x86 OFF)
-+  if(CMAKE_OSX_ARCHITECTURES)
-+    if(&quot;x86_64&quot; IN_LIST CMAKE_OSX_ARCHITECTURES)
-+      set(_mlx_macos_targeting_x86 ON)
-+    endif()
-+  elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES &quot;x86_64&quot;)
-+    set(_mlx_macos_targeting_x86 ON)
-+  endif()
-+  if(_mlx_macos_targeting_x86)
-     if(NOT MLX_ENABLE_X64_MAC)
-       message(
-         FATAL_ERROR
-diff --git setup.py setup.py
-index 12505bd1..db0c67c8 100644
---- setup.py
-+++ setup.py
-@@ -126,6 +126,9 @@ class CMakeBuild(build_ext):
-         if build_macos:
-             # Cross-compile support for macOS - respect ARCHFLAGS if set
-             archs = re.findall(r&quot;-arch (\S+)&quot;, os.environ.get(&quot;ARCHFLAGS&quot;, &quot;&quot;))
-+            # Default to native Apple-silicon when ARCHFLAGS is unset (avoids CMAKE_SYSTEM_PROCESSOR=x86_64 with universal toolchains)
-+            if not archs and platform.machine() == &quot;arm64&quot;:
-+                archs = [&quot;arm64&quot;]
-             if archs:
-                 cmake_args += [&quot;-DCMAKE_OSX_ARCHITECTURES={}&quot;.format(&quot;;&quot;.join(archs))]
-</code></pre>
-<p>然后发现 metal 命令不存在。继续折腾。因为我没升级 macOS 26，还是 Sequoia 15.7.3，XCode从商店安装直接提示</p>
-<blockquote>
-<p>Xcode can’t be installed on “Macintosh HD” because macOS version 26.2 or later is required.</p>
-</blockquote>
-<p>手动：</p>
-<pre><code>wget https://download.developer.apple.com/Developer_Tools/Xcode_16/Xcode_16.xip
-xip --expand Xcode_16.xip
-sudo mv Xcode.app /Applications/
-sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
-sudo xcodebuild -license accept
-</code></pre>
-<p>有AI代为折腾真好。</p>
-<p>最后吐槽下，open-webui什么妖魔鬼怪。就tmd一个界面玩意也整出来好几个GB。</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2026-04-01T15:40:00+08:00">2026-04-01</time></p>
-<p>stdout</p>            </div>
-          </article>
-        </div>
-
-
-        <!-- new article -->
-        <div class="card blog-card">
-          <article class="card-body">
-            <a href="/2026/stdin-09"  rel="bookmark" >
-              <h2 class="card-title">The Porsche Diffusion</h2>
-            </a>
-            <p class="card-text"><p>Social media and smartphones are <a href="https://www.reddit.com/r/dataisbeautiful/comments/1o87cy4/oc_i_analyzed_15_years_of_comments_on/">sterializing humanity</a>.</p>
-<!-- img referrerpolicy="no-referrer" src="https://i.redd.it/jicewvesfhvf1.jpeg" -->
-
-<p>There is an absurd claim I saw the other day. It's a popular call out "The Porsche diffusion" on Chinese interwebs. It goes like this</p>
-<blockquote>
-<p>If one woman dates a guy who drives a Porsche, she’s unlikely to settle for less afterward.<br />
-Then nine of her BFFs think, “If she can get a Porsche guy, why can’t I?”<br />
-Now you have ten women who won’t consider non-Porsche men.<br />
-That’s the Porsche Diffusion Law.</p>
-</blockquote>
-<p>I initially dismissed this as a blatantly misogynistic take on hypergamy. It felt like one of those cynical internet takes trying to reduce complex human behavior into a cheap punchline. Then someone did a bit of napkin math:</p>
-<p>Imagine a mega city with 10 million people. Say there are about 20,000 people who can visibly signal high status - not just wealth, but performative wealth. Think luxury cars, curated lifestyles, Instagram-ready relationships. Call them “Porsche guy”</p>
-<p>That’s 0.2% of the population.</p>
-<p>The question isn’t “how many Porsche guys exist from commoner's perception?”</p>
-<p>To translate into Math: what’s the probability you’ve seen at least one Porsche guy around you?</p>
-<p>Consider a typical social graph. Between friends, coworkers, friends-of-friends, and social media exposure, it’s not unreasonable for someone to be indirectly exposed to a few hundred distinct individuals.</p>
-<p>Let’s say 300.</p>
-<p>What’s the probability that none of those 300 people are connected (directly or indirectly) to someone in that top 0.2%?</p>
-<p>Roughly:</p>
-<p><code>(1 − 0.002)³⁰⁰ ≈ 55%</code></p>
-<p>So there’s about a <strong>45% chance</strong> you will encounter at least one “Porsche-level” signal within your immediate social horizon.</p>
-<p>Now add recommender algorithms.</p>
-<p>You are no longer sampling randomly from 300 people. You are sampling from a biased, algorithmically amplified feed - one that disproportionately surfaces high-status, high-engagement content.</p>
-<p>Your effective exposure probability is no longer 45%. It’s closer to saturation.</p>
-<p>At that point, the system changes character.</p>
-<hr />
-<p>I actually went a bit further into this topic. Checkout <a href="https://blog.est.im/2026/stdin-03">my post few weeks back</a> in Chinese.</p>
-<p>Thinking about this made me realize something a bit unsettling.</p>
-<p>In early development of a human body, every cell starts out basically identical. Same DNA, same potential. Then some local chemicals kick in, and only a tiny fraction become germ cells. The rest become somatic-functional, necessary, but no longer part of reproduction.</p>
-<p>No cell is forced. It’s just the gradients.</p>
-<p>The system ends up with massive scale, high efficiency-and very few cells actually reproducing.</p>
-<p>If you squint, the pattern doesn’t feel entirely alien.</p>
-<hr />
-<p>I wrote this blog because of <a href="https://news.ycombinator.com/item?id=47554773">an HN thread</a>. Praise the unholy AI trinity of 搜广推 business (Another Chinese connotation which stands for Search, Ads, and Recommendation engines in case you are wondering).</p></p>
-            <div class="card-subtext muted-text">
-              <p>Posted <time datetime="2026-03-29T00:27:00+08:00">2026-03-29</time></p>
-<p>stdin</p>            </div>
           </article>
         </div>
 
